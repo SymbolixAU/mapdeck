@@ -96,28 +96,58 @@
 # lon <- sample(c(-90:90), size = 500000, replace = T)
 # lat <- sample(c(-90:90), size = 500000, replace = T)
 # df <- data.frame(lon = lon, lat = lat)
+# df$colour <- sample(letters, size = 500000, replace = T)
 #
-# # jsonlite::toJSON(df)
-# #
-# # df$data <- paste0("[", df$lon, ",", df$lat, "]")
-# # jsonlite::toJSON(df$data)
 #
-# js <- jsonlite::toJSON( setNames( df[, c("lon","lat")], NULL) )
+# colourColumns <- googleway:::shapeAttributes(fill_colour = "colour", stroke_colour = NULL)
 #
-# #js <- jsonlite::toJSON(df$data)
+# allCols <- c("lon", "lat", "fill_colour")
+# objArgs <- quote(add_scatterplot(data = df, fill_colour = "colour", lon = "lon", lat = "lat"))
+# shape <- googleway:::createMapObject(df, allCols, objArgs)
+#
+# ## createPalettes
+# palettes <- unique(colourColumns)
+# v <- vapply(names(colourColumns), function(x) !googleway:::isHexColour(shape[, x]), 0L)
+# palettes <- colourColumns[which(v == T)]
+#
+# ## createColourPalettes
+# colour_palettes <- googleway:::createColourPalettes(data = df, palettes = palettes, colourColumns, viridisLite::viridis)
+#
+# colours <- googleway:::createColours(shape, colour_palettes)
+#
+# df[, c("red","green","blue")] <- t(col2rgb(colours[[1]]))
+#
+# #js <- jsonlite::toJSON( setNames( df, NULL) )
+# js <- jsonlite::toJSON(df)
+#
+# mapdeck_map(key = key) %>% add_scatterplot(data = js)
+#
+# library(mongolite)
+# library(symbolix.utils)
+#
+# m <- symbolix.utils::connectToMongo(db = "ABS", collection = "SA2_2016", usr = "db_user")
+# geo <- m$find(query = '{"geometry":{"$ne":null}}', ndjson = T)
+# sf <- geojsonsf::geojson_sf(geo)
+#
+# coords <- as.data.frame(sf::st_coordinates(sf))
+#
+# # setNames(nm = coords, c("lon","lat","l1","l2","l3"))
+#
+# names(coords) <- c("lon","lat","L1","L2","L3")
+#
+# js <- jsonlite::toJSON(coords)
+#
+# key <- read.dcf("~/Documents/.googleAPI", fields= "MAPBOX")
 #
 # mapdeck_map(key = key) %>% add_scatterplot(data = js)
 
+## DATA FORMAT CAN BE
 
-
-
-
-
-
-
-
-
-
+# Data format:
+# 	[
+#   {name: 'Colma (COLM)', code:'CM', address: '365 D Street, Colma CA 94014', exits: 4214, coordinates: [-122.466233, 37.684638]},
+#    ...
+#  ]
 
 
 
