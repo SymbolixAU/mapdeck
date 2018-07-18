@@ -1,6 +1,6 @@
-#' Google map update
+#' Mapdeck map update
 #'
-#' Update a Google map in a shiny app. Use this function whenever the map needs
+#' Update a mapdeck map in a shiny app. Use this function whenever the map needs
 #' to respond to reactive content.
 #'
 #' @param map_id string containing the output ID of the map in a shiny application.
@@ -14,7 +14,7 @@
 #' \dontrun{
 #'
 #' library(shiny)
-#' library(googleway)
+#' library(mapdeck)
 #'
 #' ui <- pageWithSidebar(
 #'   headerPanel("Toggle markers"),
@@ -199,13 +199,9 @@ addDependency <- function(map, dependencyFunction) {
 	existingDeps <- sapply(map$dependencies, function(x) x[['name']])
 	addingDependency <- sapply(dependencyFunction, function(x) x[['name']])
 
-	# print(existingDeps)
-	# print(addingDependency)
-
 	if(!addingDependency %in% existingDeps)
 		map$dependencies <- c(map$dependencies, dependencyFunction)
 
-	# print(map$dependencies)
-
 	return(map)
 }
+

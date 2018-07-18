@@ -1,14 +1,15 @@
 Package: mapdeck
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Interactive Maps Using 'Mapbox' and 'Deck.gl'
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: c(
+    person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
+    )
+Description: Provides a mechanism to plot an interactive map using 'Mapbox GL' maps and 'Deck.gl' plotting functions.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
-  magrittr
+  magrittr,
+  viridisLite
 RoxygenNote: 6.0.1

@@ -92,54 +92,19 @@
 # key <- read.dcf("~/Documents/.googleAPI", fields= "MAPBOX")
 
 # mapdeck::mapdeck_map(key = key) %>% add_scatterplot()
-
-# lon <- sample(c(-90:90), size = 500000, replace = T)
-# lat <- sample(c(-90:90), size = 500000, replace = T)
+# n <- 500000
+# lon <- sample(c(-90:90), size = n, replace = T)
+# lat <- sample(c(-90:90), size = n, replace = T)
 # df <- data.frame(lon = lon, lat = lat)
-# df$colour <- sample(letters, size = 500000, replace = T)
+# df$colour <- sample(letters, size = n, replace = T)
+# df$radius <- sample(100:100000, size = n, replace = T)
 #
-#
-# colourColumns <- googleway:::shapeAttributes(fill_colour = "colour", stroke_colour = NULL)
-#
-# allCols <- c("lon", "lat", "fill_colour")
-# objArgs <- quote(add_scatterplot(data = df, fill_colour = "colour", lon = "lon", lat = "lat"))
-# shape <- googleway:::createMapObject(df, allCols, objArgs)
-#
-# ## createPalettes
-# palettes <- unique(colourColumns)
-# v <- vapply(names(colourColumns), function(x) !googleway:::isHexColour(shape[, x]), 0L)
-# palettes <- colourColumns[which(v == T)]
-#
-# ## createColourPalettes
-# colour_palettes <- googleway:::createColourPalettes(data = df, palettes = palettes, colourColumns, viridisLite::viridis)
-#
-# colours <- googleway:::createColours(shape, colour_palettes)
-#
-# df[, c("red","green","blue")] <- t(col2rgb(colours[[1]]))
-#
-# #js <- jsonlite::toJSON( setNames( df, NULL) )
-# js <- jsonlite::toJSON(df)
-#
-# mapdeck_map(key = key) %>% add_scatterplot(data = js)
-#
-# library(mongolite)
-# library(symbolix.utils)
-#
-# m <- symbolix.utils::connectToMongo(db = "ABS", collection = "SA2_2016", usr = "db_user")
-# geo <- m$find(query = '{"geometry":{"$ne":null}}', ndjson = T)
-# sf <- geojsonsf::geojson_sf(geo)
-#
-# coords <- as.data.frame(sf::st_coordinates(sf))
-#
-# # setNames(nm = coords, c("lon","lat","l1","l2","l3"))
-#
-# names(coords) <- c("lon","lat","L1","L2","L3")
-#
-# js <- jsonlite::toJSON(coords)
-#
-# key <- read.dcf("~/Documents/.googleAPI", fields= "MAPBOX")
-#
-# mapdeck_map(key = key) %>% add_scatterplot(data = js)
+# md_map(key = key) %>%
+# 	add_scatterplot(data = df[1:50000, ], fill_colour = "colour", lat = "lat", lon = "lon",
+# 									radius = "radius")
+
+
+
 
 ## DATA FORMAT CAN BE
 

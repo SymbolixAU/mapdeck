@@ -1,20 +1,18 @@
 
 function add_scatterplot( map_id, json ) {
 
-	console.log("scatter plot");
-
-//	const MALE_COLOR = [0, 128, 255];
-//  const FEMALE_COLOR = [255, 0, 128];
+  console.log( json );
 
 	const scatterLayer = new deck.ScatterplotLayer({
 		id: 'scatterplot',
 		data: json,
-    radiusScale: 50,
+    radiusScale: 1,
     radiusMinPixels: 1,
-    getPosition: d => [d.lon, d.lat, 0],
-    getColor: d => [d.red, d.blue, d.green]
+    getRadius: d => d.radius,
+    //strokeWidth: json.stroke_width,
+    getPosition: d => [d.lon, d.lat, d.elevation],
+    getColor: d => [d.fill_colour_red, d.fill_colour_green, d.fill_colour_blue]
 	});
 
 	window[map_id + 'map'].setProps({ layers: [ scatterLayer ]} );
-
 }

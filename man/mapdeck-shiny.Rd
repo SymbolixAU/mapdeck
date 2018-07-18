@@ -4,7 +4,7 @@
 \alias{mapdeck-shiny}
 \alias{mapdeckOutput}
 \alias{renderMapdeck}
-\title{Shiny bindings for mapdeck}
+\title{Change Location}
 \usage{
 mapdeckOutput(outputId, width = "100\%", height = "400px")
 
@@ -25,6 +25,5 @@ string and have \code{'px'} appended.}
 is useful if you want to save an expression in a variable.}
 }
 \description{
-Output and render functions for using mapdeck within Shiny
-applications and interactive Rmd documents.
+Change Location
 }

@@ -1,20 +1,35 @@
-#' mapdeck Map
+#' md Map
 #'
 #' @import htmlwidgets
 #'
+#' @param key
+#' @param data
+#' @param width
+#' @param height
+#' @param elementId
+#' @param padding
+#' @param pitch
+#' @param style
+#' @param location vector of lon and lat coordinates
+#'
 #' @export
-mapdeck_map <- function(key,
-											 data = NULL,
-											 width = NULL,
-											 height = NULL,
-											 elementId = NULL,
-											 padding = 0,
-											 style = 'mapbox://styles/mapbox/streets-v9') {
+md_map <- function(
+	key,
+	data = NULL,
+	width = NULL,
+	height = NULL,
+	elementId = NULL,
+	padding = 0,
+	style = 'mapbox://styles/mapbox/streets-v9',
+	pitch = 0,
+	location = c(0, 0)
+	) {
 
   # forward options using x
   x = list(
     access_token = key
     , style = style
+    , pitch = pitch
   )
 
   # create widget
@@ -58,6 +73,16 @@ mapdeck_map <- function(key,
 
   return(mapdeckmap)
 }
+
+#' Change Location
+#'
+#' @inheritParams md_map
+#'
+# md_change_location <- function(map_id, location) {
+#
+# 	## TODO(validate location params)
+# 	invoke_method(map_id, "change_location", location)
+# }
 
 #' Shiny bindings for mapdeck
 #'

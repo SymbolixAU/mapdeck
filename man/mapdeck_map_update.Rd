@@ -2,7 +2,7 @@
 % Please edit documentation in R/mapdeck_map_utilities.R
 \name{mapdeck_map_update}
 \alias{mapdeck_map_update}
-\title{Google map update}
+\title{Mapdeck map update}
 \usage{
 mapdeck_map_update(map_id, session = shiny::getDefaultReactiveDomain(),
   data = NULL, deferUntilFlush = TRUE)
@@ -20,14 +20,14 @@ instance should be carried out right away, or whether they should be held until
 after the next time all of the outputs are updated; defaults to TRUE.}
 }
 \description{
-Update a Google map in a shiny app. Use this function whenever the map needs
+Update a mapdeck map in a shiny app. Use this function whenever the map needs
 to respond to reactive content.
 }
 \examples{
 \dontrun{
 
 library(shiny)
-library(googleway)
+library(mapdeck)
 
 ui <- pageWithSidebar(
   headerPanel("Toggle markers"),

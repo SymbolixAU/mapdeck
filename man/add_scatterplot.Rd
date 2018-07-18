@@ -4,7 +4,9 @@
 \alias{add_scatterplot}
 \title{Add Scatterplot}
 \usage{
-add_scatterplot(map, data = get_map_data(map))
+add_scatterplot(map, data = get_map_data(map), lat, lon, radius = NULL,
+  fill_colour = NULL, fill_opacity = NULL, stroke_width = NULL,
+  digits = 6, palette = viridisLite::viridis)
 }
 \description{
 Add Scatterplot

@@ -29,9 +29,11 @@ HTMLWidgets.widget({
           const deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
-			      longitude: 144.5,
-			      latitude: -37.9,
-			      zoom: 4
+			      mapStyle: x.style,
+			      longitude: 0,
+			      latitude: 0,
+			      zoom: 1,
+			      pitch: x.pitch
         });
 
         window[el.id + 'map'] = deckgl;
@@ -110,3 +112,26 @@ function initialise_map(el, x) {
     }
   }
 }
+
+
+function change_location( map_id, location ) {
+
+	console.log( location );
+	console.log( location[0] );
+
+	window[map_id + 'map'].setProps({
+    viewState: {
+      longitude: location[0],
+      latitude: location[1],
+      zoom: 10,
+      pitch: 0,
+      bearing: 0
+    },
+    transitionInterpolator: new deck.experimental.ViewportFlyToInterpolator(),
+    transitionDuration: 5000
+  });
+
+}
+
+
+
