@@ -51,3 +51,84 @@
 # mapdeck_map(key = key) %>% add_geojson()
 
 
+#mapdeck_map(key = key) %>% add_geojson(googleway::geo_melbourne)
+
+# ## GeoJSON colours
+# library(data.table)
+# sf <- geojsonsf::geojson_sf(googleway::geo_melbourne)
+# setDT(sf)
+# sf[, fillColor := paste0("[", paste0(col2rgb(fillColor), collapse = ","), "]"), by = 1:nrow(sf)]
+# sf <- sf::st_as_sf(sf)
+# geo <- geojsonsf::sf_geojson(sf)
+# mapdeck_map(key = key) %>% add_geojson(geo)
+
+# ## large geojson
+# library(mongolite)
+# key <- read.dcf("~/Documents/.googleAPI", fields= "MAPBOX")
+# m <- symbolix.utils::connectToMongo(db = "ABS", collection = "SA2_2016", usr = "db_user")
+#
+# geo <- m$find(ndjson = T)
+# sf <- geojsonsf::geojson_sf(geo)
+
+
+
+# sf$fill_colour <- sf$AREASQKM16
+#
+# colourColumns <- googleway:::shapeAttributes(fill_colour = "fill_colour", stroke_colour =NULL)
+# pal <- googleway:::createPalettes(sf, colourColumns)
+#
+# colour_palettes <- googleway:::createColourPalettes(sf, pal, colourColumns = "AREASQKM16", viridisLite::viridis)
+#
+# googleway:::constructPalette(sf$AREASQKM16, viridisLite::viridis)
+
+#
+# geo_mini <- geojsonsf::sf_geojson(sf[1:1000, ])
+# attr(geo_mini, 'class') <- 'json'
+#
+# mapdeck_map(key = key) %>% mapdeck::add_geojson(geo_mini)
+
+
+### SCATTER
+# key <- read.dcf("~/Documents/.googleAPI", fields= "MAPBOX")
+
+# mapdeck::mapdeck_map(key = key) %>% add_scatterplot()
+
+# lon <- sample(c(-90:90), size = 500000, replace = T)
+# lat <- sample(c(-90:90), size = 500000, replace = T)
+# df <- data.frame(lon = lon, lat = lat)
+#
+# # jsonlite::toJSON(df)
+# #
+# # df$data <- paste0("[", df$lon, ",", df$lat, "]")
+# # jsonlite::toJSON(df$data)
+#
+# js <- jsonlite::toJSON( setNames( df[, c("lon","lat")], NULL) )
+#
+# #js <- jsonlite::toJSON(df$data)
+#
+# mapdeck_map(key = key) %>% add_scatterplot(data = js)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

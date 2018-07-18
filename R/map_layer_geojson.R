@@ -13,6 +13,9 @@ mapdeckGeojsonDependency <- function() {
 
 #' Add Geojson
 #'
+#'
+#' @details the GeoJSON string needs to have a \code{class} attribute of 'json'
+#'
 #' @export
 add_geojson <- function(map, data = get_map_data(map)) {
 	map <- addDependency(map, mapdeckGeojsonDependency())
