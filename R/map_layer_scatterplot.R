@@ -32,7 +32,13 @@ add_scatterplot <- function(
 
 	allCols <- scatterplotColumns()
 	requiredCols <- requiredScatterplotColumns()
-	colourColumns <- shapeAttributes(fill_colour = fill_colour, stroke_colour = NULL)
+
+	colourColumns <- shapeAttributes(
+		fill_colour = fill_colour
+		, stroke_colour = NULL
+		, stroke_from = NULL
+		, stroke_to = NULL
+		)
 
 	shape <- createMapObject(data, allCols, objArgs)
 

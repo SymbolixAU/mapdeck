@@ -2,6 +2,7 @@
 function add_geojson( map_id, geojson ) {
 
   console.log(geojson);
+  // reference: https://github.com/uber/deck.gl/blob/master/docs/layers/geojson-layer.md
 
 	const geojsonLayer = new deck.GeoJsonLayer({
 		id: 'geojson-layer',
@@ -13,12 +14,12 @@ function add_geojson( map_id, geojson ) {
     extruded: true,
     lineWidthScale: 20,
     lineWidthMinPixels: 2,
-    getFillColor: [160, 160, 180, 200],
-    //getFillColor: f => JSON.parse(f.properties.fillColor),
-    //getLineColor: d => colorToRGBArray(d.properties.color),
-    getRadius: 100,
-    getLineWidth: 1,
-    getElevation: 30,
+    //getFillColor: [160, 160, 180, 200],
+    getFillColor: f => hexToRgb(f.properties.fillColor),
+    getLineColor: d => hexToRgb(d.properties.lineColor),
+    getRadius: 100,   // TODO
+    getLineWidth: 1,  // TODO
+    getElevation: 30, // TODO
     //onHover: ({object}) => setTooltip(object.properties.name || object.properties.station)
 	});
 

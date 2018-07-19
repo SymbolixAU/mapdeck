@@ -21,6 +21,7 @@ HTMLWidgets.widget({
        	// use setInterval to check if the map can be loaded
 	      // the map is dependant on the mapdeck JS resource
 	      // - usually implemented via callback
+
 	      var checkExists = setInterval( function() {
 
 	      	const deckgl = new deck.DeckGL({
@@ -62,6 +63,8 @@ HTMLWidgets.widget({
 
           initialise_map(el, x);
        }
+
+       //console.log(hexToRgb("#0F0F0F"));
 
       },
 
@@ -154,6 +157,19 @@ function change_location( map_id, location ) {
   });
 
 }
+
+
+/**
+ * hex to rgb
+ *
+ * Converts hex colours to rgb
+ */
+const hexToRgb = hex =>
+  hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
+             ,(m, r, g, b) => '#' + r + r + g + g + b + b)
+    .substring(1).match(/.{2}/g)
+    .map(x => parseInt(x, 16));
+
 
 
 

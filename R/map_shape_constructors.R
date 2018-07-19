@@ -64,15 +64,14 @@ replaceVariableColours <- function(shape, colours) {
 	## (there is an issue with one or the other not recognisign an array ["#FF00FF"])
 	shape[, c(unname(colourNames))] <- as.data.frame(eachColour, stringsAsFactors = F)
 
-	l <- lapply(colourNames, function(x) {
-		setNames(as.data.frame(t(col2rgb(shape[[x]]) ) ), paste0(x, c("_red","_green","_blue")) )
-	})
-
-	colour_columns <- do.call(cbind, l)
-	shape[, names(colour_columns) ] <- colour_columns
+	# l <- lapply(colourNames, function(x) {
+	# 	setNames(as.data.frame(t(col2rgb(shape[[x]]) ) ), paste0(x, c("_red","_green","_blue")) )
+	# })
+	#
+	# colour_columns <- do.call(cbind, l)
+	# shape[, names(colour_columns) ] <- colour_columns
 
 	return(shape)
-
 }
 
 
@@ -89,15 +88,18 @@ addDefaults <- function(shape, requiredDefaults, shapeType) {
 	defaults <- switch(
 		shapeType
 		, "scatterplot" = scatterplotDefaults(n)
+		, "arc" = arcDefaults(n)
 		)
 	shape <- cbind(shape, defaults[, requiredDefaults, drop = F])
 	return(shape)
 }
 
 
-shapeAttributes <- function(fill_colour, stroke_colour) {
+shapeAttributes <- function(fill_colour, stroke_colour, stroke_from, stroke_to) {
 	c("stroke_colour" = stroke_colour,
-		"fill_colour" = fill_colour)
+		"fill_colour" = fill_colour,
+		"stroke_from" = stroke_from,
+		"stroke_to" = stroke_to)
 }
 
 
