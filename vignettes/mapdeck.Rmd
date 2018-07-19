@@ -1,0 +1,59 @@
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "# "
+)
+library(mapdeck)
+access_token <- read.dcf("~/Documents/.googleAPI", fields= "MAPBOX")
+```
+
+
+### What is Mapdeck?
+
+Mapdeck is a combination of [Mabox](https://www.mapbox.com/help/define-mapbox-gl/) and [Deck.gl](http://deck.gl/#/)
+
+
+### Why did you build it?
+
+Because Deck.gl is one of the most user-friendly WebGL javascript libraries and can produce some beautiful maps. And it integrates nicely with Mapbox maps. 
+
+
+
+### The basics
+
+Simply calling `mapdeck()` gives you a map
+
+```{r, fig.width=6}
+mapdeck(token = access_token)
+```
+
+You can style the map using any [mapbox style](https://www.mapbox.com/api-documentation/#styles) template styles, or you can [create one of your own](https://www.mapbox.com/help/studio-manual-styles/)
+
+```{r, fig.width=6}
+mapdeck(token = access_token, style = 'mapbox://styles/mapbox/dark-v9')
+```
+
+
+
+### Shiny
+
+Of course you can, what would be the point otherwise? 
+
+```{r, eval = FALSE}
+library(shiny)
+token <- "MAPBOX_KEY"
+ui <- fluidRow(mapdeckOutput(outputId = "map"))
+server <- function(input, output) output$map <- renderMapdeck({ mapdeck(token = token) })
+shinyApp(ui, server)
+```

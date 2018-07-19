@@ -21,7 +21,29 @@ HTMLWidgets.widget({
        	// use setInterval to check if the map can be loaded
 	      // the map is dependant on the mapdeck JS resource
 	      // - usually implemented via callback
+	      var checkExists = setInterval( function() {
 
+	      	const deckgl = new deck.DeckGL({
+          	mapboxApiAccessToken: x.access_token,
+			      container: el.id,
+			      mapStyle: x.style,
+			      longitude: 0,
+			      latitude: 0,
+			      zoom: 1,
+			      pitch: x.pitch
+          });
+
+          if (deck !== undefined) {
+            //console.log("exists");
+            clearInterval(checkExists);
+
+            initialise_map(el, x);
+
+          } else {
+            //console.log("does not exist!");
+          }
+
+	      }, 100);
 
        } else {
 
@@ -34,11 +56,11 @@ HTMLWidgets.widget({
 			      latitude: 0,
 			      zoom: 1,
 			      pitch: x.pitch
-        });
+          });
 
-        window[el.id + 'map'] = deckgl;
+          window[el.id + 'map'] = deckgl;
 
-        initialise_map(el, x);
+          initialise_map(el, x);
        }
 
       },

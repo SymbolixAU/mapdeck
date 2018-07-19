@@ -1,8 +1,8 @@
-#' md Map
+#' mapdeck
 #'
 #' @import htmlwidgets
 #'
-#' @param key
+#' @param token Mapbox Acess token
 #' @param data
 #' @param width
 #' @param height
@@ -13,8 +13,8 @@
 #' @param location vector of lon and lat coordinates
 #'
 #' @export
-md_map <- function(
-	key,
+mapdeck <- function(
+	token,
 	data = NULL,
 	width = NULL,
 	height = NULL,
@@ -27,7 +27,7 @@ md_map <- function(
 
   # forward options using x
   x = list(
-    access_token = key
+    access_token = token
     , style = style
     , pitch = pitch
   )

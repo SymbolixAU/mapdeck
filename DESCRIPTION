@@ -13,3 +13,8 @@ Imports:
   magrittr,
   viridisLite
 RoxygenNote: 6.0.1
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

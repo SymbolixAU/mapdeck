@@ -8,6 +8,9 @@ add_scatterplot(map, data = get_map_data(map), lat, lon, radius = NULL,
   fill_colour = NULL, fill_opacity = NULL, stroke_width = NULL,
   digits = 6, palette = viridisLite::viridis)
 }
+\arguments{
+\item{radius}{in metres}
+}
 \description{
 Add Scatterplot
 }
