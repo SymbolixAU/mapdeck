@@ -71,18 +71,22 @@
 # 		, stroke_width = "stroke"
 # 	)
 
-## DATA FORMAT CAN BE
+### PATH
 
-# Data format:
-# 	[
-#   {name: 'Colma (COLM)', code:'CM', address: '365 D Street, Colma CA 94014', exits: 4214, coordinates: [-122.466233, 37.684638]},
-#    ...
-#  ]
+# df <- googleway::tram_stops
+#
+#
+# head(df)
+# df$id <- 1
+#
 
-
-
-
-
+# df <- data.frame( polyline = googlePolylines:::encodeCoordinates(lon = df$stop_lon, lat = df$stop_lat) )
+#
+# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9' ) %>%
+# 	add_path(
+# 		data = df
+# 		, polyline = "polyline"
+# 		)
 
 
 

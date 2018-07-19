@@ -13,6 +13,9 @@ Add arc
 }
 \examples{
 \dontrun{
+
+key <- "MAPBOX_KEY"
+
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 flights <- read.csv(url)
 flights$id <- seq_len(nrow(flights))

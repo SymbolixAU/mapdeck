@@ -87,8 +87,9 @@ addDefaults <- function(shape, requiredDefaults, shapeType) {
 	n <- nrow(shape)
 	defaults <- switch(
 		shapeType
-		, "scatterplot" = scatterplotDefaults(n)
 		, "arc" = arcDefaults(n)
+		, "path" = pathDefaults(n)
+		, "scatterplot" = scatterplotDefaults(n)
 		)
 	shape <- cbind(shape, defaults[, requiredDefaults, drop = F])
 	return(shape)
