@@ -11,7 +11,4 @@ Add Geojson
 }
 \details{
 the GeoJSON string needs to have a \code{class} attribute of 'json'
-
-- fillColour: hex colour
-- lineColour: hex colour
 }

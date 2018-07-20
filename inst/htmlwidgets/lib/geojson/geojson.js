@@ -15,15 +15,16 @@ function add_geojson( map_id, geojson, layer_id ) {
     lineWidthScale: 20,
     lineWidthMinPixels: 2,
     //getFillColor: [160, 160, 180, 200],
-    getFillColor: f => hexToRgb(f.properties.fillColor),
-    getLineColor: d => hexToRgb(d.properties.lineColor),
+    getFillColor: f => hexToRgb( f.properties.fillColor ),
+    getLineColor: d => hexToRgb( d.properties.lineColor ),
     getRadius: 100,   // TODO
     getLineWidth: 1,  // TODO
     getElevation: 30, // TODO
     //onHover: ({object}) => setTooltip(object.properties.name || object.properties.station)
-	});
+    onClick: info => layer_click( map_id, "geojson", info )
+  });
 
-	  window[map_id + 'layers'].push(geojsonLayer);
+  window[map_id + 'layers'].push(geojsonLayer);
   window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] } );
 }
 

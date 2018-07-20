@@ -12,6 +12,11 @@ mapdeckPathDependency <- function() {
 
 #' Add Path
 #'
+#' @inheritParams add_arc
+#'
+#' @param polyline column of \code{data} containing the polyline
+#' @param stroke_colour variable of \code{data} or hex colour for the stroke
+#' @param stroke_width width of the stroke
 #'
 #' @export
 add_path <- function(

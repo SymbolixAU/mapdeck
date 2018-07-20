@@ -13,6 +13,22 @@ mapdeckArcDependency <- function() {
 #' Add arc
 #'
 #'
+#' @param map a mapdeck map object
+#' @param data data to be used in the layer
+#' @param lat_from latitude coordinate of the origin
+#' @param lon_from longitude coordinate of the origin
+#' @param lat_to latitude coordinate of the destination
+#' @param lon_to latitude longitude of the destination
+#' @param id an id value in \code{data} to identify layers when interacting in Shiny apps
+#' @param stroke_from variable or hex colour to use as the staring stroke colour
+#' @param stroke_to variable or hex colour to use as the ending stroke colour
+#' @param stroke_width width of the stroke
+#' @param layer_id single value specifying an id for the layer. Use this value to
+#' distinguish between shape layers of the same type
+#' @param digits integer. Use this parameter to specify how many digits (decimal places)
+#' should be used for the latitude / longitude coordinates.
+#' @param palette a function, or list of functions which generates hex colours
+#'
 #' @examples
 #' \dontrun{
 #'

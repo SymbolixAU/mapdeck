@@ -13,7 +13,8 @@ function add_scatterplot( map_id, json, layer_id ) {
     getRadius: d => d.radius,
     getPosition: d => [d.lon, d.lat, d.elevation],
     //getColor: d => [d.fill_colour_red, d.fill_colour_green, d.fill_colour_blue]
-    getColor: d => hexToRgb( d.fill_colour )
+    getColor: d => hexToRgb( d.fill_colour ),
+    onClick: info => layer_click( map_id, "scatterplot", info )
 	});
 
 	  window[map_id + 'layers'].push(scatterLayer);

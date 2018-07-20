@@ -3,13 +3,12 @@
 #' @import htmlwidgets
 #'
 #' @param token Mapbox Acess token
-#' @param data
-#' @param width
-#' @param height
-#' @param elementId
-#' @param padding
-#' @param pitch
-#' @param style
+#' @param data data to be used on the map
+#' @param width the width of the map
+#' @param height the height of the map
+#' @param padding the padding of the map
+#' @param pitch the pitch angle of the map
+#' @param style the style of the map
 #' @param location vector of lon and lat coordinates
 #'
 #' @export
@@ -18,7 +17,6 @@ mapdeck <- function(
 	data = NULL,
 	width = NULL,
 	height = NULL,
-	elementId = NULL,
 	padding = 0,
 	style = 'mapbox://styles/mapbox/streets-v9',
 	pitch = 0,

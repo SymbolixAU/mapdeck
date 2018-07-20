@@ -16,6 +16,8 @@ mapdeckGeojsonDependency <- function() {
 #'
 #' @details the GeoJSON string needs to have a \code{class} attribute of 'json'
 #'
+#' @inheritParams add_arc
+#'
 #' - fillColour: hex colour
 #' - lineColour: hex colour
 #'

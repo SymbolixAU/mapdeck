@@ -8,6 +8,25 @@ add_path(map, data = get_map_data(map), polyline, stroke_colour = NULL,
   stroke_width = NULL, layer_id = NULL, digits = 6,
   palette = viridisLite::viridis)
 }
+\arguments{
+\item{map}{a mapdeck map object}
+
+\item{data}{data to be used in the layer}
+
+\item{polyline}{column of \code{data} containing the polyline}
+
+\item{stroke_colour}{variable of \code{data} or hex colour for the stroke}
+
+\item{stroke_width}{width of the stroke}
+
+\item{layer_id}{single value specifying an id for the layer. Use this value to
+distinguish between shape layers of the same type}
+
+\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
+should be used for the latitude / longitude coordinates.}
+
+\item{palette}{a function, or list of functions which generates hex colours}
+}
 \description{
 Add Path
 }

@@ -4,13 +4,24 @@
 \alias{mapdeck}
 \title{mapdeck}
 \usage{
-mapdeck(token, data = NULL, width = NULL, height = NULL,
-  elementId = NULL, padding = 0,
+mapdeck(token, data = NULL, width = NULL, height = NULL, padding = 0,
   style = "mapbox://styles/mapbox/streets-v9", pitch = 0, location = c(0,
   0))
 }
 \arguments{
 \item{token}{Mapbox Acess token}
+
+\item{data}{data to be used on the map}
+
+\item{width}{the width of the map}
+
+\item{height}{the height of the map}
+
+\item{padding}{the padding of the map}
+
+\item{style}{the style of the map}
+
+\item{pitch}{the pitch angle of the map}
 
 \item{location}{vector of lon and lat coordinates}
 }
