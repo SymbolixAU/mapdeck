@@ -20,11 +20,16 @@ add_path <- function(
 	polyline,
 	stroke_colour = NULL,
 	stroke_width = NULL,
+	layer_id = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
 
 	objArgs <- match.call(expand.dots = F)
+
+	## parameter checks
+	layer_id <- layerId(layer_id)
+	## end parameter checks
 
 	allCols <- pathColumns()
 	requiredCols <- requiredPathColumns()
@@ -58,8 +63,16 @@ add_path <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckPathDependency())
-	invoke_method(map, "add_path", shape)
+	invoke_method(map, "add_path", shape, layer_id)
 }
+
+#' @rdname clear
+#' @export
+clear_path <- function(map, layer_id) {
+	layer_id <- layerId(layer_id)
+	invoke_method(map, 'clear_path', layer_id)
+}
+
 
 
 requiredPathColumns <- function() {

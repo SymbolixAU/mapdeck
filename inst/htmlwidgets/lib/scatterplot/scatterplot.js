@@ -1,12 +1,12 @@
 
-function add_scatterplot( map_id, json ) {
+function add_scatterplot( map_id, json, layer_id ) {
 
   console.log( json );
 
   // reference: https://github.com/uber/deck.gl/blob/master/docs/layers/scatterplot-layer.md
 
 	const scatterLayer = new deck.ScatterplotLayer({
-		id: 'scatterplot',  // TODO
+		id: 'scatterplot-'+layer_id,  // TODO
 		data: json,
     radiusScale: 1,
     radiusMinPixels: 1,

@@ -24,11 +24,18 @@ add_scatterplot <- function(
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	stroke_width = NULL,
+	layer_id = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
 	) {
 
 	objArgs <- match.call(expand.dots = F)
+
+	## parmater checks
+
+	layer_id <- layerId(layer_id)
+
+	## end parameter checks
 
 	allCols <- scatterplotColumns()
 	requiredCols <- requiredScatterplotColumns()
@@ -60,7 +67,7 @@ add_scatterplot <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
-	invoke_method(map, "add_scatterplot", shape)
+	invoke_method(map, "add_scatterplot", shape, layer_id)
 }
 
 

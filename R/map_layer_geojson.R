@@ -21,7 +21,14 @@ mapdeckGeojsonDependency <- function() {
 #'
 #'
 #' @export
-add_geojson <- function(map, data = get_map_data(map)) {
+add_geojson <- function(
+	map,
+	data = get_map_data(map),
+	layer_id = NULL
+	) {
+
+	layer_id <- layerId(layer_id)
+
 	map <- addDependency(map, mapdeckGeojsonDependency())
-	invoke_method(map, "add_geojson", data)
+	invoke_method(map, "add_geojson", data, layer_id)
 }

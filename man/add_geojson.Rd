@@ -4,7 +4,7 @@
 \alias{add_geojson}
 \title{Add Geojson}
 \usage{
-add_geojson(map, data = get_map_data(map))
+add_geojson(map, data = get_map_data(map), layer_id = NULL)
 }
 \description{
 Add Geojson

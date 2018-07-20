@@ -47,11 +47,17 @@ add_arc <- function(
 	stroke_from = NULL,
 	stroke_to = NULL,
 	stroke_width = NULL,
+	layer_id = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
 
 	objArgs <- match.call(expand.dots = F)
+
+	## parameter checks
+	layer_id <- layerId(layer_id)
+
+	## end parameter checks
 
 	allCols <- arcColumns()
 	requiredCols <- requiredArcColumns()
@@ -85,7 +91,7 @@ add_arc <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckArcDependency())
-	invoke_method(map, "add_arc", shape)
+	invoke_method(map, "add_arc", shape, layer_id)
 }
 
 

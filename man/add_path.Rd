@@ -5,7 +5,8 @@
 \title{Add Path}
 \usage{
 add_path(map, data = get_map_data(map), polyline, stroke_colour = NULL,
-  stroke_width = NULL, digits = 6, palette = viridisLite::viridis)
+  stroke_width = NULL, layer_id = NULL, digits = 6,
+  palette = viridisLite::viridis)
 }
 \description{
 Add Path

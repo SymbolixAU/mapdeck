@@ -1,13 +1,9 @@
 
 
-function add_path( map_id, path_data ) {
-
-  console.log( path_data );
-
-  console.log( decode_polyline( path_data[0].polyline ) );
+function add_path( map_id, path_data, layer_id ) {
 
   const pathLayer = new PathLayer({
-    id: 'path-layer',  // TODO
+    id: 'path-'+layer_id,  // TODO
     data: path_data,
     pickable: true,
     widthScale: 20,
@@ -18,8 +14,17 @@ function add_path( map_id, path_data ) {
     //onHover: ({object}) => setTooltip(object.name)  // TODO
   });
 
-  console.log(pathLayer);
-
   window[map_id + 'layers'].push(pathLayer);
+
+  console.log( window[map_id + 'layers'] );
+
   window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] } );
 }
+
+
+function clear_path( map_id, layer_id ) {
+
+
+
+}
+

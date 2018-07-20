@@ -1,9 +1,9 @@
 
-function add_arc( map_id, arc_data ) {
+function add_arc( map_id, arc_data, layer_id ) {
   // reference: http://deck.gl/#/documentation/deckgl-api-reference/layers/arc-layer
 
   const arcLayer = new ArcLayer({
-    id: 'arc-layer',  // TODO
+    id: 'arc-'+layer_id,  // TODO
     data: arc_data,
     pickable: true,
     getStrokeWidth: d => d.stroke_width,

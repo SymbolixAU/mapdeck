@@ -1,11 +1,11 @@
 
-function add_geojson( map_id, geojson ) {
+function add_geojson( map_id, geojson, layer_id ) {
 
   console.log(geojson);
   // reference: https://github.com/uber/deck.gl/blob/master/docs/layers/geojson-layer.md
 
 	const geojsonLayer = new deck.GeoJsonLayer({
-		id: 'geojson-layer',
+		id: 'geojson-'+layer_id,
 		//data: 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/geojson/vancouver-blocks.json',
 		data: geojson,
 		pickable: true,
