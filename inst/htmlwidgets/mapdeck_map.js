@@ -40,6 +40,8 @@ HTMLWidgets.widget({
             //console.log("exists");
             clearInterval(checkExists);
 
+            window[el.id + 'map'] = deckgl;
+
             initialise_map(el, x);
 
           } else {
@@ -171,6 +173,26 @@ const hexToRgb = hex =>
              ,(m, r, g, b) => '#' + r + r + g + g + b + b)
     .substring(1).match(/.{2}/g)
     .map(x => parseInt(x, 16));
+
+function layer_click( map_id, layer, info ) {
+
+  if ( !HTMLWidgets.shinyMode ) {
+    return;
+  }
+
+  var eventInfo = {
+  	index: info.index,
+  	color: info.color,
+  	object: info.object,
+  	layerId: info.layer_id,
+  	lat: info.lngLat[1],
+  	lon: info.lngLat[0]
+  };
+
+  eventInfo = JSON.stringify( eventInfo );
+  Shiny.onInputChange(map_id + "_" + layer + "_click", eventInfo);
+}
+
 
 
 function decode_polyline(str, precision) {

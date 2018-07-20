@@ -12,6 +12,7 @@ function add_path( map_id, path_data, layer_id ) {
     getColor: d => hexToRgb(d.stroke_colour),
     getWidth: d => d.stroke_width,
     //onHover: ({object}) => setTooltip(object.name)  // TODO
+    onClick: info => layer_click( map_id, "path", info )
   });
 
   window[map_id + 'layers'].push(pathLayer);

@@ -44,6 +44,7 @@ add_arc <- function(
 	lon_from,
 	lat_to,
 	lon_to,
+	id = NULL,
 	stroke_from = NULL,
 	stroke_to = NULL,
 	stroke_width = NULL,

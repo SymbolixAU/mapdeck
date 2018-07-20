@@ -5,7 +5,7 @@
 \title{Add arc}
 \usage{
 add_arc(map, data = get_map_data(map), lat_from, lon_from, lat_to, lon_to,
-  stroke_from = NULL, stroke_to = NULL, stroke_width = NULL,
+  id = NULL, stroke_from = NULL, stroke_to = NULL, stroke_width = NULL,
   layer_id = NULL, digits = 6, palette = viridisLite::viridis)
 }
 \description{
