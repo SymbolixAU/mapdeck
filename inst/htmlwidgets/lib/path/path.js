@@ -4,6 +4,8 @@ function add_path( map_id, path_data ) {
 
   console.log( path_data );
 
+  console.log( decode_polyline( path_data[0].polyline ) );
+
   const pathLayer = new PathLayer({
     id: 'path-layer',  // TODO
     data: path_data,
@@ -16,6 +18,8 @@ function add_path( map_id, path_data ) {
     //onHover: ({object}) => setTooltip(object.name)  // TODO
   });
 
-  window[map_id + 'map'].setProps({ layers: [ pathLayer ]} );
+  console.log(pathLayer);
 
+  window[map_id + 'layers'].push(pathLayer);
+  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] } );
 }

@@ -23,6 +23,7 @@ function add_geojson( map_id, geojson ) {
     //onHover: ({object}) => setTooltip(object.properties.name || object.properties.station)
 	});
 
-	window[map_id + 'map'].setProps({ layers: [ geojsonLayer ]} );
+	  window[map_id + 'layers'].push(geojsonLayer);
+  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] } );
 }
 

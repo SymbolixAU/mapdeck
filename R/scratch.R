@@ -73,22 +73,43 @@
 
 ### PATH
 
-# df <- googleway::tram_stops
-#
-#
+# df <- googleway::tram_route
 # head(df)
 # df$id <- 1
 #
-
-# df <- data.frame( polyline = googlePolylines:::encodeCoordinates(lon = df$stop_lon, lat = df$stop_lat) )
+# df <- data.frame( polyline = googlePolylines:::encodeCoordinates(lon = df$shape_pt_lon, lat = df$shape_pt_lat) )
 #
+# key <- read.dcf("~/Documents/.googleAPI", fields= "MAPBOX")
+#
+#
+# df$col <- "a"
+# df$width <- 3
 # mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9' ) %>%
 # 	add_path(
 # 		data = df
 # 		, polyline = "polyline"
+# 		, stroke_colour = "col"
+# 		, stroke_width = "width"
 # 		)
 
+## TODO: multiple layers
+## scatter + path
 
+# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9' ) %>%
+# 	add_path(
+# 		data = df
+# 		, polyline = "polyline"
+# 		, stroke_colour = "col"
+# 		, stroke_width = "width"
+# 	) %>%
+# 		add_scatterplot(
+# 			data = googleway::tram_stops
+# 			, lat = "stop_lat"
+# 			, lon = "stop_lon"
+# 			, fill_colour = "stop_id"
+# 			, radius = 30
+# 			, fill_opacity = 0.2
+# 		)
 
 
 

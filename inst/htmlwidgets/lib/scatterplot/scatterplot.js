@@ -16,5 +16,6 @@ function add_scatterplot( map_id, json ) {
     getColor: d => hexToRgb( d.fill_colour )
 	});
 
-	window[map_id + 'map'].setProps({ layers: [ scatterLayer ]} );
+	  window[map_id + 'layers'].push(scatterLayer);
+  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] } );
 }

@@ -1,7 +1,7 @@
 
-dependencies:
-	- name: map
-		version: 1.0.0
-		src: "htmlwidgets/lib/map"
-		script:
-			- polyline.js
+#dependencies:
+#	- name: map
+#		version: 1.0.0
+#		src: "htmlwidgets/lib/map"
+#		script:
+#			- polyline.js

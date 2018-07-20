@@ -90,7 +90,7 @@ function decode_polyline(str, precision) {
     }
 
     return coordinates;
-};
+}
 
 function encode_polyline(coordinates, precision) {
     if (!coordinates.length) { return ''; }

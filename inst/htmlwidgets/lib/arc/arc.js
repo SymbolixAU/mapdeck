@@ -14,6 +14,7 @@ function add_arc( map_id, arc_data ) {
     //onHover: ({object}) => setTooltip(`${object.from.name} to ${object.to.name}`)
   });
 
-  window[map_id + 'map'].setProps({ layers: [ arcLayer ]} );
+    window[map_id + 'layers'].push(arcLayer);
+  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] } );
 
 }
