@@ -205,7 +205,7 @@
 # 	update_arc(
 # 		data = dt2
 # 	)
-
+#
 # library(shiny)
 # library(shinydashboard)
 # library(data.table)
@@ -224,6 +224,10 @@
 # server <- function(input, output) {
 #
 # 	dt <- as.data.table(capitals)
+# 	dt[, key := 1]
+# 	dt[lat < 0, hemisphere := "south"]
+# 	dt[lat >= 0, hemisphere := "north"]
+#
 # 	access_token <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
 #
 # 	output$countries <- renderUI({
@@ -240,9 +244,6 @@
 # 		if(is.null(input$countries)) return()
 #
 # 		selected_country <- input$countries
-# 		dt[, key := 1]
-# 		dt[lat < 0, hemisphere := "south"]
-# 		dt[lat >= 0, hemisphere := "north"]
 #
 # 		dt_plot <- dt[ country == selected_country, .(country_from = country, capital_from = capital, lat_from = lat, lon_from = lon, key)][
 # 			dt[,  .(country_to = country, capital_to = capital, lat_to = lat, lon_to = lon, hemisphere, key) ]
@@ -250,12 +251,20 @@
 # 			, allow.cartesian = T
 # 			]
 #
+# 		print(dt_plot)
 # 		return(dt_plot)
 # 	})
 #
 # 	output$map <- renderMapdeck({
 #
-# 		if(is.null(dt_countries())) return()
+# 		dt_plot <- dt[ country == "United Kingdom of Great Britain and Northern Ireland", .(country_from = country, capital_from = capital, lat_from = lat, lon_from = lon, key)][
+# 			dt[,  .(country_to = country, capital_to = capital, lat_to = lat, lon_to = lon, hemisphere, key) ]
+# 			, on = "key"
+# 			, allow.cartesian = T
+# 			]
+#
+# 		print("reinitialising map")
+# 		print(dt_plot)
 #
 # 		mapdeck(
 # 			token = access_token
@@ -263,7 +272,7 @@
 # 			, pitch = 35
 # 		) %>%
 # 			add_arc(
-# 				data = dt_countries()
+# 				data = dt_plot
 # 				, layer_id = "arc_layer"
 # 				, lat_from = "lat_from"
 # 				, lat_to = "lat_to"
@@ -280,8 +289,15 @@
 # 	}, {
 # 		mapdeck_update('map') %>%
 # 			update_arc(
-# 				layer_id = "arc_layer"
 # 				, data = dt_countries()
+# 				, layer_id = "arc_layer"
+# 				, lat_from = "lat_from"
+# 				, lat_to = "lat_to"
+# 				, lon_from = "lon_from"
+# 				, lon_to = "lon_to"
+# 				, stroke_from = "country_from"
+# 				, id = "country_to"
+# 				#, stroke_to = "hemisphere"
 # 			)
 # 	})
 # }

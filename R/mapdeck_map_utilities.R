@@ -123,19 +123,20 @@ mapdeck_dispatch = function(
 invoke_method = function(map, method, ...) {
 	args = evalFormula(list(...))
 
-	mapdeck_dispatch(map,
-									method,
-									mapdeck = {
-										x = map$x$calls
-										if (is.null(x)) x = list()
-										n = length(x)
-										x[[n + 1]] = list(functions = method, args = args)
-										map$x$calls = x
-										map
-									},
-									mapdeck_update = {
-										invoke_remote(map, method, args)
-									}
+	mapdeck_dispatch(
+		map,
+		method,
+		mapdeck = {
+		  x = map$x$calls
+			if (is.null(x)) x = list()
+			n = length(x)
+			x[[n + 1]] = list(functions = method, args = args)
+			map$x$calls = x
+			map
+	  },
+		mapdeck_update = {
+		  invoke_remote(map, method, args)
+		}
 	)
 }
 

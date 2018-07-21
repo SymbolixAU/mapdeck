@@ -28,14 +28,18 @@ function add_arc( map_id, arc_data, layer_id ) {
 function update_arc( map_id, arc_data, layer_id ) {
 
 	var arcLayer = window[map_id + 'layers'][ 'arc-'+layer_id];
+	console.log( window[map_id + 'layers'] );
 
 	if ( !arcLayer ) {
 		return;
 	}
 
-	//console.log("update arc layer");
-	//console.log(arcLayer);
+	console.log("update arc layer");
+	console.log(arcLayer);
+	console.log(arcLayer.props);
+	console.log(arcLayer.props.data);
 
 	//arcLayer.props.getSourceColor = [255, 255, 255];
 	arcLayer.props.data = arc_data;
+	window[map_id + 'layers'][ 'arc-'+layer_id] = arcLayer;
 }

@@ -4,7 +4,9 @@
 \alias{update_arc}
 \title{Update Arc}
 \usage{
-update_arc(map, data = get_map_data(map), layer_id)
+update_arc(map, data = get_map_data(map), layer_id, lat_from, lon_from,
+  lat_to, lon_to, id = NULL, stroke_from = NULL, stroke_to = NULL,
+  stroke_width = NULL, digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{layer_id}{the layer_id of the layer to update.}

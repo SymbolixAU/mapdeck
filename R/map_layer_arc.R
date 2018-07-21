@@ -120,12 +120,58 @@ add_arc <- function(
 update_arc <- function(
 	map,
 	data = get_map_data(map),
-	layer_id
+	layer_id,
+	lat_from,
+	lon_from,
+	lat_to,
+	lon_to,
+	id = NULL,
+	stroke_from = NULL,
+	stroke_to = NULL,
+	stroke_width = NULL,
+	digits = 6,
+	palette = viridisLite::viridis
 ) {
 
-	#layer_id <- layerId(layer_id)
+	objArgs <- match.call(expand.dots = F)
 
-	invoke_method(map, "update_arc", data, layer_id)
+	## parameter checks
+	layer_id <- layerId(layer_id)
+
+	## end parameter checks
+
+	allCols <- arcColumns()
+	requiredCols <- requiredArcColumns()
+
+	colourColumns <- shapeAttributes(
+		fill_colour = NULL
+		, stroke_colour = NULL
+		, stroke_from = stroke_from
+		, stroke_to = stroke_to
+	)
+
+	shape <- createMapObject(data, allCols, objArgs)
+
+	# print(head(shape))
+	pal <- createPalettes(shape, colourColumns)
+
+	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
+	colours <- createColours(shape, colour_palettes)
+
+	if(length(colours) > 0) {
+		shape <- replaceVariableColours(shape, colours)
+	}
+
+	# print(head(shape))
+	requiredDefaults <- setdiff(requiredCols, names(shape))
+
+	if(length(requiredDefaults) > 0){
+		shape <- addDefaults(shape, requiredDefaults, "arc")
+	}
+
+	shape <- jsonlite::toJSON(shape, digits = digits)
+
+	invoke_method(map, "update_arc", shape, layer_id)
 }
 
 
