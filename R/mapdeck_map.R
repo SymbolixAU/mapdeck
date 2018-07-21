@@ -9,7 +9,7 @@
 #' @param padding the padding of the map
 #' @param pitch the pitch angle of the map
 #' @param style the style of the map
-#' @param location vector of lon and lat coordinates
+#' @param location vector of lon and lat coordinates (in that order)
 #'
 #' @export
 mapdeck <- function(
@@ -20,6 +20,7 @@ mapdeck <- function(
 	padding = 0,
 	style = 'mapbox://styles/mapbox/streets-v9',
 	pitch = 0,
+	zoom = 0,
 	location = c(0, 0)
 	) {
 
@@ -28,19 +29,20 @@ mapdeck <- function(
     access_token = token
     , style = style
     , pitch = pitch
+    , zoom = zoom
+    , location = location
   )
 
   # create widget
   mapdeckmap <- htmlwidgets::createWidget(
-    name = 'mapdeck_map',
+    name = 'mapdeck',
     x = structure(
     	x,
-    	mapdeck_map_data = data
+    	mapdeck_data = data
     ),
     width = width,
     height = height,
     package = 'mapdeck',
-    elementId = elementId,
     sizingPolicy = htmlwidgets::sizingPolicy(
     	defaultWidth = '100%',
     	defaultHeight = 800,
@@ -100,7 +102,7 @@ mapdeck <- function(
 #'
 #' @export
 mapdeckOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'mapdeck_map', width, height, package = 'mapdeck')
+  htmlwidgets::shinyWidgetOutput(outputId, 'mapdeck', width, height, package = 'mapdeck')
 }
 
 #' @rdname mapdeck-shiny
@@ -109,6 +111,49 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   htmlwidgets::shinyRenderWidget(expr, mapdeckOutput, env, quoted = TRUE)
 }
+
+
+#' Mapdeck update
+#'
+#' Update a Mapdeck map in a shiny app. Use this function whenever the map needs
+#' to respond to reactive content.
+#'
+#' @param map_id string containing the output ID of the map in a shiny application.
+#' @param session the Shiny session object to which the map belongs; usually the
+#' default value will suffice.
+#' @param data data to be used in the map. See the details section for \code{\link{mapdeck}}.
+#' @param deferUntilFlush indicates whether actions performed against this
+#' instance should be carried out right away, or whether they should be held until
+#' after the next time all of the outputs are updated; defaults to TRUE.
+#' @examples
+#' \dontrun{
+#' @export
+mapdeck_update <- function(
+	map_id,
+	session = shiny::getDefaultReactiveDomain(),
+	data = NULL,
+	deferUntilFlush = TRUE
+	) {
+
+	if (is.null(session)) {
+		stop("mapdeck_update must be called from the server function of a Shiny app")
+	}
+
+	structure(
+		list(
+			session = session,
+			id = map_id,
+			x = structure(
+				list(),
+				mapdeck_data = data
+			),
+			deferUntilFlush = deferUntilFlush,
+			dependencies = NULL
+		),
+		class = "mapdeck_update"
+	)
+}
+
 
 
 # Get Map Data

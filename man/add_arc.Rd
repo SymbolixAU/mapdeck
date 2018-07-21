@@ -4,14 +4,17 @@
 \alias{add_arc}
 \title{Add arc}
 \usage{
-add_arc(map, data = get_map_data(map), lat_from, lon_from, lat_to, lon_to,
-  id = NULL, stroke_from = NULL, stroke_to = NULL, stroke_width = NULL,
-  layer_id = NULL, digits = 6, palette = viridisLite::viridis)
+add_arc(map, data = get_map_data(map), layer_id, lat_from, lon_from, lat_to,
+  lon_to, id = NULL, stroke_from = NULL, stroke_to = NULL,
+  stroke_width = NULL, digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
 \item{data}{data to be used in the layer}
+
+\item{layer_id}{single value specifying an id for the layer. Use this value to
+distinguish between shape layers of the same type}
 
 \item{lat_from}{latitude coordinate of the origin}
 
@@ -28,9 +31,6 @@ add_arc(map, data = get_map_data(map), lat_from, lon_from, lat_to, lon_to,
 \item{stroke_to}{variable or hex colour to use as the ending stroke colour}
 
 \item{stroke_width}{width of the stroke}
-
-\item{layer_id}{single value specifying an id for the layer. Use this value to
-distinguish between shape layers of the same type}
 
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}

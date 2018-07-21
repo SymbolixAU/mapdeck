@@ -15,6 +15,8 @@ mapdeckArcDependency <- function() {
 #'
 #' @param map a mapdeck map object
 #' @param data data to be used in the layer
+#' @param layer_id single value specifying an id for the layer. Use this value to
+#' distinguish between shape layers of the same type
 #' @param lat_from latitude coordinate of the origin
 #' @param lon_from longitude coordinate of the origin
 #' @param lat_to latitude coordinate of the destination
@@ -23,8 +25,6 @@ mapdeckArcDependency <- function() {
 #' @param stroke_from variable or hex colour to use as the staring stroke colour
 #' @param stroke_to variable or hex colour to use as the ending stroke colour
 #' @param stroke_width width of the stroke
-#' @param layer_id single value specifying an id for the layer. Use this value to
-#' distinguish between shape layers of the same type
 #' @param digits integer. Use this parameter to specify how many digits (decimal places)
 #' should be used for the latitude / longitude coordinates.
 #' @param palette a function, or list of functions which generates hex colours
@@ -56,6 +56,7 @@ mapdeckArcDependency <- function() {
 add_arc <- function(
 	map,
 	data = get_map_data(map),
+	layer_id,
 	lat_from,
 	lon_from,
 	lat_to,
@@ -64,7 +65,6 @@ add_arc <- function(
 	stroke_from = NULL,
 	stroke_to = NULL,
 	stroke_width = NULL,
-	layer_id = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
@@ -111,6 +111,22 @@ add_arc <- function(
 	invoke_method(map, "add_arc", shape, layer_id)
 }
 
+#' Update Arc
+#'
+#'
+#' @param layer_id the layer_id of the layer to update.
+#'
+#' @export
+update_arc <- function(
+	map,
+	data = get_map_data(map),
+	layer_id
+) {
+
+	#layer_id <- layerId(layer_id)
+
+	invoke_method(map, "update_arc", data, layer_id)
+}
 
 
 

@@ -5,8 +5,8 @@
 \title{mapdeck}
 \usage{
 mapdeck(token, data = NULL, width = NULL, height = NULL, padding = 0,
-  style = "mapbox://styles/mapbox/streets-v9", pitch = 0, location = c(0,
-  0))
+  style = "mapbox://styles/mapbox/streets-v9", pitch = 0, zoom = 0,
+  location = c(0, 0))
 }
 \arguments{
 \item{token}{Mapbox Acess token}
@@ -23,7 +23,7 @@ mapdeck(token, data = NULL, width = NULL, height = NULL, padding = 0,
 
 \item{pitch}{the pitch angle of the map}
 
-\item{location}{vector of lon and lat coordinates}
+\item{location}{vector of lon and lat coordinates (in that order)}
 }
 \description{
 mapdeck

@@ -162,4 +162,135 @@
 # shinyApp(ui, server)
 
 
+### Updating layers
+# library(mapdeck)
+# library(data.table)
+# dt <- as.data.table(capitals)
+# access_token <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
+#
+# dt[, key := 1]
+# dt[lat < 0, hemisphere := "south"]
+# dt[lat >= 0, hemisphere := "north"]
+#
+# dt1 <- dt[ country == "United Kingdom of Great Britain and Northern Ireland", .(country_from = country, capital_from = capital, lat_from = lat, lon_from = lon, key)][
+# 	dt[,  .(country_to = country, capital_to = capital, lat_to = lat, lon_to = lon, hemisphere, key) ]
+# 	, on = "key"
+# 	, allow.cartesian = T
+# 	]
+#
+# dt2 <- dt[ country == "Australia", .(country_from = country, capital_from = capital, lat_from = lat, lon_from = lon, key)][
+# 	dt[,  .(country_to = country, capital_to = capital, lat_to = lat, lon_to = lon, hemisphere, key) ]
+# 	, on = "key"
+# 	, allow.cartesian = T
+# 	]
+#
+#
+
+# mapdeck(
+# 	token = access_token
+# 	, style = "mapbox://styles/mapbox/dark-v9"
+# 	, pitch = 35
+# ) %>%
+# 	add_arc(
+# 		data = dt1
+# 		, layer_id = "arc"
+# 		, lat_from = "lat_from"
+# 		, lat_to = "lat_to"
+# 		, lon_from = "lon_from"
+# 		, lon_to = "lon_to"
+# 		, stroke_from = "country_from"
+# 		, id = "country_to"
+# 		#, stroke_to = "hemisphere"
+# 	) %>%
+# 	update_arc(
+# 		data = dt2
+# 	)
+
+# library(shiny)
+# library(shinydashboard)
+# library(data.table)
+# library(mapdeck)
+#
+# ui <- dashboardPage(
+# 	dashboardHeader()
+# 	, dashboardSidebar(
+# 		shiny::uiOutput(outputId = "countries")
+# 	)
+# 	, dashboardBody(
+# 		mapdeckOutput(outputId = "map")
+# 	)
+# )
+#
+# server <- function(input, output) {
+#
+# 	dt <- as.data.table(capitals)
+# 	access_token <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
+#
+# 	output$countries <- renderUI({
+# 		selectInput(
+# 			inputId = "countries"
+# 			, label = "Countries"
+# 			, choices = dt[, country]
+# 			, selected = "United Kingdom of Great Britain and Northern Ireland"
+# 		)
+# 	})
+#
+# 	dt_countries <- reactive({
+#
+# 		if(is.null(input$countries)) return()
+#
+# 		selected_country <- input$countries
+# 		dt[, key := 1]
+# 		dt[lat < 0, hemisphere := "south"]
+# 		dt[lat >= 0, hemisphere := "north"]
+#
+# 		dt_plot <- dt[ country == selected_country, .(country_from = country, capital_from = capital, lat_from = lat, lon_from = lon, key)][
+# 			dt[,  .(country_to = country, capital_to = capital, lat_to = lat, lon_to = lon, hemisphere, key) ]
+# 			, on = "key"
+# 			, allow.cartesian = T
+# 			]
+#
+# 		return(dt_plot)
+# 	})
+#
+# 	output$map <- renderMapdeck({
+#
+# 		if(is.null(dt_countries())) return()
+#
+# 		mapdeck(
+# 			token = access_token
+# 			, style = "mapbox://styles/mapbox/dark-v9"
+# 			, pitch = 35
+# 		) %>%
+# 			add_arc(
+# 				data = dt_countries()
+# 				, layer_id = "arc_layer"
+# 				, lat_from = "lat_from"
+# 				, lat_to = "lat_to"
+# 				, lon_from = "lon_from"
+# 				, lon_to = "lon_to"
+# 				, stroke_from = "country_from"
+# 				, id = "country_to"
+# 				#, stroke_to = "hemisphere"
+# 			)
+# 	})
+#
+# 	observeEvent({
+# 		input$countries
+# 	}, {
+# 		mapdeck_update('map') %>%
+# 			update_arc(
+# 				layer_id = "arc_layer"
+# 				, data = dt_countries()
+# 			)
+# 	})
+# }
+#
+# shinyApp(ui, server)
+
+
+
+
+
+
 

@@ -1,6 +1,6 @@
 HTMLWidgets.widget({
 
-  name: 'mapdeck_map',
+  name: 'mapdeck',
   type: 'output',
 
   factory: function(el, width, height) {
@@ -14,7 +14,7 @@ HTMLWidgets.widget({
       	window.params = [];
       	window.params.push({ 'map_id' : el.id });
 
-      	window[el.id + 'layers'] = []; // keep track of layers for overlaying multiple
+      	window[el.id + 'layers'] = {}; // keep track of layers for overlaying multiple
 
         var mapDiv = document.getElementById(el.id);
         mapDiv.className = 'mapdeckmap';
@@ -24,15 +24,17 @@ HTMLWidgets.widget({
 	      // the map is dependant on the mapdeck JS resource
 	      // - usually implemented via callback
 
+	      console.log(" re-initialising map ");
+
 	      var checkExists = setInterval( function() {
 
 	      	const deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
-			      longitude: 0,
-			      latitude: 0,
-			      zoom: 1,
+			      longitude: x.location[1],
+			      latitude: x.location[0],
+			      zoom: x.zoom,
 			      pitch: x.pitch
           });
 
@@ -57,9 +59,9 @@ HTMLWidgets.widget({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
-			      longitude: 0,
-			      latitude: 0,
-			      zoom: 1,
+			      longitude: x.location[0],
+			      latitude: x.location[1],
+			      zoom: x.zoom,
 			      pitch: x.pitch
           });
 

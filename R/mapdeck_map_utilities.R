@@ -22,7 +22,7 @@
 #'     actionButton(inputId = "markers", label = "toggle markers")
 #'   ),
 #'   mainPanel(
-#'     mapdeck_mapOutput("map")
+#'     mapdeck_Output("map")
 #'   )
 #' )
 #'
@@ -57,13 +57,15 @@
 #' shinyApp(ui, server)
 #' }
 #' @export
-mapdeck_map_update <- function(map_id,
-															session = shiny::getDefaultReactiveDomain(),
-															data = NULL,
-															deferUntilFlush = TRUE) {
+mapdeck_update <- function(
+	map_id,
+	session = shiny::getDefaultReactiveDomain(),
+	data = NULL,
+	deferUntilFlush = TRUE
+	) {
 
 	if (is.null(session)) {
-		stop("mapdeck_map_update must be called from the server function of a Shiny app")
+		stop("mapdeck_update must be called from the server function of a Shiny app")
 	}
 
 	structure(
@@ -72,12 +74,12 @@ mapdeck_map_update <- function(map_id,
 			id = map_id,
 			x = structure(
 				list(),
-				mapdeck_map_data = data
+				mapdeck_data = data
 			),
 			deferUntilFlush = deferUntilFlush,
 			dependencies = NULL
 		),
-		class = "mapdeck_map_update"
+		class = "mapdeck_update"
 	)
 }
 
@@ -99,15 +101,16 @@ mapdeck_map_update <- function(map_id,
 #' \code{map} object that was passed in, possibly modified.
 #'
 #' @export
-mapdeck_dispatch = function(map,
-													 funcName,
-													 mapdeck_map = stop(paste(funcName, "requires a map update object")),
-													 mapdeck_map_update = stop(paste(funcName, "does not support map udpate objects"))
+mapdeck_dispatch = function(
+	map,
+	funcName,
+	mapdeck = stop(paste(funcName, "requires a map update object")),
+	mapdeck_update = stop(paste(funcName, "does not support map udpate objects"))
 ) {
-	if (inherits(map, "mapdeck_map"))
-		return(mapdeck_map)
-	else if (inherits(map, "mapdeck_map_update"))
-		return(mapdeck_map_update)
+	if (inherits(map, "mapdeck"))
+		return(mapdeck)
+	else if (inherits(map, "mapdeck_update"))
+		return(mapdeck_update)
 	else
 		stop("Invalid map parameter")
 }
@@ -122,7 +125,7 @@ invoke_method = function(map, method, ...) {
 
 	mapdeck_dispatch(map,
 									method,
-									mapdeck_map = {
+									mapdeck = {
 										x = map$x$calls
 										if (is.null(x)) x = list()
 										n = length(x)
@@ -130,7 +133,7 @@ invoke_method = function(map, method, ...) {
 										map$x$calls = x
 										map
 									},
-									mapdeck_map_update = {
+									mapdeck_update = {
 										invoke_remote(map, method, args)
 									}
 	)
@@ -138,7 +141,7 @@ invoke_method = function(map, method, ...) {
 
 
 invoke_remote = function(map, method, args = list()) {
-	if (!inherits(map, "mapdeck_map_update"))
+	if (!inherits(map, "mapdeck_update"))
 		stop("Invalid map parameter; mapdeck_update object was expected")
 
 	msg <- list(

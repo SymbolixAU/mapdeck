@@ -14,13 +14,28 @@ function add_arc( map_id, arc_data, layer_id ) {
     //onHover: ({object}) => setTooltip(`${object.from.name} to ${object.to.name}`)
     //onHover: info => console.log('Hovered:', info),
     //onClick: info => console.log('Clicked:', info)
-    onClick: info => layer_click( map_id, "arc", info )
+    onClick: info => layer_click( map_id, "arc", info ),
+    //updateTriggers: {
+    //	getSourceColor:
+    //}
   });
 
-  window[map_id + 'layers'].push( arcLayer );
-  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] } );
+  window[map_id + 'layers'][ 'arc-' + layer_id] = arcLayer ;
+  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'][ 'arc-' + layer_id] } );
 
 }
 
+function update_arc( map_id, arc_data, layer_id ) {
 
+	var arcLayer = window[map_id + 'layers'][ 'arc-'+layer_id];
 
+	if ( !arcLayer ) {
+		return;
+	}
+
+	//console.log("update arc layer");
+	//console.log(arcLayer);
+
+	//arcLayer.props.getSourceColor = [255, 255, 255];
+	arcLayer.props.data = arc_data;
+}
