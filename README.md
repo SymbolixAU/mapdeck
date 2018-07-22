@@ -9,6 +9,8 @@ Interactive maps using Mapbox GL and Deck.gl
 devtools::install_github("SymbolixAU/mapdeck")
 ```
 
+![Arcs](./vignettes/img/arcs.png)
+
 ## Available Plots
 
 Most of these plots are avialble in a limited capacity. I haven't implemented all attributes (fill, strokes, widths, elevations)
