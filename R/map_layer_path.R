@@ -44,6 +44,8 @@ add_path <- function(
 	palette = viridisLite::viridis
 ) {
 
+	## TODO(sf and lon/lat coordinates)
+
 	objArgs <- match.call(expand.dots = F)
 
 	## parameter checks
