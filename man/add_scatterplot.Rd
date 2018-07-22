@@ -5,8 +5,8 @@
 \title{Add Scatterplot}
 \usage{
 add_scatterplot(map, data = get_map_data(map), lon, lat, radius = NULL,
-  fill_colour = NULL, fill_opacity = NULL, stroke_width = NULL,
-  layer_id = NULL, digits = 6, palette = viridisLite::viridis)
+  fill_colour = NULL, fill_opacity = NULL, stroke_width = NULL, layer_id,
+  digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -44,6 +44,7 @@ add_scatterplot(
   , lon = "lon"
   , radius = 100000
   , fill_colour = "country"
+  , layer_id = "scatter_layer"
 )
 
 }

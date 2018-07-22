@@ -31,6 +31,7 @@ mapdeckScatterplotDependency <- function() {
 #'   , lon = "lon"
 #'   , radius = 100000
 #'   , fill_colour = "country"
+#'   , layer_id = "scatter_layer"
 #' )
 #'
 #' @export
@@ -43,7 +44,7 @@ add_scatterplot <- function(
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	stroke_width = NULL,
-	layer_id = NULL,
+	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis
 	) {
