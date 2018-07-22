@@ -111,6 +111,23 @@ mapdeck(
 
 ```
 
+### Polygons
+
+```{r, fig.width = 6}
+mapdeck(
+  token = key
+  , style = 'mapbox://styles/mapbox/dark-v9'
+  , location = c(145, -38)
+  , zoom = 8
+  ) %>%
+  add_polygon(
+  	data = melbourne
+    , polyline = "geometry"
+    , layer = "polygon_layer"
+  	, fill_colour = "fillColor"
+ 	)
+```
+
 
 ### Multiple layers
 
