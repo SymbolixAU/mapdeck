@@ -155,8 +155,25 @@
 # shinyApp(ui, server)
 
 
+### Polygon
 
+## polygons need to be an array of polylines
 
+# sf <- geojsonsf::geojson_sf( googleway::geo_melbourne )
+# enc <- googlePolylines::encode(sf)
+#
+# mapdeck(
+#   token = key
+#   , style = 'mapbox://styles/mapbox/dark-v9'
+#   , location = c(145.688269, -38.101062)
+#   , zoom = 8
+#   ) %>%
+#   add_polygon(
+#   	data = enc
+#     , polyline = "geometry"
+#     , layer = "polygon_layer"
+#   	, fill_colour = "fillColor"
+#   	)
 
 
 

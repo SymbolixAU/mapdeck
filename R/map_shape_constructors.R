@@ -90,6 +90,7 @@ addDefaults <- function(shape, requiredDefaults, shapeType) {
 		, "arc" = arcDefaults(n)
 		, "path" = pathDefaults(n)
 		, "scatterplot" = scatterplotDefaults(n)
+		, "polygon" = polygonDefaults(n)
 		)
 	shape <- cbind(shape, defaults[, requiredDefaults, drop = F])
 	return(shape)
