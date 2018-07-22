@@ -22,10 +22,3 @@ function add_path( map_id, path_data, layer_id ) {
   window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] } );
 }
 
-
-function clear_path( map_id, layer_id ) {
-
-
-
-}
-

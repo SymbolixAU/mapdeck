@@ -18,6 +18,20 @@ mapdeckPathDependency <- function() {
 #' @param stroke_colour variable of \code{data} or hex colour for the stroke
 #' @param stroke_width width of the stroke
 #'
+#' @examples
+#' \dontrun{
+#' mapdeck(
+#'   token = key
+#'   , style = 'mapbox://styles/mapbox/dark-v9'
+#'   , location = c(145.688269, -38.101062)
+#'   , zoom = 8) %>%
+#'   add_path(
+#'   data = roads[1:10000, ]
+#'   , polyline = "geometry"
+#'   , stroke_colour = "RIGHT_LOC"
+#'   )
+#' }
+#'
 #' @export
 add_path <- function(
 	map,
@@ -25,7 +39,7 @@ add_path <- function(
 	polyline,
 	stroke_colour = NULL,
 	stroke_width = NULL,
-	layer_id = NULL,
+	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
@@ -33,7 +47,8 @@ add_path <- function(
 	objArgs <- match.call(expand.dots = F)
 
 	## parameter checks
-	layer_id <- layerId(layer_id)
+
+
 	## end parameter checks
 
 	allCols <- pathColumns()
@@ -70,14 +85,6 @@ add_path <- function(
 	map <- addDependency(map, mapdeckPathDependency())
 	invoke_method(map, "add_path", shape, layer_id)
 }
-
-#' @rdname clear
-#' @export
-clear_path <- function(map, layer_id) {
-	layer_id <- layerId(layer_id)
-	invoke_method(map, 'clear_path', layer_id)
-}
-
 
 
 requiredPathColumns <- function() {

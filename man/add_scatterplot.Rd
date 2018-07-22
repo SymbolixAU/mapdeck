@@ -4,13 +4,45 @@
 \alias{add_scatterplot}
 \title{Add Scatterplot}
 \usage{
-add_scatterplot(map, data = get_map_data(map), lat, lon, radius = NULL,
+add_scatterplot(map, data = get_map_data(map), lon, lat, radius = NULL,
   fill_colour = NULL, fill_opacity = NULL, stroke_width = NULL,
   layer_id = NULL, digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
+\item{map}{a mapdeck map object}
+
+\item{data}{data to be used in the layer}
+
+\item{lon}{column containing longitude values}
+
+\item{lat}{column containing latitude values}
+
 \item{radius}{in metres}
+
+\item{stroke_width}{width of the stroke}
+
+\item{layer_id}{single value specifying an id for the layer. Use this value to
+distinguish between shape layers of the same type}
+
+\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
+should be used for the latitude / longitude coordinates.}
+
+\item{palette}{a function, or list of functions which generates hex colours}
 }
 \description{
 Add Scatterplot
+}
+\examples{
+
+key <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
+
+mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+add_scatterplot(
+  data = capitals
+  , lat = "lat"
+  , lon = "lon"
+  , radius = 100000
+  , fill_colour = "country"
+)
+
 }

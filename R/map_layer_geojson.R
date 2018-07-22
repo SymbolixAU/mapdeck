@@ -18,18 +18,15 @@ mapdeckGeojsonDependency <- function() {
 #'
 #' @inheritParams add_arc
 #'
-#' - fillColour: hex colour
-#' - lineColour: hex colour
 #'
 #'
 #' @export
 add_geojson <- function(
 	map,
 	data = get_map_data(map),
-	layer_id = NULL
+	layer_id
 	) {
 
-	layer_id <- layerId(layer_id)
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
 	invoke_method(map, "add_geojson", data, layer_id)

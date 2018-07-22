@@ -14,7 +14,8 @@ HTMLWidgets.widget({
       	window.params = [];
       	window.params.push({ 'map_id' : el.id });
 
-      	window[el.id + 'layers'] = {}; // keep track of layers for overlaying multiple
+      	window[el.id + 'layers'] = []; // keep track of layers for overlaying multiple
+      	// needs to be an array because .props takes an array of layers
 
         var mapDiv = document.getElementById(el.id);
         mapDiv.className = 'mapdeckmap';

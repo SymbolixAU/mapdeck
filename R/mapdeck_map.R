@@ -74,16 +74,6 @@ mapdeck <- function(
   return(mapdeckmap)
 }
 
-#' Change Location
-#'
-#' @inheritParams md_map
-#'
-# md_change_location <- function(map_id, location) {
-#
-# 	## TODO(validate location params)
-# 	invoke_method(map_id, "change_location", location)
-# }
-
 #' Shiny bindings for mapdeck
 #'
 #' Output and render functions for using mapdeck within Shiny
@@ -127,6 +117,8 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' after the next time all of the outputs are updated; defaults to TRUE.
 #' @examples
 #' \dontrun{
+#'
+#' }
 #' @export
 mapdeck_update <- function(
 	map_id,

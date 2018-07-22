@@ -20,26 +20,48 @@ function add_arc( map_id, arc_data, layer_id ) {
     //}
   });
 
-  window[map_id + 'layers'][ 'arc-' + layer_id] = arcLayer ;
-  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'][ 'arc-' + layer_id] } );
+  window[map_id + 'layers'].push( arcLayer );
+  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
 
 }
 
 function update_arc( map_id, arc_data, layer_id ) {
-
-	var arcLayer = window[map_id + 'layers'][ 'arc-'+layer_id];
-	console.log( window[map_id + 'layers'] );
-
+/*
 	if ( !arcLayer ) {
 		return;
 	}
-
-	console.log("update arc layer");
-	console.log(arcLayer);
-	console.log(arcLayer.props);
-	console.log(arcLayer.props.data);
+*/
 
 	//arcLayer.props.getSourceColor = [255, 255, 255];
-	arcLayer.props.data = arc_data;
-	window[map_id + 'layers'][ 'arc-'+layer_id] = arcLayer;
+	//window[map_id + 'layers'][ 'arc-'+layer_id] = arcLayer;
+
+	console.log(" arc layer: ");
+	console.log( window[map_id + 'map'].props );
+
+	var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', 'arc-arc_layer');
+
+	//if ( elem ) {
+		console.log(" elem found ");
+		// TODO(test is this elem is valid/ null/works)
+		console.log( "before update: " );
+		console.log( window[map_id + 'map'].props.layers[elem].props );
+		window[map_id + 'map'].props.layers[elem].props.data = arc_data;
+		console.log( "after update: " );
+		console.log( window[map_id + 'map'].props.layers[elem].props );
+	//}
+	//window[map_id + 'map'].setProps({ layers: window[map_id + 'layers']['arc-'+layer_id] });
+}
+
+
+function updateLayerData(  ) {
+
+}
+
+function findObjectElementByKey(array, key, value, layer_data ) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i][key] === value) {
+            return i;
+        }
+    }
+    return null;
 }

@@ -4,7 +4,15 @@
 \alias{add_geojson}
 \title{Add Geojson}
 \usage{
-add_geojson(map, data = get_map_data(map), layer_id = NULL)
+add_geojson(map, data = get_map_data(map), layer_id)
+}
+\arguments{
+\item{map}{a mapdeck map object}
+
+\item{data}{data to be used in the layer}
+
+\item{layer_id}{single value specifying an id for the layer. Use this value to
+distinguish between shape layers of the same type}
 }
 \description{
 Add Geojson

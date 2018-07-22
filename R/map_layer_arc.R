@@ -17,10 +17,8 @@ mapdeckArcDependency <- function() {
 #' @param data data to be used in the layer
 #' @param layer_id single value specifying an id for the layer. Use this value to
 #' distinguish between shape layers of the same type
-#' @param lat_from latitude coordinate of the origin
-#' @param lon_from longitude coordinate of the origin
-#' @param lat_to latitude coordinate of the destination
-#' @param lon_to latitude longitude of the destination
+#' @param origin vector of longitude and latitude columns
+#' @param destination vector of longitude and latitude columns
 #' @param id an id value in \code{data} to identify layers when interacting in Shiny apps
 #' @param stroke_from variable or hex colour to use as the staring stroke colour
 #' @param stroke_to variable or hex colour to use as the ending stroke colour
@@ -32,7 +30,7 @@ mapdeckArcDependency <- function() {
 #' @examples
 #' \dontrun{
 #'
-#' key <- "MAPBOX_KEY"
+#' key <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
 #'
 #' url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 #' flights <- read.csv(url)
@@ -42,10 +40,9 @@ mapdeckArcDependency <- function() {
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' 	add_arc(
 #' 		data = flights
-#' 		, lat_from = "start_lat"
-#' 		, lon_from = "start_lon"
-#' 		, lat_to = "end_lat"
-#' 		, lon_to = "end_lon"
+#' 		, layer_id = "arc_layer"
+#' 		, origin = c("start_lon", "start_lat")
+#' 		, destination = c("end_lon", "end_lat")
 #' 		, stroke_from = "airport1"
 #' 		, stroke_to = "airport2"
 #' 		, stroke_width = "stroke"
@@ -57,10 +54,8 @@ add_arc <- function(
 	map,
 	data = get_map_data(map),
 	layer_id,
-	lat_from,
-	lon_from,
-	lat_to,
-	lon_to,
+	origin,
+	destination,
 	id = NULL,
 	stroke_from = NULL,
 	stroke_to = NULL,
@@ -72,9 +67,19 @@ add_arc <- function(
 	objArgs <- match.call(expand.dots = F)
 
 	## parameter checks
-	layer_id <- layerId(layer_id)
+
 
 	## end parameter checks
+
+	lon_from <- origin[1]
+	lat_from <- origin[2]
+	lon_to <- destination[1]
+	lat_to <- destination[2]
+	objArgs[['lat_from']] <- lat_from
+	objArgs[['lat_to']] <- lat_to
+	objArgs[['lon_from']] <- lon_from
+	objArgs[['lon_to']] <- lon_to
+
 
 	allCols <- arcColumns()
 	requiredCols <- requiredArcColumns()
@@ -132,6 +137,8 @@ update_arc <- function(
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
+
+	stop(" function not implemented ")
 
 	objArgs <- match.call(expand.dots = F)
 

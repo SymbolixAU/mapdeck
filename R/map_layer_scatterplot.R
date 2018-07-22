@@ -12,14 +12,30 @@ mapdeckScatterplotDependency <- function() {
 
 #' Add Scatterplot
 #'
+#' @inheritParams add_arc
+#' @param lon column containing longitude values
+#' @param lat column containing latitude values
 #' @param radius in metres
+#'
+#' @examples
+#'
+#' key <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
+#'
+#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' add_scatterplot(
+#'   data = capitals
+#'   , lat = "lat"
+#'   , lon = "lon"
+#'   , radius = 100000
+#'   , fill_colour = "country"
+#' )
 #'
 #' @export
 add_scatterplot <- function(
 	map,
 	data = get_map_data(map),
-	lat,
 	lon,
+	lat,
 	radius = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
@@ -33,7 +49,6 @@ add_scatterplot <- function(
 
 	## parmater checks
 
-	layer_id <- layerId(layer_id)
 
 	## end parameter checks
 

@@ -54,44 +54,7 @@
 # mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
 # 	add_geojson(data = geo)
 
-## using encoded polyline and various colour / fill options
-# url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
-# flights <- read.csv(url)
-# flights$id <- seq_len(nrow(flights))
-# flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
-#
-# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
-# 	add_arc(
-# 		data = flights
-# 		, lat_from = "start_lat"
-# 		, lon_from = "start_lon"
-# 		, lat_to = "end_lat"
-# 		, lon_to = "end_lon"
-# 		, stroke_from = "airport1"
-# 		, stroke_to = "airport2"
-# 		, stroke_width = "stroke"
-# 	)
 
-### PATH
-
-# df <- googleway::tram_route
-# head(df)
-# df$id <- 1
-#
-# df <- data.frame( polyline = googlePolylines:::encodeCoordinates(lon = df$shape_pt_lon, lat = df$shape_pt_lat) )
-#
-# key <- read.dcf("~/Documents/.googleAPI", fields= "MAPBOX")
-#
-#
-# df$col <- "a"
-# df$width <- 3
-# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9' ) %>%
-# 	add_path(
-# 		data = df
-# 		, polyline = "polyline"
-# 		, stroke_colour = "col"
-# 		, stroke_width = "width"
-# 		)
 
 ## TODO: multiple layers
 ## scatter + path
@@ -184,8 +147,6 @@
 # 	, allow.cartesian = T
 # 	]
 #
-#
-
 # mapdeck(
 # 	token = access_token
 # 	, style = "mapbox://styles/mapbox/dark-v9"
@@ -205,7 +166,10 @@
 # 	update_arc(
 # 		data = dt2
 # 	)
-#
+
+
+
+
 # library(shiny)
 # library(shinydashboard)
 # library(data.table)
@@ -246,7 +210,7 @@
 # 		selected_country <- input$countries
 #
 # 		dt_plot <- dt[ country == selected_country, .(country_from = country, capital_from = capital, lat_from = lat, lon_from = lon, key)][
-# 			dt[,  .(country_to = country, capital_to = capital, lat_to = lat, lon_to = lon, hemisphere, key) ]
+# 			dt[country != selected_country,  .(country_to = country, capital_to = capital, lat_to = lat, lon_to = lon, hemisphere, key) ]
 # 			, on = "key"
 # 			, allow.cartesian = T
 # 			]
@@ -258,7 +222,7 @@
 # 	output$map <- renderMapdeck({
 #
 # 		dt_plot <- dt[ country == "United Kingdom of Great Britain and Northern Ireland", .(country_from = country, capital_from = capital, lat_from = lat, lon_from = lon, key)][
-# 			dt[,  .(country_to = country, capital_to = capital, lat_to = lat, lon_to = lon, hemisphere, key) ]
+# 			dt[country != "United Kingdom of Great Britain and Northern Ireland" ,  .(country_to = country, capital_to = capital, lat_to = lat, lon_to = lon, hemisphere, key) ]
 # 			, on = "key"
 # 			, allow.cartesian = T
 # 			]
@@ -266,21 +230,26 @@
 # 		print("reinitialising map")
 # 		print(dt_plot)
 #
-# 		mapdeck(
-# 			token = access_token
-# 			, style = "mapbox://styles/mapbox/dark-v9"
-# 			, pitch = 35
-# 		) %>%
-# 			add_arc(
-# 				data = dt_plot
-# 				, layer_id = "arc_layer"
-# 				, lat_from = "lat_from"
-# 				, lat_to = "lat_to"
-# 				, lon_from = "lon_from"
-# 				, lon_to = "lon_to"
-# 				, stroke_from = "country_from"
-# 				, id = "country_to"
-# 				#, stroke_to = "hemisphere"
+		# mapdeck(
+		# 	token = access_token
+		# 	, style = "mapbox://styles/mapbox/dark-v9"
+		# 	, pitch = 35
+		# ) %>%
+		# 	add_arc(
+		# 		data = dt_plot
+		# 		, layer_id = "arc_layer"
+		# 		, origin = c("lon_from", "lat_from")
+		# 		, destination = c("lon_to", "lat_to")
+		# 		, stroke_from = "country_from"
+		# 		, id = "country_to"
+		# 		#, stroke_to = "hemisphere"
+		# 	) %>%
+# 			add_scatterplot(
+# 				data = dt
+# 				, lat = "lat"
+# 				, lon = "lon"
+# 				, radius = 100000
+# 				, fill_colour = "country"
 # 			)
 # 	})
 #

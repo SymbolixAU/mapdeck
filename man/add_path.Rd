@@ -5,7 +5,7 @@
 \title{Add Path}
 \usage{
 add_path(map, data = get_map_data(map), polyline, stroke_colour = NULL,
-  stroke_width = NULL, layer_id = NULL, digits = 6,
+  stroke_width = NULL, layer_id, digits = 6,
   palette = viridisLite::viridis)
 }
 \arguments{
@@ -29,4 +29,19 @@ should be used for the latitude / longitude coordinates.}
 }
 \description{
 Add Path
+}
+\examples{
+\dontrun{
+mapdeck(
+  token = key
+  , style = 'mapbox://styles/mapbox/dark-v9'
+  , location = c(145.688269, -38.101062)
+  , zoom = 8) \%>\%
+  add_path(
+  data = roads[1:10000, ]
+  , polyline = "geometry"
+  , stroke_colour = "RIGHT_LOC"
+  )
+}
+
 }

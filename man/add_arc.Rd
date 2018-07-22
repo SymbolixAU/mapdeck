@@ -4,9 +4,9 @@
 \alias{add_arc}
 \title{Add arc}
 \usage{
-add_arc(map, data = get_map_data(map), layer_id, lat_from, lon_from, lat_to,
-  lon_to, id = NULL, stroke_from = NULL, stroke_to = NULL,
-  stroke_width = NULL, digits = 6, palette = viridisLite::viridis)
+add_arc(map, data = get_map_data(map), layer_id, origin, destination,
+  id = NULL, stroke_from = NULL, stroke_to = NULL, stroke_width = NULL,
+  digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -16,13 +16,9 @@ add_arc(map, data = get_map_data(map), layer_id, lat_from, lon_from, lat_to,
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type}
 
-\item{lat_from}{latitude coordinate of the origin}
+\item{origin}{vector of longitude and latitude columns}
 
-\item{lon_from}{longitude coordinate of the origin}
-
-\item{lat_to}{latitude coordinate of the destination}
-
-\item{lon_to}{latitude longitude of the destination}
+\item{destination}{vector of longitude and latitude columns}
 
 \item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
 
@@ -43,7 +39,7 @@ Add arc
 \examples{
 \dontrun{
 
-key <- "MAPBOX_KEY"
+key <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
 
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 flights <- read.csv(url)
@@ -53,10 +49,9 @@ flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 	add_arc(
 		data = flights
-		, lat_from = "start_lat"
-		, lon_from = "start_lon"
-		, lat_to = "end_lat"
-		, lon_to = "end_lon"
+		, layer_id = "arc_layer"
+		, origin = c("start_lon", "start_lat")
+		, destination = c("end_lon", "end_lat")
 		, stroke_from = "airport1"
 		, stroke_to = "airport2"
 		, stroke_width = "stroke"
