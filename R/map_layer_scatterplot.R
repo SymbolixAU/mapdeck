@@ -12,6 +12,9 @@ mapdeckScatterplotDependency <- function() {
 
 #' Add Scatterplot
 #'
+#' The Scatterplot Layer takes in coordinate points and renders them as circles
+#' with a certain radius.
+#'
 #' @inheritParams add_arc
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values

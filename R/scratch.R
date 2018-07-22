@@ -1,22 +1,4 @@
 
-## Geojson
-# library(mongolite)
-# library(sf)
-# library(geojsonsf)
-# m <- symbolix.utils::connectToMongo(db = "ABS", collection = "SA2_2016", usr = "db_user")
-# m <- mongo(db = "ABS", collection = "SA2_2016")
-# geo <- m$find(query = '{"geometry":{"$ne":null}}', ndjson = T)
-# sf <- geojsonsf::geojson_sf(geo)
-#
-#s f$fillColor <- viridisLite::viridis(n = nrow(sf))
-#
-# geo <- sf_geojson(sf[sf$STE_NAME16 == "Victoria",])
-# geo <- sf_geojson(sf[sf$SA3_NAME16 == "Perth City", ])
-# geo <- sf_geojson(sf[1:100, ])
-# attr(geo, 'class') <- 'json'
-#
-# mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
-# 	add_geojson(data = geo)
 
 # ## ON CLICK
 # library(shiny)

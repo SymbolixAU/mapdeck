@@ -12,6 +12,7 @@ mapdeckArcDependency <- function() {
 
 #' Add arc
 #'
+#' The Arc Layer renders raised arcs joining pairs of source and target coordinates
 #'
 #' @param map a mapdeck map object
 #' @param data data to be used in the layer

@@ -28,7 +28,8 @@ should be used for the latitude / longitude coordinates.}
 \item{palette}{a function, or list of functions which generates hex colours}
 }
 \description{
-Add Path
+The Path Layer takes in lists of coordinate points and renders them as
+extruded lines with mitering.
 }
 \examples{
 \dontrun{
@@ -41,6 +42,7 @@ mapdeck(
   data = roads
   , polyline = "geometry"
   , stroke_colour = "RIGHT_LOC"
+  , layer_id = "path_layer"
   )
 }
 

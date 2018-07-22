@@ -30,7 +30,8 @@ should be used for the latitude / longitude coordinates.}
 \item{palette}{a function, or list of functions which generates hex colours}
 }
 \description{
-Add Scatterplot
+The Scatterplot Layer takes in coordinate points and renders them as circles
+with a certain radius.
 }
 \examples{
 

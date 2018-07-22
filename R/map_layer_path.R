@@ -12,6 +12,9 @@ mapdeckPathDependency <- function() {
 
 #' Add Path
 #'
+#' The Path Layer takes in lists of coordinate points and renders them as
+#' extruded lines with mitering.
+#'
 #' @inheritParams add_arc
 #'
 #' @param polyline column of \code{data} containing the polyline
@@ -29,6 +32,7 @@ mapdeckPathDependency <- function() {
 #'   data = roads
 #'   , polyline = "geometry"
 #'   , stroke_colour = "RIGHT_LOC"
+#'   , layer_id = "path_layer"
 #'   )
 #' }
 #'

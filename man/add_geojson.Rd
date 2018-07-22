@@ -15,7 +15,8 @@ add_geojson(map, data = get_map_data(map), layer_id)
 distinguish between shape layers of the same type}
 }
 \description{
-Add Geojson
+The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,
+lines and points
 }
 \details{
 the GeoJSON string needs to have a \code{class} attribute of 'json'

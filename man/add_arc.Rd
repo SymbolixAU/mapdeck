@@ -34,7 +34,7 @@ should be used for the latitude / longitude coordinates.}
 \item{palette}{a function, or list of functions which generates hex colours}
 }
 \description{
-Add arc
+The Arc Layer renders raised arcs joining pairs of source and target coordinates
 }
 \examples{
 \dontrun{
