@@ -15,15 +15,24 @@ function add_arc( map_id, arc_data, layer_id ) {
     //onHover: info => console.log('Hovered:', info),
     //onClick: info => console.log('Clicked:', info)
     onClick: info => layer_click( map_id, "arc", info ),
-    //updateTriggers: {
-    //	getSourceColor:
-    //}
+    updateTriggers: {
+    	//getSourcePosition: d.lon_from
+    }
   });
 
   window[map_id + 'layers'].push( arcLayer );
   window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
 
 }
+
+
+Shiny.addCustomMessageHandler("handler", triggerButton );
+
+function triggerButton( counter ) {
+	console.log("triggered");
+	return counter;
+}
+
 
 function update_arc( map_id, arc_data, layer_id ) {
 /*
@@ -39,6 +48,9 @@ function update_arc( map_id, arc_data, layer_id ) {
 	console.log( window[map_id + 'map'].props );
 
 	var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', 'arc-arc_layer');
+
+  console.log("elem: " + elem);
+
 
 	//if ( elem ) {
 		console.log(" elem found ");
