@@ -129,6 +129,26 @@ mapdeck(
 ```
 
 
+### SF - Polygon
+
+```{r, fig.width=6}
+library(sf)
+
+sf <- sf::st_read("http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json")
+
+mapdeck(
+  token = key
+  , style = 'mapbox://styles/mapbox/dark-v9'
+  ) %>%
+  add_polygon(
+  	data = sf[!sf$STATE %in% c("02","15","72"), ]
+    , layer = "polygon_layer"
+  	, fill_colour = "CENSUSAREA"
+  	)
+
+```
+
+
 ### Multiple layers
 
 
@@ -161,6 +181,7 @@ mapdeck(
 		, lat = "lat"
 		, radius = 100000
 		, fill_colour = "country"
+		, layer_id = "scatter"
 	)
 
 

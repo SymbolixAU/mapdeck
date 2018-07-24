@@ -47,4 +47,15 @@ add_scatterplot(
   , layer_id = "scatter_layer"
 )
 
+df <- read.csv('https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv')
+
+mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+add_scatterplot(
+  data = df
+  , lat = "lat"
+  , lon = "lng"
+  , layer_id = "scatter_layer"
+)
+
+
 }
