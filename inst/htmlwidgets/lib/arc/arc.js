@@ -19,10 +19,16 @@ function add_arc( map_id, arc_data, layer_id ) {
     	//getSourcePosition: d.lon_from
     }
   });
+  var elem = -1;
+  elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', 'arc-arc_layer');
 
-  window[map_id + 'layers'].push( arcLayer );
-  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
-
+  if (elem === -1) {
+    window[map_id + 'layers'].push( arcLayer );
+    window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
+  } else {
+  	//window[map_id + 'layers'][elem] = arcLayer;
+  	arcLayer.updateState;
+  }
 }
 
 
@@ -75,5 +81,5 @@ function findObjectElementByKey(array, key, value, layer_data ) {
             return i;
         }
     }
-    return null;
+    return -1;
 }

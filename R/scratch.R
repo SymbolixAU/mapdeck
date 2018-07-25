@@ -72,10 +72,10 @@
 # 	rv <- reactiveValues()
 # 	rv$button_counter = 0
 #
-# 	observeEvent(input$button, {
-# 		rv$button_counter <- rv$button_counter + 1
-# 		session$sendCustomMessage("handler", rv$button_counter)
-# 	})
+# 	# observeEvent(input$button, {
+# 	# 	rv$button_counter <- rv$button_counter + 1
+# 	# 	session$sendCustomMessage("handler", rv$button_counter)
+# 	# })
 #
 # 	dt <- as.data.table(capitals)
 # 	dt[, key := 1]
@@ -145,20 +145,18 @@
 # 	})
 #
 # 	observeEvent({
-# 		input$countries
+# 		input$button
 # 	}, {
-# 		# mapdeck_update('map') %>%
-# 		# 	update_arc(
-# 		# 		, data = dt_countries()
-# 		# 		, layer_id = "arc_layer"
-# 		# 		, lat_from = "lat_from"
-# 		# 		, lat_to = "lat_to"
-# 		# 		, lon_from = "lon_from"
-# 		# 		, lon_to = "lon_to"
-# 		# 		, stroke_from = "country_from"
-# 		# 		, id = "country_to"
-# 		# 		#, stroke_to = "hemisphere"
-# 		# 	)
+# 		mapdeck_update('map') %>%
+# 			add_arc(
+# 				data = dt_countries()
+# 				, layer_id = "arc_layer"
+# 				, origin = c("lon_from", "lat_from")
+# 				, destination = c("lon_to", "lat_to")
+# 				, stroke_from = "country_from"
+# 				, id = "country_to"
+# 				#, stroke_to = "hemisphere"
+# 			)
 # 	})
 # }
 #
