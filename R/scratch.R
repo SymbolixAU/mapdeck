@@ -72,10 +72,10 @@
 # 	rv <- reactiveValues()
 # 	rv$button_counter = 0
 #
-# 	# observeEvent(input$button, {
-# 	# 	rv$button_counter <- rv$button_counter + 1
-# 	# 	session$sendCustomMessage("handler", rv$button_counter)
-# 	# })
+# 	observeEvent(input$button, {
+# 		rv$button_counter <- rv$button_counter + 1
+# 		session$sendCustomMessage("handler", rv$button_counter)
+# 	})
 #
 # 	dt <- as.data.table(capitals)
 # 	dt[, key := 1]
