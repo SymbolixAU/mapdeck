@@ -176,6 +176,23 @@
 #   	)
 
 
+### SF
+
+# library(sf)
+#
+# sf <- sf::st_read("http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json")
+# access_token <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
+#
+# mapdeck(
+#   token = access_token
+#   , style = 'mapbox://styles/mapbox/dark-v9'
+#   ) %>%
+#   add_polygon(
+#   	data = sf[!sf$STATE %in% c("02","15","72"), ]
+#     , layer = "polygon_layer"
+#   	, fill_colour = "CENSUSAREA"
+#   	)
+
 
 
 
