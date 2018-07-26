@@ -17,6 +17,9 @@ r <- unlist(roads$geometry)
 roads$geometry <- r
 
 roads <- roads[1:10000, ]
-usethis::use_data(roads)
+roads <- as.data.frame(roads)
+usethis::use_data(roads, overwrite = T)
+
+
 
 

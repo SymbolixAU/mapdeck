@@ -19,3 +19,12 @@ function add_path( map_id, path_data, layer_id ) {
   window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] } );
 }
 
+function decode_paths( polylines ) {
+	// polygons can be an array of polylines
+	var i, coordinates = [];
+
+	for (i = 0; i < polylines.length; i++ ) {
+		coordinates.push( decode_polyline( polylines[i] ) );
+	}
+	return coordinates;
+}

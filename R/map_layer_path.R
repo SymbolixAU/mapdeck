@@ -34,6 +34,7 @@ mapdeckPathDependency <- function() {
 #'   , stroke_colour = "RIGHT_LOC"
 #'   , layer_id = "path_layer"
 #'   )
+#'
 #' }
 #'
 #' @export
