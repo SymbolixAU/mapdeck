@@ -51,25 +51,54 @@ mapdeck <- function(
     )
   )
 
-  header <- paste0(
-    '<script src="https://unpkg.com/deck.gl@latest/deckgl.min.js"></script>
-     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js"></script>
-    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css" rel="stylesheet" />'
-    )
+  ## <script src="https://unpkg.com/deck.gl@latest/deckgl.min.js"></script>
+  ## <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js"></script>
+  ## <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css" rel="stylesheet" />
 
-
-  mapdeckmap$dependencies <- c(
-  	mapdeckmap$dependencies,
-  	list(
-  		htmltools::htmlDependency(
-  			name = "mapdeck",
-  			version = "9999",
-  			src=".",
-  			head = header,
-  			all_files = FALSE
-  		)
-  	)
-  )
+  # mapdeckmap$dependencies <- c(
+  # 	mapdeckmap$dependencies,
+  # 	list(
+  # 		htmltools::htmlDependency(
+  # 			name = "mapdeck",
+  # 			version = "9999",
+  # 			src=".",
+  # 			head = header,
+  # 			all_files = FALSE
+  # 		)
+  # 	)
+  # )
+  # header_mapbox <- paste0(
+  # 	'<script src="lib/mapboxgl.js"></script>
+  #    <link href="lib/mapboxgl.css" rel="stylesheet" />'
+  # )
+  #
+  # mapdeckmap$dependencies <- c(
+  # 	mapdeckmap$dependencies,
+  # 	list(
+  # 		htmltools::htmlDependency(
+  # 			name = "mapbox-gl",
+  # 			version = "0.47.0",
+  # 			src="lib/",
+  # 			head = header_mapbox,
+  # 			all_files = FALSE
+  # 		)
+  # 	)
+  # )
+  #
+  # header_deck <- '<script src="lib/deckgl.min.js"></script>'
+  #
+  # mapdeckmap$dependencies <- c(
+  # 	mapdeckmap$dependencies,
+  # 	list(
+  # 		htmltools::htmlDependency(
+  # 			name = "deck.gl",
+  # 			version = "6.0.1",
+  # 			src="lib/",
+  # 			head = header_deck,
+  # 			all_files = FALSE
+  # 		)
+  # 	)
+  # )
 
   return(mapdeckmap)
 }

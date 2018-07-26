@@ -6,7 +6,6 @@ HTMLWidgets.widget({
   factory: function(el, width, height) {
 
     // TODO: define shared variables for this instance
-
     return {
 
       renderValue: function(x) {
@@ -29,7 +28,7 @@ HTMLWidgets.widget({
 
 	      var checkExists = setInterval( function() {
 
-	      	const deckgl = new deck.DeckGL({
+	      const	deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
@@ -45,6 +44,7 @@ HTMLWidgets.widget({
             clearInterval(checkExists);
 
             window[el.id + 'map'] = deckgl;
+            //window.deckgl = deckgl;
 
             initialise_map(el, x);
 
@@ -69,6 +69,7 @@ HTMLWidgets.widget({
           });
 
           window[el.id + 'map'] = deckgl;
+          //window.deckgl = deckgl;
 
           initialise_map(el, x);
        }
@@ -90,38 +91,37 @@ HTMLWidgets.widget({
 
 if (HTMLWidgets.shinyMode) {
 
-    Shiny.addCustomMessageHandler("mapdeckmap-calls", function (data) {
+  Shiny.addCustomMessageHandler("mapdeckmap-calls", function (data) {
 
-        var id = data.id,   // the div id of the map
-            el = document.getElementById(id),
-            map = el,
-            call = [],
-            i = 0;
+    var id = data.id,   // the div id of the map
+      el = document.getElementById(id),
+      map = el,
+      call = [],
+      i = 0;
 
+    if (!map) {
+      //console.log("Couldn't find map with id " + id);
+      return;
+    }
 
-        if (!map) {
-            //console.log("Couldn't find map with id " + id);
-            return;
-        }
+    for (i = 0; i < data.calls.length; i++) {
 
-        for (i = 0; i < data.calls.length; i++) {
+      call = data.calls[i];
 
-            call = data.calls[i];
+      //push the mapId into the call.args
+      call.args.unshift(id);
 
-            //push the mapId into the call.args
-            call.args.unshift(id);
+      if (call.dependencies) {
+        Shiny.renderDependencies(call.dependencies);
+      }
 
-            if (call.dependencies) {
-                Shiny.renderDependencies(call.dependencies);
-            }
-
-            if (window[call.method]) {
-                window[call.method].apply(window[id + 'map'], call.args);
-            } else {
-                //console.log("Unknown function " + call.method);
-            }
-        }
-    });
+      if (window[call.method]) {
+        window[call.method].apply(window[id + 'map'], call.args);
+      } else {
+        //console.log("Unknown function " + call.method);
+      }
+    }
+  });
 }
 
 function initialise_map(el, x) {

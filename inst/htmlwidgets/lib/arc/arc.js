@@ -29,17 +29,9 @@ function add_arc( map_id, data, layer_id ) {
 
   //if (elem === -1) {
 
-  console.log( 'before adding' );
-  console.log( window[map_id + 'map'].props.layers );
-  console.log( 'arc layer' );
-  console.log( arcLayer );
-
   remove_layer( map_id, layer_id );
   window[map_id + 'layers'].push( arcLayer );
-
-  deckgl.setProps({ layers: window[map_id + 'layers'] });
-  //window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
-
+  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
 }
 
 function remove_layer( map_id, layer_id ) {
