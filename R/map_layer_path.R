@@ -34,13 +34,14 @@ mapdeckPathDependency <- function() {
 #'   , stroke_colour = "RIGHT_LOC"
 #'   , layer_id = "path_layer"
 #'   )
+#'
 #' }
 #'
 #' @export
 add_path <- function(
 	map,
 	data = get_map_data(map),
-	polyline,
+	polyline = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	layer_id,
@@ -51,6 +52,15 @@ add_path <- function(
 	## TODO(sf and lon/lat coordinates)
 
 	objArgs <- match.call(expand.dots = F)
+
+	data <- normaliseSfData(data, "LINESTRING")
+	polyline <- findEncodedColumn(data, polyline)
+
+	## - if sf object, and geometry column has not been supplied, it needs to be
+	## added to objArgs after the match.call() function
+	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
+		objArgs[['polyline']] <- polyline
+	}
 
 	## parameter checks
 

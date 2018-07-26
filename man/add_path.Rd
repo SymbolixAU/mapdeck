@@ -4,8 +4,8 @@
 \alias{add_path}
 \title{Add Path}
 \usage{
-add_path(map, data = get_map_data(map), polyline, stroke_colour = NULL,
-  stroke_width = NULL, layer_id, digits = 6,
+add_path(map, data = get_map_data(map), polyline = NULL,
+  stroke_colour = NULL, stroke_width = NULL, layer_id, digits = 6,
   palette = viridisLite::viridis)
 }
 \arguments{
@@ -39,11 +39,12 @@ mapdeck(
   , location = c(145.688269, -38.101062)
   , zoom = 8) \%>\%
   add_path(
-  data = roads
+  data = roads[2, ]
   , polyline = "geometry"
   , stroke_colour = "RIGHT_LOC"
   , layer_id = "path_layer"
   )
+
 }
 
 }
