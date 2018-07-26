@@ -36,8 +36,9 @@ HTMLWidgets.widget({
 			      longitude: x.location[1],
 			      latitude: x.location[0],
 			      zoom: x.zoom,
-			      pitch: x.pitch
-          });
+			      pitch: x.pitch,
+			      layers: []
+			    });
 
           if (deck !== undefined) {
             //console.log("exists");
@@ -63,7 +64,8 @@ HTMLWidgets.widget({
 			      longitude: x.location[0],
 			      latitude: x.location[1],
 			      zoom: x.zoom,
-			      pitch: x.pitch
+			      pitch: x.pitch,
+			      layers: []
           });
 
           window[el.id + 'map'] = deckgl;

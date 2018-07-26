@@ -35,9 +35,10 @@ function add_arc( map_id, data, layer_id ) {
   console.log( arcLayer );
 
   remove_layer( map_id, layer_id );
-
   window[map_id + 'layers'].push( arcLayer );
-  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
+
+  deckgl.setProps({ layers: window[map_id + 'layers'] });
+  //window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
 
 }
 
@@ -48,7 +49,7 @@ function remove_layer( map_id, layer_id ) {
 
   if ( elem != -1 ) {
     window[map_id + 'map'].props.layers.splice( elem, 1 );
-    window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
+    //window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
   }
 }
 
