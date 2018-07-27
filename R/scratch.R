@@ -193,8 +193,11 @@
 #   	, fill_colour = "CENSUSAREA"
 #   	)
 
-
-
+#
+# enc <- googlePolylines::encode(sf, strip = T)
+# str(enc)
+#
+# enc[['geometry']] <- unlist(enc[['geometry']])
 
 
 
