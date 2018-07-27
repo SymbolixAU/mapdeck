@@ -49,8 +49,9 @@ mapdeckScatterplotDependency <- function() {
 add_scatterplot <- function(
 	map,
 	data = get_map_data(map),
-	lon,
-	lat,
+	lon = NULL,
+	lat = NULL,
+	polyline = NULL,
 	radius = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
@@ -62,10 +63,26 @@ add_scatterplot <- function(
 
 	objArgs <- match.call(expand.dots = F)
 
-	## parmater checks
+	data <- normaliseSfData(data, "POINT")
+	polyline <- findEncodedColumn(data, polyline)
 
+	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
+		objArgs[['polyline']] <- polyline
+		data[[polyline]] <- unlist(data[[polyline]])
+	}
+
+	## parmater checks
+	usePolyline <- isUsingPolyline(polyline)
 
 	## end parameter checks
+	if ( !usePolyline ) {
+		## TODO(check only a data.frame)
+		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
+		polyline <- 'polyline'
+		objArgs[[lon]] <- NULL
+		objArgs[[lat]] <- NULL
+		objArgs[['polyline']] <- polyline
+	}
 
 	allCols <- scatterplotColumns()
 	requiredCols <- requiredScatterplotColumns()
@@ -93,7 +110,6 @@ add_scatterplot <- function(
 	if(length(requiredDefaults) > 0){
 		shape <- addDefaults(shape, requiredDefaults, "scatterplot")
 	}
-
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
@@ -110,7 +126,7 @@ requiredScatterplotColumns <- function() {
 
 
 scatterplotColumns <- function() {
-	c('lat', 'lon', "elevation", "radius",
+	c('polyline', "elevation", "radius",
 		'fill_colour', 'fill_opacity',
 		'stroke_width')
 }

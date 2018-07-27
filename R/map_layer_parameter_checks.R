@@ -1,5 +1,16 @@
 
 
+
+# Is Using Polyline
+#
+# Checks if the polyline argument is null or not
+# @param polyline
+isUsingPolyline <- function(polyline){
+	if(!is.null(polyline)) return(TRUE)
+	return(FALSE)
+}
+
+
 # Layer Id
 #
 # Checks the layer_id parameter, and provides a default one if NULL

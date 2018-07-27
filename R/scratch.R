@@ -200,6 +200,51 @@
 # enc[['geometry']] <- unlist(enc[['geometry']])
 
 
+## sf scatter
+
+# library(googlePolylines)
+# library(mapdeck)
+# df <- capitals
+# df$polyline <- googlePolylines::encode(df, byrow = T)
+#
+# head(df)
+#
+# library(data.table)
+# library(sf)
+#
+# dt <- as.data.table( capitals )
+# dt <- dt[
+# 	, {
+# 		geometry <- sf::st_point(x = c(lon, lat))
+# 		geometry <- sf::st_sfc(geometry)
+# 		geometry <- sf::st_sf(geometry = geometry)
+# 	}
+# 	, by = 1:nrow(dt)
+# ]
+#
+# sf <- sf::st_as_sf(dt)
+#
+# key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+#
+# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+# add_scatterplot(
+#   data = sf
+#   , radius = 100000
+#   , layer_id = "scatter_layer"
+# )
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
