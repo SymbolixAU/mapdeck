@@ -23,6 +23,7 @@ mapdeckScreengridDependency <- function() {
 #' @examples
 #' \dontrun{
 #'
+#' key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 #' df <- read.csv('https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv')
 #' df$weight <- sample(1:10, size = nrow(df), replace = T)
 #'
