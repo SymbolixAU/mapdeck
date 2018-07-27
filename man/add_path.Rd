@@ -33,13 +33,14 @@ extruded lines with mitering.
 }
 \examples{
 \dontrun{
+
 mapdeck(
   token = key
   , style = 'mapbox://styles/mapbox/dark-v9'
-  , location = c(145.688269, -38.101062)
-  , zoom = 8) \%>\%
+  , location = c(145, -37.8)
+  , zoom = 10) \%>\%
   add_path(
-  data = roads[2, ]
+  data = roads
   , polyline = "geometry"
   , stroke_colour = "RIGHT_LOC"
   , layer_id = "path_layer"
