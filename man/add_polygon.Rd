@@ -4,9 +4,9 @@
 \alias{add_polygon}
 \title{Add Polygon}
 \usage{
-add_polygon(map, data = get_map_data(map), polyline, stroke_colour = NULL,
-  stroke_width = NULL, fill_colour = NULL, layer_id, digits = 6,
-  palette = viridisLite::viridis)
+add_polygon(map, data = get_map_data(map), polyline = NULL,
+  stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL, layer_id,
+  digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -35,7 +35,7 @@ The Polygon Layer renders filled and/or stroked polygons.
 \examples{
 \dontrun{
 
-key <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
+key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 
 mapdeck(
   token = key

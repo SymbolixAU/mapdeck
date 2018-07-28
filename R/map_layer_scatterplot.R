@@ -22,8 +22,7 @@ mapdeckScatterplotDependency <- function() {
 #'
 #' @examples
 #'
-#' key <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
-#'
+#' key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = capitals
@@ -33,6 +32,17 @@ mapdeckScatterplotDependency <- function() {
 #'   , fill_colour = "country"
 #'   , layer_id = "scatter_layer"
 #' )
+#'
+#' df <- read.csv('https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv')
+#'
+#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' add_scatterplot(
+#'   data = df
+#'   , lat = "lat"
+#'   , lon = "lng"
+#'   , layer_id = "scatter_layer"
+#' )
+#'
 #'
 #' @export
 add_scatterplot <- function(

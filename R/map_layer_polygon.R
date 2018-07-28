@@ -24,7 +24,7 @@ mapdeckPolygonDependency <- function() {
 #' @examples
 #' \dontrun{
 #'
-#' key <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
+#' key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 #'
 #' mapdeck(
 #'   token = key
@@ -45,7 +45,7 @@ mapdeckPolygonDependency <- function() {
 add_polygon <- function(
 	map,
 	data = get_map_data(map),
-	polyline,
+	polyline = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	fill_colour = NULL,
@@ -59,6 +59,15 @@ add_polygon <- function(
 	## TODO( is this too slow? )
 
 	objArgs <- match.call(expand.dots = F)
+
+	data <- normaliseSfData(data, "POLYGON")
+	polyline <- findEncodedColumn(data, polyline)
+
+	## - if sf object, and geometry column has not been supplied, it needs to be
+	## added to objArgs after the match.call() function
+	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
+		objArgs[['polyline']] <- polyline
+	}
 
 	## parameter checks
 

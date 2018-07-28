@@ -91,6 +91,7 @@ addDefaults <- function(shape, requiredDefaults, shapeType) {
 		, "path" = pathDefaults(n)
 		, "scatterplot" = scatterplotDefaults(n)
 		, "polygon" = polygonDefaults(n)
+		, "screengrid" = screengridDefaults(n)
 		)
 	shape <- cbind(shape, defaults[, requiredDefaults, drop = F])
 	return(shape)

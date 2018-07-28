@@ -23,24 +23,26 @@ mapdeckPathDependency <- function() {
 #'
 #' @examples
 #' \dontrun{
+#'
 #' mapdeck(
 #'   token = key
 #'   , style = 'mapbox://styles/mapbox/dark-v9'
-#'   , location = c(145.688269, -38.101062)
-#'   , zoom = 8) %>%
+#'   , location = c(145, -37.8)
+#'   , zoom = 10) %>%
 #'   add_path(
 #'   data = roads
 #'   , polyline = "geometry"
 #'   , stroke_colour = "RIGHT_LOC"
 #'   , layer_id = "path_layer"
 #'   )
+#'
 #' }
 #'
 #' @export
 add_path <- function(
 	map,
 	data = get_map_data(map),
-	polyline,
+	polyline = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	layer_id,
@@ -51,6 +53,19 @@ add_path <- function(
 	## TODO(sf and lon/lat coordinates)
 
 	objArgs <- match.call(expand.dots = F)
+
+	data <- normaliseSfData(data, "LINESTRING")
+	polyline <- findEncodedColumn(data, polyline)
+
+	## - if sf object, and geometry column has not been supplied, it needs to be
+	## added to objArgs after the match.call() function
+	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
+		objArgs[['polyline']] <- polyline
+		## TODO(MULTILINESTRINGS)
+		## this unlist wont' work; needs a row per polyline, and therefore keep all
+		## the other columns consistent with those rows.
+		data[[polyline]] <- unlist(data[[polyline]])
+	}
 
 	## parameter checks
 
@@ -85,6 +100,17 @@ add_path <- function(
 	if(length(requiredDefaults) > 0){
 		shape <- addDefaults(shape, requiredDefaults, "path")
 	}
+
+	# print(str(shape))
+	#
+	# if (!is.list(shape[["polyline"]])) {
+	# 	f <- paste0("polyline ~ ", paste0(setdiff(names(shape),
+	# 																						"polyline"), collapse = "+"))
+	# 	shape <- stats::aggregate(stats::formula(f), data = shape,
+	# 														list)
+	# }
+	#
+	# print(str(shape))
 
 	shape <- jsonlite::toJSON(shape, digits = digits)
 

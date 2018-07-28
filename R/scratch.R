@@ -11,7 +11,7 @@
 # server <- function(input, output) {
 #
 # 	dt <- as.data.table(capitals)
-# 	access_token <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
+# 	key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 #
 # 	dt[, key := 1]
 # 	dt[lat < 0, hemisphere := "south"]
@@ -82,7 +82,7 @@
 # 	dt[lat < 0, hemisphere := "south"]
 # 	dt[lat >= 0, hemisphere := "north"]
 #
-# 	access_token <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
+# key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 #
 # 	output$countries <- renderUI({
 # 		selectInput(
@@ -182,6 +182,32 @@
 #     , layer = "polygon_layer"
 #   	, fill_colour = "fillColor"
 #   	)
+
+
+### SF
+
+# library(sf)
+#
+# sf <- sf::st_read("http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json")
+# key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+#
+# mapdeck(
+#   token = access_token
+#   , style = 'mapbox://styles/mapbox/dark-v9'
+#   ) %>%
+#   add_polygon(
+#   	data = sf[!sf$STATE %in% c("02","15","72"), ]
+#     , layer = "polygon_layer"
+#   	, fill_colour = "CENSUSAREA"
+#   	)
+
+#
+# enc <- googlePolylines::encode(sf, strip = T)
+# str(enc)
+#
+# enc[['geometry']] <- unlist(enc[['geometry']])
+
+
 
 
 

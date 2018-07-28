@@ -4,8 +4,8 @@
 \alias{add_path}
 \title{Add Path}
 \usage{
-add_path(map, data = get_map_data(map), polyline, stroke_colour = NULL,
-  stroke_width = NULL, layer_id, digits = 6,
+add_path(map, data = get_map_data(map), polyline = NULL,
+  stroke_colour = NULL, stroke_width = NULL, layer_id, digits = 6,
   palette = viridisLite::viridis)
 }
 \arguments{
@@ -33,17 +33,19 @@ extruded lines with mitering.
 }
 \examples{
 \dontrun{
+
 mapdeck(
   token = key
   , style = 'mapbox://styles/mapbox/dark-v9'
-  , location = c(145.688269, -38.101062)
-  , zoom = 8) \%>\%
+  , location = c(145, -37.8)
+  , zoom = 10) \%>\%
   add_path(
   data = roads
   , polyline = "geometry"
   , stroke_colour = "RIGHT_LOC"
   , layer_id = "path_layer"
   )
+
 }
 
 }
