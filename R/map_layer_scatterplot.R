@@ -22,6 +22,7 @@ mapdeckScatterplotDependency <- function() {
 #'
 #' @examples
 #'
+#'\dontrun{
 #' key <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
 #'
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
@@ -43,7 +44,7 @@ mapdeckScatterplotDependency <- function() {
 #'   , lon = "lng"
 #'   , layer_id = "scatter_layer"
 #' )
-#'
+#' }
 #'
 #' @export
 add_scatterplot <- function(
@@ -79,8 +80,9 @@ add_scatterplot <- function(
 		## TODO(check only a data.frame)
 		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
 		polyline <- 'polyline'
-		objArgs[[lon]] <- NULL
-		objArgs[[lat]] <- NULL
+    ## TODO(check lon & lat exist / passed in as arguments )
+		objArgs[['lon']] <- NULL
+		objArgs[['lat']] <- NULL
 		objArgs[['polyline']] <- polyline
 	}
 

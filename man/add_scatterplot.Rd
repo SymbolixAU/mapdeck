@@ -36,6 +36,7 @@ with a certain radius.
 }
 \examples{
 
+\dontrun{
 key <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
 
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
@@ -57,6 +58,6 @@ add_scatterplot(
   , lon = "lng"
   , layer_id = "scatter_layer"
 )
-
+}
 
 }

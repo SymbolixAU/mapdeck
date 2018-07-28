@@ -9,11 +9,18 @@ function add_scatterplot( map_id, scatter_data, layer_id ) {
     radiusScale: 1,
     radiusMinPixels: 1,
     getRadius: d => d.radius,
-    getPosition: d => decode_polyline( d.polyline ),
+    getPosition: d => decode_scatter( d.polyline ),
     getColor: d => hexToRgb( d.fill_colour ),
     onClick: info => layer_click( map_id, "scatterplot", info )
 	});
 
 	window[map_id + 'layers'].push( scatterLayer );
   window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
+}
+
+function decode_scatter( polyline ) {
+
+	var coordinates = decode_polyline( polyline ) ;
+
+	return coordinates[0];
 }
