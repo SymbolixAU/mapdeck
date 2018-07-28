@@ -35,7 +35,7 @@ The Polygon Layer renders filled and/or stroked polygons.
 \examples{
 \dontrun{
 
-key <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
+key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 
 mapdeck(
   token = key
