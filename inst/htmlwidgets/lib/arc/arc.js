@@ -17,18 +17,27 @@ function add_arc( map_id, data, layer_id ) {
 
 //  remove_layer( map_id, layer_id );
   update_layer( map_id, layer_id, arcLayer );
+
+//  window[map_id + 'map'].setProps({ layers: arcLayer });
 }
 
 function update_layer( map_id, layer_id, layer ) {
+
 	var elem = -1;
   var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', 'arc-arc_layer');
   if ( elem != -1 ) {
-  	console.log( "logging window elem" );
-  	console.log( window[ map_id + 'layers'][elem] );
+
+    console.log("window layers before arc update");
+    console.log( window[map_id + 'layers']);
+
   	window[ map_id + 'layers'][elem] = layer;
   } else {
   	window[map_id + 'layers'].push( layer );
   }
+
+  console.log("window layers after arc update");
+  console.log( window[map_id + 'layers']);
+
   window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
 }
 

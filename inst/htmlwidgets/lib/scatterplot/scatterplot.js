@@ -17,8 +17,6 @@ function add_scatterplot( map_id, json, layer_id ) {
     onClick: info => layer_click( map_id, "scatterplot", info )
 	});
 
-  console.log( window[map_id + 'map'] ); // this is teh deck obj
-  console.log( window[map_id + 'layers'] );
 	window[map_id + 'layers'].push( scatterLayer );
   window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
 }
