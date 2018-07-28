@@ -3,8 +3,6 @@ var triggerCounter = 0;
 
 function add_arc( map_id, data, layer_id ) {
   // reference: http://deck.gl/#/documentation/deckgl-api-reference/layers/arc-layer
-  var elem = -1;
-
   const arcLayer = new ArcLayer({
     id: 'arc-'+layer_id,  // TODO
     data,
@@ -15,22 +13,22 @@ function add_arc( map_id, data, layer_id ) {
     getSourceColor: d => hexToRgb( d.stroke_from ),
     getTargetColor: d => hexToRgb( d.stroke_to ),
     onClick: info => layer_click( map_id, "arc", info ),
-    //updateTriggers: {
-    //	getStrokeWidth: triggerCounter
-    //}
   });
 
-  //window[map_id + 'layers'].push( arcLayer );
-  //window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
+//  remove_layer( map_id, layer_id );
+  update_layer( map_id, layer_id, arcLayer );
+}
 
-  //var elem = -1;
-  //elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', 'arc-arc_layer');
-  //console.log("elem: " + elem);
-
-  //if (elem === -1) {
-
-  remove_layer( map_id, layer_id );
-  window[map_id + 'layers'].push( arcLayer );
+function update_layer( map_id, layer_id, layer ) {
+	var elem = -1;
+  var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', 'arc-arc_layer');
+  if ( elem != -1 ) {
+  	console.log( "logging window elem" );
+  	console.log( window[ map_id + 'layers'][elem] );
+  	window[ map_id + 'layers'][elem] = layer;
+  } else {
+  	window[map_id + 'layers'].push( layer );
+  }
   window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
 }
 
@@ -51,44 +49,6 @@ function triggerButton( message ) {
 	console.log("triggered counter: " + message );
 	triggerCounter = triggerCounter + 1;
 	return triggerCounter;
-}
-
-
-function update_arc( map_id, arc_data, layer_id ) {
-
-/*
-	if ( !arcLayer ) {
-		return;
-	}
-*/
-
-	//arcLayer.props.getSourceColor = [255, 255, 255];
-	//window[map_id + 'layers'][ 'arc-'+layer_id] = arcLayer;
-
-	console.log(" arc layer: ");
-	console.log( window[map_id + 'map'].props );
-
-	var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', 'arc-arc_layer');
-
-  console.log("elem: " + elem);
-
-
-	//if ( elem ) {
-		console.log(" elem found ");
-		// TODO(test is this elem is valid/ null/works)
-		console.log( "before update: " );
-		console.log( window[map_id + 'map'].props.layers[elem].props );
-		add_arc( map_id, arc_data, layer_id );
-		//window[map_id + 'map'].props.layers[elem].props.data = arc_data;
-		console.log( "after update: " );
-		console.log( window[map_id + 'map'].props.layers[elem].props );
-	//}
-	//window[map_id + 'map'].setProps({ layers: window[map_id + 'layers']['arc-'+layer_id] });
-}
-
-
-function updateLayerData(  ) {
-
 }
 
 function findObjectElementByKey(array, key, value, layer_data ) {

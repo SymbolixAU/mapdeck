@@ -1,4 +1,8 @@
 
+## trigger notes
+## https://github.com/uber/deck.gl/issues/577
+
+
 
 # ## ON CLICK
 # library(shiny)
