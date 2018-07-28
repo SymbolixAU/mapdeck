@@ -61,10 +61,7 @@ add_path <- function(
 	## added to objArgs after the match.call() function
 	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
 		objArgs[['polyline']] <- polyline
-		## TODO(MULTILINESTRINGS)
-		## this unlist wont' work; needs a row per polyline, and therefore keep all
-		## the other columns consistent with those rows.
-		data[[polyline]] <- unlist(data[[polyline]])
+		data <- unlistMultiPolyline( data, polyline )
 	}
 
 	## parameter checks
