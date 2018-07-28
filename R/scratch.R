@@ -52,6 +52,17 @@
 ## TRIGGERS
 
 # library(shiny)
+# ui <- fluidPage(
+# 	mapdeckOutput(outputId = "map")
+# )
+# server <- function(input, output) {
+# 	output$map <- renderMapdeck({
+# 		mapdeck(token = key)
+# 	})
+# }
+# shinyApp(ui, server)
+
+# library(shiny)
 # library(shinydashboard)
 # library(data.table)
 # library(mapdeck)
@@ -82,7 +93,7 @@
 # 	dt[lat < 0, hemisphere := "south"]
 # 	dt[lat >= 0, hemisphere := "north"]
 #
-# key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+#   key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 #
 # 	output$countries <- renderUI({
 # 		selectInput(
@@ -121,7 +132,7 @@
 # 		print(dt_plot)
 #
 # 		mapdeck(
-# 			token = access_token
+# 			token = key
 # 			, style = "mapbox://styles/mapbox/dark-v9"
 # 			, pitch = 35
 # 		) %>%
