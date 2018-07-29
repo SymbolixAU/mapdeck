@@ -10,7 +10,7 @@ function add_arc( map_id, arc_data, layer_id ) {
     getTargetPosition: d => decode_points( d.destination ),
     getSourceColor: d => hexToRgb( d.stroke_from ),
     getTargetColor: d => hexToRgb( d.stroke_to ),
-    //onHover: ({object}) => setTooltip(`${object.from.name} to ${object.to.name}`)
+    onHover: ({object}) => setTooltip(`${object.from.name} to ${object.to.name}`),
     //onHover: info => console.log('Hovered:', info),
     //onClick: info => console.log('Clicked:', info)
     onClick: info => layer_click( map_id, "arc", info ),

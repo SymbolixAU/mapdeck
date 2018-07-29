@@ -61,7 +61,7 @@ add_path <- function(
 	## added to objArgs after the match.call() function
 	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
 		objArgs[['polyline']] <- polyline
-		data[[polyline]] <- unlist(data[[polyline]])
+		data <- unlistMultiPolyline( data, polyline )
 	}
 
 	## parameter checks

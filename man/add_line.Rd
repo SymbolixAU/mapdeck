@@ -9,7 +9,27 @@ add_line(map, data = get_map_data(map), layer_id, origin, destination,
   palette = viridisLite::viridis)
 }
 \arguments{
+\item{map}{a mapdeck map object}
+
+\item{data}{data to be used in the layer}
+
+\item{layer_id}{single value specifying an id for the layer. Use this value to
+distinguish between shape layers of the same type}
+
+\item{origin}{vector of longitude and latitude columns, or an \code{sfc} column}
+
+\item{destination}{vector of longitude and latitude columns, or an \code{sfc} column}
+
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+
 \item{stroke_colour}{variable or hex colour to use as the ending stroke colour}
+
+\item{stroke_width}{width of the stroke}
+
+\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
+should be used for the latitude / longitude coordinates.}
+
+\item{palette}{a function, or list of functions which generates hex colours}
 }
 \description{
 The Line Layer renders raised lines joining pairs of source and target coordinates

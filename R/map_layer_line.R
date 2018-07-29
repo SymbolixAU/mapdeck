@@ -14,7 +14,7 @@ mapdeckLineDependency <- function() {
 #'
 #' The Line Layer renders raised lines joining pairs of source and target coordinates
 #'
-#' @inheritParams arc_layer
+#' @inheritParams add_arc
 #' @param stroke_colour variable or hex colour to use as the ending stroke colour
 #'
 #' @examples

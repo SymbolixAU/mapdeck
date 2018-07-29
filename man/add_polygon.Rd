@@ -50,6 +50,21 @@ mapdeck(
   	, fill_colour = "fillColor"
   	)
 
+library(sf)
+library(geojsonsf)
+
+sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+
+mapdeck(
+	token = key
+	, style = 'mapbox://styles/mapbox/dark-v9'
+) \%>\%
+	add_polygon(
+		data = sf
+		, layer = "polygon_layer"
+		, fill_colour = "SA2_NAME16"
+	)
+
 }
 
 }
