@@ -14,19 +14,8 @@ mapdeckLineDependency <- function() {
 #'
 #' The Line Layer renders raised lines joining pairs of source and target coordinates
 #'
-#' @param map a mapdeck map object
-#' @param data data to be used in the layer
-#' @param layer_id single value specifying an id for the layer. Use this value to
-#' distinguish between shape layers of the same type
-#' @param origin vector of longitude and latitude columns, or an \code{sfc} column
-#' @param destination vector of longitude and latitude columns, or an \code{sfc} column
-#' @param id an id value in \code{data} to identify layers when interacting in Shiny apps
-#' @param stroke_from variable or hex colour to use as the staring stroke colour
-#' @param stroke_to variable or hex colour to use as the ending stroke colour
-#' @param stroke_width width of the stroke
-#' @param digits integer. Use this parameter to specify how many digits (decimal places)
-#' should be used for the latitude / longitude coordinates.
-#' @param palette a function, or list of functions which generates hex colours
+#' @inheritParams arc_layer
+#' @param stroke_colour variable or hex colour to use as the ending stroke colour
 #'
 #' @examples
 #' \dontrun{
