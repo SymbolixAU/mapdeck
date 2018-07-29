@@ -42,8 +42,9 @@ mapdeckGridDependency <- function() {
 add_grid <- function(
 	map,
 	data = get_map_data(map),
-	lon,
-	lat,
+	lon = NULL,
+	lat = NULL,
+	polyline = NULL,
 	cell_size = 1000,
 	extruded = TRUE,
 	elevation_scale = 1,

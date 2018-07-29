@@ -4,8 +4,9 @@
 \alias{add_grid}
 \title{Add Grid}
 \usage{
-add_grid(map, data = get_map_data(map), lon, lat, cell_size = 1000,
-  extruded = TRUE, elevation_scale = 1, layer_id, digits = 6,
+add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
+  polyline = NULL, cell_size = 1000, extruded = TRUE,
+  elevation_scale = 1, layer_id, digits = 6,
   palette = viridisLite::viridis)
 }
 \arguments{
