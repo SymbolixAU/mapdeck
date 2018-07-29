@@ -223,6 +223,19 @@
 # enc[['geometry']] <- unlist(enc[['geometry']])
 
 
+# ### MULTILINESTRING
+# ls1 <- sf::st_linestring(x = matrix(c(1,2,3,4,5,6), ncol = 2))
+# ls2 <- sf::st_linestring(x = matrix(c(8, 9, 10, 11), ncol = 2))
+# mls <- sf::st_multilinestring(x = list(ls1, ls2))
+# sf <- sf::st_sf( geometry = sf::st_sfc(mls) )
+#
+# mapdeck(
+# 	token = key
+# ) %>%
+# 	add_path(
+# 		data = sf
+# 		, layer_id = "path"
+# 	)
 
 
 
