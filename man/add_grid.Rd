@@ -42,11 +42,11 @@ df <- read.csv('https://raw.githubusercontent.com/uber-common/deck.gl-data/maste
 
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 add_grid(
-  data = df[1:100000, ]
+  data = df
   , lat = "lat"
   , lon = "lng"
-  , cell_size = 2000
-  , elevation_scale = 10
+  , cell_size = 5000
+  , elevation_scale = 50
   , layer_id = "grid_layer"
 )
 }
