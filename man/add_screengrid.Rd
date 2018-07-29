@@ -25,7 +25,8 @@ distinguish between shape layers of the same type}
 should be used for the latitude / longitude coordinates.}
 }
 \description{
-Add Screengrid
+The Screen Grid Layer takes in an array of latitude and longitude coordinated points,
+aggregates them into histogram bins and renders as a grid
 }
 \examples{
 \dontrun{

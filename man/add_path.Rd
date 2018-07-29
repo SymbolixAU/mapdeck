@@ -40,7 +40,7 @@ mapdeck(
   , location = c(145, -37.8)
   , zoom = 10) \%>\%
   add_path(
-  data = roads[1:100, ]
+  data = roads
   , polyline = "geometry"
   , stroke_colour = "RIGHT_LOC"
   , layer_id = "path_layer"

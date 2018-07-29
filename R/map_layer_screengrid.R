@@ -12,6 +12,9 @@ mapdeckScreengridDependency <- function() {
 
 #' Add Screengrid
 #'
+#' The Screen Grid Layer takes in an array of latitude and longitude coordinated points,
+#' aggregates them into histogram bins and renders as a grid
+#'
 #' @inheritParams add_arc
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
