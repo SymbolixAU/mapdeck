@@ -4,9 +4,10 @@
 \alias{add_scatterplot}
 \title{Add Scatterplot}
 \usage{
-add_scatterplot(map, data = get_map_data(map), lon, lat, radius = NULL,
-  fill_colour = NULL, fill_opacity = NULL, stroke_width = NULL, layer_id,
-  digits = 6, palette = viridisLite::viridis)
+add_scatterplot(map, data = get_map_data(map), lon = NULL, lat = NULL,
+  polyline = NULL, radius = NULL, fill_colour = NULL,
+  fill_opacity = NULL, stroke_width = NULL, layer_id, digits = 6,
+  palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -35,6 +36,7 @@ with a certain radius.
 }
 \examples{
 
+\dontrun{
 key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 add_scatterplot(
@@ -55,6 +57,6 @@ add_scatterplot(
   , lon = "lng"
   , layer_id = "scatter_layer"
 )
-
+}
 
 }

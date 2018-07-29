@@ -135,64 +135,23 @@
 # shinyApp(ui, server)
 
 
-### Polygon
-
-## polygons need to be an array of polylines
-
-# sf <- geojsonsf::geojson_sf( googleway::geo_melbourne )
-# enc <- googlePolylines::encode(sf)
+# library(data.table)
 #
-# mapdeck(
-#   token = key
-#   , style = 'mapbox://styles/mapbox/dark-v9'
-#   , location = c(145.688269, -38.101062)
-#   , zoom = 8
-#   ) %>%
-#   add_polygon(
-#   	data = enc
-#     , polyline = "geometry"
-#     , layer = "polygon_layer"
-#   	, fill_colour = "fillColor"
-#   	)
-
-
-### SF
-
-# library(sf)
+# dt <- as.data.table(df)
+# dt[, idx := rep(1:(.N/2),  each = 2)]
+# dt <- dt[
+# 	, {
+# 		geometry <- sf::st_sfc(sf::st_multipoint(x = matrix(c(lng, lat), ncol = 2)))
+# 		geometry <- sf::st_sf(geometry = geometry)
+# 	}
+# 	, by = idx
+# ]
 #
-# sf <- sf::st_read("http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json")
-# key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 #
-# mapdeck(
-#   token = access_token
-#   , style = 'mapbox://styles/mapbox/dark-v9'
-#   ) %>%
-#   add_polygon(
-#   	data = sf[!sf$STATE %in% c("02","15","72"), ]
-#     , layer = "polygon_layer"
-#   	, fill_colour = "CENSUSAREA"
-#   	)
+# dt
+#
+# sf <- sf::st_as_sf(dt)
 
-#
-# enc <- googlePolylines::encode(sf, strip = T)
-# str(enc)
-#
-# enc[['geometry']] <- unlist(enc[['geometry']])
-
-
-# ### MULTILINESTRING
-# ls1 <- sf::st_linestring(x = matrix(c(1,2,3,4,5,6), ncol = 2))
-# ls2 <- sf::st_linestring(x = matrix(c(8, 9, 10, 11), ncol = 2))
-# mls <- sf::st_multilinestring(x = list(ls1, ls2))
-# sf <- sf::st_sf( geometry = sf::st_sfc(mls) )
-#
-# mapdeck(
-# 	token = key
-# ) %>%
-# 	add_path(
-# 		data = sf
-# 		, layer_id = "path"
-# 	)
 
 
 

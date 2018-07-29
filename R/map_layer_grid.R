@@ -54,10 +54,27 @@ add_grid <- function(
 
 	objArgs <- match.call(expand.dots = F)
 
-	## parmater checks
+	data <- normaliseSfData(data, "POINT")
+	polyline <- findEncodedColumn(data, polyline)
 
+	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
+		objArgs[['polyline']] <- polyline
+		data <- unlistMultiGeometry( data, polyline )
+	}
+
+	## parmater checks
+	usePolyline <- isUsingPolyline(polyline)
 
 	## end parameter checks
+	if ( !usePolyline ) {
+		## TODO(check only a data.frame)
+		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
+		polyline <- 'polyline'
+		## TODO(check lon & lat exist / passed in as arguments )
+		objArgs[['lon']] <- NULL
+		objArgs[['lat']] <- NULL
+		objArgs[['polyline']] <- polyline
+	}
 
 	allCols <- gridColumns()
 	requiredCols <- requiredGridColumns()
@@ -99,7 +116,7 @@ requiredGridColumns <- function() {
 
 
 gridColumns <- function() {
-	c('lat', 'lon')
+	c("polyline")
 }
 
 gridDefaults <- function(n) {
