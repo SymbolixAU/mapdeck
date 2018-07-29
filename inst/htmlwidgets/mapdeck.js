@@ -20,6 +20,21 @@ HTMLWidgets.widget({
         var mapDiv = document.getElementById(el.id);
         mapDiv.className = 'mapdeckmap';
 
+        const	deckgl = new deck.DeckGL({
+          	mapboxApiAccessToken: x.access_token,
+			      container: el.id,
+			      mapStyle: x.style,
+			      longitude: x.location[1],
+			      latitude: x.location[0],
+			      zoom: x.zoom,
+			      pitch: x.pitch,
+			      layers: []
+			    });
+
+			    window[el.id + 'map'] = deckgl;
+
+			    initialise_map(el, x);
+/*
        if (HTMLWidgets.shinyMode) {
        	// use setInterval to check if the map can be loaded
 	      // the map is dependant on the mapdeck JS resource
@@ -70,7 +85,7 @@ HTMLWidgets.widget({
 
           initialise_map(el, x);
        }
-
+*/
        //console.log(hexToRgb("#0F0F0F"));
 
       },
