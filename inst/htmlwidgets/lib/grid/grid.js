@@ -10,7 +10,7 @@ function add_grid( map_id, grid_data, layer_id, cell_size, extruded, elevation_s
     extruded: extruded,
     cellSize: cell_size,
     elevationScale: elevation_scale,
-    getPosition: d => decode_polyline( d.polyline ),
+    getPosition: d => decode_polyline( d.polyline )[0],
     onClick: info => layer_click( map_id, "grid", info )
   });
 
