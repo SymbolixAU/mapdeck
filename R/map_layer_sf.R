@@ -17,6 +17,28 @@ findEncodedColumn.sfencoded <- function(data, polyline) {
 #' @export
 findEncodedColumn.default <- function(data, polyline) polyline
 
+normaliseMultiSfData <- function(data, origin, destination) UseMethod("normaliseMultiSfData")
+
+#' @export
+normaliseMultiSfData.sf <- function(data, origin, destination) {
+	attr(data, 'sf_column') <- origin
+	enc_origin <- googlePolylines::encode( data[, origin ] )
+
+	attr(data, 'sf_column') <- destination
+	# destination <- googlePolylines::encode( data[, destination ] )
+	enc <- googlePolylines::encode( data )
+	enc[, origin ] <- enc_origin
+
+	attr(enc, 'encoded_column') <- origin
+	one <- googlePolylines::geometryRow( enc, "POINT" )
+
+	attr(enc, 'encoded_column') <- destination
+	two <- googlePolylines::geometryRow( enc, "POINT" )
+
+	point_rows <- intersect(one, two)
+	attr(enc, 'class') <- c("sfencoded", "data.frame")
+	return(enc[ point_rows, ])
+}
 
 normaliseSfData <- function(data, geom) UseMethod("normaliseSfData")
 
@@ -35,8 +57,6 @@ normaliseSfData.sfencoded <- function(data, geom) {
 
 #' @export
 normaliseSfData.default <- function(data, geom) data
-
-
 
 normalise_sf <- function(sf) UseMethod("normalise_sf")
 

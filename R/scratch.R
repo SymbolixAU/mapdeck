@@ -233,6 +233,94 @@
 #   , layer_id = "scatter_layer"
 # )
 
+### ARC
+#
+# library(googlePolylines)
+# library(mapdeck)
+#
+# df <- capitals
+# df$polyline <- googlePolylines::encode(df, byrow = T)
+#
+# head(df)
+#
+# library(data.table)
+# library(sf)
+#
+# dt <- as.data.table( capitals )
+#
+# dt <- dt[
+# 	, {
+# 		geometry <- sf::st_point(x = c(lon, lat))
+# 		geometry <- sf::st_sfc(geometry)
+# 		geometry <- sf::st_sf(geometry = geometry)
+# 	}
+# 	, by = .(country, capital)
+# ]
+#
+# dt[, key := 1]
+# dt <- dt[ country == "Australia" ][
+# 	dt
+# 	, on = "key"
+# 	, nomatch = 0
+# ][country != i.country]
+#
+# setnames(dt, c("i.country", "i.capital", "i.geometry"), c("destination_country", "destination_capital", "destination_geometry"))
+# setnames(dt, c("country", "capital", "geometry"), c("origin_country", "origin_capital", "origin_geometry"))
+#
+#
+# sf <- sf::st_as_sf( dt )
+#
+# sf::st_geometry( sf ) <- "destination_geometry"
+# sf
+# sf::st_geometry( sf ) <- "origin_geometry"
+# sf
+#
+# data <- sf
+# toEncode <- names( which( sapply( data, function(x) inherits(x, "sfc") ) ) )
+
+# enc <- googlePolylines::encode( sf )
+# googlePolylines::encode( sf[, toEncode[1] ] )
+
+## encode both columns
+# sapply(toEncode, function(x) {
+# 	attr(sf, "sf_column") <- x
+# 	googlePolylines::encode( sf[, x ] )
+# })
+#
+# encodeTwoColumns <- function(data, origin, destination ) {
+# 	attr(data, 'sf_column') <- origin
+# 	enc_origin <- googlePolylines::encode( data[, origin ] )
+#
+# 	attr(data, 'sf_column') <- destination
+# 	# destination <- googlePolylines::encode( data[, destination ] )
+# 	enc <- googlePolylines::encode( data )
+# 	enc[, origin ] <- enc_origin
+#
+# 	attr(enc, 'encoded_column') <- origin
+# 	one <- googlePolylines::geometryRow( enc, "POINT" )
+#
+# 	attr(enc, 'encoded_column') <- destination
+# 	two <- googlePolylines::geometryRow( enc, "POINT" )
+#
+# 	point_rows <- intersect(one, two)
+# 	attr(enc, 'class') <- c("sfencoded", "data.frame")
+# 	return(enc[ point_rows, ])
+# }
+#
+# data <- encodeTwoColumns( sf, "origin_geometry", "destination_geometry")
+#
+# head(data)
+
+
+# key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+#
+# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+# add_arc(
+#   data = sf
+#   , origin = "origin_geometry"
+#   , destination = "destination_geometry"
+#   , layer_id = "arc_layer"
+# )
 
 
 

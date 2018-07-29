@@ -196,7 +196,10 @@ function layer_click( map_id, layer, info ) {
   Shiny.onInputChange(map_id + "_" + layer + "_click", eventInfo);
 }
 
-
+function decode_points( polyline ) {
+	var coordinates = decode_polyline( polyline ) ;
+	return coordinates[0];
+}
 
 function decode_polyline(str, precision) {
   var index = 0,

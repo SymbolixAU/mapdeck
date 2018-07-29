@@ -18,8 +18,8 @@ mapdeckArcDependency <- function() {
 #' @param data data to be used in the layer
 #' @param layer_id single value specifying an id for the layer. Use this value to
 #' distinguish between shape layers of the same type
-#' @param origin vector of longitude and latitude columns
-#' @param destination vector of longitude and latitude columns
+#' @param origin vector of longitude and latitude columns, or an \code{sfc} column
+#' @param destination vector of longitude and latitude columns, or an \code{sfc} column
 #' @param id an id value in \code{data} to identify layers when interacting in Shiny apps
 #' @param stroke_from variable or hex colour to use as the staring stroke colour
 #' @param stroke_to variable or hex colour to use as the ending stroke colour
@@ -67,19 +67,49 @@ add_arc <- function(
 
 	objArgs <- match.call(expand.dots = F)
 
+	## if origin && destination == one column each, it's an sf_encoded
+	## else, it's two column, which need to be encoded!
+  if ( length(origin) == 2 && length(destination) == 2) {
+  	## lon / lat columns
+  	data[[ origin[1] ]] <- googlePolylines:::encode(
+  		data[, origin, drop = F ]
+  		, lon = origin[1]
+  		, lat = origin[2]
+  		, byrow = T
+  		)
+  	data[[ destination[1] ]] <- googlePolylines:::encode(
+  		data[, destination, drop = F ]
+  		, lon = destination[1]
+  		, lat = destination[2]
+  		, byrow = T
+  		)
+
+  	objArgs[['origin']] <- origin[1]
+  	objArgs[['destination']] <- destination[1]
+
+  } else if (length(origin) == 1 && length(destination) == 1) {
+  	## encoded
+  	data <- normaliseMultiSfData(data, origin, destination)
+  	data[[origin]] <- unlist(data[[origin]])
+  	data[[destination]] <- unlist(data[[destination]])
+
+  } else {
+  	stop("expecting lon/lat origin destinations or sfc columns")
+  }
+
 	## parameter checks
 
 
 	## end parameter checks
 
-	lon_from <- origin[1]
-	lat_from <- origin[2]
-	lon_to <- destination[1]
-	lat_to <- destination[2]
-	objArgs[['lat_from']] <- lat_from
-	objArgs[['lat_to']] <- lat_to
-	objArgs[['lon_from']] <- lon_from
-	objArgs[['lon_to']] <- lon_to
+	# lon_from <- origin[1]
+	# lat_from <- origin[2]
+	# lon_to <- destination[1]
+	# lat_to <- destination[2]
+	# objArgs[['lat_from']] <- lat_from
+	# objArgs[['lat_to']] <- lat_to
+	# objArgs[['lon_from']] <- lon_from
+	# objArgs[['lon_to']] <- lon_to
 
 
 	allCols <- arcColumns()
@@ -189,7 +219,7 @@ requiredArcColumns <- function() {
 }
 
 arcColumns <- function() {
-	c('lat_from', 'lon_from', "lat_to", "lon_to",
+	c("origin", "destination",
 		"stroke_width", "stroke_from", "stroke_to")
 }
 
