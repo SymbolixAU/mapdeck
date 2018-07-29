@@ -1,65 +1,56 @@
-mapdeckScatterplotDependency <- function() {
+mapdeckGridDependency <- function() {
 	list(
 		htmltools::htmlDependency(
-			"scatterplot",
+			"grid",
 			"1.0.0",
-			system.file("htmlwidgets/lib/scatterplot", package = "mapdeck"),
-			script = c("scatterplot.js")
+			system.file("htmlwidgets/lib/grid", package = "mapdeck"),
+			script = c("grid.js")
 		)
 	)
 }
 
 
-#' Add Scatterplot
+#' Add Grid
 #'
-#' The Scatterplot Layer takes in coordinate points and renders them as circles
-#' with a certain radius.
+#' The Grid Layer renders a grid heatmap based on an array of points.
+#' It takes the constant size all each cell, projects points into cells.
+#' The color and height of the cell is scaled by number of points it contains.
 #'
 #' @inheritParams add_arc
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
-#' @param radius in metres
+#' @param cell_size size of each cell in meters
+#' @param extruded logical indicating if cells are elevated or not
+#' @param elevation_scale cell elevation multiplier
 #'
 #' @examples
-#'
-#'\dontrun{
-#' key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
-#' add_scatterplot(
-#'   data = capitals
-#'   , lat = "lat"
-#'   , lon = "lon"
-#'   , radius = 100000
-#'   , fill_colour = "country"
-#'   , layer_id = "scatter_layer"
-#' )
-#'
+#' \dontrun{
 #' df <- read.csv('https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv')
 #'
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
-#' add_scatterplot(
+#' add_grid(
 #'   data = df
 #'   , lat = "lat"
 #'   , lon = "lng"
-#'   , layer_id = "scatter_layer"
+#'   , cell_size = 5000
+#'   , elevation_scale = 50
+#'   , layer_id = "grid_layer"
 #' )
 #' }
 #'
 #' @export
-add_scatterplot <- function(
+add_grid <- function(
 	map,
 	data = get_map_data(map),
-	lon = NULL,
-	lat = NULL,
-	polyline = NULL,
-	radius = NULL,
-	fill_colour = NULL,
-	fill_opacity = NULL,
-	stroke_width = NULL,
+	lon,
+	lat,
+	cell_size = 1000,
+	extruded = TRUE,
+	elevation_scale = 1,
 	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis
-	) {
+) {
 
 	objArgs <- match.call(expand.dots = F)
 
@@ -79,21 +70,21 @@ add_scatterplot <- function(
 		## TODO(check only a data.frame)
 		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
 		polyline <- 'polyline'
-    ## TODO(check lon & lat exist / passed in as arguments )
+		## TODO(check lon & lat exist / passed in as arguments )
 		objArgs[['lon']] <- NULL
 		objArgs[['lat']] <- NULL
 		objArgs[['polyline']] <- polyline
 	}
 
-	allCols <- scatterplotColumns()
-	requiredCols <- requiredScatterplotColumns()
+	allCols <- gridColumns()
+	requiredCols <- requiredGridColumns()
 
 	colourColumns <- shapeAttributes(
-		fill_colour = fill_colour
+		fill_colour = NULL
 		, stroke_colour = NULL
 		, stroke_from = NULL
 		, stroke_to = NULL
-		)
+	)
 
 	shape <- createMapObject(data, allCols, objArgs)
 
@@ -109,36 +100,27 @@ add_scatterplot <- function(
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
 	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "scatterplot")
+		shape <- addDefaults(shape, requiredDefaults, "grid")
 	}
+
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
-	map <- addDependency(map, mapdeckScatterplotDependency())
-	invoke_method(map, "add_scatterplot", shape, layer_id)
+	map <- addDependency(map, mapdeckGridDependency())
+	invoke_method(map, "add_grid", shape, layer_id, cell_size, jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale)
 }
 
 
-
-
-requiredScatterplotColumns <- function() {
-	c("stroke_width", "radius",
-		"fill_opacity", "fill_colour")
+requiredGridColumns <- function() {
+	c()
 }
 
 
-scatterplotColumns <- function() {
-	c('polyline', "elevation", "radius",
-		'fill_colour', 'fill_opacity',
-		'stroke_width')
+gridColumns <- function() {
+	c("polyline")
 }
 
-scatterplotDefaults <- function(n) {
+gridDefaults <- function(n) {
 	data.frame(
-		"elevation" = rep(0, n),
-		"radius" = rep(1, n),
-		"fill_colour" = rep("#0000FF", n),
-		"fill_opacity" = rep(0.8, n),
-		"stroke_width" = rep(1, n),
 		stringsAsFactors = F
 	)
 }

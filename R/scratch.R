@@ -155,6 +155,23 @@
 # shinyApp(ui, server)
 
 
+# library(data.table)
+#
+# dt <- as.data.table(df)
+# dt[, idx := rep(1:(.N/2),  each = 2)]
+# dt <- dt[
+# 	, {
+# 		geometry <- sf::st_sfc(sf::st_multipoint(x = matrix(c(lng, lat), ncol = 2)))
+# 		geometry <- sf::st_sf(geometry = geometry)
+# 	}
+# 	, by = idx
+# ]
+#
+#
+# dt
+#
+# sf <- sf::st_as_sf(dt)
+
 
 
 

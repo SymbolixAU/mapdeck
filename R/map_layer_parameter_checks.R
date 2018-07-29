@@ -32,15 +32,15 @@ layerId <- function(layer_id){
 # unlists a polyline column so it's one row per geometry
 #
 # @param df
-# @param polyline
-unlistMultiPolyline <- function( df, polyline ) {
+# @param geometry
+unlistMultiGeometry <- function( df, geometry ) {
 
-	list_length <- vapply( df[[polyline]] , length, 1L)
-	unlisted <- unlist( df[[polyline]] )
+	list_length <- vapply( df[[ geometry ]] , length, 1L)
+	unlisted <- unlist( df[[ geometry ]] )
 	df_rows <- 1:nrow(df)
 
 	## ensure a one-column data.frame is handle correctly
-	df <- df[rep(df_rows, list_length), setdiff(names(df), polyline), drop = F]
-	df[[polyline]] <- unlisted
+	df <- df[rep(df_rows, list_length), setdiff(names(df), geometry), drop = F]
+	df[[ geometry ]] <- unlisted
 	return( df )
 }

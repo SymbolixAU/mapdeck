@@ -93,6 +93,7 @@ addDefaults <- function(shape, requiredDefaults, shapeType) {
 		, "polygon" = polygonDefaults(n)
 		, "screengrid" = screengridDefaults(n)
 		, "line" = lineDefaults(n)
+		, "grid" = gridDefaults(n)
 		)
 	shape <- cbind(shape, defaults[, requiredDefaults, drop = F])
 	return(shape)
