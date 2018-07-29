@@ -75,7 +75,6 @@
 # 	dashboardHeader()
 # 	, dashboardSidebar(
 # 		shiny::uiOutput(outputId = "countries")
-# 		, actionButton(inputId = "button", label = "update map")
 # 	)
 # 	, dashboardBody(
 # 		mapdeckOutput(outputId = "map")
@@ -120,7 +119,6 @@
 # 			, allow.cartesian = T
 # 			]
 #
-# 		print(dt_plot)
 # 		return(dt_plot)
 # 	})
 #
@@ -131,9 +129,6 @@
 # 			, on = "key"
 # 			, allow.cartesian = T
 # 			]
-#
-# 		print("reinitialising map")
-# 		print(dt_plot)
 #
 # 		mapdeck(
 # 			token = key
@@ -160,18 +155,18 @@
 # 	})
 #
 # 	observeEvent({
-# 		input$button
+# 		input$countries
 # 	}, {
-# 		mapdeck_update('map') %>%
-# 			add_arc(
-# 				data = dt_countries()
-# 				, layer_id = "arc_layer"
-# 				, origin = c("lon_from", "lat_from")
-# 				, destination = c("lon_to", "lat_to")
-# 				, stroke_from = "country_from"
-# 				, id = "country_to"
-# 				#, stroke_to = "hemisphere"
-# 			)
+# 		# mapdeck_update('map') %>%
+# 		# 	add_arc(
+# 		# 		data = dt_countries()
+# 		# 		, layer_id = "arc_layer"
+# 		# 		, origin = c("lon_from", "lat_from")
+# 		# 		, destination = c("lon_to", "lat_to")
+# 		# 		, stroke_from = "country_from"
+# 		# 		, id = "country_to"
+# 		# 		#, stroke_to = "hemisphere"
+# 		# 	)
 # 	})
 # }
 #

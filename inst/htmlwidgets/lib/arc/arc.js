@@ -16,48 +16,23 @@ function add_arc( map_id, data, layer_id ) {
   });
 
 //  remove_layer( map_id, layer_id );
-  update_layer( map_id, layer_id, arcLayer );
-
-//  window[map_id + 'map'].setProps({ layers: arcLayer });
+  update_layer( map_id, 'arc-'+layer_id, arcLayer );
+  //window[map_id + 'map'].setProps({ layers: arcLayer  });
 }
 
 function update_layer( map_id, layer_id, layer ) {
 
-	var elem = -1;
-  var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', 'arc-arc_layer');
+  var elem g= findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
   if ( elem != -1 ) {
-
-    console.log("window layers before arc update");
-    console.log( window[map_id + 'layers']);
-
   	window[ map_id + 'layers'][elem] = layer;
   } else {
   	window[map_id + 'layers'].push( layer );
   }
 
-  console.log("window layers after arc update");
-  console.log( window[map_id + 'layers']);
+  console.log( "layers: " );
+  console.log( window[map_id + 'layers'] );
 
   window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
-}
-
-function remove_layer( map_id, layer_id ) {
-
-  var elem = -1;
-  var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', 'arc-arc_layer');
-
-  if ( elem != -1 ) {
-    window[map_id + 'map'].props.layers.splice( elem, 1 );
-    //window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
-  }
-}
-
-Shiny.addCustomMessageHandler("handler", triggerButton );
-
-function triggerButton( message ) {
-	console.log("triggered counter: " + message );
-	triggerCounter = triggerCounter + 1;
-	return triggerCounter;
 }
 
 function findObjectElementByKey(array, key, value, layer_data ) {
