@@ -24,8 +24,8 @@ HTMLWidgets.widget({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
-			      longitude: x.location[1],
-			      latitude: x.location[0],
+			      longitude: x.location[0],
+			      latitude: x.location[1],
 			      zoom: x.zoom,
 			      pitch: x.pitch,
 			      layers: []

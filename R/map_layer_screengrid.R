@@ -12,9 +12,6 @@ mapdeckScreengridDependency <- function() {
 
 #' Add Screengrid
 #'
-#' The Screengrid Layer takes in coordinate points and renders them as circles
-#' with a certain radius.
-#'
 #' @inheritParams add_arc
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
@@ -35,8 +32,6 @@ mapdeckScreengridDependency <- function() {
 #'   , weight = "weight",
 #'   , layer_id = "screengrid_layer"
 #' )
-#'
-#'
 #' }
 #'
 #' @export
