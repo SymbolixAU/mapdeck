@@ -169,7 +169,7 @@ update_arc <- function(
 	palette = viridisLite::viridis
 ) {
 
-	stop(" function not implemented ")
+	# stop(" function not implemented ")
 
 	objArgs <- match.call(expand.dots = F)
 

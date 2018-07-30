@@ -191,6 +191,6 @@ mapdeck(
 
 ### Shiny
 
-watch this space!
+Is on its way! Use `mapdeck_update()` to update an existing map. 
 
-It works... but need to figure out data updates and update triggers... 
+

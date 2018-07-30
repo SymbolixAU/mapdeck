@@ -14,6 +14,5 @@ function add_grid( map_id, grid_data, layer_id, cell_size, extruded, elevation_s
     onClick: info => layer_click( map_id, "grid", info )
   });
 
-  window[map_id + 'layers'].push( gridLayer );
-  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
+	update_layer( map_id, 'arc-'+layer_id, gridLayer );
 }
