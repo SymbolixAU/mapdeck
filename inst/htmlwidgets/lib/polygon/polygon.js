@@ -18,8 +18,7 @@ function add_polygon( map_id, polygon_data, layer_id ) {
     onClick: info => layer_click( map_id, "path", info )
   });
 
-  window[map_id + 'layers'].push(pathLayer);
-  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] } );
+  update_layer( map_id, 'arc-'+layer_id, polygonLayer );
 }
 
 function decode_polygons( polylines ) {

@@ -24,7 +24,6 @@ function add_geojson( map_id, geojson, layer_id ) {
     onClick: info => layer_click( map_id, "geojson", info )
   });
 
-  window[map_id + 'layers'].push(geojsonLayer);
-  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] } );
+  update_layer( map_id, 'arc-'+layer_id, geojsonLayer );
 }
 

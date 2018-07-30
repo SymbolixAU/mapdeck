@@ -33,70 +33,11 @@ HTMLWidgets.widget({
 			    window[el.id + 'map'] = deckgl;
 
 			    initialise_map(el, x);
-/*
-       if (HTMLWidgets.shinyMode) {
-       	// use setInterval to check if the map can be loaded
-	      // the map is dependant on the mapdeck JS resource
-	      // - usually implemented via callback
-
-	      console.log(" re-initialising map ");
-
-	      var checkExists = setInterval( function() {
-
-	      const	deckgl = new deck.DeckGL({
-          	mapboxApiAccessToken: x.access_token,
-			      container: el.id,
-			      mapStyle: x.style,
-			      longitude: x.location[1],
-			      latitude: x.location[0],
-			      zoom: x.zoom,
-			      pitch: x.pitch,
-			      layers: []
-			    });
-
-          if (deck !== undefined) {
-            //console.log("exists");
-            clearInterval(checkExists);
-
-            window[el.id + 'map'] = deckgl;
-            //window.deckgl = deckgl;
-
-            initialise_map(el, x);
-
-          } else {
-            //console.log("does not exist!");
-          }
-
-	      }, 100);
-
-       } else {
-
-         	console.log("loading map");
-          const deckgl = new deck.DeckGL({
-          	mapboxApiAccessToken: x.access_token,
-			      container: el.id,
-			      mapStyle: x.style,
-			      longitude: x.location[0],
-			      latitude: x.location[1],
-			      zoom: x.zoom,
-			      pitch: x.pitch,
-			      layers: []
-          });
-
-          window[el.id + 'map'] = deckgl;
-          //window.deckgl = deckgl;
-
-          initialise_map(el, x);
-       }
-*/
-       //console.log(hexToRgb("#0F0F0F"));
-
       },
 
       resize: function(width, height) {
 
         // TODO: code to re-render the widget with a new size
-
       }
 
     };
@@ -160,6 +101,16 @@ function initialise_map(el, x) {
       }
     }
   }
+}
+
+function update_layer( map_id, layer_id, layer ) {
+  var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
+  if ( elem != -1 ) {
+  	window[ map_id + 'layers'][elem] = layer;
+  } else {
+  	window[map_id + 'layers'].push( layer );
+  }
+  window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
 }
 
 
