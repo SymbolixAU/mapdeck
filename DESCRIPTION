@@ -10,7 +10,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
-  googlePolylines,
+  googlePolylines (>= 0.6.2),
   jsonlite,
   magrittr,
   viridisLite

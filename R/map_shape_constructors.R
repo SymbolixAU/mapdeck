@@ -92,6 +92,7 @@ addDefaults <- function(shape, requiredDefaults, shapeType) {
 		, "scatterplot" = scatterplotDefaults(n)
 		, "polygon" = polygonDefaults(n)
 		, "screengrid" = screengridDefaults(n)
+		, "line" = lineDefaults(n)
 		, "grid" = gridDefaults(n)
 		)
 	shape <- cbind(shape, defaults[, requiredDefaults, drop = F])

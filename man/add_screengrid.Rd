@@ -25,8 +25,8 @@ distinguish between shape layers of the same type}
 should be used for the latitude / longitude coordinates.}
 }
 \description{
-The Screengrid Layer takes in coordinate points and renders them as circles
-with a certain radius.
+The Screen Grid Layer takes in an array of latitude and longitude coordinated points,
+aggregates them into histogram bins and renders as a grid
 }
 \examples{
 \dontrun{
@@ -43,8 +43,6 @@ add_screengrid(
   , weight = "weight",
   , layer_id = "screengrid_layer"
 )
-
-
 }
 
 }

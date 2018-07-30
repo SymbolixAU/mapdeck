@@ -2,8 +2,7 @@
 
 function add_path( map_id, path_data, layer_id ) {
 
-  console.log(path_data);
-
+  console.log( path_data) ;
   const pathLayer = new PathLayer({
     id: 'path-'+layer_id,  // TODO
     data: path_data,
@@ -21,12 +20,15 @@ function add_path( map_id, path_data, layer_id ) {
   update_layer( map_id, 'arc-'+layer_id, pathLayer );
 }
 
+/*
 function decode_paths( polylines ) {
 	// polygons can be an array of polylines
 	var i, coordinates = [];
 
 	for (i = 0; i < polylines.length; i++ ) {
-		coordinates.push( decode_polyline( polylines[i] ) );
+		coordinates.push( decode_polyline( polylines ) );
 	}
+
 	return coordinates;
 }
+*/
