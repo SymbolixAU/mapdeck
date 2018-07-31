@@ -2,13 +2,6 @@ context("sf")
 
 test_that("multi-column sf objects read correctly", {
 
-	# library(sf)
-	# pt1 <- sf::st_sf(geometry = sf::st_sfc(sf::st_point(c(1,2))))
-	# pt2 <- sf::st_sf(geometry = sf::st_sfc(sf::st_point(c(3,4))))
-	# sf <- rbind(pt1, pt2)
-	# sf2 <- rbind(pt2, pt1)
-	# sf <- cbind(sf, sf2)
-
 	sf <- structure(list(geometry = structure(list(structure(c(1, 2), class = c("XY",
 	"POINT", "sfg")), structure(c(3, 4), class = c("XY", "POINT",
 	"sfg"))), precision = 0, bbox = structure(c(xmin = 1, ymin = 2,
@@ -39,11 +32,15 @@ test_that("multi-column sf objects read correctly", {
 
 test_that("multipoints unlisted", {
 
-	library(sf)
-	sf <- sf::st_sf(geometry = sf::st_sfc(sf::st_multipoint(matrix(c(1,2,3,4), ncol = 2))))
-	sf$id <- 1
-	#m <- mapdeck( token = 'abc' ) %>% add_scatterplot( data = sf, layer_id = "id" )
+	sf <- structure(list(geometry = structure(list(structure(c(1, 2, 3,
+	4), .Dim = c(2L, 2L), class = c("XY", "MULTIPOINT", "sfg"))), class = c("sfc_MULTIPOINT",
+	"sfc"), precision = 0, bbox = structure(c(xmin = 1, ymin = 3,
+	xmax = 2, ymax = 4), class = "bbox"), crs = structure(list(epsg = NA_integer_,
+	proj4string = NA_character_), class = "crs"), n_empty = 0L),
+	id = 1), row.names = 1L, sf_column = "geometry", agr = structure(c(id = NA_integer_), class = "factor", .Label = c("constant",
+	"aggregate", "identity")), class = c("sf", "data.frame"))
 
+  ## as per scatterplot
 	data <- mapdeck:::normaliseSfData(sf, "POINT")
 	polyline <- mapdeck:::findEncodedColumn(data, NULL)
   data <- mapdeck:::unlistMultiGeometry( data, polyline )
@@ -54,7 +51,28 @@ test_that("multipoints unlisted", {
   expect_true(data[2, 'geometry'] == googlePolylines::encodeCoordinates(2, 4))
 })
 
+test_that("multilinestring unlisted", {
 
+  sf <- structure(list(geometry = structure(list(structure(list(structure(c(1,
+  3), .Dim = 1:2), structure(c(2, 4), .Dim = 1:2)), class = c("XY",
+  "MULTILINESTRING", "sfg"))), class = c("sfc_MULTILINESTRING",
+  "sfc"), precision = 0, bbox = structure(c(xmin = 1, ymin = 3,
+  xmax = 2, ymax = 4), class = "bbox"), crs = structure(list(epsg = NA_integer_,
+  proj4string = NA_character_), class = "crs"), n_empty = 0L),
+  id = 1), row.names = 1L, sf_column = "geometry", agr = structure(c(id = NA_integer_), class = "factor", .Label = c("constant",
+  "aggregate", "identity")), class = c("sf", "data.frame"))
+
+  ## as per path
+  data <- mapdeck:::normaliseSfData(sf, "LINESTRING")
+  polyline <- mapdeck:::findEncodedColumn(data, polyline)
+  data <- mapdeck:::unlistMultiGeometry( data, polyline )
+
+  expect_true(nrow(data) == 2)
+  expect_true(unique(data$id) == 1)
+  expect_true(data[1, 'geometry'] == googlePolylines::encodeCoordinates(1, 3))
+  expect_true(data[2, 'geometry'] == googlePolylines::encodeCoordinates(2, 4))
+
+})
 
 
 
