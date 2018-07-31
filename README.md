@@ -23,18 +23,18 @@ Most of these plots are avialble in a limited capacity. I haven't implemented al
 
 - Arc
 - GeoJSON
+- Grid
+- Line
 - Path (partial - uses encoded polylines)
 - Polygon (partial - uses encoded polylines)
 - Scatter
+- ScreenGrid
 
 ## TODO
 
-- Grid
 - Hexagon
 - Icon
-- Line
 - PointCloud
-- ScreenGrid
 - Text
 
 ## Shiny
