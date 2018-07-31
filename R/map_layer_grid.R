@@ -19,6 +19,7 @@ mapdeckGridDependency <- function() {
 #' @inheritParams add_arc
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
+#' @param colour_range vector of hex colours
 #' @param cell_size size of each cell in meters
 #' @param extruded logical indicating if cells are elevated or not
 #' @param elevation_scale cell elevation multiplier
@@ -26,6 +27,8 @@ mapdeckGridDependency <- function() {
 #' @examples
 #' \dontrun{
 #' df <- read.csv('https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv')
+#'
+#' key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 #'
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' add_grid(
@@ -45,12 +48,12 @@ add_grid <- function(
 	lon = NULL,
 	lat = NULL,
 	polyline = NULL,
+	colour_range = viridisLite::viridis(5),
 	cell_size = 1000,
 	extruded = TRUE,
 	elevation_scale = 1,
 	layer_id,
-	digits = 6,
-	palette = viridisLite::viridis
+	digits = 6
 ) {
 
 	objArgs <- match.call(expand.dots = F)
@@ -107,7 +110,7 @@ add_grid <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckGridDependency())
-	invoke_method(map, "add_grid", shape, layer_id, cell_size, jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale)
+	invoke_method(map, "add_grid", shape, layer_id, cell_size, jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale, colour_range)
 }
 
 

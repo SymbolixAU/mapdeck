@@ -85,7 +85,7 @@ add_screengrid <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckScreengridDependency())
-	invoke_method(map, "add_screengrid", shape, layer_id )
+	invoke_method(map, "add_screengrid", shape, layer_id, colour_range )
 }
 
 

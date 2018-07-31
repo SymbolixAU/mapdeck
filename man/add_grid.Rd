@@ -5,9 +5,9 @@
 \title{Add Grid}
 \usage{
 add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, cell_size = 1000, extruded = TRUE,
-  elevation_scale = 1, layer_id, digits = 6,
-  palette = viridisLite::viridis)
+  polyline = NULL, colour_range = viridisLite::viridis(5),
+  cell_size = 1000, extruded = TRUE, elevation_scale = 1, layer_id,
+  digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -17,6 +17,8 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 \item{lon}{column containing longitude values}
 
 \item{lat}{column containing latitude values}
+
+\item{colour_range}{vector of hex colours}
 
 \item{cell_size}{size of each cell in meters}
 
@@ -29,8 +31,6 @@ distinguish between shape layers of the same type}
 
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
-
-\item{palette}{a function, or list of functions which generates hex colours}
 }
 \description{
 The Grid Layer renders a grid heatmap based on an array of points.
@@ -40,6 +40,8 @@ The color and height of the cell is scaled by number of points it contains.
 \examples{
 \dontrun{
 df <- read.csv('https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv')
+
+key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 add_grid(

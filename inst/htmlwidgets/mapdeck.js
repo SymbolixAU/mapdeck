@@ -156,6 +156,21 @@ const hexToRgb = hex =>
     .substring(1).match(/.{2}/g)
     .map(x => parseInt(x, 16));
 
+/**
+ * Converts a 'vector' of hex colours (with alpha) into an array
+ */
+function to_rgba( colour_range ) {
+	var arr = [],
+	i,
+	n = colour_range.length;
+
+	for (i = 0; i < n; i++) {
+		arr.push( hexToRgb(colour_range[i]) );
+	}
+  console.log( arr );
+  return arr;
+}
+
 function layer_click( map_id, layer, info ) {
 
   if ( !HTMLWidgets.shinyMode ) {
