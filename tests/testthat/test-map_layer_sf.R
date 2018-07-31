@@ -37,9 +37,21 @@ test_that("multi-column sf objects read correctly", {
 })
 
 
-test_that("multipoints plotted", {
+test_that("multipoints unlisted", {
 
+	library(sf)
+	sf <- sf::st_sf(geometry = sf::st_sfc(sf::st_multipoint(matrix(c(1,2,3,4), ncol = 2))))
+	sf$id <- 1
+	#m <- mapdeck( token = 'abc' ) %>% add_scatterplot( data = sf, layer_id = "id" )
 
+	data <- mapdeck:::normaliseSfData(sf, "POINT")
+	polyline <- mapdeck:::findEncodedColumn(data, NULL)
+  data <- mapdeck:::unlistMultiGeometry( data, polyline )
+
+  expect_true(nrow(data) == 2)
+  expect_true(unique(data$id) == 1)
+  expect_true(data[1, 'geometry'] == googlePolylines::encodeCoordinates(1, 3))
+  expect_true(data[2, 'geometry'] == googlePolylines::encodeCoordinates(2, 4))
 })
 
 
