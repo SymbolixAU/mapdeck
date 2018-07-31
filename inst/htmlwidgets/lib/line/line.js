@@ -12,7 +12,6 @@ function add_line( map_id, line_data, layer_id ) {
     onClick: info => layer_click( map_id, "line", info ),
   });
 
-  window[map_id + 'layers'].push( lineLayer );
-  window[map_id + 'map'].setProps({ layers: window[map_id + 'layers'] });
+  update_layer( map_id, 'line-'+layer_id, lineLayer );
 
 }

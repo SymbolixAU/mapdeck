@@ -18,7 +18,7 @@ function add_polygon( map_id, polygon_data, layer_id ) {
     onClick: info => layer_click( map_id, "path", info )
   });
 
-  update_layer( map_id, 'arc-'+layer_id, polygonLayer );
+  update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 }
 
 function decode_polygons( polylines ) {

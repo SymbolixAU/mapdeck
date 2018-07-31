@@ -17,7 +17,7 @@ function add_path( map_id, path_data, layer_id ) {
     onClick: info => layer_click( map_id, "path", info )
   });
 
-  update_layer( map_id, 'arc-'+layer_id, pathLayer );
+  update_layer( map_id, 'path-'+layer_id, pathLayer );
 }
 
 /*

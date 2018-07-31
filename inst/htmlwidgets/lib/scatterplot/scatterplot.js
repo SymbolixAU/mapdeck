@@ -14,5 +14,5 @@ function add_scatterplot( map_id, scatter_data, layer_id ) {
     onClick: info => layer_click( map_id, "scatterplot", info )
 	});
 
-	update_layer( map_id, 'arc-'+layer_id, scatterLayer );
+	update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
 }

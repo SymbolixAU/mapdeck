@@ -24,6 +24,6 @@ function add_geojson( map_id, geojson, layer_id ) {
     onClick: info => layer_click( map_id, "geojson", info )
   });
 
-  update_layer( map_id, 'arc-'+layer_id, geojsonLayer );
+  update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
 }
 

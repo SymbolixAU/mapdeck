@@ -12,5 +12,5 @@ function add_grid( map_id, grid_data, layer_id, cell_size, extruded, elevation_s
     getPosition: d => decode_polyline( d.polyline )[0],
     onClick: info => layer_click( map_id, "grid", info )
   });
-	update_layer( map_id, 'arc-'+layer_id, gridLayer );
+	update_layer( map_id, 'grid-'+layer_id, gridLayer );
 }
