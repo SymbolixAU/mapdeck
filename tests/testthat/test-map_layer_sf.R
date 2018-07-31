@@ -37,6 +37,12 @@ test_that("multi-column sf objects read correctly", {
 })
 
 
+test_that("multipoints plotted", {
+
+
+})
+
+
 
 
 
