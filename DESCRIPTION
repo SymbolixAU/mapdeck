@@ -18,6 +18,7 @@ Imports:
 RoxygenNote: 6.0.1
 Suggests: 
     covr,
+    geojsonsf,
     knitr,
     rmarkdown,
     sf,
