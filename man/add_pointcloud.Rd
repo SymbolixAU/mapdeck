@@ -38,9 +38,18 @@ with a certain radius.
 }
 \examples{
 
-key <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
+key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 
+df <- capitals
+df$z <- sample(1000:100000, size = nrow(df))
 
-
+mapdeck(token = key) \%>\%
+add_pointcloud(
+  data = df
+  , lon = 'lon'
+  , lat = 'lat'
+  , elevation = 'z'
+  , layer_id = 'point'
+)
 
 }
