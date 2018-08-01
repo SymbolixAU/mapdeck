@@ -19,14 +19,23 @@ HTMLWidgets.widget({
         var mapDiv = document.getElementById(el.id);
         mapDiv.className = 'mapdeckmap';
 
+        // INITIAL VIEW
+        window[el.id + 'INITIAL_VIEW_STATE'] = {
+        	longitude: x.location[0],
+        	latitude: x.location[1],
+        	zoom: x.zoom,
+        	pitch: x.pitch
+        };
+
         const	deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
-			      longitude: x.location[0],
-			      latitude: x.location[1],
-			      zoom: x.zoom,
-			      pitch: x.pitch,
+			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      //longitude: x.location[0],
+			      //latitude: x.location[1],
+			      //zoom: x.zoom,
+			      //pitch: x.pitch,
 			      layers: []
 			    });
 
@@ -126,6 +135,19 @@ function update_layer( map_id, layer_id, layer ) {
 
 
 function change_location( map_id, location, duration, transition, zoom ) {
+/*
+  var updated_state = {
+  	longitude: location[0],
+      latitude: location[1],
+      zoom: zoom,
+      pitch: 0,
+      bearing: 0,
+      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
+      transitionDuration: duration
+  };
+
+  window[map_id + 'map'].props.setState(updated_state);
+*/
 
 	window[map_id + 'map'].setProps({
     viewState: {
@@ -138,6 +160,8 @@ function change_location( map_id, location, duration, transition, zoom ) {
       transitionDuration: duration
     },
   });
+
+  console.log(window[map_id + 'map']);
 
 }
 
