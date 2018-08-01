@@ -41,15 +41,16 @@ with a certain radius.
 key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 
 df <- capitals
-df$z <- sample(1000:100000, size = nrow(df))
+df$z <- sample(10000:10000000, size = nrow(df))
 
-mapdeck(token = key) \%>\%
+mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') \%>\%
 add_pointcloud(
   data = df
   , lon = 'lon'
   , lat = 'lat'
   , elevation = 'z'
   , layer_id = 'point'
+  , fill_colour = "country"
 )
 
 }
