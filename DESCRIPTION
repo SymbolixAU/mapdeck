@@ -21,6 +21,5 @@ Suggests:
     geojsonsf,
     knitr,
     rmarkdown,
-    sf,
     testthat
 VignetteBuilder: knitr

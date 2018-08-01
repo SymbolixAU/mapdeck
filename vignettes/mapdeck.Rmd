@@ -132,7 +132,7 @@ mapdeck(
 ### SF - Polygon
 
 ```{r, fig.width=6}
-library(sf)
+#library(sf)
 library(geojsonsf)
 
 sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
