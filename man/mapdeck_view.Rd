@@ -8,8 +8,14 @@ mapdeck_view(map, location, zoom = 6, duration = 0,
   transition = c("linear", "fly"))
 }
 \arguments{
-\item{duration}{time in milliseconds}
+\item{location}{vector of lon and lat coordinates (in that order)}
+
+\item{zoom}{zoom level of the map}
+
+\item{duration}{time in milliseconds of the transition}
+
+\item{transition}{type of transition}
 }
 \description{
-Mapdeck view
+Changes the view of the of the map
 }

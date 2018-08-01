@@ -23,6 +23,8 @@ mapdeck(token, data = NULL, width = NULL, height = NULL, padding = 0,
 
 \item{pitch}{the pitch angle of the map}
 
+\item{zoom}{zoom level of the map}
+
 \item{location}{vector of lon and lat coordinates (in that order)}
 }
 \description{

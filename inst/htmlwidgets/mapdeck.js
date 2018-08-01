@@ -27,20 +27,19 @@ HTMLWidgets.widget({
         	pitch: x.pitch
         };
 
+        window[el.id + 'VIEW_STATE_CHANGE'] = {
+
+        };
+
         const	deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
 			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      //longitude: x.location[0],
-			      //latitude: x.location[1],
-			      //zoom: x.zoom,
-			      //pitch: x.pitch,
 			      layers: []
 			    });
 
 			    window[el.id + 'map'] = deckgl;
-
 			    initialise_map(el, x);
       },
 
@@ -53,6 +52,21 @@ HTMLWidgets.widget({
   }
 });
 
+
+function change_location( map_id, location, duration, transition, zoom ) {
+
+	window[map_id + 'map'].setProps({
+    viewState: {
+      longitude: location[0],
+      latitude: location[1],
+      zoom: zoom,
+      pitch: 0,
+      bearing: 0,
+      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
+      transitionDuration: duration
+    },
+  });
+}
 
 if (HTMLWidgets.shinyMode) {
 
@@ -131,38 +145,6 @@ function update_layer( map_id, layer_id, layer ) {
   	window[map_id + 'layers'].push( layer );
   }
   window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
-}
-
-
-function change_location( map_id, location, duration, transition, zoom ) {
-/*
-  var updated_state = {
-  	longitude: location[0],
-      latitude: location[1],
-      zoom: zoom,
-      pitch: 0,
-      bearing: 0,
-      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
-      transitionDuration: duration
-  };
-
-  window[map_id + 'map'].props.setState(updated_state);
-*/
-
-	window[map_id + 'map'].setProps({
-    viewState: {
-      longitude: location[0],
-      latitude: location[1],
-      zoom: zoom,
-      pitch: 0,
-      bearing: 0,
-      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
-      transitionDuration: duration
-    },
-  });
-
-  console.log(window[map_id + 'map']);
-
 }
 
 
