@@ -11,14 +11,15 @@ Encoding: UTF-8
 LazyData: true
 Imports:
   googlePolylines (>= 0.6.2),
+  htmlwidgets,
   jsonlite,
   magrittr,
-  htmlwidgets,
   viridisLite
 RoxygenNote: 6.0.1
 Suggests: 
-    testthat,
+    covr,
     knitr,
     rmarkdown,
-    covr
+    sf,
+    testthat
 VignetteBuilder: knitr
