@@ -7,8 +7,9 @@
 #' @param width the width of the map
 #' @param height the height of the map
 #' @param padding the padding of the map
-#' @param pitch the pitch angle of the map
 #' @param style the style of the map
+#' @param pitch the pitch angle of the map
+#' @param zoom zoom level of the map
 #' @param location vector of lon and lat coordinates (in that order)
 #'
 #' @export
@@ -146,6 +147,25 @@ mapdeck_update <- function(
 }
 
 
+#' Mapdeck view
+#'
+#' Changes the view of the of the map
+#'
+#' @inheritParams mapdeck
+#' @param duration time in milliseconds of the transition
+#' @param transition type of transition
+#' @export
+mapdeck_view <- function(
+	map,
+	location,
+	zoom = 6,
+	duration = 0,
+	transition = c("linear", "fly")
+	) {
+
+	transition <- match.arg(transition)
+	invoke_method(map, 'change_location', location, duration, transition, zoom)
+}
 
 # Get Map Data
 #
