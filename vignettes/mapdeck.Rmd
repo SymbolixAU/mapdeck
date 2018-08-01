@@ -14,8 +14,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "# "
 )
-library(mapdeck)
-access_token <- 'pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g'
 ```
 
 
@@ -32,23 +30,23 @@ Because Deck.gl is one of the most user-friendly WebGL javascript libraries and 
 
 ### The basics
 
-Simply calling `mapdeck()` gives you a map
+You need a [Mapbox Access Token](https://www.mapbox.com/help/how-access-tokens-work/) to load a map. Then call `mapdeck(token = token)` to give you a map
 
 ```{r, fig.width=6}
-mapdeck(token = access_token)
+library(mapdeck)
+key <- 'abc'
+mapdeck(token = key)
 ```
 
 You can style the map using any [mapbox style](https://www.mapbox.com/api-documentation/#styles) template styles, or you can [create one of your own](https://www.mapbox.com/help/studio-manual-styles/)
 
 ```{r, fig.width=6}
-mapdeck(token = access_token, style = 'mapbox://styles/mapbox/dark-v9')
+mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9')
 ```
 
 ### Arcs
 
 ```{r, fig.width=6}
-
-key <- "pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g"
 
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 flights <- read.csv(url)
