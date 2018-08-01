@@ -146,6 +146,23 @@ mapdeck_update <- function(
 }
 
 
+#' Mapdeck view
+#'
+#' @param map
+#' @param location
+#' @param duration time in milliseconds
+#' @export
+mapdeck_view <- function(
+	map,
+	location,
+	zoom = 6,
+	duration = 0,
+	transition = c("linear", "fly")
+	) {
+
+	transition <- match.arg(transition)
+	invoke_method(map, 'change_location', location, duration, transition, zoom)
+}
 
 # Get Map Data
 #

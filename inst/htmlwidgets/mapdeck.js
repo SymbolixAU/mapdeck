@@ -125,21 +125,18 @@ function update_layer( map_id, layer_id, layer ) {
 }
 
 
-function change_location( map_id, location ) {
-
-	console.log( location );
-	console.log( location[0] );
+function change_location( map_id, location, duration, transition, zoom ) {
 
 	window[map_id + 'map'].setProps({
     viewState: {
       longitude: location[0],
       latitude: location[1],
-      zoom: 10,
+      zoom: zoom,
       pitch: 0,
-      bearing: 0
+      bearing: 0,
+      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
+      transitionDuration: duration
     },
-    transitionInterpolator: new deck.experimental.ViewportFlyToInterpolator(),
-    transitionDuration: 5000
   });
 
 }
