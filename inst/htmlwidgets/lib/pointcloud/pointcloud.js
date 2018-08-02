@@ -6,7 +6,7 @@ function add_pointcloud( map_id, pointcloud_data, layer_id ) {
 		data: pointcloud_data,
 		radiusPixels: 10,
     getPosition: d => [d.lon, d.lat, d.elevation],
-    getColor: d => hexToRgb( d.fill_colour ),
+    getColor: d => hexToRGBA( d.fill_colour, d.fill_opacity ),
     onClick: info => layer_click( map_id, "pointcloud", info )
 	});
 

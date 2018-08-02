@@ -28,6 +28,7 @@ mapdeckPointcloudDependency <- function() {
 #'
 #' df <- capitals
 #' df$z <- sample(10000:10000000, size = nrow(df))
+#' df$opacity <- sample(1:255, size = nrow(df))
 #'
 #' mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
 #' add_pointcloud(
@@ -37,6 +38,7 @@ mapdeckPointcloudDependency <- function() {
 #'   , elevation = 'z'
 #'   , layer_id = 'point'
 #'   , fill_colour = "country"
+#'   , fill_opacity = "opacity"
 #' )
 #' }
 #'
@@ -49,6 +51,7 @@ add_pointcloud <- function(
 	elevation,
 	radius = NULL,
 	fill_colour = NULL,
+	fill_opacity = NULL,
 	stroke_width = NULL,
 	layer_id,
 	digits = 6,
@@ -100,13 +103,13 @@ add_pointcloud <- function(
 
 requiredPointcloudColumns <- function() {
 	c("stroke_width", "radius",
-		"fill_colour")
+		"fill_colour", "fill_opacity")
 }
 
 
 pointcloudColumns <- function() {
 	c('lat', 'lon', "elevation", "radius",
-		'fill_colour',
+		'fill_colour', 'fill_opacity',
 		'stroke_width')
 }
 
@@ -115,6 +118,7 @@ pointcloudDefaults <- function(n) {
 		"elevation" = rep(0, n),
 		"radius" = rep(1, n),
 		"fill_colour" = rep("#0000FF", n),
+		"fill_opacity" = rep(255, n),
 		"stroke_width" = rep(1, n),
 		stringsAsFactors = F
 	)

@@ -5,8 +5,9 @@
 \title{Add Pointcloud}
 \usage{
 add_pointcloud(map, data = get_map_data(map), lon, lat, elevation,
-  radius = NULL, fill_colour = NULL, stroke_width = NULL, layer_id,
-  digits = 6, palette = viridisLite::viridis)
+  radius = NULL, fill_colour = NULL, fill_opacity = NULL,
+  stroke_width = NULL, layer_id, digits = 6,
+  palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -22,6 +23,10 @@ add_pointcloud(map, data = get_map_data(map), lon, lat, elevation,
 \item{radius}{in metres}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour}
+
+\item{fill_opacity}{value between 1 and 255. Either a string specifying the
+column of \code{data} containing the fill opacity of each shape, or a value
+between 1 and 255 to be applied to all the shapes}
 
 \item{stroke_width}{width of the stroke}
 
@@ -44,6 +49,7 @@ key <- 'abc'
 
 df <- capitals
 df$z <- sample(10000:10000000, size = nrow(df))
+df$opacity <- sample(1:255, size = nrow(df))
 
 mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') \%>\%
 add_pointcloud(
@@ -53,6 +59,7 @@ add_pointcloud(
   , elevation = 'z'
   , layer_id = 'point'
   , fill_colour = "country"
+  , fill_opacity = "opacity"
 )
 }
 
