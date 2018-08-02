@@ -18,6 +18,9 @@ mapdeckPolygonDependency <- function() {
 #'
 #' @param polyline column of \code{data} containing the polylines
 #' @param fill_colour column of \code{data} or hex colour for the fill colour
+#' @param fill_opacity value between 1 and 255. Either a string specifying the
+#' column of \code{data} containing the fill opacity of each shape, or a value
+#' between 1 and 255 to be applied to all the shapes
 #' @param stroke_colour variable of \code{data} or hex colour for the stroke
 #' @param stroke_width width of the stroke
 #'
@@ -27,6 +30,9 @@ mapdeckPolygonDependency <- function() {
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
 #'
+#' df <- melbourne
+#' melbourne$opacity <- sample(1:255, size = nrow(df))
+#'
 #' mapdeck(
 #'   token = key
 #'   , style = 'mapbox://styles/mapbox/dark-v9'
@@ -35,9 +41,10 @@ mapdeckPolygonDependency <- function() {
 #'   ) %>%
 #'   add_polygon(
 #'   	data = melbourne
-#'     , polyline = "geometry"
-#'     , layer = "polygon_layer"
-#'   	, fill_colour = "fillColor"
+#'    , polyline = "geometry"
+#'    , layer = "polygon_layer"
+#'   	, fill_colour = "fillColor",
+#'   	, fill_opacity = "opacity"
 #'   	)
 #'
 #' library(sf)
@@ -65,6 +72,7 @@ add_polygon <- function(
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	fill_colour = NULL,
+	fill_opacity = NULL,
 	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis
@@ -125,16 +133,17 @@ add_polygon <- function(
 
 
 requiredPolygonColumns <- function() {
-	c("fill_colour", "stroke_width", "stroke_colour")
+	c("fill_colour", "fill_opacity", "stroke_width", "stroke_colour")
 }
 
 polygonColumns <- function() {
-	c("polyline", "fill_colour", "stroke_width", "stroke_colour")
+	c("polyline", "fill_colour", "fill_opacity","stroke_width", "stroke_colour")
 }
 
 polygonDefaults <- function(n) {
 	data.frame(
 		"fill_colour" = rep("#440154", n),
+		"fill_opacity" = rep(255, n),
 		"stroke_colour" = rep("#440154", n),
 		"stroke_width" = rep(1, n),
 		stringsAsFactors = F
