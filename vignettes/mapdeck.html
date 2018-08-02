@@ -322,35 +322,32 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </div>
 <div id="scatter" class="section level3">
 <h3>Scatter</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">key &lt;-<span class="st"> &quot;pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g&quot;</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">add_scatterplot</span>(</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="dt">data =</span> capitals</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">  , <span class="dt">lat =</span> <span class="st">&quot;lat&quot;</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">  , <span class="dt">lon =</span> <span class="st">&quot;lon&quot;</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">  , <span class="dt">radius =</span> <span class="dv">100000</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">  , <span class="dt">fill_colour =</span> <span class="st">&quot;country&quot;</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">  , <span class="dt">layer_id =</span> <span class="st">&quot;scatter_layer&quot;</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">add_scatterplot</span>(</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">data =</span> capitals</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">  , <span class="dt">lat =</span> <span class="st">&quot;lat&quot;</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">  , <span class="dt">lon =</span> <span class="st">&quot;lon&quot;</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">  , <span class="dt">radius =</span> <span class="dv">100000</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">  , <span class="dt">fill_colour =</span> <span class="st">&quot;country&quot;</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">  , <span class="dt">layer_id =</span> <span class="st">&quot;scatter_layer&quot;</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">)</a></code></pre></div>
 </div>
 <div id="path" class="section level3">
 <h3>Path</h3>
 <p>Currently only encoded polylines are supported.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">key &lt;-<span class="st"> &quot;pk.eyJ1Ijoic3ltYm9saXgiLCJhIjoiY2pqbm45Zmo1MGl1aTNxbmxwamFqb3Z6MSJ9.yIkj0tGNNh4u61DliOXV6g&quot;</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">mapdeck</span>(</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">  <span class="dt">token =</span> key</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">  , <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">  , <span class="dt">location =</span> <span class="kw">c</span>(<span class="fl">145.688269</span>, <span class="fl">-38.101062</span>)</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">  , <span class="dt">zoom =</span> <span class="dv">8</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="st">  </span><span class="kw">add_path</span>(</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">  <span class="dt">data =</span> roads</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">  , <span class="dt">polyline =</span> <span class="st">&quot;geometry&quot;</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">  , <span class="dt">stroke_colour =</span> <span class="st">&quot;RIGHT_LOC&quot;</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">  , <span class="dt">layer_id =</span> <span class="st">&quot;path_layer&quot;</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">)</a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">mapdeck</span>(</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="dt">token =</span> key</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">  , <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">  , <span class="dt">location =</span> <span class="kw">c</span>(<span class="fl">145.688269</span>, <span class="fl">-38.101062</span>)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">  , <span class="dt">zoom =</span> <span class="dv">8</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw">add_path</span>(</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">  <span class="dt">data =</span> roads</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">  , <span class="dt">polyline =</span> <span class="st">&quot;geometry&quot;</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">  , <span class="dt">stroke_colour =</span> <span class="st">&quot;RIGHT_LOC&quot;</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">  , <span class="dt">layer_id =</span> <span class="st">&quot;path_layer&quot;</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">)</a></code></pre></div>
 </div>
 <div id="polygons" class="section level3">
 <h3>Polygons</h3>
