@@ -17,8 +17,15 @@ mapdeckPathDependency <- function() {
 #'
 #' @inheritParams add_polygon
 #'
+#' @param stroke_opacity value between 1 and 255. Either a string specifying the
+#' column of \code{data} containing the stroke opacity of each shape, or a value
+#' between 1 and 255 to be applied to all the shapes
+#'
 #' @examples
 #' \dontrun{
+#'
+#' ## You need a valid access token from Mapbox
+#' key <- 'abc'
 #'
 #' mapdeck(
 #'   token = key
@@ -26,7 +33,7 @@ mapdeckPathDependency <- function() {
 #'   , location = c(145, -37.8)
 #'   , zoom = 10) %>%
 #'   add_path(
-#'   data = roads
+#'   data = roads[1:100, ]
 #'   , polyline = "geometry"
 #'   , stroke_colour = "RIGHT_LOC"
 #'   , layer_id = "path_layer"
@@ -41,6 +48,7 @@ add_path <- function(
 	polyline = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
+	stroke_opacity = NULL,
 	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis
@@ -113,17 +121,18 @@ add_path <- function(
 
 
 requiredPathColumns <- function() {
-	c("stroke_width", "stroke_colour")
+	c("stroke_width", "stroke_colour","stroke_opacity")
 }
 
 pathColumns <- function() {
-	c("polyline", "stroke_width", "stroke_colour")
+	c("polyline", "stroke_width", "stroke_colour", "stroke_opacity")
 }
 
 pathDefaults <- function(n) {
 	data.frame(
 		"stroke_colour" = rep("#440154", n),
 		"stroke_width" = rep(1, n),
+		"stroke_opacity" = rep(255, n),
 		stringsAsFactors = F
 	)
 }
