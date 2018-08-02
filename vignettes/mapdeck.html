@@ -310,15 +310,15 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb3-5" data-line-number="5">flights<span class="op">$</span>stroke &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw">nrow</span>(flights), <span class="dt">replace =</span> T)</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="st">    </span><span class="kw">add_arc</span>(</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">        <span class="dt">data =</span> flights</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">        , <span class="dt">layer_id =</span> <span class="st">&quot;arc_layer&quot;</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">        , <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">&quot;start_lon&quot;</span>, <span class="st">&quot;start_lat&quot;</span>)</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">        , <span class="dt">destination =</span> <span class="kw">c</span>(<span class="st">&quot;end_lon&quot;</span>, <span class="st">&quot;end_lat&quot;</span>)</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">        , <span class="dt">stroke_from =</span> <span class="st">&quot;airport1&quot;</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">        , <span class="dt">stroke_to =</span> <span class="st">&quot;airport2&quot;</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">        , <span class="dt">stroke_width =</span> <span class="st">&quot;stroke&quot;</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">    )</a></code></pre></div>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="st">  </span><span class="kw">add_arc</span>(</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">    <span class="dt">data =</span> flights</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">    , <span class="dt">layer_id =</span> <span class="st">&quot;arc_layer&quot;</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">    , <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">&quot;start_lon&quot;</span>, <span class="st">&quot;start_lat&quot;</span>)</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">    , <span class="dt">destination =</span> <span class="kw">c</span>(<span class="st">&quot;end_lon&quot;</span>, <span class="st">&quot;end_lat&quot;</span>)</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">    , <span class="dt">stroke_from =</span> <span class="st">&quot;airport1&quot;</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">    , <span class="dt">stroke_to =</span> <span class="st">&quot;airport2&quot;</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">    , <span class="dt">stroke_width =</span> <span class="st">&quot;stroke&quot;</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">  )</a></code></pre></div>
 </div>
 <div id="scatter" class="section level3">
 <h3>Scatter</h3>
@@ -362,7 +362,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb6-9" data-line-number="9">    , <span class="dt">polyline =</span> <span class="st">&quot;geometry&quot;</span></a>
 <a class="sourceLine" id="cb6-10" data-line-number="10">    , <span class="dt">layer =</span> <span class="st">&quot;polygon_layer&quot;</span></a>
 <a class="sourceLine" id="cb6-11" data-line-number="11">    , <span class="dt">fill_colour =</span> <span class="st">&quot;fillColor&quot;</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">    )</a></code></pre></div>
+<a class="sourceLine" id="cb6-12" data-line-number="12">  )</a></code></pre></div>
 </div>
 <div id="sf---polygon" class="section level3">
 <h3>SF - Polygon</h3>
@@ -379,7 +379,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb7-11" data-line-number="11">    <span class="dt">data =</span> sf</a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">    , <span class="dt">layer =</span> <span class="st">&quot;polygon_layer&quot;</span></a>
 <a class="sourceLine" id="cb7-13" data-line-number="13">    , <span class="dt">fill_colour =</span> <span class="st">&quot;SA2_NAME16&quot;</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">    )</a></code></pre></div>
+<a class="sourceLine" id="cb7-14" data-line-number="14">  )</a></code></pre></div>
 </div>
 <div id="multiple-layers" class="section level3">
 <h3>Multiple layers</h3>
@@ -396,23 +396,23 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb8-11" data-line-number="11">  , <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span></a>
 <a class="sourceLine" id="cb8-12" data-line-number="12">  , <span class="dt">pitch =</span> <span class="dv">35</span></a>
 <a class="sourceLine" id="cb8-13" data-line-number="13">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="st">    </span><span class="kw">add_arc</span>(</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">        <span class="dt">data =</span> df</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">        , <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">&quot;lon.x&quot;</span>, <span class="st">&quot;lat.x&quot;</span>)</a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">        , <span class="dt">destination =</span> <span class="kw">c</span>(<span class="st">&quot;lon.y&quot;</span>, <span class="st">&quot;lat.y&quot;</span>)</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">        , <span class="dt">layer_id =</span> <span class="st">&quot;arc_layer&quot;</span></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19">        , <span class="dt">stroke_from =</span> <span class="st">&quot;country.x&quot;</span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20">        , <span class="dt">stroke_to =</span> <span class="st">&quot;country.y&quot;</span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21">        , <span class="dt">stroke_width =</span> <span class="dv">2</span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22">    ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="st">    </span><span class="kw">add_scatterplot</span>(</a>
-<a class="sourceLine" id="cb8-24" data-line-number="24">        <span class="dt">data =</span> df2</a>
-<a class="sourceLine" id="cb8-25" data-line-number="25">        , <span class="dt">lon =</span> <span class="st">&quot;lon&quot;</span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26">        , <span class="dt">lat =</span> <span class="st">&quot;lat&quot;</span></a>
-<a class="sourceLine" id="cb8-27" data-line-number="27">        , <span class="dt">radius =</span> <span class="dv">100000</span></a>
-<a class="sourceLine" id="cb8-28" data-line-number="28">        , <span class="dt">fill_colour =</span> <span class="st">&quot;country&quot;</span></a>
-<a class="sourceLine" id="cb8-29" data-line-number="29">        , <span class="dt">layer_id =</span> <span class="st">&quot;scatter&quot;</span></a>
-<a class="sourceLine" id="cb8-30" data-line-number="30">    )</a></code></pre></div>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="st">  </span><span class="kw">add_arc</span>(</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">    <span class="dt">data =</span> df</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">    , <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">&quot;lon.x&quot;</span>, <span class="st">&quot;lat.x&quot;</span>)</a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">    , <span class="dt">destination =</span> <span class="kw">c</span>(<span class="st">&quot;lon.y&quot;</span>, <span class="st">&quot;lat.y&quot;</span>)</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">    , <span class="dt">layer_id =</span> <span class="st">&quot;arc_layer&quot;</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19">    , <span class="dt">stroke_from =</span> <span class="st">&quot;country.x&quot;</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">    , <span class="dt">stroke_to =</span> <span class="st">&quot;country.y&quot;</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">    , <span class="dt">stroke_width =</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="st">  </span><span class="kw">add_scatterplot</span>(</a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">    <span class="dt">data =</span> df2</a>
+<a class="sourceLine" id="cb8-25" data-line-number="25">    , <span class="dt">lon =</span> <span class="st">&quot;lon&quot;</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26">    , <span class="dt">lat =</span> <span class="st">&quot;lat&quot;</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27">    , <span class="dt">radius =</span> <span class="dv">100000</span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28">    , <span class="dt">fill_colour =</span> <span class="st">&quot;country&quot;</span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29">    , <span class="dt">layer_id =</span> <span class="st">&quot;scatter&quot;</span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30">  )</a></code></pre></div>
 </div>
 <div id="shiny" class="section level3">
 <h3>Shiny</h3>

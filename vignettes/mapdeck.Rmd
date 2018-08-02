@@ -55,15 +55,15 @@ flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
-	add_arc(
-		data = flights
-		, layer_id = "arc_layer"
-		, origin = c("start_lon", "start_lat")
-		, destination = c("end_lon", "end_lat")
-		, stroke_from = "airport1"
-		, stroke_to = "airport2"
-		, stroke_width = "stroke"
-	)
+  add_arc(
+    data = flights
+    , layer_id = "arc_layer"
+    , origin = c("start_lon", "start_lat")
+    , destination = c("end_lon", "end_lat")
+    , stroke_from = "airport1"
+    , stroke_to = "airport2"
+    , stroke_width = "stroke"
+  )
 
 
 
@@ -117,11 +117,11 @@ mapdeck(
   , zoom = 8
   ) %>%
   add_polygon(
-  	data = melbourne
+    data = melbourne
     , polyline = "geometry"
     , layer = "polygon_layer"
-  	, fill_colour = "fillColor"
- 	)
+    , fill_colour = "fillColor"
+  )
 ```
 
 
@@ -138,10 +138,10 @@ mapdeck(
   , style = 'mapbox://styles/mapbox/dark-v9'
   ) %>%
   add_polygon(
-  	data = sf
+    data = sf
     , layer = "polygon_layer"
-  	, fill_colour = "SA2_NAME16"
-  	)
+    , fill_colour = "SA2_NAME16"
+  )
 
 ```
 
@@ -163,23 +163,23 @@ mapdeck(
   , style = 'mapbox://styles/mapbox/dark-v9'
   , pitch = 35
   ) %>%
-	add_arc(
-		data = df
-		, origin = c("lon.x", "lat.x")
-		, destination = c("lon.y", "lat.y")
-		, layer_id = "arc_layer"
-		, stroke_from = "country.x"
-		, stroke_to = "country.y"
-		, stroke_width = 2
-	) %>%
-	add_scatterplot(
-		data = df2
-		, lon = "lon"
-		, lat = "lat"
-		, radius = 100000
-		, fill_colour = "country"
-		, layer_id = "scatter"
-	)
+  add_arc(
+    data = df
+    , origin = c("lon.x", "lat.x")
+    , destination = c("lon.y", "lat.y")
+    , layer_id = "arc_layer"
+    , stroke_from = "country.x"
+    , stroke_to = "country.y"
+    , stroke_width = 2
+  ) %>%
+  add_scatterplot(
+    data = df2
+    , lon = "lon"
+    , lat = "lat"
+    , radius = 100000
+    , fill_colour = "country"
+    , layer_id = "scatter"
+  )
 
 
 ```
