@@ -15,7 +15,7 @@ mapdeckPointcloudDependency <- function() {
 #' The Pointcloud Layer takes in coordinate points and renders them as circles
 #' with a certain radius.
 #'
-#' @inheritParams add_arc
+#' @inheritParams add_polygon
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param elevation column containing the elevation values
@@ -49,7 +49,6 @@ add_pointcloud <- function(
 	elevation,
 	radius = NULL,
 	fill_colour = NULL,
-	fill_opacity = NULL,
 	stroke_width = NULL,
 	layer_id,
 	digits = 6,
@@ -101,13 +100,13 @@ add_pointcloud <- function(
 
 requiredPointcloudColumns <- function() {
 	c("stroke_width", "radius",
-		"fill_opacity", "fill_colour")
+		"fill_colour")
 }
 
 
 pointcloudColumns <- function() {
 	c('lat', 'lon', "elevation", "radius",
-		'fill_colour', 'fill_opacity',
+		'fill_colour',
 		'stroke_width')
 }
 
@@ -116,7 +115,6 @@ pointcloudDefaults <- function(n) {
 		"elevation" = rep(0, n),
 		"radius" = rep(1, n),
 		"fill_colour" = rep("#0000FF", n),
-		"fill_opacity" = rep(0.8, n),
 		"stroke_width" = rep(1, n),
 		stringsAsFactors = F
 	)

@@ -18,6 +18,8 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 
 \item{lat}{column containing latitude values}
 
+\item{polyline}{column of \code{data} containing the polylines}
+
 \item{colour_range}{vector of hex colours}
 
 \item{cell_size}{size of each cell in meters}
@@ -39,7 +41,10 @@ The color and height of the cell is scaled by number of points it contains.
 }
 \examples{
 \dontrun{
-df <- read.csv('https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv')
+df <- read.csv(paste0(
+'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+'examples/3d-heatmap/heatmap-data.csv'
+))
 
 ## You need a valid access token from Mapbox
 key <- 'abc'

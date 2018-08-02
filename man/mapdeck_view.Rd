@@ -8,6 +8,8 @@ mapdeck_view(map, location, zoom = 6, duration = 0,
   transition = c("linear", "fly"))
 }
 \arguments{
+\item{map}{a \code{mapdeck} map object}
+
 \item{location}{vector of lon and lat coordinates (in that order)}
 
 \item{zoom}{zoom level of the map}

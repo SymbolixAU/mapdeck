@@ -16,7 +16,7 @@ mapdeckGridDependency <- function() {
 #' It takes the constant size all each cell, projects points into cells.
 #' The color and height of the cell is scaled by number of points it contains.
 #'
-#' @inheritParams add_arc
+#' @inheritParams add_polygon
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param colour_range vector of hex colours
@@ -26,7 +26,10 @@ mapdeckGridDependency <- function() {
 #'
 #' @examples
 #' \dontrun{
-#' df <- read.csv('https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv')
+#' df <- read.csv(paste0(
+#' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+#' 'examples/3d-heatmap/heatmap-data.csv'
+#' ))
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
@@ -84,23 +87,23 @@ add_grid <- function(
 	allCols <- gridColumns()
 	requiredCols <- requiredGridColumns()
 
-	colourColumns <- shapeAttributes(
-		fill_colour = NULL
-		, stroke_colour = NULL
-		, stroke_from = NULL
-		, stroke_to = NULL
-	)
+	# colourColumns <- shapeAttributes(
+	# 	fill_colour = NULL
+	# 	, stroke_colour = NULL
+	# 	, stroke_from = NULL
+	# 	, stroke_to = NULL
+	# )
 
 	shape <- createMapObject(data, allCols, objArgs)
 
-	pal <- createPalettes(shape, colourColumns)
+	# pal <- createPalettes(shape, colourColumns)
+	#
+	# colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
+	# colours <- createColours(shape, colour_palettes)
 
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
-
-	if(length(colours) > 0){
-		shape <- replaceVariableColours(shape, colours)
-	}
+	# if(length(colours) > 0){
+	# 	shape <- replaceVariableColours(shape, colours)
+	# }
 
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 

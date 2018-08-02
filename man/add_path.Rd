@@ -13,7 +13,7 @@ add_path(map, data = get_map_data(map), polyline = NULL,
 
 \item{data}{data to be used in the layer}
 
-\item{polyline}{column of \code{data} containing the polyline}
+\item{polyline}{column of \code{data} containing the polylines}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke}
 

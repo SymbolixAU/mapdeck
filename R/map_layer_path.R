@@ -15,11 +15,7 @@ mapdeckPathDependency <- function() {
 #' The Path Layer takes in lists of coordinate points and renders them as
 #' extruded lines with mitering.
 #'
-#' @inheritParams add_arc
-#'
-#' @param polyline column of \code{data} containing the polyline
-#' @param stroke_colour variable of \code{data} or hex colour for the stroke
-#' @param stroke_width width of the stroke
+#' @inheritParams add_polygon
 #'
 #' @examples
 #' \dontrun{

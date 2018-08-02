@@ -5,9 +5,8 @@
 \title{Add Pointcloud}
 \usage{
 add_pointcloud(map, data = get_map_data(map), lon, lat, elevation,
-  radius = NULL, fill_colour = NULL, fill_opacity = NULL,
-  stroke_width = NULL, layer_id, digits = 6,
-  palette = viridisLite::viridis)
+  radius = NULL, fill_colour = NULL, stroke_width = NULL, layer_id,
+  digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -21,6 +20,8 @@ add_pointcloud(map, data = get_map_data(map), lon, lat, elevation,
 \item{elevation}{column containing the elevation values}
 
 \item{radius}{in metres}
+
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour}
 
 \item{stroke_width}{width of the stroke}
 

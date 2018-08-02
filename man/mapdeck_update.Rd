@@ -23,8 +23,3 @@ after the next time all of the outputs are updated; defaults to TRUE.}
 Update a Mapdeck map in a shiny app. Use this function whenever the map needs
 to respond to reactive content.
 }
-\examples{
-\dontrun{
-
-}
-}

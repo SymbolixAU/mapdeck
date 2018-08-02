@@ -6,7 +6,7 @@
 \usage{
 add_scatterplot(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, radius = NULL, fill_colour = NULL,
-  fill_opacity = NULL, stroke_width = NULL, layer_id, digits = 6,
+  stroke_width = NULL, layer_id, digits = 6,
   palette = viridisLite::viridis)
 }
 \arguments{
@@ -18,7 +18,11 @@ add_scatterplot(map, data = get_map_data(map), lon = NULL, lat = NULL,
 
 \item{lat}{column containing latitude values}
 
+\item{polyline}{column of \code{data} containing the polylines}
+
 \item{radius}{in metres}
+
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour}
 
 \item{stroke_width}{width of the stroke}
 
@@ -50,7 +54,10 @@ add_scatterplot(
   , layer_id = "scatter_layer"
 )
 
-df <- read.csv('https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv')
+df <- read.csv(paste0(
+'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+'examples/3d-heatmap/heatmap-data.csv'
+))
 
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 add_scatterplot(

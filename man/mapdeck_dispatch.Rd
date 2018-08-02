@@ -12,23 +12,23 @@ mapdeck_dispatch(map, funcName, mapdeck = stop(paste(funcName,
 invoke_method(map, method, ...)
 }
 \arguments{
-\item{map}{a map object, as returned from \code{\link{mapdeck_map}}}
+\item{map}{a map object, as returned from \code{\link{mapdeck}}}
 
 \item{funcName}{the name of the function that the user called that caused
 this \code{mapdeck_dispatch} call; for error message purposes}
 
+\item{mapdeck}{an action to be performed if the map is from
+\code{\link{mapdeck}}}
+
+\item{mapdeck_update}{an action to be performed if the map is from
+\code{\link{mapdeck_update}}}
+
 \item{method}{the name of the JavaScript method to invoke}
 
 \item{...}{unnamed arguments to be passed to the JavaScript method}
-
-\item{mapdeck_map}{an action to be performed if the map is from
-\code{\link{mapdeck_map}}}
-
-\item{mapdeck_map_update}{an action to be performed if the map is from
-\code{\link{mapdeck_map_update}}}
 }
 \value{
-\code{mapdeck_dispatch} returns the value of \code{mapdeck_map} or
+\code{mapdeck_dispatch} returns the value of \code{mapdeck} or
 or an error. \code{invokeMethod} returns the
 \code{map} object that was passed in, possibly modified.
 }

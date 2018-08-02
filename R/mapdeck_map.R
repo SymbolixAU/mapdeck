@@ -115,10 +115,6 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param deferUntilFlush indicates whether actions performed against this
 #' instance should be carried out right away, or whether they should be held until
 #' after the next time all of the outputs are updated; defaults to TRUE.
-#' @examples
-#' \dontrun{
-#'
-#' }
 #' @export
 mapdeck_update <- function(
 	map_id,
@@ -152,6 +148,7 @@ mapdeck_update <- function(
 #' Changes the view of the of the map
 #'
 #' @inheritParams mapdeck
+#' @param map a \code{mapdeck} map object
 #' @param duration time in milliseconds of the transition
 #' @param transition type of transition
 #' @export

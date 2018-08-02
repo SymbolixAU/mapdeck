@@ -26,7 +26,11 @@ mapdeckScreengridDependency <- function() {
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
 #'
-#' df <- read.csv('https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv')
+#' df <- read.csv(paste0(
+#' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+#' 'examples/3d-heatmap/heatmap-data.csv'
+#' ))
+#'
 #' df$weight <- sample(1:10, size = nrow(df), replace = T)
 #'
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
@@ -60,23 +64,23 @@ add_screengrid <- function(
 	allCols <- screengridColumns()
 	requiredCols <- requiredScreengridColumns()
 
-	colourColumns <- shapeAttributes(
-		fill_colour = NULL
-		, stroke_colour = NULL
-		, stroke_from = NULL
-		, stroke_to = NULL
-	)
+	# colourColumns <- shapeAttributes(
+	# 	fill_colour = NULL
+	# 	, stroke_colour = NULL
+	# 	, stroke_from = NULL
+	# 	, stroke_to = NULL
+	# )
 
 	shape <- createMapObject(data, allCols, objArgs)
 
-	pal <- createPalettes(shape, colourColumns)
-
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
-
-	if(length(colours) > 0){
-		shape <- replaceVariableColours(shape, colours)
-	}
+	# pal <- createPalettes(shape, colourColumns)
+	#
+	# colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
+	# colours <- createColours(shape, colour_palettes)
+#
+# 	if(length(colours) > 0){
+# 		shape <- replaceVariableColours(shape, colours)
+# 	}
 
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 

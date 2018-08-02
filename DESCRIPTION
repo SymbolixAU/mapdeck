@@ -9,9 +9,13 @@ Description: Provides a mechanism to plot an interactive map using 'Mapbox GL' m
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
+Depends: R (>= 3.3.0)
 Imports:
   googlePolylines (>= 0.6.2),
   htmlwidgets,
+  htmltools,
+  scales,
+  shiny,
   jsonlite,
   magrittr,
   viridisLite
@@ -21,5 +25,6 @@ Suggests:
     geojsonsf,
     knitr,
     rmarkdown,
+    sf,
     testthat
 VignetteBuilder: knitr

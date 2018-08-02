@@ -34,7 +34,11 @@ aggregates them into histogram bins and renders as a grid
 ## You need a valid access token from Mapbox
 key <- 'abc'
 
-df <- read.csv('https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv')
+df <- read.csv(paste0(
+'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+'examples/3d-heatmap/heatmap-data.csv'
+))
+
 df$weight <- sample(1:10, size = nrow(df), replace = T)
 
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%

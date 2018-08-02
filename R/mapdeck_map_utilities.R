@@ -2,15 +2,15 @@
 #'
 #' Extension points for plugins
 #'
-#' @param map a map object, as returned from \code{\link{mapdeck_map}}
+#' @param map a map object, as returned from \code{\link{mapdeck}}
 #' @param funcName the name of the function that the user called that caused
 #'   this \code{mapdeck_dispatch} call; for error message purposes
-#' @param mapdeck_map an action to be performed if the map is from
-#'   \code{\link{mapdeck_map}}
-#' @param mapdeck_map_update an action to be performed if the map is from
-#'   \code{\link{mapdeck_map_update}}
+#' @param mapdeck an action to be performed if the map is from
+#'   \code{\link{mapdeck}}
+#' @param mapdeck_update an action to be performed if the map is from
+#'   \code{\link{mapdeck_update}}
 #'
-#' @return \code{mapdeck_dispatch} returns the value of \code{mapdeck_map} or
+#' @return \code{mapdeck_dispatch} returns the value of \code{mapdeck} or
 #' or an error. \code{invokeMethod} returns the
 #' \code{map} object that was passed in, possibly modified.
 #'

@@ -72,13 +72,13 @@ add_arc <- function(
 	## else, it's two column, which need to be encoded!
   if ( length(origin) == 2 && length(destination) == 2) {
   	## lon / lat columns
-  	data[[ origin[1] ]] <- googlePolylines:::encode(
+  	data[[ origin[1] ]] <- googlePolylines::encode(
   		data[, origin, drop = F ]
   		, lon = origin[1]
   		, lat = origin[2]
   		, byrow = T
   		)
-  	data[[ destination[1] ]] <- googlePolylines:::encode(
+  	data[[ destination[1] ]] <- googlePolylines::encode(
   		data[, destination, drop = F ]
   		, lon = destination[1]
   		, lat = destination[2]
