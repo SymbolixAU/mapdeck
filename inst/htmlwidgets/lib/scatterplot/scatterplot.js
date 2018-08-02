@@ -10,7 +10,7 @@ function add_scatterplot( map_id, scatter_data, layer_id ) {
     radiusMinPixels: 1,
     getRadius: d => d.radius,
     getPosition: d => decode_points( d.polyline ),
-    getColor: d => hexToRgb( d.fill_colour ),
+    getColor: d => hexToRGBA( d.fill_colour, d.fill_opacity ),
     onClick: info => layer_click( map_id, "scatterplot", info )
 	});
 

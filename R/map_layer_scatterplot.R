@@ -59,7 +59,7 @@ add_scatterplot <- function(
 	polyline = NULL,
 	radius = NULL,
 	fill_colour = NULL,
-	stroke_width = NULL,
+	fill_opacity = NULL,
 	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis
@@ -125,15 +125,14 @@ add_scatterplot <- function(
 
 
 requiredScatterplotColumns <- function() {
-	c("stroke_width", "radius",
-		"fill_colour")
+	c("radius",
+		"fill_colour", "fill_opacity")
 }
 
 
 scatterplotColumns <- function() {
 	c('polyline', "elevation", "radius",
-		'fill_colour',
-		'stroke_width')
+		'fill_colour', 'fill_opacity')
 }
 
 scatterplotDefaults <- function(n) {
@@ -141,7 +140,7 @@ scatterplotDefaults <- function(n) {
 		"elevation" = rep(0, n),
 		"radius" = rep(1, n),
 		"fill_colour" = rep("#0000FF", n),
-		"stroke_width" = rep(1, n),
+		"fill_opacity" = rep(255, n),
 		stringsAsFactors = F
 	)
 }

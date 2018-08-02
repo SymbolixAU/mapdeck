@@ -6,7 +6,7 @@
 \usage{
 add_scatterplot(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, radius = NULL, fill_colour = NULL,
-  stroke_width = NULL, layer_id, digits = 6,
+  fill_opacity = NULL, layer_id, digits = 6,
   palette = viridisLite::viridis)
 }
 \arguments{
@@ -24,7 +24,9 @@ add_scatterplot(map, data = get_map_data(map), lon = NULL, lat = NULL,
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour}
 
-\item{stroke_width}{width of the stroke}
+\item{fill_opacity}{value between 1 and 255. Either a string specifying the
+column of \code{data} containing the fill opacity of each shape, or a value
+between 1 and 255 to be applied to all the shapes}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type}
