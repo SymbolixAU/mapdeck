@@ -36,8 +36,9 @@ HTMLWidgets.widget({
 			      container: el.id,
 			      mapStyle: x.style,
 			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      layers: []
-			    });
+			      layers: [],
+			      //onLayerHover: setTooltip
+			  });
 
 			    window[el.id + 'map'] = deckgl;
 			    initialise_map(el, x);
