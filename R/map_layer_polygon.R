@@ -24,7 +24,8 @@ mapdeckPolygonDependency <- function() {
 #' @examples
 #' \dontrun{
 #'
-#' key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+#' ## You need a valid access token from Mapbox
+#' key <- 'abc'
 #'
 #' mapdeck(
 #'   token = key

@@ -31,7 +31,8 @@ mapdeckArcDependency <- function() {
 #' @examples
 #' \dontrun{
 #'
-#' key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+#' ## You need a valid access token from Mapbox
+#' key <- 'abc'
 #'
 #' url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 #' flights <- read.csv(url)

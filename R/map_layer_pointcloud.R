@@ -22,8 +22,9 @@ mapdeckPointcloudDependency <- function() {
 #' @param radius in metres
 #'
 #' @examples
-#'
-#' key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+#' \dontrun{
+#' ## You need a valid access token from Mapbox
+#' key <- 'abc'
 #'
 #' df <- capitals
 #' df$z <- sample(10000:10000000, size = nrow(df))
@@ -37,6 +38,7 @@ mapdeckPointcloudDependency <- function() {
 #'   , layer_id = 'point'
 #'   , fill_colour = "country"
 #' )
+#' }
 #'
 #' @export
 add_pointcloud <- function(

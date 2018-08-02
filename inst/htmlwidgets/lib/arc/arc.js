@@ -13,6 +13,7 @@ function add_arc( map_id, arc_data, layer_id ) {
     getSourceColor: d => hexToRgb( d.stroke_from ),
     getTargetColor: d => hexToRgb( d.stroke_to ),
     onClick: info => layer_click( map_id, "arc", info ),
+    //onHover: ({object}) => setTooltip(`${object.origin} to ${object.destination}`)
   });
 
   update_layer( map_id, 'arc-'+layer_id, arcLayer );

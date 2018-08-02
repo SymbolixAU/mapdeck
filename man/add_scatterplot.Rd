@@ -37,7 +37,9 @@ with a certain radius.
 \examples{
 
 \dontrun{
-key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+## You need a valid access token from Mapbox
+key <- 'abc'
+
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 add_scatterplot(
   data = capitals

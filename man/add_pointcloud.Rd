@@ -37,8 +37,9 @@ The Pointcloud Layer takes in coordinate points and renders them as circles
 with a certain radius.
 }
 \examples{
-
-key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+\dontrun{
+## You need a valid access token from Mapbox
+key <- 'abc'
 
 df <- capitals
 df$z <- sample(10000:10000000, size = nrow(df))
@@ -52,5 +53,6 @@ add_pointcloud(
   , layer_id = 'point'
   , fill_colour = "country"
 )
+}
 
 }
