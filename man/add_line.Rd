@@ -5,8 +5,8 @@
 \title{Add line}
 \usage{
 add_line(map, data = get_map_data(map), layer_id, origin, destination,
-  id = NULL, stroke_colour = NULL, stroke_width = NULL, digits = 6,
-  palette = viridisLite::viridis)
+  id = NULL, stroke_colour = NULL, stroke_width = NULL,
+  stroke_opacity = NULL, digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}

@@ -49,6 +49,7 @@ add_line <- function(
 	id = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
+	stroke_opacity = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
@@ -127,18 +128,19 @@ add_line <- function(
 
 
 requiredLineColumns <- function() {
-	c("stroke_colour", "stroke_width")
+	c("stroke_colour", "stroke_width", "stroke_opacity")
 }
 
 lineColumns <- function() {
 	c("origin", "destination",
-		"stroke_width", "stroke_colour")
+		"stroke_width", "stroke_colour", "stroke_opacity")
 }
 
 lineDefaults <- function(n) {
 	data.frame(
 		"stroke_colour" = rep("#440154", n),
 		"stroke_width" = rep(1, n),
+		"stroke_opacity" = rep(255, n),
 		stringsAsFactors = F
 	)
 }

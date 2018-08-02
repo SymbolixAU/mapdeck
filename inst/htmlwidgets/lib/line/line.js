@@ -8,7 +8,7 @@ function add_line( map_id, line_data, layer_id ) {
     getStrokeWidth: d => d.stroke_width,
     getSourcePosition: d => decode_points( d.origin ),
     getTargetPosition: d => decode_points( d.destination ),
-    getColor: d => hexToRgb( d.stroke_colour ),
+    getColor: d => hexToRGBA( d.stroke_colour, d.stroke_opacity ),
     onClick: info => layer_click( map_id, "line", info ),
   });
 
