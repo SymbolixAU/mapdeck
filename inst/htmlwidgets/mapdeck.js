@@ -68,6 +68,14 @@ function change_location( map_id, location, duration, transition, zoom ) {
   });
 }
 
+/*
+function setTooltip( map_id ) {
+	window[map_id + 'map'].setProps({
+
+	});
+}
+*/
+
 if (HTMLWidgets.shinyMode) {
 
   Shiny.addCustomMessageHandler("mapdeckmap-calls", function (data) {
