@@ -28,7 +28,6 @@ mapdeckPointcloudDependency <- function() {
 #'
 #' df <- capitals
 #' df$z <- sample(10000:10000000, size = nrow(df))
-#' df$opacity <- sample(1:255, size = nrow(df))
 #'
 #' mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
 #' add_pointcloud(
@@ -38,7 +37,6 @@ mapdeckPointcloudDependency <- function() {
 #'   , elevation = 'z'
 #'   , layer_id = 'point'
 #'   , fill_colour = "country"
-#'   , fill_opacity = "opacity"
 #' )
 #' }
 #'

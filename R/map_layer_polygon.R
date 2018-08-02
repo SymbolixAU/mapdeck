@@ -30,9 +30,6 @@ mapdeckPolygonDependency <- function() {
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
 #'
-#' df <- melbourne
-#' melbourne$opacity <- sample(1:255, size = nrow(df))
-#'
 #' mapdeck(
 #'   token = key
 #'   , style = 'mapbox://styles/mapbox/dark-v9'
@@ -44,7 +41,6 @@ mapdeckPolygonDependency <- function() {
 #'    , polyline = "geometry"
 #'    , layer = "polygon_layer"
 #'   	, fill_colour = "fillColor",
-#'   	, fill_opacity = "opacity"
 #'   	)
 #'
 #' library(sf)
