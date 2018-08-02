@@ -22,7 +22,13 @@ mapdeckArcDependency <- function() {
 #' @param destination vector of longitude and latitude columns, or an \code{sfc} column
 #' @param id an id value in \code{data} to identify layers when interacting in Shiny apps
 #' @param stroke_from variable or hex colour to use as the staring stroke colour
+#' @param stroke_from_opacity value between 1 and 255. Either a string specifying the
+#' column of \code{data} containing the stroke opacity of each shape, or a value
+#' between 1 and 255 to be applied to all the shapes
 #' @param stroke_to variable or hex colour to use as the ending stroke colour
+#' @param stroke_to_opacity value between 1 and 255. Either a string specifying the
+#' column of \code{data} containing the stroke opacity of each shape, or a value
+#' between 1 and 255 to be applied to all the shapes
 #' @param stroke_width width of the stroke
 #' @param digits integer. Use this parameter to specify how many digits (decimal places)
 #' should be used for the latitude / longitude coordinates.
@@ -60,7 +66,9 @@ add_arc <- function(
 	destination,
 	id = NULL,
 	stroke_from = NULL,
+	stroke_from_opacity = NULL,
 	stroke_to = NULL,
+	stroke_to_opacity = NULL,
 	stroke_width = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
@@ -149,18 +157,22 @@ add_arc <- function(
 }
 
 requiredArcColumns <- function() {
-	c("stroke_width", "stroke_from", "stroke_to")
+	c("stroke_width", "stroke_from", "stroke_to",
+		"stroke_from_opacity","stroke_to_opacity")
 }
 
 arcColumns <- function() {
 	c("origin", "destination",
-		"stroke_width", "stroke_from", "stroke_to")
+		"stroke_width", "stroke_from", "stroke_to",
+		"stroke_from_opacity", "stroke_to_opacity")
 }
 
 arcDefaults <- function(n) {
 	data.frame(
 		"stroke_from" = rep("#440154", n),
 		"stroke_to" = rep("#FDE725", n),
+		"stroke_from_opacity" = rep(255, n),
+		"stroke_to_opacity" = rep(255, n),
 		"stroke_width" = rep(1, n),
 		stringsAsFactors = F
 	)

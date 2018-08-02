@@ -10,8 +10,8 @@ function add_arc( map_id, arc_data, layer_id ) {
     getStrokeWidth: d => d.stroke_width,
     getSourcePosition: d => decode_points( d.origin ),
     getTargetPosition: d => decode_points( d.destination ),
-    getSourceColor: d => hexToRgb( d.stroke_from ),
-    getTargetColor: d => hexToRgb( d.stroke_to ),
+    getSourceColor: d => hexToRGBA( d.stroke_from, d.stroke_from_opacity ),
+    getTargetColor: d => hexToRGBA( d.stroke_to, d.stroke_to_opacity ),
     onClick: info => layer_click( map_id, "arc", info ),
     //onHover: ({object}) => setTooltip(`${object.origin} to ${object.destination}`)
   });

@@ -5,7 +5,8 @@
 \title{Add arc}
 \usage{
 add_arc(map, data = get_map_data(map), layer_id, origin, destination,
-  id = NULL, stroke_from = NULL, stroke_to = NULL, stroke_width = NULL,
+  id = NULL, stroke_from = NULL, stroke_from_opacity = NULL,
+  stroke_to = NULL, stroke_to_opacity = NULL, stroke_width = NULL,
   digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
@@ -24,7 +25,15 @@ distinguish between shape layers of the same type}
 
 \item{stroke_from}{variable or hex colour to use as the staring stroke colour}
 
+\item{stroke_from_opacity}{value between 1 and 255. Either a string specifying the
+column of \code{data} containing the stroke opacity of each shape, or a value
+between 1 and 255 to be applied to all the shapes}
+
 \item{stroke_to}{variable or hex colour to use as the ending stroke colour}
+
+\item{stroke_to_opacity}{value between 1 and 255. Either a string specifying the
+column of \code{data} containing the stroke opacity of each shape, or a value
+between 1 and 255 to be applied to all the shapes}
 
 \item{stroke_width}{width of the stroke}
 
