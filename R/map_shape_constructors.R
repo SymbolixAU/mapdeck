@@ -64,13 +64,6 @@ replaceVariableColours <- function(shape, colours) {
 	## (there is an issue with one or the other not recognisign an array ["#FF00FF"])
 	shape[, c(unname(colourNames))] <- as.data.frame(eachColour, stringsAsFactors = F)
 
-	# l <- lapply(colourNames, function(x) {
-	# 	setNames(as.data.frame(t(col2rgb(shape[[x]]) ) ), paste0(x, c("_red","_green","_blue")) )
-	# })
-	#
-	# colour_columns <- do.call(cbind, l)
-	# shape[, names(colour_columns) ] <- colour_columns
-
 	return(shape)
 }
 
@@ -88,13 +81,13 @@ addDefaults <- function(shape, requiredDefaults, shapeType) {
 	defaults <- switch(
 		shapeType
 		, "arc" = arcDefaults(n)
-		, "path" = pathDefaults(n)
-		, "scatterplot" = scatterplotDefaults(n)
-		, "polygon" = polygonDefaults(n)
-		, "screengrid" = screengridDefaults(n)
-		, "line" = lineDefaults(n)
 		, "grid" = gridDefaults(n)
+		, "line" = lineDefaults(n)
+		, "path" = pathDefaults(n)
 		, "pointcloud" = pointcloudDefaults(n)
+		, "polygon" = polygonDefaults(n)
+		, "scatterplot" = scatterplotDefaults(n)
+		, "screengrid" = screengridDefaults(n)
 		)
 	shape <- cbind(shape, defaults[, requiredDefaults, drop = F])
 	return(shape)
