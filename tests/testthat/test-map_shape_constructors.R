@@ -40,14 +40,14 @@ test_that("Defaults columns returned", {
 	## scatterplot
 	## screengrid
 
-	arcCols <- mapdeck::arcColumns()
-	gridCols <- mapdeck::gridColumns()
-	lineCols <- mapdeck::lineColumns()
-	pathCols <- mapdeck::pathColumns()
-	pointCols <- mapdeck::pointcloudColumns()
-	polyCols <- mapdeck::polygonColumns()
-	scatterCols <- mapdeck::scatterplotColumns()
-	screenCols <- mapdeck::screengridColumns()
+	arcCols <- mapdeck:::arcColumns()
+	gridCols <- mapdeck:::gridColumns()
+	lineCols <- mapdeck:::lineColumns()
+	pathCols <- mapdeck:::pathColumns()
+	pointCols <- mapdeck:::pointcloudColumns()
+	polyCols <- mapdeck:::polygonColumns()
+	scatterCols <- mapdeck:::scatterplotColumns()
+	screenCols <- mapdeck:::screengridColumns()
 
 	#setdiff(mapdeck::arcColumns(), mapdeck::requiredArcColumns())
 	#setdiff(mapdeck::gridColumns(), mapdeck::requiredGridColumns())
@@ -77,49 +77,49 @@ test_that("Defaults columns returned", {
 	screenDefaults <- setdiff(screenCols, names(screenShape))
 
 	if( length(arcDefaults) > 0 ) {
-		arcRes <- mapdeck::addDefaults(arcShape, arcDefaults, 'arc')
+		arcRes <- mapdeck:::addDefaults(arcShape, arcDefaults, 'arc')
 	  expect_true(all(arcCols %in% names(arcRes)))
 	}
 
 	if( length(gridDefaults) > 0 ) {
-		gridRes <- mapdeck::addDefaults(gridShape, gridDefaults, 'grid')
+		gridRes <- mapdeck:::addDefaults(gridShape, gridDefaults, 'grid')
 		expect_true(all(gridCols %in% names(gridRes)))
 	}
 
 	if( length(lineDefaults) > 0 ) {
-		lineRes <- mapdeck::addDefaults(lineShape, lineDefaults, 'line')
+		lineRes <- mapdeck:::addDefaults(lineShape, lineDefaults, 'line')
 		expect_true(all(lineCols %in% names(lineRes)))
 	}
 
 	if( length(pathDefaults) > 0 ) {
-		pathRes <- mapdeck::addDefaults(pathShape, pathDefaults, 'path')
+		pathRes <- mapdeck:::addDefaults(pathShape, pathDefaults, 'path')
 		expect_true(all(pathCols %in% names(pathRes)))
 	}
 
 	if( length(pointDefaults) > 0 ) {
-		pointRes <- mapdeck::addDefaults(pointShape, pointDefaults, 'pointcloud')
+		pointRes <- mapdeck:::addDefaults(pointShape, pointDefaults, 'pointcloud')
 		expect_true(all(pointCols %in% names(pointRes)))
 	}
 
 	if( length(polyDefaults) > 0 ) {
-		polyRes <- mapdeck::addDefaults(polyShape, polyDefaults, 'polygon')
+		polyRes <- mapdeck:::addDefaults(polyShape, polyDefaults, 'polygon')
 		expect_true(all(polyCols %in% names(polyRes)))
 	}
 
 	if( length(scatterDefaults) > 0 ) {
-		scatterRes <- mapdeck::addDefaults(scatterShape, scatterDefaults, 'scatterplot')
+		scatterRes <- mapdeck:::addDefaults(scatterShape, scatterDefaults, 'scatterplot')
 		expect_true(all(scatterCols %in% names(scatterRes)))
 	}
 
 	if( length(screenDefaults) > 0 ) {
-		screenRes <- mapdeck::addDefaults(screenShape, screenDefaults, 'screengrid')
+		screenRes <- mapdeck:::addDefaults(screenShape, screenDefaults, 'screengrid')
 		expect_true(all(screenCols %in% names(screenRes)))
 	}
 })
 
 test_that("shape attributes returned", {
 
-	shapeAttr <- mapdeck::shapeAttributes(
+	shapeAttr <- mapdeck:::shapeAttributes(
 		fill_colour = "fill"
 		, stroke_colour = "stroke"
 		, stroke_from = "from"
