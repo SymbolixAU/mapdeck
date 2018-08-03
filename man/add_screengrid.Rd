@@ -16,6 +16,8 @@ add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 
 \item{lat}{column containing latitude values}
 
+\item{polyline}{column of \code{data} containing the polylines}
+
 \item{weight}{the weight of each value}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
