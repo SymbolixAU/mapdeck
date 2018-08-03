@@ -17,18 +17,18 @@ function add_polygon( map_id, polygon_data, layer_id ) {
     //onHover: ({object}) => setTooltip(object.name)  // TODO
     onClick: info => layer_click( map_id, "path", info )
   });
-
-  console.log( polygonLayer );
-
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 }
 
 function decode_polygons( polylines ) {
 	// polygons can be an array of polylines
-	var i, coordinates = [];
+	var i, p, coordinates = [];
 
 	for (i = 0; i < polylines.length; i++ ) {
-		coordinates.push( decode_polyline( polylines[i] ) );
+		p = polylines[i];
+		if ( p != "-") {
+		  coordinates.push( decode_polyline( p ) );
+	  }
 	}
 	return coordinates;
 }

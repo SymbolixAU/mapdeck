@@ -1,5 +1,227 @@
 context("sf")
 
+test_that("sf POINT objects are plotted", {
+
+	testthat::skip_on_cran()
+	testthat::skip_on_travis()
+
+	library(sf)
+	library(geojsonsf)
+
+	pt1 <- sf::st_sf(geometry = sf::st_sfc(sf::st_point(x = c(1, 2))))
+	pt2 <- sf::st_sf(geometry = sf::st_sfc(sf::st_point(x = c(3, 4))))
+	sf <- rbind(pt1, pt2)
+
+	## SCATTER
+	key <- 'abc'
+	m <- mapdeck(token = key) %>%
+		add_scatterplot(data = sf, layer = "scatter")
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+
+	expect_true(nrow(df) == 2)
+	expect_true('polyline' %in% names(df))
+
+	## POINTCLOUD
+	m <- mapdeck(token = key) %>%
+		add_pointcloud(data = sf, layer = "cloud")
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+
+	expect_true(nrow(df) == 2)
+	expect_true('polyline' %in% names(df))
+
+	## GRID
+	m <- mapdeck(token = key) %>%
+		add_grid(data = sf, layer = "grid")
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+
+	expect_true(nrow(df) == 2)
+	expect_true('polyline' %in% names(df))
+
+	## SCREENGRID
+	m <- mapdeck(token = key) %>%
+		add_screengrid(data = sf, layer = "screen")
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+
+	expect_true(nrow(df) == 2)
+	expect_true('polyline' %in% names(df))
+
+
+	### LINE (2 cols)
+	sf <- cbind(sf, sf[2:1, ])
+
+	m <- mapdeck(token = key) %>%
+		add_line(
+			data = sf
+			, origin = 'geometry'
+			, destination = 'geometry.1'
+			, layer_id = "line"
+			)
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+
+	expect_true(nrow(df) == 2)
+	expect_true('origin' %in% names(df))
+	expect_true('destination' %in% names(df))
+
+	### ARC (2 cols)
+	m <- mapdeck(token = key) %>%
+		add_arc(
+			data = sf
+			, origin = 'geometry'
+			, destination = 'geometry.1'
+			, layer_id = "line"
+		)
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+
+	expect_true(nrow(df) == 2)
+	expect_true('origin' %in% names(df))
+	expect_true('destination' %in% names(df))
+})
+
+
+test_that("sf MULTIPOINT objects are plotted", {
+
+	testthat::skip_on_cran()
+	testthat::skip_on_travis()
+
+	library(sf)
+	library(geojsonsf)
+	sf <- sf::st_sf(geometry = sf::st_sfc(sf::st_multipoint(x = matrix(1:4, ncol = 2))))
+
+	## SCATTER
+	key <- 'abc'
+	m <- mapdeck(token = key) %>%
+		add_scatterplot(data = sf, layer = "scatter")
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+
+	expect_true(nrow(df) == 2)
+	expect_true('polyline' %in% names(df))
+
+	## POINTCLOUD
+	m <- mapdeck(token = key) %>%
+		add_pointcloud(data = sf, layer = "cloud")
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+
+	expect_true(nrow(df) == 2)
+	expect_true('polyline' %in% names(df))
+
+	## GRID
+	m <- mapdeck(token = key) %>%
+		add_grid(data = sf, layer = "grid")
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+
+	expect_true(nrow(df) == 2)
+	expect_true('polyline' %in% names(df))
+
+	## SCREENGRID
+	m <- mapdeck(token = key) %>%
+		add_screengrid(data = sf, layer = "screen")
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+
+	expect_true(nrow(df) == 2)
+	expect_true('polyline' %in% names(df))
+
+})
+
+test_that("sf LINESTRING objects are plotted", {
+
+	testthat::skip_on_cran()
+	testthat::skip_on_travis()
+
+	library(sf)
+	library(geojsonsf)
+
+	ls1 <- sf::st_sf(geometry = sf::st_sfc(sf::st_linestring(x = matrix(c(1:4), ncol = 2))))
+	ls2 <- sf::st_sf(geometry = sf::st_sfc(sf::st_linestring(x = matrix(c(4:1), ncol = 2))))
+	sf <- rbind(ls1, ls2)
+
+	key <- 'abc'
+	m <- mapdeck(token = key) %>%
+		add_path(data = sf, layer = "path")
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+
+	expect_true(nrow(df) == 2)
+	expect_true('polyline' %in% names(df))
+
+})
+
+test_that("sf MULTILINESTRING objects are plotted", {
+
+	testthat::skip_on_cran()
+	testthat::skip_on_travis()
+
+	library(sf)
+	library(geojsonsf)
+
+	ls1 <- sf::st_linestring(x = matrix(c(1:4), ncol = 2))
+	ls2 <- sf::st_linestring(x = matrix(c(4:1), ncol = 2))
+	sf <- sf::st_sf(geometry = sf::st_sfc(sf::st_multilinestring(x = list(ls1, ls2))))
+
+	key <- 'abc'
+	m <- mapdeck(token = key) %>%
+		add_path(data = sf, layer = "path")
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+
+	expect_true(nrow(df) == 2)
+	expect_true('polyline' %in% names(df))
+
+})
+
+test_that("sf POLYGON objects are plotted", {
+
+	testthat::skip_on_cran()
+	testthat::skip_on_travis()
+
+	library(sf)
+	library(geojsonsf)
+
+	sf <- sf::st_sf(geometry = sf::st_sfc(sf::st_polygon(x = list(matrix(c(-1,-1,1,-1,1,1,-1,1,-1,-1), byrow = T, ncol = 2)))))
+
+	m <- mapdeck(token = 'abc') %>%
+		add_polygon(data = sf, layer_id = "poly")
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+	expect_true(nrow(df) == 1)
+	expect_true("polyline" %in% names(df))
+
+})
+
+
+test_that("sf MULTIPOLYGON objects are plotted", {
+
+	testthat::skip_on_cran()
+	testthat::skip_on_travis()
+
+	library(sf)
+	library(geojsonsf)
+
+	pl1 <-sf::st_polygon(x = list(matrix(c(-1,-1,1,-1,1,1,-1,1,-1,-1), byrow = T, ncol = 2)))
+	pl2 <- sf::st_polygon(x = list(matrix(c(-2,-2,2,-2,2,2,-2,2,-2,-2), byrow = T, ncol = 2)))
+
+	sf <- sf::st_sf(geometry = sf::st_sfc(sf::st_multipolygon(x = list(pl1, pl2))))
+
+	m <- mapdeck(token = 'abc') %>%
+		add_polygon(data = sf, layer_id = "poly")
+
+	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
+	expect_true(nrow(df) == 2)
+	expect_true("polyline" %in% names(df))
+
+})
+
+
+
 test_that("multi-column sf objects read correctly", {
 
 	testthat::skip_on_cran()

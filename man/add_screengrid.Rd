@@ -4,8 +4,8 @@
 \alias{add_screengrid}
 \title{Add Screengrid}
 \usage{
-add_screengrid(map, data = get_map_data(map), lon, lat, weight = NULL,
-  layer_id, digits = 6)
+add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
+  polyline = NULL, weight = NULL, layer_id, digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}

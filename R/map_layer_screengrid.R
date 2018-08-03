@@ -47,8 +47,9 @@ mapdeckScreengridDependency <- function() {
 add_screengrid <- function(
 	map,
 	data = get_map_data(map),
-	lon,
-	lat,
+	lon = NULL,
+	lat = NULL,
+	polyline = NULL,
 	weight = NULL,
 	layer_id,
 	digits = 6
@@ -56,7 +57,27 @@ add_screengrid <- function(
 
 	objArgs <- match.call(expand.dots = F)
 
+	data <- normaliseSfData(data, "POINT")
+	polyline <- findEncodedColumn(data, polyline)
+
+	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
+		objArgs[['polyline']] <- polyline
+		data <- unlistMultiGeometry( data, polyline )
+	}
+
 	## parmater checks
+	usePolyline <- isUsingPolyline(polyline)
+
+	## end parameter checks
+	if ( !usePolyline ) {
+		## TODO(check only a data.frame)
+		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
+		polyline <- 'polyline'
+		## TODO(check lon & lat exist / passed in as arguments )
+		objArgs[['lon']] <- NULL
+		objArgs[['lat']] <- NULL
+		objArgs[['polyline']] <- polyline
+	}
 
 
 	## end parameter checks
@@ -103,7 +124,7 @@ requiredScreengridColumns <- function() {
 
 
 screengridColumns <- function() {
-	c('lat', 'lon', 'weight')
+	c('polyline', 'weight')
 }
 
 screengridDefaults <- function(n) {

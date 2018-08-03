@@ -255,7 +255,7 @@ function decode_polyline(str, precision) {
 
     coordinates.push([lng / factor, lat / factor]);
   }
-
+  //console.log(coordinates);
   return coordinates;
 }
 

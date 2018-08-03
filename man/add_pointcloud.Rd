@@ -4,9 +4,9 @@
 \alias{add_pointcloud}
 \title{Add Pointcloud}
 \usage{
-add_pointcloud(map, data = get_map_data(map), lon, lat, elevation,
-  radius = NULL, fill_colour = NULL, fill_opacity = NULL,
-  stroke_width = NULL, layer_id, digits = 6,
+add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
+  elevation, polyline = NULL, radius = NULL, fill_colour = NULL,
+  fill_opacity = NULL, stroke_width = NULL, layer_id, digits = 6,
   palette = viridisLite::viridis)
 }
 \arguments{
@@ -19,6 +19,8 @@ add_pointcloud(map, data = get_map_data(map), lon, lat, elevation,
 \item{lat}{column containing latitude values}
 
 \item{elevation}{column containing the elevation values}
+
+\item{polyline}{column of \code{data} containing the polylines}
 
 \item{radius}{in metres}
 
