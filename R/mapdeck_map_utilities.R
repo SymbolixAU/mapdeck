@@ -16,17 +16,17 @@
 #'
 #' @export
 mapdeck_dispatch = function(
-	map,
-	funcName,
-	mapdeck = stop(paste(funcName, "requires a map update object")),
-	mapdeck_update = stop(paste(funcName, "does not support map udpate objects"))
-) {
-	if (inherits(map, "mapdeck"))
-		return(mapdeck)
-	else if (inherits(map, "mapdeck_update"))
-		return(mapdeck_update)
-	else
-		stop("Invalid map parameter")
+  map,
+  funcName,
+  mapdeck = stop(paste(funcName, "requires a map update object")),
+  mapdeck_update = stop(paste(funcName, "does not support map udpate objects"))
+  ) {
+  if (inherits(map, "mapdeck"))
+    return(mapdeck)
+  else if (inherits(map, "mapdeck_update"))
+    return(mapdeck_update)
+  else
+    stop("Invalid map parameter")
 }
 
 
@@ -41,46 +41,46 @@ invoke_method = function(map, method, ...) {
 		map,
 		method,
 		mapdeck = {
-		  x = map$x$calls
+			x = map$x$calls
 			if (is.null(x)) x = list()
 			n = length(x)
 			x[[n + 1]] = list(functions = method, args = args)
 			map$x$calls = x
 			map
-	  },
+		},
 		mapdeck_update = {
-		  invoke_remote(map, method, args)
+			invoke_remote(map, method, args)
 		}
 	)
 }
 
 
 invoke_remote = function(map, method, args = list()) {
-	if (!inherits(map, "mapdeck_update"))
-		stop("Invalid map parameter; mapdeck_update object was expected")
+  if (!inherits(map, "mapdeck_update"))
+    stop("Invalid map parameter; mapdeck_update object was expected")
 
-	msg <- list(
-		id = map$id,
-		calls = list(
-			list(
-				dependencies = lapply(map$dependencies, shiny::createWebDependency),
-				method = method,
-				args = args
-			)
-		)
-	)
+  msg <- list(
+    id = map$id,
+    calls = list(
+      list(
+        dependencies = lapply(map$dependencies, shiny::createWebDependency),
+        method = method,
+        args = args
+      )
+    )
+  )
 
-	sess <- map$session
-	if (map$deferUntilFlush) {
+  sess <- map$session
+  if (map$deferUntilFlush) {
 
-		sess$onFlushed(function() {
-			sess$sendCustomMessage("mapdeckmap-calls", msg)
-		}, once = TRUE)
+    sess$onFlushed(function() {
+      sess$sendCustomMessage("mapdeckmap-calls", msg)
+    }, once = TRUE)
 
-	} else {
-		sess$sendCustomMessage("mapdeckmap-calls", msg)
-	}
-	map
+  } else {
+    sess$sendCustomMessage("mapdeckmap-calls", msg)
+  }
+  map
 }
 
 
