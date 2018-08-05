@@ -3,8 +3,10 @@
 library(sf)
 
 sf <- geojsonsf::geojson_sf(googleway::geo_melbourne)
-sf$elevation <- sample(100:5000, size = nrow(sf), replace = T)
+sf <- sf[, c( 'geometry')]
+sf$id <- 1:nrow(sf)
 
+#geojson <- geojsonsf::sf_geojson(sf)
 geojson <- geojsonsf::sf_geojson(sf)
 
 attr(geojson, 'class') <- 'json'
@@ -20,7 +22,7 @@ dt_routes <- fread("~/Downloads/gtfs (3)/routes.txt")
 dt_routes <- dt_routes[ dt_routes[, .I[1], by = .(route_long_name) ]$V1 ]
 
 dt <- unique(dt_trips[, .(route_id, trip_id, shape_id, trip_headsign, direction_id)])[
-	unique(dt_routes[, .(route_id, route_long_name, route_type)])
+	unique(dt_routes[route_type %in% c(0), .(route_id, route_long_name, route_type)])
 	, on = "route_id"
 	, nomatch = 0
 ]
@@ -39,8 +41,6 @@ rm(dt_shapes, dt_trips, dt_routes)
 
 setorder(dt, trip_id, route_id, shape_id, direction_id, sequence)
 
-dt[trip_id == '1334.T0.4-388-mjp-1.1.H']
-
 sf <- dt[
 	, {
 		geometry <- sf::st_linestring(x = matrix(c(lon, lat), ncol = 2))
@@ -50,21 +50,40 @@ sf <- dt[
 	, by = .(route_id, trip_id, shape_id, direction_id)
 ]
 
-sf <- sf::st_as_sf(sf)
+sf <- sf::st_as_sf(sf[, 'geometry'])
+sf$id <- 1:nrow(sf)
 
-geo <- geojsonsf::sf_geojson(sf[24, ])
-attr(geo, 'class') <- 'json'
+sf_geo <- geojsonsf::geojson_sf(geojson)
+sf::st_crs(sf) <- sf::st_crs(sf_geo)
+
+sf_bind <- rbind(sf, sf_geo)
+geojson <- geojsonsf::sf_geojson(sf_bind)
+attr(geojson, 'class') <- 'json'
 
 mapdeck(
 	token = key
 	, style = "mapbox://styles/mapbox/dark-v9"
 	, pitch = 35
 ) %>%
-	add_geojson(
+	mapdeck::add_geojson(
 		data = geo
 		, layer_id = "geojson"
 	)
 
+usethis::use_data(geojson, overwrite = T)
+
+
+# library(googleway)
+# set_key(read.dcf("~/Documents/.googleAPI", fields = "GOOGLE_MAP_KEY"))
+#
+# google_map() %>%
+# 	add_polylines(data = sf[24, ])
+#
+# google_map() %>%
+# 	add_markers(data = dt[trip_id == '1334.T0.4-388-mjp-1.1.H'])
+#
+#
+# dt_shapes[shape_id == '4-388-mjp-1.1.H']
 
 ## Points?
 
