@@ -29,3 +29,10 @@
 #'
 #' @format An sfencoded and data frame object with 41 observations and 8 variables
 "melbourne"
+
+#' Geojson
+#'
+#' A GeoJSON object of polygons and lines in Melbourne
+#'
+#' @format a 'json' object
+"geojson"

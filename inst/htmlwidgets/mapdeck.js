@@ -180,7 +180,7 @@ function to_rgba( colour_range ) {
 	n = colour_range.length;
 
 	for (i = 0; i < n; i++) {
-		arr.push( hexToRgb(colour_range[i]) );
+		arr.push( hexToRGBA( colour_range[i]) );
 	}
   console.log( arr );
   return arr;
