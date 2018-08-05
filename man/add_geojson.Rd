@@ -64,10 +64,9 @@ mapdeck(
 
 ## add colours, elevation and opacities
 sf <- geojsonsf::geojson_sf(geojson)
-sf$fillColor <- substr(viridisLite::viridis(nrow(sf)), 1, 7) ## doesn't support alpha
-sf$lineColor <- substr(viridisLite::viridis(nrow(sf)), 1, 7)
-sf$elevation <- sample(100:5000, size = nrow(sf), replace = T)
-sf$fillOpacity <- sample(1:255, size = nrow(sf), replace = T)
+sf$elevation <- sample(100:1000, size = nrow(sf), replace = T)
+sf$fillOpacity <- sample(200:255, size = nrow(sf), replace = T)
+sf$radius <- sample(1:100, size = nrow(sf), replace = T)
 g <- geojsonsf::sf_geojson(sf)
 attr(g, 'class') <- 'json'
 
@@ -80,7 +79,7 @@ mapdeck(
 ) \%>\%
   add_geojson(
     data = g
-    , lineWidth = 100,
+    , lineWidth = 250,
     , layer_id = "geojson"
  )
 }
