@@ -2,21 +2,26 @@
 
 library(sf)
 
-sf <- geojsonsf::geojson_sf(googleway::geo_melbourne)
-sf <- sf[, c( 'geometry')]
-sf$id <- 1:nrow(sf)
-
-#geojson <- geojsonsf::sf_geojson(sf)
-geojson <- geojsonsf::sf_geojson(sf)
-
-attr(geojson, 'class') <- 'json'
-usethis::use_data(geojson, overwrite = T)
+# sf <- geojsonsf::geojson_sf(googleway::geo_melbourne)
+# sf <- sf[, c( 'geometry')]
+# sf$id <- 1:nrow(sf)
+#
+# #geojson <- geojsonsf::sf_geojson(sf)
+# geojson <- geojsonsf::sf_geojson(sf)
+#
+# attr(geojson, 'class') <- 'json'
+# usethis::use_data(geojson, overwrite = T)
 
 library(data.table)
 
 dt_shapes <- fread("~/Downloads/gtfs (3)/shapes.txt")
 dt_trips <- fread("~/Downloads/gtfs (3)/trips.txt")
 dt_routes <- fread("~/Downloads/gtfs (3)/routes.txt")
+
+dt_stops <- fread("~/Downloads/gtfs (3)/stops.txt")
+dt_stoptimes <- fread("~/Downloads/gtfs (3)/stop_times.txt")
+
+
 
 ## select one route_long_name
 dt_routes <- dt_routes[ dt_routes[, .I[1], by = .(route_long_name) ]$V1 ]
@@ -39,6 +44,30 @@ dt <- dt[
 
 rm(dt_shapes, dt_trips, dt_routes)
 
+## grab stops
+dt_stops <- unique(dt[, .(trip_id)])[
+	dt_stoptimes[, .(stop_id, trip_id)]
+	, on = "trip_id"
+	, nomatch = 0
+][
+	dt_stops
+	, on = "stop_id"
+	, nomatch = 0
+]
+
+dt_stops <- dt_stops[ dt_stops[, .I[1], by = stop_id]$V1 ]
+sf_stops <- dt_stops[
+	, {
+		geometry <- sf::st_point(x = c(stop_lon, stop_lat))
+		geometry <- sf::st_sfc(geometry)
+		geometry <- sf::st_sf(geometry = geometry)
+	}
+	, by = stop_id
+]
+
+sf_stops <- sf_stops[, 'geometry']
+sf_stops <- sf::st_sf(sf_stops)
+
 setorder(dt, trip_id, route_id, shape_id, direction_id, sequence)
 
 sf <- dt[
@@ -52,11 +81,12 @@ sf <- dt[
 
 sf <- sf::st_as_sf(sf[, 'geometry'])
 sf$id <- 1:nrow(sf)
-
+sf_stops$id <- 1:nrow(sf_stops)
 sf_geo <- geojsonsf::geojson_sf(geojson)
 sf::st_crs(sf) <- sf::st_crs(sf_geo)
+sf::st_crs(sf_stops) <- sf::st_crs(sf_geo)
 
-sf_bind <- rbind(sf, sf_geo)
+sf_bind <- rbind(sf, sf_geo, sf_stops)
 geojson <- geojsonsf::sf_geojson(sf_bind)
 attr(geojson, 'class') <- 'json'
 
@@ -66,61 +96,17 @@ mapdeck(
 	, pitch = 35
 ) %>%
 	mapdeck::add_geojson(
-		data = geo
+		data = geojson
 		, layer_id = "geojson"
 	)
 
 usethis::use_data(geojson, overwrite = T)
 
+sf <- geojsonsf::geojson_sf(geojson)
+sf$fillColor <- sample(viridisLite::viridis(5), size = nrow(sf), replace = T)
+geojson <- geojsonsf::sf_geojson(sf)
+attr(geojson, 'class') <- 'json'
 
-# library(googleway)
-# set_key(read.dcf("~/Documents/.googleAPI", fields = "GOOGLE_MAP_KEY"))
-#
-# google_map() %>%
-# 	add_polylines(data = sf[24, ])
-#
-# google_map() %>%
-# 	add_markers(data = dt[trip_id == '1334.T0.4-388-mjp-1.1.H'])
-#
-#
-# dt_shapes[shape_id == '4-388-mjp-1.1.H']
-
-## Points?
-
-# key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
-# geo <- '{"type":"Feature","properties":{"fillColor":"#00FF00"},"geometry":{"type":"Point","coordinates":[144.5, -37]}}'
-# geo <- '{"type":"Point","coordinates":[144.5, -37]}'
-#
-# jsonlite::validate(geo)
-# attr(geo, 'class') <- 'json'
-#
-# mapdeck(
-# 	token = key
-# 	, location = c(144.5, -37)
-# 	, zoom = 12
-# 	, style = "mapbox://styles/mapbox/dark-v9"
-# 	, pitch = 35
-# ) %>%
-# 	add_geojson(
-# 		data = geo
-# 		, layer_id = "geojson"
-# 	)
+usethis::use_data(geojson, overwrite = T)
 
 
-
-
-# sf <- geojsonsf::geojson_sf(geo)
-# sf$radius <- 1000
-#
-# mapdeck(
-# 	token = key
-# 	, location = c(144.5, -37)
-# 	, zoom = 12
-# 	, style = "mapbox://styles/mapbox/dark-v9"
-# 	, pitch = 35
-# ) %>%
-# 	add_scatterplot(
-# 		data = sf
-# 		, layer_id = "geojson"
-# 		, radius = 'radius'
-# 	)
