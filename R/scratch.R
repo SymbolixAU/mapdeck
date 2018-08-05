@@ -80,3 +80,19 @@
 # }
 # shinyApp(ui, server)
 #
+
+# mapdeck(
+# 	token = key
+# 	, style = "mapbox://styles/mapbox/dark-v9"
+# 	, pitch = 35
+# ) %>%
+# 	add_geojson(
+# 		data = geojson
+# 		, layer_id = "geojson"
+# 	)
+
+
+
+
+
+

@@ -21,3 +21,15 @@ lines and points
 \details{
 the GeoJSON string needs to have a \code{class} attribute of 'json'
 }
+\examples{
+\dontrun{
+
+## You need a valid access token from Mapbox
+key <- 'abc'
+
+
+
+}
+
+
+}

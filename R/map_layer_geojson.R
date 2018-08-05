@@ -19,7 +19,15 @@ mapdeckGeojsonDependency <- function() {
 #' @details the GeoJSON string needs to have a \code{class} attribute of 'json'
 #'
 #' @inheritParams add_arc
+#' @examples
+#' \dontrun{
 #'
+#' ## You need a valid access token from Mapbox
+#' key <- 'abc'
+#'
+#'
+#'
+#' }
 #'
 #'
 #' @export
