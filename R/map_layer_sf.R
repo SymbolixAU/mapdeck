@@ -25,7 +25,7 @@ normaliseMultiSfData.sf <- function(data, origin, destination) {
 	enc_origin <- googlePolylines::encode( data[, origin ] )
 
 	attr(data, 'sf_column') <- destination
-	# destination <- googlePolylines::encode( data[, destination ] )
+
 	enc <- googlePolylines::encode( data )
 	enc[, origin ] <- enc_origin
 

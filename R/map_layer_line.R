@@ -42,6 +42,14 @@ mapdeckLineDependency <- function() {
 #' 	)
 #' }
 #'
+#' @details
+#'
+#' MULTIPOINT objects will be treated as single points. That is, if an sf objet
+#' has one row with a MULTIPOINT object consisting of two points, this will
+#' be expanded to two rows of single POINTs.
+#' Therefore, if the origin is a MULTIPOINT of two points, and the destination is
+#' a single POINT, the code will error as there will be an uneven number of rows
+#'
 #' @export
 add_line <- function(
 	map,
@@ -82,8 +90,13 @@ add_line <- function(
 	} else if (length(origin) == 1 && length(destination) == 1) {
 		## encoded
 		data <- normaliseMultiSfData(data, origin, destination)
-		data[[origin]] <- unlist(data[[origin]])
-		data[[destination]] <- unlist(data[[destination]])
+		o <- unlist(data[[origin]])
+		d <- unlist(data[[destination]])
+		if(length(o) != length(d)) {
+			stop("There are a different number of origin and destination POINTs, possibly due to MULTIPOINT geometries?")
+		}
+		data[[origin]] <- o
+		data[[destination]] <- d
 
 	} else {
 		stop("expecting lon/lat origin destinations or sfc columns")

@@ -90,9 +90,3 @@
 # 		data = geojson
 # 		, layer_id = "geojson"
 # 	)
-
-
-
-
-
-

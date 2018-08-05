@@ -45,6 +45,13 @@ should be used for the latitude / longitude coordinates.}
 \description{
 The Arc Layer renders raised arcs joining pairs of source and target coordinates
 }
+\details{
+MULTIPOINT objects will be treated as single points. That is, if an sf objet
+has one row with a MULTIPOINT object consisting of two points, this will
+be expanded to two rows of single POINTs.
+Therefore, if the origin is a MULTIPOINT of two points, and the destination is
+a single POINT, the code will error as there will be an uneven number of rows
+}
 \examples{
 \dontrun{
 

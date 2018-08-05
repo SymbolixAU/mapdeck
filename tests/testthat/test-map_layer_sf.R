@@ -132,6 +132,30 @@ test_that("sf MULTIPOINT objects are plotted", {
 
 })
 
+test_that("sf MULTIPOINT and POINT objects error if different lengths", {
+
+	testthat::skip_on_cran()
+	testthat::skip_on_travis()
+	library(sf)
+
+	pt1 <- sf::st_sf(geometry = sf::st_sfc(sf::st_multipoint(x = matrix(1:4, ncol = 2))))
+	pt2 <- sf::st_sf(geometry = sf::st_sfc(sf::st_point(x = c(10, 11))))
+	sf <- cbind(pt1, pt2)
+
+	m <- mapdeck(token = 'abc')
+
+	expect_error(
+		add_arc(m, data = sf, origin = "geometry" , destination = "geometry.1" , layer_id = "arc")
+		, 'There are a different number of origin and destination POINTs, possibly due to MULTIPOINT geometries?'
+	)
+
+	expect_error(
+		add_line(m, data = sf, origin = "geometry" , destination = "geometry.1" , layer_id = "line")
+		, 'There are a different number of origin and destination POINTs, possibly due to MULTIPOINT geometries?'
+	)
+
+})
+
 test_that("sf LINESTRING objects are plotted", {
 
 	testthat::skip_on_cran()
