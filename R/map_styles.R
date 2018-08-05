@@ -20,6 +20,7 @@ mapdeck_style <- function(
 	style = c("streets","outdoors","light","dark","satellite",
 						"satellite-streets")
 ) {
+	style <- match.arg(style)
 	return(
 		switch(
 			style
