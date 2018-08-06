@@ -88,6 +88,7 @@ addDefaults <- function(shape, requiredDefaults, shapeType) {
 		, "polygon" = polygonDefaults(n)
 		, "scatterplot" = scatterplotDefaults(n)
 		, "screengrid" = screengridDefaults(n)
+		, "text" = textDefaults(n)
 		)
 	shape <- cbind(shape, defaults[, requiredDefaults, drop = F])
 	return(shape)

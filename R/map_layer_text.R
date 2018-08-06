@@ -1,69 +1,67 @@
-mapdeckScatterplotDependency <- function() {
+mapdeckTextDependency <- function() {
 	list(
 		htmltools::htmlDependency(
-			"scatterplot",
+			"text",
 			"1.0.0",
-			system.file("htmlwidgets/lib/scatterplot", package = "mapdeck"),
-			script = c("scatterplot.js")
+			system.file("htmlwidgets/lib/text", package = "mapdeck"),
+			script = c("text.js")
 		)
 	)
 }
 
 
-#' Add Scatterplot
+#' Add Text
 #'
-#' The Scatterplot Layer takes in coordinate points and renders them as circles
+#' The Text Layer takes in coordinate points and renders them as circles
 #' with a certain radius.
 #'
-#' @inheritParams add_polygon
-#' @param lon column containing longitude values
-#' @param lat column containing latitude values
-#' @param radius in metres
+#' @inheritParams add_scatterplot
+#' @param text
+#' @param size
+#' @param angle
+#' @param anchor
+#' @param alignment_baseline
 #'
 #' @examples
 #'
 #'\dontrun{
 #' ## You need a valid access token from Mapbox
-#' key <- 'abc'
+#' key <- 'abc
 #'
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
-#' add_scatterplot(
-#'   data = capitals
-#'   , lat = "lat"
-#'   , lon = "lon"
-#'   , radius = 100000
-#'   , fill_colour = "country"
-#'   , layer_id = "scatter_layer"
-#' )
+#' mapdeck(
+#'   token = key,
+#'   style = mapdeck_style('dark')
+#' ) %>%
+#'   add_text(
+#'     data = capitals
+#'     , lon = 'lon'
+#'     , lat = 'lat'
+#'     , fill_colour = 'country'
+#'     , text = 'capital'
+#'     , layer_id = 'text'
+#'   )
 #'
-#' df <- read.csv(paste0(
-#' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
-#' 'examples/3d-heatmap/heatmap-data.csv'
-#' ))
 #'
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
-#' add_scatterplot(
-#'   data = df
-#'   , lat = "lat"
-#'   , lon = "lng"
-#'   , layer_id = "scatter_layer"
-#' )
 #' }
 #'
 #' @export
-add_scatterplot <- function(
+add_text <- function(
 	map,
 	data = get_map_data(map),
 	lon = NULL,
 	lat = NULL,
+	text,
 	polyline = NULL,
-	radius = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
+	size = NULL,
+	angle = NULL,
+	anchor = NULL,
+	alignment_baseline = NULL,
 	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis
-	) {
+) {
 
 	objArgs <- match.call(expand.dots = F)
 
@@ -83,21 +81,21 @@ add_scatterplot <- function(
 		## TODO(check only a data.frame)
 		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
 		polyline <- 'polyline'
-    ## TODO(check lon & lat exist / passed in as arguments )
+		## TODO(check lon & lat exist / passed in as arguments )
 		objArgs[['lon']] <- NULL
 		objArgs[['lat']] <- NULL
 		objArgs[['polyline']] <- polyline
 	}
 
-	allCols <- scatterplotColumns()
-	requiredCols <- requiredScatterplotColumns()
+	allCols <- textColumns()
+	requiredCols <- requiredTextColumns()
 
 	colourColumns <- shapeAttributes(
 		fill_colour = fill_colour
 		, stroke_colour = NULL
 		, stroke_from = NULL
 		, stroke_to = NULL
-		)
+	)
 
 	shape <- createMapObject(data, allCols, objArgs)
 
@@ -113,34 +111,34 @@ add_scatterplot <- function(
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
 	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "scatterplot")
+		shape <- addDefaults(shape, requiredDefaults, "text")
 	}
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
-	map <- addDependency(map, mapdeckScatterplotDependency())
-	invoke_method(map, "add_scatterplot", shape, layer_id)
+	map <- addDependency(map, mapdeckTextDependency())
+	invoke_method(map, "add_text", shape, layer_id)
 }
 
 
 
 
-requiredScatterplotColumns <- function() {
-	c("radius",
-		"fill_colour", "fill_opacity")
+requiredTextColumns <- function() {
+	c('fill_colour', 'text', 'fill_opacity', 'anchor', 'size','angle','alignment_baseline')
 }
 
 
-scatterplotColumns <- function() {
-	c('polyline', "elevation", "radius",
-		'fill_colour', 'fill_opacity')
+textColumns <- function() {
+	c('fill_colour', 'fill_opacity', 'polyline', 'size','angle','text_anchor','alignment_baseline')
 }
 
-scatterplotDefaults <- function(n) {
+textDefaults <- function(n) {
 	data.frame(
-		"elevation" = rep(0, n),
-		"radius" = rep(1, n),
+		"size" = rep(32, n),
+		"angle" = rep(0, n),
 		"fill_colour" = rep("#440154", n),
 		"fill_opacity" = rep(255, n),
+		"anchor" = rep('middle', n),
+		"alignment_baseline" = rep('center', n),
 		stringsAsFactors = F
 	)
 }
