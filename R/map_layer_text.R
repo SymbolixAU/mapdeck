@@ -16,11 +16,13 @@ mapdeckTextDependency <- function() {
 #' with a certain radius.
 #'
 #' @inheritParams add_scatterplot
-#' @param text
-#' @param size
-#' @param angle
-#' @param anchor
-#' @param alignment_baseline
+#' @param text column of \code{data} containing the text
+#' @param size column of \code{data} containing the size of the text
+#' @param angle column of \code{data} containging the angle of the text
+#' @param anchor column of \code{data} containing the anchor of the text. One of
+#' 'start', 'middle' or 'end'
+#' @param alignment_baseline column of \code{data} containing the alignment. One of
+#' 'top', 'center' or 'bottom'
 #'
 #' @examples
 #'

@@ -18,6 +18,8 @@ add_text(map, data = get_map_data(map), lon = NULL, lat = NULL, text,
 
 \item{lat}{column containing latitude values}
 
+\item{text}{column of \code{data} containing the text}
+
 \item{polyline}{column of \code{data} containing the polylines}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour}
@@ -26,7 +28,15 @@ add_text(map, data = get_map_data(map), lon = NULL, lat = NULL, text,
 column of \code{data} containing the fill opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
-\item{alignment_baseline}{}
+\item{size}{column of \code{data} containing the size of the text}
+
+\item{angle}{column of \code{data} containging the angle of the text}
+
+\item{anchor}{column of \code{data} containing the anchor of the text. One of
+'start', 'middle' or 'end'}
+
+\item{alignment_baseline}{column of \code{data} containing the alignment. One of
+'top', 'center' or 'bottom'}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type}
