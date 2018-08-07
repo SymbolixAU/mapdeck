@@ -2,6 +2,8 @@
 #'
 #' List object containg light settings.
 #'
+#' Available in \link{add_geojson}, \link{add_pointcloud} and \link{add_polygon}
+#'
 #' \itemize{
 #'   \item{numberOfLights - the number of lights. Maximum of 5}
 #'   \item{lightsPosition - vector of x, y, z coordinates. Must be 3x the nubmer of lights}
