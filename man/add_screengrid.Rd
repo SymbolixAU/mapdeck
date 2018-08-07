@@ -5,7 +5,8 @@
 \title{Add Screengrid}
 \usage{
 add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, weight = NULL, layer_id, digits = 6)
+  polyline = NULL, weight = NULL, opacity = 0.8, cell_size = 50,
+  layer_id, digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -19,6 +20,10 @@ add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 \item{polyline}{column of \code{data} containing the polylines}
 
 \item{weight}{the weight of each value}
+
+\item{opacity}{opacity of cells. Value between 0 and 1}
+
+\item{cell_size}{size of grid squares in pixels}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type}
@@ -50,6 +55,8 @@ add_screengrid(
   , lon = "lng"
   , weight = "weight",
   , layer_id = "screengrid_layer"
+  , cell_size = 10
+  , opacity = 0.3
 )
 }
 

@@ -1,10 +1,11 @@
 
-function add_screengrid( map_id, screengrid_data, layer_id ) {
+function add_screengrid( map_id, screengrid_data, layer_id, opacity, cell_size ) {
 
 	const screengridLayer = new deck.ScreenGridLayer({
 		id: 'screengrid-'+layer_id,  // TODO
 		data: screengrid_data,
-		cellSizePixels: 50,
+		opacity: opacity,
+		cellSizePixels: cell_size,
 		//colorRange: to_rgba( colour_range ),
     getPosition: d => decode_points( d.polyline ),
     getWeight: d => d.weight,

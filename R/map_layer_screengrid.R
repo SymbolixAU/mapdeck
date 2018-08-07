@@ -19,6 +19,8 @@ mapdeckScreengridDependency <- function() {
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param weight the weight of each value
+#' @param opacity opacity of cells. Value between 0 and 1
+#' @param cell_size size of grid squares in pixels
 #'
 #' @examples
 #' \dontrun{
@@ -40,6 +42,8 @@ mapdeckScreengridDependency <- function() {
 #'   , lon = "lng"
 #'   , weight = "weight",
 #'   , layer_id = "screengrid_layer"
+#'   , cell_size = 10
+#'   , opacity = 0.3
 #' )
 #' }
 #'
@@ -51,6 +55,8 @@ add_screengrid <- function(
 	lat = NULL,
 	polyline = NULL,
 	weight = NULL,
+	opacity = 0.8,
+	cell_size = 50,
 	layer_id,
 	digits = 6
 ) {
@@ -112,7 +118,7 @@ add_screengrid <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckScreengridDependency())
-	invoke_method(map, "add_screengrid", shape, layer_id )
+	invoke_method(map, "add_screengrid", shape, layer_id, opacity, cell_size )
 }
 
 
