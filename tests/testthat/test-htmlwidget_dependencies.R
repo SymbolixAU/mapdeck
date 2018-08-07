@@ -12,7 +12,7 @@ test_that("dependencies are loaded", {
 		, mapdeck:::mapdeckPolygonDependency()
 		, mapdeck:::mapdeckScatterplotDependency()
 		, mapdeck:::mapdeckScreengridDependency()
-		, mapdeck::mapdeckTextDependency()
+		, mapdeck:::mapdeckTextDependency()
 	)
 
 	n <- sapply(lst, function(x) x[[1]]$name)
