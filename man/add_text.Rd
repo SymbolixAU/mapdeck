@@ -4,7 +4,7 @@
 \alias{add_text}
 \title{Add Text}
 \usage{
-add_text(map, data = get_map_data(map), lon = NULL, lat = NULL, text,
+add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
   polyline = NULL, fill_colour = NULL, fill_opacity = NULL, size = NULL,
   angle = NULL, anchor = NULL, alignment_baseline = NULL, layer_id,
   digits = 6, palette = viridisLite::viridis)
@@ -14,11 +14,11 @@ add_text(map, data = get_map_data(map), lon = NULL, lat = NULL, text,
 
 \item{data}{data to be used in the layer}
 
+\item{text}{column of \code{data} containing the text}
+
 \item{lon}{column containing longitude values}
 
 \item{lat}{column containing latitude values}
-
-\item{text}{column of \code{data} containing the text}
 
 \item{polyline}{column of \code{data} containing the polylines}
 
@@ -69,8 +69,6 @@ mapdeck(
     , text = 'capital'
     , layer_id = 'text'
   )
-
-
 }
 
 }

@@ -43,17 +43,15 @@ mapdeckTextDependency <- function() {
 #'     , text = 'capital'
 #'     , layer_id = 'text'
 #'   )
-#'
-#'
 #' }
 #'
 #' @export
 add_text <- function(
 	map,
 	data = get_map_data(map),
+	text,
 	lon = NULL,
 	lat = NULL,
-	text,
 	polyline = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
@@ -123,15 +121,13 @@ add_text <- function(
 }
 
 
-
-
 requiredTextColumns <- function() {
-	c('fill_colour', 'text', 'fill_opacity', 'anchor', 'size','angle','alignment_baseline')
+	c('fill_colour', 'size','angle','anchor','alignment_baseline')
 }
 
 
 textColumns <- function() {
-	c('fill_colour', 'fill_opacity', 'polyline', 'size','angle','text_anchor','alignment_baseline')
+	c('polyline', 'fill_colour', 'size','angle','anchor','alignment_baseline')
 }
 
 textDefaults <- function(n) {
@@ -139,7 +135,6 @@ textDefaults <- function(n) {
 		"size" = rep(32, n),
 		"angle" = rep(0, n),
 		"fill_colour" = rep("#440154", n),
-		"fill_opacity" = rep(255, n),
 		"anchor" = rep('middle', n),
 		"alignment_baseline" = rep('center', n),
 		stringsAsFactors = F
