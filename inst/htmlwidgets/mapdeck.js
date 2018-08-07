@@ -27,10 +27,6 @@ HTMLWidgets.widget({
         	pitch: x.pitch
         };
 
-        window[el.id + 'VIEW_STATE_CHANGE'] = {
-
-        };
-
         const	deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
@@ -52,6 +48,10 @@ HTMLWidgets.widget({
   }
 });
 
+// default light settings
+const DEFAULT_NUMBER_OF_LIGHTS = 1;
+const DEFAULT_LIGHTS_POSITION = [0, 0, 0];
+const DEFAULT_AMBIENT_RATIO = 0.4;
 
 function change_location( map_id, location, duration, transition, zoom ) {
 
