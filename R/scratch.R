@@ -92,109 +92,108 @@
 # 	)
 
 
-library(shiny)
-library(shinydashboard)
-library(mapdeck)
-ui <- dashboardPage(
-	dashboardHeader()
-	, dashboardSidebar()
-	, dashboardBody(
-		box(
-			width = 8
-			,
-			mapdeckOutput(
-				outputId = "map"
-				, height = "600px"
-			)
-		)
-		, box(
-			width = 4
-			, sliderInput(
-				inputId = "light_x"
-				, label = "Light x"
-				, min = -180
-				, max = 180
-				, value = 0
-			)
-			, sliderInput(
-				inputId = "light_y"
-				, label = "Light y"
-				, min = -90
-				, max = 90
-				, value = 0
-			)
-			, sliderInput(
-				inputId = "light_z"
-				, label = "Light z"
-				, min = 0
-				, max = 100000
-				, value = 0
-			)
-			, sliderInput(
-				inputId = "ambient_ratio"
-				, label = "ambience"
-				, min = 0
-				, max = 1
-				, step = 0.01
-				, value = 0.5
-			)
-		)
-	)
-)
-server <- function(input, output) {
-
-	df <- melbourne
-	df$elevation <- sample(100:5000, size = nrow(df))
-
-	output$map <- renderMapdeck({
-		mapdeck(
-			token = key
-			, style = mapdeck_style('dark')
-			, pitch = 35
-		) %>%
-			add_polygon(
-				data = df
-				, polyline = "geometry"
-				, fill_colour = "fillColor"
-				, stroke_colour = "strokeColor"
-				, elevation = "elevation"
-				, stroke_width = 0
-				, layer_id = "poly"
-			)
-	})
-
-	observeEvent({
-		c(input$light_x, input$light_y, input$light_z, input$ambient_ratio)
-	}, {
-
-		light_settings <- list(
-			lightsPosition = c(input$light_x, input$light_y, input$light_z)
-			, ambientRatio = input$ambient_ratio
-		)
-
-		mapdeck_update('map') %>%
-			add_polygon(
-				data = df
-				, polyline = "geometry"
-				, fill_colour = "fillColor"
-				, stroke_colour = "strokeColor"
-				, elevation = "elevation"
-				, stroke_width = 0
-				, layer_id = "poly"
-				, light_settings = light_settings
-			)
-
-	})
-
-}
-shinyApp(ui, server)
-
-
-
-
-
-
-
-
+# library(shiny)
+# library(shinydashboard)
+# library(mapdeck)
+# ui <- dashboardPage(
+# 	dashboardHeader()
+# 	, dashboardSidebar()
+# 	, dashboardBody(
+# 		box(
+# 			width = 8
+# 			,
+# 			mapdeckOutput(
+# 				outputId = "map"
+# 				, height = "600px"
+# 			)
+# 		)
+# 		, box(
+# 			width = 4
+# 			, sliderInput(
+# 				inputId = "light_x"
+# 				, label = "Light x"
+# 				, min = -180
+# 				, max = 180
+# 				, value = 0
+# 			)
+# 			, sliderInput(
+# 				inputId = "light_y"
+# 				, label = "Light y"
+# 				, min = -90
+# 				, max = 90
+# 				, value = 0
+# 			)
+# 			, sliderInput(
+# 				inputId = "light_z"
+# 				, label = "Light z"
+# 				, min = 0
+# 				, max = 100000
+# 				, value = 0
+# 			)
+# 			, sliderInput(
+# 				inputId = "ambient_ratio"
+# 				, label = "ambience"
+# 				, min = 0
+# 				, max = 1
+# 				, step = 0.01
+# 				, value = 0.5
+# 			)
+# 		)
+# 	)
+# )
+# server <- function(input, output) {
+#
+# 	key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+# 	#df <- melbourne
+# 	df <- capitals
+#  df$elevation <- sample(100000:5000000, size = nrow(df))
+#
+# 	output$map <- renderMapdeck({
+# 		mapdeck(
+# 			token = key
+# 			, style = mapdeck_style('dark')
+# 			, pitch = 35
+# 		) %>%
+# 			add_pointcloud(
+# 				data = df
+# 				#, polyline = "geometry"
+# 				, lon = "lon"
+# 				, lat = "lat"
+# 				#, fill_colour = "fillColor"
+# 				, fill_colour = "country"
+# 				#, stroke_colour = "strokeColor"
+# 				, elevation = "elevation"
+# 				#, stroke_width = 0
+# 				, layer_id = "poly"
+# 			)
+# 	})
+#
+# 	observeEvent({
+# 		c(input$light_x, input$light_y, input$light_z, input$ambient_ratio)
+# 	}, {
+#
+# 		light_settings <- list(
+# 			lightsPosition = c(input$light_x, input$light_y, input$light_z)
+# 			, ambientRatio = input$ambient_ratio
+# 		)
+#
+# 	mapdeck_update('map') %>%
+#     #mapdeck(token = key, style = mapdeck_style('dark')) %>%
+# 			add_pointcloud(
+# 				data = df
+# 				#, polyline = "geometry"
+# 				, lon = "lon"
+# 				, lat = "lat"
+# 				#, fill_colour = "fillColor"
+# 				, fill_colour = "country"
+# 				#, stroke_colour = "strokeColor"
+# 				, elevation = "elevation"
+# 				#, stroke_width = 0
+# 				, layer_id = "poly"
+# 				, light_settings = light_settings
+# 			)
+# 	})
+# }
+# shinyApp(ui, server)
 
 

@@ -5,7 +5,8 @@
 \title{Add Geojson}
 \usage{
 add_geojson(map, data = get_map_data(map), layer_id, lineColor = "#440154",
-  fillColor = "#440154", radius = 1, lineWidth = 1, elevation = 0)
+  fillColor = "#440154", radius = 1, lineWidth = 1,
+  light_settings = list(), elevation = 0)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -22,6 +23,8 @@ distinguish between shape layers of the same type}
 \item{radius}{radius of points in meters. See details}
 
 \item{lineWidth}{width of lines in meters. See details}
+
+\item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
 \item{elevation}{elevation of polygons. See details}
 }

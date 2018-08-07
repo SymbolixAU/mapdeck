@@ -166,7 +166,7 @@ add_arc <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckArcDependency())
-	invoke_method(map, "add_arc", shape, layer_id)
+	invoke_method(map, "add_arc", shape, layer_id )
 }
 
 requiredArcColumns <- function() {

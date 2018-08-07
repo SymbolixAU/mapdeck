@@ -2,18 +2,6 @@
 
 function add_polygon( map_id, polygon_data, layer_id, light_settings ) {
 
-
-/*
-  const LIGHT_SETTINGS = {
-    lightsPosition: [-0.144528, 49.739968, 8000],
-    ambientRatio: 0.4,
-    diffuseRatio: 0.6,
-    specularRatio: 0.2,
-    lightsStrength: [0.2, 0.0, ],
-    numberOfLights: 1
-  };
-*/
-
   const polygonLayer = new PolygonLayer({
     id: 'polygon-'+layer_id,  // TODO
     data: polygon_data,

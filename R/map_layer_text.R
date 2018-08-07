@@ -26,9 +26,10 @@ mapdeckTextDependency <- function() {
 #'
 #' @examples
 #'
-#'\dontrun{
+#' \dontrun{
+#'
 #' ## You need a valid access token from Mapbox
-#' key <- 'abc
+#' key <- 'abc'
 #'
 #' mapdeck(
 #'   token = key,

@@ -23,6 +23,7 @@ mapdeckPolygonDependency <- function() {
 #' between 1 and 255 to be applied to all the shapes
 #' @param stroke_colour variable of \code{data} or hex colour for the stroke
 #' @param stroke_width width of the stroke
+#' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param elevation the height of the polygon
 #'
 #' @examples
@@ -131,12 +132,6 @@ add_polygon <- function(
 	}
 
 	shape <- jsonlite::toJSON(shape, digits = digits)
-
-	# light_settings <- list(
-	# 	lightsPosition = c(150, -50, 3000)
-	# 	, ambientRatio = 0.1
-	# 	, specularRatio = 0.2
-	# )
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 

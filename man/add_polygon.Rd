@@ -28,6 +28,8 @@ between 1 and 255 to be applied to all the shapes}
 
 \item{elevation}{the height of the polygon}
 
+\item{light_settings}{list of light setting parameters. See \link{light_settings}}
+
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type}
 

@@ -50,3 +50,27 @@ should be used for the latitude / longitude coordinates.}
 The Text Layer takes in coordinate points and renders them as circles
 with a certain radius.
 }
+\examples{
+
+\dontrun{
+
+## You need a valid access token from Mapbox
+key <- 'abc'
+
+mapdeck(
+  token = key,
+  style = mapdeck_style('dark')
+) \%>\%
+  add_text(
+    data = capitals
+    , lon = 'lon'
+    , lat = 'lat'
+    , fill_colour = 'country'
+    , text = 'capital'
+    , layer_id = 'text'
+  )
+
+
+}
+
+}
