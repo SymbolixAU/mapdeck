@@ -1,6 +1,6 @@
 
 function add_line( map_id, line_data, layer_id ) {
-  // reference: http://deck.gl/#/documentation/deckgl-api-reference/layers/line-layer
+
   const lineLayer = new LineLayer({
     id: 'line-'+layer_id,  // TODO
     data: line_data,

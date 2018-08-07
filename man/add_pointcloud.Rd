@@ -6,8 +6,8 @@
 \usage{
 add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
   elevation, polyline = NULL, radius = NULL, fill_colour = NULL,
-  fill_opacity = NULL, stroke_width = NULL, layer_id, digits = 6,
-  palette = viridisLite::viridis)
+  fill_opacity = NULL, stroke_width = NULL, light_settings = list(),
+  layer_id, digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -31,6 +31,8 @@ column of \code{data} containing the fill opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
 \item{stroke_width}{width of the stroke}
+
+\item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type}

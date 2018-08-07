@@ -23,6 +23,8 @@ mapdeckPolygonDependency <- function() {
 #' between 1 and 255 to be applied to all the shapes
 #' @param stroke_colour variable of \code{data} or hex colour for the stroke
 #' @param stroke_width width of the stroke
+#' @param light_settings list of light setting parameters. See \link{light_settings}
+#' @param elevation the height of the polygon
 #'
 #' @examples
 #' \dontrun{
@@ -30,17 +32,23 @@ mapdeckPolygonDependency <- function() {
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
 #'
+#' df <- melbourne
+#' df$elevation <- sample(100:5000, size = nrow(df))
+#'
 #' mapdeck(
 #'   token = key
-#'   , style = 'mapbox://styles/mapbox/dark-v9'
+#'   , style = mapdeck_style('dark')
 #'   , location = c(145, -38)
 #'   , zoom = 8
 #'   ) %>%
 #'   add_polygon(
-#'   	data = melbourne
+#'   	data = df
 #'    , polyline = "geometry"
 #'    , layer = "polygon_layer"
 #'   	, fill_colour = "fillColor",
+#'   	, stroke_colour = "fillColor",
+#'   	, elevation = "elevation"
+#'   	, stroke_width = 0
 #'   	)
 #'
 #' library(sf)
@@ -69,6 +77,8 @@ add_polygon <- function(
 	stroke_width = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
+	elevation = NULL,
+	light_settings = list(),
 	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis
@@ -123,17 +133,19 @@ add_polygon <- function(
 
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
+	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
+
 	map <- addDependency(map, mapdeckPolygonDependency())
-	invoke_method(map, "add_polygon", shape, layer_id)
+	invoke_method(map, "add_polygon", shape, layer_id, light_settings)
 }
 
 
 requiredPolygonColumns <- function() {
-	c("fill_colour", "fill_opacity", "stroke_width", "stroke_colour")
+	c("fill_colour", "fill_opacity", "stroke_width", "stroke_colour","elevation")
 }
 
 polygonColumns <- function() {
-	c("polyline", "fill_colour", "fill_opacity","stroke_width", "stroke_colour")
+	c("polyline", "fill_colour", "fill_opacity","stroke_width", "stroke_colour","elevation")
 }
 
 polygonDefaults <- function(n) {
@@ -142,6 +154,7 @@ polygonDefaults <- function(n) {
 		"fill_opacity" = rep(255, n),
 		"stroke_colour" = rep("#440154", n),
 		"stroke_width" = rep(1, n),
+		"elevation" = rep(0, n),
 		stringsAsFactors = F
 	)
 }

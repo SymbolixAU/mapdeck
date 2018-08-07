@@ -20,6 +20,7 @@ mapdeckPointcloudDependency <- function() {
 #' @param lat column containing latitude values
 #' @param elevation column containing the elevation values
 #' @param radius in metres
+#' @param light_settings list of light setting parameters. See \link{light_settings}
 #'
 #' @examples
 #' \dontrun{
@@ -52,6 +53,7 @@ add_pointcloud <- function(
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	stroke_width = NULL,
+	light_settings = list(),
 	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis
@@ -113,8 +115,10 @@ add_pointcloud <- function(
 
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
+	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
+
 	map <- addDependency(map, mapdeckPointcloudDependency())
-	invoke_method(map, "add_pointcloud", shape, layer_id)
+	invoke_method(map, "add_pointcloud", shape, layer_id, light_settings)
 }
 
 

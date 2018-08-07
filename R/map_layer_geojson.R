@@ -22,6 +22,7 @@ mapdeckGeojsonDependency <- function() {
 #' @param radius radius of points in meters. See details
 #' @param lineWidth width of lines in meters. See details
 #' @param elevation elevation of polygons. See details
+#' @param light_settings list of light setting parameters. See \link{light_settings}
 #'
 #' @details
 #'
@@ -90,10 +91,9 @@ add_geojson <- function(
 	fillColor = "#440154",
 	radius = 1,
 	lineWidth = 1,
+	light_settings = list(),
 	elevation = 0
 	) {
-
-
 	map <- addDependency(map, mapdeckGeojsonDependency())
-	invoke_method(map, "add_geojson", data, layer_id, lineColor, fillColor, radius, lineWidth, elevation)
+	invoke_method(map, "add_geojson", data, layer_id, lineColor, fillColor, radius, lineWidth, elevation, light_settings)
 }

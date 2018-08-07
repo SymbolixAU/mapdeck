@@ -139,7 +139,7 @@ add_line <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckLineDependency())
-	invoke_method(map, "add_line", shape, layer_id)
+	invoke_method(map, "add_line", shape, layer_id )
 }
 
 

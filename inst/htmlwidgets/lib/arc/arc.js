@@ -1,6 +1,4 @@
 
-var triggerCounter = 0;
-
 function add_arc( map_id, arc_data, layer_id ) {
   // reference: http://deck.gl/#/documentation/deckgl-api-reference/layers/arc-layer
   const arcLayer = new ArcLayer({
