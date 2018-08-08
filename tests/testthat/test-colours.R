@@ -327,8 +327,6 @@ test_that("palettes generated", {
 
 })
 
-
-
 test_that("hexcolour validation", {
 
 	expect_true(mapdeck:::isHexColour("#0") == FALSE)
