@@ -1,8 +1,7 @@
 
 
 function add_text( map_id, text_data, layer_id ) {
-
-  console.log(text_data);
+;
 		const textLayer = new TextLayer({
 			id: 'text-'+layer_id,  // TODO
 			data: text_data,

@@ -105,8 +105,6 @@ if (HTMLWidgets.shinyMode) {
 
 function initialise_map(el, x) {
 
-	console.log("initialising map");
-
 	// call initial layers
   if (x.calls !== undefined) {
 
@@ -171,6 +169,18 @@ const hexToRGBA = (hex, alpha = 255) => {
     //return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
+
+function to_rgb( colour_range ) {
+	var arr = [],
+	i,
+	n = colour_range.length;
+
+	for (i = 0; i < n; i++) {
+		arr.push( hexToRgb( colour_range[i]) );
+	}
+  return arr;
+}
+
 /**
  * Converts a 'vector' of hex colours (with alpha) into an array
  */
@@ -182,7 +192,6 @@ function to_rgba( colour_range ) {
 	for (i = 0; i < n; i++) {
 		arr.push( hexToRGBA( colour_range[i]) );
 	}
-  console.log( arr );
   return arr;
 }
 

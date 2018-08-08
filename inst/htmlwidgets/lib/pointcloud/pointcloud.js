@@ -21,6 +21,5 @@ function decode_pointcloud( polyline, elevation ) {
 	position[1] = coords[1];
 	position[2] = elevation;
 	//position.push(elevation);
-	console.log(position);
 	return position;
 }

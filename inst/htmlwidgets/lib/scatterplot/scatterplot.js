@@ -1,8 +1,6 @@
 
 function add_scatterplot( map_id, scatter_data, layer_id ) {
 
-  console.log( scatter_data );
-
 	const scatterLayer = new deck.ScatterplotLayer({
 		id: 'scatterplot-'+layer_id,  // TODO
 		data: scatter_data,

@@ -26,13 +26,13 @@ mapdeckGridDependency <- function() {
 #'
 #' @examples
 #' \dontrun{
+#' ## You need a valid access token from Mapbox
+#' key <- 'abc'
+#'
 #' df <- read.csv(paste0(
 #' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
 #' 'examples/3d-heatmap/heatmap-data.csv'
 #' ))
-#'
-#' ## You need a valid access token from Mapbox
-#' key <- 'abc'
 #'
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' add_grid(

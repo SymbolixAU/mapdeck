@@ -2,7 +2,6 @@
 
 function add_path( map_id, path_data, layer_id ) {
 
-  console.log( path_data) ;
   const pathLayer = new PathLayer({
     id: 'path-'+layer_id,  // TODO
     data: path_data,
