@@ -333,5 +333,22 @@ test_that("multilinestring unlisted", {
 
 })
 
+test_that("sfencoded objects are plotted", {
 
+
+	testthat::skip_on_cran()
+	testthat::skip_on_travis()
+
+	library(sf)
+	library(googlePolylines)
+
+	pt1 <- sf::st_sf(geometry = sf::st_sfc(sf::st_point(x = c(1, 2))))
+	pt2 <- sf::st_sf(geometry = sf::st_sfc(sf::st_point(x = c(3, 4))))
+	sf <- rbind(pt1, pt2)
+
+	enc <- encode(sf)
+
+	expect_true(mapdeck:::findEncodedColumn(enc, NULL) == "geometry")
+	expect_true(mapdeck:::findEncodedColumn(enc, 'geometry') == "geometry")
+})
 
