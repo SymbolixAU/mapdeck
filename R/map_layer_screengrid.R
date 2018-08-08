@@ -55,6 +55,7 @@ add_screengrid <- function(
 	lat = NULL,
 	polyline = NULL,
 	weight = NULL,
+	colour_range = viridisLite::viridis(6),
 	opacity = 0.8,
 	cell_size = 50,
 	layer_id,
@@ -121,7 +122,7 @@ add_screengrid <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckScreengridDependency())
-	invoke_method(map, "add_screengrid", shape, layer_id, opacity, cell_size )
+	invoke_method(map, "add_screengrid", shape, layer_id, opacity, cell_size, colour_range )
 }
 
 

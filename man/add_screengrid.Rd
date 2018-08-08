@@ -5,8 +5,8 @@
 \title{Add Screengrid}
 \usage{
 add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, weight = NULL, opacity = 0.8, cell_size = 50,
-  layer_id, digits = 6)
+  polyline = NULL, weight = NULL, colour_range = viridisLite::viridis(6),
+  opacity = 0.8, cell_size = 50, layer_id, digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}
