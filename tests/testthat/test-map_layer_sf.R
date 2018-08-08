@@ -269,14 +269,12 @@ test_that("multi-column sf objects read correctly", {
 	ept1 <- googlePolylines::encodeCoordinates(1, 2)
 	ept2 <- googlePolylines::encodeCoordinates(3, 4)
 
-	enc <- mapdeck:::normaliseMultiSfData( data = sf , origin = 'geometry', destination = 'geometry.1')
-
-	expect_true(attr(enc, 'encoded_column') == "geometry.1")
-	expect_true(all(names(enc) == c("geometry","geometry.1")) )
-	expect_true(enc[1, 'geometry'][[1]] == enc[2, 'geometry.1'][[1]] )
-	expect_true(enc[2, 'geometry'][[1]] == enc[1, 'geometry.1'][[1]] )
-	expect_true(enc[1, 'geometry'][[1]] == ept1)
-	expect_true(enc[2, 'geometry'][[1]] == ept2)
+	expect_true(attr(mapdeck:::normaliseMultiSfData( data = sf , origin = 'geometry', destination = 'geometry.1'), 'encoded_column') == "geometry.1")
+	expect_true(all(names(mapdeck:::normaliseMultiSfData( data = sf , origin = 'geometry', destination = 'geometry.1')) == c("geometry","geometry.1")) )
+	expect_true(mapdeck:::normaliseMultiSfData( data = sf , origin = 'geometry', destination = 'geometry.1')[1, 'geometry'][[1]] == mapdeck:::normaliseMultiSfData( data = sf , origin = 'geometry', destination = 'geometry.1')[2, 'geometry.1'][[1]] )
+	expect_true(mapdeck:::normaliseMultiSfData( data = sf , origin = 'geometry', destination = 'geometry.1')[2, 'geometry'][[1]] == mapdeck:::normaliseMultiSfData( data = sf , origin = 'geometry', destination = 'geometry.1')[1, 'geometry.1'][[1]] )
+	expect_true(mapdeck:::normaliseMultiSfData( data = sf , origin = 'geometry', destination = 'geometry.1')[1, 'geometry'][[1]] == ept1)
+	expect_true(mapdeck:::normaliseMultiSfData( data = sf , origin = 'geometry', destination = 'geometry.1')[2, 'geometry'][[1]] == ept2)
 
 })
 
