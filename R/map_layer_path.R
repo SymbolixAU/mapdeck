@@ -34,7 +34,6 @@ mapdeckPathDependency <- function() {
 #'   , zoom = 10) %>%
 #'   add_path(
 #'   data = roads
-#'   , polyline = "geometry"
 #'   , stroke_colour = "RIGHT_LOC"
 #'   , layer_id = "path_layer"
 #'   )
@@ -69,7 +68,8 @@ add_path <- function(
 	}
 
 	## parameter checks
-
+	checkNumeric(digits)
+	checkPalette(palette)
 
 	## end parameter checks
 

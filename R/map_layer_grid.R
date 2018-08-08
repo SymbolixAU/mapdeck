@@ -72,6 +72,10 @@ add_grid <- function(
 
 	## parmater checks
 	usePolyline <- isUsingPolyline(polyline)
+	checkNumeric(digits)
+	checkNumeric(elevation_scale)
+	checkNumeric(cell_size)
+	checkHex(colour_range)
 
 	## end parameter checks
 	if ( !usePolyline ) {

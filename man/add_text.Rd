@@ -44,7 +44,7 @@ distinguish between shape layers of the same type}
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
 
-\item{palette}{a function, or list of functions which generates hex colours}
+\item{palette}{a function which generates hex colours}
 }
 \description{
 The Text Layer takes in coordinate points and renders them as circles

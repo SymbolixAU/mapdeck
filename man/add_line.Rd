@@ -33,7 +33,7 @@ between 1 and 255 to be applied to all the shapes}
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
 
-\item{palette}{a function, or list of functions which generates hex colours}
+\item{palette}{a function which generates hex colours}
 }
 \description{
 The Line Layer renders raised lines joining pairs of source and target coordinates

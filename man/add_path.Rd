@@ -29,7 +29,7 @@ distinguish between shape layers of the same type}
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
 
-\item{palette}{a function, or list of functions which generates hex colours}
+\item{palette}{a function which generates hex colours}
 }
 \description{
 The Path Layer takes in lists of coordinate points and renders them as
@@ -48,7 +48,6 @@ mapdeck(
   , zoom = 10) \%>\%
   add_path(
   data = roads
-  , polyline = "geometry"
   , stroke_colour = "RIGHT_LOC"
   , layer_id = "path_layer"
   )

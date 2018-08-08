@@ -73,6 +73,9 @@ add_screengrid <- function(
 
 	## parmater checks
 	usePolyline <- isUsingPolyline(polyline)
+	checkNumeric(opacity)
+	checkNumeric(cell_size)
+	checkNumeric(digits)
 
 	## end parameter checks
 	if ( !usePolyline ) {

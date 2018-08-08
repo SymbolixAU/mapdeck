@@ -77,6 +77,8 @@ add_scatterplot <- function(
 
 	## parmater checks
 	usePolyline <- isUsingPolyline(polyline)
+	checkNumeric(digits)
+	checkPalette(palette)
 
 	## end parameter checks
 	if ( !usePolyline ) {

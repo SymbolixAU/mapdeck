@@ -83,6 +83,9 @@ add_pointcloud <- function(
 		objArgs[['polyline']] <- polyline
 	}
 
+	checkNumeric(digits)
+	checkPalette(palette)
+	## TODO(light_settings)
 
 	## end parameter checks
 

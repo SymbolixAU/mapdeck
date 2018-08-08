@@ -103,7 +103,8 @@ add_line <- function(
 	}
 
 	## parameter checks
-
+	checkNumeric(digits)
+	checkPalette(palette)
 
 	## end parameter checks
 

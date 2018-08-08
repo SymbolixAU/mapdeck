@@ -100,7 +100,9 @@ add_polygon <- function(
 	}
 
 	## parameter checks
-
+	checkNumeric(digits)
+	checkPalette(palette)
+	## TODO(light_settings)
 
 	## end parameter checks
 

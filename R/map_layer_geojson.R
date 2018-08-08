@@ -94,6 +94,18 @@ add_geojson <- function(
 	light_settings = list(),
 	elevation = 0
 	) {
+
+	## Parameter checks
+
+	checkNumeric(radius)
+	checkNumeric(lineWidth)
+	checkNumeric(elevation)
+	isHexColour(lineColor)
+	isHexColour(fillColor)
+	## TODO(light_settings - test options are accurate)
+
+	### end parameter checks
+
 	map <- addDependency(map, mapdeckGeojsonDependency())
 	invoke_method(map, "add_geojson", data, layer_id, lineColor, fillColor, radius, lineWidth, elevation, light_settings)
 }

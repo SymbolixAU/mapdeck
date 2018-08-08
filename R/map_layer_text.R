@@ -76,6 +76,10 @@ add_text <- function(
 
 	## parmater checks
 	usePolyline <- isUsingPolyline(polyline)
+	checkNumeric(digits)
+	checkPalette(palette)
+	checkNumeric(size)
+	checkNumeric(angle)
 
 	## end parameter checks
 	if ( !usePolyline ) {

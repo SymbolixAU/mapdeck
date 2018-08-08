@@ -32,7 +32,7 @@ mapdeckArcDependency <- function() {
 #' @param stroke_width width of the stroke
 #' @param digits integer. Use this parameter to specify how many digits (decimal places)
 #' should be used for the latitude / longitude coordinates.
-#' @param palette a function, or list of functions which generates hex colours
+#' @param palette a function which generates hex colours
 #'
 #' @examples
 #' \dontrun{
@@ -120,19 +120,10 @@ add_arc <- function(
   }
 
 	## parameter checks
-
+	checkNumeric(digits)
+	checkPalette(palette)
 
 	## end parameter checks
-
-	# lon_from <- origin[1]
-	# lat_from <- origin[2]
-	# lon_to <- destination[1]
-	# lat_to <- destination[2]
-	# objArgs[['lat_from']] <- lat_from
-	# objArgs[['lat_to']] <- lat_to
-	# objArgs[['lon_from']] <- lon_from
-	# objArgs[['lon_to']] <- lon_to
-
 
 	allCols <- arcColumns()
 	requiredCols <- requiredArcColumns()
