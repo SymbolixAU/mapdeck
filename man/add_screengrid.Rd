@@ -21,6 +21,8 @@ add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 
 \item{weight}{the weight of each value}
 
+\item{colour_range}{vector of 6 hex colours}
+
 \item{opacity}{opacity of cells. Value between 0 and 1}
 
 \item{cell_size}{size of grid squares in pixels}

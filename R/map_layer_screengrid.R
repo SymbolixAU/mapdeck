@@ -19,6 +19,7 @@ mapdeckScreengridDependency <- function() {
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param weight the weight of each value
+#' @param colour_range vector of 6 hex colours
 #' @param opacity opacity of cells. Value between 0 and 1
 #' @param cell_size size of grid squares in pixels
 #'
@@ -77,6 +78,8 @@ add_screengrid <- function(
 	checkNumeric(opacity)
 	checkNumeric(cell_size)
 	checkNumeric(digits)
+	if(length(colour_range) != 6)
+		stop("colour_range must have 6 hex colours")
 
 	## end parameter checks
 	if ( !usePolyline ) {
@@ -88,7 +91,6 @@ add_screengrid <- function(
 		objArgs[['lat']] <- NULL
 		objArgs[['polyline']] <- polyline
 	}
-
 
 	## end parameter checks
 
