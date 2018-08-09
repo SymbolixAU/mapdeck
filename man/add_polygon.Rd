@@ -68,7 +68,7 @@ mapdeck(
   	, stroke_colour = "fillColor",
   	, elevation = "elevation"
   	, stroke_width = 0
-  	#, tooltip = 'info'
+  	, tooltip = 'info'
   	)
 
 library(sf)

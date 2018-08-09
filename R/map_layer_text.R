@@ -23,6 +23,7 @@ mapdeckTextDependency <- function() {
 #' 'start', 'middle' or 'end'
 #' @param alignment_baseline column of \code{data} containing the alignment. One of
 #' 'top', 'center' or 'bottom'
+#' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #'
 #' @examples
 #'

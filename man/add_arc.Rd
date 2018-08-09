@@ -37,6 +37,8 @@ between 1 and 255 to be applied to all the shapes}
 
 \item{stroke_width}{width of the stroke}
 
+\item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
+
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
 

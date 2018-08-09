@@ -30,6 +30,7 @@ mapdeckArcDependency <- function() {
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes
 #' @param stroke_width width of the stroke
+#' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #' @param digits integer. Use this parameter to specify how many digits (decimal places)
 #' should be used for the latitude / longitude coordinates.
 #' @param palette a function which generates hex colours

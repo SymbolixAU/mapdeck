@@ -38,6 +38,8 @@ between 1 and 255 to be applied to all the shapes}
 \item{alignment_baseline}{column of \code{data} containing the alignment. One of
 'top', 'center' or 'bottom'}
 
+\item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
+
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type}
 
