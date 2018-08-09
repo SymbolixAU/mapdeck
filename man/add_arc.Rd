@@ -5,8 +5,9 @@
 \title{Add arc}
 \usage{
 add_arc(map, data = get_map_data(map), layer_id, origin, destination,
-  id = NULL, stroke_from = NULL, stroke_to = NULL, stroke_width = NULL,
-  digits = 6, palette = viridisLite::viridis)
+  id = NULL, stroke_from = NULL, stroke_from_opacity = NULL,
+  stroke_to = NULL, stroke_to_opacity = NULL, stroke_width = NULL,
+  tooltip = NULL, digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -24,17 +25,32 @@ distinguish between shape layers of the same type}
 
 \item{stroke_from}{variable or hex colour to use as the staring stroke colour}
 
+\item{stroke_from_opacity}{value between 1 and 255. Either a string specifying the
+column of \code{data} containing the stroke opacity of each shape, or a value
+between 1 and 255 to be applied to all the shapes}
+
 \item{stroke_to}{variable or hex colour to use as the ending stroke colour}
+
+\item{stroke_to_opacity}{value between 1 and 255. Either a string specifying the
+column of \code{data} containing the stroke opacity of each shape, or a value
+between 1 and 255 to be applied to all the shapes}
 
 \item{stroke_width}{width of the stroke}
 
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
 
-\item{palette}{a function, or list of functions which generates hex colours}
+\item{palette}{a function which generates hex colours}
 }
 \description{
 The Arc Layer renders raised arcs joining pairs of source and target coordinates
+}
+\details{
+MULTIPOINT objects will be treated as single points. That is, if an sf objet
+has one row with a MULTIPOINT object consisting of two points, this will
+be expanded to two rows of single POINTs.
+Therefore, if the origin is a MULTIPOINT of two points, and the destination is
+a single POINT, the code will error as there will be an uneven number of rows
 }
 \examples{
 \dontrun{
@@ -46,6 +62,7 @@ url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_a
 flights <- read.csv(url)
 flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
+flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 	add_arc(
@@ -56,6 +73,7 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>
 		, stroke_from = "airport1"
 		, stroke_to = "airport2"
 		, stroke_width = "stroke"
+		, tooltip = "info"
 	)
 }
 

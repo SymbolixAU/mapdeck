@@ -19,16 +19,19 @@ HTMLWidgets.widget({
         var mapDiv = document.getElementById(el.id);
         mapDiv.className = 'mapdeckmap';
 
+        var tooltipdiv = document.createElement('div');
+        tooltipdiv.id = 'tooltip';
+        mapDiv.appendChild(tooltipdiv);
+
+        console.log(mapDiv);
+//        console.log(tooltipdiv);
+
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
         	longitude: x.location[0],
         	latitude: x.location[1],
         	zoom: x.zoom,
         	pitch: x.pitch
-        };
-
-        window[el.id + 'VIEW_STATE_CHANGE'] = {
-
         };
 
         const	deckgl = new deck.DeckGL({
@@ -53,6 +56,10 @@ HTMLWidgets.widget({
   }
 });
 
+// default light settings
+const DEFAULT_NUMBER_OF_LIGHTS = 1;
+const DEFAULT_LIGHTS_POSITION = [0, 0, 0];
+const DEFAULT_AMBIENT_RATIO = 0.4;
 
 function change_location( map_id, location, duration, transition, zoom ) {
 
@@ -69,13 +76,21 @@ function change_location( map_id, location, duration, transition, zoom ) {
   });
 }
 
-/*
-function setTooltip( map_id ) {
-	window[map_id + 'map'].setProps({
-
-	});
+// following: https://codepen.io/vis-gl/pen/pLLQpN
+// and: https://beta.observablehq.com/@pessimistress/deck-gl-geojsonlayer-example
+function updateTooltip({x, y, object}) {
+  const tooltip = document.getElementById('tooltip');
+  if (object) {
+  	if(object.tooltip === undefined) {
+  		return;
+  	}
+    tooltip.style.top = `${y}px`;
+    tooltip.style.left = `${x}px`;
+    tooltip.innerHTML = `<div>${object.tooltip}</div>`;
+  } else {
+    tooltip.innerHTML = '';
+  }
 }
-*/
 
 if (HTMLWidgets.shinyMode) {
 
@@ -113,8 +128,6 @@ if (HTMLWidgets.shinyMode) {
 }
 
 function initialise_map(el, x) {
-
-	console.log("initialising map");
 
 	// call initial layers
   if (x.calls !== undefined) {
@@ -168,6 +181,30 @@ const hexToRgb = hex =>
     .substring(1).match(/.{2}/g)
     .map(x => parseInt(x, 16));
 
+const hexToRGBA = (hex, alpha = 255) => {
+    let parseString = hex;
+    if (hex.startsWith('#')) {parseString = hex.slice(1, 7);}
+    if (parseString.length !== 6) {return null;}
+    const r = parseInt(parseString.slice(0, 2), 16);
+    const g = parseInt(parseString.slice(2, 4), 16);
+    const b = parseInt(parseString.slice(4, 6), 16);
+    if (isNaN(r) || isNaN(g) || isNaN(b)) {return null;}
+    return [r, g, b, alpha];
+    //return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
+
+function to_rgb( colour_range ) {
+	var arr = [],
+	i,
+	n = colour_range.length;
+
+	for (i = 0; i < n; i++) {
+		arr.push( hexToRgb( colour_range[i]) );
+	}
+  return arr;
+}
+
 /**
  * Converts a 'vector' of hex colours (with alpha) into an array
  */
@@ -177,9 +214,8 @@ function to_rgba( colour_range ) {
 	n = colour_range.length;
 
 	for (i = 0; i < n; i++) {
-		arr.push( hexToRgb(colour_range[i]) );
+		arr.push( hexToRGBA( colour_range[i]) );
 	}
-  console.log( arr );
   return arr;
 }
 
@@ -252,7 +288,7 @@ function decode_polyline(str, precision) {
 
     coordinates.push([lng / factor, lat / factor]);
   }
-
+  //console.log(coordinates);
   return coordinates;
 }
 

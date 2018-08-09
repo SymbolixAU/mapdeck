@@ -5,7 +5,8 @@
 \title{Add line}
 \usage{
 add_line(map, data = get_map_data(map), layer_id, origin, destination,
-  id = NULL, stroke_colour = NULL, stroke_width = NULL, digits = 6,
+  id = NULL, stroke_colour = NULL, stroke_width = NULL,
+  stroke_opacity = NULL, tooltip = NULL, digits = 6,
   palette = viridisLite::viridis)
 }
 \arguments{
@@ -26,13 +27,24 @@ distinguish between shape layers of the same type}
 
 \item{stroke_width}{width of the stroke}
 
+\item{stroke_opacity}{value between 1 and 255. Either a string specifying the
+column of \code{data} containing the stroke opacity of each shape, or a value
+between 1 and 255 to be applied to all the shapes}
+
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
 
-\item{palette}{a function, or list of functions which generates hex colours}
+\item{palette}{a function which generates hex colours}
 }
 \description{
 The Line Layer renders raised lines joining pairs of source and target coordinates
+}
+\details{
+MULTIPOINT objects will be treated as single points. That is, if an sf objet
+has one row with a MULTIPOINT object consisting of two points, this will
+be expanded to two rows of single POINTs.
+Therefore, if the origin is a MULTIPOINT of two points, and the destination is
+a single POINT, the code will error as there will be an uneven number of rows
 }
 \examples{
 \dontrun{

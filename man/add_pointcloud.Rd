@@ -4,9 +4,10 @@
 \alias{add_pointcloud}
 \title{Add Pointcloud}
 \usage{
-add_pointcloud(map, data = get_map_data(map), lon, lat, elevation,
-  radius = NULL, fill_colour = NULL, stroke_width = NULL, layer_id,
-  digits = 6, palette = viridisLite::viridis)
+add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
+  elevation, polyline = NULL, radius = NULL, fill_colour = NULL,
+  fill_opacity = NULL, stroke_width = NULL, light_settings = list(),
+  layer_id, digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -19,11 +20,19 @@ add_pointcloud(map, data = get_map_data(map), lon, lat, elevation,
 
 \item{elevation}{column containing the elevation values}
 
+\item{polyline}{column of \code{data} containing the polylines}
+
 \item{radius}{in metres}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour}
 
+\item{fill_opacity}{value between 1 and 255. Either a string specifying the
+column of \code{data} containing the fill opacity of each shape, or a value
+between 1 and 255 to be applied to all the shapes}
+
 \item{stroke_width}{width of the stroke}
+
+\item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type}
@@ -31,7 +40,7 @@ distinguish between shape layers of the same type}
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
 
-\item{palette}{a function, or list of functions which generates hex colours}
+\item{palette}{a function which generates hex colours}
 }
 \description{
 The Pointcloud Layer takes in coordinate points and renders them as circles

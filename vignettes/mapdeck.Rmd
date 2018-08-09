@@ -25,7 +25,7 @@ Mapdeck is a combination of [Mabox](https://www.mapbox.com/help/define-mapbox-gl
 
 ### Why did you build it?
 
-Because Deck.gl is one of the most user-friendly WebGL javascript libraries and can produce some beautiful maps. And it integrates nicely with Mapbox maps. 
+Because Deck.gl is one of the most user-friendly WebGL javascript libraries and can produce some beautiful maps. And it integrates nicely with Mapbox. 
 
 
 
@@ -35,7 +35,7 @@ You need a [Mapbox Access Token](https://www.mapbox.com/help/how-access-tokens-w
 
 ```{r, fig.width=6}
 library(mapdeck)
-key <- 'abc'
+key <- 'abc'    ## put your own key here
 mapdeck(token = key)
 ```
 
@@ -47,32 +47,138 @@ mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9')
 
 ### Arcs
 
-```{r, fig.width=6}
+```{r}
 
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 flights <- read.csv(url)
 flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
-
+#'
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
-  add_arc(
-    data = flights
-    , layer_id = "arc_layer"
-    , origin = c("start_lon", "start_lat")
-    , destination = c("end_lon", "end_lat")
-    , stroke_from = "airport1"
-    , stroke_to = "airport2"
-    , stroke_width = "stroke"
+	add_arc(
+		data = flights
+		, layer_id = "arc_layer"
+		, origin = c("start_lon", "start_lat")
+		, destination = c("end_lon", "end_lat")
+		, stroke_from = "airport1"
+		, stroke_to = "airport2"
+		, stroke_width = "stroke"
+	)
+```
+
+### GeoJSON
+
+```{r}
+mapdeck(
+ token = key
+ , location = c(145, -37.9)
+ , zoom = 8
+ , style = "mapbox://styles/mapbox/dark-v9"
+ , pitch = 35
+) %>%
+ add_geojson(
+   data = geojson
+   , layer_id = "geojson"
+ )
+```
+
+### Grid
+
+```{r}
+df <- read.csv(paste0(
+'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+'examples/3d-heatmap/heatmap-data.csv'
+))
+#'
+mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+add_grid(
+  data = df
+  , lat = "lat"
+  , lon = "lng"
+  , cell_size = 5000
+  , elevation_scale = 50
+  , layer_id = "grid_layer"
+)
+```
+
+
+### Lines
+
+```{r}
+url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
+flights <- read.csv(url)
+flights$id <- seq_len(nrow(flights))
+flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
+#'
+mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+	add_line(
+		data = flights
+		, layer_id = "line_layer"
+		, origin = c("start_lon", "start_lat")
+		, destination = c("end_lon", "end_lat")
+		, stroke_colour = "airport1"
+		, stroke_width = "stroke"
+	)
+```
+
+### Path
+
+```{r}
+
+mapdeck(
+  token = key
+  , style = 'mapbox://styles/mapbox/dark-v9'
+  , location = c(145, -37.8)
+  , zoom = 10) %>%
+  add_path(
+  data = roads
+  , stroke_colour = "RIGHT_LOC"
+  , layer_id = "path_layer"
   )
 
+```
 
+### Point cloud
 
+```{r}
+df <- capitals
+df$z <- sample(10000:10000000, size = nrow(df))
+#'
+mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
+add_pointcloud(
+  data = df
+  , lon = 'lon'
+  , lat = 'lat'
+  , elevation = 'z'
+  , layer_id = 'point'
+  , fill_colour = "country"
+)
+```
+
+### Polygons
+
+```{r}
+library(sf)
+library(geojsonsf)
+#'
+sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+#'
+mapdeck(
+	token = key
+	, style = 'mapbox://styles/mapbox/dark-v9'
+) %>%
+	add_polygon(
+		data = sf
+		, layer = "polygon_layer"
+		, fill_colour = "SA2_NAME16"
+	)
+#'
 ```
 
 
 ### Scatter
 
-```{r, fig.width = 6}
+```{r}
 
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 add_scatterplot(
@@ -86,70 +192,50 @@ add_scatterplot(
 
 ```
 
+### Screen grid
 
-### Path
+```{r}
+df <- read.csv(paste0(
+'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+'examples/3d-heatmap/heatmap-data.csv'
+))
 
-Currently only encoded polylines are supported. 
+df$weight <- sample(1:10, size = nrow(df), replace = T)
 
-```{r, fig.width = 6}
-
-mapdeck(
-  token = key
-  , style = 'mapbox://styles/mapbox/dark-v9'
-  , location = c(145.688269, -38.101062)
-  , zoom = 8) %>%
-  add_path(
-  data = roads
-  , polyline = "geometry"
-  , stroke_colour = "RIGHT_LOC"
-  , layer_id = "path_layer"
+mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%
+add_screengrid(
+  data = df
+  , lat = "lat"
+  , lon = "lng"
+  , weight = "weight",
+  , layer_id = "screengrid_layer"
+  , cell_size = 10
+  , opacity = 0.3
 )
-
 ```
 
-### Polygons
 
-```{r, fig.width = 6}
+### Text
+
+```{r}
 mapdeck(
-  token = key
-  , style = 'mapbox://styles/mapbox/dark-v9'
-  , location = c(145, -38)
-  , zoom = 8
-  ) %>%
-  add_polygon(
-    data = melbourne
-    , polyline = "geometry"
-    , layer = "polygon_layer"
-    , fill_colour = "fillColor"
+  token = key,
+  style = mapdeck_style('dark')
+) %>%
+  add_text(
+    data = capitals
+    , lon = 'lon'
+    , lat = 'lat'
+    , fill_colour = 'country'
+    , text = 'capital'
+     , layer_id = 'text'
   )
 ```
-
-
-### SF - Polygon
-
-```{r, fig.width=6}
-#library(sf)
-library(geojsonsf)
-
-sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
-
-mapdeck(
-  token = key
-  , style = 'mapbox://styles/mapbox/dark-v9'
-  ) %>%
-  add_polygon(
-    data = sf
-    , layer = "polygon_layer"
-    , fill_colour = "SA2_NAME16"
-  )
-
-```
-
 
 ### Multiple layers
 
 
-```{r, fig.width = 6}
+```{r}
 
 df1 <- capitals[ capitals$country == "Australia", ]
 df2 <- capitals[ capitals$country != "Australia", ]
@@ -187,6 +273,6 @@ mapdeck(
 
 ### Shiny
 
-Is on its way! Use `mapdeck_update()` to update an existing map. 
+
 
 

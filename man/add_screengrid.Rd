@@ -4,8 +4,9 @@
 \alias{add_screengrid}
 \title{Add Screengrid}
 \usage{
-add_screengrid(map, data = get_map_data(map), lon, lat, weight = NULL,
-  layer_id, digits = 6)
+add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
+  polyline = NULL, weight = NULL, colour_range = viridisLite::viridis(6),
+  opacity = 0.8, cell_size = 50, layer_id, digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -16,7 +17,15 @@ add_screengrid(map, data = get_map_data(map), lon, lat, weight = NULL,
 
 \item{lat}{column containing latitude values}
 
+\item{polyline}{column of \code{data} containing the polylines}
+
 \item{weight}{the weight of each value}
+
+\item{colour_range}{vector of 6 hex colours}
+
+\item{opacity}{opacity of cells. Value between 0 and 1}
+
+\item{cell_size}{size of grid squares in pixels}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type}
@@ -41,13 +50,15 @@ df <- read.csv(paste0(
 
 df$weight <- sample(1:10, size = nrow(df), replace = T)
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) \%>\%
 add_screengrid(
   data = df
   , lat = "lat"
   , lon = "lng"
   , weight = "weight",
   , layer_id = "screengrid_layer"
+  , cell_size = 10
+  , opacity = 0.3
 )
 }
 

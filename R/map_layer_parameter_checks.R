@@ -1,3 +1,36 @@
+# Check Hex
+#
+# Checks if the paramter is a hex colour
+# @param arg
+checkHex <- function(arg) {
+	if(!is.null(arg)) {
+		if(!isHexColour(arg))
+			stop(paste0(deparse(substitute(arg)), " must be a valid hex colour"))
+	}
+}
+
+
+# Check Palette
+#
+# Checks if the palette supplied is a function
+# @param arg
+checkPalette <- function(arg) {
+	if(!is.null(arg)) {
+		if(!is.function(arg))
+			stop(paste0(deparse(substitute(arg)), " must be a function which generates hex colours"))
+	}
+}
+
+# Check Numeric
+#
+# Checks the argument is length 1 numeric
+# @param arg
+checkNumeric <- function(arg) {
+	if(!is.null(arg)) {
+		if(!is.numeric(arg) | length(arg) != 1)
+			stop(paste0(deparse(substitute(arg)), " must be a single numeric value"))
+	}
+}
 
 
 
@@ -9,23 +42,6 @@ isUsingPolyline <- function(polyline){
 	if(!is.null(polyline)) return(TRUE)
 	return(FALSE)
 }
-
-
-# Layer Id
-#
-# Checks the layer_id parameter, and provides a default one if NULL
-# @param layer_id
-layerId <- function(layer_id){
-	if(!is.null(layer_id) & length(layer_id) != 1)
-		stop("please provide a single value for 'layer_id'")
-
-	if(is.null(layer_id)){
-		return("defaultLayerId")
-	}else{
-		return(layer_id)
-	}
-}
-
 
 # Unlist Multi Polyline
 #

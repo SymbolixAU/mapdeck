@@ -20,6 +20,7 @@ mapdeckPointcloudDependency <- function() {
 #' @param lat column containing latitude values
 #' @param elevation column containing the elevation values
 #' @param radius in metres
+#' @param light_settings list of light setting parameters. See \link{light_settings}
 #'
 #' @examples
 #' \dontrun{
@@ -44,12 +45,15 @@ mapdeckPointcloudDependency <- function() {
 add_pointcloud <- function(
 	map,
 	data = get_map_data(map),
-	lon,
-	lat,
+	lon = NULL,
+	lat = NULL,
 	elevation,
+	polyline = NULL,
 	radius = NULL,
 	fill_colour = NULL,
+	fill_opacity = NULL,
 	stroke_width = NULL,
+	light_settings = list(),
 	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis
@@ -57,8 +61,31 @@ add_pointcloud <- function(
 
 	objArgs <- match.call(expand.dots = F)
 
-	## parmater checks
+	data <- normaliseSfData(data, "POINT")
+	polyline <- findEncodedColumn(data, polyline)
 
+	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
+		objArgs[['polyline']] <- polyline
+		data <- unlistMultiGeometry( data, polyline )
+	}
+
+	## parmater checks
+	usePolyline <- isUsingPolyline(polyline)
+
+	## end parameter checks
+	if ( !usePolyline ) {
+		## TODO(check only a data.frame)
+		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
+		polyline <- 'polyline'
+		## TODO(check lon & lat exist / passed in as arguments )
+		objArgs[['lon']] <- NULL
+		objArgs[['lat']] <- NULL
+		objArgs[['polyline']] <- polyline
+	}
+
+	checkNumeric(digits)
+	checkPalette(palette)
+	## TODO(light_settings)
 
 	## end parameter checks
 
@@ -91,8 +118,10 @@ add_pointcloud <- function(
 
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
+	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
+
 	map <- addDependency(map, mapdeckPointcloudDependency())
-	invoke_method(map, "add_pointcloud", shape, layer_id)
+	invoke_method(map, "add_pointcloud", shape, layer_id, light_settings)
 }
 
 
@@ -100,13 +129,13 @@ add_pointcloud <- function(
 
 requiredPointcloudColumns <- function() {
 	c("stroke_width", "radius",
-		"fill_colour")
+		"fill_colour", "fill_opacity")
 }
 
 
 pointcloudColumns <- function() {
-	c('lat', 'lon', "elevation", "radius",
-		'fill_colour',
+	c('polyline', "elevation", "radius",
+		'fill_colour', 'fill_opacity',
 		'stroke_width')
 }
 
@@ -115,6 +144,7 @@ pointcloudDefaults <- function(n) {
 		"elevation" = rep(0, n),
 		"radius" = rep(1, n),
 		"fill_colour" = rep("#0000FF", n),
+		"fill_opacity" = rep(255, n),
 		"stroke_width" = rep(1, n),
 		stringsAsFactors = F
 	)

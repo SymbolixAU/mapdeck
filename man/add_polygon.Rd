@@ -5,8 +5,10 @@
 \title{Add Polygon}
 \usage{
 add_polygon(map, data = get_map_data(map), polyline = NULL,
-  stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL, layer_id,
-  digits = 6, palette = viridisLite::viridis)
+  stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL,
+  fill_opacity = NULL, elevation = NULL, tooltip = NULL,
+  light_settings = list(), layer_id, digits = 6,
+  palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -21,13 +23,23 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour}
 
+\item{fill_opacity}{value between 1 and 255. Either a string specifying the
+column of \code{data} containing the fill opacity of each shape, or a value
+between 1 and 255 to be applied to all the shapes}
+
+\item{elevation}{the height of the polygon}
+
+\item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
+
+\item{light_settings}{list of light setting parameters. See \link{light_settings}}
+
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type}
 
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
 
-\item{palette}{a function, or list of functions which generates hex colours}
+\item{palette}{a function which generates hex colours}
 }
 \description{
 The Polygon Layer renders filled and/or stroked polygons.
@@ -38,17 +50,25 @@ The Polygon Layer renders filled and/or stroked polygons.
 ## You need a valid access token from Mapbox
 key <- 'abc'
 
+df <- melbourne
+df$elevation <- sample(100:5000, size = nrow(df))
+df$info <- paste0("<b>SA2 - </b><br>",df$SA2_NAME)
+
 mapdeck(
   token = key
-  , style = 'mapbox://styles/mapbox/dark-v9'
+  , style = mapdeck_style('dark')
   , location = c(145, -38)
   , zoom = 8
   ) \%>\%
   add_polygon(
-  	data = melbourne
-    , polyline = "geometry"
-    , layer = "polygon_layer"
-  	, fill_colour = "fillColor"
+  	data = df
+   , polyline = "geometry"
+   , layer = "polygon_layer"
+  	, fill_colour = "fillColor",
+  	, stroke_colour = "fillColor",
+  	, elevation = "elevation"
+  	, stroke_width = 0
+  	#, tooltip = 'info'
   	)
 
 library(sf)

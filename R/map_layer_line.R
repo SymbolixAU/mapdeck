@@ -15,6 +15,9 @@ mapdeckLineDependency <- function() {
 #' The Line Layer renders raised lines joining pairs of source and target coordinates
 #'
 #' @inheritParams add_arc
+#' @param stroke_opacity value between 1 and 255. Either a string specifying the
+#' column of \code{data} containing the stroke opacity of each shape, or a value
+#' between 1 and 255 to be applied to all the shapes
 #' @param stroke_colour variable or hex colour to use as the ending stroke colour
 #'
 #' @examples
@@ -39,6 +42,14 @@ mapdeckLineDependency <- function() {
 #' 	)
 #' }
 #'
+#' @details
+#'
+#' MULTIPOINT objects will be treated as single points. That is, if an sf objet
+#' has one row with a MULTIPOINT object consisting of two points, this will
+#' be expanded to two rows of single POINTs.
+#' Therefore, if the origin is a MULTIPOINT of two points, and the destination is
+#' a single POINT, the code will error as there will be an uneven number of rows
+#'
 #' @export
 add_line <- function(
 	map,
@@ -49,6 +60,8 @@ add_line <- function(
 	id = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
+	stroke_opacity = NULL,
+	tooltip = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
@@ -78,15 +91,21 @@ add_line <- function(
 	} else if (length(origin) == 1 && length(destination) == 1) {
 		## encoded
 		data <- normaliseMultiSfData(data, origin, destination)
-		data[[origin]] <- unlist(data[[origin]])
-		data[[destination]] <- unlist(data[[destination]])
+		o <- unlist(data[[origin]])
+		d <- unlist(data[[destination]])
+		if(length(o) != length(d)) {
+			stop("There are a different number of origin and destination POINTs, possibly due to MULTIPOINT geometries?")
+		}
+		data[[origin]] <- o
+		data[[destination]] <- d
 
 	} else {
 		stop("expecting lon/lat origin destinations or sfc columns")
 	}
 
 	## parameter checks
-
+	checkNumeric(digits)
+	checkPalette(palette)
 
 	## end parameter checks
 
@@ -122,23 +141,24 @@ add_line <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckLineDependency())
-	invoke_method(map, "add_line", shape, layer_id)
+	invoke_method(map, "add_line", shape, layer_id )
 }
 
 
 requiredLineColumns <- function() {
-	c("stroke_colour", "stroke_width")
+	c("stroke_colour", "stroke_width", "stroke_opacity")
 }
 
 lineColumns <- function() {
 	c("origin", "destination",
-		"stroke_width", "stroke_colour")
+		"stroke_width", "stroke_colour", "stroke_opacity")
 }
 
 lineDefaults <- function(n) {
 	data.frame(
 		"stroke_colour" = rep("#440154", n),
 		"stroke_width" = rep(1, n),
+		"stroke_opacity" = rep(255, n),
 		stringsAsFactors = F
 	)
 }

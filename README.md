@@ -17,26 +17,26 @@ devtools::install_github("SymbolixAU/mapdeck")
 
 ![Arcs](./vignettes/img/arcs.png)
 
-## Available Plots
+## Access Token
 
-Most of these plots are avialble in a limited capacity. I haven't implemented all attributes (fill, strokes, widths, elevations)
+Mapdeck uses [Mabox maps](https://www.mapbox.com/), and to use Mapbocx you need an [access token](https://www.mapbox.com/help/how-access-tokens-work/)
+
+## Available Plots
 
 - Arc
 - GeoJSON
 - Grid
 - Line
-- Path (partial - uses encoded polylines)
-- Polygon (partial - uses encoded polylines)
-- Scatter
-- ScreenGrid
-
-## TODO
-
-- Hexagon
-- Icon
-- PointCloud
+- Path 
+- Point cloud
+- Polygon
+- Scatter plot
+- Screen grid
 - Text
+
 
 ## Shiny
 
-Basic plots work in shiny, but I'm still working on the interactive updates
+Mapdeck is also an `htmlwidget`, so will work in a shiny application. 
+
+Examples of all plots and shiny can be found in the [vignette](https://github.com/SymbolixAU/mapdeck/blob/master/vignettes/mapdeck.Rmd)
