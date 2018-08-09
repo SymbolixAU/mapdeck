@@ -8,7 +8,7 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings ) {
     pickable: true,
     stroked: true,
     filled: true,
-    wireframe: true,
+    wireframe: false,
     extruded: true,
     lineWidthMinPixels: 1,
     getPolygon: d => decode_polygons( d.polyline ),
