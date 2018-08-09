@@ -21,10 +21,10 @@ HTMLWidgets.widget({
 
         var tooltipdiv = document.createElement('div');
         tooltipdiv.id = 'tooltip';
-        document.body.appendChild(tooltipdiv);
+        mapDiv.appendChild(tooltipdiv);
 
+        console.log(mapDiv);
 //        console.log(tooltipdiv);
-
 
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {

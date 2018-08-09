@@ -32,13 +32,13 @@ function updateTooltip({x, y, object}) {
   const tooltip = document.getElementById('tooltip');
   //console.log(tooltip);
 
-  //if (object) {
-  //  tooltip.style.top = `${y}px`;
-  //  tooltip.style.left = `${x}px`;
-  //  tooltip.innerHTML = '<div><b>Hovering</b></div>';
-  //} else {
+  if (object) {
+    tooltip.style.top = `${y}px`;
+    tooltip.style.left = `${x}px`;
+    tooltip.innerHTML = '<div><b>Hovering</b></div>';
+  } else {
     tooltip.innerHTML = '';
-  //}
+  }
 }
 
 function decode_polygons( polylines ) {
