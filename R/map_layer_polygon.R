@@ -25,6 +25,7 @@ mapdeckPolygonDependency <- function() {
 #' @param stroke_width width of the stroke
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param elevation the height of the polygon
+#' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #'
 #' @examples
 #' \dontrun{
@@ -34,6 +35,7 @@ mapdeckPolygonDependency <- function() {
 #'
 #' df <- melbourne
 #' df$elevation <- sample(100:5000, size = nrow(df))
+#' df$info <- paste0("<b>SA2 - </b><br>",df$SA2_NAME)
 #'
 #' mapdeck(
 #'   token = key
@@ -49,6 +51,7 @@ mapdeckPolygonDependency <- function() {
 #'   	, stroke_colour = "fillColor",
 #'   	, elevation = "elevation"
 #'   	, stroke_width = 0
+#'   	, tooltip = 'info'
 #'   	)
 #'
 #' library(sf)
@@ -78,15 +81,12 @@ add_polygon <- function(
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	elevation = NULL,
+	tooltip = NULL,
 	light_settings = list(),
 	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
-
-	## TODO( sf and lon/lat coordinates )
-	## TODO( elevation )
-	## TODO( is this too slow? )
 
 	objArgs <- match.call(expand.dots = F)
 

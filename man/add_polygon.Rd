@@ -6,8 +6,9 @@
 \usage{
 add_polygon(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL,
-  fill_opacity = NULL, elevation = NULL, light_settings = list(),
-  layer_id, digits = 6, palette = viridisLite::viridis)
+  fill_opacity = NULL, elevation = NULL, tooltip = NULL,
+  light_settings = list(), layer_id, digits = 6,
+  palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -27,6 +28,8 @@ column of \code{data} containing the fill opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
 \item{elevation}{the height of the polygon}
+
+\item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
 \item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
@@ -49,6 +52,7 @@ key <- 'abc'
 
 df <- melbourne
 df$elevation <- sample(100:5000, size = nrow(df))
+df$info <- paste0("<b>SA2 - </b><br>",df$SA2_NAME)
 
 mapdeck(
   token = key
@@ -64,6 +68,7 @@ mapdeck(
   	, stroke_colour = "fillColor",
   	, elevation = "elevation"
   	, stroke_width = 0
+  	#, tooltip = 'info'
   	)
 
 library(sf)

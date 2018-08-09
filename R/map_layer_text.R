@@ -59,6 +59,7 @@ add_text <- function(
 	angle = NULL,
 	anchor = NULL,
 	alignment_baseline = NULL,
+	tooltip = NULL,
 	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis

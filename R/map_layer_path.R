@@ -36,6 +36,7 @@ mapdeckPathDependency <- function() {
 #'   data = roads
 #'   , stroke_colour = "RIGHT_LOC"
 #'   , layer_id = "path_layer"
+#'   , tooltip = "ROAD_NAME"
 #'   )
 #'
 #' }
@@ -48,6 +49,7 @@ add_path <- function(
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	stroke_opacity = NULL,
+	tooltip = NULL,
 	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis

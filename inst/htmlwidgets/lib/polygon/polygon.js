@@ -17,7 +17,7 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings ) {
     getLineWidth: d => d.stroke_width,
     getElevation: d => d.elevation,
     lightSettings: light_settings,
-    //onHover: ({object}) => setTooltip(object.name)  // TODO
+    onHover: updateTooltip,
     onClick: info => layer_click( map_id, "path", info )
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );

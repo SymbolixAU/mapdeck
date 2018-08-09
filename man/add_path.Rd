@@ -6,7 +6,7 @@
 \usage{
 add_path(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
-  layer_id, digits = 6, palette = viridisLite::viridis)
+  tooltip = NULL, layer_id, digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -22,6 +22,8 @@ add_path(map, data = get_map_data(map), polyline = NULL,
 \item{stroke_opacity}{value between 1 and 255. Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
+
+\item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type}
@@ -50,6 +52,7 @@ mapdeck(
   data = roads
   , stroke_colour = "RIGHT_LOC"
   , layer_id = "path_layer"
+  , tooltip = "ROAD_NAME"
   )
 
 }

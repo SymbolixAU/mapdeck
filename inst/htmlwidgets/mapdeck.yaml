@@ -10,3 +10,7 @@ dependencies:
     src: "htmlwidgets/lib"
     script: mapbox-gl.js
     style: mapbox-gl.css
+  - name: mapdeck
+    version: 0.0.1
+    src: "htmlwidgets/lib"
+    style: mapdeck.css

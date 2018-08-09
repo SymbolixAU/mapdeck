@@ -44,6 +44,7 @@ mapdeckArcDependency <- function() {
 #' flights <- read.csv(url)
 #' flights$id <- seq_len(nrow(flights))
 #' flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
+#' flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 #'
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' 	add_arc(
@@ -54,6 +55,7 @@ mapdeckArcDependency <- function() {
 #' 		, stroke_from = "airport1"
 #' 		, stroke_to = "airport2"
 #' 		, stroke_width = "stroke"
+#' 		, tooltip = "info"
 #' 	)
 #' }
 #'
@@ -78,6 +80,7 @@ add_arc <- function(
 	stroke_to = NULL,
 	stroke_to_opacity = NULL,
 	stroke_width = NULL,
+	tooltip = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {

@@ -61,6 +61,7 @@ add_line <- function(
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	stroke_opacity = NULL,
+	tooltip = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {

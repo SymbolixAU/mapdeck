@@ -19,6 +19,13 @@ HTMLWidgets.widget({
         var mapDiv = document.getElementById(el.id);
         mapDiv.className = 'mapdeckmap';
 
+        var tooltipdiv = document.createElement('div');
+        tooltipdiv.id = 'tooltip';
+        mapDiv.appendChild(tooltipdiv);
+
+        console.log(mapDiv);
+//        console.log(tooltipdiv);
+
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
         	longitude: x.location[0],
@@ -32,8 +39,9 @@ HTMLWidgets.widget({
 			      container: el.id,
 			      mapStyle: x.style,
 			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      layers: []
-			    });
+			      layers: [],
+			      //onLayerHover: setTooltip
+			  });
 
 			    window[el.id + 'map'] = deckgl;
 			    initialise_map(el, x);
@@ -66,6 +74,22 @@ function change_location( map_id, location, duration, transition, zoom ) {
       transitionDuration: duration
     },
   });
+}
+
+// following: https://codepen.io/vis-gl/pen/pLLQpN
+// and: https://beta.observablehq.com/@pessimistress/deck-gl-geojsonlayer-example
+function updateTooltip({x, y, object}) {
+  const tooltip = document.getElementById('tooltip');
+  if (object) {
+  	if(object.tooltip === undefined) {
+  		return;
+  	}
+    tooltip.style.top = `${y}px`;
+    tooltip.style.left = `${x}px`;
+    tooltip.innerHTML = `<div>${object.tooltip}</div>`;
+  } else {
+    tooltip.innerHTML = '';
+  }
 }
 
 if (HTMLWidgets.shinyMode) {

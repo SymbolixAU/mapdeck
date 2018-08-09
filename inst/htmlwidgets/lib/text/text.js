@@ -1,7 +1,7 @@
 
 
 function add_text( map_id, text_data, layer_id ) {
-;
+
 		const textLayer = new TextLayer({
 			id: 'text-'+layer_id,  // TODO
 			data: text_data,
@@ -14,7 +14,7 @@ function add_text( map_id, text_data, layer_id ) {
 			getTextAnchor: d => d.anchor,
 			getAlignmentBaseline: d => d.alignment_baseline,
 			onClick: info => layer_click( map_id, "text", info ),
-			//onHover: ({object}) => setTooltip(`${object.origin} to ${object.destination}`)
+			onHover: updateTooltip
 		});
 
 		update_layer( map_id, 'text-'+layer_id, textLayer );
