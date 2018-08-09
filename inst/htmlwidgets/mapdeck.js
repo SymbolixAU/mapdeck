@@ -19,6 +19,13 @@ HTMLWidgets.widget({
         var mapDiv = document.getElementById(el.id);
         mapDiv.className = 'mapdeckmap';
 
+        var tooltipdiv = document.createElement('div');
+        tooltipdiv.id = 'tooltip';
+        document.body.appendChild(tooltipdiv);
+
+//        console.log(tooltipdiv);
+
+
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
         	longitude: x.location[0],

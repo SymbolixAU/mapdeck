@@ -17,10 +17,28 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings ) {
     getLineWidth: d => d.stroke_width,
     getElevation: d => d.elevation,
     lightSettings: light_settings,
+    onHover: updateTooltip,
     //onHover: ({object}) => setTooltip(object.name)  // TODO
     onClick: info => layer_click( map_id, "path", info )
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
+}
+
+
+// following: https://codepen.io/vis-gl/pen/pLLQpN
+// and: https://beta.observablehq.com/@pessimistress/deck-gl-geojsonlayer-example
+function updateTooltip({x, y, object}) {
+
+  const tooltip = document.getElementById('tooltip');
+  //console.log(tooltip);
+
+  //if (object) {
+  //  tooltip.style.top = `${y}px`;
+  //  tooltip.style.left = `${x}px`;
+  //  tooltip.innerHTML = '<div><b>Hovering</b></div>';
+  //} else {
+    tooltip.innerHTML = '';
+  //}
 }
 
 function decode_polygons( polylines ) {
