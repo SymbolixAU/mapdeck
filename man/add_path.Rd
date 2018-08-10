@@ -49,10 +49,10 @@ mapdeck(
   , location = c(145, -37.8)
   , zoom = 10) \%>\%
   add_path(
-  data = roads
-  , stroke_colour = "RIGHT_LOC"
-  , layer_id = "path_layer"
-  , tooltip = "ROAD_NAME"
+    data = roads
+    , stroke_colour = "RIGHT_LOC"
+    , layer_id = "path_layer"
+    , tooltip = "ROAD_NAME"
   )
 
 }

@@ -17,6 +17,10 @@ knitr::opts_chunk$set(
 )
 ```
 
+<!-- TODO: -->
+<!-- layer_id - why it's important -->
+<!-- set_token() -->
+
 
 ### What is Mapdeck?
 

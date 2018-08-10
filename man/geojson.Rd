@@ -9,6 +9,6 @@
 geojson
 }
 \description{
-A GeoJSON object of polygons and lines in Melbourne
+A GeoJSON object of polygons, lines and points in Melbourne
 }
 \keyword{datasets}

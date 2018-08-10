@@ -4,7 +4,8 @@
 \name{melbourne}
 \alias{melbourne}
 \title{Polygons in and around Melbourne}
-\format{An sfencoded and data frame object with 41 observations and 8 variables}
+\format{An sfencoded and data frame object with 41 observations and 8 variables.
+See library googlePolylines for information on sfencoded objects}
 \usage{
 melbourne
 }

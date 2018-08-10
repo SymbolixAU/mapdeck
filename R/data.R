@@ -27,12 +27,13 @@
 #'
 #' A data set containing statistical area 2 regions of central (and surrounds) Melbourne.
 #'
-#' @format An sfencoded and data frame object with 41 observations and 8 variables
+#' @format An sfencoded and data frame object with 41 observations and 8 variables.
+#' See library googlePolylines for information on sfencoded objects
 "melbourne"
 
 #' Geojson
 #'
-#' A GeoJSON object of polygons and lines in Melbourne
+#' A GeoJSON object of polygons, lines and points in Melbourne
 #'
 #' @format a 'json' object
 "geojson"

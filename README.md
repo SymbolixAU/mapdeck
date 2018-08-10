@@ -15,13 +15,34 @@ Interactive maps using Mapbox GL and Deck.gl
 devtools::install_github("SymbolixAU/mapdeck")
 ```
 
-![Arcs](./vignettes/img/arcs.png)
+## Basic Use
+
+`mapdeck(token = 'your_token')` will give you a map. You then start adding layers by using one of the various `add_*()` functions. 
+
+```r
+url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
+flights <- read.csv(url)
+flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
+
+mapdeck(token = key, style = mapdeck_style('dark')) %>%
+  add_arc(
+    data = flights
+    , origin = c("start_lon", "start_lat")
+    , destination = c("end_lon", "end_lat")
+    , stroke_from = "airport1"
+    , stroke_to = "airport2"
+    , tooltip = "info"
+    , layer_id = 'arclayer'
+  )
+```
+
+![Arcs](./vignettes/img/readme_arcs_small.gif)
 
 ## Access Token
 
 Mapdeck uses [Mabox maps](https://www.mapbox.com/), and to use Mapbocx you need an [access token](https://www.mapbox.com/help/how-access-tokens-work/)
 
-## Available Plots
+## Available Layers
 
 - Arc
 - GeoJSON

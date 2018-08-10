@@ -61,15 +61,15 @@ mapdeck(
   , zoom = 8
   ) \%>\%
   add_polygon(
-  	data = df
-   , polyline = "geometry"
-   , layer = "polygon_layer"
-  	, fill_colour = "fillColor",
-  	, stroke_colour = "fillColor",
-  	, elevation = "elevation"
-  	, stroke_width = 0
-  	, tooltip = 'info'
-  	)
+    data = df
+    , polyline = "geometry"
+    , layer = "polygon_layer"
+    , fill_colour = "fillColor",
+    , stroke_colour = "fillColor",
+    , elevation = "elevation"
+    , stroke_width = 0
+    , tooltip = 'info'
+  )
 
 library(sf)
 library(geojsonsf)
@@ -77,14 +77,14 @@ library(geojsonsf)
 sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
 
 mapdeck(
-	token = key
-	, style = 'mapbox://styles/mapbox/dark-v9'
+  token = key
+  , style = 'mapbox://styles/mapbox/dark-v9'
 ) \%>\%
-	add_polygon(
-		data = sf
-		, layer = "polygon_layer"
-		, fill_colour = "SA2_NAME16"
-	)
+  add_polygon(
+    data = sf
+    , layer = "polygon_layer"
+    , fill_colour = "SA2_NAME16"
+  )
 
 }
 
