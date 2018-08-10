@@ -87,7 +87,6 @@ add_path <- function(
 
 	shape <- createMapObject(data, allCols, objArgs)
 
-	# print(head(shape))
 	pal <- createPalettes(shape, colourColumns)
 
 	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
@@ -97,23 +96,11 @@ add_path <- function(
 		shape <- replaceVariableColours(shape, colours)
 	}
 
-	# print(head(shape))
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
 	if(length(requiredDefaults) > 0){
 		shape <- addDefaults(shape, requiredDefaults, "path")
 	}
-
-	# print(str(shape))
-	#
-	# if (!is.list(shape[["polyline"]])) {
-	# 	f <- paste0("polyline ~ ", paste0(setdiff(names(shape),
-	# 																						"polyline"), collapse = "+"))
-	# 	shape <- stats::aggregate(stats::formula(f), data = shape,
-	# 														list)
-	# }
-	#
-	# print(str(shape))
 
 	shape <- jsonlite::toJSON(shape, digits = digits)
 

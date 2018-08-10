@@ -23,9 +23,6 @@ HTMLWidgets.widget({
         tooltipdiv.id = 'tooltip';
         mapDiv.appendChild(tooltipdiv);
 
-        console.log(mapDiv);
-//        console.log(tooltipdiv);
-
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
         	longitude: x.location[0],
@@ -288,7 +285,6 @@ function decode_polyline(str, precision) {
 
     coordinates.push([lng / factor, lat / factor]);
   }
-  //console.log(coordinates);
   return coordinates;
 }
 

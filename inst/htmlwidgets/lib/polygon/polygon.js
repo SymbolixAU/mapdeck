@@ -3,7 +3,7 @@
 function add_polygon( map_id, polygon_data, layer_id, light_settings ) {
 
   const polygonLayer = new PolygonLayer({
-    id: 'polygon-'+layer_id,  // TODO
+    id: 'polygon-'+layer_id,
     data: polygon_data,
     pickable: true,
     stroked: true,
@@ -24,14 +24,13 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings ) {
 }
 
 function decode_polygons( polylines ) {
-	// polygons can be an array of polylines
-	var i, p, coordinates = [];
+  var i, p, coordinates = [];
 
-	for (i = 0; i < polylines.length; i++ ) {
-		p = polylines[i];
-		if ( p != "-") {
-		  coordinates.push( decode_polyline( p ) );
-	  }
-	}
-	return coordinates;
+  for (i = 0; i < polylines.length; i++ ) {
+    p = polylines[i];
+    if ( p != "-") {
+      coordinates.push( decode_polyline( p ) );
+    }
+  }
+  return coordinates;
 }

@@ -1,8 +1,7 @@
 
 function add_screengrid( map_id, screengrid_data, layer_id, opacity, cell_size, colour_range ) {
-
   const screengridLayer = new deck.ScreenGridLayer({
-    id: 'screengrid-'+layer_id,  // TODO
+    id: 'screengrid-'+layer_id,
     data: screengrid_data,
     opacity: opacity,
     cellSizePixels: cell_size,
@@ -12,6 +11,5 @@ function add_screengrid( map_id, screengrid_data, layer_id, opacity, cell_size, 
     onClick: info => layer_click( map_id, "screengrid", info ),
     onHover: updateTooltip
   });
-
-	update_layer( map_id, 'screengrid-'+layer_id, screengridLayer );
+  update_layer( map_id, 'screengrid-'+layer_id, screengridLayer );
 }

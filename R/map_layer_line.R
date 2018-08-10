@@ -121,7 +121,6 @@ add_line <- function(
 
 	shape <- createMapObject(data, allCols, objArgs)
 
-	# print(head(shape))
 	pal <- createPalettes(shape, colourColumns)
 
 	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
@@ -131,7 +130,6 @@ add_line <- function(
 		shape <- replaceVariableColours(shape, colours)
 	}
 
-	# print(head(shape))
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
 	if(length(requiredDefaults) > 0){

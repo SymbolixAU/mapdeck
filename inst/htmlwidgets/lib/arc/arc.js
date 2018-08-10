@@ -2,7 +2,7 @@
 function add_arc( map_id, arc_data, layer_id ) {
 
   const arcLayer = new ArcLayer({
-    id: 'arc-'+layer_id,  // TODO
+    id: 'arc-'+layer_id,
     data: arc_data,
     pickable: true,
     getStrokeWidth: d => d.stroke_width,

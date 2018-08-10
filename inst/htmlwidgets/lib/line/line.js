@@ -2,7 +2,7 @@
 function add_line( map_id, line_data, layer_id ) {
 
   const lineLayer = new LineLayer({
-    id: 'line-'+layer_id,  // TODO
+    id: 'line-'+layer_id,
     data: line_data,
     pickable: true,
     getStrokeWidth: d => d.stroke_width,
@@ -14,5 +14,4 @@ function add_line( map_id, line_data, layer_id ) {
   });
 
   update_layer( map_id, 'line-'+layer_id, lineLayer );
-
 }
