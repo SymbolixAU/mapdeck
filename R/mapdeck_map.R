@@ -2,7 +2,7 @@
 #'
 #' @import htmlwidgets
 #'
-#' @param token Mapbox Acess token
+#' @param token Mapbox Acess token. Use \code{set_token()} to use a global token
 #' @param data data to be used on the map
 #' @param width the width of the map
 #' @param height the height of the map
@@ -14,7 +14,7 @@
 #'
 #' @export
 mapdeck <- function(
-	token,
+	token = get_access_token(api = 'mapbox'),
 	data = NULL,
 	width = NULL,
 	height = NULL,

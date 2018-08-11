@@ -6,7 +6,7 @@ Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
 Description: Provides a mechanism to plot an interactive map using 'Mapbox GL' maps and 'Deck.gl' plotting functions.
-License: GPL-3 + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
