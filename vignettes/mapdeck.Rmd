@@ -43,11 +43,28 @@ key <- 'abc'    ## put your own key here
 mapdeck(token = key)
 ```
 
+You can also use `set_token()` to make your token avaialble 'globally' to all future calls to `mapdeck()` in a session. 
+
+```{r, eval = T}
+set_token('abc')
+mapdeck_tokens()
+```
+
+
 You can style the map using any [mapbox style](https://www.mapbox.com/api-documentation/#styles) template styles, or you can [create one of your own](https://www.mapbox.com/help/studio-manual-styles/)
 
 ```{r, fig.width=6}
 mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9')
 ```
+
+### Layers
+
+Once you have a map you can start adding layers through the various `add_*()` functions (there is an example of each one in this vignette).
+
+Each layer requires you to set a `layer_id` value. This is important and required. It's this ID that `deck.gl` uses to 'shallow-compare' layers to see if they need updating or not. 
+
+Which comes in handy when working in Shiny. If you udpate the data but use the same `layer_id`, `deck.gl` knows it should udpate the layer. There's nothing extra for you to do. There is a section on Shiny giving examples
+
 
 ### Arcs
 
@@ -57,33 +74,33 @@ url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_a
 flights <- read.csv(url)
 flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
-#'
+
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
-	add_arc(
-		data = flights
-		, layer_id = "arc_layer"
-		, origin = c("start_lon", "start_lat")
-		, destination = c("end_lon", "end_lat")
-		, stroke_from = "airport1"
-		, stroke_to = "airport2"
-		, stroke_width = "stroke"
-	)
+  add_arc(
+    data = flights
+    , layer_id = "arc_layer"
+    , origin = c("start_lon", "start_lat")
+    , destination = c("end_lon", "end_lat")
+    , stroke_from = "airport1"
+    , stroke_to = "airport2"
+    , stroke_width = "stroke"
+  )
 ```
 
 ### GeoJSON
 
 ```{r}
 mapdeck(
- token = key
- , location = c(145, -37.9)
- , zoom = 8
- , style = "mapbox://styles/mapbox/dark-v9"
- , pitch = 35
-) %>%
- add_geojson(
-   data = geojson
-   , layer_id = "geojson"
- )
+  token = key
+  , location = c(145, -37.9)
+  , zoom = 8
+  , style = "mapbox://styles/mapbox/dark-v9"
+  , pitch = 35
+  ) %>%
+	add_geojson(
+    data = geojson
+    , layer_id = "geojson"
+  )
 ```
 
 ### Grid
@@ -93,7 +110,7 @@ df <- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
 'examples/3d-heatmap/heatmap-data.csv'
 ))
-#'
+
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 add_grid(
   data = df
@@ -113,16 +130,16 @@ url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_a
 flights <- read.csv(url)
 flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
-#'
+
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
-	add_line(
-		data = flights
-		, layer_id = "line_layer"
-		, origin = c("start_lon", "start_lat")
-		, destination = c("end_lon", "end_lat")
-		, stroke_colour = "airport1"
-		, stroke_width = "stroke"
-	)
+  add_line(
+    data = flights
+    , layer_id = "line_layer"
+    , origin = c("start_lon", "start_lat")
+    , destination = c("end_lon", "end_lat")
+    , stroke_colour = "airport1"
+    , stroke_width = "stroke"
+  )
 ```
 
 ### Path
@@ -135,9 +152,9 @@ mapdeck(
   , location = c(145, -37.8)
   , zoom = 10) %>%
   add_path(
-  data = roads
-  , stroke_colour = "RIGHT_LOC"
-  , layer_id = "path_layer"
+    data = roads
+    , stroke_colour = "RIGHT_LOC"
+    , layer_id = "path_layer"
   )
 
 ```
@@ -147,7 +164,7 @@ mapdeck(
 ```{r}
 df <- capitals
 df$z <- sample(10000:10000000, size = nrow(df))
-#'
+
 mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
 add_pointcloud(
   data = df
@@ -164,19 +181,15 @@ add_pointcloud(
 ```{r}
 library(sf)
 library(geojsonsf)
-#'
+
 sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
-#'
-mapdeck(
-	token = key
-	, style = 'mapbox://styles/mapbox/dark-v9'
-) %>%
-	add_polygon(
-		data = sf
-		, layer = "polygon_layer"
-		, fill_colour = "SA2_NAME16"
-	)
-#'
+
+mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
+  add_polygon(
+    data = sf
+    , layer = "polygon_layer"
+    , fill_colour = "SA2_NAME16"
+  )
 ```
 
 
@@ -222,17 +235,14 @@ add_screengrid(
 ### Text
 
 ```{r}
-mapdeck(
-  token = key,
-  style = mapdeck_style('dark')
-) %>%
+mapdeck(token = key, style = mapdeck_style('dark')) %>%
   add_text(
     data = capitals
     , lon = 'lon'
     , lat = 'lat'
     , fill_colour = 'country'
     , text = 'capital'
-     , layer_id = 'text'
+    , layer_id = 'text'
   )
 ```
 
@@ -243,8 +253,8 @@ mapdeck(
 
 df1 <- capitals[ capitals$country == "Australia", ]
 df2 <- capitals[ capitals$country != "Australia", ]
-df1$key <- 1
-df2$key <- 1
+df1$key <- 1L
+df2$key <- 1L
 
 df <- merge(df1, df2, by = 'key')
 
@@ -261,8 +271,8 @@ mapdeck(
     , stroke_from = "country.x"
     , stroke_to = "country.y"
     , stroke_width = 2
-  ) %>%
-  add_scatterplot(
+    ) %>%
+	add_scatterplot(
     data = df2
     , lon = "lon"
     , lat = "lat"

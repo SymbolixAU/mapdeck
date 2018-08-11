@@ -301,203 +301,207 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(mapdeck)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">key &lt;-<span class="st"> 'abc'</span>    ## put your own key here</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">mapdeck</span>(<span class="dt">token =</span> key)</a></code></pre></div>
+<p>You can also use <code>set_token()</code> to make your token avaialble ‘globally’ to all future calls to <code>mapdeck()</code> in a session.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">set_token</span>(<span class="st">'abc'</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">mapdeck_tokens</span>()</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#  Mapdeck tokens</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#   -  mapbox : abc</span></a></code></pre></div>
 <p>You can style the map using any <a href="https://www.mapbox.com/api-documentation/#styles">mapbox style</a> template styles, or you can <a href="https://www.mapbox.com/help/studio-manual-styles/">create one of your own</a></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">mapdeck</span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">mapdeck</span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>)</a></code></pre></div>
+</div>
+<div id="layers" class="section level3">
+<h3>Layers</h3>
+<p>Once you have a map you can start adding layers through the various <code>add_*()</code> functions (there is an example of each one in this vignette).</p>
+<p>Each layer requires you to set a <code>layer_id</code> value. This is important and required. It’s this ID that <code>deck.gl</code> uses to ‘shallow-compare’ layers to see if they need updating or not.</p>
+<p>Which comes in handy when working in Shiny. If you udpate the data but use the same <code>layer_id</code>, <code>deck.gl</code> knows it should udpate the layer. There’s nothing extra for you to do. There is a section on Shiny giving examples</p>
 </div>
 <div id="arcs" class="section level3">
 <h3>Arcs</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">flights &lt;-<span class="st"> </span><span class="kw">read.csv</span>(url)</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">flights<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">seq_len</span>(<span class="kw">nrow</span>(flights))</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">flights<span class="op">$</span>stroke &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw">nrow</span>(flights), <span class="dt">replace =</span> T)</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#'</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="st">    </span><span class="kw">add_arc</span>(</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">        <span class="dt">data =</span> flights</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">        , <span class="dt">layer_id =</span> <span class="st">&quot;arc_layer&quot;</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">        , <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">&quot;start_lon&quot;</span>, <span class="st">&quot;start_lat&quot;</span>)</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">        , <span class="dt">destination =</span> <span class="kw">c</span>(<span class="st">&quot;end_lon&quot;</span>, <span class="st">&quot;end_lat&quot;</span>)</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">        , <span class="dt">stroke_from =</span> <span class="st">&quot;airport1&quot;</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">        , <span class="dt">stroke_to =</span> <span class="st">&quot;airport2&quot;</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">        , <span class="dt">stroke_width =</span> <span class="st">&quot;stroke&quot;</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">    )</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">flights &lt;-<span class="st"> </span><span class="kw">read.csv</span>(url)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">flights<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">seq_len</span>(<span class="kw">nrow</span>(flights))</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">flights<span class="op">$</span>stroke &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw">nrow</span>(flights), <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="st">  </span><span class="kw">add_arc</span>(</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">    <span class="dt">data =</span> flights</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">    , <span class="dt">layer_id =</span> <span class="st">&quot;arc_layer&quot;</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">    , <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">&quot;start_lon&quot;</span>, <span class="st">&quot;start_lat&quot;</span>)</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">    , <span class="dt">destination =</span> <span class="kw">c</span>(<span class="st">&quot;end_lon&quot;</span>, <span class="st">&quot;end_lat&quot;</span>)</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">    , <span class="dt">stroke_from =</span> <span class="st">&quot;airport1&quot;</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">    , <span class="dt">stroke_to =</span> <span class="st">&quot;airport2&quot;</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">    , <span class="dt">stroke_width =</span> <span class="st">&quot;stroke&quot;</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">  )</a></code></pre></div>
 </div>
 <div id="geojson" class="section level3">
 <h3>GeoJSON</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">mapdeck</span>(</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"> <span class="dt">token =</span> key</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"> , <span class="dt">location =</span> <span class="kw">c</span>(<span class="dv">145</span>, <span class="fl">-37.9</span>)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"> , <span class="dt">zoom =</span> <span class="dv">8</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"> , <span class="dt">style =</span> <span class="st">&quot;mapbox://styles/mapbox/dark-v9&quot;</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"> , <span class="dt">pitch =</span> <span class="dv">35</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="st"> </span><span class="kw">add_geojson</span>(</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">   <span class="dt">data =</span> geojson</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">   , <span class="dt">layer_id =</span> <span class="st">&quot;geojson&quot;</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"> )</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">mapdeck</span>(</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="dt">token =</span> key</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  , <span class="dt">location =</span> <span class="kw">c</span>(<span class="dv">145</span>, <span class="fl">-37.9</span>)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">  , <span class="dt">zoom =</span> <span class="dv">8</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">  , <span class="dt">style =</span> <span class="st">&quot;mapbox://styles/mapbox/dark-v9&quot;</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">  , <span class="dt">pitch =</span> <span class="dv">35</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">    </span><span class="kw">add_geojson</span>(</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">    <span class="dt">data =</span> geojson</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">    , <span class="dt">layer_id =</span> <span class="st">&quot;geojson&quot;</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">  )</a></code></pre></div>
 </div>
 <div id="grid" class="section level3">
 <h3>Grid</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">paste0</span>(</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">))</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#'</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw">add_grid</span>(</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">  <span class="dt">data =</span> df</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">  , <span class="dt">lat =</span> <span class="st">&quot;lat&quot;</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">  , <span class="dt">lon =</span> <span class="st">&quot;lng&quot;</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">  , <span class="dt">cell_size =</span> <span class="dv">5000</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">  , <span class="dt">elevation_scale =</span> <span class="dv">50</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">  , <span class="dt">layer_id =</span> <span class="st">&quot;grid_layer&quot;</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">paste0</span>(</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">))</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw">add_grid</span>(</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">  <span class="dt">data =</span> df</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">  , <span class="dt">lat =</span> <span class="st">&quot;lat&quot;</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">  , <span class="dt">lon =</span> <span class="st">&quot;lng&quot;</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">  , <span class="dt">cell_size =</span> <span class="dv">5000</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">  , <span class="dt">elevation_scale =</span> <span class="dv">50</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">  , <span class="dt">layer_id =</span> <span class="st">&quot;grid_layer&quot;</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">)</a></code></pre></div>
 </div>
 <div id="lines" class="section level3">
 <h3>Lines</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">flights &lt;-<span class="st"> </span><span class="kw">read.csv</span>(url)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">flights<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">seq_len</span>(<span class="kw">nrow</span>(flights))</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">flights<span class="op">$</span>stroke &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw">nrow</span>(flights), <span class="dt">replace =</span> T)</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#'</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">    </span><span class="kw">add_line</span>(</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">        <span class="dt">data =</span> flights</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">        , <span class="dt">layer_id =</span> <span class="st">&quot;line_layer&quot;</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">        , <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">&quot;start_lon&quot;</span>, <span class="st">&quot;start_lat&quot;</span>)</a>
-<a class="sourceLine" id="cb6-11" data-line-number="11">        , <span class="dt">destination =</span> <span class="kw">c</span>(<span class="st">&quot;end_lon&quot;</span>, <span class="st">&quot;end_lat&quot;</span>)</a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">        , <span class="dt">stroke_colour =</span> <span class="st">&quot;airport1&quot;</span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">        , <span class="dt">stroke_width =</span> <span class="st">&quot;stroke&quot;</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">    )</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">flights &lt;-<span class="st"> </span><span class="kw">read.csv</span>(url)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">flights<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">seq_len</span>(<span class="kw">nrow</span>(flights))</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">flights<span class="op">$</span>stroke &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw">nrow</span>(flights), <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  </span><span class="kw">add_line</span>(</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">    <span class="dt">data =</span> flights</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">    , <span class="dt">layer_id =</span> <span class="st">&quot;line_layer&quot;</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">    , <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">&quot;start_lon&quot;</span>, <span class="st">&quot;start_lat&quot;</span>)</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">    , <span class="dt">destination =</span> <span class="kw">c</span>(<span class="st">&quot;end_lon&quot;</span>, <span class="st">&quot;end_lat&quot;</span>)</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">    , <span class="dt">stroke_colour =</span> <span class="st">&quot;airport1&quot;</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">    , <span class="dt">stroke_width =</span> <span class="st">&quot;stroke&quot;</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">  )</a></code></pre></div>
 </div>
 <div id="path" class="section level3">
 <h3>Path</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">mapdeck</span>(</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="dt">token =</span> key</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">  , <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">  , <span class="dt">location =</span> <span class="kw">c</span>(<span class="dv">145</span>, <span class="fl">-37.8</span>)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">  , <span class="dt">zoom =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  </span><span class="kw">add_path</span>(</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">  <span class="dt">data =</span> roads</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">  , <span class="dt">stroke_colour =</span> <span class="st">&quot;RIGHT_LOC&quot;</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">  , <span class="dt">layer_id =</span> <span class="st">&quot;path_layer&quot;</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">  )</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">mapdeck</span>(</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">  <span class="dt">token =</span> key</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">  , <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">  , <span class="dt">location =</span> <span class="kw">c</span>(<span class="dv">145</span>, <span class="fl">-37.8</span>)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">  , <span class="dt">zoom =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw">add_path</span>(</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">    <span class="dt">data =</span> roads</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">    , <span class="dt">stroke_colour =</span> <span class="st">&quot;RIGHT_LOC&quot;</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">    , <span class="dt">layer_id =</span> <span class="st">&quot;path_layer&quot;</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">  )</a></code></pre></div>
 </div>
 <div id="point-cloud" class="section level3">
 <h3>Point cloud</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">df &lt;-<span class="st"> </span>capitals</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">df<span class="op">$</span>z &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">10000</span><span class="op">:</span><span class="dv">10000000</span>, <span class="dt">size =</span> <span class="kw">nrow</span>(df))</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#'</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw">mapdeck</span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">add_pointcloud</span>(</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">  <span class="dt">data =</span> df</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">  , <span class="dt">lon =</span> <span class="st">'lon'</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">  , <span class="dt">lat =</span> <span class="st">'lat'</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">  , <span class="dt">elevation =</span> <span class="st">'z'</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">  , <span class="dt">layer_id =</span> <span class="st">'point'</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">  , <span class="dt">fill_colour =</span> <span class="st">&quot;country&quot;</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">df &lt;-<span class="st"> </span>capitals</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">df<span class="op">$</span>z &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">10000</span><span class="op">:</span><span class="dv">10000000</span>, <span class="dt">size =</span> <span class="kw">nrow</span>(df))</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="kw">mapdeck</span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="kw">add_pointcloud</span>(</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">  <span class="dt">data =</span> df</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">  , <span class="dt">lon =</span> <span class="st">'lon'</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">  , <span class="dt">lat =</span> <span class="st">'lat'</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">  , <span class="dt">elevation =</span> <span class="st">'z'</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">  , <span class="dt">layer_id =</span> <span class="st">'point'</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">  , <span class="dt">fill_colour =</span> <span class="st">&quot;country&quot;</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">)</a></code></pre></div>
 </div>
 <div id="polygons" class="section level3">
 <h3>Polygons</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">library</span>(sf)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw">library</span>(geojsonsf)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#'</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">sf &lt;-<span class="st"> </span><span class="kw">geojson_sf</span>(<span class="st">&quot;https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json&quot;</span>)</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#'</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="kw">mapdeck</span>(</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">    <span class="dt">token =</span> key</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">    , <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="st">    </span><span class="kw">add_polygon</span>(</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">        <span class="dt">data =</span> sf</a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">        , <span class="dt">layer =</span> <span class="st">&quot;polygon_layer&quot;</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">        , <span class="dt">fill_colour =</span> <span class="st">&quot;SA2_NAME16&quot;</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">    )</a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#'</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">library</span>(sf)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">library</span>(geojsonsf)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">sf &lt;-<span class="st"> </span><span class="kw">geojson_sf</span>(<span class="st">&quot;https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json&quot;</span>)</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="kw">mapdeck</span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="st">  </span><span class="kw">add_polygon</span>(</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">    <span class="dt">data =</span> sf</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">    , <span class="dt">layer =</span> <span class="st">&quot;polygon_layer&quot;</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">    , <span class="dt">fill_colour =</span> <span class="st">&quot;SA2_NAME16&quot;</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">  )</a></code></pre></div>
 </div>
 <div id="scatter" class="section level3">
 <h3>Scatter</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">add_scatterplot</span>(</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">  <span class="dt">data =</span> capitals</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">  , <span class="dt">lat =</span> <span class="st">&quot;lat&quot;</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">  , <span class="dt">lon =</span> <span class="st">&quot;lon&quot;</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">  , <span class="dt">radius =</span> <span class="dv">100000</span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">  , <span class="dt">fill_colour =</span> <span class="st">&quot;country&quot;</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">  , <span class="dt">layer_id =</span> <span class="st">&quot;scatter_layer&quot;</span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw">add_scatterplot</span>(</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">  <span class="dt">data =</span> capitals</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">  , <span class="dt">lat =</span> <span class="st">&quot;lat&quot;</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">  , <span class="dt">lon =</span> <span class="st">&quot;lon&quot;</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">  , <span class="dt">radius =</span> <span class="dv">100000</span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">  , <span class="dt">fill_colour =</span> <span class="st">&quot;country&quot;</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">  , <span class="dt">layer_id =</span> <span class="st">&quot;scatter_layer&quot;</span></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">)</a></code></pre></div>
 </div>
 <div id="screen-grid" class="section level3">
 <h3>Screen grid</h3>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">paste0</span>(</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">))</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">df<span class="op">$</span>weight &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">size =</span> <span class="kw">nrow</span>(df), <span class="dt">replace =</span> T)</a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw">mapdeck_style</span>(<span class="st">'dark'</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="kw">add_screengrid</span>(</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10">  <span class="dt">data =</span> df</a>
-<a class="sourceLine" id="cb11-11" data-line-number="11">  , <span class="dt">lat =</span> <span class="st">&quot;lat&quot;</span></a>
-<a class="sourceLine" id="cb11-12" data-line-number="12">  , <span class="dt">lon =</span> <span class="st">&quot;lng&quot;</span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13">  , <span class="dt">weight =</span> <span class="st">&quot;weight&quot;</span>,</a>
-<a class="sourceLine" id="cb11-14" data-line-number="14">  , <span class="dt">layer_id =</span> <span class="st">&quot;screengrid_layer&quot;</span></a>
-<a class="sourceLine" id="cb11-15" data-line-number="15">  , <span class="dt">cell_size =</span> <span class="dv">10</span></a>
-<a class="sourceLine" id="cb11-16" data-line-number="16">  , <span class="dt">opacity =</span> <span class="fl">0.3</span></a>
-<a class="sourceLine" id="cb11-17" data-line-number="17">)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">paste0</span>(</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">))</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">df<span class="op">$</span>weight &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">size =</span> <span class="kw">nrow</span>(df), <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="kw">mapdeck</span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw">mapdeck_style</span>(<span class="st">'dark'</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="kw">add_screengrid</span>(</a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">  <span class="dt">data =</span> df</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11">  , <span class="dt">lat =</span> <span class="st">&quot;lat&quot;</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">  , <span class="dt">lon =</span> <span class="st">&quot;lng&quot;</span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">  , <span class="dt">weight =</span> <span class="st">&quot;weight&quot;</span>,</a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">  , <span class="dt">layer_id =</span> <span class="st">&quot;screengrid_layer&quot;</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15">  , <span class="dt">cell_size =</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16">  , <span class="dt">opacity =</span> <span class="fl">0.3</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17">)</a></code></pre></div>
 </div>
 <div id="text" class="section level3">
 <h3>Text</h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">mapdeck</span>(</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">  <span class="dt">token =</span> key,</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">  <span class="dt">style =</span> <span class="kw">mapdeck_style</span>(<span class="st">'dark'</span>)</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">add_text</span>(</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">    <span class="dt">data =</span> capitals</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">    , <span class="dt">lon =</span> <span class="st">'lon'</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">    , <span class="dt">lat =</span> <span class="st">'lat'</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">    , <span class="dt">fill_colour =</span> <span class="st">'country'</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">    , <span class="dt">text =</span> <span class="st">'capital'</span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11">     , <span class="dt">layer_id =</span> <span class="st">'text'</span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12">  )</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">mapdeck</span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw">mapdeck_style</span>(<span class="st">'dark'</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">add_text</span>(</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">    <span class="dt">data =</span> capitals</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">    , <span class="dt">lon =</span> <span class="st">'lon'</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">    , <span class="dt">lat =</span> <span class="st">'lat'</span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">    , <span class="dt">fill_colour =</span> <span class="st">'country'</span></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">    , <span class="dt">text =</span> <span class="st">'capital'</span></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">    , <span class="dt">layer_id =</span> <span class="st">'text'</span></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">  )</a></code></pre></div>
 </div>
 <div id="multiple-layers" class="section level3">
 <h3>Multiple layers</h3>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">df1 &lt;-<span class="st"> </span>capitals[ capitals<span class="op">$</span>country <span class="op">==</span><span class="st"> &quot;Australia&quot;</span>, ]</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">df2 &lt;-<span class="st"> </span>capitals[ capitals<span class="op">$</span>country <span class="op">!=</span><span class="st"> &quot;Australia&quot;</span>, ]</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">df1<span class="op">$</span>key &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">df2<span class="op">$</span>key &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7">df &lt;-<span class="st"> </span><span class="kw">merge</span>(df1, df2, <span class="dt">by =</span> <span class="st">'key'</span>)</a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="kw">mapdeck</span>(</a>
-<a class="sourceLine" id="cb13-10" data-line-number="10">  <span class="dt">token =</span> key</a>
-<a class="sourceLine" id="cb13-11" data-line-number="11">  , <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span></a>
-<a class="sourceLine" id="cb13-12" data-line-number="12">  , <span class="dt">pitch =</span> <span class="dv">35</span></a>
-<a class="sourceLine" id="cb13-13" data-line-number="13">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="st">  </span><span class="kw">add_arc</span>(</a>
-<a class="sourceLine" id="cb13-15" data-line-number="15">    <span class="dt">data =</span> df</a>
-<a class="sourceLine" id="cb13-16" data-line-number="16">    , <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">&quot;lon.x&quot;</span>, <span class="st">&quot;lat.x&quot;</span>)</a>
-<a class="sourceLine" id="cb13-17" data-line-number="17">    , <span class="dt">destination =</span> <span class="kw">c</span>(<span class="st">&quot;lon.y&quot;</span>, <span class="st">&quot;lat.y&quot;</span>)</a>
-<a class="sourceLine" id="cb13-18" data-line-number="18">    , <span class="dt">layer_id =</span> <span class="st">&quot;arc_layer&quot;</span></a>
-<a class="sourceLine" id="cb13-19" data-line-number="19">    , <span class="dt">stroke_from =</span> <span class="st">&quot;country.x&quot;</span></a>
-<a class="sourceLine" id="cb13-20" data-line-number="20">    , <span class="dt">stroke_to =</span> <span class="st">&quot;country.y&quot;</span></a>
-<a class="sourceLine" id="cb13-21" data-line-number="21">    , <span class="dt">stroke_width =</span> <span class="dv">2</span></a>
-<a class="sourceLine" id="cb13-22" data-line-number="22">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-23" data-line-number="23"><span class="st">  </span><span class="kw">add_scatterplot</span>(</a>
-<a class="sourceLine" id="cb13-24" data-line-number="24">    <span class="dt">data =</span> df2</a>
-<a class="sourceLine" id="cb13-25" data-line-number="25">    , <span class="dt">lon =</span> <span class="st">&quot;lon&quot;</span></a>
-<a class="sourceLine" id="cb13-26" data-line-number="26">    , <span class="dt">lat =</span> <span class="st">&quot;lat&quot;</span></a>
-<a class="sourceLine" id="cb13-27" data-line-number="27">    , <span class="dt">radius =</span> <span class="dv">100000</span></a>
-<a class="sourceLine" id="cb13-28" data-line-number="28">    , <span class="dt">fill_colour =</span> <span class="st">&quot;country&quot;</span></a>
-<a class="sourceLine" id="cb13-29" data-line-number="29">    , <span class="dt">layer_id =</span> <span class="st">&quot;scatter&quot;</span></a>
-<a class="sourceLine" id="cb13-30" data-line-number="30">  )</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">df1 &lt;-<span class="st"> </span>capitals[ capitals<span class="op">$</span>country <span class="op">==</span><span class="st"> &quot;Australia&quot;</span>, ]</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">df2 &lt;-<span class="st"> </span>capitals[ capitals<span class="op">$</span>country <span class="op">!=</span><span class="st"> &quot;Australia&quot;</span>, ]</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">df1<span class="op">$</span>key &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">df2<span class="op">$</span>key &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">df &lt;-<span class="st"> </span><span class="kw">merge</span>(df1, df2, <span class="dt">by =</span> <span class="st">'key'</span>)</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="kw">mapdeck</span>(</a>
+<a class="sourceLine" id="cb14-10" data-line-number="10">  <span class="dt">token =</span> key</a>
+<a class="sourceLine" id="cb14-11" data-line-number="11">  , <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12">  , <span class="dt">pitch =</span> <span class="dv">35</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="st">  </span><span class="kw">add_arc</span>(</a>
+<a class="sourceLine" id="cb14-15" data-line-number="15">    <span class="dt">data =</span> df</a>
+<a class="sourceLine" id="cb14-16" data-line-number="16">    , <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">&quot;lon.x&quot;</span>, <span class="st">&quot;lat.x&quot;</span>)</a>
+<a class="sourceLine" id="cb14-17" data-line-number="17">    , <span class="dt">destination =</span> <span class="kw">c</span>(<span class="st">&quot;lon.y&quot;</span>, <span class="st">&quot;lat.y&quot;</span>)</a>
+<a class="sourceLine" id="cb14-18" data-line-number="18">    , <span class="dt">layer_id =</span> <span class="st">&quot;arc_layer&quot;</span></a>
+<a class="sourceLine" id="cb14-19" data-line-number="19">    , <span class="dt">stroke_from =</span> <span class="st">&quot;country.x&quot;</span></a>
+<a class="sourceLine" id="cb14-20" data-line-number="20">    , <span class="dt">stroke_to =</span> <span class="st">&quot;country.y&quot;</span></a>
+<a class="sourceLine" id="cb14-21" data-line-number="21">    , <span class="dt">stroke_width =</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb14-22" data-line-number="22">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-23" data-line-number="23"><span class="st">    </span><span class="kw">add_scatterplot</span>(</a>
+<a class="sourceLine" id="cb14-24" data-line-number="24">    <span class="dt">data =</span> df2</a>
+<a class="sourceLine" id="cb14-25" data-line-number="25">    , <span class="dt">lon =</span> <span class="st">&quot;lon&quot;</span></a>
+<a class="sourceLine" id="cb14-26" data-line-number="26">    , <span class="dt">lat =</span> <span class="st">&quot;lat&quot;</span></a>
+<a class="sourceLine" id="cb14-27" data-line-number="27">    , <span class="dt">radius =</span> <span class="dv">100000</span></a>
+<a class="sourceLine" id="cb14-28" data-line-number="28">    , <span class="dt">fill_colour =</span> <span class="st">&quot;country&quot;</span></a>
+<a class="sourceLine" id="cb14-29" data-line-number="29">    , <span class="dt">layer_id =</span> <span class="st">&quot;scatter&quot;</span></a>
+<a class="sourceLine" id="cb14-30" data-line-number="30">  )</a></code></pre></div>
 </div>
 <div id="shiny" class="section level3">
 <h3>Shiny</h3>
