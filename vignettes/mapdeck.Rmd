@@ -78,7 +78,7 @@ Once you have a map you can start adding layers through the various `add_*()` fu
 
 Each layer requires you to set a `layer_id` value. This is important and required. It's this ID that `deck.gl` uses to 'shallow-compare' layers to see if they need updating. 
 
-Which comes in handy when working in Shiny. If you udpate the data but use the same `layer_id`, `deck.gl` knows it should udpate the layer. There's nothing extra for you to do. There is a section on Shiny giving examples
+Which comes in handy when working in Shiny. If you update the data but use the same `layer_id`, `deck.gl` knows it should update the layer. There's nothing extra for you to do. There is a section on Shiny giving examples
 
 ### Simple Features
 

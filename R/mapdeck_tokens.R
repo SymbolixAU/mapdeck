@@ -67,6 +67,7 @@ get_access_token <- function(api = "mapbox") {
 	## try and find specific key,
 	## then go for the general one
 	api <- getOption("mapdeck")[['mapdeck']][[api]]
+	if(is.null(api) || is.na(api)) stop("Please supply an access token. Use either the 'token' parameter, or use `set_token()`")
 	return(api)
 }
 
