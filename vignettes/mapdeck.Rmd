@@ -1,10 +1,18 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "mapdeck"
+author: "David Cooley"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+    html_document:
+        toc: true
+        toc_float: true
+        number_sections: false
+        theme: flatly
+header-includes: 
+    - \usepackage{tikz}
+    - \usetikzlibrary{arrows}
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{1 dodgr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,10 +25,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-<!-- TODO: -->
-<!-- layer_id - why it's important -->
-<!-- set_token() -->
-
+```{r packages, eval = TRUE, message = FALSE}
+library(mapdeck)
+```
 
 ### What is Mapdeck?
 
@@ -38,12 +45,11 @@ Because Deck.gl is one of the most user-friendly WebGL javascript libraries and 
 You need a [Mapbox Access Token](https://www.mapbox.com/help/how-access-tokens-work/) to load a map. Then call `mapdeck(token = token)` to give you a map
 
 ```{r, fig.width=6}
-library(mapdeck)
 key <- 'abc'    ## put your own key here
 mapdeck(token = key)
 ```
 
-You can also use `set_token()` to make your token avaialble 'globally' to all future calls to `mapdeck()` in a session. 
+You can use `set_token()` to make your token available 'globally' to all future calls to `mapdeck()`. 
 
 ```{r, eval = T}
 set_token('abc')
@@ -61,10 +67,15 @@ mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9')
 
 Once you have a map you can start adding layers through the various `add_*()` functions (there is an example of each one in this vignette).
 
-Each layer requires you to set a `layer_id` value. This is important and required. It's this ID that `deck.gl` uses to 'shallow-compare' layers to see if they need updating or not. 
+### layer_id
+
+Each layer requires you to set a `layer_id` value. This is important and required. It's this ID that `deck.gl` uses to 'shallow-compare' layers to see if they need updating. 
 
 Which comes in handy when working in Shiny. If you udpate the data but use the same `layer_id`, `deck.gl` knows it should udpate the layer. There's nothing extra for you to do. There is a section on Shiny giving examples
 
+### Simple Features
+
+TODO
 
 ### Arcs
 
@@ -145,7 +156,6 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 ### Path
 
 ```{r}
-
 mapdeck(
   token = key
   , style = 'mapbox://styles/mapbox/dark-v9'
@@ -224,7 +234,7 @@ add_screengrid(
   data = df
   , lat = "lat"
   , lon = "lng"
-  , weight = "weight",
+  , weight = "weight"
   , layer_id = "screengrid_layer"
   , cell_size = 10
   , opacity = 0.3
