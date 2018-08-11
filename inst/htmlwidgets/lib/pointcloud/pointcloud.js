@@ -7,7 +7,7 @@ function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings ) {
     getPosition: d => decode_pointcloud(d.polyline, d.elevation),
     getColor: d => hexToRGBA( d.fill_colour, d.fill_opacity ),
     lightSettings: light_settings,
-    onClick: info => layer_click( map_id, "pointcloud", info )
+    //onClick: info => layer_click( map_id, "pointcloud", info )
   });
   update_layer( map_id, 'pointcloud-'+layer_id, pointcloudLayer );
 }

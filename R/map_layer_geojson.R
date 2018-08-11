@@ -64,8 +64,6 @@ mapdeckGeojsonDependency <- function() {
 #' sf$elevation <- sample(100:1000, size = nrow(sf), replace = T)
 #' sf$fillOpacity <- sample(200:255, size = nrow(sf), replace = T)
 #' sf$radius <- sample(1:100, size = nrow(sf), replace = T)
-#' g <- geojsonsf::sf_geojson(sf)
-#' attr(g, 'class') <- 'json'
 #'
 #' mapdeck(
 #'   token = key
@@ -75,7 +73,7 @@ mapdeckGeojsonDependency <- function() {
 #'   , pitch = 35
 #' ) %>%
 #'   add_geojson(
-#'     data = g
+#'     data = sf
 #'     , lineWidth = 250,
 #'     , layer_id = "geojson"
 #'  )
@@ -95,6 +93,7 @@ add_geojson <- function(
 	elevation = 0
 	) {
 
+	data <- normalisesGeojsonData(data)
 	## Parameter checks
 
 	checkNumeric(radius)

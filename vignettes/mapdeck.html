@@ -1507,7 +1507,7 @@ div.tocify {
 <div id="the-basics" class="section level3">
 <h3>The basics</h3>
 <p>You need a <a href="https://www.mapbox.com/help/how-access-tokens-work/">Mapbox Access Token</a> to load a map. Then call <code>mapdeck(token = token)</code> to give you a map</p>
-<pre class="r"><code>key &lt;- 'abc'    ## put your own key here
+<pre class="r"><code>key &lt;- 'abc'    ## put your own token here
 mapdeck(token = key)</code></pre>
 <p>You can use <code>set_token()</code> to make your token available ‘globally’ to all future calls to <code>mapdeck()</code>.</p>
 <pre class="r"><code>set_token('abc')
@@ -1516,6 +1516,8 @@ mapdeck_tokens()
 #   -  mapbox : abc</code></pre>
 <p>You can style the map using any <a href="https://www.mapbox.com/api-documentation/#styles">mapbox style</a> template styles, or you can <a href="https://www.mapbox.com/help/studio-manual-styles/">create one of your own</a></p>
 <pre class="r"><code>mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9')</code></pre>
+<p>I’ve provided a convenience function to select one of the mapbox defined styles</p>
+<pre class="r"><code>mapdeck_style(style = 'dark')</code></pre>
 </div>
 <div id="layers" class="section level3">
 <h3>Layers</h3>
@@ -1528,7 +1530,7 @@ mapdeck_tokens()
 </div>
 <div id="simple-features" class="section level3">
 <h3>Simple Features</h3>
-<p>TODO</p>
+<p>All layers support simple feature <a href="https://github.com/r-spatial/sf"><code>sf</code></a> objects. In each layer section I specify which type of <code>sfc</code> object is supported</p>
 </div>
 <div id="arcs" class="section level3">
 <h3>Arcs</h3>
@@ -1548,6 +1550,7 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %&g
     , stroke_to = &quot;airport2&quot;
     , stroke_width = &quot;stroke&quot;
   )</code></pre>
+<p><strong>sf</strong> : supports <code>sf</code> objects with two POINT geometry columns.</p>
 </div>
 <div id="geojson" class="section level3">
 <h3>GeoJSON</h3>
@@ -1562,6 +1565,7 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %&g
     data = geojson
     , layer_id = &quot;geojson&quot;
   )</code></pre>
+<p><strong>sf</strong> : supports all <code>sf</code> geometry types. Converted to geojson using <code>geojsonsf::sf_geojson()</code>. Useful if your <code>sf</code> object contains different geometry types.</p>
 </div>
 <div id="grid" class="section level3">
 <h3>Grid</h3>
@@ -1579,6 +1583,7 @@ add_grid(
   , elevation_scale = 50
   , layer_id = &quot;grid_layer&quot;
 )</code></pre>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
 </div>
 <div id="lines" class="section level3">
 <h3>Lines</h3>
@@ -1596,6 +1601,7 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %&g
     , stroke_colour = &quot;airport1&quot;
     , stroke_width = &quot;stroke&quot;
   )</code></pre>
+<p><strong>sf</strong> : supports <code>sf</code> objects with two POINT geometry columns.</p>
 </div>
 <div id="path" class="section level3">
 <h3>Path</h3>
@@ -1610,6 +1616,7 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %&g
     , layer_id = &quot;path_layer&quot;
   )
 </code></pre>
+<p><strong>sf</strong> : supports <code>sf</code> objects with LINESTRING geometries</p>
 </div>
 <div id="point-cloud" class="section level3">
 <h3>Point cloud</h3>
@@ -1625,6 +1632,7 @@ add_pointcloud(
   , layer_id = 'point'
   , fill_colour = &quot;country&quot;
 )</code></pre>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
 </div>
 <div id="polygons" class="section level3">
 <h3>Polygons</h3>
@@ -1639,6 +1647,7 @@ mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %&gt;%
     , layer = &quot;polygon_layer&quot;
     , fill_colour = &quot;SA2_NAME16&quot;
   )</code></pre>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POLYGON geometries</p>
 </div>
 <div id="scatter" class="section level3">
 <h3>Scatter</h3>
@@ -1653,6 +1662,7 @@ add_scatterplot(
   , layer_id = &quot;scatter_layer&quot;
 )
 </code></pre>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
 </div>
 <div id="screen-grid" class="section level3">
 <h3>Screen grid</h3>
@@ -1673,6 +1683,7 @@ add_screengrid(
   , cell_size = 10
   , opacity = 0.3
 )</code></pre>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
 </div>
 <div id="text" class="section level3">
 <h3>Text</h3>
@@ -1685,6 +1696,7 @@ add_screengrid(
     , text = 'capital'
     , layer_id = 'text'
   )</code></pre>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
 </div>
 <div id="multiple-layers" class="section level3">
 <h3>Multiple layers</h3>
@@ -1722,6 +1734,100 @@ mapdeck(
 </div>
 <div id="shiny" class="section level3">
 <h3>Shiny</h3>
+<p>The three main functions to use are</p>
+<ol style="list-style-type: decimal">
+<li><code>render_mapdeck()</code> in the <strong>Server</strong></li>
+<li><code>mapdeck_output()</code> in the <strong>UI</strong></li>
+<li><code>mapdeck_update()</code> to update an existing map</li>
+</ol>
+<p>You can observe interactions with the layers by using <code>observeEvent()</code>. The event you observe is formed by combining</p>
+<p><code>'map_id + &quot;_&quot; + layer + &quot;_click&quot;</code></p>
+<p>where</p>
+<ul>
+<li><code>map_id</code> is the <code>outputId</code> of the <code>mapdeckOutput()</code> function</li>
+<li><code>layer</code> is the layer you’re interacting with</li>
+<li><code>_click</code> is you observing ‘clicking’ on the layer</li>
+</ul>
+<p>There’s an example of this in the shiny.</p>
+<pre class="r"><code>library(shiny)
+library(shinydashboard)
+library(jsonlite)
+ui &lt;- dashboardPage(
+    dashboardHeader()
+    , dashboardSidebar()
+    , dashboardBody(
+        mapdeckOutput(
+            outputId = 'myMap'
+            ),
+        sliderInput(
+            inputId = &quot;longitudes&quot;
+            , label = &quot;Longitudes&quot;
+            , min = -180
+            , max = 180
+            , value = c(-90, 90)
+        )
+        , verbatimTextOutput(
+            outputId = &quot;observed_click&quot;
+        )
+    )
+)
+server &lt;- function(input, output) {
+    
+    set_token('abc') ## set your access token
+    
+    origin &lt;- capitals[capitals$country == &quot;Australia&quot;, ]
+    destination &lt;- capitals[capitals$country != &quot;Australia&quot;, ]
+    origin$key &lt;- 1L
+    destination$key &lt;- 1L
+    
+    df &lt;- merge(origin, destination, by = 'key', all = T)
+    
+    output$myMap &lt;- renderMapdeck({
+        mapdeck(style = mapdeck_style('dark')) 
+    })
+    
+    ## plot points &amp; lines according to the selected longitudes
+    df_reactive &lt;- reactive({
+        if(is.null(input$longitudes)) return(NULL)
+        lons &lt;- input$longitudes
+        return(
+            df[df$lon.y &gt;= lons[1] &amp; df$lon.y &lt;= lons[2], ]
+        )
+    })
+    
+    observeEvent({input$longitudes}, {
+        if(is.null(input$longitudes)) return()
+        
+        mapdeck_update(map_id = 'myMap') %&gt;%
+            add_scatterplot(
+                data = df_reactive()
+                , lon = &quot;lon.y&quot;
+                , lat = &quot;lat.y&quot;
+                , fill_colour = &quot;country.y&quot;
+                , radius = 100000
+                , layer_id = &quot;myScatterLayer&quot;
+            ) %&gt;%
+            add_arc(
+                data = df_reactive()
+                , origin = c(&quot;lon.x&quot;, &quot;lat.x&quot;)
+                , destination = c(&quot;lon.y&quot;, &quot;lat.y&quot;)
+                , layer_id = &quot;myArcLayer&quot;
+                , stroke_width = 4
+            )
+    })
+    
+    ## observe clicking on a line and return the text
+    observeEvent(input$myMap_arc_click, {
+        
+        event &lt;- input$myMap_arc_click
+        output$observed_click &lt;- renderText({
+            jsonlite::prettify( event )
+        })
+    })
+}
+
+shinyApp(ui, server)</code></pre>
+<p><strong>Note:</strong> <code>scatterplot</code> and <code>pointclouds</code> don’t currently support click events</p>
 </div>
 
 

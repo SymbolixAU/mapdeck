@@ -17,19 +17,18 @@
 #'
 #' @export
 mapdeck_style <- function(
-	style = c("streets","outdoors","light","dark","satellite",
-						"satellite-streets")
+  style = c("dark","light","outdoors","streets","satellite","satellite-streets")
 ) {
-	style <- match.arg(style)
-	return(
-		switch(
-			style
-			, "streets" = "mapbox://styles/mapbox/streets-v10"
-			, "outdoors" = "mapbox://styles/mapbox/outdoors-v10"
-			, "light" = "mapbox://styles/mapbox/light-v9"
-			, "dark" = "mapbox://styles/mapbox/dark-v9"
-			, "satellite" = "mapbox://styles/mapbox/satellite-v9"
-			, "satellite-streets" = "mapbox://styles/mapbox/satellite-streets-v10"
-		)
-	)
+  style <- match.arg(style)
+  return(
+    switch(
+      style
+      , "dark" = "mapbox://styles/mapbox/dark-v9"
+      , "light" = "mapbox://styles/mapbox/light-v9"
+      , "outdoors" = "mapbox://styles/mapbox/outdoors-v10"
+      , "streets" = "mapbox://styles/mapbox/streets-v10"
+      , "satellite" = "mapbox://styles/mapbox/satellite-v9"
+      , "satellite-streets" = "mapbox://styles/mapbox/satellite-streets-v10"
+    )
+  )
 }

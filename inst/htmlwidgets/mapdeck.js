@@ -218,6 +218,9 @@ function to_rgba( colour_range ) {
 
 function layer_click( map_id, layer, info ) {
 
+  console.log("layer click");
+  console.log(map_id + "_" + layer + "_click");
+
   if ( !HTMLWidgets.shinyMode ) {
     return;
   }

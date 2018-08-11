@@ -45,7 +45,7 @@ Because Deck.gl is one of the most user-friendly WebGL javascript libraries and 
 You need a [Mapbox Access Token](https://www.mapbox.com/help/how-access-tokens-work/) to load a map. Then call `mapdeck(token = token)` to give you a map
 
 ```{r, fig.width=6}
-key <- 'abc'    ## put your own key here
+key <- 'abc'    ## put your own token here
 mapdeck(token = key)
 ```
 
@@ -63,6 +63,13 @@ You can style the map using any [mapbox style](https://www.mapbox.com/api-docume
 mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9')
 ```
 
+I've provided a convenience function to select one of the mapbox defined styles
+
+```{r}
+mapdeck_style(style = 'dark')
+```
+
+
 ### Layers
 
 Once you have a map you can start adding layers through the various `add_*()` functions (there is an example of each one in this vignette).
@@ -75,7 +82,7 @@ Which comes in handy when working in Shiny. If you udpate the data but use the s
 
 ### Simple Features
 
-TODO
+All layers support simple feature [`sf`](https://github.com/r-spatial/sf) objects. In each layer section I specify which type of `sfc` object is supported
 
 ### Arcs
 
@@ -98,6 +105,9 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
   )
 ```
 
+**sf** : supports `sf` objects with two POINT geometry columns.
+
+
 ### GeoJSON
 
 ```{r}
@@ -113,6 +123,8 @@ mapdeck(
     , layer_id = "geojson"
   )
 ```
+
+**sf** : supports all `sf` geometry types. Converted to geojson using `geojsonsf::sf_geojson()`. Useful if your `sf` object contains different geometry types.
 
 ### Grid
 
@@ -133,6 +145,7 @@ add_grid(
 )
 ```
 
+**sf** : supports `sf` objects with POINT geometries
 
 ### Lines
 
@@ -153,6 +166,8 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
   )
 ```
 
+**sf** : supports `sf` objects with two POINT geometry columns.
+
 ### Path
 
 ```{r}
@@ -168,6 +183,8 @@ mapdeck(
   )
 
 ```
+
+**sf** : supports `sf` objects with LINESTRING geometries
 
 ### Point cloud
 
@@ -186,6 +203,8 @@ add_pointcloud(
 )
 ```
 
+**sf** : supports `sf` objects with POINT geometries
+
 ### Polygons
 
 ```{r}
@@ -202,6 +221,7 @@ mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
   )
 ```
 
+**sf** : supports `sf` objects with POLYGON geometries
 
 ### Scatter
 
@@ -218,6 +238,8 @@ add_scatterplot(
 )
 
 ```
+
+**sf** : supports `sf` objects with POINT geometries
 
 ### Screen grid
 
@@ -241,6 +263,7 @@ add_screengrid(
 )
 ```
 
+**sf** : supports `sf` objects with POINT geometries
 
 ### Text
 
@@ -255,6 +278,8 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
     , layer_id = 'text'
   )
 ```
+
+**sf** : supports `sf` objects with POINT geometries
 
 ### Multiple layers
 
@@ -297,6 +322,103 @@ mapdeck(
 
 ### Shiny
 
+The three main functions to use are
 
+1. `render_mapdeck()` in the **Server**
+2. `mapdeck_output()` in the **UI**
+3. `mapdeck_update()` to update an existing map
 
+You can observe interactions with the layers by using `observeEvent()`. The event you observe is formed by combining
 
+`'map_id + "_" + layer + "_click"`
+
+where
+
+- `map_id` is the `outputId` of the `mapdeckOutput()` function
+- `layer` is the layer you're interacting with
+- `_click` is you observing 'clicking' on the layer
+
+There's an example of this in the shiny.
+
+```{r}
+library(shiny)
+library(shinydashboard)
+library(jsonlite)
+ui <- dashboardPage(
+	dashboardHeader()
+	, dashboardSidebar()
+	, dashboardBody(
+		mapdeckOutput(
+			outputId = 'myMap'
+			),
+		sliderInput(
+			inputId = "longitudes"
+			, label = "Longitudes"
+			, min = -180
+			, max = 180
+			, value = c(-90, 90)
+		)
+		, verbatimTextOutput(
+			outputId = "observed_click"
+		)
+	)
+)
+server <- function(input, output) {
+	
+	set_token('abc') ## set your access token
+	
+	origin <- capitals[capitals$country == "Australia", ]
+	destination <- capitals[capitals$country != "Australia", ]
+	origin$key <- 1L
+	destination$key <- 1L
+	
+	df <- merge(origin, destination, by = 'key', all = T)
+	
+	output$myMap <- renderMapdeck({
+		mapdeck(style = mapdeck_style('dark')) 
+	})
+	
+	## plot points & lines according to the selected longitudes
+	df_reactive <- reactive({
+		if(is.null(input$longitudes)) return(NULL)
+		lons <- input$longitudes
+		return(
+			df[df$lon.y >= lons[1] & df$lon.y <= lons[2], ]
+		)
+	})
+	
+	observeEvent({input$longitudes}, {
+		if(is.null(input$longitudes)) return()
+		
+		mapdeck_update(map_id = 'myMap') %>%
+			add_scatterplot(
+				data = df_reactive()
+				, lon = "lon.y"
+				, lat = "lat.y"
+				, fill_colour = "country.y"
+				, radius = 100000
+				, layer_id = "myScatterLayer"
+			) %>%
+			add_arc(
+				data = df_reactive()
+				, origin = c("lon.x", "lat.x")
+				, destination = c("lon.y", "lat.y")
+				, layer_id = "myArcLayer"
+				, stroke_width = 4
+			)
+	})
+	
+	## observe clicking on a line and return the text
+	observeEvent(input$myMap_arc_click, {
+		
+		event <- input$myMap_arc_click
+		output$observed_click <- renderText({
+			jsonlite::prettify( event )
+		})
+	})
+}
+
+shinyApp(ui, server)
+```
+
+**Note:** `scatterplot` and `pointclouds` don't currently support click events

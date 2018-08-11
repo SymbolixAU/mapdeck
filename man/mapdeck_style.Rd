@@ -4,7 +4,7 @@
 \alias{mapdeck_style}
 \title{Mapdeck Style}
 \usage{
-mapdeck_style(style = c("streets", "outdoors", "light", "dark", "satellite",
+mapdeck_style(style = c("dark", "light", "outdoors", "streets", "satellite",
   "satellite-streets"))
 }
 \arguments{

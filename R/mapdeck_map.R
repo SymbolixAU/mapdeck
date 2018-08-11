@@ -51,26 +51,6 @@ mapdeck <- function(
     	browser.fill = FALSE
     )
   )
-
-  # header <- paste0(
-  #   '<script src="https://unpkg.com/deck.gl@latest/deckgl.min.js"></script>
-  #    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js"></script>
-  #   <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css" rel="stylesheet" />'
-  #   )
-  #
-  # mapdeckmap$dependencies <- c(
-  # 	mapdeckmap$dependencies,
-  # 	list(
-  # 		htmltools::htmlDependency(
-  # 			name = "mapdeck",
-  # 			version = "9999",
-  # 			src=".",
-  # 			head = header,
-  # 			all_files = FALSE
-  # 		)
-  # 	)
-  # )
-
   return(mapdeckmap)
 }
 

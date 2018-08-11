@@ -57,3 +57,23 @@ normaliseSfData.sfencoded <- function(data, geom) {
 
 #' @export
 normaliseSfData.default <- function(data, geom) data
+
+
+normalisesGeojsonData <- function(data) UseMethod("normalisesGeojsonData")
+
+#' @export
+normalisesGeojsonData.sf <- function(data) {
+	geo <- geojsonsf::sf_geojson(data)
+	attr(geo, 'class') <- 'json'
+	return(geo)
+}
+
+#' @export
+normalisesGeojsonData.character <- function(data) {
+	attr(data, 'class') <- 'json'
+	return(data)
+}
+
+#' @export
+normalisesGeojsonData.default <- function(data) data ## allow it through?
+
