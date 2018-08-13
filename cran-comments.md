@@ -1,5 +1,6 @@
 ## Comments
 
+* Updated description with details about Mapbox GL and Deck gl
 * All examples are `dontrun` because they all require internet connection
 
 

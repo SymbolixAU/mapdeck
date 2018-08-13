@@ -6,7 +6,10 @@ Date: 2018-08-11
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
-Description: Provides a mechanism to plot an interactive map using 'Mapbox GL' maps and 'Deck.gl' plotting functions.
+Description: Provides a mechanism to plot an interactive map using 'Mapbox GL' 
+		(<https://www.mapbox.com/mapbox-gl-js/api/>), a javascript library for interactive maps,
+		and 'Deck.gl' (<http://deck.gl/#/>), a javascript library which uses 'WebGL' for 
+		visualising large data sets.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
