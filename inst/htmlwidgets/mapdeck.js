@@ -172,7 +172,7 @@ function update_layer( map_id, layer_id, layer ) {
  *
  * Converts hex colours to rgb
  */
-const hexToRgb = hex =>
+const hexToRgb_simple = hex =>
   hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
              ,(m, r, g, b) => '#' + r + r + g + g + b + b)
     .substring(1).match(/.{2}/g)
@@ -197,7 +197,7 @@ function to_rgb( colour_range ) {
 	n = colour_range.length;
 
 	for (i = 0; i < n; i++) {
-		arr.push( hexToRgb( colour_range[i]) );
+		arr.push( hexToRgb_simple( colour_range[i]) );
 	}
   return arr;
 }
