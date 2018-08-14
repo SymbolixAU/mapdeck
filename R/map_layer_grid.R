@@ -25,7 +25,7 @@ mapdeckGridDependency <- function() {
 #' @param elevation_scale cell elevation multiplier
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
 #'

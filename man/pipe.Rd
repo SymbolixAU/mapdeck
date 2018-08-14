@@ -11,7 +11,7 @@ Uses the pipe operator (\code{\%>\%}) to chain statements. Useful for adding
 layers to a \code{google_map}
 }
 \examples{
-\dontrun{
+\donttest{
 
 key <- "your_api_key"
 mapdeck_map(key = key) \%>\%

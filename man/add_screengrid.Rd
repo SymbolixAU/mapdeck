@@ -38,7 +38,7 @@ The Screen Grid Layer takes in an array of latitude and longitude coordinated po
 aggregates them into histogram bins and renders as a grid
 }
 \examples{
-\dontrun{
+\donttest{
 
 ## You need a valid access token from Mapbox
 key <- 'abc'

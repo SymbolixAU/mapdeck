@@ -42,7 +42,7 @@ mapdeckGeojsonDependency <- function() {
 #'
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'

@@ -49,7 +49,7 @@ Therefore, if the origin is a MULTIPOINT of two points, and the destination is
 a single POINT, the code will error as there will be an uneven number of rows
 }
 \examples{
-\dontrun{
+\donttest{
 
 ## You need a valid access token from Mapbox
 key <- 'abc'

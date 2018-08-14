@@ -40,7 +40,7 @@ It takes the constant size all each cell, projects points into cells.
 The color and height of the cell is scaled by number of points it contains.
 }
 \examples{
-\dontrun{
+\donttest{
 ## You need a valid access token from Mapbox
 key <- 'abc'
 

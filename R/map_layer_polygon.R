@@ -28,7 +28,7 @@ mapdeckPolygonDependency <- function() {
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'

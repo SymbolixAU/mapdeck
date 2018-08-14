@@ -9,7 +9,7 @@
 #' @export
 #' @param lhs,rhs A google map and a layer to add to it
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' key <- "your_api_key"
 #' mapdeck_map(key = key) %>%

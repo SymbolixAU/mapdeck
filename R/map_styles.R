@@ -5,7 +5,7 @@
 #' @param style one of streets, outdoors, light, dark, satellite, satellite-streets
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'

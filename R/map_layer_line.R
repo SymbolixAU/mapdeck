@@ -21,7 +21,7 @@ mapdeckLineDependency <- function() {
 #' @param stroke_colour variable or hex colour to use as the ending stroke colour
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'

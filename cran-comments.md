@@ -1,7 +1,8 @@
 ## Comments
 
+* Updated all examples from `\dontrun` to `\donttest`
 * Updated description with details about Mapbox GL and Deck gl
-* All examples are `dontrun` because they all require internet connection
+* All examples are `donttest` because they all require internet connection
 
 
 ## Test environments

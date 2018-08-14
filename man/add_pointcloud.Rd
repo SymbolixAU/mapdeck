@@ -47,7 +47,7 @@ The Pointcloud Layer takes in coordinate points and renders them as circles
 with a certain radius.
 }
 \examples{
-\dontrun{
+\donttest{
 ## You need a valid access token from Mapbox
 key <- 'abc'
 

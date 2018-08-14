@@ -1,7 +1,7 @@
 Package: mapdeck
 Type: Package
 Title: Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'
-Version: 0.1.1
+Version: 0.1.0
 Date: 2018-08-11
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))

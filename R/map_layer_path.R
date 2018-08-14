@@ -22,7 +22,7 @@ mapdeckPathDependency <- function() {
 #' between 1 and 255 to be applied to all the shapes
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'

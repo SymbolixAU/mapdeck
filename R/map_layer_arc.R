@@ -36,7 +36,7 @@ mapdeckArcDependency <- function() {
 #' @param palette a function which generates hex colours
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'

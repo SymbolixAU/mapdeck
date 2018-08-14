@@ -38,7 +38,7 @@ The Path Layer takes in lists of coordinate points and renders them as
 extruded lines with mitering.
 }
 \examples{
-\dontrun{
+\donttest{
 
 ## You need a valid access token from Mapbox
 key <- 'abc'

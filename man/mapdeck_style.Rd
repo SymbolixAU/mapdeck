@@ -14,7 +14,7 @@ mapdeck_style(style = c("dark", "light", "outdoors", "streets", "satellite",
 Various styles available to all Mapbox accounts using a valid access token
 }
 \examples{
-\dontrun{
+\donttest{
 
 ## You need a valid access token from Mapbox
 key <- 'abc'

@@ -24,7 +24,7 @@ mapdeckScreengridDependency <- function() {
 #' @param cell_size size of grid squares in pixels
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'

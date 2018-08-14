@@ -48,7 +48,7 @@ Otherwise the values supplied to the arguments will be applied to all the featur
 }
 }
 \examples{
-\dontrun{
+\donttest{
 
 ## You need a valid access token from Mapbox
 key <- 'abc'

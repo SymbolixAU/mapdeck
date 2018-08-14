@@ -23,7 +23,7 @@ mapdeckPointcloudDependency <- function() {
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
 #'

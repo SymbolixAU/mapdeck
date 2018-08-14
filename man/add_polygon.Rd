@@ -45,7 +45,7 @@ should be used for the latitude / longitude coordinates.}
 The Polygon Layer renders filled and/or stroked polygons.
 }
 \examples{
-\dontrun{
+\donttest{
 
 ## You need a valid access token from Mapbox
 key <- 'abc'
