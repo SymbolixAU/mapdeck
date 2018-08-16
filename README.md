@@ -11,6 +11,13 @@ Interactive maps using Mapbox GL and Deck.gl
 
 ## Installation
 
+#### From cran
+
+```r
+install.packages("mapdeck")
+```
+
+#### Development version
 ```r
 devtools::install_github("SymbolixAU/mapdeck")
 ```
