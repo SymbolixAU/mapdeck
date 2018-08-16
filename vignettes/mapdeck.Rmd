@@ -12,7 +12,7 @@ header-includes:
     - \usepackage{tikz}
     - \usetikzlibrary{arrows}
 vignette: >
-  %\VignetteIndexEntry{1 dodgr}
+  %\VignetteIndexEntry{mapdeck}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

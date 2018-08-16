@@ -53,11 +53,6 @@ HTMLWidgets.widget({
   }
 });
 
-// default light settings
-const DEFAULT_NUMBER_OF_LIGHTS = 1;
-const DEFAULT_LIGHTS_POSITION = [0, 0, 0];
-const DEFAULT_AMBIENT_RATIO = 0.4;
-
 function change_location( map_id, location, duration, transition, zoom ) {
 
 	window[map_id + 'map'].setProps({
@@ -217,9 +212,6 @@ function to_rgba( colour_range ) {
 }
 
 function layer_click( map_id, layer, info ) {
-
-  console.log("layer click");
-  console.log(map_id + "_" + layer + "_click");
 
   if ( !HTMLWidgets.shinyMode ) {
     return;
