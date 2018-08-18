@@ -102,8 +102,6 @@ void main(void) {
 }
 `;
 
-	var arcVertex = "";
-
   const defaultProps = {
     ...ArcLayer.defaultProps,
     // show arc if source is in brush
@@ -117,57 +115,7 @@ void main(void) {
     mousePosition: [0, 0]
   };
 
-  console.log(defaultProps);
-
-/*
-  const arcLayer = new ArcLayer({
-    id: 'arc-'+layer_id,
-    data: arc_data,
-    pickable: true,
-    getStrokeWidth: d => d.stroke_width,
-    getSourcePosition: d => decode_points( d.origin ),
-    getTargetPosition: d => decode_points( d.destination ),
-    getSourceColor: d => hexToRGBA( d.stroke_from, d.stroke_from_opacity ),
-    getTargetColor: d => hexToRGBA( d.stroke_to, d.stroke_to_opacity ),
-    onClick: info => layer_click( map_id, "arc", info ),
-    onHover: updateTooltip
-  });
-
-  console.log("arcLayer.getShaders()");
-  console.log(arcLayer.getShaders);
-
-*/
- // var ArcBrushingLayer = Object.assign({  }, ArcLayer );
- // ArcBrushingLayer.defaultProps = defaultProps;
-  //console.log( ArcBrushingLayer );
-
-  // THIS DOESN'T WORK
-  //var ArcBrushingLayer = Object.create( ArcLayer );
-
-  // THIS DOESN'T WORK
-  //var ArcBrushingLayer = new ArcLayer;
-
-  // THIS works, so need to figure out how to extend it.
-  // It's not different to just extending ArcLayer...
-  /*
-  var ArcBrushingLayer = ArcLayer;
-
-  console.log(ArcLayer);
-  console.log(ArcBrushingLayer);
-
-  console.log(" -- ArcBrushingLayer.prototype -- ");
-  console.log( ArcBrushingLayer.prototype );
-  console.log( ArcBrushingLayer.prototype.getShaders );
-  //console.log( ArcBrushingLayer.prototype.getShaders.fs ); // undefined
-  */
-
-
-
-
-
-  // can't acces 'fs' like this
-  //console.log( ArcBrushingLayer.prototype.getShaders.fs );
-
+  //console.log(defaultProps);
 
   var arcLayer = new ArcLayer({
     id: 'arc-'+layer_id,
@@ -184,17 +132,17 @@ void main(void) {
     // show arc if target is in brush
     brushTarget: true,
     enableBrushing: true,
-    getStrokeWidth: d => d.strokeWidth,
+    //getStrokeWidth: d => d.strokeWidth,
     // brush radius in meters
     brushRadius: 100000,
     mousePosition: [0, 0]
   });
 
   // can I update the layer after it's been created?
-  console.log( arcLayer );
+  //console.log( arcLayer );
 
   // how do I acess (and modify) the 'fs' of the getShader() function?
-  console.log( arcLayer.getShaders );
+  //console.log( arcLayer.getShaders );
   //console.log( arcLayer.getShaders() );
 
    var av = arcLayer.getShaders().vs;
@@ -216,12 +164,12 @@ void main(void) {
     }
   }
 
-  console.log(' -- updated getShaders -- ');
-  console.log( arcLayer.getShaders() );
+  //console.log(' -- updated getShaders -- ');
+  //console.log( arcLayer.getShaders() );
 
   // overriding the draw method
   //console.log( arcLayer.draw().uniforms );
-  console.log( ArcLayer.prototype.draw );
+  //console.log( ArcLayer.prototype.draw );
 
   ArcLayer.prototype.draw = function( opts ) {
   	//console.log(' -- draw opts --');
