@@ -199,6 +199,7 @@ void main(void) {
 
    var av = arcLayer.getShaders().vs;
    var af = arcLayer.getShaders().fs;
+   var m = arcLayer.getShaders().modules;
 
   //arcLayer.getShaders = function() {
   ArcLayer.prototype.getShaders = function() {
@@ -207,57 +208,52 @@ void main(void) {
   	//  fs: arcFragment
     //});
     console.log(" -- modifying shader -- ");
-    //return shaders;
 
     return {
-    	modules: ['picking'],
-    	vs: av,
-    	fs: af
+    	modules: m,
+    	vs: arcVertex,
+    	fs: arcFragment
     }
   }
 
   console.log(' -- updated getShaders -- ');
   console.log( arcLayer.getShaders() );
 
-
-
   // overriding the draw method
-  console.log( arcLayer.draw );
+  //console.log( arcLayer.draw().uniforms );
+  console.log( ArcLayer.prototype.draw );
 
-  // this shaders object is modified
-  /*
-  const shaders = Object.assign({}, arcLayer.getShaders(), {
-  	fs: arcFragment
-  });
-  */
+  ArcLayer.prototype.draw = function( opts ) {
+  	//console.log(' -- draw opts --');
+  	//console.log(opts);
 
-  // THIS DOESN'T WORK
-  /*
-  console.log("-- overwriting fs?? -- ");
-  console.log(arcLayer.getShaders().fs);
-  arcLayer.getShaders().fs = arcFragment;
-  console.log(arcLayer.getShaders().fs);
-  */
+  	//return opts;
+  	//console.log( '-- opts --');
+  	//console.log( opts );
+  	const uniforms = Object.assign({}, opts.uniforms, {
+      brushSource: this.props.brushSource,
+      brushTarget: this.props.brushTarget,
+      brushRadius: this.props.brushRadius,
+      mousePos: this.props.mousePosition
+        ? new Float32Array(this.unproject(this.props.mousePosition))
+        : defaultProps.mousePosition,
+      enableBrushing: this.props.enableBrushing
+    });
+    const newOpts = Object.assign({}, opts, {uniforms});
 
-  // CAN I DO THIS?
-  /*
-  function getShaders() {
-  	return {
-  		fs: arcFragment,
-  		vs: arcLayer.getShaders().vs
-  	}
+    //console.log( newOpts );
+
+  	for(const e of this.getModels()) e.draw( newOpts );
   }
-  */
 
-  // THIS DOESN'T WORK
-  //const shaders = Object.assign({}, ArcLayer.prototype.getShaders(), {
-  //	fs: arcFragment
-  //});
-  //console.log(' -- shaders -- ');
-  //console.log(shaders);
+  //console.log(' -- this.getModels() -- ');
+  //console.log(ArcLayer.prototype.getModels );
 
-  // THIS doesn't exist. there's no prototype
-  //console.log( arcLayer.prototype) ;
+
+  //ArcLayer.prototype.draw = function(opts) {
+
+  //	return opts;
+  //}
 
   update_layer( map_id, 'arc-'+layer_id, arcLayer );
 }
