@@ -1,9 +1,8 @@
 
 function add_arc( map_id, arc_data, layer_id ) {
 
-
-	var arcFragment = `\
-#define SHADER_NAME arc-layer-fragment-shader2
+var arcFragment = `\
+#define SHADER_NAME arc-layer-fragment-shader
 precision highp float;
 varying vec4 vColor;
 void main(void) {
@@ -101,7 +100,7 @@ void main(void) {
   vColor = vec4(color.rgb, color.a * opacity);
 }
 `;
-
+/*
   const defaultProps = {
     ...ArcLayer.defaultProps,
     // show arc if source is in brush
@@ -114,8 +113,12 @@ void main(void) {
     brushRadius: 100000,
     mousePosition: [0, 0]
   };
+*/
+  var mousePosition;
+  var enableBrushing = true;
 
-  //console.log(defaultProps);
+  const isMouseover = mousePosition !== null;
+  const startBrushing = Boolean(isMouseover && enableBrushing);
 
   var arcLayer = new ArcLayer({
     id: 'arc-'+layer_id,
@@ -131,31 +134,59 @@ void main(void) {
     brushSource: true,
     // show arc if target is in brush
     brushTarget: true,
-    enableBrushing: true,
+    enableBrushing: true,  // startBrushing
     //getStrokeWidth: d => d.strokeWidth,
     // brush radius in meters
-    brushRadius: 100000,
+    brushRadius: 5000000,
     mousePosition: [0, 0]
   });
 
-  // can I update the layer after it's been created?
-  //console.log( arcLayer );
 
-  // how do I acess (and modify) the 'fs' of the getShader() function?
-  //console.log( arcLayer.getShaders );
-  //console.log( arcLayer.getShaders() );
+
+  console.log(' -- created arcLayer -- ');
+  console.log(arcLayer);
+
+  //arcLayer.state = Object.assign({}, arcLayer.state );
+  //arcLayer.setState({mousePosition: [0,0]});
+
+  console.log(arcLayer);
+
+  //arcLayer.state = Object.assign({	mousePosition: null}, arcLayer.state);
+
+
+
+  var myListener = function(evt) {
+  	//console.log(evt);
+
+  	//console.log( [evt.clientX, evt.clientY] );
+  	console.log("-- before setState --");
+
+  	//console.log(arcLayer);
+  	arcLayer.setState( {mousePosition: [evt.clientX, evt.clientY] } )
+  	console.log( arcLayer );
+  	console.log( arcLayer.state );
+
+  	//console.log(arcLayer.props.mousePosition);
+  	//arcLayer.props.mousePosition = [evt.clientX, evt.clientY];
+  	//console.log( arcLayer.setState );
+
+  	console.log("-- after setState -- ");
+  	//console.log(arcLayer.state);
+  	//console.log(arcLayer);
+  	//console.log(arcLayer.props.mousePosition);
+
+  	//arcLayer.props.mousePosition = [evt.clientX, evt.clientY];
+  	//console.log(arcLayer.state);
+  	// TODO(update the element)
+  	//update_layer( map_id, 'arc-'+layer_id, arcLayer );
+  }
+  document.addEventListener('mousemove', myListener, false);
 
    var av = arcLayer.getShaders().vs;
    var af = arcLayer.getShaders().fs;
    var m = arcLayer.getShaders().modules;
 
-  //arcLayer.getShaders = function() {
   ArcLayer.prototype.getShaders = function() {
-
-  	//const shaders = Object.assign({}, arcLayer.getShaders(), {
-  	//  fs: arcFragment
-    //});
-    console.log(" -- modifying shader -- ");
 
     return {
     	modules: m,
@@ -164,20 +195,8 @@ void main(void) {
     }
   }
 
-  //console.log(' -- updated getShaders -- ');
-  //console.log( arcLayer.getShaders() );
-
-  // overriding the draw method
-  //console.log( arcLayer.draw().uniforms );
-  //console.log( ArcLayer.prototype.draw );
-
   ArcLayer.prototype.draw = function( opts ) {
-  	//console.log(' -- draw opts --');
-  	//console.log(opts);
 
-  	//return opts;
-  	//console.log( '-- opts --');
-  	//console.log( opts );
   	const uniforms = Object.assign({}, opts.uniforms, {
       brushSource: this.props.brushSource,
       brushTarget: this.props.brushTarget,
@@ -187,21 +206,13 @@ void main(void) {
         : defaultProps.mousePosition,
       enableBrushing: this.props.enableBrushing
     });
-    const newOpts = Object.assign({}, opts, {uniforms});
 
-    //console.log( newOpts );
+    const newOpts = Object.assign({}, opts, {uniforms});
 
   	for(const e of this.getModels()) e.draw( newOpts );
   }
 
-  //console.log(' -- this.getModels() -- ');
-  //console.log(ArcLayer.prototype.getModels );
-
-
-  //ArcLayer.prototype.draw = function(opts) {
-
-  //	return opts;
-  //}
-
+  //console.log(" -- calling update layer again on mouseover? -- ");
+  // this is not re-called durng mouse-over.
   update_layer( map_id, 'arc-'+layer_id, arcLayer );
 }
