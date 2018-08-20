@@ -1,6 +1,6 @@
 
 
-function add_polygon( map_id, polygon_data, layer_id, light_settings ) {
+function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highlight ) {
 
   const polygonLayer = new PolygonLayer({
     id: 'polygon-'+layer_id,
@@ -17,6 +17,7 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings ) {
     getLineWidth: d => d.stroke_width,
     getElevation: d => d.elevation,
     lightSettings: light_settings,
+    autoHighlight: auto_highlight,
     onHover: updateTooltip,
     onClick: info => layer_click( map_id, "path", info )
   });

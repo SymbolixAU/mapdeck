@@ -1,6 +1,6 @@
 
 
-function add_path( map_id, path_data, layer_id ) {
+function add_path( map_id, path_data, layer_id, auto_highlight ) {
 
   const pathLayer = new PathLayer({
     id: 'path-'+layer_id,
@@ -13,7 +13,8 @@ function add_path( map_id, path_data, layer_id ) {
     getColor: d => hexToRGBA( d.stroke_colour, d.stroke_opacity ),
     getWidth: d => d.stroke_width,
     onClick: info => layer_click( map_id, "path", info ),
-    onHover: updateTooltip
+    onHover: updateTooltip,
+    autoHighlight: auto_highlight
   });
   update_layer( map_id, 'path-'+layer_id, pathLayer );
 }

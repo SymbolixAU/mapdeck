@@ -57,6 +57,7 @@ mapdeckArcDependency <- function() {
 #'   , stroke_to = "airport2"
 #'   , stroke_width = "stroke"
 #'   , tooltip = "info"
+#'   , auto_highlight = TRUE
 #'  )
 #'
 #' ## Using a 2-sfc-column sf object
@@ -102,6 +103,7 @@ add_arc <- function(
 	stroke_to_opacity = NULL,
 	stroke_width = NULL,
 	tooltip = NULL,
+	auto_highlight = FALSE,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
@@ -179,7 +181,7 @@ add_arc <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckArcDependency())
-	invoke_method(map, "add_arc", shape, layer_id )
+	invoke_method(map, "add_arc", shape, layer_id, auto_highlight )
 }
 
 requiredArcColumns <- function() {

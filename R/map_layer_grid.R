@@ -43,6 +43,7 @@ mapdeckGridDependency <- function() {
 #'   , cell_size = 5000
 #'   , elevation_scale = 50
 #'   , layer_id = "grid_layer"
+#'   , auto_highlight = TRUE
 #' )
 #' }
 #'
@@ -57,6 +58,7 @@ add_grid <- function(
 	cell_size = 1000,
 	extruded = TRUE,
 	elevation_scale = 1,
+	auto_highlight = FALSE,
 	layer_id,
 	digits = 6
 ) {
@@ -119,7 +121,7 @@ add_grid <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckGridDependency())
-	invoke_method(map, "add_grid", shape, layer_id, cell_size, jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale, colour_range)
+	invoke_method(map, "add_grid", shape, layer_id, cell_size, jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale, colour_range, auto_highlight)
 }
 
 

@@ -26,6 +26,7 @@ mapdeckPolygonDependency <- function() {
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param elevation the height of the polygon
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
+#' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
 #'
 #' @examples
 #' \donttest{
@@ -52,6 +53,7 @@ mapdeckPolygonDependency <- function() {
 #'     , elevation = "elevation"
 #'     , stroke_width = 0
 #'     , tooltip = 'info'
+#'     , highlight_colour = "#00ff00"
 #'   )
 #'
 #' library(sf)
@@ -82,6 +84,7 @@ add_polygon <- function(
 	fill_opacity = NULL,
 	elevation = NULL,
 	tooltip = NULL,
+	auto_highlight = FALSE,
 	light_settings = list(),
 	layer_id,
 	digits = 6,
@@ -103,6 +106,8 @@ add_polygon <- function(
 	checkNumeric(digits)
 	checkPalette(palette)
 	## TODO(light_settings)
+
+	## TODO(check highlight_colour)
 
 	## end parameter checks
 
@@ -138,7 +143,7 @@ add_polygon <- function(
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
 	map <- addDependency(map, mapdeckPolygonDependency())
-	invoke_method(map, "add_polygon", shape, layer_id, light_settings)
+	invoke_method(map, "add_polygon", shape, layer_id, light_settings, auto_highlight)
 }
 
 

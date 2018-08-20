@@ -1,5 +1,5 @@
 
-function add_line( map_id, line_data, layer_id ) {
+function add_line( map_id, line_data, layer_id, auto_highlight ) {
 
   const lineLayer = new LineLayer({
     id: 'line-'+layer_id,
@@ -10,7 +10,8 @@ function add_line( map_id, line_data, layer_id ) {
     getTargetPosition: d => decode_points( d.destination ),
     getColor: d => hexToRGBA( d.stroke_colour, d.stroke_opacity ),
     onClick: info => layer_click( map_id, "line", info ),
-    onHover: updateTooltip
+    onHover: updateTooltip,
+    autoHighlight: auto_highlight
   });
 
   update_layer( map_id, 'line-'+layer_id, lineLayer );

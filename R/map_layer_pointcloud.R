@@ -38,6 +38,7 @@ mapdeckPointcloudDependency <- function() {
 #'   , elevation = 'z'
 #'   , layer_id = 'point'
 #'   , fill_colour = "country"
+#'   , tooltip = "country"
 #' )
 #' }
 #'
@@ -53,6 +54,7 @@ add_pointcloud <- function(
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	stroke_width = NULL,
+	tooltip = NULL,
 	light_settings = list(),
 	layer_id,
 	digits = 6,

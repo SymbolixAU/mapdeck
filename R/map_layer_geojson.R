@@ -57,6 +57,7 @@ mapdeckGeojsonDependency <- function() {
 #'  add_geojson(
 #'    data = geojson
 #'    , layer_id = "geojson"
+#'    , auto_highlight = TRUE
 #'  )
 #'
 #' ## add colours, elevation and opacities
@@ -90,7 +91,8 @@ add_geojson <- function(
 	radius = 1,
 	lineWidth = 1,
 	light_settings = list(),
-	elevation = 0
+	elevation = 0,
+	auto_highlight = FALSE
 	) {
 
 	data <- normalisesGeojsonData(data)
@@ -106,5 +108,5 @@ add_geojson <- function(
 	### end parameter checks
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
-	invoke_method(map, "add_geojson", data, layer_id, lineColor, fillColor, radius, lineWidth, elevation, light_settings)
+	invoke_method(map, "add_geojson", data, layer_id, lineColor, fillColor, radius, lineWidth, elevation, light_settings, auto_highlight)
 }

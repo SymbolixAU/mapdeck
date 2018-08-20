@@ -37,6 +37,7 @@ mapdeckPathDependency <- function() {
 #'     , stroke_colour = "RIGHT_LOC"
 #'     , layer_id = "path_layer"
 #'     , tooltip = "ROAD_NAME"
+#'     , auto_highlight = TRUE
 #'   )
 #'
 #' }
@@ -52,6 +53,7 @@ add_path <- function(
 	tooltip = NULL,
 	layer_id,
 	digits = 6,
+	auto_highlight = FALSE,
 	palette = viridisLite::viridis
 ) {
 
@@ -105,7 +107,7 @@ add_path <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckPathDependency())
-	invoke_method(map, "add_path", shape, layer_id)
+	invoke_method(map, "add_path", shape, layer_id, auto_highlight )
 }
 
 

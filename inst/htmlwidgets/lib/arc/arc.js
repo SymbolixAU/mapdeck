@@ -1,5 +1,5 @@
 
-function add_arc( map_id, arc_data, layer_id ) {
+function add_arc( map_id, arc_data, layer_id, auto_highlight ) {
 
   const arcLayer = new ArcLayer({
     id: 'arc-'+layer_id,
@@ -11,7 +11,8 @@ function add_arc( map_id, arc_data, layer_id ) {
     getSourceColor: d => hexToRGBA( d.stroke_from, d.stroke_from_opacity ),
     getTargetColor: d => hexToRGBA( d.stroke_to, d.stroke_to_opacity ),
     onClick: info => layer_click( map_id, "arc", info ),
-    onHover: updateTooltip
+    onHover: updateTooltip,
+    autoHighlight: auto_highlight
   });
 
   update_layer( map_id, 'arc-'+layer_id, arcLayer );

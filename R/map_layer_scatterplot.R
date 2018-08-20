@@ -34,6 +34,7 @@ mapdeckScatterplotDependency <- function() {
 #'   , radius = 100000
 #'   , fill_colour = "country"
 #'   , layer_id = "scatter_layer"
+#'   , tooltip = "capital"
 #' )
 #'
 #' df <- read.csv(paste0(
@@ -60,6 +61,8 @@ add_scatterplot <- function(
 	radius = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
+	tooltip = NULL,
+	auto_highlight = FALSE,
 	layer_id,
 	digits = 6,
 	palette = viridisLite::viridis
@@ -79,6 +82,7 @@ add_scatterplot <- function(
 	usePolyline <- isUsingPolyline(polyline)
 	checkNumeric(digits)
 	checkPalette(palette)
+	## TODO(logical check auto_highlight)
 
 	## end parameter checks
 	if ( !usePolyline ) {
@@ -120,7 +124,7 @@ add_scatterplot <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
-	invoke_method(map, "add_scatterplot", shape, layer_id)
+	invoke_method(map, "add_scatterplot", shape, layer_id, auto_highlight)
 }
 
 

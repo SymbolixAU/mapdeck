@@ -9,7 +9,8 @@ function add_screengrid( map_id, screengrid_data, layer_id, opacity, cell_size, 
     getPosition: d => decode_points( d.polyline ),
     getWeight: d => d.weight,
     onClick: info => layer_click( map_id, "screengrid", info ),
-    onHover: updateTooltip
+    onHover: updateTooltip,
+    pickable: true
   });
   update_layer( map_id, 'screengrid-'+layer_id, screengridLayer );
 }

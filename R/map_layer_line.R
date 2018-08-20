@@ -39,6 +39,7 @@ mapdeckLineDependency <- function() {
 #'     , destination = c("end_lon", "end_lat")
 #'     , stroke_colour = "airport1"
 #'     , stroke_width = "stroke"
+#'     , auto_highlight = TRUE
 #'  )
 #' }
 #'
@@ -62,6 +63,7 @@ add_line <- function(
 	stroke_width = NULL,
 	stroke_opacity = NULL,
 	tooltip = NULL,
+	auto_highlight = FALSE,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
@@ -139,7 +141,7 @@ add_line <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckLineDependency())
-	invoke_method(map, "add_line", shape, layer_id )
+	invoke_method(map, "add_line", shape, layer_id, auto_highlight )
 }
 
 
