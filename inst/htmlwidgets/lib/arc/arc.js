@@ -114,6 +114,10 @@ void main(void) {
     mousePosition: [0, 0]
   };
 */
+
+ // TODO: should I extend 'Layer' ??
+ console.log( Layer );
+
   var mousePosition;
   var enableBrushing = true;
 
@@ -141,44 +145,25 @@ void main(void) {
     mousePosition: [0, 0]
   });
 
-
-
-  console.log(' -- created arcLayer -- ');
   console.log(arcLayer);
-
-  //arcLayer.state = Object.assign({}, arcLayer.state );
-  //arcLayer.setState({mousePosition: [0,0]});
-
-  console.log(arcLayer);
-
-  //arcLayer.state = Object.assign({	mousePosition: null}, arcLayer.state);
-
-
+  //arcLayer.setState( {mousePosition: [0,0]});
 
   var myListener = function(evt) {
-  	//console.log(evt);
 
-  	//console.log( [evt.clientX, evt.clientY] );
-  	console.log("-- before setState --");
+    //TODO(can't call setState without having set the state in the constructor
+    // So I need to find a way to access the laeyr's state constructor so I can set
+    // mousePosition: null)
+  	//arcLayer.setState( {mousePosition: [evt.clientX, evt.clientY] } )
+  	// Perhaps this is where/why I need to extedn ArcLayer, and define it with a new state?
 
-  	//console.log(arcLayer);
-  	arcLayer.setState( {mousePosition: [evt.clientX, evt.clientY] } )
-  	console.log( arcLayer );
-  	console.log( arcLayer.state );
+    console.log( arcLayer );
+  	//arcLayer.forceUpdate();  // not a function
 
-  	//console.log(arcLayer.props.mousePosition);
-  	//arcLayer.props.mousePosition = [evt.clientX, evt.clientY];
-  	//console.log( arcLayer.setState );
+  	// state gets set on the React.Component, not the layer...
 
-  	console.log("-- after setState -- ");
-  	//console.log(arcLayer.state);
-  	//console.log(arcLayer);
-  	//console.log(arcLayer.props.mousePosition);
+  	// can I do this using 'update_layer' by changing which arcs are visible according to brush?
+  	// will this be slow?
 
-  	//arcLayer.props.mousePosition = [evt.clientX, evt.clientY];
-  	//console.log(arcLayer.state);
-  	// TODO(update the element)
-  	//update_layer( map_id, 'arc-'+layer_id, arcLayer );
   }
   document.addEventListener('mousemove', myListener, false);
 
