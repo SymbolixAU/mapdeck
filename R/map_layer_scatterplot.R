@@ -63,7 +63,7 @@ add_scatterplot <- function(
 	fill_opacity = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
-	layer_id,
+	layer_id = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
 	) {
@@ -82,6 +82,7 @@ add_scatterplot <- function(
 	usePolyline <- isUsingPolyline(polyline)
 	checkNumeric(digits)
 	checkPalette(palette)
+	layer_id <- layerId(layer_id, "scatterplot")
 	## TODO(logical check auto_highlight)
 
 	## end parameter checks

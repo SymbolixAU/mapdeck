@@ -59,7 +59,7 @@ add_grid <- function(
 	extruded = TRUE,
 	elevation_scale = 1,
 	auto_highlight = FALSE,
-	layer_id,
+	layer_id = NULL,
 	digits = 6
 ) {
 
@@ -79,6 +79,7 @@ add_grid <- function(
 	checkNumeric(elevation_scale)
 	checkNumeric(cell_size)
 	checkHex(colour_range)
+	layer_id <- layerId(layer_id, "grid")
 
 	## end parameter checks
 	if ( !usePolyline ) {

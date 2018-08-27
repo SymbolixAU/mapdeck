@@ -17,7 +17,8 @@ mapdeckArcDependency <- function() {
 #' @param map a mapdeck map object
 #' @param data data to be used in the layer
 #' @param layer_id single value specifying an id for the layer. Use this value to
-#' distinguish between shape layers of the same type
+#' distinguish between shape layers of the same type. Layers with the same id are likely
+#' to conflict and not plot correctly
 #' @param origin vector of longitude and latitude columns, or an \code{sfc} column
 #' @param destination vector of longitude and latitude columns, or an \code{sfc} column
 #' @param id an id value in \code{data} to identify layers when interacting in Shiny apps
@@ -93,7 +94,7 @@ mapdeckArcDependency <- function() {
 add_arc <- function(
 	map,
 	data = get_map_data(map),
-	layer_id,
+	layer_id = NULL,
 	origin,
 	destination,
 	id = NULL,
@@ -148,6 +149,7 @@ add_arc <- function(
 	## parameter checks
 	checkNumeric(digits)
 	checkPalette(palette)
+	layer_id <- layerId(layer_id, "arc")
 
 	## end parameter checks
 

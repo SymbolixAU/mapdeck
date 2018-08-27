@@ -56,7 +56,7 @@ add_pointcloud <- function(
 	stroke_width = NULL,
 	tooltip = NULL,
 	light_settings = list(),
-	layer_id,
+	layer_id = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
@@ -87,6 +87,7 @@ add_pointcloud <- function(
 
 	checkNumeric(digits)
 	checkPalette(palette)
+	layer_id <- layerId(layer_id, "pointcloud")
 	## TODO(light_settings)
 
 	## end parameter checks

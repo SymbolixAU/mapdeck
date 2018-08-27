@@ -85,7 +85,7 @@ mapdeckGeojsonDependency <- function() {
 add_geojson <- function(
 	map,
 	data = get_map_data(map),
-	layer_id,
+	layer_id = NULL,
 	lineColor = "#440154",
 	fillColor = "#440154",
 	radius = 1,
@@ -103,6 +103,7 @@ add_geojson <- function(
 	checkNumeric(elevation)
 	isHexColour(lineColor)
 	isHexColour(fillColor)
+	layer_id <- layerId(layer_id, "geojson")
 	## TODO(light_settings - test options are accurate)
 
 	### end parameter checks

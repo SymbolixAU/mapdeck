@@ -55,7 +55,7 @@ mapdeckLineDependency <- function() {
 add_line <- function(
 	map,
 	data = get_map_data(map),
-	layer_id,
+	layer_id = NULL,
 	origin,
 	destination,
 	id = NULL,
@@ -108,6 +108,7 @@ add_line <- function(
 	## parameter checks
 	checkNumeric(digits)
 	checkPalette(palette)
+	layer_id <- layerId(layer_id, "line")
 
 	## end parameter checks
 

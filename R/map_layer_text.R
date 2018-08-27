@@ -61,7 +61,7 @@ add_text <- function(
 	anchor = NULL,
 	alignment_baseline = NULL,
 	tooltip = NULL,
-	layer_id,
+	layer_id = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
@@ -82,6 +82,7 @@ add_text <- function(
 	checkPalette(palette)
 	checkNumeric(size)
 	checkNumeric(angle)
+	layer_id <- layerId(layer_id, "text")
 
 	## end parameter checks
 	if ( !usePolyline ) {

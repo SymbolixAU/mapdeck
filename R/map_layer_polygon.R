@@ -86,7 +86,7 @@ add_polygon <- function(
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	light_settings = list(),
-	layer_id,
+	layer_id = NULL,
 	digits = 6,
 	palette = viridisLite::viridis
 ) {
@@ -105,6 +105,7 @@ add_polygon <- function(
 	## parameter checks
 	checkNumeric(digits)
 	checkPalette(palette)
+	layer_id <- layerId(layer_id, "polygon")
 	## TODO(light_settings)
 
 	## TODO(check highlight_colour)
