@@ -10,7 +10,7 @@ mapdeck(token = get_access_token(api = "mapbox"), data = NULL,
   location = c(0, 0))
 }
 \arguments{
-\item{token}{Mapbox Acess token. Use \code{set_token()} to use a global token}
+\item{token}{Mapbox Acess token. Use \code{set_token()} to set a global token}
 
 \item{data}{data to be used on the map}
 

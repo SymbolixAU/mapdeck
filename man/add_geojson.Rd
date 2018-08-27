@@ -4,9 +4,10 @@
 \alias{add_geojson}
 \title{Add Geojson}
 \usage{
-add_geojson(map, data = get_map_data(map), layer_id, lineColor = "#440154",
-  fillColor = "#440154", radius = 1, lineWidth = 1,
-  light_settings = list(), elevation = 0)
+add_geojson(map, data = get_map_data(map), layer_id = NULL,
+  lineColor = "#440154", fillColor = "#440154", radius = 1,
+  lineWidth = 1, light_settings = list(), elevation = 0,
+  auto_highlight = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -14,7 +15,8 @@ add_geojson(map, data = get_map_data(map), layer_id, lineColor = "#440154",
 \item{data}{data to be used in the layer}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
-distinguish between shape layers of the same type}
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
 
 \item{lineColor}{hex value for all line colours. See details}
 
@@ -27,6 +29,8 @@ distinguish between shape layers of the same type}
 \item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
 \item{elevation}{elevation of polygons. See details}
+
+\item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 }
 \description{
 The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,
@@ -63,6 +67,7 @@ mapdeck(
  add_geojson(
    data = geojson
    , layer_id = "geojson"
+   , auto_highlight = TRUE
  )
 
 ## add colours, elevation and opacities

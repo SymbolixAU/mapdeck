@@ -6,7 +6,7 @@
 \usage{
 add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, weight = NULL, colour_range = viridisLite::viridis(6),
-  opacity = 0.8, cell_size = 50, layer_id, digits = 6)
+  opacity = 0.8, cell_size = 50, layer_id = NULL, digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -28,7 +28,8 @@ add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 \item{cell_size}{size of grid squares in pixels}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
-distinguish between shape layers of the same type}
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
 
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}

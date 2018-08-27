@@ -7,8 +7,8 @@
 add_polygon(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL,
   fill_opacity = NULL, elevation = NULL, tooltip = NULL,
-  light_settings = list(), layer_id, digits = 6,
-  palette = viridisLite::viridis)
+  auto_highlight = FALSE, light_settings = list(), layer_id = NULL,
+  digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -31,10 +31,13 @@ between 1 and 255 to be applied to all the shapes}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
+\item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
+
 \item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
-distinguish between shape layers of the same type}
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
 
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
@@ -69,6 +72,7 @@ mapdeck(
     , elevation = "elevation"
     , stroke_width = 0
     , tooltip = 'info'
+    , highlight_colour = "#00ff00"
   )
 
 library(sf)

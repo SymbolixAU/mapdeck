@@ -4,10 +4,10 @@
 \alias{add_line}
 \title{Add line}
 \usage{
-add_line(map, data = get_map_data(map), layer_id, origin, destination,
-  id = NULL, stroke_colour = NULL, stroke_width = NULL,
-  stroke_opacity = NULL, tooltip = NULL, digits = 6,
-  palette = viridisLite::viridis)
+add_line(map, data = get_map_data(map), layer_id = NULL, origin,
+  destination, id = NULL, stroke_colour = NULL, stroke_width = NULL,
+  stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
+  digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -15,7 +15,8 @@ add_line(map, data = get_map_data(map), layer_id, origin, destination,
 \item{data}{data to be used in the layer}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
-distinguish between shape layers of the same type}
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
 
 \item{origin}{vector of longitude and latitude columns, or an \code{sfc} column}
 
@@ -32,6 +33,8 @@ column of \code{data} containing the stroke opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
+
+\item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
@@ -67,6 +70,7 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>
     , destination = c("end_lon", "end_lat")
     , stroke_colour = "airport1"
     , stroke_width = "stroke"
+    , auto_highlight = TRUE
  )
 }
 

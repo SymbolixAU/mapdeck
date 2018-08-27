@@ -6,8 +6,9 @@
 \usage{
 add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
   elevation, polyline = NULL, radius = NULL, fill_colour = NULL,
-  fill_opacity = NULL, stroke_width = NULL, light_settings = list(),
-  layer_id, digits = 6, palette = viridisLite::viridis)
+  fill_opacity = NULL, stroke_width = NULL, tooltip = NULL,
+  light_settings = list(), layer_id = NULL, digits = 6,
+  palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -32,10 +33,13 @@ between 1 and 255 to be applied to all the shapes}
 
 \item{stroke_width}{width of the stroke}
 
+\item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
+
 \item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
-distinguish between shape layers of the same type}
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
 
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
@@ -62,6 +66,7 @@ add_pointcloud(
   , elevation = 'z'
   , layer_id = 'point'
   , fill_colour = "country"
+  , tooltip = "country"
 )
 }
 

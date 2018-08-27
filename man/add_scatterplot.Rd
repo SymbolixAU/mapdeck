@@ -6,8 +6,8 @@
 \usage{
 add_scatterplot(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, radius = NULL, fill_colour = NULL,
-  fill_opacity = NULL, layer_id, digits = 6,
-  palette = viridisLite::viridis)
+  fill_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
+  layer_id = NULL, digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -28,8 +28,13 @@ add_scatterplot(map, data = get_map_data(map), lon = NULL, lat = NULL,
 column of \code{data} containing the fill opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
+\item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
+
+\item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
+
 \item{layer_id}{single value specifying an id for the layer. Use this value to
-distinguish between shape layers of the same type}
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
 
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
@@ -54,6 +59,7 @@ add_scatterplot(
   , radius = 100000
   , fill_colour = "country"
   , layer_id = "scatter_layer"
+  , tooltip = "capital"
 )
 
 df <- read.csv(paste0(

@@ -26,7 +26,6 @@ mapdeckPolygonDependency <- function() {
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param elevation the height of the polygon
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
-#' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
 #'
 #' @examples
 #' \donttest{
