@@ -59,7 +59,7 @@ add_screengrid <- function(
 	colour_range = viridisLite::viridis(6),
 	opacity = 0.8,
 	cell_size = 50,
-	layer_id,
+	layer_id = NULL,
 	digits = 6
 ) {
 
@@ -78,6 +78,8 @@ add_screengrid <- function(
 	checkNumeric(opacity)
 	checkNumeric(cell_size)
 	checkNumeric(digits)
+	layer_id <- layerId(layer_id, "screengrid")
+
 	if(length(colour_range) != 6)
 		stop("colour_range must have 6 hex colours")
 

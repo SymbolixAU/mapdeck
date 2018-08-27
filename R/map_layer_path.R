@@ -51,7 +51,7 @@ add_path <- function(
 	stroke_width = NULL,
 	stroke_opacity = NULL,
 	tooltip = NULL,
-	layer_id,
+	layer_id = NULL,
 	digits = 6,
 	auto_highlight = FALSE,
 	palette = viridisLite::viridis
@@ -74,6 +74,7 @@ add_path <- function(
 	## parameter checks
 	checkNumeric(digits)
 	checkPalette(palette)
+	layer_id <- layerId(layer_id, "path")
 
 	## end parameter checks
 

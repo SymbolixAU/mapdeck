@@ -123,3 +123,19 @@ addDependency <- function(map, dependencyFunction) {
 	return(map)
 }
 
+# Layer Id
+#
+# Checks the layer_id parameter, and provides a default one if NULL
+# @param layer_id
+layerId <- function(layer_id, layer = c("arc", "geojson","grid","line","path","pointcloud",
+																				"polygon","scatterplot", "screengrid","text")){
+	if (!is.null(layer_id) & length(layer_id) != 1)
+		stop("please provide a single value for 'layer_id'")
+
+	if (is.null(layer_id)) {
+		return(paste0(layer, "-defaultLayerId"))
+	} else {
+		return(layer_id)
+	}
+}
+
