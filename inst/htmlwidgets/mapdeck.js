@@ -31,11 +31,30 @@ HTMLWidgets.widget({
         	pitch: x.pitch
         };
 
+        var view1 = new FirstPersonView({
+        	id: 'first-person'
+        });
+
+        var view2 = new MapView({
+        	id: 'mini-map',
+        	x: '70%',
+        	y: '70%',
+        	height: '15%',
+        	width: '15%'
+        });
+
+        console.log( view1 );
+        //var view1 = new FirstPersonView({height: '50%'});
+        //var view2 = new WebMercatorView({y: '50%', height: '50%'});
+
         const	deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
-			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      views: [view1, view2],
+			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      //initialViewState: view1,
+			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
 			      //onLayerHover: setTooltip
 			  });
