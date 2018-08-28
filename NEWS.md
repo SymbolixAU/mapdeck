@@ -1,3 +1,4 @@
 # mapdeck 0.1.001
 
-* Added a `NEWS.md` file to track changes to the package.
+* `layer_id` is optional to the user
+* `auto_highlight` argument
