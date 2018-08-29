@@ -15,7 +15,7 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
 Imports:
-  googlePolylines (>= 0.6.2),
+  googlePolylines (>= 0.7.0),
   htmlwidgets,
   htmltools,
   scales,
