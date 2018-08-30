@@ -1,14 +1,3 @@
-## MULTIPOLYGONS
-# #
-# library(sf)
-# library(mapdeck)
-# nc <- st_read(system.file("shape/nc.shp", package="sf"))
-# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
-#
-# mapdeck() %>%
-# 	add_polygon(data = nc)
-
-#
 # ## SCATTERPLOT ELEVATION
 #
 # # head(capitals)

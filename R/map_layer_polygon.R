@@ -12,7 +12,8 @@ mapdeckPolygonDependency <- function() {
 
 #' Add Polygon
 #'
-#' The Polygon Layer renders filled and/or stroked polygons.
+#' The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects
+#' only POLYGONs are supported, MULTIPOLYGONs are ignored.
 #'
 #' @inheritParams add_arc
 #'
