@@ -19,6 +19,10 @@ install.packages("mapdeck")
 
 #### Development version
 ```r
+## Until googlePolylines 0.7.2+ is on CRAN you'll need 
+devtools::install_github("SymbolixAU/googlePolylines")
+
+## then mapdeck
 devtools::install_github("SymbolixAU/mapdeck")
 ```
 
