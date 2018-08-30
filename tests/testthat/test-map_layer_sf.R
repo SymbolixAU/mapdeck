@@ -222,7 +222,7 @@ test_that("sf POLYGON objects are plotted", {
 })
 
 
-test_that("sf MULTIPOLYGON objects are plotted", {
+test_that("sf MULTIPOLYGON objects not plotted", {
 
 	testthat::skip_on_cran()
 	testthat::skip_on_travis()
@@ -239,8 +239,8 @@ test_that("sf MULTIPOLYGON objects are plotted", {
 		add_polygon(data = sf, layer_id = "poly")
 
 	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
-	expect_true(nrow(df) == 1)
-	expect_true("polyline" %in% names(df))
+	expect_true(length(df) == 0)
+	expect_true(!"polyline" %in% names(df))
 
 })
 

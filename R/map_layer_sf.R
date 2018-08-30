@@ -40,23 +40,23 @@ normaliseMultiSfData.sf <- function(data, origin, destination) {
 	return(enc[ point_rows, ])
 }
 
-normaliseSfData <- function(data, geom) UseMethod("normaliseSfData")
+normaliseSfData <- function(data, geom, multi = TRUE) UseMethod("normaliseSfData")
 
 #' @export
-normaliseSfData.sf <- function(data, geom) {
+normaliseSfData.sf <- function(data, geom, multi = TRUE) {
 	enc <- googlePolylines::encode(data)
-	data <- normaliseSfData(enc, geom)
+	data <- normaliseSfData(enc, geom, multi)
 	return(data)
 }
 
 #' @export
-normaliseSfData.sfencoded <- function(data, geom) {
-	idx <- googlePolylines::geometryRow(data, geom)
+normaliseSfData.sfencoded <- function(data, geom, multi = TRUE) {
+	idx <- googlePolylines::geometryRow(data, geom, multi)
 	return(data[idx, names(data), drop = F])
 }
 
 #' @export
-normaliseSfData.default <- function(data, geom) data
+normaliseSfData.default <- function(data, geom, multi = TRUE) data
 
 
 normalisesGeojsonData <- function(data) UseMethod("normalisesGeojsonData")

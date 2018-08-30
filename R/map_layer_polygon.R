@@ -92,7 +92,7 @@ add_polygon <- function(
 
 	objArgs <- match.call(expand.dots = F)
 
-	data <- normaliseSfData(data, "POLYGON")
+	data <- normaliseSfData(data, "POLYGON", multi = FALSE)
 	polyline <- findEncodedColumn(data, polyline)
 
 	## - if sf object, and geometry column has not been supplied, it needs to be

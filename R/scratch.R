@@ -1,3 +1,51 @@
+## MULTIPOLYGONS
+# #
+# library(sf)
+# library(mapdeck)
+# nc <- st_read(system.file("shape/nc.shp", package="sf"))
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+#
+# mapdeck() %>%
+# 	add_polygon(data = nc)
+
+#
+# ## SCATTERPLOT ELEVATION
+#
+# # head(capitals)
+#
+# library(data.table)
+#
+# dt <- as.data.table(capitals)
+#
+# dt$z <- sample(1:100, size = nrow(dt), replace = T)
+#
+# dt$z <- sample(10000:10000000, size = nrow(dt))
+#
+# dt <- dt[
+# 	, {
+# 		geometry <- sf::st_point(x = c(lon, lat, z))
+# 		geometry <- sf::st_sfc(geometry)
+# 		geometry <- sf::st_sf(geometry = geometry)
+# 	}
+# 	, by = country
+# ]
+# sf <- sf::st_as_sf( dt )
+# enc <- googlePolylines::encode( sf )
+#
+# enc$geometryZM[[5]]
+#
+# attributes( enc$geometryZM[[1]] )
+#
+# googlePolylines::decode( enc$geometryZM[[3]] )
+#
+#
+# e <- encodeCoordinates( lon = -9999, lat = 9999 )
+# e
+# decode( e )
+
+
+
+
 #
 # library(shiny)
 # library(shinydashboard)
