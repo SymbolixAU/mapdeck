@@ -15,14 +15,15 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
 Imports:
-  googlePolylines (>= 0.7.1002),
-  htmlwidgets,
-  htmltools,
-  scales,
-  shiny,
-  jsonlite,
-  magrittr,
-  viridisLite
+    googlePolylines (>= 0.7.1002),
+    htmlwidgets,
+    htmltools,
+    scales,
+    shiny,
+    jsonlite,
+    magrittr,
+    viridisLite,
+    Rcpp
 RoxygenNote: 6.0.1
 Suggests: 
     covr,
@@ -32,3 +33,5 @@ Suggests:
     sf,
     testthat
 VignetteBuilder: knitr
+LinkingTo: 
+    Rcpp

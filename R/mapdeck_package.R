@@ -1,3 +1,7 @@
+#' @useDynLib mapdeck, .registration = TRUE
+#' @importFrom Rcpp sourceCpp
+NULL
+
 #' Pipe
 #'
 #' Uses the pipe operator (\code{\%>\%}) to chain statements. Useful for adding

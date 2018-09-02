@@ -45,7 +45,8 @@ should be used for the latitude / longitude coordinates.}
 \item{palette}{a function which generates hex colours}
 }
 \description{
-The Polygon Layer renders filled and/or stroked polygons.
+The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects
+only POLYGONs are supported, MULTIPOLYGONs are ignored.
 }
 \examples{
 \donttest{

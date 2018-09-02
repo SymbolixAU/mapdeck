@@ -10,6 +10,14 @@ mapdeckScatterplotDependency <- function() {
 }
 
 
+#' @export
+scatterplot <- function(data, polyline, fill_colour, radius, tooltip) {
+	l <- as.list(match.call())
+	#print(l)
+	#df <- data.frame("polyline" = "abc")
+	rcpp_scatterplot(data, l)
+}
+
 #' Add Scatterplot
 #'
 #' The Scatterplot Layer takes in coordinate points and renders them as circles
@@ -132,8 +140,7 @@ add_scatterplot <- function(
 
 
 requiredScatterplotColumns <- function() {
-	c("radius",
-		"fill_colour", "fill_opacity")
+	c("radius",	"fill_colour", "fill_opacity")
 }
 
 

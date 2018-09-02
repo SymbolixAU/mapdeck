@@ -1,3 +1,23 @@
+### RCPP
+# df <- data.frame(
+# 	polyline = letters
+# 	, r = 1:26)
+#
+# mapdeck::scatterplot(data = df, polyline = "polyline", radius = "r")
+
+## Tests required
+## - non-requied columns (e.g. tooltip) are added on
+## - arguments with a singel value (not a column name) are used for the whole column of data.frame
+
+## non-requied cols
+# df$tool <- letters
+# mapdeck::scatterplot(data = df, polyline = "polyline", radius = "r", tooltip = "tool")
+
+## args with single value
+# mapdeck::scatterplot(data = df, polyline = "polyline", fill_colour = "#00FF00")
+
+
+
 # ## SCATTERPLOT ELEVATION
 #
 # # head(capitals)
