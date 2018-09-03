@@ -34,4 +34,5 @@ Suggests:
     testthat
 VignetteBuilder: knitr
 LinkingTo: 
-    Rcpp
+    Rcpp,
+    googlePolylines

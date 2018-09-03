@@ -1,6 +1,7 @@
 #include <Rcpp.h>
 #include "R_mapdeck.hpp"
 #include "R_scatterplot.hpp"
+#include "googlePolylines.h"  // TODO(use 'rcpp_encodeSfGeometry()' directly)
 
 using namespace Rcpp;
 
