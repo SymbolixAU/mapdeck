@@ -3,8 +3,16 @@
 #include "R_scatterplot.hpp"
 #include "googlePolylines.h"  // TODO(use 'rcpp_encodeSfGeometry()' directly)
 
+#include "RcppViridis/colours/colours.hpp"
+// [[Rcpp::depends(RcppViridis)]]
+
 using namespace Rcpp;
 
+// [[Rcpp::export]]
+Rcpp::StringVector viridis_test(Rcpp::NumericVector x) {
+
+	return rcppviridis::colours::colour_value_hex(x, "viridis", "#808080");
+}
 
 // TODO
 // 1. define which columns are to be in the final data.frame object

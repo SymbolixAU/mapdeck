@@ -86,6 +86,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// viridis_test
+Rcpp::StringVector viridis_test(Rcpp::NumericVector x);
+RcppExport SEXP _mapdeck_viridis_test(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(viridis_test(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // test_palette
 Rcpp::StringVector test_palette(int data_rows, Function f);
 RcppExport SEXP _mapdeck_test_palette(SEXP data_rowsSEXP, SEXP fSEXP) {
@@ -119,6 +130,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_seq", (DL_FUNC) &_mapdeck_rcpp_seq, 3},
     {"_mapdeck_rcpp_findInterval", (DL_FUNC) &_mapdeck_rcpp_findInterval, 2},
     {"_mapdeck_rcpp_generate_palette", (DL_FUNC) &_mapdeck_rcpp_generate_palette, 2},
+    {"_mapdeck_viridis_test", (DL_FUNC) &_mapdeck_viridis_test, 1},
     {"_mapdeck_test_palette", (DL_FUNC) &_mapdeck_test_palette, 2},
     {"_mapdeck_rcpp_scatterplot", (DL_FUNC) &_mapdeck_rcpp_scatterplot, 2},
     {NULL, NULL, 0}

@@ -23,7 +23,8 @@ Imports:
     jsonlite,
     magrittr,
     viridisLite,
-    Rcpp
+    Rcpp,
+    RcppViridis
 RoxygenNote: 6.0.1
 Suggests: 
     covr,
@@ -35,4 +36,5 @@ Suggests:
 VignetteBuilder: knitr
 LinkingTo: 
     Rcpp,
-    googlePolylines
+    googlePolylines,
+    RcppViridis
