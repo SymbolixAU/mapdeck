@@ -45,7 +45,8 @@ should be used for the latitude / longitude coordinates.}
 \item{palette}{a function which generates hex colours}
 }
 \description{
-The Polygon Layer renders filled and/or stroked polygons.
+The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects
+only POLYGONs are supported, MULTIPOLYGONs are ignored.
 }
 \examples{
 \donttest{
@@ -72,7 +73,7 @@ mapdeck(
     , elevation = "elevation"
     , stroke_width = 0
     , tooltip = 'info'
-    , highlight_colour = "#00ff00"
+    #, highlight_colour = "#00ff00"
   )
 
 library(sf)
