@@ -3,15 +3,19 @@
 #include "R_scatterplot.hpp"
 #include "googlePolylines.h"  // TODO(use 'rcpp_encodeSfGeometry()' directly)
 
-#include "RcppViridis/colours/colours.hpp"
 // [[Rcpp::depends(RcppViridis)]]
+#include "RcppViridis/colours/colours_hex.hpp"
 
 using namespace Rcpp;
 
 // [[Rcpp::export]]
 Rcpp::StringVector viridis_test(Rcpp::NumericVector x) {
-
-	return rcppviridis::colours::colour_value_hex(x, "viridis", "#808080");
+	Rcpp::NumericVector alpha(1);
+	alpha[0] = 255;
+	std::string palette = "viridis";
+	std::string na_colour = "#808080FF";
+  return rcppviridis::colours_hex::colour_value_hex( x, palette, na_colour, alpha );
+//	return rcppviridis::colours::colour_value_hex(x, "viridis", "#808080");
 }
 
 // TODO
