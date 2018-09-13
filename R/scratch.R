@@ -1,9 +1,18 @@
 ### RCPP
+
 # df <- data.frame(
-# 	polyline = letters
-# 	, r = 1:26)
+# 	id = sample(letters[1:10], size = 26, replace = T)
+# #	id = 1:26
+# 	, polyline = letters
+# 	, r = 1:26
+# 	, s = rnorm(26)
+#   , stringsAsFactors = F
+# 	)
 #
-# mapdeck::scatterplot(data = df, polyline = "polyline", radius = "r")
+# mapdeck::scatterplot(data = df, polyline = "polyline", radius = "r", fill_colour = "id", tooltip = "s")
+
+# df_plot <- mapdeck::scatterplot(data = df, polyline = "polyline", radius = "r", fill_colour = "id", tooltip = "s")
+# barplot(height = df_plot$radius, col = df_plot$fill_colour, border = NA, space = 0)
 
 ## Tests required
 ## - non-requied columns (e.g. tooltip) are added on

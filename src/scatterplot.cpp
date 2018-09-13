@@ -14,7 +14,8 @@ Rcpp::StringVector viridis_test(Rcpp::NumericVector x) {
 	alpha[0] = 255;
 	std::string palette = "viridis";
 	std::string na_colour = "#808080FF";
-  return rcppviridis::colours_hex::colour_value_hex( x, palette, na_colour, alpha );
+	bool include_alpha = true;
+  return rcppviridis::colours_hex::colour_value_hex( x, palette, na_colour, alpha, include_alpha );
 //	return rcppviridis::colours::colour_value_hex(x, "viridis", "#808080");
 }
 
@@ -69,6 +70,21 @@ Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params) {
 	Rcpp::StringVector param_names = params.names();
 	Rcpp::StringVector sv = mapdeck::scatterplot_columns;
 
+	Rcpp::Rcout << "param_names: " << param_names << std::endl;
+
+	Rcpp::NumericVector data_types( data.ncol() );
+
+	Rcpp::List data_list = Rcpp::as< Rcpp::List >( data );
+
+	size_t counter = 0;
+	for ( Rcpp::List::iterator it = data_list.begin(); it != data_list.end(); ++it ) {
+		data_types[ counter ] = TYPEOF(*it);
+		counter++;
+		//Rcpp::Rcout << "intput data type: " << list_type << std::endl;
+	}
+
+	Rcpp::Rcout << "data types: " << data_types << std::endl;
+
 	int n = params.size();
 	int colIndex = -1;
 
@@ -85,12 +101,73 @@ Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params) {
 			Rcpp::StringVector param_value = params[i];
 			colIndex = indexColumnName( param_value, data.names() );
 
+			Rcpp::Rcout << "param_value: " << param_value << std::endl;
+			Rcpp::Rcout << "col index: " << colIndex << std::endl;
+
 			if ( colIndex >= 0) {
 				// The param_value IS a column name
-				// which 'sv' does it belong it?
+				// which 'sv' does it belong in?
 				Rcpp::String thisParam = param_names[i];
+				std::string this_string_param = thisParam;
+				Rcpp::Rcout << "thisParam: " << this_string_param << std::endl;
+
 				lst[ thisParam ] = data[ colIndex ];
 				// TODO(if it's not a required column (e.g. tooltip), needs to append it to the list)
+
+				SEXP this_data_col = data[ param_value ];
+				//Rcpp::Rcout << "this_data_col: " << this_data_col << std::endl;
+
+
+
+				Rcpp::StringVector hex_strings(data_rows);
+
+				if ( this_string_param == "fill_colour" ) {
+					Rcpp::Rcout << "finding fill_colour" << std::endl;
+
+					int this_data_type = data_types[ colIndex ] ;
+					switch( this_data_type ) {
+					case REALSXP: {
+						Rcpp::Rcout << "REALSXP" << std::endl;
+						break;
+					}
+					case INTSXP: {
+						Rcpp::Rcout << "INTSXP" << std::endl;
+						break;
+					}
+					case STRSXP: {
+						Rcpp::Rcout << "STRSXP" << std::endl;
+
+						// TODO: include alpha?
+						Rcpp::StringVector x = data[ colIndex ];
+
+						Rcpp::NumericVector alpha(1, 255.0);
+						Rcpp::Rcout << "alpha: " << alpha << std::endl;
+
+						std::string palette = "viridis";
+						std::string na_colour = "#808080FF";
+						bool include_alpha = true;
+						hex_strings = rcppviridis::colours_hex::colour_value_hex( x, palette, na_colour, alpha, include_alpha );
+						Rcpp::Rcout << hex_strings << std::endl;
+						lst[ thisParam ] = hex_strings;
+
+						break;
+					}
+
+					}
+				}
+
+
+				// Rcpp::NumericVector alpha(1);
+				// alpha[0] = 255;
+				// std::string palette = "viridis";
+				// std::string na_colour = "#808080FF";
+				// bool include_alpha = true;
+				//
+				// Rcpp::NumericVector hex_strings = rcppviridis::colours_hex::colour_value_hex( data[ colIndex ], palette, na_colour, alpha, include_alpha );
+
+				// if it's a colour column, and NOT hex string, need to generate the colours
+				//Rcpp::Rcout << "thisParam: " << thisParam << std::endl;
+
 			}
 		} else {
 				// TODO(if it's not a column name, but thisParam IS in sv, it's a value to use for the whole column))
