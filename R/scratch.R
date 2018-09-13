@@ -1,8 +1,10 @@
 ### RCPP
 
 # df <- data.frame(
-# 	id = sample(letters[1:10], size = 26, replace = T)
+# #	id = sample(letters[1:10], size = 26, replace = T)
 # #	id = 1:26
+# #	id = seq(as.Date("2018-01-01"), as.Date("2018-01-26"), by = 1)
+# 	id = as.factor(1:26)
 # 	, polyline = letters
 # 	, r = 1:26
 # 	, s = rnorm(26)

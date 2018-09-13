@@ -2,6 +2,10 @@
 #include "R_mapdeck.hpp"
 using namespace Rcpp;
 
+#define PARAM_UNKNOWN  0
+#define PARAM_CONSTANT 1
+#define PARAM_VECTOR   2
+
 Rcpp::StringVector default_polyline(int n) {
 	Rcpp::StringVector sv(n);
 	sv.fill("");
@@ -21,14 +25,14 @@ Rcpp::IntegerVector default_radius(int n) {
 Rcpp::StringVector default_fill_colour(int n) {
 	//return Rcpp::StringVector::create(n, "#440154");
 	Rcpp::StringVector sv(n);
-	sv.fill("#440154");
+	sv.fill("#440154FF");
 	return sv;
 }
 
-Rcpp::IntegerVector default_fill_opacity(int n) {
-  Rcpp::IntegerVector iv(n, 255.0);
-	return iv;
-}
+// Rcpp::IntegerVector default_fill_opacity(int n) {
+//   Rcpp::IntegerVector iv(n, 255.0);
+// 	return iv;
+// }
 
 Rcpp::List construct_df(Rcpp::List df, int nrows) {
 
