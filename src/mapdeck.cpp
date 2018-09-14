@@ -2,10 +2,6 @@
 #include "R_mapdeck.hpp"
 using namespace Rcpp;
 
-#define PARAM_UNKNOWN  0
-#define PARAM_CONSTANT 1
-#define PARAM_VECTOR   2
-
 Rcpp::StringVector default_polyline(int n) {
 	Rcpp::StringVector sv(n);
 	sv.fill("");
@@ -52,7 +48,7 @@ Rcpp::List construct_df(Rcpp::List df, int nrows) {
  * indexColumnName
  * Finds the index of the names of the input data which match the function argument values
  */
-int indexColumnName(Rcpp::StringVector param_value, Rcpp::StringVector data_names) {
+int indexColumnName(Rcpp::StringVector& param_value, Rcpp::StringVector& data_names) {
 
 	Rcpp::Rcout << "finding: " << param_value << std::endl;
 	Rcpp::Rcout << "in: " << data_names << std::endl;

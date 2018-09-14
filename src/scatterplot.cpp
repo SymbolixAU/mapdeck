@@ -145,9 +145,56 @@ void param_data_column_index( Rcpp::NumericVector& param_indexes,
 	Rcpp::Rcout << "param indeces in data: " << param_indexes << std::endl;
 }
 
+int get_parameter_type( SEXP param ) {
+	return TYPEOF( param );
+}
+
+Rcpp::DataFrame construct_params(
+		Rcpp::DataFrame& data,
+		Rcpp::List& params
+	) {
+
+	int n_params = params.size();
+	Rcpp::IntegerVector parameter_types( n_params );
+	Rcpp::IntegerVector data_column_index( n_params, -1 );
+	Rcpp::StringVector data_names = data.names();
+	int i = 0;
+	int parameter_type;
+
+	for (i = 0; i < n_params; i++) {
+		parameter_type = get_parameter_type( params[i] );
+		parameter_types[i] = parameter_type;
+		if ( parameter_type == STRSXP ) { // STRSXP (string vector)
+			// is it a column index?
+			Rcpp::StringVector param_value = params[i];
+			data_column_index[i] = indexColumnName( param_value, data_names );
+		}
+	}
+
+	return Rcpp::DataFrame::create(
+		_["parameter"] = params.names(),
+		_["parameter_type"] = parameter_types,
+		_["data_column_index"] = data_column_index
+	);
+
+}
+
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params) {
+
+	Rcpp::DataFrame df_params = construct_params( data, params );
+	// TODO()
+	// loop over all the available columns of a scatterplot data object (e.g. scatterplot_available_columns)
+	// If they are in the 'parameter' column, resolve the arguemnt based on the parameter_type & data_column_index argument:
+
+	// if parameter_type %in% INTSXP, REALSXP, STRSXP && data_column_index == -1,
+	// - it's not in the data, so treat it as a constant?
+	// if parameter_type %in% INTSXP, REALSXP, STRSXP && data_column_index >= 0,
+	// - it's a column of the data
+
+
+	return df_params;
 
 	/*
 	if ( indexColumnName( "polyline", data.names() ) == -1 ) {
@@ -161,6 +208,7 @@ Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params) {
 	// return a list with attributes (to make it a data.frame)
 	// we know the size of the list...
   int data_rows = data.nrows();
+	int n_data_columns = data.ncol();
 	bool fill_resolved = false;
 	bool stroke_resolved = false;
 
@@ -187,59 +235,59 @@ Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params) {
 	int n = params.size();
 	int colIndex = -1;
 
-	for (int i = 0; i < n; i ++ ) {
-		// if the param element is length 1; check if it's a column name
-
-		if( paramIsSingleString( params[i] ) ) {
-			// it's a single string
-			// is it also a column name
-
-			Rcpp::StringVector param_value = params[i];
-			colIndex = indexColumnName( param_value, data.names() );
-
-			if ( colIndex >= 0) {
-				// The param_value IS a column name
-				// which 'sv' does it belong in?
-				Rcpp::String thisParam = param_names[i];
-				std::string this_string_param = thisParam;
-
-				lst[ thisParam ] = data[ colIndex ];
-				// TODO(if it's not a required column (e.g. tooltip), needs to append it to the list)
-
-				// TODO(resolve colours)
-				// - scatterplot requires fill_colour and fill_opacity.
-				// - it will have been initialised with defaults
-				// - if opacity has been provided, is it a vector or a constant?
-				// - it has to be numeric.
-
-
-				if ( (this_string_param == "fill_colour" || this_string_param == "fill_opacity") && !fill_resolved) {
-
-					// need to resolve fill colour & opacity
-					// if 'this_string_param == 'fill_colour', need to also find 'fill_opacity' in params,
-					// then find it in data
-
-
-					Rcpp::Rcout << "finding fill_colour" << std::endl;
-
-					int this_data_type = data_types[ colIndex ];
-
-					colour_values( data, lst, this_data_type, colIndex, thisParam );
-
-					fill_resolved = true;
-
-				}
-			}
-		} else {
-				// TODO(if it's not a column name, but thisParam IS in sv, it's a value to use for the whole column))
-				// get the type of 'params[i]'
-				// create a vector of that type
-				if( paramIsSingleString( params[i] ) ) {
-  				Rcpp::String thisString = params[i];
-   				Rcpp::StringVector sv(data_rows, thisString);
-	  			lst[ thisString ] = sv;
-				}
-		}
-	}
+// 	for (int i = 0; i < n; i ++ ) {
+// 		// if the param element is length 1; check if it's a column name
+//
+// 		if( paramIsSingleString( params[i] ) ) {
+// 			// it's a single string
+// 			// is it also a column name
+//
+// 			Rcpp::StringVector param_value = params[i];
+// 			colIndex = indexColumnName( param_value, data.names() );
+//
+// 			if ( colIndex >= 0) {
+// 				// The param_value IS a column name
+// 				// which 'sv' does it belong in?
+// 				Rcpp::String thisParam = param_names[i];
+// 				std::string this_string_param = thisParam;
+//
+// 				lst[ thisParam ] = data[ colIndex ];
+// 				// TODO(if it's not a required column (e.g. tooltip), needs to append it to the list)
+//
+// 				// TODO(resolve colours)
+// 				// - scatterplot requires fill_colour and fill_opacity.
+// 				// - it will have been initialised with defaults
+// 				// - if opacity has been provided, is it a vector or a constant?
+// 				// - it has to be numeric.
+//
+//
+// 				if ( (this_string_param == "fill_colour" || this_string_param == "fill_opacity") && !fill_resolved) {
+//
+// 					// need to resolve fill colour & opacity
+// 					// if 'this_string_param == 'fill_colour', need to also find 'fill_opacity' in params,
+// 					// then find it in data
+//
+//
+// 					Rcpp::Rcout << "finding fill_colour" << std::endl;
+//
+// 					int this_data_type = data_types[ colIndex ];
+//
+// 					colour_values( data, lst, this_data_type, colIndex, thisParam );
+//
+// 					fill_resolved = true;
+//
+// 				}
+// 			}
+// 		} else {
+// 				// TODO(if it's not a column name, but thisParam IS in sv, it's a value to use for the whole column))
+// 				// get the type of 'params[i]'
+// 				// create a vector of that type
+// 				if( paramIsSingleString( params[i] ) ) {
+//   				Rcpp::String thisString = params[i];
+//    				Rcpp::StringVector sv(data_rows, thisString);
+// 	  			lst[ thisString ] = sv;
+// 				}
+// 		}
+// 	}
 	return construct_df( lst, data_rows );
 }
