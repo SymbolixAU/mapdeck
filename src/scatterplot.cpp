@@ -37,8 +37,8 @@ Rcpp::List scatterplot_defaults(int n) {
 		_["polyline"] = default_polyline(n),
 		_["elevation"] = default_elevation(n),
 		_["radius"] = default_radius(n),
-		_["fill_colour"] = default_fill_colour(n)
-		//_["fill_opacity"] = default_fill_opacity(n)
+		_["fill_colour"] = default_fill_colour(n),
+		_["fill_opacity"] = default_fill_opacity(n)
 	);
 }
 
@@ -134,48 +134,127 @@ void param_data_column_index( Rcpp::NumericVector& param_indexes,
 	for ( i = 0; i < n; i++ ) {
 		if ( paramIsSingleString( params[i] ) ) {
 		  Rcpp::StringVector param_value = params[i];
-			Rcpp::Rcout << "param value: " << param_value << std::endl;
-			colIndex = indexColumnName( param_value, data_names );
-			Rcpp::Rcout << "colIndex: " << colIndex << std::endl;
+			//Rcpp::Rcout << "param value: " << param_value << std::endl;
+			//colIndex = indexColumnName( param_value, data_names );
+			//Rcpp::Rcout << "colIndex: " << colIndex << std::endl;
 			//Rcpp::Rcout << "param: " << param_indexes[ param_value ] << std::endl;
 		//   param_indexes[ param_value ] = indexColumnName( param_value, data.names() );
 		}
 	}
 
-	Rcpp::Rcout << "param indeces in data: " << param_indexes << std::endl;
+	//Rcpp::Rcout << "param indeces in data: " << param_indexes << std::endl;
 }
 
-int get_parameter_type( SEXP param ) {
+int get_parameter_r_type( SEXP param ) {
 	return TYPEOF( param );
 }
 
-Rcpp::DataFrame construct_params(
+Rcpp::List construct_params(
 		Rcpp::DataFrame& data,
-		Rcpp::List& params
+		Rcpp::List& params,
+		int& fill_colour_location,
+		int& fill_opacity_location
 	) {
 
 	int n_params = params.size();
-	Rcpp::IntegerVector parameter_types( n_params );
+	Rcpp::StringVector param_names = params.names();
+	Rcpp::IntegerVector parameter_r_types( n_params );
 	Rcpp::IntegerVector data_column_index( n_params, -1 );
 	Rcpp::StringVector data_names = data.names();
+
 	int i = 0;
 	int parameter_type;
 
 	for (i = 0; i < n_params; i++) {
-		parameter_type = get_parameter_type( params[i] );
-		parameter_types[i] = parameter_type;
+		parameter_type = get_parameter_r_type( params[i] );
+		parameter_r_types[i] = parameter_type;
+
 		if ( parameter_type == STRSXP ) { // STRSXP (string vector)
 			// is it a column index?
 			Rcpp::StringVector param_value = params[i];
 			data_column_index[i] = indexColumnName( param_value, data_names );
+
+			// those with data_column_index >= 0 are VECTORS
+			// those with data_column_index == -1 AND parameter_type == 14/15/16 are constants!
+
+			if ( param_names[i] == "fill_colour"  ) {
+				fill_colour_location = i;
+			} else if ( param_names[i] == "fill_opacity" ) {
+				fill_opacity_location = i;
+			}
+
 		}
 	}
 
-	return Rcpp::DataFrame::create(
-		_["parameter"] = params.names(),
-		_["parameter_type"] = parameter_types,
+	return Rcpp::List::create(
+		_["parameter"] = param_names,
+		_["parameter_type"] = parameter_r_types,
 		_["data_column_index"] = data_column_index
 	);
+}
+
+// colour functions:
+// Numeric Fill && Numeric Opacity && string palette
+// Numeric Fill && Numeric Opacity && matrix palette
+
+// Character fill && Numeric Opacity && string palette
+// Character fill && Numeric Opacity && matrix palette
+
+// need to return hex string of colours
+
+
+
+void resolve_fill(
+		Rcpp::List& lst_params,
+		Rcpp::DataFrame& data,
+		Rcpp::List& lst_defaults,
+		int& fill_colour_location, // locations of the paramter in the parameter list
+		int& fill_opacity_location ) {
+	// TODO
+	// to create a column of colours with alpha component.
+	// if fill_colour & fill_opacity
+	// - iff VECTORS
+  Rcpp::IntegerVector data_column_index = lst_params[ "data_column_index" ];
+
+
+	// data_column_index >= 0 are VECTORS
+	// data_column_index == -1 && parameter_type
+
+	// Rcpp::StringVector parameters = lst_params["parameter"];
+
+	// TODO - ff a vector of hex strings; don't interpolate
+
+	Rcpp::NumericMatrix mat;
+	int mattype = TYPEOF( mat );
+	Rcpp::Rcout << "NumericMatrix type: " << mattype << std::endl;
+
+
+
+
+	if ( fill_colour_location >= 0 && fill_opacity_location >= 0 ) {
+		// both need resolving
+
+		// no need to do anything with the values, becaues it exsits in the data object
+
+
+	} else if ( fill_colour_location >= 0 && fill_opacity_location == -1 ) {
+		// fill colour needs resolving, and opacity is default
+
+		//Rcpp::NumericVector fill_colour = data[ fill_colour_location ];
+		// need to use default fill_colour
+		Rcpp::StringVector fill_colour = lst_defaults[ "fill_colour" ];
+
+
+	} else if ( fill_opacity_location == -1 && fill_opacity_location >= 0 ) {
+		// fill opacity needs resolving, and colour is default.
+
+		// need to use default fill_opacity
+		Rcpp::IntegerVector fill_opacity = lst_defaults[ "fill_opacity" ];
+
+	}
+
+	// to resolve a paramter
+	// if it's
 
 }
 
@@ -183,7 +262,6 @@ Rcpp::DataFrame construct_params(
 // [[Rcpp::export]]
 Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params) {
 
-	Rcpp::DataFrame df_params = construct_params( data, params );
 	// TODO()
 	// loop over all the available columns of a scatterplot data object (e.g. scatterplot_available_columns)
 	// If they are in the 'parameter' column, resolve the arguemnt based on the parameter_type & data_column_index argument:
@@ -193,8 +271,21 @@ Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params) {
 	// if parameter_type %in% INTSXP, REALSXP, STRSXP && data_column_index >= 0,
 	// - it's a column of the data
 
+	// do colours first
+	//
+	int fill_colour_location = -1 ;
+	int fill_opacity_location = -1;
+	int data_rows = data.nrows();
 
-	return df_params;
+	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
+
+	Rcpp::List lst_params = construct_params( data, params, fill_colour_location, fill_opacity_location );
+
+	resolve_fill( lst_params, data, lst_defaults, fill_colour_location, fill_opacity_location );
+
+
+
+	return lst_params;
 
 	/*
 	if ( indexColumnName( "polyline", data.names() ) == -1 ) {
@@ -207,17 +298,14 @@ Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params) {
 
 	// return a list with attributes (to make it a data.frame)
 	// we know the size of the list...
-  int data_rows = data.nrows();
+
 	int n_data_columns = data.ncol();
 	bool fill_resolved = false;
 	bool stroke_resolved = false;
 
-	Rcpp::List lst = scatterplot_defaults( data_rows );  // initialise with defaults
 
-	Rcpp::NumericVector param_indexes = mapdeck::scatterplot_param_column_index;
-
-
-	param_data_column_index(param_indexes,params, data) ;
+	//Rcpp::NumericVector param_indexes = mapdeck::scatterplot_param_column_index;
+	//param_data_column_index(param_indexes,params, data) ;
 
 	Rcpp::StringVector param_names = params.names();
 	Rcpp::StringVector sv = mapdeck::scatterplot_columns;
@@ -251,7 +339,7 @@ Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params) {
 // 				Rcpp::String thisParam = param_names[i];
 // 				std::string this_string_param = thisParam;
 //
-// 				lst[ thisParam ] = data[ colIndex ];
+// 				lst_defaults[ thisParam ] = data[ colIndex ];
 // 				// TODO(if it's not a required column (e.g. tooltip), needs to append it to the list)
 //
 // 				// TODO(resolve colours)
@@ -272,7 +360,7 @@ Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params) {
 //
 // 					int this_data_type = data_types[ colIndex ];
 //
-// 					colour_values( data, lst, this_data_type, colIndex, thisParam );
+// 					colour_values( data, lst_defaults, this_data_type, colIndex, thisParam );
 //
 // 					fill_resolved = true;
 //
@@ -285,9 +373,9 @@ Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params) {
 // 				if( paramIsSingleString( params[i] ) ) {
 //   				Rcpp::String thisString = params[i];
 //    				Rcpp::StringVector sv(data_rows, thisString);
-// 	  			lst[ thisString ] = sv;
+// 	  			lst_defaults[ thisString ] = sv;
 // 				}
 // 		}
 // 	}
-	return construct_df( lst, data_rows );
+	return construct_df( lst_defaults, data_rows );
 }

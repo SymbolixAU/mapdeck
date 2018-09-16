@@ -19,7 +19,11 @@ namespace mapdeck {
   // can be passed to JS
   Rcpp::StringVector scatterplot_available_columns = Rcpp::StringVector::create(
   	"polyline","elevation","radius","fill_colour","tooltip"
-  )
+  );
+
+  Rcpp::StringVector scatterplot_colour_columns = Rcpp::StringVector::create(
+  	"fill_colour", "fill_opacity"
+  );
 
   Rcpp::NumericVector scatterplot_param_column_index = Rcpp::NumericVector::create(
   	_["polyline"] = -1.0,
