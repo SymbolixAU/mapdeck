@@ -24,7 +24,7 @@ Imports:
     magrittr,
     viridisLite,
     Rcpp,
-    RcppViridis
+    colourvalues
 RoxygenNote: 6.0.1
 Suggests: 
     covr,
@@ -37,4 +37,4 @@ VignetteBuilder: knitr
 LinkingTo: 
     Rcpp,
     googlePolylines,
-    RcppViridis
+    colourvalues
