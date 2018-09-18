@@ -29,10 +29,6 @@ rcpp_generate_palette <- function(x, pal) {
     .Call(`_mapdeck_rcpp_generate_palette`, x, pal)
 }
 
-viridis_test <- function(x) {
-    .Call(`_mapdeck_viridis_test`, x)
-}
-
 test_palette <- function(data_rows, f) {
     .Call(`_mapdeck_test_palette`, data_rows, f)
 }

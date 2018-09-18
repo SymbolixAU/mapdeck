@@ -10,8 +10,7 @@
 # 	, s = rnorm(26)
 #   , stringsAsFactors = F
 # 	)
-
-# mapdeck::scatterplot(data = df, polyline = "polyline", radius = 20, fill_colour = "id", tooltip = "s")
+# mapdeck::scatterplot(data = df, polyline = "polyline", radius = 20, fill_colour = "id", tooltip = "s", fill_opacity = "id")
 
 # df_plot <- mapdeck::scatterplot(data = df, polyline = "polyline", radius = "r", fill_colour = "id", tooltip = "s")
 # barplot(height = df_plot$radius, col = df_plot$fill_colour, border = NA, space = 0)

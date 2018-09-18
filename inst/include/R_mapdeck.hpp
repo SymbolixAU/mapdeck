@@ -14,9 +14,9 @@ Rcpp::IntegerVector default_elevation(int n);
 
 Rcpp::IntegerVector default_radius(int n);
 
-Rcpp::StringVector default_fill_colour(int n);
+Rcpp::NumericVector default_fill_colour(int n);
 
-Rcpp::IntegerVector default_fill_opacity(int n);
+Rcpp::NumericVector default_fill_opacity(int n);
 
 Rcpp::List construct_df(Rcpp::List df, int nrows);
 

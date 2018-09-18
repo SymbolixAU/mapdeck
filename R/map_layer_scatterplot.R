@@ -11,7 +11,7 @@ mapdeckScatterplotDependency <- function() {
 
 
 #' @export
-scatterplot <- function(data, polyline, fill_colour, radius, tooltip) {
+scatterplot <- function(data, polyline, fill_colour, radius, fill_opacity, tooltip) {
 	l <- as.list(match.call())
 	#print(l)
 	#df <- data.frame("polyline" = "abc")

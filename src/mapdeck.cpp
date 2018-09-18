@@ -18,16 +18,18 @@ Rcpp::IntegerVector default_radius(int n) {
   return iv;
 }
 
-Rcpp::StringVector default_fill_colour( int n ) {
+Rcpp::NumericVector default_fill_colour( int n ) {
 	//return Rcpp::StringVector::create(n, "#440154");
-  Rcpp::StringVector sv(n);
-	sv.fill("#440154FF");
-	return sv;
+  //Rcpp::StringVector sv(n);
+	//sv.fill("#440154FF");
+	//return sv;
+	Rcpp::NumericVector nv(n, 1.0);
+	return nv;
 }
 
-Rcpp::IntegerVector default_fill_opacity(int n) {
-  Rcpp::IntegerVector iv(n, 255.0);
-	return iv;
+Rcpp::NumericVector default_fill_opacity(int n) {
+  Rcpp::NumericVector nv(n, 255.0);
+	return nv;
 }
 
 Rcpp::List construct_df(Rcpp::List df, int nrows) {
