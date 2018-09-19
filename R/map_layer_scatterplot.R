@@ -11,11 +11,33 @@ mapdeckScatterplotDependency <- function() {
 
 
 #' @export
-scatterplot <- function(data, polyline, fill_colour, radius, fill_opacity, tooltip) {
+add_scatterplot2 <- function(
+	map,
+	data = get_map_data(map),
+	lon = NULL,
+	lat = NULL,
+	polyline = NULL,
+	radius = NULL,
+	fill_colour = NULL,
+	fill_opacity = NULL,
+	tooltip = NULL,
+	auto_highlight = FALSE,
+	layer_id = NULL,
+	digits = 6,
+	palette = viridisLite::viridis
+) {
+
 	l <- as.list(match.call())
+
+	data$polyline <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = T)
+
 	#print(l)
 	#df <- data.frame("polyline" = "abc")
-	rcpp_scatterplot(data, l)
+	shape <- rcpp_scatterplot(data, l)
+	# print( head(shape) )
+	shape <- jsonlite::toJSON( shape )
+	map <- addDependency(map, mapdeckScatterplotDependency())
+	invoke_method(map, "add_scatterplot2", shape, layer_id, auto_highlight)
 }
 
 #' Add Scatterplot

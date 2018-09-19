@@ -14,7 +14,7 @@ Rcpp::IntegerVector default_elevation(int n) {
 }
 
 Rcpp::IntegerVector default_radius(int n) {
-  Rcpp::IntegerVector iv(n, 1);
+  Rcpp::IntegerVector iv(n, 100000);
   return iv;
 }
 
@@ -52,8 +52,8 @@ Rcpp::List construct_df(Rcpp::List df, int nrows) {
  */
 int indexColumnName(Rcpp::StringVector& param_value, Rcpp::StringVector& data_names) {
 
-	Rcpp::Rcout << "finding: " << param_value << std::endl;
-	Rcpp::Rcout << "in: " << data_names << std::endl;
+	//Rcpp::Rcout << "finding: " << param_value << std::endl;
+	//Rcpp::Rcout << "in: " << data_names << std::endl;
 
 	int n = data_names.size();
 	for (int i = 0; i < n; i++ ) {
@@ -71,4 +71,13 @@ int indexColumnName(Rcpp::StringVector& param_value, Rcpp::StringVector& data_na
 
 bool paramIsSingleString( SEXP param ) {
 	return TYPEOF( param ) == STRSXP;
+}
+
+void removeParameters(
+		Rcpp::List& params,
+		Rcpp::StringVector& param_names,
+		Rcpp::StringVector& to_remove
+	) {
+	param_names = Rcpp::setdiff( param_names,  to_remove );
+	params = params[ param_names ];
 }

@@ -24,4 +24,6 @@ int indexColumnName(Rcpp::StringVector& param_value, Rcpp::StringVector& data_na
 
 bool paramIsSingleString( SEXP param );
 
+void removeParameters( Rcpp::List& params, Rcpp::StringVector& param_names, Rcpp::StringVector& to_remove );
+
 #endif
