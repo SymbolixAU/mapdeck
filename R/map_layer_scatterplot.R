@@ -27,15 +27,14 @@ add_scatterplot2 <- function(
 	palette = viridisLite::viridis
 ) {
 
-	l <- as.list(match.call())
+	l <- as.list( match.call() )
 
 	data$polyline <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = T)
 
-	#print(l)
-	#df <- data.frame("polyline" = "abc")
 	shape <- rcpp_scatterplot(data, l)
-	# print( head(shape) )
+
 	shape <- jsonlite::toJSON( shape )
+
 	map <- addDependency(map, mapdeckScatterplotDependency())
 	invoke_method(map, "add_scatterplot2", shape, layer_id, auto_highlight)
 }

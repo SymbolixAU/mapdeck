@@ -2,7 +2,7 @@
 #
 # set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
 #
-# n <- 1e5
+# n <- 26
 # df <- data.frame(
 # #	id = sample(letters[1:10], size = 26, replace = T)
 # 	id = 1:n
@@ -14,14 +14,17 @@
 #   , stringsAsFactors = F
 # 	)
 #
+# m <- mapdeck::mapdeck()
 # df2 <- mapdeck::add_scatterplot2(
-# 	data = df, polyline = "polyline",
+# 	map = m,
+# 	data = df,
+# 	polyline = "polyline",
 # 	radius = 20,
 # 	fill_colour = "id",
 # 	tooltip = 20,
 # 	fill_opacity = "id")
-#
-#
+
+
 # head(df2); tail(df2)
 # js <- jsonlite::toJSON(df2)
 #
@@ -39,8 +42,9 @@
 #
 # df <- capitals
 
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
 # m <- mapdeck::mapdeck()
-# n <- 1e6
+# n <- 1e3
 # df <- data.frame(
 # 	lat = sample(-90:90, size = n, replace = T)
 # 	, lon = sample(-180:180, size = n, replace = T)
@@ -70,14 +74,14 @@
 #   new = {
 #   	add_scatterplot2(
 # 			map = m
-# 			, data = df
-# 			, lat = "lat"
-# 			, lon = "lon"
-# 			, polyline = "polyline"     ## force through
-# 			, radius = 100000
-# 			, fill_colour = "country"
-# 			, layer_id = "scatter_layer"
-# 			, tooltip = "capital"
+			# , data = df
+			# , lat = "lat"
+			# , lon = "lon"
+			# , polyline = "polyline"     ## force through
+			# , radius = 100000
+			# , fill_colour = "country"
+			# , layer_id = "scatter_layer"
+			# , tooltip = "capital"
 # 		)
 #   },
 # 	times = 2

@@ -194,7 +194,8 @@ void resolve_fill(
 
 		Rcpp::NumericVector alpha(1, 255.0);  // opacity HAS to be numeric!
 
-		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings, fill, alpha, fill_colour_location, fill_opacity_location );
+		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings,
+               fill, alpha, fill_colour_location, fill_opacity_location );
 
 	} else if ( fill_colour_location == -1 && fill_opacity_location >= 0 ) {
 		// fill opacity needs resolving, and colour is default.
@@ -206,7 +207,8 @@ void resolve_fill(
 		int alphaColIndex = data_column_index[ fill_opacity_location ];
 		Rcpp::NumericVector alpha = data[ alphaColIndex ];  // opacity HAS to be numeric!
 
-		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings, fill, alpha, fill_colour_location, fill_opacity_location );
+		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings,
+               fill, alpha, fill_colour_location, fill_opacity_location );
 
 	} else {
 		// don't do anything; keep defaults?
@@ -306,4 +308,5 @@ Rcpp::List rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 		}
 	}
 	return construct_df( lst_defaults, data_rows );
+	//return lst_defaults;
 }
