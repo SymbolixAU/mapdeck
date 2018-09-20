@@ -8,6 +8,8 @@
 # 	id = 1:n
 # #	id = seq(as.Date("2018-01-01"), as.Date("2018-01-26"), by = 1)
 # #	id = as.factor(1:26)
+# 	, lon = sample(-180:180, size = n, replace = T)
+# 	, lat = sample(-90:90, size = n, replace = T)
 # 	, polyline = sample(letters, size = n, replace = T)
 # 	, r = 1:n
 # 	, s = rnorm(n)
@@ -15,106 +17,17 @@
 # 	)
 #
 # m <- mapdeck::mapdeck()
-# df2 <- mapdeck::add_scatterplot2(
+# mapdeck::add_scatterplot2(
 # 	map = m,
 # 	data = df,
+#   lat = "lat",
+#   lon = "lon",
 # 	polyline = "polyline",
 # 	radius = 20,
-# 	fill_colour = "id",
+# 	fill_colour = "test",  ## can it handle columns which don't exist
 # 	tooltip = 20,
-# 	fill_opacity = "id")
-
-
-# head(df2); tail(df2)
-# js <- jsonlite::toJSON(df2)
-#
-# m <- mapdeck::mapdeck(token = 'abc')
-# df3 <- mapdeck::add_scatterplot(
-# 	map = m
-# 	, data = df
-# 	, polyline = "polyline"
-# 	, radius = 20
-# 	, fill_colour = "id"
-# 	, tooltip = 20
-# 	, fill_opacity = "id"
-# )
-# head(df3); tail(df3)
-#
-# df <- capitals
-
-# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
-# m <- mapdeck::mapdeck()
-# n <- 1e3
-# df <- data.frame(
-# 	lat = sample(-90:90, size = n, replace = T)
-# 	, lon = sample(-180:180, size = n, replace = T)
-# 	, radius = rep(100000, n)
-# 	, fill_colour = 1:n
-# 	, capital = sample(letters, size = n, replace = T)
-# 	, country = sample(letters, size = n, replace = T)
-# )
-#
-# library(microbenchmark)
-#
-# microbenchmark(
-#
-# 	old = {
-# 		add_scatterplot(
-# 			map = m
-# 			, data = df
-# 			, lat = "lat"
-# 			, lon = "lon"
-# 			, radius = 100000
-# 			, fill_colour = "country"
-# 			, layer_id = "scatter_layer"
-# 			, tooltip = "capital"
-# 		)
-# 	},
-#
-#   new = {
-#   	add_scatterplot2(
-# 			map = m
-			# , data = df
-			# , lat = "lat"
-			# , lon = "lon"
-			# , polyline = "polyline"     ## force through
-			# , radius = 100000
-			# , fill_colour = "country"
-			# , layer_id = "scatter_layer"
-			# , tooltip = "capital"
-# 		)
-#   },
-# 	times = 2
-# )
-#
-# js <- jsonlite::toJSON( df )
-
-# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
-# m <- mapdeck::mapdeck()
-# add_scatterplot(
-# 	map = m
-# 	, data = capitals
-# 	, lat = "lat"
-# 	, lon = "lon"
-# 	, radius = 100000
-# 	, fill_colour = "country"
-# 	, layer_id = "scatter_layer"
-# 	, tooltip = "capital"
-# )
-#
-#
-# df <- capitals
-# df$polyline <- googlePolylines::encode(capitals, lon = "lon", lat = "lat", byrow = T)
-#
-# add_scatterplot2(
-# 	map = m
-# 	, data = df
-# 	, polyline = "polyline" ## force this arg for now
-# 	, radius = 100000
-# 	, fill_colour = "country"
-# 	, layer_id = "scatter_layer"
-# 	, tooltip = "capital"
-# )
+# 	fill_opacity = "id"
+# 	)
 
 
 # df_plot <- mapdeck::scatterplot(data = df, polyline = "polyline", radius = "r", fill_colour = "id", tooltip = "s")

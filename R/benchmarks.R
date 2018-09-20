@@ -111,12 +111,15 @@
 # 	, stringsAsFactors = F
 # )
 #
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+# m <- mapdeck::mapdeck()
 # library(microbenchmark)
 #
 # microbenchmark(
-# 	one = {
-# 		res <- test_scatterplot(
-# 			data = df
+# 	old = {
+# 		old <- add_scatterplot(
+# 			map = m
+# 			, data = df
 # 			, lat = "lat"
 # 			, lon = "lon"
 # 			#, polyline = "polyline"     ## force through
@@ -126,22 +129,23 @@
 # 		)
 #   },
 #
-#   two = {
-#   	res2 <- test_scatterplot2(
-# 			data = df
-# 			, lat = "lat"
-# 			, lon = "lon"
-# 			, polyline = "polyline"     ## force through
-# 			, radius = 100000
-# 			, fill_colour = "id"
-# 			, tooltip = "id"
-# 		)
+#   new = {
+#   	new <- add_scatterplot2(
+#   		map = m
+#   		, data = df
+#   		, lat = "lat"
+#   		, lon = "lon"
+#   		, polyline = "polyline"     ## force through
+#   		, radius = 100000
+#   		, fill_colour = "id"
+#   		, tooltip = "id"
+#   	)
 #   },
 # 	times = 5
 # )
 #
 # # Unit: seconds
-# # expr        min         lq       mean     median         uq        max neval
-# # one 215.594935 217.604062 222.888764 219.810418 223.967136 237.467271     5
-# # two   1.575554   1.614204   1.731736   1.654544   1.773606   2.040773     5
+# # expr       min        lq      mean    median        uq       max neval
+# #  one 71.439725 71.945582 74.644004 73.121869 76.494151 80.218691     5
+# #  two  4.018393  4.277548  4.302488  4.295433  4.350198  4.570869     5
 #

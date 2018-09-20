@@ -126,18 +126,26 @@ void fill_colour(
 
 	std::string palette = "viridis";
 	std::string na_colour = "#808080FF";
-	bool include_alpha = false;
-
+	bool include_alpha = true;
 
 	switch ( TYPEOF( fill ) ) {
 	case 16: {
 		Rcpp::StringVector fill_colour_vec = Rcpp::as< Rcpp::StringVector >( fill );
+
+		Rcpp::Rcout << "fill: " << fill_colour_vec << std::endl;
+		Rcpp::Rcout << "alpha: " << alpha << std::endl;
+
 		hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, palette, na_colour, alpha, include_alpha );
 		break;
 	}
 	default: {
 		Rcpp::NumericVector fill_colour_vec = Rcpp::as< Rcpp::NumericVector >( fill );
+
+		Rcpp::Rcout << "fill: " << fill_colour_vec << std::endl;
+		Rcpp::Rcout << "alpha: " << alpha << std::endl;
+
 		hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, palette, na_colour, alpha, include_alpha );
+
 		break;
 	}
 	}
@@ -154,6 +162,14 @@ void resolve_fill(
 	Rcpp::IntegerVector parameter_type = lst_params[ "parameter_type" ];
 
 	Rcpp::StringVector hex_strings( data.nrows() );
+	Rcpp::NumericVector alpha( 1, 255.0 );
+	SEXP fill;
+
+	Rcpp::Rcout << "data_column_index: " << data_column_index << std::endl;
+	Rcpp::Rcout << "parameter_types: " << parameter_type << std::endl;
+
+	Rcpp::Rcout << "fill_colour_location: " << fill_colour_location << std::endl;
+	Rcpp::Rcout << "fill_opacity_location: " << fill_opacity_location << std::endl;
 
 	// data_column_index >= 0 are VECTORS
 	// data_column_index == -1 && parameter_type
@@ -168,53 +184,69 @@ void resolve_fill(
 		// the final fill_colour will be a hex string with ALPHA  : "#AABBCCFF"
 		// in this instance, both fill_colour and fill_opacity exist on the data
 		// need to work out their type, Switch, and call colourvalues::
-		//Rcpp::Rcout << " fill AND opacity " << std::endl;
-
-		//SEXP fill = data[ fill_colour_location ];  // fill_colour_location is the location in paramter list...
+		Rcpp::Rcout << " fill AND opacity supplied by user" << std::endl;
 
 		int alphaColIndex = data_column_index[ fill_opacity_location ];
 		int fillColIndex = data_column_index[ fill_colour_location ];
 
-		//Rcpp::Rcout << "alpha index: " << alphaColIndex << ", fill index: " << fillColIndex << std::endl;
+		Rcpp::Rcout << "alpha col index: " << alphaColIndex << std::endl;
+		Rcpp::Rcout << "fill col index: " << fillColIndex << std::endl;
 
-		Rcpp::NumericVector alpha = data[ alphaColIndex ];  // opacity HAS to be numeric!
-		SEXP fill = data[ fillColIndex ];
+		if ( fillColIndex == -1 ) {
+			// it doesn't exist in the data
+			// TODO(check if it's a hex colour and use it for all data)
 
-		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings, fill, alpha, fill_colour_location, fill_opacity_location );
+			fill = lst_defaults[ "fill_colour" ];
+		} else {
+			fill = data[ fillColIndex ];
+		}
+
+		if ( alphaColIndex == -1 ) {
+			// TODO(check it's numeric [0, 255]);
+
+		} else {
+			alpha = data[ alphaColIndex ];
+		}
+
+		// if the supplied argument doesn't exist in the DATA, need to use default?
+ 		//Rcpp::NumericVector alpha = data[ alphaColIndex ];  // opacity HAS to be numeric!
+ 		//SEXP fill = data[ fillColIndex ];
+
+		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings,
+               fill, alpha, fill_colour_location, fill_opacity_location );
 
 	} else if ( fill_colour_location >= 0 && fill_opacity_location == -1 ) {
 		// fill colour needs resolving, and opacity is default
 
-		//Rcpp::Rcout << " fill only " << std::endl;
+		Rcpp::Rcout << " fill only " << std::endl;
 
-		// Rcpp::NumericVector fill_colour = data[ fill_colour_location ];
-		// need to use default fill_colour
-		int fillColIndex = data_column_index[ fill_colour_location ];
-		SEXP fill = data[ fillColIndex ];
-
-		Rcpp::NumericVector alpha(1, 255.0);  // opacity HAS to be numeric!
-
-		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings,
-               fill, alpha, fill_colour_location, fill_opacity_location );
+// 		int fillColIndex = data_column_index[ fill_colour_location ];
+// 		SEXP fill = data[ fillColIndex ];
+//
+// 		Rcpp::NumericVector alpha(1, 255.0);  // opacity HAS to be numeric!
+//
+// 		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings,
+//                fill, alpha, fill_colour_location, fill_opacity_location );
 
 	} else if ( fill_colour_location == -1 && fill_opacity_location >= 0 ) {
 		// fill opacity needs resolving, and colour is default.
-		//Rcpp::Rcout << "opacity only " << std::endl;
+		Rcpp::Rcout << "opacity only " << std::endl;
 
 		// need to use default fill_opacity
-		SEXP fill = lst_defaults[ "fill_colour" ];
-
-		int alphaColIndex = data_column_index[ fill_opacity_location ];
-		Rcpp::NumericVector alpha = data[ alphaColIndex ];  // opacity HAS to be numeric!
-
-		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings,
-               fill, alpha, fill_colour_location, fill_opacity_location );
+// 		SEXP fill = lst_defaults[ "fill_colour" ];
+//
+// 		int alphaColIndex = data_column_index[ fill_opacity_location ];
+// 		Rcpp::NumericVector alpha = data[ alphaColIndex ];  // opacity HAS to be numeric!
+//
+// 		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings,
+//                fill, alpha, fill_colour_location, fill_opacity_location );
 
 	} else {
-		// don't do anything; keep defaults?
-
+		// neither fill colour NOR fill_opacity are supplied on the data
+		Rcpp::Rcout << "no fill supplied: " << std::endl;
 	}
 
+	Rcpp::Rcout << "hex strings: " << hex_strings << std::endl;
 	lst_defaults[ "fill_colour" ] = hex_strings;
 }
 
