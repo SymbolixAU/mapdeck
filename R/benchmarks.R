@@ -1,4 +1,4 @@
-#
+# #
 # test_scatterplot <- function(
 # 	map,
 # 	data = get_map_data(map),
@@ -125,6 +125,7 @@
 # 			#, polyline = "polyline"     ## force through
 # 			, radius = 100000
 # 			, fill_colour = "id"
+# 			, fill_opacity = "id"
 # 			, tooltip = "id"
 # 		)
 #   },
@@ -138,6 +139,7 @@
 #   		, polyline = "polyline"     ## force through
 #   		, radius = 100000
 #   		, fill_colour = "id"
+#   		, fill_opacity = "id"
 #   		, tooltip = "id"
 #   	)
 #   },

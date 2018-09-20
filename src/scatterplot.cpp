@@ -132,8 +132,8 @@ void fill_colour(
 	case 16: {
 		Rcpp::StringVector fill_colour_vec = Rcpp::as< Rcpp::StringVector >( fill );
 
-		Rcpp::Rcout << "fill: " << fill_colour_vec << std::endl;
-		Rcpp::Rcout << "alpha: " << alpha << std::endl;
+		// Rcpp::Rcout << "fill: " << fill_colour_vec << std::endl;
+		// Rcpp::Rcout << "alpha: " << alpha << std::endl;
 
 		hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, palette, na_colour, alpha, include_alpha );
 		break;
@@ -141,8 +141,8 @@ void fill_colour(
 	default: {
 		Rcpp::NumericVector fill_colour_vec = Rcpp::as< Rcpp::NumericVector >( fill );
 
-		Rcpp::Rcout << "fill: " << fill_colour_vec << std::endl;
-		Rcpp::Rcout << "alpha: " << alpha << std::endl;
+		// Rcpp::Rcout << "fill: " << fill_colour_vec << std::endl;
+		// Rcpp::Rcout << "alpha: " << alpha << std::endl;
 
 		hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, palette, na_colour, alpha, include_alpha );
 
@@ -165,11 +165,11 @@ void resolve_fill(
 	Rcpp::NumericVector alpha( 1, 255.0 );
 	SEXP fill;
 
-	Rcpp::Rcout << "data_column_index: " << data_column_index << std::endl;
-	Rcpp::Rcout << "parameter_types: " << parameter_type << std::endl;
-
-	Rcpp::Rcout << "fill_colour_location: " << fill_colour_location << std::endl;
-	Rcpp::Rcout << "fill_opacity_location: " << fill_opacity_location << std::endl;
+	// Rcpp::Rcout << "data_column_index: " << data_column_index << std::endl;
+	// Rcpp::Rcout << "parameter_types: " << parameter_type << std::endl;
+	//
+	// Rcpp::Rcout << "fill_colour_location: " << fill_colour_location << std::endl;
+	// Rcpp::Rcout << "fill_opacity_location: " << fill_opacity_location << std::endl;
 
 	// data_column_index >= 0 are VECTORS
 	// data_column_index == -1 && parameter_type
@@ -189,8 +189,8 @@ void resolve_fill(
 		int alphaColIndex = data_column_index[ fill_opacity_location ];
 		int fillColIndex = data_column_index[ fill_colour_location ];
 
-		Rcpp::Rcout << "alpha col index: " << alphaColIndex << std::endl;
-		Rcpp::Rcout << "fill col index: " << fillColIndex << std::endl;
+		// Rcpp::Rcout << "alpha col index: " << alphaColIndex << std::endl;
+		// Rcpp::Rcout << "fill col index: " << fillColIndex << std::endl;
 
 		if ( fillColIndex == -1 ) {
 			// it doesn't exist in the data
@@ -246,7 +246,7 @@ void resolve_fill(
 		Rcpp::Rcout << "no fill supplied: " << std::endl;
 	}
 
-	Rcpp::Rcout << "hex strings: " << hex_strings << std::endl;
+	// Rcpp::Rcout << "hex strings: " << hex_strings << std::endl;
 	lst_defaults[ "fill_colour" ] = hex_strings;
 }
 
