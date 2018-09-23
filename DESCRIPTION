@@ -11,6 +11,8 @@ Description: Provides a mechanism to plot an interactive map using 'Mapbox GL'
 		and 'Deck.gl' (<http://deck.gl/#/>), a javascript library which uses 'WebGL' for 
 		visualising large data sets.
 License: GPL-3
+URL: https://github.com/SymbolixAU/mapdeck
+BugReports: https://github.com/SymbolixAU/mapdeck/issues
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
