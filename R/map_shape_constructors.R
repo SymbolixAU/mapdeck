@@ -82,6 +82,7 @@ addDefaults <- function(shape, requiredDefaults, shapeType) {
 		shapeType
 		, "arc" = arcDefaults(n)
 		, "grid" = gridDefaults(n)
+		, "hexagon" = hexagonDefaults(n)
 		, "line" = lineDefaults(n)
 		, "path" = pathDefaults(n)
 		, "pointcloud" = pointcloudDefaults(n)

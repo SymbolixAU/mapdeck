@@ -73,7 +73,6 @@ mapdeck(
     , elevation = "elevation"
     , stroke_width = 0
     , tooltip = 'info'
-    #, highlight_colour = "#00ff00"
   )
 
 library(sf)

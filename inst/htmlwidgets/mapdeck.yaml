@@ -1,7 +1,7 @@
 
 dependencies:
   - name: deck.gl
-    version: 6.1.0
+    version: 6.1.1
     src: "htmlwidgets/lib/"
     script:
     - deckgl.min.js
