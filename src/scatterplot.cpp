@@ -6,6 +6,9 @@
 // [[Rcpp::depends(colourvalues)]]
 #include "colourvalues/colours/colours_hex.hpp"
 
+// [[Rcpp::depends(jsonify)]]
+#include "jsonify/dataframe.hpp"
+
 using namespace Rcpp;
 
 
@@ -252,7 +255,7 @@ void resolve_fill(
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
+Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	int fill_colour_location = -1 ;
 	int fill_opacity_location = -1;
@@ -339,6 +342,14 @@ Rcpp::List rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 				}
 		}
 	}
-	return construct_df( lst_defaults, data_rows );
+
+	// to_json accepts SEXP
+	//SEXP lst = lst_defaults;
+
+	Rcpp::DataFrame df = construct_df( lst_defaults, data_rows );
+
+	return jsonify::dataframe::to_json( df );
+
+	//return construct_df( lst_defaults, data_rows );
 	//return lst_defaults;
 }

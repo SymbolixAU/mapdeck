@@ -33,7 +33,11 @@ add_scatterplot2 <- function(
 
 	shape <- rcpp_scatterplot(data, l)
 
-	shape <- jsonlite::toJSON( shape )
+	# shape <- jsonlite::toJSON( shape )
+
+	##return( shape )
+
+	#attr(shape, 'class') <- "json"
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
 	invoke_method(map, "add_scatterplot2", shape, layer_id, auto_highlight)

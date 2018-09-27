@@ -24,7 +24,8 @@ Imports:
     magrittr,
     viridisLite,
     Rcpp,
-    colourvalues
+    colourvalues,
+    jsonify
 RoxygenNote: 6.0.1
 Suggests: 
     covr,
@@ -36,5 +37,5 @@ Suggests:
 VignetteBuilder: knitr
 LinkingTo: 
     Rcpp,
-    googlePolylines,
-    colourvalues
+    colourvalues,
+    jsonify
