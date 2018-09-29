@@ -1,13 +1,15 @@
 #include <Rcpp.h>
 #include "R_mapdeck.hpp"
 #include "R_scatterplot.hpp"
-//#include "googlePolylines.h"  // TODO(use 'rcpp_encodeSfGeometry()' directly)
 
 // [[Rcpp::depends(colourvalues)]]
 #include "colourvalues/colours/colours_hex.hpp"
 
 // [[Rcpp::depends(jsonify)]]
 #include "jsonify/dataframe.hpp"
+
+// [[Rcpp::depends(googlePolylines)]]
+#include "googlePolylines/encode/encode_api.hpp"
 
 using namespace Rcpp;
 

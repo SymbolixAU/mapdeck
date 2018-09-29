@@ -33,15 +33,27 @@ add_scatterplot2 <- function(
 
 	shape <- rcpp_scatterplot(data, l)
 
-	# shape <- jsonlite::toJSON( shape )
-
-	##return( shape )
-
-	#attr(shape, 'class') <- "json"
-
 	map <- addDependency(map, mapdeckScatterplotDependency())
 	invoke_method(map, "add_scatterplot2", shape, layer_id, auto_highlight)
 }
+
+dispatch_data <- function( data, lon, lat, polyline, l ) UseMethod("dispatch_data")
+
+dispatch_data.data.frame <- function( data, lon, lat, polyline, l ) {
+	## TODO - encode byrow
+}
+
+dispatch_data.sf <- function( data, l, ... ) {
+	## TODO(need to handle MULTI, and 2-col data...)
+
+}
+
+dispatch_data.sfencoded <- function( data, l, ... ) {
+
+}
+
+dispatch_data.default <- function( data, l ) stop("Data type not supported")
+
 
 #' Add Scatterplot
 #'
