@@ -51,7 +51,7 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
 
 ## Access Token
 
-Mapdeck uses [Mabox maps](https://www.mapbox.com/), and to use Mapbox you need an [access token](https://www.mapbox.com/help/how-access-tokens-work/)
+Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox you need an [access token](https://www.mapbox.com/help/how-access-tokens-work/)
 
 ## Available Layers
 
