@@ -29,6 +29,8 @@ add_scatterplot2 <- function(
 
 	l <- as.list( match.call() )
 
+	# print( l )
+
 	data$polyline <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = T)
 
 	shape <- rcpp_scatterplot(data, l)

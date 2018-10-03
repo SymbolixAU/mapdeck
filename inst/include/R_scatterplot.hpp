@@ -7,6 +7,8 @@ using namespace Rcpp;
 
 namespace mapdeck {
 
+  const Rcpp::StringVector default_palette = "viridis";
+
   /*
    * scatterplot_attributes
    */
@@ -15,7 +17,7 @@ namespace mapdeck {
   	);
 
   Rcpp::StringVector scatterplot_colours = Rcpp::StringVector::create(
-  	"fill_colour", "fill_opacity"
+  	"fill_colour", "fill_opacity","palette"
   );
 
   // all the possible columns not needed in the default, including the extra ones which

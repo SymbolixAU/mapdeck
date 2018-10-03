@@ -5,10 +5,10 @@
 \title{Add Text}
 \usage{
 add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
-  polyline = NULL, fill_colour = NULL, fill_opacity = NULL, size = NULL,
-  angle = NULL, anchor = NULL, alignment_baseline = NULL,
-  tooltip = NULL, layer_id = NULL, digits = 6,
-  palette = viridisLite::viridis)
+  polyline = NULL, fill_colour = NULL, fill_opacity = NULL,
+  size = NULL, angle = NULL, anchor = NULL,
+  alignment_baseline = NULL, tooltip = NULL, layer_id = NULL,
+  digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}

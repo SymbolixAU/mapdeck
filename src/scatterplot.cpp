@@ -7,7 +7,8 @@
 #include "colourvalues/colours/colours_hex.hpp"
 
 // [[Rcpp::depends(jsonify)]]
-#include "jsonify/dataframe.hpp"
+#include "jsonify/to_json.hpp"
+
 
 using namespace Rcpp;
 
@@ -36,6 +37,18 @@ Rcpp::StringVector test_palette(int data_rows, Function f) {
 }
 
 
+size_t find_parameter_index( Rcpp::List& lst_params, const char* to_find ) {
+	Rcpp::StringVector parameter_names = lst_params[ "parameter" ];
+	size_t pos = std::distance(
+		parameter_names.begin(),
+		std::find( parameter_names.begin(), parameter_names.end(), to_find )
+		);
+	if ( pos >= parameter_names.size() ) {
+		return -1;
+	}
+	return pos;
+}
+
 /*
  * Takes the parameters / arguments supplied by the user and fills a named vector
  * of their indeces in the data supplied by the user
@@ -63,6 +76,8 @@ void param_data_column_index( Rcpp::NumericVector& param_indexes,
  * determins the data type in the list of argument parameters (not the data)
  */
 int get_parameter_r_type( SEXP param ) {
+	// A 'variable' passed in is type 1 - SYMSXP
+	// A function (c(), list(), matrix(), viridisLite::viridis) is type 6 - LANGSXP
 	return TYPEOF( param );
 }
 
@@ -91,7 +106,11 @@ Rcpp::List construct_params(
 			Rcpp::StringVector param_value = params[i];
 			data_column_index[i] = indexColumnName( param_value, data_names );
 
-			if ( param_names[i] == "fill_colour"  ) {
+			// these colour values are stored for convenience
+			// do I also need 'stroke_colour' as well?
+			// OR, should I just have a function to find a variable in the 'paramter_names' vector
+			// - there shouldn't be much overhead doing that each time for each var?
+			if ( param_names[i] == "fill_colour" ) {
 				fill_colour_location = i;
 			} else if ( param_names[i] == "fill_opacity" ) {
 				fill_opacity_location = i;
@@ -106,6 +125,19 @@ Rcpp::List construct_params(
 	);
 }
 
+SEXP resolve_palette( Rcpp::List& lst_params, Rcpp::List& params ) {
+
+	SEXP pal = mapdeck::default_palette;
+	int idx =  find_parameter_index( lst_params, "palette" );
+	Rcpp::Rcout << "palette index: " << idx << std::endl;
+
+	if (idx >= 0 ) {
+		// if function, evaluate it? (or do this in R before entering Rcpp?)
+		pal = params[ idx ];
+	}
+	return pal;
+}
+
 // colour functions:
 // Numeric Fill && Numeric Opacity && string palette
 // Numeric Fill && Numeric Opacity && matrix palette
@@ -117,6 +149,7 @@ Rcpp::List construct_params(
 // not using Function palettes inside Rcpp - this will be resolved at R level.
 void fill_colour(
 		Rcpp::List& lst_params,
+		Rcpp::List& params,
 		Rcpp::DataFrame& data,
 		Rcpp::List& lst_defaults,
 		Rcpp::IntegerVector& data_column_index,
@@ -127,28 +160,42 @@ void fill_colour(
 		int& fill_opacity_location
 	) {
 
-	std::string palette = "viridis";
-	std::string na_colour = "#808080FF";
+	std::string palette = "viridis";      // TODO
+	std::string na_colour = "#808080FF";  // TODO
 	bool include_alpha = true;
+
+	SEXP pal = resolve_palette( lst_params, params );
+
+	 int palType = get_parameter_r_type( pal );
+	 Rcpp::Rcout << "palette type: " << palType << std::endl;
+
+
+	// palette can be a single string, or a NumericMatrix
+
 
 	switch ( TYPEOF( fill ) ) {
 	case 16: {
 		Rcpp::StringVector fill_colour_vec = Rcpp::as< Rcpp::StringVector >( fill );
 
-		// Rcpp::Rcout << "fill: " << fill_colour_vec << std::endl;
-		// Rcpp::Rcout << "alpha: " << alpha << std::endl;
+		switch ( TYPEOF( pal ) ) {
+		case 1: {
+			Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( pal );
+			hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
+			break;
+		}
+		case 16: {
+			std::string thispal = Rcpp::as< std::string>( pal );
+			hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, alpha, include_alpha );
+			break;
+		}
+		}
 
-		hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, palette, na_colour, alpha, include_alpha );
+
 		break;
 	}
 	default: {
 		Rcpp::NumericVector fill_colour_vec = Rcpp::as< Rcpp::NumericVector >( fill );
-
-		// Rcpp::Rcout << "fill: " << fill_colour_vec << std::endl;
-		// Rcpp::Rcout << "alpha: " << alpha << std::endl;
-
 		hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, palette, na_colour, alpha, include_alpha );
-
 		break;
 	}
 	}
@@ -156,6 +203,7 @@ void fill_colour(
 
 void resolve_fill(
 		Rcpp::List& lst_params,
+		Rcpp::List& params,
 		Rcpp::DataFrame& data,
 		Rcpp::List& lst_defaults,
 		int& fill_colour_location, // locations of the paramter in the parameter list
@@ -215,7 +263,7 @@ void resolve_fill(
  		//Rcpp::NumericVector alpha = data[ alphaColIndex ];  // opacity HAS to be numeric!
  		//SEXP fill = data[ fillColIndex ];
 
-		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings,
+		fill_colour( lst_params, params, data, lst_defaults, data_column_index, hex_strings,
                fill, alpha, fill_colour_location, fill_opacity_location );
 
 	} else if ( fill_colour_location >= 0 && fill_opacity_location == -1 ) {
@@ -223,30 +271,53 @@ void resolve_fill(
 
 		Rcpp::Rcout << " fill only " << std::endl;
 
-// 		int fillColIndex = data_column_index[ fill_colour_location ];
-// 		SEXP fill = data[ fillColIndex ];
-//
-// 		Rcpp::NumericVector alpha(1, 255.0);  // opacity HAS to be numeric!
-//
-// 		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings,
-//                fill, alpha, fill_colour_location, fill_opacity_location );
+		int fillColIndex = data_column_index[ fill_colour_location ];
+		// Rcpp::Rcout << "fill col index: " << fillColIndex << std::endl;
+
+		if ( fillColIndex == -1 ) {
+			// it doesn't exist in the data
+			// TODO(check if it's a hex colour and use it for all data)
+
+			fill = lst_defaults[ "fill_colour" ];
+		} else {
+			fill = data[ fillColIndex ];
+		}
+
+		//Rcpp::NumericVector alpha(1, 255.0);  // opacity HAS to be numeric!
+
+		fill_colour( lst_params, params, data, lst_defaults, data_column_index, hex_strings,
+               fill, alpha, fill_colour_location, fill_opacity_location );
 
 	} else if ( fill_colour_location == -1 && fill_opacity_location >= 0 ) {
+
 		// fill opacity needs resolving, and colour is default.
+
+		//
 		Rcpp::Rcout << "opacity only " << std::endl;
 
-		// need to use default fill_opacity
-// 		SEXP fill = lst_defaults[ "fill_colour" ];
-//
-// 		int alphaColIndex = data_column_index[ fill_opacity_location ];
-// 		Rcpp::NumericVector alpha = data[ alphaColIndex ];  // opacity HAS to be numeric!
-//
-// 		fill_colour( lst_params, data, lst_defaults, data_column_index, hex_strings,
-//                fill, alpha, fill_colour_location, fill_opacity_location );
+		int alphaColIndex = data_column_index[ fill_opacity_location ];
+		fill = lst_defaults[ "fill_colour" ];
+
+		if ( alphaColIndex == -1 ) {
+			// TODO(check it's numeric [0, 255]);
+
+		} else {
+			alpha = data[ alphaColIndex ];
+		}
+
+		fill_colour( lst_params, params, data, lst_defaults, data_column_index, hex_strings,
+               fill, alpha, fill_colour_location, fill_opacity_location );
 
 	} else {
 		// neither fill colour NOR fill_opacity are supplied on the data
 		Rcpp::Rcout << "no fill supplied: " << std::endl;
+		// need to use defaults
+		fill = lst_defaults[ "fill_colour" ];
+		//Rcpp::NumericVector alpha(1, 255.0);  // opacity HAS to be numeric!
+
+		fill_colour( lst_params, params, data, lst_defaults, data_column_index, hex_strings,
+               fill, alpha, fill_colour_location, fill_opacity_location );
+
 	}
 
 	// Rcpp::Rcout << "hex strings: " << hex_strings << std::endl;
@@ -259,6 +330,7 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	int fill_colour_location = -1 ;
 	int fill_opacity_location = -1;
+	//int palette_location = -1;
 	int data_rows = data.nrows();
 
 	Rcpp::StringVector param_names = params.names();
@@ -271,7 +343,9 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	Rcpp::List lst_params = construct_params( data, params, fill_colour_location, fill_opacity_location );
 
-	resolve_fill( lst_params, data, lst_defaults, fill_colour_location, fill_opacity_location );
+	resolve_palette( lst_params, params );
+
+	resolve_fill( lst_params, params, data, lst_defaults, fill_colour_location, fill_opacity_location );
 
 	//Rcpp::Rcout << "fill resolved" << std::endl;
 

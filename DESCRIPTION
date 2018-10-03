@@ -26,7 +26,7 @@ Imports:
     Rcpp,
     colourvalues,
     jsonify
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Suggests: 
     covr,
     geojsonsf,
@@ -38,4 +38,5 @@ VignetteBuilder: knitr
 LinkingTo: 
     Rcpp,
     colourvalues,
-    jsonify
+    jsonify,
+    rapidjsonr

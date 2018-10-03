@@ -17,6 +17,12 @@
 # 	)
 #
 # m <- mapdeck::mapdeck()
+# pal <- matrix(rnorm(9), ncol = 3)
+# x <- c(1,2,3)
+# l <- list(x = 1)
+
+# m <- grDevices::colorRamp(c("red", "green"))( (1:50)/50 )
+#
 # mapdeck::add_scatterplot2(
 # 	map = m,
 # 	data = df,
@@ -24,8 +30,9 @@
 #   lon = "lon",
 # 	polyline = "polyline",
 # 	radius = 20,
-# 	fill_colour = "test",  ## can it handle columns which don't exist
+# 	fill_colour = "polyline",  ## can it handle columns which don't exist
 # 	tooltip = 20,
+# 	palette = m,
 # 	fill_opacity = "id"
 # 	)
 
@@ -36,6 +43,7 @@
 ## Tests required
 ## - non-requied columns (e.g. tooltip) are added on
 ## - arguments with a singel value (not a column name) are used for the whole column of data.frame
+## - non-numeric opacity column supplied
 
 ## non-requied cols
 # df$tool <- letters
