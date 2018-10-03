@@ -180,7 +180,15 @@ void fill_colour(
 		Rcpp::StringVector fill_colour_vec = Rcpp::as< Rcpp::StringVector >( fill );
 
 		switch ( TYPEOF( pal ) ) {
-		case 1: {
+		case 1: { // SYMSXP
+
+			// Rcpp::Symbol sym = Rcpp::as< Rcpp::Symbol >( pal );
+			// Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( sym );
+			// hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
+			Rcpp::stop("Unsupported palette type");
+			break;
+		}
+		case 14: { // REALSXP (i.e, matrix)
 			Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( pal );
 			hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
 			break;
@@ -197,10 +205,30 @@ void fill_colour(
 	}
 	default: {
 		Rcpp::NumericVector fill_colour_vec = Rcpp::as< Rcpp::NumericVector >( fill );
-		hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, palette, na_colour, alpha, include_alpha );
+		switch ( TYPEOF( pal ) ) {
+		case 1: { // SYMSXP
+
+			// Rcpp::Symbol sym = Rcpp::as< Rcpp::Symbol >( pal );
+			// Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( sym );
+			// hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
+			Rcpp::stop("Unsupported palette type");
+			break;
+		}
+		case 14: { // REALSXP (i.e, matrix)
+			Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( pal );
+			hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
+			break;
+		}
+		case 16: {
+			std::string thispal = Rcpp::as< std::string>( pal );
+			hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, alpha, include_alpha );
+			break;
+		}
+		}
 		break;
 	}
 	}
+	//Rcpp:Rcout << hex_strings << std::endl;
 }
 
 void resolve_fill(

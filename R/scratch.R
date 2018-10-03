@@ -16,21 +16,21 @@
 #   , stringsAsFactors = F
 # 	)
 #
-# m <- mapdeck::mapdeck()
+# map <- mapdeck::mapdeck()
 # pal <- matrix(rnorm(9), ncol = 3)
 # x <- c(1,2,3)
 # l <- list(x = 1)
-
+#
 # m <- grDevices::colorRamp(c("red", "green"))( (1:50)/50 )
 #
 # mapdeck::add_scatterplot2(
-# 	map = m,
+# 	map = map,
 # 	data = df,
 #   lat = "lat",
 #   lon = "lon",
 # 	polyline = "polyline",
 # 	radius = 20,
-# 	fill_colour = "polyline",  ## can it handle columns which don't exist
+# 	fill_colour = "id",  ## can it handle columns which don't exist
 # 	tooltip = 20,
 # 	palette = m,
 # 	fill_opacity = "id"
