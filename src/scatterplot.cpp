@@ -1,13 +1,11 @@
 #include <Rcpp.h>
+
 #include "R_mapdeck.hpp"
 #include "R_scatterplot.hpp"
-
-// [[Rcpp::depends(colourvalues)]]
-#include "colourvalues/colours/colours_hex.hpp"
+#include "palette/palette.hpp"
 
 // [[Rcpp::depends(jsonify)]]
 #include "jsonify/to_json.hpp"
-
 
 // [[Rcpp::depends(googlePolylines)]]
 //#include "googlePolylines/encode/encode_api.hpp"
@@ -24,10 +22,10 @@ using namespace Rcpp;
 Rcpp::List scatterplot_defaults(int n) {
 
 	return Rcpp::List::create(
-		_["polyline"] = default_polyline(n),
-		_["elevation"] = default_elevation(n),
-		_["radius"] = default_radius(n),
-		_["fill_colour"] = default_fill_colour(n)
+		_["polyline"] = mapdeck::defaults::default_polyline(n),
+		_["elevation"] = mapdeck::defaults::default_elevation(n),
+		_["radius"] = mapdeck::defaults::default_radius(n),
+		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n)
 		//_["fill_opacity"] = 255.0
 	);
 }
@@ -38,18 +36,6 @@ Rcpp::StringVector test_palette(int data_rows, Function f) {
 	return sv;
 }
 
-
-size_t find_parameter_index( Rcpp::List& lst_params, const char* to_find ) {
-	Rcpp::StringVector parameter_names = lst_params[ "parameter" ];
-	size_t pos = std::distance(
-		parameter_names.begin(),
-		std::find( parameter_names.begin(), parameter_names.end(), to_find )
-		);
-	if ( pos >= parameter_names.size() ) {
-		return -1;
-	}
-	return pos;
-}
 
 /*
  * Takes the parameters / arguments supplied by the user and fills a named vector
@@ -66,21 +52,12 @@ void param_data_column_index( Rcpp::NumericVector& param_indexes,
 	Rcpp::StringVector data_names = data.names();
 
 	for ( i = 0; i < n; i++ ) {
-		if ( paramIsSingleString( params[i] ) ) {
+		if ( mapdeck::param_is_single_string( params[i] ) ) {
 		  Rcpp::StringVector param_value = params[i];
 		}
 	}
 
 	//Rcpp::Rcout << "param indeces in data: " << param_indexes << std::endl;
-}
-
-/*
- * determins the data type in the list of argument parameters (not the data)
- */
-int get_parameter_r_type( SEXP param ) {
-	// A 'variable' passed in is type 1 - SYMSXP
-	// A function (c(), list(), matrix(), viridisLite::viridis) is type 6 - LANGSXP
-	return TYPEOF( param );
 }
 
 Rcpp::List construct_params(
@@ -100,7 +77,7 @@ Rcpp::List construct_params(
 	int parameter_type;
 
 	for (i = 0; i < n_params; i++) {
-		parameter_type = get_parameter_r_type( params[i] );
+		parameter_type = mapdeck::get_parameter_r_type( params[i] );
 		parameter_r_types[i] = parameter_type;
 
 		if ( parameter_type == STRSXP ) { // STRSXP (string vector)
@@ -127,18 +104,18 @@ Rcpp::List construct_params(
 	);
 }
 
-SEXP resolve_palette( Rcpp::List& lst_params, Rcpp::List& params ) {
-
-	SEXP pal = mapdeck::default_palette;
-	int idx =  find_parameter_index( lst_params, "palette" );
-	Rcpp::Rcout << "palette index: " << idx << std::endl;
-
-	if (idx >= 0 ) {
-		// if function, evaluate it? (or do this in R before entering Rcpp?)
-		pal = params[ idx ];
-	}
-	return pal;
-}
+// SEXP resolve_palette( Rcpp::List& lst_params, Rcpp::List& params ) {
+//
+// 	SEXP pal = mapdeck::default_palette;
+// 	int idx =  find_parameter_index( lst_params, "palette" );
+// 	Rcpp::Rcout << "palette index: " << idx << std::endl;
+//
+// 	if (idx >= 0 ) {
+// 		// if function, evaluate it? (or do this in R before entering Rcpp?)
+// 		pal = params[ idx ];
+// 	}
+// 	return pal;
+// }
 
 // colour functions:
 // Numeric Fill && Numeric Opacity && string palette
@@ -162,70 +139,22 @@ void fill_colour(
 		int& fill_opacity_location
 	) {
 
-	std::string palette = "viridis";      // TODO
+	//std::string palette = "viridis";      // TODO
 	std::string na_colour = "#808080FF";  // TODO
 	bool include_alpha = true;
 
-	SEXP pal = resolve_palette( lst_params, params );
-
-	 int palType = get_parameter_r_type( pal );
-	 Rcpp::Rcout << "palette type: " << palType << std::endl;
-
-
-	// palette can be a single string, or a NumericMatrix
-
+	SEXP pal = mapdeck::palette::resolve_palette( lst_params, params );
 
 	switch ( TYPEOF( fill ) ) {
 	case 16: {
 		Rcpp::StringVector fill_colour_vec = Rcpp::as< Rcpp::StringVector >( fill );
-
-		switch ( TYPEOF( pal ) ) {
-		case 1: { // SYMSXP
-
-			// Rcpp::Symbol sym = Rcpp::as< Rcpp::Symbol >( pal );
-			// Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( sym );
-			// hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
-			Rcpp::stop("Unsupported palette type");
-			break;
-		}
-		case 14: { // REALSXP (i.e, matrix)
-			Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( pal );
-			hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
-			break;
-		}
-		case 16: {
-			std::string thispal = Rcpp::as< std::string>( pal );
-			hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, alpha, include_alpha );
-			break;
-		}
-		}
-
-
+	 	hex_strings = mapdeck::palette::colour_with_palette( pal, fill_colour_vec, alpha, na_colour, include_alpha );
 		break;
 	}
 	default: {
 		Rcpp::NumericVector fill_colour_vec = Rcpp::as< Rcpp::NumericVector >( fill );
-		switch ( TYPEOF( pal ) ) {
-		case 1: { // SYMSXP
-
-			// Rcpp::Symbol sym = Rcpp::as< Rcpp::Symbol >( pal );
-			// Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( sym );
-			// hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
-			Rcpp::stop("Unsupported palette type");
-			break;
-		}
-		case 14: { // REALSXP (i.e, matrix)
-			Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( pal );
-			hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
-			break;
-		}
-		case 16: {
-			std::string thispal = Rcpp::as< std::string>( pal );
-			hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, alpha, include_alpha );
-			break;
-		}
-		}
-		break;
+		hex_strings = mapdeck::palette::colour_with_palette( pal, fill_colour_vec, alpha, na_colour, include_alpha );
+	break;
 	}
 	}
 	//Rcpp:Rcout << hex_strings << std::endl;
@@ -246,12 +175,6 @@ void resolve_fill(
 	Rcpp::NumericVector alpha( 1, 255.0 );
 	SEXP fill;
 
-	// Rcpp::Rcout << "data_column_index: " << data_column_index << std::endl;
-	// Rcpp::Rcout << "parameter_types: " << parameter_type << std::endl;
-	//
-	// Rcpp::Rcout << "fill_colour_location: " << fill_colour_location << std::endl;
-	// Rcpp::Rcout << "fill_opacity_location: " << fill_opacity_location << std::endl;
-
 	// data_column_index >= 0 are VECTORS
 	// data_column_index == -1 && parameter_type
 
@@ -265,7 +188,6 @@ void resolve_fill(
 		// the final fill_colour will be a hex string with ALPHA  : "#AABBCCFF"
 		// in this instance, both fill_colour and fill_opacity exist on the data
 		// need to work out their type, Switch, and call colourvalues::
-		Rcpp::Rcout << " fill AND opacity supplied by user" << std::endl;
 
 		int alphaColIndex = data_column_index[ fill_opacity_location ];
 		int fillColIndex = data_column_index[ fill_colour_location ];
@@ -289,23 +211,15 @@ void resolve_fill(
 			alpha = data[ alphaColIndex ];
 		}
 
-		// if the supplied argument doesn't exist in the DATA, need to use default?
- 		//Rcpp::NumericVector alpha = data[ alphaColIndex ];  // opacity HAS to be numeric!
- 		//SEXP fill = data[ fillColIndex ];
-
 		fill_colour( lst_params, params, data, lst_defaults, data_column_index, hex_strings,
                fill, alpha, fill_colour_location, fill_opacity_location );
 
 	} else if ( fill_colour_location >= 0 && fill_opacity_location == -1 ) {
 		// fill colour needs resolving, and opacity is default
 
-		Rcpp::Rcout << " fill only " << std::endl;
-
 		int fillColIndex = data_column_index[ fill_colour_location ];
-		// Rcpp::Rcout << "fill col index: " << fillColIndex << std::endl;
 
 		if ( fillColIndex == -1 ) {
-			// it doesn't exist in the data
 			// TODO(check if it's a hex colour and use it for all data)
 
 			fill = lst_defaults[ "fill_colour" ];
@@ -313,17 +227,12 @@ void resolve_fill(
 			fill = data[ fillColIndex ];
 		}
 
-		//Rcpp::NumericVector alpha(1, 255.0);  // opacity HAS to be numeric!
-
 		fill_colour( lst_params, params, data, lst_defaults, data_column_index, hex_strings,
                fill, alpha, fill_colour_location, fill_opacity_location );
 
 	} else if ( fill_colour_location == -1 && fill_opacity_location >= 0 ) {
 
 		// fill opacity needs resolving, and colour is default.
-
-		//
-		Rcpp::Rcout << "opacity only " << std::endl;
 
 		int alphaColIndex = data_column_index[ fill_opacity_location ];
 		fill = lst_defaults[ "fill_colour" ];
@@ -350,7 +259,7 @@ void resolve_fill(
 
 	}
 
-	// Rcpp::Rcout << "hex strings: " << hex_strings << std::endl;
+	//Rcpp::Rcout << "hex strings: " << hex_strings << std::endl;
 	lst_defaults[ "fill_colour" ] = hex_strings;
 }
 
@@ -373,7 +282,7 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	Rcpp::List lst_params = construct_params( data, params, fill_colour_location, fill_opacity_location );
 
-	resolve_palette( lst_params, params );
+	mapdeck::palette::resolve_palette( lst_params, params );
 
 	resolve_fill( lst_params, params, data, lst_defaults, fill_colour_location, fill_opacity_location );
 
@@ -381,7 +290,7 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	Rcpp::StringVector cols_remove = mapdeck::scatterplot_colours;
 
-	removeParameters( params, param_names, mapdeck::scatterplot_colours );
+	mapdeck::remove_parameters( params, param_names, mapdeck::scatterplot_colours );
 
 	lst_params = construct_params( data, params, fill_colour_location, fill_opacity_location );
 
@@ -411,7 +320,7 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 	for (int i = 0; i < n; i ++ ) {
 		// if the param element is length 1; check if it's a column name
 
-		if( paramIsSingleString( params[i] ) ) {
+		if( mapdeck::param_is_single_string( params[i] ) ) {
 			// it's a single string
 			// is it also a column name
 
@@ -439,7 +348,7 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 				// TODO(if it's not a column name, but thisParam IS in sv, it's a value to use for the whole column))
 				// get the type of 'params[i]'
 				// create a vector of that type
-				if( paramIsSingleString( params[i] ) ) {
+				if( mapdeck::param_is_single_string( params[i] ) ) {
   				Rcpp::String thisString = params[i];
    				Rcpp::StringVector sv( data_rows, thisString );
 	  			lst_defaults[ thisString ] = sv;
@@ -450,7 +359,7 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 	// to_json accepts SEXP
 	//SEXP lst = lst_defaults;
 
-	Rcpp::DataFrame df = construct_df( lst_defaults, data_rows );
+	Rcpp::DataFrame df = mapdeck::construct_df( lst_defaults, data_rows );
 
 	return jsonify::dataframe::to_json( df );
 

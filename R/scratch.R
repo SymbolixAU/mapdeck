@@ -32,7 +32,7 @@
 # 	radius = 20,
 # 	fill_colour = "id",  ## can it handle columns which don't exist
 # 	tooltip = 20,
-# 	palette = m,
+# 	palette = "viridis",
 # 	fill_opacity = "id"
 # 	)
 

@@ -7,8 +7,6 @@ using namespace Rcpp;
 
 namespace mapdeck {
 
-  const Rcpp::StringVector default_palette = "viridis";
-
   /*
    * scatterplot_attributes
    */
