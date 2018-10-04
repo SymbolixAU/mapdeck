@@ -4,11 +4,11 @@
 \alias{add_arc}
 \title{Add arc}
 \usage{
-add_arc(map, data = get_map_data(map), layer_id = NULL, origin, destination,
-  id = NULL, stroke_from = NULL, stroke_from_opacity = NULL,
-  stroke_to = NULL, stroke_to_opacity = NULL, stroke_width = NULL,
-  tooltip = NULL, auto_highlight = FALSE, digits = 6,
-  palette = viridisLite::viridis)
+add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
+  destination, id = NULL, stroke_from = NULL,
+  stroke_from_opacity = NULL, stroke_to = NULL,
+  stroke_to_opacity = NULL, stroke_width = NULL, tooltip = NULL,
+  auto_highlight = FALSE, digits = 6, palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}

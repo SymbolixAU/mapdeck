@@ -19,6 +19,9 @@ mapdeckScatterplotDependency <- function() {
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param radius in metres
+#' @param palette string or matrix. String is either one of "viridis","inferno",
+#' "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
+#' between [0, 255], where the 4th column represents the alpha.
 #'
 #' @examples
 #'
@@ -53,6 +56,80 @@ mapdeckScatterplotDependency <- function() {
 #'
 #' @export
 add_scatterplot <- function(
+	map,
+	data = get_map_data(map),
+	lon = NULL,
+	lat = NULL,
+	polyline = NULL,
+	radius = NULL,
+	fill_colour = NULL,
+	fill_opacity = NULL,
+	tooltip = NULL,
+	auto_highlight = FALSE,
+	layer_id = NULL,
+	digits = 6,
+	palette = viridisLite::viridis
+) {
+
+	message("Using development version. Please check plots carefully")
+
+	l <- as.list( match.call() )
+	l <- resolve_palette( l, palette )
+
+	data <- normaliseSfData(data, "POINT")
+	polyline <- findEncodedColumn(data, polyline)
+	if( !is.null(polyline) && !polyline %in% names(l) ) {
+		l[['polyline']] <- polyline
+		data <- unlistMultiGeometry( data, polyline )
+	}
+	usePolyline <- isUsingPolyline(polyline)
+	if ( !usePolyline ) {
+		## TODO(check only a data.frame)
+		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
+		polyline <- 'polyline'
+		## TODO(check lon & lat exist / passed in as arguments )
+		l[['lon']] <- NULL
+		l[['lat']] <- NULL
+		l[['polyline']] <- polyline
+	}
+
+
+	shape <- rcpp_scatterplot( data, l )
+
+	map <- addDependency(map, mapdeckScatterplotDependency())
+	invoke_method(map, "add_scatterplot2", shape, layer_id, auto_highlight)
+}
+
+resolve_palette <- function( l, palette ) {
+
+	if ( is.matrix( palette ) ) {
+		#print("resolving matrix palette")
+		l[['palette']] <- palette
+	}
+	return( l )
+}
+
+dispatch_data <- function( data, lon, lat, polyline, l ) UseMethod("dispatch_data")
+
+dispatch_data.data.frame <- function( data, lon, lat, polyline, l ) {
+	## TODO - encode byrow
+}
+
+dispatch_data.sf <- function( data, l, ... ) {
+	## TODO(need to handle MULTI, and 2-col data...)
+
+}
+
+dispatch_data.sfencoded <- function( data, l, ... ) {
+
+}
+
+dispatch_data.default <- function( data, l ) stop("Data type not supported")
+
+
+#' @inheritParams add_scatterplot
+#' @export
+add_scatterplot_old <- function(
 	map,
 	data = get_map_data(map),
 	lon = NULL,
@@ -132,8 +209,7 @@ add_scatterplot <- function(
 
 
 requiredScatterplotColumns <- function() {
-	c("radius",
-		"fill_colour", "fill_opacity")
+	c("radius",	"fill_colour", "fill_opacity")
 }
 
 

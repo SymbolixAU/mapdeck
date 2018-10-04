@@ -17,15 +17,18 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
 Imports:
-  googlePolylines (>= 0.7.1002),
-  htmlwidgets,
-  htmltools,
-  scales,
-  shiny,
-  jsonlite,
-  magrittr,
-  viridisLite
-RoxygenNote: 6.0.1
+    googlePolylines (>= 0.7.1005),
+    htmlwidgets,
+    htmltools,
+    scales,
+    shiny,
+    jsonlite,
+    magrittr,
+    viridisLite,
+    Rcpp,
+    colourvalues,
+    jsonify
+RoxygenNote: 6.1.0
 Suggests: 
     covr,
     geojsonsf,
@@ -34,3 +37,9 @@ Suggests:
     sf,
     testthat
 VignetteBuilder: knitr
+LinkingTo: 
+    Rcpp,
+    rapidjsonr,
+    colourvalues,
+    jsonify,
+    rapidjsonr

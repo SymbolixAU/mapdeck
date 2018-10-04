@@ -4,8 +4,8 @@
 \alias{add_scatterplot}
 \title{Add Scatterplot}
 \usage{
-add_scatterplot(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, radius = NULL, fill_colour = NULL,
+add_scatterplot(map, data = get_map_data(map), lon = NULL,
+  lat = NULL, polyline = NULL, radius = NULL, fill_colour = NULL,
   fill_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
   layer_id = NULL, digits = 6, palette = viridisLite::viridis)
 }
@@ -39,7 +39,9 @@ to conflict and not plot correctly}
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
 
-\item{palette}{a function which generates hex colours}
+\item{palette}{string or matrix. String is either one of "viridis","inferno",
+"magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
+between [0, 255], where the 4th column represents the alpha.}
 }
 \description{
 The Scatterplot Layer takes in coordinate points and renders them as circles

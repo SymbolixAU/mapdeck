@@ -1,3 +1,59 @@
+### RCPP
+
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+#
+# n <- 5
+# df2 <- data.frame(
+# #	id = sample(letters[1:10], size = 26, replace = T)
+# 	id = 1:n
+# #	id = seq(as.Date("2018-01-01"), as.Date("2018-01-26"), by = 1)
+# #	id = as.factor(1:26)
+# 	, lon = sample(-180:180, size = n, replace = T)
+# 	, lat = sample(-90:90, size = n, replace = T)
+# 	, polyline = sample(letters, size = n, replace = T)
+# 	, r = 1:n
+# 	, s = rnorm(n)
+#   , stringsAsFactors = F
+# 	)
+#
+# map <- mapdeck::mapdeck()
+# pal <- matrix(rnorm(9), ncol = 3)
+# x <- c(1,2,3)
+# l <- list(x = 1)
+#
+# m <- grDevices::colorRamp( c("red", "green") )( (1:50) / 50 )
+#
+# mapdeck::add_scatterplot2(
+# 	map = map,
+# 	data = df2,
+#   lat = "lat",
+#   lon = "lon",
+# 	polyline = "polyline",
+# 	radius = 200,
+# 	fill_colour = "id",  ## can it handle columns which don't exist
+# 	tooltip = 20,
+# 	palette = "viridis",
+# 	fill_opacity = "id"
+# 	)
+
+
+# df_plot <- mapdeck::scatterplot(data = df, polyline = "polyline", radius = "r", fill_colour = "id", tooltip = "s")
+# barplot(height = df_plot$radius, col = df_plot$fill_colour, border = NA, space = 0)
+
+## Tests required
+## - non-requied columns (e.g. tooltip) are added on
+## - arguments with a singel value (not a column name) are used for the whole column of data.frame
+## - non-numeric opacity column supplied
+
+## non-requied cols
+# df$tool <- letters
+# mapdeck::scatterplot(data = df, polyline = "polyline", radius = "r", tooltip = "tool")
+
+## args with single value
+# mapdeck::scatterplot(data = df, polyline = "polyline", fill_colour = "#00FF00")
+
+
+
 # ## SCATTERPLOT ELEVATION
 #
 # # head(capitals)
