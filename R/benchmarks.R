@@ -97,7 +97,7 @@
 # }
 #
 #
-# n <- 1e6
+# n <- 1e5
 # df <- data.frame(
 # 	#	id = sample(letters[1:10], size = 26, replace = T)
 # 	id = 1:n
@@ -139,7 +139,7 @@
 #   		, polyline = "polyline"     ## force through
 #   		, radius = 100000
 #   		, fill_colour = "id"
-#   		, fill_opacity = "id"
+#   		#, fill_opacity = "id"
 #   		, tooltip = "id"
 #   	)
 #   },

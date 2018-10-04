@@ -5,18 +5,6 @@
 
 using namespace Rcpp;
 
-// test_palette
-Rcpp::StringVector test_palette(int data_rows, Function f);
-RcppExport SEXP _mapdeck_test_palette(SEXP data_rowsSEXP, SEXP fSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type data_rows(data_rowsSEXP);
-    Rcpp::traits::input_parameter< Function >::type f(fSEXP);
-    rcpp_result_gen = Rcpp::wrap(test_palette(data_rows, f));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_scatterplot
 Rcpp::StringVector rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params);
 RcppExport SEXP _mapdeck_rcpp_scatterplot(SEXP dataSEXP, SEXP paramsSEXP) {
@@ -31,7 +19,6 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_mapdeck_test_palette", (DL_FUNC) &_mapdeck_test_palette, 2},
     {"_mapdeck_rcpp_scatterplot", (DL_FUNC) &_mapdeck_rcpp_scatterplot, 2},
     {NULL, NULL, 0}
 };

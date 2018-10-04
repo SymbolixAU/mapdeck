@@ -10,17 +10,45 @@ using namespace Rcpp;
 
 namespace mapdeck {
 
-  inline size_t find_parameter_index( Rcpp::List& lst_params, const char* to_find ) {
-  	Rcpp::StringVector parameter_names = lst_params[ "parameter" ];
+  /*
+   * find_parameter_index
+   * Finds the location (index) of a string in the list of parameters (as given by the R function call)
+   */
+  inline size_t find_character_index_in_vector( Rcpp::StringVector& sv, const char* to_find ) {
+  	//Rcpp::StringVector parameter_names = lst_params[ "parameter" ];
   	size_t pos = std::distance(
-  		parameter_names.begin(),
-  		std::find( parameter_names.begin(), parameter_names.end(), to_find )
+  		sv.begin(),
+  		std::find( sv.begin(), sv.end(), to_find )
   	);
-  	if ( pos >= parameter_names.size() ) {
+  	if ( pos >= sv.size() ) {
   		return -1;
   	}
   	return pos;
   }
+
+
+	/*
+	 * indexColumnName
+	 * Finds the index of the names of the input data which match the function argument values
+	 */
+	inline int data_column_index(Rcpp::StringVector& param_value, Rcpp::StringVector& data_names) {
+
+		// Rcpp::Rcout << "finding: " << param_value << std::endl;
+		// Rcpp::Rcout << "in: " << data_names << std::endl;
+
+		int n = data_names.size();
+		for (int i = 0; i < n; i++ ) {
+
+			if ( param_value.length() != 1 ) {
+				return -1;
+			}
+
+			if (param_value[0] == data_names[i] ) {
+				return i;
+			}
+		}
+		return -1;
+	}
 
   inline Rcpp::List construct_df(Rcpp::List df, int nrows) {
 
@@ -44,35 +72,92 @@ namespace mapdeck {
 		params = params[ param_names ];
 	}
 
-  inline bool param_is_single_string( SEXP param ) {
-  	return TYPEOF( param ) == STRSXP;
+  inline bool param_is_string( SEXP param ) {
+  	return TYPEOF( param ) == STRSXP;  // string vectors
   }
 
 	/*
 	 * determins the data type in the list of argument parameters (not the data)
 	 */
-	inline int get_parameter_r_type( SEXP param ) {
-		// A 'variable' passed in is type 1 - SYMSXP
-		// A function (c(), list(), matrix(), viridisLite::viridis) is type 6 - LANGSXP
+	inline int get_parameter_r_type( SEXP param ) {\
 		return TYPEOF( param );
+	}
+
+	void fill_single_vector( Rcpp::List& lst_defaults, Rcpp::String& param_name, SEXP& value, int n_rows ) {
+		switch( TYPEOF( value ) ) {
+		case 10: { // LGLSXP
+		Rcpp::LogicalVector l = Rcpp::as< Rcpp::LogicalVector >( value );
+		Rcpp::LogicalVector lv(n_rows, l[0]);
+		lst_defaults[ param_name ] = lv;
+		return;
+	}
+		case 13: { // INTSXP
+			Rcpp::IntegerVector i = Rcpp::as< Rcpp::IntegerVector >( value );
+			Rcpp::IntegerVector iv(n_rows, i[0]);
+			lst_defaults[ param_name ] = iv;
+			return;
+		}
+		case 14: { // REALSXP
+			Rcpp::NumericVector n = Rcpp::as< Rcpp::NumericVector >( value );
+			Rcpp::NumericVector nv(n_rows, n[0]);
+			lst_defaults[ param_name ] = nv;
+			return;
+		}
+		default: {
+			Rcpp::StringVector s = Rcpp::as< Rcpp::StringVector >( value );
+			Rcpp::StringVector sv(n_rows, s[0]);
+			lst_defaults[ param_name ] = sv;
+			return;
+		}
+		}
+	}
+
+
+	inline Rcpp::List construct_params(
+			Rcpp::DataFrame& data,
+			Rcpp::List& params,
+			int& fill_colour_location,
+			int& fill_opacity_location
+	) {
+
+		int n_params = params.size();
+		Rcpp::StringVector param_names = params.names();
+		Rcpp::IntegerVector parameter_r_types( n_params );
+		Rcpp::IntegerVector data_column_index( n_params, -1 );
+		Rcpp::StringVector data_names = data.names();
+
+		int i = 0;
+		int parameter_type;
+
+		for (i = 0; i < n_params; i++) {
+			parameter_type = mapdeck::get_parameter_r_type( params[i] );
+			parameter_r_types[i] = parameter_type;
+
+			if ( parameter_type == STRSXP ) { // STRSXP (string vector)
+
+				Rcpp::StringVector param_value = params[i];
+				data_column_index[i] = mapdeck::data_column_index( param_value, data_names );
+
+				// these colour values are stored for convenience
+				// do I also need 'stroke_colour' as well?
+				// OR, should I just have a function to find a variable in the 'paramter_names' vector
+				// - there shouldn't be much overhead doing that each time for each var?
+				if ( param_names[i] == "fill_colour" ) {
+					fill_colour_location = i;
+				} else if ( param_names[i] == "fill_opacity" ) {
+					fill_opacity_location = i;
+				}
+
+			}
+		}
+		return Rcpp::List::create(
+			_["parameter"] = param_names,
+			_["parameter_type"] = parameter_r_types,
+			_["data_column_index"] = data_column_index
+		);
 	}
 
 } // namespace mapdeck
 
-// Rcpp::StringVector default_polyline(int n);
-//
-// Rcpp::IntegerVector default_elevation(int n);
-//
-// Rcpp::IntegerVector default_radius(int n);
-//
-// Rcpp::NumericVector default_fill_colour(int n);
-//
-// Rcpp::NumericVector default_fill_opacity(int n);
-//
-// Rcpp::List construct_df(Rcpp::List df, int nrows);
-
-int indexColumnName(Rcpp::StringVector& param_value, Rcpp::StringVector& data_names);
-
-//bool paramIsSingleString( SEXP param );
 
 #endif

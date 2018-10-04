@@ -20,7 +20,8 @@ namespace palette {
   inline SEXP resolve_palette( Rcpp::List& lst_params, Rcpp::List& params ) {
 
   	SEXP pal = mapdeck::defaults::default_palette;
-  	int idx =  mapdeck::find_parameter_index( lst_params, "palette" );
+  	Rcpp::StringVector sv = lst_params[ "parameter" ];
+  	int idx =  mapdeck::find_character_index_in_vector( sv, "palette" );
   	//pal = idx >= 0 ? params[ idx ] : pal;
 
   	if (idx >= 0 ) {
@@ -39,10 +40,6 @@ namespace palette {
 
   	switch ( TYPEOF( palette ) ) {
   	case 1: { // SYMSXP
-
-  	// Rcpp::Symbol sym = Rcpp::as< Rcpp::Symbol >( pal );
-  	// Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( sym );
-  	// hex_strings = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
   	Rcpp::stop("Unsupported palette type");
   	break;
   }
@@ -83,11 +80,6 @@ namespace palette {
 		}
 		case 16: {
 			std::string thispal = Rcpp::as< std::string>( palette );
-			Rcpp::Rcout << "string palette " << thispal << std::endl;
-			Rcpp::Rcout << fill_colour_vec << std::endl;
-			Rcpp::Rcout << na_colour << std::endl;
-			Rcpp::Rcout << alpha << std::endl;
-			Rcpp::Rcout << include_alpha << std::endl;
 			return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, alpha, include_alpha );
 			break;
 		}

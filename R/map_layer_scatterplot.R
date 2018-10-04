@@ -32,16 +32,11 @@ add_scatterplot2 <- function(
 	#print( is.matrix( palette ))
 	l <- resolve_palette( l, palette )
 
-	#l[["palette"]] <- palette
-
-	#print( l )
-	# l <- resolve_palette( l )
-	#print( dput(l) )
 
 	data$polyline <- googlePolylines::encode( data, lon = lon, lat = lat, byrow = T )
-
+	# print( data )
 	shape <- rcpp_scatterplot( data, l )
-	print( shape )
+	# print( shape )
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
 	invoke_method(map, "add_scatterplot2", shape, layer_id, auto_highlight)

@@ -9,8 +9,8 @@ namespace defaults {
   const Rcpp::StringVector default_palette = "viridis";
 
 	inline Rcpp::StringVector default_polyline(int n) {
+		// created so it's pre-allocated - every data set will require a polylne vector
 		Rcpp::StringVector sv(n);
-		sv.fill("");
 		return sv;
 	}
 
@@ -20,7 +20,7 @@ namespace defaults {
 	}
 
 	inline Rcpp::IntegerVector default_radius(int n) {
-		Rcpp::IntegerVector iv(n, 100000);
+		Rcpp::IntegerVector iv(n, 1000);
 		return iv;
 	}
 
@@ -33,7 +33,6 @@ namespace defaults {
 		Rcpp::NumericVector nv(n, 255.0);
 		return nv;
 	}
-
 
 } // namespace defaults
 } // namespace mapdeck

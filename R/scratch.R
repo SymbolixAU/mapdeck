@@ -1,9 +1,9 @@
-# ### RCPP
-#
+### RCPP
+
 # set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
 #
-# n <- 26
-# df <- data.frame(
+# n <- 5
+# df2 <- data.frame(
 # #	id = sample(letters[1:10], size = 26, replace = T)
 # 	id = 1:n
 # #	id = seq(as.Date("2018-01-01"), as.Date("2018-01-26"), by = 1)
@@ -21,15 +21,15 @@
 # x <- c(1,2,3)
 # l <- list(x = 1)
 #
-# m <- grDevices::colorRamp(c("red", "green"))( (1:50)/50 )
+# m <- grDevices::colorRamp( c("red", "green") )( (1:50) / 50 )
 #
 # mapdeck::add_scatterplot2(
 # 	map = map,
-# 	data = df,
+# 	data = df2,
 #   lat = "lat",
 #   lon = "lon",
 # 	polyline = "polyline",
-# 	radius = 20,
+# 	radius = 200,
 # 	fill_colour = "id",  ## can it handle columns which don't exist
 # 	tooltip = 20,
 # 	palette = "viridis",
