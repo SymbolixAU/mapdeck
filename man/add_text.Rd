@@ -48,7 +48,9 @@ to conflict and not plot correctly}
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
 
-\item{palette}{a function which generates hex colours}
+\item{palette}{string or matrix. String is either one of "viridis","inferno",
+"magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
+between [0, 255], where the 4th column represents the alpha.}
 }
 \description{
 The Text Layer takes in coordinate points and renders them as circles

@@ -144,7 +144,6 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 	mapdeck::remove_parameters( params, param_names, mapdeck::scatterplot::scatterplot_colours );
 	lst_params = mapdeck::construct_params( data, params, fill_colour_location, fill_opacity_location );
 
-
 	Rcpp::DataFrame df = mapdeck::construction::construct_data(
 		param_names,
 		scatterplot_columns,

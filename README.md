@@ -22,6 +22,9 @@ install.packages("mapdeck")
 ## Until googlePolylines 0.7.2+ is on CRAN you'll need 
 devtools::install_github("SymbolixAU/googlePolylines")
 
+## and jsonify
+devtools::install_github("SymbolixAU/jsonify")
+
 ## then mapdeck
 devtools::install_github("SymbolixAU/mapdeck")
 ```

@@ -7,6 +7,16 @@
 namespace mapdeck {
 namespace construction {
 
+  /*
+   * Assess each variable passed in to the R function as an argument, determines
+   * if it's a column of data, or a single value to use as the whole column.
+   *
+   * If it's a column of data, that column is used. If it's a single value,
+   * that value is 'cbind'-ed as a column of data
+   *
+   * This assumes the fill and stroke colours have already been resolved and removed
+   * from the list of parameters
+   */
   inline Rcpp::DataFrame construct_data(
   		Rcpp::StringVector& param_names,
   		Rcpp::StringVector& required_columns,

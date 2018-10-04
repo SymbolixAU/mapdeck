@@ -101,7 +101,7 @@
 # lons <- seq(-180, 180, by = 0.0001)
 # lats <- seq(-90, 90, by = 0.0001)
 #
-# n <- 1e6
+# n <- 1e5
 # df <- data.frame(
 # 	#	id = sample(letters[1:10], size = 26, replace = T)
 # 	id = 1:n
@@ -109,7 +109,7 @@
 # 	#	id = as.factor(1:26)
 # 	, lon = sample(lons, size = n, replace = T)
 # 	, lat = sample(lats, size = n, replace = T)
-# 	, polyline = sample(letters, size = n, replace = T)
+# 	#, polyline = sample(letters, size = n, replace = T)
 # 	, r = 1:n
 # 	, s = rnorm(n)
 # 	, stringsAsFactors = F
@@ -121,12 +121,11 @@
 #
 # microbenchmark(
 # 	old = {
-# 		old <- add_scatterplot(
+# 		old <- add_scatterplot_old(
 # 			map = m
 # 			, data = df
 # 			, lat = "lat"
 # 			, lon = "lon"
-# 			#, polyline = "polyline"     ## force through
 # 			, radius = 1000
 # 			, fill_colour = "id"
 # 			, fill_opacity = "id"
@@ -135,12 +134,11 @@
 #   },
 #
 #   new = {
-#   	new <- add_scatterplot2(
+#   	new <- add_scatterplot(
 #   		map = m
 #   		, data = df
 #   		, lat = "lat"
 #   		, lon = "lon"
-#   		, polyline = "polyline"     ## force through
 #   		, radius = 1000
 #   		, fill_colour = "id"
 #   		#, fill_opacity = "id"
