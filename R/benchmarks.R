@@ -97,14 +97,18 @@
 # }
 #
 #
-# n <- 1e5
+#
+# lons <- seq(-180, 180, by = 0.0001)
+# lats <- seq(-90, 90, by = 0.0001)
+#
+# n <- 1e6
 # df <- data.frame(
 # 	#	id = sample(letters[1:10], size = 26, replace = T)
 # 	id = 1:n
 # 	#	id = seq(as.Date("2018-01-01"), as.Date("2018-01-26"), by = 1)
 # 	#	id = as.factor(1:26)
-# 	, lon = sample(-180:180, size = n, replace = T)
-# 	, lat = sample(-90:90, size = n, replace = T)
+# 	, lon = sample(lons, size = n, replace = T)
+# 	, lat = sample(lats, size = n, replace = T)
 # 	, polyline = sample(letters, size = n, replace = T)
 # 	, r = 1:n
 # 	, s = rnorm(n)
@@ -123,7 +127,7 @@
 # 			, lat = "lat"
 # 			, lon = "lon"
 # 			#, polyline = "polyline"     ## force through
-# 			, radius = 100000
+# 			, radius = 1000
 # 			, fill_colour = "id"
 # 			, fill_opacity = "id"
 # 			, tooltip = "id"
@@ -137,7 +141,7 @@
 #   		, lat = "lat"
 #   		, lon = "lon"
 #   		, polyline = "polyline"     ## force through
-#   		, radius = 100000
+#   		, radius = 1000
 #   		, fill_colour = "id"
 #   		#, fill_opacity = "id"
 #   		, tooltip = "id"
@@ -156,3 +160,19 @@
 # expr       min        lq     mean    median        uq       max neval
 # old 77.033577 77.695166 77.88357 77.887395 77.968052 78.833664     5
 # new  3.581377  3.682539  3.94304  4.018411  4.170176  4.262699     5
+
+
+# system.time({
+# 	p <- add_scatterplot2(
+# 		map = m
+# 		, data = df
+# 		, lat = "lat"
+# 		, lon = "lon"
+# 		, polyline = "polyline"
+# 		, radius = 1000
+# 		, fill_colour = "id"
+# 		#, fill_opacity = "id"
+# 		, tooltip = "id"
+# 	)
+# })
+# p

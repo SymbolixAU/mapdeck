@@ -2,11 +2,6 @@
 #define R_MAPDECK_H
 
 #include <Rcpp.h>
-using namespace Rcpp;
-
-#define PARAM_UNKNOWN  0
-#define PARAM_CONSTANT 1
-#define PARAM_VECTOR   2
 
 namespace mapdeck {
 
@@ -56,7 +51,7 @@ namespace mapdeck {
   		Rcpp::stop("Error creating data layer");
   	}
 
-  	Rcpp::IntegerVector nv = seq(1, nrows);
+  	Rcpp::IntegerVector nv = Rcpp::seq(1, nrows);
 
   	df.attr("class") = "data.frame";
   	df.attr("row.names") = nv;
@@ -151,9 +146,9 @@ namespace mapdeck {
 			}
 		}
 		return Rcpp::List::create(
-			_["parameter"] = param_names,
-			_["parameter_type"] = parameter_r_types,
-			_["data_column_index"] = data_column_index
+			Rcpp::_["parameter"] = param_names,
+			Rcpp::_["parameter_type"] = parameter_r_types,
+			Rcpp::_["data_column_index"] = data_column_index
 		);
 	}
 
