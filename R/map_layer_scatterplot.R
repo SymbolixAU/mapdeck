@@ -29,19 +29,19 @@ add_scatterplot2 <- function(
 
 	l <- as.list( match.call() )
 	##print(str(palette))
-	print( is.matrix( palette ))
+	#print( is.matrix( palette ))
 	l <- resolve_palette( l, palette )
 
 	#l[["palette"]] <- palette
 
 	#print( l )
 	# l <- resolve_palette( l )
-	# print( l )
+	#print( dput(l) )
 
 	data$polyline <- googlePolylines::encode( data, lon = lon, lat = lat, byrow = T )
 
 	shape <- rcpp_scatterplot( data, l )
-	#print( shape )
+	print( shape )
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
 	invoke_method(map, "add_scatterplot2", shape, layer_id, auto_highlight)
@@ -50,7 +50,7 @@ add_scatterplot2 <- function(
 resolve_palette <- function( l, palette ) {
 
 	if ( is.matrix( palette ) ) {
-		print("resolving matrix palette")
+		#print("resolving matrix palette")
 		l[['palette']] <- palette
 	}
 	return( l )

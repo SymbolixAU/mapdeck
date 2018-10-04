@@ -83,6 +83,11 @@ namespace palette {
 		}
 		case 16: {
 			std::string thispal = Rcpp::as< std::string>( palette );
+			Rcpp::Rcout << "string palette " << thispal << std::endl;
+			Rcpp::Rcout << fill_colour_vec << std::endl;
+			Rcpp::Rcout << na_colour << std::endl;
+			Rcpp::Rcout << alpha << std::endl;
+			Rcpp::Rcout << include_alpha << std::endl;
 			return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, alpha, include_alpha );
 			break;
 		}

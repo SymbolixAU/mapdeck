@@ -249,7 +249,7 @@ void resolve_fill(
 
 	} else {
 		// neither fill colour NOR fill_opacity are supplied on the data
-		Rcpp::Rcout << "no fill supplied: " << std::endl;
+		//Rcpp::Rcout << "no fill supplied: " << std::endl;
 		// need to use defaults
 		fill = lst_defaults[ "fill_colour" ];
 		//Rcpp::NumericVector alpha(1, 255.0);  // opacity HAS to be numeric!
