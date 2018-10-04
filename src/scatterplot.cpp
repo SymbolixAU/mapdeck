@@ -269,7 +269,6 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	int fill_colour_location = -1 ;
 	int fill_opacity_location = -1;
-	//int palette_location = -1;
 	int data_rows = data.nrows();
 
 	Rcpp::StringVector param_names = params.names();
@@ -296,16 +295,6 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	// TODO(don't do anything if the stroke attribut isn't available)
 	//resolve_stroke( )
-
-	//Rcpp::NumericVector param_indexes = mapdeck::scatterplot_param_column_index;
-	//param_data_column_index(param_indexes,params, data);
-
-
-	//Rcpp::StringVector sv = mapdeck::scatterplot_columns;
-	//Rcpp::NumericVector data_types( data.ncol() );
-
-	//Rcpp::List data_list = Rcpp::as< Rcpp::List >( data );
-
 
 	// for ( Rcpp::List::iterator it = data_list.begin(); it != data_list.end(); ++it ) {
 	// 	data_types[ counter ] = TYPEOF( *it );
@@ -336,12 +325,6 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 
 				lst_defaults[ thisParam ] = data[ colIndex ];
 				// TODO(if it's not a required column (e.g. tooltip), needs to append it to the list)
-
-				// TODO(resolve colours)
-				// - scatterplot requires fill_colour and fill_opacity.
-				// - it will have been initialised with defaults
-				// - if opacity has been provided, is it a vector or a constant?
-				// - it has to be numeric.
 
 			}
 		} else {
