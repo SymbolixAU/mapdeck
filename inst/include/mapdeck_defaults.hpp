@@ -29,11 +29,20 @@ namespace defaults {
 		return nv;
 	}
 
+	inline Rcpp::NumericVector default_stroke_colour( int n ) {
+		Rcpp::NumericVector nv(n, 1.0);
+		return nv;
+	}
+
 	inline Rcpp::NumericVector default_fill_opacity(int n) {
 		Rcpp::NumericVector nv(n, 255.0);
 		return nv;
 	}
 
+	inline Rcpp::NumericVector default_stroke_opacity(int n) {
+		Rcpp::NumericVector nv(n, 255.0);
+		return nv;
+	}
 } // namespace defaults
 } // namespace mapdeck
 

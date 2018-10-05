@@ -5,11 +5,6 @@
 #include "mapdeck.hpp"
 #include "mapdeck_defaults.hpp"
 
-
-// [[Rcpp::depends(colourvalues)]]
-#include "colourvalues/colours/colours_hex.hpp"
-
-
 namespace mapdeck {
 namespace palette {
 

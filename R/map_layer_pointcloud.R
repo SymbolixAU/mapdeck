@@ -80,7 +80,7 @@ add_pointcloud <- function(
 		l[['polyline']] <- polyline
 	}
 
-	shape <- rcpp_scatterplot( data, l )
+	shape <- rcpp_pointcloud( data, l )
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 

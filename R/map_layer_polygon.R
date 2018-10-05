@@ -53,13 +53,14 @@ mapdeckPolygonDependency <- function() {
 #'     , elevation = "elevation"
 #'     , stroke_width = 0
 #'     , tooltip = 'info'
-#'     , highlight_colour = "#00ff00"
+#'     #, highlight_colour = "#00ff00"
 #'   )
 #'
 #' library(sf)
 #' library(geojsonsf)
 #'
 #' sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+#' sf <- sf::st_cast(sf, "POLYGON")
 #'
 #' mapdeck(
 #'   token = key
@@ -72,9 +73,50 @@ mapdeckPolygonDependency <- function() {
 #'   )
 #'
 #' }
-#'
 #' @export
 add_polygon <- function(
+	map,
+	data = get_map_data(map),
+	polyline = NULL,
+	stroke_colour = NULL,
+	stroke_width = NULL,
+	fill_colour = NULL,
+	fill_opacity = NULL,
+	elevation = NULL,
+	tooltip = NULL,
+	auto_highlight = FALSE,
+	light_settings = list(),
+	layer_id = NULL,
+	digits = 6,
+	palette = "viridis"
+) {
+
+	message("Using development version. Please check plots carefully")
+
+	l <- as.list( match.call() )
+	l <- resolve_palette( l, palette )
+
+	data <- normaliseSfData(data, "POLYGON", multi = FALSE)
+	polyline <- findEncodedColumn(data, polyline)
+
+	## - if sf object, and geometry column has not been supplied, it needs to be
+	## added to objArgs after the match.call() function
+	if( !is.null(polyline) && !polyline %in% names(l) ) {
+		l[['polyline']] <- polyline
+	}
+
+	shape <- rcpp_polygon( data, l )
+
+	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
+
+	map <- addDependency(map, mapdeckPolygonDependency())
+	invoke_method(map, "add_polygon2", shape, layer_id, light_settings, auto_highlight)
+}
+
+
+
+#' @export
+add_polygon_old <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,

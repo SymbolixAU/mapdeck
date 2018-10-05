@@ -3,6 +3,12 @@
 
 #include <Rcpp.h>
 
+// [[Rcpp::depends(colourvalues)]]
+#include "colourvalues/colours/colours_hex.hpp"
+
+// [[Rcpp::depends(jsonify)]]
+#include "jsonify/to_json.hpp"
+
 namespace mapdeck {
 
   /*
@@ -110,7 +116,9 @@ namespace mapdeck {
 			Rcpp::DataFrame& data,
 			Rcpp::List& params,
 			int& fill_colour_location,
-			int& fill_opacity_location
+			int& fill_opacity_location,
+			int& stroke_colour_location,
+			int& stroke_opacity_location
 	) {
 
 		int n_params = params.size();
@@ -139,6 +147,10 @@ namespace mapdeck {
 					fill_colour_location = i;
 				} else if ( param_names[i] == "fill_opacity" ) {
 					fill_opacity_location = i;
+				} else if ( param_names[i] == "stroke_colour" ) {
+					stroke_colour_location = i;
+				} else if ( param_names[i] == "stroke_opacity" ) {
+					stroke_opacity_location = i;
 				}
 			}
 		}

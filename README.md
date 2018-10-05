@@ -34,6 +34,9 @@ devtools::install_github("SymbolixAU/googlePolylines")
 ## and jsonify
 devtools::install_github("SymbolixAU/jsonify")
 
+## and colourvalues
+devtools::install_github("SymbolixAU/colourvalues")
+
 ## then mapdeck
 devtools::install_github("SymbolixAU/mapdeck")
 ```

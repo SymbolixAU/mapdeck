@@ -8,7 +8,7 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL,
   fill_opacity = NULL, elevation = NULL, tooltip = NULL,
   auto_highlight = FALSE, light_settings = list(), layer_id = NULL,
-  digits = 6, palette = viridisLite::viridis)
+  digits = 6, palette = "viridis")
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -73,13 +73,14 @@ mapdeck(
     , elevation = "elevation"
     , stroke_width = 0
     , tooltip = 'info'
-    , highlight_colour = "#00ff00"
+    #, highlight_colour = "#00ff00"
   )
 
 library(sf)
 library(geojsonsf)
 
 sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+sf <- sf::st_cast(sf, "POLYGON")
 
 mapdeck(
   token = key
@@ -92,5 +93,4 @@ mapdeck(
   )
 
 }
-
 }

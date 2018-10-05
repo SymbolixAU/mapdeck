@@ -5,18 +5,6 @@
 
 using namespace Rcpp;
 
-// rcpp_scatterplot
-Rcpp::StringVector rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params);
-RcppExport SEXP _mapdeck_rcpp_scatterplot(SEXP dataSEXP, SEXP paramsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_scatterplot(data, params));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_pointcloud
 Rcpp::StringVector rcpp_pointcloud(Rcpp::DataFrame data, Rcpp::List params);
 RcppExport SEXP _mapdeck_rcpp_pointcloud(SEXP dataSEXP, SEXP paramsSEXP) {
@@ -29,10 +17,35 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_polygon
+Rcpp::StringVector rcpp_polygon(Rcpp::DataFrame data, Rcpp::List params);
+RcppExport SEXP _mapdeck_rcpp_polygon(SEXP dataSEXP, SEXP paramsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_polygon(data, params));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_scatterplot
+Rcpp::StringVector rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params);
+RcppExport SEXP _mapdeck_rcpp_scatterplot(SEXP dataSEXP, SEXP paramsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_scatterplot(data, params));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_mapdeck_rcpp_scatterplot", (DL_FUNC) &_mapdeck_rcpp_scatterplot, 2},
     {"_mapdeck_rcpp_pointcloud", (DL_FUNC) &_mapdeck_rcpp_pointcloud, 2},
+    {"_mapdeck_rcpp_polygon", (DL_FUNC) &_mapdeck_rcpp_polygon, 2},
+    {"_mapdeck_rcpp_scatterplot", (DL_FUNC) &_mapdeck_rcpp_scatterplot, 2},
     {NULL, NULL, 0}
 };
 
