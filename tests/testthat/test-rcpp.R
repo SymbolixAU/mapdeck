@@ -6,6 +6,8 @@ context("rcpp")
 ## - string, logical, numeric, factor fill values
 ## - na_colour
 ## - matrix palette, including alpha
+## - check alpha is [0,255]
+
 
 test_that("defaults are overwritten by user-supplied arguments from input data", {
 

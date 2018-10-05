@@ -9,15 +9,16 @@ namespace mapdeck {
    * find_parameter_index
    * Finds the location (index) of a string in the list of parameters (as given by the R function call)
    */
-  inline size_t find_character_index_in_vector( Rcpp::StringVector& sv, const char* to_find ) {
+  inline int find_character_index_in_vector( Rcpp::StringVector& sv, const char* to_find ) {
   	//Rcpp::StringVector parameter_names = lst_params[ "parameter" ];
-  	size_t pos = std::distance(
+  	int pos = std::distance(
   		sv.begin(),
   		std::find( sv.begin(), sv.end(), to_find )
   	);
   	if ( pos >= sv.size() ) {
   		return -1;
   	}
+  	//Rcpp::Rcout << "pos: " << pos << std::endl;
   	return pos;
   }
 
