@@ -76,22 +76,26 @@ void resolve_fill(
 // [[Rcpp::export]]
 Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 
-	int fill_colour_location = -1;
-	int fill_opacity_location = -1;
 	int data_rows = data.nrows();
 
-	Rcpp::StringVector param_names = params.names();
 	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
 	Rcpp::StringVector scatterplot_columns = mapdeck::scatterplot::scatterplot_columns;
+	Rcpp::StringVector scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
 
+	int fill_colour_location = -1;
+	int fill_opacity_location = -1;
+
+
+
+	Rcpp::StringVector param_names = params.names();
 	Rcpp::StringVector data_names = data.names();
+
 	Rcpp::List lst_params = mapdeck::construct_params( data, params, fill_colour_location, fill_opacity_location );
 	mapdeck::palette::resolve_palette( lst_params, params );
 
 	resolve_fill( lst_params, params, data, lst_defaults, fill_colour_location, fill_opacity_location );
 
-	Rcpp::StringVector cols_remove = mapdeck::scatterplot::scatterplot_colours;
-	mapdeck::remove_parameters( params, param_names, cols_remove );
+	mapdeck::remove_parameters( params, param_names, scatterplot_colours );
 	lst_params = mapdeck::construct_params( data, params, fill_colour_location, fill_opacity_location );
 
 	Rcpp::DataFrame df = mapdeck::construction::construct_data(
