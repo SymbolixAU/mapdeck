@@ -41,4 +41,5 @@ LinkingTo:
     Rcpp,
     colourvalues,
     jsonify,
-    rapidjsonr
+    rapidjsonr,
+    BH
