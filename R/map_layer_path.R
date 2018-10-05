@@ -43,7 +43,46 @@ mapdeckPathDependency <- function() {
 #' }
 #'
 #' @export
+#' @export
 add_path <- function(
+	map,
+	data = get_map_data(map),
+	polyline = NULL,
+	stroke_colour = NULL,
+	stroke_width = NULL,
+	stroke_opacity = NULL,
+	tooltip = NULL,
+	layer_id = NULL,
+	digits = 6,
+	auto_highlight = FALSE,
+	palette = "viridis"
+) {
+
+	## TODO(sf and lon/lat coordinates)
+	message("Using development version. Please check plots carefully")
+
+	l <- as.list( match.call() )
+	l <- resolve_palette( l, palette )
+
+	data <- normaliseSfData(data, "LINESTRING")
+	polyline <- findEncodedColumn(data, polyline)
+
+	## - if sf object, and geometry column has not been supplied, it needs to be
+	## added to objArgs after the match.call() function
+	if( !is.null(polyline) && !polyline %in% names(l) ) {
+		l[['polyline']] <- polyline
+		data <- unlistMultiGeometry( data, polyline )
+	}
+
+	shape <- rcpp_path( data, l );
+
+	map <- addDependency(map, mapdeckPathDependency())
+	invoke_method(map, "add_path2", shape, layer_id, auto_highlight )
+}
+
+#' @inheritParams add_path
+#' @export
+add_path_old <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,

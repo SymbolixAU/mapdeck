@@ -7,7 +7,7 @@
 add_path(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
   tooltip = NULL, layer_id = NULL, digits = 6,
-  auto_highlight = FALSE, palette = viridisLite::viridis)
+  auto_highlight = FALSE, palette = "viridis")
 }
 \arguments{
 \item{map}{a mapdeck map object}

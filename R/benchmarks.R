@@ -174,3 +174,91 @@
 # 	)
 # })
 # p
+
+# key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+#
+# library(microbenchmark)
+# microbenchmark(
+#
+# 	old = {
+# 		m <- mapdeck(
+# 		  token = key
+# 		  , style = 'mapbox://styles/mapbox/dark-v9'
+# 		  , location = c(145, -37.8)
+# 		  , zoom = 10) %>%
+# 		  add_path_old(
+# 		    data = roads
+# 		    , stroke_colour = "RIGHT_LOC"
+# 		    , layer_id = "path_layer"
+# 		    , tooltip = "ROAD_NAME"
+# 		    , auto_highlight = TRUE
+# 		  )
+# 	},
+#
+# 	new = {
+# 		m <- mapdeck(
+# 		  token = key
+# 		  , style = 'mapbox://styles/mapbox/dark-v9'
+# 		  , location = c(145, -37.8)
+# 		  , zoom = 10) %>%
+# 		  add_path(
+# 		    data = roads
+# 		    , stroke_colour = "RIGHT_LOC"
+# 		    , layer_id = "path_layer"
+# 		    , tooltip = "ROAD_NAME"
+# 		    , auto_highlight = TRUE
+# 		  )
+# 	},
+# 	times = 3
+# )
+
+
+# lons <- seq(-180, 180, by = 0.0001)
+# lats <- seq(-90, 90, by = 0.0001)
+#
+# n <- 1e4
+# df <- data.frame(
+# 	#	id = sample(letters[1:10], size = 26, replace = T)
+# 	id = 1:n
+# 	#	id = seq(as.Date("2018-01-01"), as.Date("2018-01-26"), by = 1)
+# 	#	id = as.factor(1:26)
+# 	, lon = sample(lons, size = n, replace = T)
+# 	, lat = sample(lats, size = n, replace = T)
+# 	#, polyline = sample(letters, size = n, replace = T)
+# 	, r = 1:n
+# 	, s = rnorm(n)
+# 	, stringsAsFactors = F
+# )
+#
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+# m <- mapdeck::mapdeck()
+# library(microbenchmark)
+#
+# microbenchmark(
+# 	old = {
+# 		old <- add_pointcloud_old(
+# 			map = m
+# 			, data = df
+# 			, lat = "lat"
+# 			, lon = "lon"
+# 			, radius = 1000
+# 			, fill_colour = "id"
+# 			#, fill_opacity = "id"
+# 			, tooltip = "id"
+# 		)
+#   },
+#
+#   new = {
+#   	new <- add_pointcloud(
+#   		map = m
+#   		, data = df
+#   		, lat = "lat"
+#   		, lon = "lon"
+#   		, radius = 1000
+#   		, fill_colour = "id"
+#   		#, fill_opacity = "id"
+#   		, tooltip = "id"
+#   	)
+#   },
+# 	times = 5
+# )

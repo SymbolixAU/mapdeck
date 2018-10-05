@@ -43,6 +43,11 @@ namespace defaults {
 		Rcpp::NumericVector nv(n, 255.0);
 		return nv;
 	}
+
+	inline Rcpp::NumericVector default_stroke_width(int n) {
+		Rcpp::NumericVector nv(n, 1.0);
+		return nv;
+	}
 } // namespace defaults
 } // namespace mapdeck
 
