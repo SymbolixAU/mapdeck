@@ -39,7 +39,6 @@ Suggests:
 VignetteBuilder: knitr
 LinkingTo: 
     Rcpp,
-    rapidjsonr,
     colourvalues,
     jsonify,
     rapidjsonr
