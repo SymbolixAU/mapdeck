@@ -19,15 +19,14 @@ namespace fill {
 			Rcpp::List& lst_defaults,
 			Rcpp::IntegerVector& data_column_index,
 			Rcpp::StringVector& hex_strings,
-			SEXP& fill,
+			SEXP& fill,                // string or matrix
 			Rcpp::NumericVector& alpha,
 			int& fill_colour_location, // locations of the paramter in the parameter list
 			int& fill_opacity_location
 	) {
 
-		//std::string palette = "viridis";      // TODO
 		std::string na_colour = "#808080FF";  // TODO
-		bool include_alpha = true;
+		bool include_alpha = true;            // always true - deck.gl supports alpha
 
 		SEXP pal = mapdeck::palette::resolve_palette( lst_params, params );
 

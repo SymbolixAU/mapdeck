@@ -34,91 +34,41 @@ void resolve_fill(
 	Rcpp::IntegerVector parameter_type = lst_params[ "parameter_type" ];
 
 	Rcpp::StringVector hex_strings( data.nrows() );
-	Rcpp::NumericVector alpha( 1, 255.0 );
-	SEXP fill;
 
-	// data_column_index >= 0 are VECTORS
-	// data_column_index == -1 && parameter_type
+	Rcpp::NumericVector alpha( 1, 255.0 ); // TODO: the user can supply a single value [0,255] to use in place of this
 
-	// TODO - iff a vector of hex strings; don't interpolate
-	// TODO - iff colour is a single value? If it's a numeric? need to stop.
+	SEXP fill = lst_defaults[ "fill_colour" ];
 
-	if ( fill_colour_location >= 0 && fill_opacity_location >= 0 ) {
-		// both need resolving
+	int alphaColIndex = fill_opacity_location >= 0 ? data_column_index[ fill_opacity_location ] : -1;
+	int fillColIndex = fill_colour_location >= 0 ? data_column_index[ fill_colour_location ] : -1;
 
-		// no need to do anything with the values, becaues it exsits in the data object
-		// the final fill_colour will be a hex string with ALPHA  : "#AABBCCFF"
-		// in this instance, both fill_colour and fill_opacity exist on the data
-		// need to work out their type, Switch, and call colourvalues::
-
-		int alphaColIndex = data_column_index[ fill_opacity_location ];
-		int fillColIndex = data_column_index[ fill_colour_location ];
-
-		if ( fillColIndex == -1 ) {
-			// it doesn't exist in the data
-			// TODO(check if it's a hex colour and use it for all data)
-
-			fill = lst_defaults[ "fill_colour" ];
-		} else {
-			fill = data[ fillColIndex ];
-		}
-
-		if ( alphaColIndex == -1 ) {
-			// TODO(check it's numeric [0, 255]);
-
-		} else {
-			alpha = data[ alphaColIndex ];
-		}
-
-		mapdeck::fill::fill_colour( lst_params, params, data, lst_defaults, data_column_index, hex_strings,
-               fill, alpha, fill_colour_location, fill_opacity_location );
-
-	} else if ( fill_colour_location >= 0 && fill_opacity_location == -1 ) {
-		// fill colour needs resolving, and opacity is default
-
-		int fillColIndex = data_column_index[ fill_colour_location ];
-
-		if ( fillColIndex == -1 ) {
-			// TODO(check if it's a hex colour and use it for all data)
-
-			fill = lst_defaults[ "fill_colour" ];
-		} else {
-			fill = data[ fillColIndex ];
-		}
-
-		mapdeck::fill::fill_colour( lst_params, params, data, lst_defaults, data_column_index, hex_strings,
-               fill, alpha, fill_colour_location, fill_opacity_location );
-
-	} else if ( fill_colour_location == -1 && fill_opacity_location >= 0 ) {
-
-		// fill opacity needs resolving, and colour is default.
-
-		int alphaColIndex = data_column_index[ fill_opacity_location ];
-		fill = lst_defaults[ "fill_colour" ];
-
-		if ( alphaColIndex == -1 ) {
-			// TODO(check it's numeric [0, 255]);
-
-		} else {
-			alpha = data[ alphaColIndex ];
-		}
-
-		mapdeck::fill::fill_colour( lst_params, params, data, lst_defaults, data_column_index, hex_strings,
-               fill, alpha, fill_colour_location, fill_opacity_location );
-
+	if ( fillColIndex >= 0 ) {
+		fill = data[ fillColIndex ];
 	} else {
-		// neither fill colour NOR fill_opacity are supplied on the data
-		//Rcpp::Rcout << "no fill supplied: " << std::endl;
-		// need to use defaults
-		fill = lst_defaults[ "fill_colour" ];
-		//Rcpp::NumericVector alpha(1, 255.0);  // opacity HAS to be numeric!
-
-		mapdeck::fill::fill_colour( lst_params, params, data, lst_defaults, data_column_index, hex_strings,
-               fill, alpha, fill_colour_location, fill_opacity_location );
-
+		// TODO ( if it's a hex string, apply it to all rows of data )
+		// i.e., when not a column of data, but ISS a hex string
+		// so this will be
+		// } else if (is_hex_string() ) {
+			// Rcpp::StringVector hex( data_rows, hex );
+		//}
 	}
 
-	//Rcpp::Rcout << "hex strings: " << hex_strings << std::endl;
+	if ( alphaColIndex >= 0 ) {
+		alpha = data[ alphaColIndex ];
+	} else {
+		Rcpp::StringVector sv = params.names();
+		int find_opacity = mapdeck::find_character_index_in_vector( sv, "fill_opacity" );
+		if (find_opacity >= 0 ) {
+			int a = params[ find_opacity ]; // will throw an error if not correct type
+			alpha.fill( a );
+		}
+	}
+
+	mapdeck::fill::fill_colour(
+		lst_params, params, data, lst_defaults, data_column_index, hex_strings,
+		fill, alpha, fill_colour_location, fill_opacity_location
+		);
+
 	lst_defaults[ "fill_colour" ] = hex_strings;
 }
 
@@ -126,7 +76,7 @@ void resolve_fill(
 // [[Rcpp::export]]
 Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 
-	int fill_colour_location = -1 ;
+	int fill_colour_location = -1;
 	int fill_opacity_location = -1;
 	int data_rows = data.nrows();
 
@@ -141,7 +91,7 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 	resolve_fill( lst_params, params, data, lst_defaults, fill_colour_location, fill_opacity_location );
 
 	Rcpp::StringVector cols_remove = mapdeck::scatterplot::scatterplot_colours;
-	mapdeck::remove_parameters( params, param_names, mapdeck::scatterplot::scatterplot_colours );
+	mapdeck::remove_parameters( params, param_names, cols_remove );
 	lst_params = mapdeck::construct_params( data, params, fill_colour_location, fill_opacity_location );
 
 	Rcpp::DataFrame df = mapdeck::construction::construct_data(
