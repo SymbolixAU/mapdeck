@@ -29,9 +29,6 @@ namespace mapdeck {
 	 */
 	inline int data_column_index(Rcpp::StringVector& param_value, Rcpp::StringVector& data_names) {
 
-		// Rcpp::Rcout << "finding: " << param_value << std::endl;
-		// Rcpp::Rcout << "in: " << data_names << std::endl;
-
 		int n = data_names.size();
 		for (int i = 0; i < n; i++ ) {
 
@@ -79,7 +76,7 @@ namespace mapdeck {
 		return TYPEOF( param );
 	}
 
-	void fill_single_vector( Rcpp::List& lst_defaults, Rcpp::String& param_name, SEXP& value, int n_rows ) {
+	inline void fill_single_vector( Rcpp::List& lst_defaults, Rcpp::String& param_name, SEXP& value, int n_rows ) {
 		switch( TYPEOF( value ) ) {
 		case 10: { // LGLSXP
 		Rcpp::LogicalVector l = Rcpp::as< Rcpp::LogicalVector >( value );
@@ -143,7 +140,6 @@ namespace mapdeck {
 				} else if ( param_names[i] == "fill_opacity" ) {
 					fill_opacity_location = i;
 				}
-
 			}
 		}
 		return Rcpp::List::create(

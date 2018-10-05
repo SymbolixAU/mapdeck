@@ -68,7 +68,7 @@ add_scatterplot <- function(
 	auto_highlight = FALSE,
 	layer_id = NULL,
 	digits = 6,
-	palette = viridisLite::viridis
+	palette = "viridis"
 ) {
 
 	message("Using development version. Please check plots carefully")
@@ -78,6 +78,7 @@ add_scatterplot <- function(
 
 	data <- normaliseSfData(data, "POINT")
 	polyline <- findEncodedColumn(data, polyline)
+
 	if( !is.null(polyline) && !polyline %in% names(l) ) {
 		l[['polyline']] <- polyline
 		data <- unlistMultiGeometry( data, polyline )
@@ -92,7 +93,6 @@ add_scatterplot <- function(
 		l[['lat']] <- NULL
 		l[['polyline']] <- polyline
 	}
-
 
 	shape <- rcpp_scatterplot( data, l )
 

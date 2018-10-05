@@ -2,7 +2,7 @@
 #define R_MAPDECK_DATA_CONSTRUCTION_H
 
 #include <Rcpp.h>
-#include "R_mapdeck.hpp"
+#include "mapdeck.hpp"
 
 namespace mapdeck {
 namespace construction {

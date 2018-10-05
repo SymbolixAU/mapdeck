@@ -7,7 +7,7 @@
 add_scatterplot(map, data = get_map_data(map), lon = NULL,
   lat = NULL, polyline = NULL, radius = NULL, fill_colour = NULL,
   fill_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
-  layer_id = NULL, digits = 6, palette = viridisLite::viridis)
+  layer_id = NULL, digits = 6, palette = "viridis")
 }
 \arguments{
 \item{map}{a mapdeck map object}

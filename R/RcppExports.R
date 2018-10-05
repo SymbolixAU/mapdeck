@@ -5,3 +5,7 @@ rcpp_scatterplot <- function(data, params) {
     .Call(`_mapdeck_rcpp_scatterplot`, data, params)
 }
 
+rcpp_pointcloud <- function(data, params) {
+    .Call(`_mapdeck_rcpp_pointcloud`, data, params)
+}
+

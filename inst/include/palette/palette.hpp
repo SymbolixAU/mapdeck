@@ -2,7 +2,7 @@
 #define R_MAPDECK_PALETTE_H
 
 #include <Rcpp.h>
-#include "R_mapdeck.hpp"
+#include "mapdeck.hpp"
 #include "mapdeck_defaults.hpp"
 
 
