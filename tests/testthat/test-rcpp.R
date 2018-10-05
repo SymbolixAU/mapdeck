@@ -170,7 +170,55 @@ test_that("different palette choice work", {
 	plot <- jsonlite::fromJSON( plot )
 
 	expect_true( all(colourvalues::colour_values(df$id, palette = pal[1:5,], alpha = df$id) == plot$fill_colour) )
+})
+
+test_that("opacity can be a single value, or a column of data", {
+
+		## TODO( n == 2 fails colourvalues::colour_values)
+		map <- mapdeck(token = 'abc')
+		set.seed(1)
+		n <- 5
+		df <- data.frame(
+			id = 1:n
+			, lon = sample(-180:180, size = n, replace = T)
+			, lat = sample(-90:90, size = n, replace = T)
+			, polyline = sample(letters, size = n, replace = T)
+			, rad = 1:n
+			, sample = rnorm(n)
+			, stringsAsFactors = F
+		)
+		l <- list(mapdeck::add_scatterplot, map = map, data = df, lon = "lon",
+							lat = "lat", polyline = "polyline", radius = "rad", fill_colour = "id",
+							fill_opacity = 100, tooltip = "id", palette = "viridis")
+
+		plot <- mapdeck:::rcpp_scatterplot(df, l)
+		expect_true( attr(plot, "class") == "json")
+		plot <- jsonlite::fromJSON( plot )
+
+		expect_true( all(colourvalues::colour_values(df$id, alpha =100) == plot$fill_colour) )
+
+		## TODO( n == 2 fails colourvalues::colour_values)
+		map <- mapdeck(token = 'abc')
+		set.seed(1)
+		n <- 5
+		df <- data.frame(
+			id = 1:n
+			, lon = sample(-180:180, size = n, replace = T)
+			, lat = sample(-90:90, size = n, replace = T)
+			, polyline = sample(letters, size = n, replace = T)
+			, rad = 1:n
+			, sample = rnorm(n)
+			, stringsAsFactors = F
+		)
+		l <- list(mapdeck::add_scatterplot, map = map, data = df, lon = "lon",
+							lat = "lat", polyline = "polyline", radius = "rad", fill_colour = "id",
+							fill_opacity = "rad", tooltip = "id", palette = "viridis")
+
+		plot <- mapdeck:::rcpp_scatterplot(df, l)
+		expect_true( attr(plot, "class") == "json")
+		plot <- jsonlite::fromJSON( plot )
+
+		expect_true( all(colourvalues::colour_values(df$id, alpha = df$rad) == plot$fill_colour) )
 
 
 })
-
