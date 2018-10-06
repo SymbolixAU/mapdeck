@@ -7,6 +7,7 @@ namespace mapdeck {
 namespace defaults {
 
   const Rcpp::StringVector default_palette = "viridis";
+  const std::string default_na_colour = "#808080FF";
 
 	inline Rcpp::StringVector default_polyline(int n) {
 		// created so it's pre-allocated - every data set will require a polylne vector

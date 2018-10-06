@@ -55,7 +55,8 @@ add_path <- function(
 	layer_id = NULL,
 	digits = 6,
 	auto_highlight = FALSE,
-	palette = "viridis"
+	palette = "viridis",
+	na_colour = "#808080FF"
 ) {
 
 	## TODO(sf and lon/lat coordinates)

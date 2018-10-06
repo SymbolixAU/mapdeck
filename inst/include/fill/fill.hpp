@@ -25,7 +25,8 @@ namespace fill {
 			int& fill_opacity_location
 	) {
 
-		std::string na_colour = "#808080FF";  // TODO
+		std::string na_colour = params.containsElementNamed("na_colour") ? params["na_colour" ] : mapdeck::defaults::default_na_colour;
+		//std::string na_colour =  params[ "na_colour" ];
 		bool include_alpha = true;            // always true - deck.gl supports alpha
 
 		SEXP pal = mapdeck::palette::resolve_palette( lst_params, params );

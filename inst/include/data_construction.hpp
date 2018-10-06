@@ -70,7 +70,6 @@ namespace construction {
   		}
   	}
 
-  	//Rcpp::DataFrame df = mapdeck::construct_df( lst_defaults, data_rows );
   	mapdeck::construct_df( lst_defaults, data_rows );
   	return lst_defaults;
   }

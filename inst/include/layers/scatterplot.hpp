@@ -18,7 +18,6 @@ namespace scatterplot {
   	"polyline","elevation","radius","tooltip"
   	);
 
-
   Rcpp::StringVector scatterplot_colours = Rcpp::StringVector::create(
   	"fill_colour", "fill_opacity","palette"
   );

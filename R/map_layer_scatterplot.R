@@ -22,6 +22,7 @@ mapdeckScatterplotDependency <- function() {
 #' @param palette string or matrix. String is either one of "viridis","inferno",
 #' "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 #' between [0, 255], where the 4th column represents the alpha.
+#' @param na_colour hex string colour to use for NA values
 #'
 #' @examples
 #'
@@ -68,13 +69,20 @@ add_scatterplot <- function(
 	auto_highlight = FALSE,
 	layer_id = NULL,
 	digits = 6,
-	palette = "viridis"
+	palette = "viridis",
+	na_colour = "#808080FF"
 ) {
 
 	message("Using development version. Please check plots carefully")
 
 	l <- as.list( match.call() )
+	l[["map"]] <- NULL
+	l[["data"]] <- NULL
+	l[["auto_highlight"]] <- NULL
+	l[["layer_id"]] <- NULL
+	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
+	#print( l )
 
 	data <- normaliseSfData(data, "POINT")
 	polyline <- findEncodedColumn(data, polyline)

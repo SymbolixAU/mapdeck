@@ -88,7 +88,8 @@ add_polygon <- function(
 	light_settings = list(),
 	layer_id = NULL,
 	digits = 6,
-	palette = "viridis"
+	palette = "viridis",
+	na_colour = "#808080FF"
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )

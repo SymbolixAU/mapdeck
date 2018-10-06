@@ -7,7 +7,8 @@
 add_scatterplot(map, data = get_map_data(map), lon = NULL,
   lat = NULL, polyline = NULL, radius = NULL, fill_colour = NULL,
   fill_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
-  layer_id = NULL, digits = 6, palette = "viridis")
+  layer_id = NULL, digits = 6, palette = "viridis",
+  na_colour = "#808080FF")
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -42,6 +43,8 @@ should be used for the latitude / longitude coordinates.}
 \item{palette}{string or matrix. String is either one of "viridis","inferno",
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 between [0, 255], where the 4th column represents the alpha.}
+
+\item{na_colour}{hex string colour to use for NA values}
 }
 \description{
 The Scatterplot Layer takes in coordinate points and renders them as circles

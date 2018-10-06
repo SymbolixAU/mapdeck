@@ -54,7 +54,8 @@ add_pointcloud <- function(
 	light_settings = list(),
 	layer_id = NULL,
 	digits = 6,
-	palette = "viridis"
+	palette = "viridis",
+	na_colour = "#808080FF"
 ) {
 
 	message("Using development version. Please check plots carefully")
