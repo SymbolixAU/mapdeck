@@ -17,7 +17,7 @@ namespace mapdeck {
   		Rcpp::List& params,
   		Rcpp::List& lst_defaults,
   		Rcpp::StringVector& layer_columns,
-  		Rcpp::StringVector& fill_colours,
+  		Rcpp::StringVector& colour_columns,
   		int& data_rows,
   		bool resolve_fill,
   		bool resolve_stroke) {
@@ -45,7 +45,8 @@ namespace mapdeck {
   		mapdeck::stroke::resolve_stroke( lst_params, params, data, lst_defaults, stroke_colour_location, stroke_opacity_location );
   	}
 
-  	mapdeck::remove_parameters( params, param_names, fill_colours );
+  	mapdeck::remove_parameters( params, param_names, colour_columns );
+
   	lst_params = mapdeck::construct_params(
   		data, params, fill_colour_location, fill_opacity_location,
   		stroke_colour_location, stroke_opacity_location

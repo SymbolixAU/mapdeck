@@ -10,7 +10,6 @@ namespace path {
 		"polyline", "tooltip"
 	);
 
-
 	Rcpp::StringVector path_colours = Rcpp::StringVector::create(
 	  "stroke_colour","stroke_opacity","palette"
 	);

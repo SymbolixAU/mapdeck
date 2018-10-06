@@ -59,9 +59,16 @@ add_path <- function(
 ) {
 
 	## TODO(sf and lon/lat coordinates)
-	message("Using development version. Please check plots carefully")
+	#message("Using development version. Please check plots carefully")
 
 	l <- as.list( match.call() )
+	l[[1]] <- NULL
+	l[["data"]] <- NULL
+	l[["map"]] <- NULL
+	l[["layer_id"]] <- NULL
+	l[["digits"]] <- NULL
+	l[["auto_highlight"]] <- NULL
+
 	l <- resolve_palette( l, palette )
 
 	data <- normaliseSfData(data, "LINESTRING")

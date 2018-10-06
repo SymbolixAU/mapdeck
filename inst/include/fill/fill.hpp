@@ -91,6 +91,7 @@ namespace fill {
   		fill, alpha, fill_colour_location, fill_opacity_location
   	);
 
+  	//Rcpp::Rcout << "hex strings: " << hex_strings << std::endl;
   	lst_defaults[ "fill_colour" ] = hex_strings;
   }
 

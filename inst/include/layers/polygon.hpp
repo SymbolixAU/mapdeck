@@ -10,7 +10,6 @@ namespace polygon {
 		"polyline","elevation","tooltip"
 	);
 
-
 	Rcpp::StringVector polygon_colours = Rcpp::StringVector::create(
 		"fill_colour", "fill_opacity","stroke_colour","stroke_opacity","palette"
 	);

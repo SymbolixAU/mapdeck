@@ -174,40 +174,42 @@
 # 	)
 # })
 # p
-
+#
 # key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 #
-# library(microbenchmark)
-# microbenchmark(
+# sf <- rbind(roads, roads, roads)
 #
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+# m <- mapdeck(
+# 	style = 'mapbox://styles/mapbox/dark-v9'
+# 	, location = c(145, -37.8)
+# 	, zoom = 10)
+#
+# library(microbenchmark)
+#
+# roads$n <- 1:nrow(roads)
+#
+# microbenchmark(
 # 	old = {
-# 		m <- mapdeck(
-# 		  token = key
-# 		  , style = 'mapbox://styles/mapbox/dark-v9'
-# 		  , location = c(145, -37.8)
-# 		  , zoom = 10) %>%
-# 		  add_path_old(
-# 		    data = roads
-# 		    , stroke_colour = "RIGHT_LOC"
-# 		    , layer_id = "path_layer"
-# 		    , tooltip = "ROAD_NAME"
-# 		    , auto_highlight = TRUE
-# 		  )
+# 		p1 <- add_path_old(
+# 			map = m
+# 			, data = roads
+# 		  , stroke_colour = "n"
+# 		  , layer_id = "path_layer"
+# 		  , tooltip = "RIGHT_LOC"
+# 		  #, auto_highlight = TRUE
+# 		)
 # 	},
 #
 # 	new = {
-# 		m <- mapdeck(
-# 		  token = key
-# 		  , style = 'mapbox://styles/mapbox/dark-v9'
-# 		  , location = c(145, -37.8)
-# 		  , zoom = 10) %>%
-# 		  add_path(
-# 		    data = roads
-# 		    , stroke_colour = "RIGHT_LOC"
-# 		    , layer_id = "path_layer"
-# 		    , tooltip = "ROAD_NAME"
-# 		    , auto_highlight = TRUE
-# 		  )
+# 		p2 <- add_path(
+# 			map = m
+# 		  , data = roads
+# 		  , stroke_colour = "n"
+# 		  , layer_id = "path_layer"
+# 		  , tooltip = "RIGHT_LOC"
+# 		  #, auto_highlight = TRUE
+# 		 )
 # 	},
 # 	times = 3
 # )
@@ -262,3 +264,57 @@
 #   },
 # 	times = 5
 # )
+
+
+
+# library(sf)
+# library(geojsonsf)
+#
+# sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+# sf <- sf::st_cast(sf, "POLYGON")
+#
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+# m <- mapdeck::mapdeck(
+# 	style = 'mapbox://styles/mapbox/dark-v9'
+# 	, location = c(144.5, -37)
+# 	, zoom = 5)
+#
+# library(microbenchmark)
+#
+# sf <- rbind(sf, sf, sf, sf, sf, sf)
+# sf <- rbind(sf, sf, sf, sf, sf)
+# sf <- rbind(sf, sf, sf)
+# # sf <- rbind(sf, sf, sf, sf, sf)
+#
+# sf$n <- 1:nrow(sf)
+#
+# microbenchmark(
+# 	old = {
+# 		p <- add_polygon_old(
+# 			map = m
+# 			, data = sf
+# 			, layer = "polygon_layer"
+# 			, fill_colour = "n"
+# 		)
+# 	},
+# 	new = {
+# 		p <- add_polygon(
+# 			map = m
+# 			, data = sf
+# 			, layer = "polygon_layer"
+# 			, fill_colour = "n"
+# 		)
+# 	},
+# 	times = 3
+# )
+#
+#
+# enc <- googlePolylines::encode( sf )
+# head( enc )
+#
+# microbenchmark(
+#   jsonlite = { js1 <- jsonlite::toJSON( enc ) },
+#   jsonify = { js2 <- jsonify::to_json( enc ) },
+#   times = 5
+# )
+

@@ -49,7 +49,7 @@ namespace mapdeck {
 		return -1;
 	}
 
-  inline Rcpp::List construct_df(Rcpp::List df, int nrows) {
+  inline void construct_df(Rcpp::List& df, int& nrows) {
 
   	if (nrows < 1) {
   		Rcpp::stop("Error creating data layer");
@@ -60,13 +60,14 @@ namespace mapdeck {
   	df.attr("class") = "data.frame";
   	df.attr("row.names") = nv;
 
-  	return df;
+  	//return df;
   }
 
 	inline void remove_parameters(
 			Rcpp::List& params,
 			Rcpp::StringVector& param_names,
 			Rcpp::StringVector& to_remove ) {
+
 		param_names = Rcpp::setdiff( param_names,  to_remove );
 		params = params[ param_names ];
 	}
@@ -82,7 +83,12 @@ namespace mapdeck {
 		return TYPEOF( param );
 	}
 
-	inline void fill_single_vector( Rcpp::List& lst_defaults, Rcpp::String& param_name, SEXP& value, int n_rows ) {
+	inline void fill_single_vector(
+			Rcpp::List& lst_defaults,
+			Rcpp::String& param_name,
+			SEXP& value,
+			int n_rows ) {
+
 		switch( TYPEOF( value ) ) {
 		case 10: { // LGLSXP
 		Rcpp::LogicalVector l = Rcpp::as< Rcpp::LogicalVector >( value );

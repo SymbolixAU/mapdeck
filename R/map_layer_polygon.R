@@ -91,9 +91,13 @@ add_polygon <- function(
 	palette = "viridis"
 ) {
 
-	message("Using development version. Please check plots carefully")
-
-	l <- as.list( match.call() )
+	l <- as.list( match.call( expand.dots = F) )
+	l[["data"]] <- NULL
+	l[["map"]] <- NULL
+	l[["auto_highlight"]] <- NULL
+	l[["light_settings"]] <- NULL
+	l[["layer_id"]] <- NULL
+	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
 
 	data <- normaliseSfData(data, "POLYGON", multi = FALSE)
@@ -106,6 +110,7 @@ add_polygon <- function(
 	}
 
 	shape <- rcpp_polygon( data, l )
+	# print( shape )
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
@@ -144,7 +149,7 @@ add_polygon_old <- function(
 		objArgs[['polyline']] <- polyline
 	}
 
-	## parameter checks
+	# parameter checks
 	checkNumeric(digits)
 	checkPalette(palette)
 	layer_id <- layerId(layer_id, "polygon")
@@ -182,6 +187,7 @@ add_polygon_old <- function(
 	}
 
 	shape <- jsonlite::toJSON(shape, digits = digits)
+	# print( shape )
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
