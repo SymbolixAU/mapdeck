@@ -187,14 +187,15 @@
 #
 # library(microbenchmark)
 #
+# sf$n <- 1:nrow(sf)
 # roads$n <- 1:nrow(roads)
 #
 # microbenchmark(
 # 	old = {
 # 		p1 <- add_path_old(
 # 			map = m
-# 			, data = roads
-# 		  , stroke_colour = "n"
+# 			, data = sf
+# 		  , stroke_colour = "RIGHT_LOC"
 # 		  , layer_id = "path_layer"
 # 		  , tooltip = "RIGHT_LOC"
 # 		  #, auto_highlight = TRUE
@@ -202,14 +203,14 @@
 # 	},
 #
 # 	new = {
-# 		p2 <- add_path(
-# 			map = m
-# 		  , data = roads
-# 		  , stroke_colour = "n"
-# 		  , layer_id = "path_layer"
-# 		  , tooltip = "RIGHT_LOC"
-# 		  #, auto_highlight = TRUE
-# 		 )
+		# p2 <- add_path(
+		# 	map = m
+		#   , data = sf
+		#   , stroke_colour = "n"
+		#   , layer_id = "path_layer"
+		#   , tooltip = "RIGHT_LOC"
+		#   #, auto_highlight = TRUE
+		#  )
 # 	},
 # 	times = 3
 # )

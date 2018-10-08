@@ -7,7 +7,7 @@ namespace mapdeck {
 namespace path {
 
 	Rcpp::StringVector path_columns = Rcpp::StringVector::create(
-		"polyline", "tooltip"
+		"polyline", "stroke_width", "tooltip"
 	);
 
 	Rcpp::StringVector path_colours = Rcpp::StringVector::create(

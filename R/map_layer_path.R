@@ -70,6 +70,15 @@ add_path <- function(
 	l[["digits"]] <- NULL
 	l[["auto_highlight"]] <- NULL
 
+	# l <- list(
+	# 	stroke_colour = stroke_colour
+	# 	, stroke_width = stroke_width
+	# 	, stroke_opacity = stroke_opacity
+	# 	, tooltip = tooltip
+	# 	, palette = palette
+	# 	, na_colour = na_colour
+	# )
+
 	l <- resolve_palette( l, palette )
 
 	data <- normaliseSfData(data, "LINESTRING")
