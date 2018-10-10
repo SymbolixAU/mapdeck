@@ -56,11 +56,8 @@ namespace mapdeck {
   	}
 
   	Rcpp::IntegerVector nv = Rcpp::seq(1, nrows);
-
   	df.attr("class") = "data.frame";
   	df.attr("row.names") = nv;
-
-  	//return df;
   }
 
 	inline void remove_parameters(

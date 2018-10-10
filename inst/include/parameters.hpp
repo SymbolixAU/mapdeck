@@ -45,6 +45,8 @@ namespace mapdeck {
   	// timer.step("resolve_palette");
   	mapdeck::palette::resolve_palette( lst_params, params );
 
+  	// TODO( if stroke & fill colours are the same, don't 'colour values' twice );
+
   	if ( resolve_fill ) {
   	  // timer.step("resolve_fill");
   	  mapdeck::fill::resolve_fill( lst_params, params, data, lst_defaults, fill_colour_location, fill_opacity_location );
