@@ -1,5 +1,5 @@
 
-function add_arc( map_id, arc_data, layer_id, auto_highlight ) {
+function add_arc( map_id, arc_data, layer_id, auto_highlight, transitions ) {
 
   const arcLayer = new ArcLayer({
     id: 'arc-'+layer_id,
@@ -14,9 +14,11 @@ function add_arc( map_id, arc_data, layer_id, auto_highlight ) {
     onHover: updateTooltip,
     autoHighlight: auto_highlight,
     transitions: {
-    	getSourceColor: 10000,
-    	getTargetcolor: 10000,
-    	getStrokeWidth: 1000
+        getSourcePosition: transitions.origin,
+        getTargetPosition: transitions.destination,
+    	getSourceColor: transitions.stroke_from,
+    	getTargetcolor: transitions.stroke_to,
+    	getStrokeWidth: transitions.stroke_width
     }
   });
 
