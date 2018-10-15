@@ -24,7 +24,7 @@ Imports:
     magrittr,
     viridisLite,
     Rcpp,
-    colourvalues (>= 0.1.1001),
+    colourvalues (>= 0.2.0),
     jsonify (>= 0.1.0001)
 RoxygenNote: 6.1.0
 Suggests: 

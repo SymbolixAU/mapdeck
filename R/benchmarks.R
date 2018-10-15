@@ -187,14 +187,15 @@
 #
 # library(microbenchmark)
 #
+# sf$n <- 1:nrow(sf)
 # roads$n <- 1:nrow(roads)
 #
 # microbenchmark(
 # 	old = {
 # 		p1 <- add_path_old(
 # 			map = m
-# 			, data = roads
-# 		  , stroke_colour = "n"
+# 			, data = sf
+# 		  , stroke_colour = "RIGHT_LOC"
 # 		  , layer_id = "path_layer"
 # 		  , tooltip = "RIGHT_LOC"
 # 		  #, auto_highlight = TRUE
@@ -204,8 +205,8 @@
 # 	new = {
 # 		p2 <- add_path(
 # 			map = m
-# 		  , data = roads
-# 		  , stroke_colour = "n"
+# 		  , data = sf
+# 		  , stroke_colour = "RIGHT_LOC"
 # 		  , layer_id = "path_layer"
 # 		  , tooltip = "RIGHT_LOC"
 # 		  #, auto_highlight = TRUE
@@ -218,7 +219,7 @@
 # lons <- seq(-180, 180, by = 0.0001)
 # lats <- seq(-90, 90, by = 0.0001)
 #
-# n <- 1e4
+# n <- 1e5
 # df <- data.frame(
 # 	#	id = sample(letters[1:10], size = 26, replace = T)
 # 	id = 1:n
@@ -226,7 +227,7 @@
 # 	#	id = as.factor(1:26)
 # 	, lon = sample(lons, size = n, replace = T)
 # 	, lat = sample(lats, size = n, replace = T)
-# 	#, polyline = sample(letters, size = n, replace = T)
+# 	, l = sample(letters, size = n, replace = T)
 # 	, r = 1:n
 # 	, s = rnorm(n)
 # 	, stringsAsFactors = F
@@ -244,7 +245,7 @@
 # 			, lat = "lat"
 # 			, lon = "lon"
 # 			, radius = 1000
-# 			, fill_colour = "id"
+# 			, fill_colour = "l"
 # 			#, fill_opacity = "id"
 # 			, tooltip = "id"
 # 		)
@@ -257,15 +258,26 @@
 #   		, lat = "lat"
 #   		, lon = "lon"
 #   		, radius = 1000
-#   		, fill_colour = "id"
+#   		, fill_colour = "l"
 #   		#, fill_opacity = "id"
 #   		, tooltip = "id"
 #   	)
 #   },
 # 	times = 5
 # )
-
-
+#
+# # n <- 1e5
+# # fill_colour = 'id'
+# # Unit: milliseconds
+# # expr       min        lq      mean    median        uq       max neval
+# # old 7485.5636 7686.8731 7859.4077 7946.2620 8040.5643 8137.7754     5
+# # new  251.0061  268.0089  381.0152  393.0107  493.9947  499.0555     5
+#
+# # fill_colour = 'l'
+# # Unit: milliseconds
+# # expr      min       lq     mean   median       uq      max neval
+# # old 276.9901 286.9193 304.4161 297.4079 315.1527 345.6107     5
+# # new 268.9899 273.5370 305.8971 280.9954 302.2579 403.7051     5
 
 # library(sf)
 # library(geojsonsf)
@@ -294,7 +306,7 @@
 # 			map = m
 # 			, data = sf
 # 			, layer = "polygon_layer"
-# 			, fill_colour = "n"
+# 			, fill_colour = "SA2_NAME16"
 # 		)
 # 	},
 # 	new = {
@@ -302,12 +314,26 @@
 # 			map = m
 # 			, data = sf
 # 			, layer = "polygon_layer"
-# 			, fill_colour = "n"
+# 			, fill_colour = "SA2_NAME16"
 # 		)
 # 	},
 # 	times = 3
 # )
-#
+
+# nrow(sf)
+# 554400
+
+# fill_colour == 'n'
+# Unit: seconds
+# expr       min        lq      mean    median        uq       max neval
+#  old 11.393775 11.477723 11.784519 11.561671 11.979890 12.398110     3
+#  new  6.250752  6.369782  6.427707  6.488813  6.516184  6.543555     3
+
+# fill_colour = "SA2_NAME16"
+# Unit: seconds
+# expr      min       lq     mean   median       uq      max neval
+# old 7.850554 7.933001 8.099077 8.015448 8.223339 8.431231     3
+# new 6.226209 6.281467 6.315807 6.336725 6.360606 6.384487     3
 #
 # enc <- googlePolylines::encode( sf )
 # head( enc )
