@@ -67,7 +67,7 @@ namespace construction {
   				SEXP value = params[i];
   				mapdeck::fill_single_vector( lst_defaults, this_param, value, data_rows );
   			}
-  		}
+  		} // TODO( is there an 'else' condition? )
   	}
 
   	mapdeck::construct_df( lst_defaults, data_rows );
