@@ -7,7 +7,8 @@
 add_line(map, data = get_map_data(map), layer_id = NULL, origin,
   destination, id = NULL, stroke_colour = NULL, stroke_width = NULL,
   stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
-  digits = 6, palette = viridisLite::viridis)
+  digits = 6, legend = FALSE, legend_options = NULL,
+  palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}

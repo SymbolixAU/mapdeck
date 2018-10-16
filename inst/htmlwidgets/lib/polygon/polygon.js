@@ -3,7 +3,7 @@
 function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highlight, legend ) {
 
   //console.log( polygon_data ) ;
-  console.log( legend );
+  //console.log( legend );
 
   const polygonLayer = new PolygonLayer({
     id: 'polygon-'+layer_id,
