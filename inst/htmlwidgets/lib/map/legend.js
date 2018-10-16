@@ -240,10 +240,15 @@ function placeControl(map_id, object, position) {
     console.log(object);
     console.log(position);
 
-    var mapbox_ctrl = document.getElementsByClassName("mapboxgl-ctrl-top-left");
+    //var mapbox_ctrl = document.getElementsByClassName("mapboxgl-ctrl-top-left");
+    var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
+    //var mapbox_ctrl = document.getElementById("htmlwidget_container");
+    //var mapbox_ctrl = document.getElementsByClassName("mapboxgl-map");
+    //var mapbox_ctrl = document.getElementById("deckgl-overlay");
     console.log("mapbox_ctrl");
     console.log(mapbox_ctrl);
     mapbox_ctrl[0].appendChild(object);
+    //mapbox_ctrl.appendChild( object );
 
     var ledge = {};
 

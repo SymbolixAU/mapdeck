@@ -9,9 +9,9 @@
     max-height: 200px;
     max-width: 200px;
     overflow: auto;
-/*    position: absolute; */
-/*    bottom: 0;  */
-/*    right: 0;   */
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .legendTitle {
@@ -46,4 +46,12 @@
 }
 #legend img {
     vertical-align: middle;
+}
+
+.overlays canvas {
+  mix-blend-mode: multiply;
+}
+
+.deckgl-parent-class {
+  isolation: 'isolate';
 }
