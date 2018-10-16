@@ -87,6 +87,8 @@ add_polygon <- function(
 	light_settings = list(),
 	layer_id = NULL,
 	digits = 6,
+	legend = F,
+	legend_options = NULL,
 	palette = viridisLite::viridis
 ) {
 
@@ -132,6 +134,9 @@ add_polygon <- function(
 		shape <- replaceVariableColours(shape, colours)
 	}
 
+	## LEGEND
+	legend <- resolveLegend(legend, legend_options, colour_palettes)
+
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
 	if(length(requiredDefaults) > 0){
@@ -143,7 +148,7 @@ add_polygon <- function(
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
 	map <- addDependency(map, mapdeckPolygonDependency())
-	invoke_method(map, "add_polygon", shape, layer_id, light_settings, auto_highlight)
+	invoke_method(map, "add_polygon", shape, layer_id, light_settings, auto_highlight, legend)
 }
 
 

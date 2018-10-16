@@ -1,8 +1,9 @@
 
 
-function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highlight ) {
+function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highlight, legend ) {
 
   //console.log( polygon_data ) ;
+  console.log( legend );
 
   const polygonLayer = new PolygonLayer({
     id: 'polygon-'+layer_id,
@@ -24,6 +25,11 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highl
     onClick: info => layer_click( map_id, "path", info )
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
+
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
+
 }
 
 function decode_polygons( polylines ) {
