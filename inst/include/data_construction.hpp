@@ -70,7 +70,6 @@ namespace construction {
   				mapdeck::fill_single_vector( lst_defaults, this_param, value, data_rows );
   			}
   		} // TODO( is there an 'else' condition? )
-  	}
 
   	mapdeck::construct_df( lst_defaults, data_rows );
   	return lst_defaults;
