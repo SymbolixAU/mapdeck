@@ -151,6 +151,13 @@ add_line <- function(
 }
 
 
+#' @rdname clear
+#' @export
+clear_line <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "line")
+	invoke_method(map, "clear_line", layer_id )
+}
+
 requiredLineColumns <- function() {
 	c("stroke_colour", "stroke_width", "stroke_opacity")
 }

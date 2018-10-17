@@ -23,3 +23,6 @@ function add_path( map_id, path_data, layer_id, auto_highlight, legend ) {
   }
 }
 
+function clear_path( map_id, layer_id ) {
+  clear_layer( map_id, 'path-'+layer_id );
+}

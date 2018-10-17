@@ -20,3 +20,7 @@ function add_hexagon( map_id, hexagon_data, layer_id ) {
 
 	update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
 }
+
+function clear_hexagon( map_id, layer_id ) {
+  clear_layer( map_id, 'hexagon-'+layer_id );
+}

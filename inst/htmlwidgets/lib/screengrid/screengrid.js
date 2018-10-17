@@ -15,3 +15,7 @@ function add_screengrid( map_id, screengrid_data, layer_id, opacity, cell_size, 
   });
   update_layer( map_id, 'screengrid-'+layer_id, screengridLayer );
 }
+
+function clear_screengrid( map_id, layer_id ) {
+  clear_layer( map_id, 'screengrid-'+layer_id );
+}

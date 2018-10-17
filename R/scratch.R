@@ -36,6 +36,8 @@
 
 # library(shiny)
 # library(shinydashboard)
+# library(mapdeck)
+# set_token(read.dcf("~/.googleAPI", fields = "MAPBOX"))
 #
 # ui <- dashboardPage(
 # 	dashboardHeader()
@@ -44,6 +46,10 @@
 # 			inputId = "elevation"
 # 			, label = "elevation"
 # 			, choices = c(seq(100,5000, by = 500))
+# 		)
+# 		, actionButton(
+# 			inputId = "clear"
+# 			, label = "clear"
 # 		)
 # 	)
 # 	, dashboardBody(
@@ -56,7 +62,7 @@
 # server <- function(input, output) {
 #
 # 	df <- melbourne
-# 	df$elevation <- sample(100:5000, size = nrow(df))
+# 	df$elevation <- sample(200:5000, size = nrow(df))
 # 	df$info <- paste0("<b>SA2 - </b><br>",df$SA2_NAME)
 #
 # 	output$map <- renderMapdeck({
@@ -79,11 +85,20 @@
 # 				data = df_plot
 # 				, polyline = "geometry"
 # 				, layer = "polygon_layer"
-# 				, fill_colour = "SA2_NAME",
+# 				, fill_colour = "SA2_NAME"
 # 				, elevation = "elevation"
 # 				, stroke_width = 0
 # 				, tooltip = 'info'
 # 				, legend = T
+# 			)
+# 	})
+#
+# 	observeEvent({input$clear},{
+# 		mapdeck_update(
+# 			map_id = "map"
+# 		) %>%
+# 			clear_polygon(
+# 				layer_id = "polygon_layer"
 # 			)
 # 	})
 #

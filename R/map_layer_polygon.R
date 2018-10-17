@@ -155,6 +155,14 @@ add_polygon <- function(
 }
 
 
+#' @rdname clear
+#' @export
+clear_polygon <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "polygon")
+	invoke_method(map, "clear_polygon", layer_id )
+}
+
+
 requiredPolygonColumns <- function() {
 	c("fill_colour", "fill_opacity", "stroke_width", "stroke_colour","elevation")
 }

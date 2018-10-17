@@ -35,9 +35,6 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highl
 function decode_polygons( polylines ) {
   var i, p, coordinates = [];
 
-  //console.log( polylines );
-  //console.log("polygon length: " + polylines.length);
-
   for (i = 0; i < polylines.length; i++ ) {
     p = polylines[i];
     if ( p != "-") {
@@ -45,6 +42,9 @@ function decode_polygons( polylines ) {
     }
   }
 
-  //console.log(coordinates);
   return coordinates;
+}
+
+function clear_polygon( map_id, layer_id ) {
+  clear_layer( map_id, 'polygon-'+layer_id );
 }

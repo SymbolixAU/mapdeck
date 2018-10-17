@@ -110,3 +110,10 @@
 #' 		stringsAsFactors = F
 #' 	)
 #' }
+#'
+#' #' @rdname clear
+#' #' @export
+#' clear_hexagon <- function( map, layer_id = NULL) {
+#' 	layer_id <- layerId(layer_id, "hexagon")
+#' 	invoke_method(map, "clear_hexagon", layer_id )
+#' }

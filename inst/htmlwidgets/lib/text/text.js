@@ -17,3 +17,7 @@ function add_text( map_id, text_data, layer_id ) {
   });
   update_layer( map_id, 'text-'+layer_id, textLayer );
 }
+
+function clear_text( map_id, layer_id ) {
+  clear_layer( map_id, 'text-'+layer_id );
+}

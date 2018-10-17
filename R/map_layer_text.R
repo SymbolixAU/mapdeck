@@ -127,6 +127,12 @@ add_text <- function(
 	invoke_method(map, "add_text", shape, layer_id)
 }
 
+#' @rdname clear
+#' @export
+clear_text <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "text")
+	invoke_method(map, "clear_text", layer_id )
+}
 
 requiredTextColumns <- function() {
 	c('fill_colour', 'size','angle','anchor','alignment_baseline')

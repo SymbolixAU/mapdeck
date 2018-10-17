@@ -116,6 +116,12 @@ add_path <- function(
 	invoke_method(map, "add_path", shape, layer_id, auto_highlight, legend )
 }
 
+#' @rdname clear
+#' @export
+clear_path <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "path")
+	invoke_method(map, "clear_path", layer_id )
+}
 
 requiredPathColumns <- function() {
 	c("stroke_width", "stroke_colour","stroke_opacity")
