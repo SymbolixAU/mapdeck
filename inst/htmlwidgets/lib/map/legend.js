@@ -211,7 +211,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
 }
 
 
-function clear_legend(map_id, layer_id){
+function clear_legend( map_id, layer_id ) {
 
     // find reference to this layer in the legends
     var id = map_id + 'legend' + layer_id + 'fill_colour';
@@ -237,8 +237,6 @@ function clear_legend(map_id, layer_id){
 function placeControl(map_id, object, position) {
 
     var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
-    console.log("mapbox_ctrl");
-    console.log(mapbox_ctrl);
     mapbox_ctrl[0].appendChild(object);
     
     var ledge = {};
