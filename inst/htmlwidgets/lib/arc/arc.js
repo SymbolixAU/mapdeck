@@ -1,7 +1,5 @@
 
 function add_arc( map_id, arc_data, layer_id, auto_highlight ) {
-    
-  console.log( legend );
 
   const arcLayer = new ArcLayer({
     id: 'arc-'+layer_id,

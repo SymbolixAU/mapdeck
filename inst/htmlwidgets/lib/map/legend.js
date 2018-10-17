@@ -2,9 +2,6 @@ function add_legend(map_id, layer_id, legendValues) {
 
   'use strict';
 
-
-  console.log("adding legend");
-
   var i = 0;
 
   for (i = 0; i < legendValues.length; i++) {
@@ -236,19 +233,9 @@ function clear_legend(map_id, layer_id){
 
 function placeControl(map_id, object, position) {
 
-    console.log(map_id);
-    console.log(object);
-    console.log(position);
-
-    //var mapbox_ctrl = document.getElementsByClassName("mapboxgl-ctrl-top-left");
     var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
-    //var mapbox_ctrl = document.getElementById("htmlwidget_container");
-    //var mapbox_ctrl = document.getElementsByClassName("mapboxgl-map");
-    //var mapbox_ctrl = document.getElementById("deckgl-overlay");
-    console.log("mapbox_ctrl");
-    console.log(mapbox_ctrl);
+
     mapbox_ctrl[0].appendChild(object);
-    //mapbox_ctrl.appendChild( object );
 
     var ledge = {};
 
