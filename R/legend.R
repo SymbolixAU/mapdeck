@@ -2,6 +2,7 @@
 #'
 #' Clears the legend for a given layer_id
 #'
+#' @inheritParams add_arc
 #'
 #' @export
 clear_legend <- function( map_id, layer_id ) {

@@ -6,6 +6,11 @@
 \usage{
 clear_legend(map_id, layer_id)
 }
+\arguments{
+\item{layer_id}{single value specifying an id for the layer. Use this value to
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
+}
 \description{
 Clears the legend for a given layer_id
 }
