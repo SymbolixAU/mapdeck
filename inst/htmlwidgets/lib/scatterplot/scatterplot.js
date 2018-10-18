@@ -1,5 +1,5 @@
 
-function add_scatterplot( map_id, scatter_data, layer_id, auto_highlight ) {
+function add_scatterplot( map_id, scatter_data, layer_id, auto_highlight, legend ) {
   const scatterLayer = new deck.ScatterplotLayer({
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
@@ -14,10 +14,14 @@ function add_scatterplot( map_id, scatter_data, layer_id, auto_highlight ) {
     onHover: updateTooltip
   });
   update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
+    
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
 }
 
 
-function add_scatterplot2( map_id, scatter_data, layer_id, auto_highlight ) {
+function add_scatterplot2( map_id, scatter_data, layer_id, auto_highlight, legend ) {
   const scatterLayer = new deck.ScatterplotLayer({
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
@@ -32,4 +36,12 @@ function add_scatterplot2( map_id, scatter_data, layer_id, auto_highlight ) {
     onHover: updateTooltip
   });
   update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
+}
+
+function clear_scatterplot( map_id, layer_id ) {
+  clear_layer( map_id, 'scatterplot-'+layer_id );
+  clear_legend( map_id, layer_id );
 }

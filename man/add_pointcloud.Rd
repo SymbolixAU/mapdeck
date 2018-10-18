@@ -8,6 +8,7 @@ add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
   elevation, polyline = NULL, radius = NULL, fill_colour = NULL,
   fill_opacity = NULL, stroke_width = NULL, tooltip = NULL,
   light_settings = list(), layer_id = NULL, digits = 6,
+  legend = FALSE, legend_options = NULL,
   palette = viridisLite::viridis)
 }
 \arguments{
@@ -43,6 +44,11 @@ to conflict and not plot correctly}
 
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
 
 \item{palette}{a function which generates hex colours}
 }

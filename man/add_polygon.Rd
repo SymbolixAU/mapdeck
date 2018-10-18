@@ -8,7 +8,8 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL,
   fill_opacity = NULL, elevation = NULL, tooltip = NULL,
   auto_highlight = FALSE, light_settings = list(), layer_id = NULL,
-  digits = 6, palette = viridisLite::viridis)
+  digits = 6, legend = F, legend_options = NULL,
+  palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -41,6 +42,11 @@ to conflict and not plot correctly}
 
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
 
 \item{palette}{a function which generates hex colours}
 }

@@ -126,6 +126,13 @@ add_grid <- function(
 }
 
 
+#' @rdname clear
+#' @export
+clear_grid <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "grid")
+	invoke_method(map, "clear_grid", layer_id )
+}
+
 requiredGridColumns <- function() {
 	c()
 }

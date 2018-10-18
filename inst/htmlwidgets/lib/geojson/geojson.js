@@ -66,3 +66,7 @@ function geojson_lineWidth( g, lineWidth ) {
   return g.properties.lineWidth;
 }
 
+function clear_geojson( map_id, layer_id ) {
+  clear_layer( map_id, 'geojson-'+layer_id );
+  clear_legend( map_id, layer_id );
+}

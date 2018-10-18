@@ -14,10 +14,15 @@ HTMLWidgets.widget({
       	//window.params.push({ 'map_id' : el.id });
 
       	window[el.id + 'layers'] = []; // keep track of layers for overlaying multiple
+        window[el.id + 'legendPositions'] = [];     // array for keeping a referene to legend positions
       	// needs to be an array because .props takes an array of layers
 
         var mapDiv = document.getElementById(el.id);
         mapDiv.className = 'mapdeckmap';
+          
+        var legendContainer = document.createElement('div');
+        legendContainer.className = "legendContainer";
+        mapDiv.appendChild( legendContainer );
 
         var tooltipdiv = document.createElement('div');
         tooltipdiv.id = 'tooltip';
@@ -31,7 +36,7 @@ HTMLWidgets.widget({
         	pitch: x.pitch
         };
 
-        const	deckgl = new deck.DeckGL({
+        const deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
@@ -157,6 +162,14 @@ function update_layer( map_id, layer_id, layer ) {
   	window[ map_id + 'layers'][elem] = layer;
   } else {
   	window[map_id + 'layers'].push( layer );
+  }
+  window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
+}
+
+function clear_layer( map_id, layer_id ) {
+  var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
+  if ( elem != -1 ) {
+  	window[ map_id + 'layers'].splice( elem, 1 );
   }
   window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
 }

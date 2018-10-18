@@ -1,6 +1,6 @@
 
 
-function add_path( map_id, path_data, layer_id, auto_highlight ) {
+function add_path( map_id, path_data, layer_id, auto_highlight, legend ) {
 
   const pathLayer = new PathLayer({
     id: 'path-'+layer_id,
@@ -17,5 +17,13 @@ function add_path( map_id, path_data, layer_id, auto_highlight ) {
     autoHighlight: auto_highlight
   });
   update_layer( map_id, 'path-'+layer_id, pathLayer );
+    
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
 }
 
+function clear_path( map_id, layer_id ) {
+  clear_layer( map_id, 'path-'+layer_id );
+  clear_legend( map_id, layer_id );
+}
