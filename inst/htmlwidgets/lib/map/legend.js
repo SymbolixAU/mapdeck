@@ -234,29 +234,18 @@ function clear_legend( map_id, layer_id ) {
 function placeControl(map_id, object, position) {
 
     var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
-<<<<<<< HEAD
 
     mapbox_ctrl[0].appendChild(object);
-
-=======
-    mapbox_ctrl[0].appendChild(object);
-    
->>>>>>> 67a6568850d5cfd63833bd7397aebd71c8b25a13
     var ledge = {};
 
     ledge = {
         id: object.getAttribute('id'),
         position: position
     };
-
-    //window[map_id + 'legendPositions'].push(ledge);
 }
 
 
 function removeControl(map_id, legend_id, position) {
-
-    //console.log("removeControl()");
-    //console.log(position);
 
     switch (position) {
     case 'TOP_LEFT':
