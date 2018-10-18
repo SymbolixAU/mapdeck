@@ -32,7 +32,7 @@
 # 		, legend = T
 # 	) %>%
 # 	clear_legend( "polygon_layer" )
-
+#
 
 # library(shiny)
 # library(shinydashboard)

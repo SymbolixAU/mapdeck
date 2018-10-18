@@ -21,6 +21,8 @@ HTMLWidgets.widget({
           
         var legendContainer = document.createElement('div');
         legendContainer.className = "legendContainer";
+        //var rightControl = document.getElementsByClassName('mapboxgl-ctrl-bottom-right');
+        //rightControl[0].appendChild( legendContainer );
         mapDiv.appendChild( legendContainer );
 
         var tooltipdiv = document.createElement('div');

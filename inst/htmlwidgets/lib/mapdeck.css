@@ -1,8 +1,9 @@
 .legendContainer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     right: 0;
     z-index: 99;
+    padding-bottom: 14px;
 }
 
 .legend {
