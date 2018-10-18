@@ -111,7 +111,7 @@
 # flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 # flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 #
-
+#
 # mapdeck(
 # 	style = 'mapbox://styles/mapbox/dark-v9'
 # 	, location = c(145, -37.8)
@@ -123,7 +123,8 @@
 # 		, tooltip = "ROAD_NAME"
 # 		, auto_highlight = TRUE
 # 		, legend = T
-# 	)
+# 	) %>%
+# 	clear_path(layer_id = "path_layer")
 
 # mapdeck(
 # 	style = 'mapbox://styles/mapbox/dark-v9'
@@ -138,7 +139,7 @@
 # 		, layer_id = "scatter_layer"
 # 		, tooltip = "capital"
 # 		, legend = T
-# 	)
+# 	) %>% clear_scatterplot(layer_id = "scatter_layer")
 
 # df <- capitals
 # df$z <- sample(10000:10000000, size = nrow(df))
