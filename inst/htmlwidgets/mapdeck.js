@@ -18,10 +18,15 @@ HTMLWidgets.widget({
 
         var mapDiv = document.getElementById(el.id);
         mapDiv.className = 'mapdeckmap';
+          
+        var legendContainer = document.createElement('div');
+        legendContainer.className = "legendContainer";
+        mapDiv.appendChild( legendContainer );
 
         var tooltipdiv = document.createElement('div');
         tooltipdiv.id = 'tooltip';
         mapDiv.appendChild(tooltipdiv);
+        //legendContainer.appendChild( tooltipdiv );
 
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {

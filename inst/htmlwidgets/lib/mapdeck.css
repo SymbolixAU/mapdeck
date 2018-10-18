@@ -1,3 +1,10 @@
+.legendContainer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 99;
+}
+
 .legend {
     font-family: Arial, sans-serif;
     background: #fff;
@@ -9,7 +16,7 @@
     max-height: 200px;
     max-width: 200px;
     overflow: auto;
-    position: absolute;
+    position: relative;
     bottom: 0;
     right: 0;
 }

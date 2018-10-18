@@ -5,14 +5,20 @@ function add_legend(map_id, layer_id, legendValues) {
   var i = 0;
 
   for (i = 0; i < legendValues.length; i++) {
-    if (legendValues[i].type === "category") {
+    if (legendValues[i].type === "category" || legendValues[i].legend.colour.length === 1) {
+        
       add_legend_category(map_id, layer_id, legendValues[i]);
+        
     } else {
-      if (legendValues[i].legend.colour.length === 1) {
-        add_legend_category(map_id, layer_id, legendValues[i]);
-      } else {
+        
+//      if (legendValues[i].legend.colour.length === 1) {
+//          
+//        add_legend_category(map_id, layer_id, legendValues[i]);
+//          
+//      } else {
+//          
         add_legend_gradient(map_id, layer_id, legendValues[i]);
-      }
+//      }
     }
   }
 }
@@ -207,12 +213,25 @@ function add_legend_category(map_id, layer_id, legendValues) {
 
 }
 
+function findById(source, id, returnType) {
+    var i = 0;
+    for (i = 0; i < source.length; i++) {
+        if (source[i].id === id) {
+            if (returnType === "object") {
+                return source[i];
+            } else {
+                return i;
+            }
+        }
+    }
+    return;
+}
 
 function clear_legend( map_id, layer_id ) {
 
     // find reference to this layer in the legends
     var id = map_id + 'legend' + layer_id + 'fill_colour';
-    var objIndex = findById(window[map_id + 'legendPositions'], id, "index" );
+    var objIndex = findById( window[map_id + 'legendPositions'], id, "index" );
 
     if(objIndex != null) {
         removeControl(map_id, id, window[map_id + 'legendPositions'][objIndex].position);
@@ -231,40 +250,70 @@ function clear_legend( map_id, layer_id ) {
 }
 
 
-function placeControl(map_id, object, position) {
+function placeControl( map_id, object, position ) {
 
-    var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
+    console.log( "object: " );
+    console.log( object );
+    
+    //var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
+    var mapbox_ctrl = document.getElementsByClassName("legendContainer");
 
-    mapbox_ctrl[0].appendChild(object);
+    mapbox_ctrl[0].appendChild( object );
     var ledge = {};
-
+/*    
+    switch (position) {
+    case 'TOP_LEFT':
+        window[map_id + 'map'].controls["TOP_LEFT"].push( object );
+        break;
+    case 'TOP_RIGHT':
+        window[map_id + 'map'].controls["TOP_RIGHT"].push( object );
+        break;
+    case 'BOTTOM_LEFT':
+        window[map_id + 'map'].controls["BOTTOM_LEFT"].push( object );
+        break;
+    case 'BOTTOM_RIGHT':
+        window[map_id + 'map'].controls["BOTTOM_RIGHT"].push( object );
+        break;
+    default:
+        position = "BOTTOM_LEFT"
+        window[map_id + 'map'].controls["BOTTOM_LEFT"].push( object );
+        break;
+    }
+*/
     ledge = {
         id: object.getAttribute('id'),
         position: position
     };
+
+//    window[map_id + 'legendPositions'].push(ledge);
 }
 
 
-function removeControl(map_id, legend_id, position) {
-
+function removeControl( map_id, legend_id, position ) {
+    
+    var element = document.getElementById(legend_id);
+    element.parentNode.removeChild(element);
+    
+/*
     switch (position) {
     case 'TOP_LEFT':
-        clearControl(window[map_id + 'map'].controls[google.maps.ControlPosition.TOP_LEFT], legend_id);
+        clearControl(window[map_id + 'map'].controls["TOP_LEFT"], legend_id);
         break;
     case 'TOP_RIGHT':
-        clearControl(window[map_id + 'map'].controls[google.maps.ControlPosition.TOP_RIGHT], legend_id);
+        clearControl(window[map_id + 'map'].controls["TOP_RIGHT"], legend_id);
         break;
     case 'BOTTOM_LEFT':
-        clearControl(window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT], legend_id);
+        clearControl(window[map_id + 'map'].controls["BOTTOM_LEFT"], legend_id);
         break;
     case 'BOTTOM_RIGHT':
-        clearControl(window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_RIGHT], legend_id);
+        clearControl(window[map_id + 'map'].controls["BOTTOM_RIGHT"], legend_id);
         break;
     default:
         position = "BOTTOM_LEFT";
-        clearControl(window[map_id + 'map'].controls[google.maps.ControlPosition.LEFT_BOTTOM], legend_id);
+        clearControl(window[map_id + 'map'].controls["LEFT_BOTTOM"], legend_id);
         break;
     }
+*/
 }
 
 function clearControl(control, legend_id) {

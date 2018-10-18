@@ -15,23 +15,23 @@
 # 		, polyline = "geometry"
 # 		, layer = "polygon_layer"
 # 		, fill_colour = "SA2_NAME",
+# 		, stroke_colour = "strokeWeight"
 # 		, elevation = "elevation"
 # 		, stroke_width = 0
 # 		, tooltip = 'info'
 # 		, legend = T
-# 	)
-
-# %>%
+# 	) %>%
 # 	add_polygon(
 # 		data = df
 # 		, polyline = "geometry"
-# 		, layer = "polygon_layer"
+# 		, layer = "another_layer"
 # 		, fill_colour = "elevation",
 # 		, elevation = "elevation"
 # 		, stroke_width = 0
 # 		, tooltip = 'info'
 # 		, legend = T
-# 	)
+# 	) %>%
+# 	clear_legend( "polygon_layer" )
 
 
 # library(shiny)
