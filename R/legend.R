@@ -1,3 +1,8 @@
+#' Clear Legend
+#'
+#' Clears the legend for a given layer_id
+#'
+#'
 #' @export
 clear_legend <- function( map_id, layer_id ) {
 	invoke_method( map_id, "clear_legend", layer_id );

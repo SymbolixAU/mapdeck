@@ -213,7 +213,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
 
 }
 
-function findById(source, id, returnType) {
+function findById( source, id, returnType ) {
     var i = 0;
     for (i = 0; i < source.length; i++) {
         if (source[i].id === id) {
@@ -252,9 +252,6 @@ function clear_legend( map_id, layer_id ) {
 
 function placeControl( map_id, object, position ) {
 
-    console.log( "object: " );
-    console.log( object );
-    
     //var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
     var mapbox_ctrl = document.getElementsByClassName("legendContainer");
 
@@ -285,7 +282,7 @@ function placeControl( map_id, object, position ) {
         position: position
     };
 
-//    window[map_id + 'legendPositions'].push(ledge);
+    window[map_id + 'legendPositions'].push(ledge);
 }
 
 

@@ -23,4 +23,5 @@ function add_line( map_id, line_data, layer_id, auto_highlight, legend ) {
 
 function clear_line( map_id, layer_id ) {
   clear_layer( map_id, 'line-'+layer_id );
+  clear_legend( map_id, layer_id );
 }

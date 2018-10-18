@@ -30,4 +30,5 @@ function decode_pointcloud( polyline, elevation ) {
 
 function clear_pointcloud( map_id, layer_id ) {
   clear_layer( map_id, 'pointcloud-'+layer_id );
+  clear_legend( map_id, layer_id );
 }

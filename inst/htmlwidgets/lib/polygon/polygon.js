@@ -47,4 +47,5 @@ function decode_polygons( polylines ) {
 
 function clear_polygon( map_id, layer_id ) {
   clear_layer( map_id, 'polygon-'+layer_id );
+  clear_legend( map_id, layer_id );
 }

@@ -18,4 +18,5 @@ function add_screengrid( map_id, screengrid_data, layer_id, opacity, cell_size, 
 
 function clear_screengrid( map_id, layer_id ) {
   clear_layer( map_id, 'screengrid-'+layer_id );
+  clear_legend( map_id, layer_id );
 }

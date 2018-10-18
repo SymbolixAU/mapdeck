@@ -14,6 +14,7 @@ HTMLWidgets.widget({
       	//window.params.push({ 'map_id' : el.id });
 
       	window[el.id + 'layers'] = []; // keep track of layers for overlaying multiple
+        window[el.id + 'legendPositions'] = [];     // array for keeping a referene to legend positions
       	// needs to be an array because .props takes an array of layers
 
         var mapDiv = document.getElementById(el.id);
@@ -21,14 +22,11 @@ HTMLWidgets.widget({
           
         var legendContainer = document.createElement('div');
         legendContainer.className = "legendContainer";
-        //var rightControl = document.getElementsByClassName('mapboxgl-ctrl-bottom-right');
-        //rightControl[0].appendChild( legendContainer );
         mapDiv.appendChild( legendContainer );
 
         var tooltipdiv = document.createElement('div');
         tooltipdiv.id = 'tooltip';
         mapDiv.appendChild(tooltipdiv);
-        //legendContainer.appendChild( tooltipdiv );
 
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
@@ -38,7 +36,7 @@ HTMLWidgets.widget({
         	pitch: x.pitch
         };
 
-        const	deckgl = new deck.DeckGL({
+        const deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,

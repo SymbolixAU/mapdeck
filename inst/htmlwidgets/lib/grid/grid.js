@@ -19,4 +19,5 @@ function add_grid( map_id, grid_data, layer_id, cell_size, extruded, elevation_s
 
 function clear_grid( map_id, layer_id ) {
   clear_layer( map_id, 'grid-'+layer_id );
+  clear_legend( map_id, layer_id );
 }
