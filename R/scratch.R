@@ -89,7 +89,7 @@
 # 				, elevation = "elevation"
 # 				, stroke_width = 0
 # 				, tooltip = 'info'
-# 				, legend = T
+# 				, legend = F
 # 			)
 # 	})
 #
