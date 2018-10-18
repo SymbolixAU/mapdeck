@@ -187,6 +187,18 @@ add_arc <- function(
 	invoke_method(map, "add_arc", shape, layer_id, auto_highlight )
 }
 
+#' Clear Arc
+#'
+#' Clears elements from a map
+#' @rdname clear
+#' @param map a mapdeck map object
+#' @param layer_id the layer_id of the layer you want to clear
+#' @export
+clear_arc <- function( map, layer_id = NULL ) {
+	layer_id <- layerId(layer_id, "arc")
+	invoke_method(map, "clear_arc", layer_id )
+}
+
 requiredArcColumns <- function() {
 	c("stroke_width", "stroke_from", "stroke_to",
 		"stroke_from_opacity","stroke_to_opacity")

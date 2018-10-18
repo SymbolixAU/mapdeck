@@ -208,7 +208,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
 }
 
 
-function clear_legend(map_id, layer_id){
+function clear_legend( map_id, layer_id ) {
 
     // find reference to this layer in the legends
     var id = map_id + 'legend' + layer_id + 'fill_colour';
@@ -234,9 +234,14 @@ function clear_legend(map_id, layer_id){
 function placeControl(map_id, object, position) {
 
     var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
+<<<<<<< HEAD
 
     mapbox_ctrl[0].appendChild(object);
 
+=======
+    mapbox_ctrl[0].appendChild(object);
+    
+>>>>>>> 67a6568850d5cfd63833bd7397aebd71c8b25a13
     var ledge = {};
 
     ledge = {
@@ -245,4 +250,43 @@ function placeControl(map_id, object, position) {
     };
 
     //window[map_id + 'legendPositions'].push(ledge);
+}
+
+
+function removeControl(map_id, legend_id, position) {
+
+    //console.log("removeControl()");
+    //console.log(position);
+
+    switch (position) {
+    case 'TOP_LEFT':
+        clearControl(window[map_id + 'map'].controls[google.maps.ControlPosition.TOP_LEFT], legend_id);
+        break;
+    case 'TOP_RIGHT':
+        clearControl(window[map_id + 'map'].controls[google.maps.ControlPosition.TOP_RIGHT], legend_id);
+        break;
+    case 'BOTTOM_LEFT':
+        clearControl(window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT], legend_id);
+        break;
+    case 'BOTTOM_RIGHT':
+        clearControl(window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_RIGHT], legend_id);
+        break;
+    default:
+        position = "BOTTOM_LEFT";
+        clearControl(window[map_id + 'map'].controls[google.maps.ControlPosition.LEFT_BOTTOM], legend_id);
+        break;
+    }
+}
+
+function clearControl(control, legend_id) {
+
+  if (control != null) {
+    control.forEach(function (item, index) {
+      if (item != null) {
+        if (item.getAttribute('id') === legend_id) {
+          control.removeAt(index);
+        }
+      }
+    });
+  }
 }

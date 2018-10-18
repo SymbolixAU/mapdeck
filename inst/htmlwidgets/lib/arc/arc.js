@@ -17,3 +17,7 @@ function add_arc( map_id, arc_data, layer_id, auto_highlight ) {
 
   update_layer( map_id, 'arc-'+layer_id, arcLayer );
 }
+
+function clear_arc( map_id, layer_id ) {
+  clear_layer( map_id, 'arc-'+layer_id );
+}

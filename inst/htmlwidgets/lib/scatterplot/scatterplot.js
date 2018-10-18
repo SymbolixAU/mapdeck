@@ -40,3 +40,7 @@ function add_scatterplot2( map_id, scatter_data, layer_id, auto_highlight, legen
     add_legend(map_id, layer_id, legend);
   }
 }
+
+function clear_scatterplot( map_id, layer_id ) {
+  clear_layer( map_id, 'scatterplot-'+layer_id );
+}

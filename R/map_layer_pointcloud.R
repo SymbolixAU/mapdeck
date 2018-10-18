@@ -133,7 +133,12 @@ add_pointcloud <- function(
 }
 
 
-
+#' @rdname clear
+#' @export
+clear_pointcloud <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "pointcloud")
+	invoke_method(map, "clear_pointcloud", layer_id )
+}
 
 requiredPointcloudColumns <- function() {
 	c("stroke_width", "radius",

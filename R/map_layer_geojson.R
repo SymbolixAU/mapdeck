@@ -111,3 +111,11 @@ add_geojson <- function(
 	map <- addDependency(map, mapdeckGeojsonDependency())
 	invoke_method(map, "add_geojson", data, layer_id, lineColor, fillColor, radius, lineWidth, elevation, light_settings, auto_highlight)
 }
+
+
+#' @rdname clear
+#' @export
+clear_geojson <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "geojson")
+	invoke_method(map, "clear_geojson", layer_id )
+}

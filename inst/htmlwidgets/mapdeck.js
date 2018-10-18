@@ -161,6 +161,14 @@ function update_layer( map_id, layer_id, layer ) {
   window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
 }
 
+function clear_layer( map_id, layer_id ) {
+  var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
+  if ( elem != -1 ) {
+  	window[ map_id + 'layers'].splice( elem, 1 );
+  }
+  window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
+}
+
 
 /**
  * hex to rgb

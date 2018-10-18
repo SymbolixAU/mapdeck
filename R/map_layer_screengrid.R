@@ -129,7 +129,12 @@ add_screengrid <- function(
 	invoke_method(map, "add_screengrid", shape, layer_id, opacity, cell_size, colour_range )
 }
 
-
+#' @rdname clear
+#' @export
+clear_screengrid <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "screengrid")
+	invoke_method(map, "clear_screengrid", layer_id )
+}
 
 
 requiredScreengridColumns <- function() {

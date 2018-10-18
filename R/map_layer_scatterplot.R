@@ -211,7 +211,12 @@ add_scatterplot_old <- function(
 }
 
 
-
+#' @rdname clear
+#' @export
+clear_scatterplot <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "scatterplot")
+	invoke_method(map, "clear_scatterplot", layer_id )
+}
 
 requiredScatterplotColumns <- function() {
 	c("radius",	"fill_colour", "fill_opacity")
