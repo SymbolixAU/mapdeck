@@ -107,6 +107,8 @@ add_arc <- function(
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	digits = 6,
+	legend = F,
+	legend_options = NULL,
 	palette = viridisLite::viridis
 ) {
 
@@ -175,6 +177,10 @@ add_arc <- function(
 		shape <- replaceVariableColours(shape, colours)
 	}
 
+	## LEGEND
+	legend <- resolveLegend(legend, legend_options, colour_palettes)
+	#print(legend)
+
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
 	if(length(requiredDefaults) > 0){
@@ -184,7 +190,7 @@ add_arc <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckArcDependency())
-	invoke_method(map, "add_arc", shape, layer_id, auto_highlight )
+	invoke_method(map, "add_arc", shape, layer_id, auto_highlight, legend )
 }
 
 #' Clear Arc

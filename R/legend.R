@@ -42,7 +42,7 @@ constructLegend <- function(colour_palettes, legend){
 
 			list(
 				## if both a fill and stroke are used, fill takes precedence
-				colourType = ifelse('fill_colour' %in% names(x$variables), 'fill_colour', 'stroke_colour'),
+				colourType = ifelse('fill_colour' %in% names(x$variables), 'fill_colour', names(x$variables)[1]),
 				type = type,
 				title = unique(x$variable),
 				legend = x$palette,
@@ -124,7 +124,7 @@ flattenLegend.logical <- function(legend){
 		## it's a named vector
 		legend <- names(legend)[legend]
 	}else{
-		legend <- c("fill_colour", "stroke_colour")[legend]
+		legend <- legend_colours()[legend]
 	}
 	return(legend)
 }
@@ -140,17 +140,17 @@ addLegendOptions <- function(legend, legend_options){
 	## If any names of legend_options not in c("fill_colour", "stroke_colour")
 	## then those will be applied to all
 	## otherwise, it will be either a fill_colour or a stroke_colour
-	nonAesthetics <- names(legend_options)[!names(legend_options) %in% c("fill_colour", "stroke_colour")]
+	nonAesthetics <- names(legend_options)[!names(legend_options) %in% legend_colours()]
 
 	if(length(nonAesthetics) > 0){
 		## then we can't use the individual mappings
 		legend <- lapply(legend, replaceLegendOption, legend_options)
 	}else{
 		## apply the mappings directly to the aesthetics
-		toMapDirectly <- names(legend_options)[names(legend_options) %in% c("fill_colour", "stroke_colour")]
+		toMapDirectly <- names(legend_options)[names(legend_options) %in% legend_colours()]
 		toMapDirectly <- toMapDirectly[vapply(toMapDirectly, function(x) is.list(legend_options[[x]]), T)]
 
-		legend <- lapply(c("fill_colour", "stroke_colour"), function(x){
+		legend <- lapply(legend_colours(), function(x){
 			idx <- which(vapply(legend, function(y) y$colourType == x, T))
 			if(length(idx) > 0){
 				replaceLegendOption(legend[[idx]], legend_options[[x]])
@@ -169,8 +169,8 @@ replaceLegendOption <- function(legend, legend_option){
 	if(!is.null(legend_option[['css']]))
 		legend[['css']] <- legend_option[['css']]
 
-	if(!is.null(legend_option[['position']]))
-		legend[['position']] <- legend_option[['position']]
+	# if(!is.null(legend_option[['position']]))
+	# 	legend[['position']] <- legend_option[['position']]
 
 
 	## reverse
@@ -206,3 +206,5 @@ formatLegendValue.POSIXct <- function(legendValue){
 
 #' @export
 formatLegendValue.default <- function(legendValue) legendValue
+
+legend_colours <- function() c("fill_colour", "stroke_colour", "stroke_from", "stroke_to")

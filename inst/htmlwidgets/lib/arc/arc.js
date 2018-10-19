@@ -1,5 +1,5 @@
 
-function add_arc( map_id, arc_data, layer_id, auto_highlight ) {
+function add_arc( map_id, arc_data, layer_id, auto_highlight, legend ) {
 
   const arcLayer = new ArcLayer({
     id: 'arc-'+layer_id,
@@ -16,6 +16,9 @@ function add_arc( map_id, arc_data, layer_id, auto_highlight ) {
   });
 
   update_layer( map_id, 'arc-'+layer_id, arcLayer );
+  if (legend !== false) {
+    add_legend( map_id, layer_id, legend );
+  }
 }
 
 function clear_arc( map_id, layer_id ) {
