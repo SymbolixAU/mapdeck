@@ -212,3 +212,23 @@
 #   , auto_highlight = TRUE
 #   , legend = T
 #  )
+#
+# df <- read.csv(paste0(
+# 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+# 'examples/3d-heatmap/heatmap-data.csv'
+# ))
+#
+#
+# mapdeck(
+# 	style = 'mapbox://styles/mapbox/dark-v9'
+# 	, pitch = 45 ) %>%
+# add_grid(
+#   data = df
+#   , lat = "lat"
+#   , lon = "lng"
+#   , cell_size = 500
+#   , elevation_scale = 50
+#   , colour_range = viridisLite::viridis(50)
+#   , layer_id = "grid_layer"
+#   , auto_highlight = TRUE
+# )
