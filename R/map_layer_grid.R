@@ -19,7 +19,7 @@ mapdeckGridDependency <- function() {
 #' @inheritParams add_polygon
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
-#' @param colour_range vector of hex colours
+#' @param colour_range vector of 6 hex colours
 #' @param cell_size size of each cell in meters
 #' @param extruded logical indicating if cells are elevated or not
 #' @param elevation_scale cell elevation multiplier
@@ -54,7 +54,7 @@ add_grid <- function(
 	lon = NULL,
 	lat = NULL,
 	polyline = NULL,
-	colour_range = viridisLite::viridis(5),
+	colour_range = viridisLite::viridis(6),
 	cell_size = 1000,
 	extruded = TRUE,
 	elevation_scale = 1,
@@ -122,7 +122,12 @@ add_grid <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckGridDependency())
-	invoke_method(map, "add_grid", shape, layer_id, cell_size, jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale, colour_range, auto_highlight)
+
+	invoke_method(
+		map, "add_grid", shape, layer_id, cell_size,
+		jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale,
+		colour_range, auto_highlight
+		)
 }
 
 
