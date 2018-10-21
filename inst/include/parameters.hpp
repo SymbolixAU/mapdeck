@@ -58,6 +58,8 @@ namespace mapdeck {
   	// lst_legend[ "stroke_colour" ] = false;
   	SEXP legend = construct_legend_list( lst_params, params, param_names, legend_types );
   	//Rcpp::Rcout << "finished legend" << std::endl;
+
+  	// just creating a bit of JSON to view the result of the legend construction
   	Rcpp::StringVector js = jsonify::vectors::to_json( legend );
   	Rcpp::Rcout << "js: " << js << std::endl;
 
