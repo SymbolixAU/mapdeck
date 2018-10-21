@@ -13,6 +13,10 @@ namespace polygon {
 	Rcpp::StringVector polygon_colours = Rcpp::StringVector::create(
 		"fill_colour", "fill_opacity","stroke_colour","stroke_opacity","palette"
 	);
+
+	Rcpp::StringVector polygon_legend = Rcpp::StringVector::create(
+		"fill_colour", "stroke_colour"
+	);
 } // namespace polygon
 } // namespace mapdeck
 

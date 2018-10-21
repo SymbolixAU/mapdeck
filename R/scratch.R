@@ -290,3 +290,20 @@
 # shinyApp(ui, server)
 
 
+
+# ## legend
+# df <- capitals
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+#
+# mapdeck(
+# 	style = mapdeck_style("dark")
+# ) %>%
+# 	add_scatterplot(
+# 		data = df
+# 		, lon = "lon"
+# 		, lat = "lat"
+# 		, radius = 1000
+# 		, fill_colour = "country"
+# 		, legend = T
+# 	)
+

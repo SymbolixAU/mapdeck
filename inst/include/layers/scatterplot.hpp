@@ -21,6 +21,11 @@ namespace scatterplot {
   Rcpp::StringVector scatterplot_colours = Rcpp::StringVector::create(
   	"fill_colour", "fill_opacity","palette"
   );
+
+  Rcpp::StringVector scatterplot_legend = Rcpp::StringVector::create(
+  	"fill_colour"
+  );
+
 } // namespace scatterplot
 } // namespace mapdeck
 

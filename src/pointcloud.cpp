@@ -22,10 +22,11 @@ Rcpp::StringVector rcpp_pointcloud( Rcpp::DataFrame data, Rcpp::List params ) {
 	Rcpp::List lst_defaults = pointcloud_defaults( data_rows );  // initialise with defaults
 	Rcpp::StringVector pointcloud_columns = mapdeck::pointcloud::pointcloud_columns;
 	Rcpp::StringVector pointcloud_colours = mapdeck::pointcloud::pointcloud_colours;
+	Rcpp::StringVector pointcloud_legend = mapdeck::pointcloud::pointcloud_legend;
 
 	Rcpp::DataFrame df = mapdeck::parameters_to_data(
-		data, params, lst_defaults, pointcloud_columns, pointcloud_colours, data_rows,
-		true, false
+		data, params, lst_defaults, pointcloud_columns, pointcloud_colours, pointcloud_legend,
+		data_rows, true, false
 	);
 
 	return jsonify::dataframe::to_json( df );

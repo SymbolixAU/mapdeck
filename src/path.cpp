@@ -21,10 +21,11 @@ Rcpp::StringVector rcpp_path( Rcpp::DataFrame data, Rcpp::List params ) {
 	Rcpp::List lst_defaults = path_defaults( data_rows );  // initialise with defaults
 	Rcpp::StringVector path_columns = mapdeck::path::path_columns;
 	Rcpp::StringVector path_colours = mapdeck::path::path_colours;
+	Rcpp::StringVector path_legend = mapdeck::path::path_legend;
 
 	Rcpp::DataFrame df = mapdeck::parameters_to_data(
-		data, params, lst_defaults, path_columns, path_colours, data_rows,
-		false, true
+		data, params, lst_defaults, path_columns, path_colours, path_legend,
+		data_rows, false, true
 	);
 
 	return jsonify::dataframe::to_json( df );

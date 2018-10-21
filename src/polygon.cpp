@@ -22,10 +22,11 @@ Rcpp::StringVector rcpp_polygon( Rcpp::DataFrame data, Rcpp::List params ) {
 	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
 	Rcpp::StringVector polygon_columns = mapdeck::polygon::polygon_columns;
 	Rcpp::StringVector polygon_colours = mapdeck::polygon::polygon_colours;
+	Rcpp::StringVector polygon_legend = mapdeck::polygon::polygon_legend;
 
 	Rcpp::DataFrame df = mapdeck::parameters_to_data(
-		data, params, lst_defaults, polygon_columns, polygon_colours, data_rows,
-		true, true
+		data, params, lst_defaults, polygon_columns, polygon_colours, polygon_legend,
+		data_rows, true, true
 	);
 
 	return jsonify::dataframe::to_json( df );

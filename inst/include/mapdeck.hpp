@@ -12,7 +12,7 @@
 namespace mapdeck {
 
   /*
-   * find_parameter_index
+   * find_parameter_index_in_vector
    * Finds the location (index) of a string in the list of parameters (as given by the R function call)
    */
   inline int find_character_index_in_vector( Rcpp::StringVector& sv, const char* to_find ) {
@@ -76,7 +76,7 @@ namespace mapdeck {
 	/*
 	 * determins the data type in the list of argument parameters (not the data)
 	 */
-	inline int get_parameter_r_type( SEXP param ) {\
+	inline int get_parameter_r_type( SEXP param ) {
 		return TYPEOF( param );
 	}
 
@@ -115,6 +115,14 @@ namespace mapdeck {
 	}
 
 
+  /*
+   * construct params
+   *
+   * Creates a list
+   * ["parameter"] - StringVector of the names of parameters
+   * ["parameter_type"] - IntegerVector of the TYPE of parameter
+   * ["data_column_index"] - IntegerVector of the column index in the data
+   */
 	inline Rcpp::List construct_params(
 			Rcpp::DataFrame& data,
 			Rcpp::List& params,

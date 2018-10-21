@@ -21,10 +21,11 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
 	Rcpp::StringVector scatterplot_columns = mapdeck::scatterplot::scatterplot_columns;
 	Rcpp::StringVector scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
+	Rcpp::StringVector scatterplot_legend = mapdeck::scatterplot::scatterplot_legend;
 
 	Rcpp::DataFrame df = mapdeck::parameters_to_data(
-		data, params, lst_defaults, scatterplot_columns, scatterplot_colours, data_rows,
-		true, false
+		data, params, lst_defaults, scatterplot_columns, scatterplot_colours, scatterplot_legend,
+		data_rows, true, false
 	);
 
 	return jsonify::dataframe::to_json( df );

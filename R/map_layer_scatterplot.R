@@ -70,7 +70,9 @@ add_scatterplot <- function(
 	layer_id = NULL,
 	digits = 6,
 	palette = "viridis",
-	na_colour = "#808080FF"
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL
 ) {
 
 	message("Using development version. Please check plots carefully")
@@ -82,6 +84,7 @@ add_scatterplot <- function(
 	l[["layer_id"]] <- NULL
 	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
 	#print( l )
 
 	data <- normaliseSfData(data, "POINT")
@@ -116,6 +119,13 @@ resolve_palette <- function( l, palette ) {
 	}
 	return( l )
 }
+
+resolve_legend <- function( l, legend ) {
+	l[['legend']] <- legend
+	return( l )
+}
+
+
 
 dispatch_data <- function( data, lon, lat, polyline, l ) UseMethod("dispatch_data")
 

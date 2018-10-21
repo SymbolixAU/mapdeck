@@ -13,6 +13,10 @@ namespace path {
 	Rcpp::StringVector path_colours = Rcpp::StringVector::create(
 	  "stroke_colour","stroke_opacity","palette"
 	);
+
+	Rcpp::StringVector path_legend = Rcpp::StringVector::create(
+		"stroke_colour"
+	);
 } // namespace path
 } // namespace mapdeck
 
