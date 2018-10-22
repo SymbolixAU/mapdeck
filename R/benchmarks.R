@@ -141,7 +141,7 @@
 #   		, lon = "lon"
 #   		, radius = 1000
 #   		, fill_colour = "id"
-#   		#, fill_opacity = "id"
+#   		, fill_opacity = "id"
 #   		, tooltip = "id"
 #   	)
 #   },

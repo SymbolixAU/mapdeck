@@ -86,7 +86,6 @@ add_scatterplot <- function(
 	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
-	#print( l )
 
 	data <- normaliseSfData(data, "POINT")
 	polyline <- findEncodedColumn(data, polyline)
@@ -108,10 +107,10 @@ add_scatterplot <- function(
 
 	shape <- rcpp_scatterplot( data, l )
 
-	print(shape)
+	#print(shape)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
-	invoke_method(map, "add_scatterplot2", shape, layer_id, auto_highlight)
+	invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight)
 }
 
 resolve_palette <- function( l, palette ) {

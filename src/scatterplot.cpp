@@ -14,7 +14,7 @@ Rcpp::List scatterplot_defaults(int n) {
 
 
 // [[Rcpp::export]]
-Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
+Rcpp::List rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	int data_rows = data.nrows();
 
@@ -23,12 +23,26 @@ Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 	Rcpp::StringVector scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
 	Rcpp::StringVector scatterplot_legend = mapdeck::scatterplot::scatterplot_legend;
 
-	Rcpp::DataFrame df = mapdeck::parameters_to_data(
+	Rcpp::List lst = mapdeck::parameters_to_data(
 		data, params, lst_defaults, scatterplot_columns, scatterplot_colours, scatterplot_legend,
 		data_rows, true, false
 	);
 
-	return jsonify::dataframe::to_json( df );
+	//Rcpp::StringVector res(2);
+	Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( lst["data"] );
+	//Rcpp::Rcout << "here" << std::endl;
+	Rcpp::StringVector js_data = jsonify::dataframe::to_json( df );
+	//Rcpp::Rcout << "res0: " << js_data << std::endl;
+
+	SEXP legend = lst[ "legend" ];
+	Rcpp::StringVector js_legend = jsonify::vectors::to_json( legend );
+	//Rcpp::Rcout << "res1: " << js_legend << std::endl;
+
+	//return js_data;
+	return Rcpp::List::create(
+		Rcpp::_["data"] = js_data,
+		Rcpp::_["legend"] = js_legend
+	);
 }
 
 

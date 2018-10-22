@@ -23,10 +23,11 @@ Rcpp::StringVector rcpp_path( Rcpp::DataFrame data, Rcpp::List params ) {
 	Rcpp::StringVector path_colours = mapdeck::path::path_colours;
 	Rcpp::StringVector path_legend = mapdeck::path::path_legend;
 
-	Rcpp::DataFrame df = mapdeck::parameters_to_data(
+	Rcpp::List lst = mapdeck::parameters_to_data(
 		data, params, lst_defaults, path_columns, path_colours, path_legend,
 		data_rows, false, true
 	);
 
+	Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( lst["data"] );
 	return jsonify::dataframe::to_json( df );
 }

@@ -15,7 +15,7 @@ namespace mapdeck {
   /*
    * paramters to data
    */
-  inline Rcpp::DataFrame parameters_to_data(
+  inline Rcpp::List parameters_to_data(
   		Rcpp::DataFrame& data,                // user-supplied data
   		Rcpp::List& params,                   // list of parameters from calling function
   		Rcpp::List& lst_defaults,
@@ -126,6 +126,12 @@ namespace mapdeck {
   		data_rows
   	);
 
+  	// TODO, convert legend to JSON
+  	Rcpp::List result = Rcpp::List::create(
+  		Rcpp::_["data"] = df,
+  		Rcpp::_["legend"] = lst_legend
+  	);
+
   	//Rcpp::Rcout << "dataframe constructed" << std::endl;
 
   	// Rcpp::NumericVector timeresult( timer );
@@ -139,7 +145,7 @@ namespace mapdeck {
   	// timeres[0] = timeresult;
   	// return timeres;
 
-  	return df;
+  	return result;
   }
 
 } // namespace mapeck

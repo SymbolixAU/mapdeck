@@ -24,10 +24,16 @@ Rcpp::StringVector rcpp_pointcloud( Rcpp::DataFrame data, Rcpp::List params ) {
 	Rcpp::StringVector pointcloud_colours = mapdeck::pointcloud::pointcloud_colours;
 	Rcpp::StringVector pointcloud_legend = mapdeck::pointcloud::pointcloud_legend;
 
-	Rcpp::DataFrame df = mapdeck::parameters_to_data(
+	Rcpp::List lst = mapdeck::parameters_to_data(
 		data, params, lst_defaults, pointcloud_columns, pointcloud_colours, pointcloud_legend,
 		data_rows, true, false
 	);
 
-	return jsonify::dataframe::to_json( df );
+	Rcpp::StringVector res(2);
+	Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( lst["data"] );
+	res[0] = jsonify::dataframe::to_json( df );
+
+	SEXP legend = lst[ "legend" ];
+	res[1] = jsonify::vectors::to_json( legend );
+	return res;
 }

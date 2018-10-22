@@ -291,7 +291,7 @@
 
 
 
-## legend
+# # legend
 # df <- capitals
 # set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
 #

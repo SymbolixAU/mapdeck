@@ -42,7 +42,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_scatterplot
-Rcpp::StringVector rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params);
+Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params);
 RcppExport SEXP _mapdeck_rcpp_scatterplot(SEXP dataSEXP, SEXP paramsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
