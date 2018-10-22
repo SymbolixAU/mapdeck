@@ -6,7 +6,7 @@
 using namespace Rcpp;
 
 // rcpp_path
-Rcpp::StringVector rcpp_path(Rcpp::DataFrame data, Rcpp::List params);
+Rcpp::List rcpp_path(Rcpp::DataFrame data, Rcpp::List params);
 RcppExport SEXP _mapdeck_rcpp_path(SEXP dataSEXP, SEXP paramsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -18,7 +18,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_pointcloud
-Rcpp::StringVector rcpp_pointcloud(Rcpp::DataFrame data, Rcpp::List params);
+Rcpp::List rcpp_pointcloud(Rcpp::DataFrame data, Rcpp::List params);
 RcppExport SEXP _mapdeck_rcpp_pointcloud(SEXP dataSEXP, SEXP paramsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -30,7 +30,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_polygon
-Rcpp::StringVector rcpp_polygon(Rcpp::DataFrame data, Rcpp::List params);
+Rcpp::List rcpp_polygon(Rcpp::DataFrame data, Rcpp::List params);
 RcppExport SEXP _mapdeck_rcpp_polygon(SEXP dataSEXP, SEXP paramsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

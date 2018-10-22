@@ -98,8 +98,12 @@ inline void resolve_stroke(
 		stroke, alpha, stroke_colour_location, stroke_opacity_location
 	);
 
-	//lst_defaults[ "stroke_colour" ] = hex_strings;
 	lst_defaults[ "stroke_colour" ] = legend[ "colours" ];
+
+	if (lst_legend.containsElementNamed("stroke_colour") ) {
+		lst_legend[ "stroke_colour" ] = legend[ "summary_colours" ];
+		lst_legend[ "stroke_values" ] = legend[ "summary_values" ];
+	}
 }
 
 

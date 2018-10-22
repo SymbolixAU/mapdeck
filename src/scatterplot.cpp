@@ -28,17 +28,12 @@ Rcpp::List rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 		data_rows, true, false
 	);
 
-	//Rcpp::StringVector res(2);
 	Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( lst["data"] );
-	//Rcpp::Rcout << "here" << std::endl;
 	Rcpp::StringVector js_data = jsonify::dataframe::to_json( df );
-	//Rcpp::Rcout << "res0: " << js_data << std::endl;
 
 	SEXP legend = lst[ "legend" ];
 	Rcpp::StringVector js_legend = jsonify::vectors::to_json( legend );
-	//Rcpp::Rcout << "res1: " << js_legend << std::endl;
 
-	//return js_data;
 	return Rcpp::List::create(
 		Rcpp::_["data"] = js_data,
 		Rcpp::_["legend"] = js_legend

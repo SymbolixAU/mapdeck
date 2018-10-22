@@ -14,7 +14,7 @@ Rcpp::List path_defaults(int n) {
 
 
 // [[Rcpp::export]]
-Rcpp::StringVector rcpp_path( Rcpp::DataFrame data, Rcpp::List params ) {
+Rcpp::List rcpp_path( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	int data_rows = data.nrows();
 
@@ -29,5 +29,13 @@ Rcpp::StringVector rcpp_path( Rcpp::DataFrame data, Rcpp::List params ) {
 	);
 
 	Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( lst["data"] );
-	return jsonify::dataframe::to_json( df );
+	Rcpp::StringVector js_data = jsonify::dataframe::to_json( df );
+
+	SEXP legend = lst[ "legend" ];
+	Rcpp::StringVector js_legend = jsonify::vectors::to_json( legend );
+
+	return Rcpp::List::create(
+		Rcpp::_["data"] = js_data,
+		Rcpp::_["legend"] = js_legend
+	);
 }

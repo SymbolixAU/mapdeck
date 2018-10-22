@@ -344,3 +344,18 @@
 #   times = 5
 # )
 
+# n <- 1e6
+# df <- data.frame(
+# 	numbers = rep(1:26,n)
+# 	, letters = rep(letters, n)
+# )
+# library(microbenchmark)
+# microbenchmark(
+# 	numbers = { colourvalues::colour_values(df$numbers) },
+# 	letters = { colourvalues::colour_values(df$letters) },
+# 	times = 5
+# )
+# Unit: seconds
+# expr      min       lq     mean   median       uq      max neval
+# numbers 4.460924 4.466449 4.542446 4.480527 4.488406 4.815922     5
+# letters 4.465812 4.467152 4.490861 4.479849 4.508244 4.533247     5

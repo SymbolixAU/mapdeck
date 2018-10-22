@@ -104,9 +104,6 @@ namespace fill {
   	if (lst_legend.containsElementNamed("fill_colour") ) {
   		lst_legend[ "fill_colour" ] = legend[ "summary_colours" ];
   		lst_legend[ "fill_values" ] = legend[ "summary_values" ];
-  		//lst_defaults[ "legend" ] = lst_legend;
-  		//lst_defaults[ "legend" ] = "legend";
-  		//lst_defaults[ "legend" ] = legend[ "summary_values" ];
   	}
 
   }
