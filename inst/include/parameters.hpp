@@ -56,25 +56,25 @@ namespace mapdeck {
   	// create a list. e.g.,
   	// lst_legend[ "fill_colour" ] = true;
   	// lst_legend[ "stroke_colour" ] = false;
-  	SEXP legend = construct_legend_list( lst_params, params, param_names, legend_types );
+  	Rcpp::List lst_legend = construct_legend_list( lst_params, params, param_names, legend_types );
   	//Rcpp::Rcout << "finished legend" << std::endl;
 
   	// just creating a bit of JSON to view the result of the legend construction
-  	Rcpp::StringVector js = jsonify::vectors::to_json( legend );
-  	Rcpp::Rcout << "js: " << js << std::endl;
+  	// Rcpp::StringVector js = jsonify::vectors::to_json( legend );
+  	// Rcpp::Rcout << "js: " << js << std::endl;
 
   	// TODO( if stroke & fill colours are the same, don't 'colour values' twice );
 
   	if ( resolve_fill ) {
   	  // timer.step("resolve_fill");
-  	  mapdeck::fill::resolve_fill( lst_params, params, data, lst_defaults, fill_colour_location, fill_opacity_location );
+  	  mapdeck::fill::resolve_fill( lst_params, params, data, lst_defaults, fill_colour_location, fill_opacity_location, lst_legend );
   	}
 
   	//Rcpp::Rcout << "fill done" << std::endl;
 
   	if ( resolve_stroke ) {
   		// timer.step("resolve_stroke");
-  		mapdeck::stroke::resolve_stroke( lst_params, params, data, lst_defaults, stroke_colour_location, stroke_opacity_location );
+  		mapdeck::stroke::resolve_stroke( lst_params, params, data, lst_defaults, stroke_colour_location, stroke_opacity_location, lst_legend );
   	}
 
   	//Rcpp::Rcout << "stroke done " << std::endl;

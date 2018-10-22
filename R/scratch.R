@@ -291,7 +291,7 @@
 
 
 
-# ## legend
+## legend
 # df <- capitals
 # set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
 #
@@ -299,7 +299,7 @@
 # 	style = mapdeck_style("dark")
 # ) %>%
 # 	add_scatterplot(
-# 		data = df
+# 		data = df[1:10, ]
 # 		, lon = "lon"
 # 		, lat = "lat"
 # 		, radius = 1000

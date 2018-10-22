@@ -12,13 +12,13 @@ namespace stroke {
 * determines the type of variable to use as teh stroke colour (string/numeric)
 *
 */
-inline void stroke_colour(
+inline Rcpp::List stroke_colour(
 		Rcpp::List& lst_params,
 		Rcpp::List& params,
 		Rcpp::DataFrame& data,
 		Rcpp::List& lst_defaults,
 		Rcpp::IntegerVector& data_column_index,
-		Rcpp::StringVector& hex_strings,
+		//Rcpp::StringVector& hex_strings,
 		SEXP& stroke,                // string or matrix
 		Rcpp::NumericVector& alpha,
 		int& stroke_colour_location, // locations of the paramter in the parameter list
@@ -33,12 +33,18 @@ inline void stroke_colour(
 	switch ( TYPEOF( stroke ) ) {
 	case 16: {
 		Rcpp::StringVector stroke_colour_vec = Rcpp::as< Rcpp::StringVector >( stroke );
-		hex_strings = mapdeck::palette::colour_with_palette( pal, stroke_colour_vec, alpha, na_colour, include_alpha );
+		Rcpp::List legend = mapdeck::palette::colour_with_palette( pal, stroke_colour_vec, alpha, na_colour, include_alpha );
+		legend[ "colour_type" ] = "stroke_colour";
+		legend[ "type" ] = "category";
+		return legend;
 		break;
 	}
 	default: {
 		Rcpp::NumericVector stroke_colour_vec = Rcpp::as< Rcpp::NumericVector >( stroke );
-		hex_strings = mapdeck::palette::colour_with_palette( pal, stroke_colour_vec, alpha, na_colour, include_alpha );
+		Rcpp::List legend = mapdeck::palette::colour_with_palette( pal, stroke_colour_vec, alpha, na_colour, include_alpha );
+		legend[ "colour_type" ] = "stroke_colour";
+		legend[ "type" ] = "gradient";
+		return legend;
 		break;
 	}
 	}
@@ -50,7 +56,8 @@ inline void resolve_stroke(
 		Rcpp::DataFrame& data,
 		Rcpp::List& lst_defaults,
 		int& stroke_colour_location, // locations of the paramter in the parameter list
-		int& stroke_opacity_location ) {
+		int& stroke_opacity_location,
+		Rcpp::List& lst_legend ) {
 
 	Rcpp::IntegerVector data_column_index = lst_params[ "data_column_index" ];
 	Rcpp::IntegerVector parameter_type = lst_params[ "parameter_type" ];
@@ -86,12 +93,13 @@ inline void resolve_stroke(
 		}
 	}
 
-	mapdeck::stroke::stroke_colour(
-		lst_params, params, data, lst_defaults, data_column_index, hex_strings,
+	Rcpp::List legend = mapdeck::stroke::stroke_colour(
+		lst_params, params, data, lst_defaults, data_column_index, //hex_strings,
 		stroke, alpha, stroke_colour_location, stroke_opacity_location
 	);
 
-	lst_defaults[ "stroke_colour" ] = hex_strings;
+	//lst_defaults[ "stroke_colour" ] = hex_strings;
+	lst_defaults[ "stroke_colour" ] = legend[ "colours" ];
 }
 
 

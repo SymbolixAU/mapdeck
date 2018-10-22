@@ -78,6 +78,7 @@ add_scatterplot <- function(
 	message("Using development version. Please check plots carefully")
 
 	l <- as.list( match.call() )
+	l[[1]] <- NULL    ## function call
 	l[["map"]] <- NULL
 	l[["data"]] <- NULL
 	l[["auto_highlight"]] <- NULL
@@ -106,6 +107,8 @@ add_scatterplot <- function(
 	}
 
 	shape <- rcpp_scatterplot( data, l )
+
+	print(shape)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
 	invoke_method(map, "add_scatterplot2", shape, layer_id, auto_highlight)
