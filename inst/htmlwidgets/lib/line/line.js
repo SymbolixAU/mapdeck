@@ -1,5 +1,5 @@
 
-function add_line( map_id, line_data, layer_id, auto_highlight ) {
+function add_line( map_id, line_data, layer_id, auto_highlight, legend ) {
 
   const lineLayer = new LineLayer({
     id: 'line-'+layer_id,
@@ -15,4 +15,13 @@ function add_line( map_id, line_data, layer_id, auto_highlight ) {
   });
 
   update_layer( map_id, 'line-'+layer_id, lineLayer );
+    
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
+}
+
+function clear_line( map_id, layer_id ) {
+  clear_layer( map_id, 'line-'+layer_id );
+  clear_legend( map_id, layer_id );
 }

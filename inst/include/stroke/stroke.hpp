@@ -101,8 +101,15 @@ inline void resolve_stroke(
 	lst_defaults[ "stroke_colour" ] = legend[ "colours" ];
 
 	if (lst_legend.containsElementNamed("stroke_colour") ) {
-		lst_legend[ "stroke_colour" ] = legend[ "summary_colours" ];
-		lst_legend[ "stroke_values" ] = legend[ "summary_values" ];
+		Rcpp::List summary = Rcpp::List::create(
+			Rcpp::_["colour"] = legend[ "summary_colours" ],
+      Rcpp::_["variable"] = legend[ "summary_values" ],
+      Rcpp::_["colourType"] = legend[ "colour_type" ],
+      Rcpp::_["type"] = legend["type"]
+		);
+		lst_legend[ "stroke_colour" ] = summary;
+		// lst_legend[ "colour" ] = legend[ "summary_colours" ];
+		// lst_legend[ "variable" ] = legend[ "summary_values" ];
 	}
 }
 

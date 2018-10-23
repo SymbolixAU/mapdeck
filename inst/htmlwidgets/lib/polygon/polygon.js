@@ -1,6 +1,7 @@
+function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highlight, legend ) {
 
-
-function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highlight ) {
+  //console.log( polygon_data ) ;
+  //console.log( legend );
   const polygonLayer = new PolygonLayer({
     id: 'polygon-'+layer_id,
     data: polygon_data,
@@ -21,6 +22,11 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highl
     onClick: info => layer_click( map_id, "path", info )
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
+
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
+
 }
 
 function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_highlight ) {
@@ -49,9 +55,6 @@ function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_high
 function decode_polygons( polylines ) {
   var i, p, coordinates = [];
 
-  //console.log( polylines );
-  //console.log("polygon length: " + polylines.length);
-
   for (i = 0; i < polylines.length; i++ ) {
     p = polylines[i];
     if ( p != "-") {
@@ -59,6 +62,10 @@ function decode_polygons( polylines ) {
     }
   }
 
-  //console.log(coordinates);
   return coordinates;
+}
+
+function clear_polygon( map_id, layer_id ) {
+  clear_layer( map_id, 'polygon-'+layer_id );
+  clear_legend( map_id, layer_id );
 }

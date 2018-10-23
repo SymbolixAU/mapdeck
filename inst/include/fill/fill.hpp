@@ -102,8 +102,15 @@ namespace fill {
   	lst_defaults[ "fill_colour" ] = legend[ "colours" ];
 
   	if (lst_legend.containsElementNamed("fill_colour") ) {
-  		lst_legend[ "fill_colour" ] = legend[ "summary_colours" ];
-  		lst_legend[ "fill_values" ] = legend[ "summary_values" ];
+  		Rcpp::List summary = Rcpp::List::create(
+  			Rcpp::_["colour"] = legend[ "summary_colours" ],
+        Rcpp::_["variable"] = legend[ "summary_values" ],
+        Rcpp::_["colourType"] = legend[ "colour_type" ],
+        Rcpp::_["type"] = legend["type"]
+  		);
+  		lst_legend[ "fill_colour" ] = summary;
+  		// lst_legend[ "colour" ] = legend[ "summary_colours" ];
+  		// lst_legend[ "variable" ] = legend[ "summary_values" ];
   	}
 
   }

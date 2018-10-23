@@ -31,12 +31,15 @@ The fisrt change is `add_scatterplot()`
 ## Until googlePolylines 0.7.2+ is on CRAN you'll need 
 devtools::install_github("SymbolixAU/googlePolylines")
 
+<<<<<<< HEAD
 ## and jsonify
 devtools::install_github("SymbolixAU/jsonify")
 
 ## and colourvalues
 devtools::install_github("SymbolixAU/colourvalues")
 
+=======
+>>>>>>> master
 ## then mapdeck
 devtools::install_github("SymbolixAU/mapdeck")
 ```
@@ -66,7 +69,7 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
 
 ## Access Token
 
-Mapdeck uses [Mabox maps](https://www.mapbox.com/), and to use Mapbox you need an [access token](https://www.mapbox.com/help/how-access-tokens-work/)
+Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox you need an [access token](https://www.mapbox.com/help/how-access-tokens-work/)
 
 ## Available Layers
 

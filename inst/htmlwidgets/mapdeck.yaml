@@ -1,7 +1,7 @@
 
 dependencies:
   - name: deck.gl
-    version: 6.0.2
+    version: 6.2.0
     src: "htmlwidgets/lib/"
     script:
     - deckgl.min.js
@@ -14,3 +14,8 @@ dependencies:
     version: 0.0.1
     src: "htmlwidgets/lib"
     style: mapdeck.css
+  - name: map
+    src: "htmlwidgets/lib/map"
+    version: 0.0.1
+    script:
+      - legend.js

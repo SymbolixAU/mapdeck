@@ -107,7 +107,7 @@ add_scatterplot <- function(
 
 	shape <- rcpp_scatterplot( data, l )
 
-	#print(shape)
+	print(shape)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
 	invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight)
@@ -162,6 +162,8 @@ add_scatterplot_old <- function(
 	auto_highlight = FALSE,
 	layer_id = NULL,
 	digits = 6,
+	legend = FALSE,
+	legend_options = NULL,
 	palette = viridisLite::viridis
 	) {
 
@@ -214,6 +216,9 @@ add_scatterplot_old <- function(
 		shape <- replaceVariableColours(shape, colours)
 	}
 
+	## LEGEND
+	legend <- resolveLegend(legend, legend_options, colour_palettes)
+
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
 	if(length(requiredDefaults) > 0){
@@ -222,11 +227,16 @@ add_scatterplot_old <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
-	invoke_method(map, "add_scatterplot", shape, layer_id, auto_highlight)
+	invoke_method(map, "add_scatterplot", shape, layer_id, auto_highlight, legend )
 }
 
 
-
+#' @rdname clear
+#' @export
+clear_scatterplot <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "scatterplot")
+	invoke_method(map, "clear_scatterplot", layer_id )
+}
 
 requiredScatterplotColumns <- function() {
 	c("radius",	"fill_colour", "fill_opacity")

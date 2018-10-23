@@ -65,6 +65,8 @@ add_line <- function(
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	digits = 6,
+	legend = FALSE,
+	legend_options = NULL,
 	palette = viridisLite::viridis
 ) {
 
@@ -133,6 +135,9 @@ add_line <- function(
 		shape <- replaceVariableColours(shape, colours)
 	}
 
+	## LEGEND
+	legend <- resolveLegend(legend, legend_options, colour_palettes)
+
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
 	if(length(requiredDefaults) > 0){
@@ -142,9 +147,16 @@ add_line <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckLineDependency())
-	invoke_method(map, "add_line", shape, layer_id, auto_highlight )
+	invoke_method(map, "add_line", shape, layer_id, auto_highlight, legend )
 }
 
+
+#' @rdname clear
+#' @export
+clear_line <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "line")
+	invoke_method(map, "clear_line", layer_id )
+}
 
 requiredLineColumns <- function() {
 	c("stroke_colour", "stroke_width", "stroke_opacity")

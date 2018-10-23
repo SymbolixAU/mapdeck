@@ -107,6 +107,8 @@ add_pointcloud_old <- function(
 	light_settings = list(),
 	layer_id = NULL,
 	digits = 6,
+	legend = FALSE,
+	legend_options = NULL,
 	palette = viridisLite::viridis
 ) {
 
@@ -162,6 +164,9 @@ add_pointcloud_old <- function(
 		shape <- replaceVariableColours(shape, colours)
 	}
 
+	## LEGEND
+	legend <- resolveLegend(legend, legend_options, colour_palettes)
+
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
 	if(length(requiredDefaults) > 0){
@@ -173,10 +178,16 @@ add_pointcloud_old <- function(
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
 	map <- addDependency(map, mapdeckPointcloudDependency())
-	invoke_method(map, "add_pointcloud", shape, layer_id, light_settings)
+	invoke_method(map, "add_pointcloud", shape, layer_id, light_settings, legend )
 }
 
 
+#' @rdname clear
+#' @export
+clear_pointcloud <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "pointcloud")
+	invoke_method(map, "clear_pointcloud", layer_id )
+}
 
 requiredPointcloudColumns <- function() {
 	c("stroke_width", "radius",

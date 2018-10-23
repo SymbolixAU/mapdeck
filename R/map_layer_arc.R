@@ -107,6 +107,8 @@ add_arc <- function(
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	digits = 6,
+	legend = F,
+	legend_options = NULL,
 	palette = viridisLite::viridis
 ) {
 
@@ -175,6 +177,10 @@ add_arc <- function(
 		shape <- replaceVariableColours(shape, colours)
 	}
 
+	## LEGEND
+	legend <- resolveLegend(legend, legend_options, colour_palettes)
+	#print(legend)
+
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
 	if(length(requiredDefaults) > 0){
@@ -184,7 +190,19 @@ add_arc <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckArcDependency())
-	invoke_method(map, "add_arc", shape, layer_id, auto_highlight )
+	invoke_method(map, "add_arc", shape, layer_id, auto_highlight, legend )
+}
+
+#' Clear Arc
+#'
+#' Clears elements from a map
+#' @rdname clear
+#' @param map a mapdeck map object
+#' @param layer_id the layer_id of the layer you want to clear
+#' @export
+clear_arc <- function( map, layer_id = NULL ) {
+	layer_id <- layerId(layer_id, "arc")
+	invoke_method(map, "clear_arc", layer_id )
 }
 
 requiredArcColumns <- function() {

@@ -5,7 +5,7 @@
 \title{Add Grid}
 \usage{
 add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, colour_range = viridisLite::viridis(5),
+  polyline = NULL, colour_range = viridisLite::viridis(6),
   cell_size = 1000, extruded = TRUE, elevation_scale = 1,
   auto_highlight = FALSE, layer_id = NULL, digits = 6)
 }
@@ -20,7 +20,7 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 
 \item{polyline}{column of \code{data} containing the polylines}
 
-\item{colour_range}{vector of hex colours}
+\item{colour_range}{vector of 6 hex colours}
 
 \item{cell_size}{size of each cell in meters}
 

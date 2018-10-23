@@ -1,5 +1,6 @@
 
 function add_screengrid( map_id, screengrid_data, layer_id, opacity, cell_size, colour_range ) {
+    
   const screengridLayer = new deck.ScreenGridLayer({
     id: 'screengrid-'+layer_id,
     data: screengrid_data,
@@ -13,4 +14,9 @@ function add_screengrid( map_id, screengrid_data, layer_id, opacity, cell_size, 
     pickable: true
   });
   update_layer( map_id, 'screengrid-'+layer_id, screengridLayer );
+}
+
+function clear_screengrid( map_id, layer_id ) {
+  clear_layer( map_id, 'screengrid-'+layer_id );
+  clear_legend( map_id, layer_id );
 }

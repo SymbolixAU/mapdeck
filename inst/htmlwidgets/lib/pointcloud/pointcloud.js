@@ -1,5 +1,6 @@
 
-function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings ) {
+function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings, legend ) {
+
   const pointcloudLayer = new deck.PointCloudLayer({
     id: 'pointcloud-'+layer_id,
     data: pointcloud_data,
@@ -12,6 +13,10 @@ function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings ) {
     onHover: updateTooltip
   });
   update_layer( map_id, 'pointcloud-'+layer_id, pointcloudLayer );
+    
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
 }
 
 function add_pointcloud2( map_id, pointcloud_data, layer_id, light_settings ) {
@@ -37,4 +42,9 @@ function decode_pointcloud( polyline, elevation ) {
   position[1] = coords[1];
   position[2] = elevation;
   return position;
+}
+
+function clear_pointcloud( map_id, layer_id ) {
+  clear_layer( map_id, 'pointcloud-'+layer_id );
+  clear_legend( map_id, layer_id );
 }

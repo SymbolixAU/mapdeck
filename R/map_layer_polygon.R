@@ -27,6 +27,9 @@ mapdeckPolygonDependency <- function() {
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param elevation the height of the polygon
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
+#' @param legend either a logical indiciating if the legend(s) should be displayed, or
+#' a named list indicating which colour attributes should be included in the legend.
+#' @param legend_options A list of options for controlling the legend.
 #'
 #' @examples
 #' \donttest{
@@ -53,7 +56,6 @@ mapdeckPolygonDependency <- function() {
 #'     , elevation = "elevation"
 #'     , stroke_width = 0
 #'     , tooltip = 'info'
-#'     #, highlight_colour = "#00ff00"
 #'   )
 #'
 #' library(sf)
@@ -111,12 +113,12 @@ add_polygon <- function(
 	}
 
 	shape <- rcpp_polygon( data, l )
-	# print( shape )
+	print( shape )
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
 	map <- addDependency(map, mapdeckPolygonDependency())
-	invoke_method(map, "add_polygon2", shape, layer_id, light_settings, auto_highlight)
+	invoke_method(map, "add_polygon2", shape[["data"]], layer_id, light_settings, auto_highlight)
 }
 
 
@@ -136,6 +138,8 @@ add_polygon_old <- function(
 	light_settings = list(),
 	layer_id = NULL,
 	digits = 6,
+	legend = F,
+	legend_options = NULL,
 	palette = viridisLite::viridis
 ) {
 
@@ -181,6 +185,9 @@ add_polygon_old <- function(
 		shape <- replaceVariableColours(shape, colours)
 	}
 
+	## LEGEND
+	legend <- resolveLegend(legend, legend_options, colour_palettes)
+
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
 	if(length(requiredDefaults) > 0){
@@ -193,7 +200,15 @@ add_polygon_old <- function(
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
 	map <- addDependency(map, mapdeckPolygonDependency())
-	invoke_method(map, "add_polygon", shape, layer_id, light_settings, auto_highlight)
+	invoke_method(map, "add_polygon", shape, layer_id, light_settings, auto_highlight, legend)
+}
+
+
+#' @rdname clear
+#' @export
+clear_polygon <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "polygon")
+	invoke_method(map, "clear_polygon", layer_id )
 }
 
 

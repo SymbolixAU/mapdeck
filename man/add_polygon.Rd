@@ -43,6 +43,11 @@ to conflict and not plot correctly}
 should be used for the latitude / longitude coordinates.}
 
 \item{palette}{a function which generates hex colours}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
 }
 \description{
 The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects
@@ -73,7 +78,6 @@ mapdeck(
     , elevation = "elevation"
     , stroke_width = 0
     , tooltip = 'info'
-    #, highlight_colour = "#00ff00"
   )
 
 library(sf)

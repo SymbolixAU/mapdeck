@@ -110,6 +110,8 @@ add_path_old <- function(
 	layer_id = NULL,
 	digits = 6,
 	auto_highlight = FALSE,
+	legend = FALSE,
+	legend_options = NULL,
 	palette = viridisLite::viridis
 ) {
 
@@ -155,6 +157,9 @@ add_path_old <- function(
 		shape <- replaceVariableColours(shape, colours)
 	}
 
+	## LEGEND
+	legend <- resolveLegend(legend, legend_options, colour_palettes)
+
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
 	if(length(requiredDefaults) > 0){
@@ -164,9 +169,15 @@ add_path_old <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckPathDependency())
-	invoke_method(map, "add_path", shape, layer_id, auto_highlight )
+	invoke_method(map, "add_path", shape, layer_id, auto_highlight, legend )
 }
 
+#' @rdname clear
+#' @export
+clear_path <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "path")
+	invoke_method(map, "clear_path", layer_id )
+}
 
 requiredPathColumns <- function() {
 	c("stroke_width", "stroke_colour","stroke_opacity")
