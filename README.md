@@ -24,7 +24,7 @@ Version v0.1.002+ sees quite a lot of changes, so I need users to test their fun
 If you install the latest dev version and your plots aren't working, you can still use the old function, just add `_old` to the function call. 
 
 
-The fisrt change is `add_scatterplot()`
+The first change is `add_scatterplot()`
 
 
 ```r
@@ -35,12 +35,19 @@ devtools::install_github("SymbolixAU/googlePolylines")
 devtools::install_github("SymbolixAU/mapdeck")
 ```
 
+## Access Token
+
+Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox you need an [access token](https://www.mapbox.com/help/how-access-tokens-work/).
+
 ## Basic Use
+
+Create a public scopes token `'your token'` beginning with pk. This token allows you to read data from the Mapdeck API.
 
 `mapdeck(token = 'your_token')` will give you a map. You then start adding layers by using one of the various `add_*()` functions. 
 
 ```r
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
+
 flights <- read.csv(url)
 flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 
@@ -58,9 +65,6 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
 
 ![Arcs](./vignettes/img/readme_arcs_small.gif)
 
-## Access Token
-
-Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox you need an [access token](https://www.mapbox.com/help/how-access-tokens-work/)
 
 ## Available Layers
 
