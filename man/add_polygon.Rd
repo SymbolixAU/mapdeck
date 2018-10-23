@@ -8,7 +8,8 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL,
   fill_opacity = NULL, elevation = NULL, tooltip = NULL,
   auto_highlight = FALSE, light_settings = list(), layer_id = NULL,
-  digits = 6, palette = "viridis", na_colour = "#808080FF")
+  digits = 6, palette = "viridis", na_colour = "#808080FF",
+  legend = FALSE, legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}

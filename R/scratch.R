@@ -264,9 +264,10 @@
 # 		data = df[1:5, ]
 # 		, polyline = "geometry"
 # 		, layer = "polygon_layer"
-# 		, fill_colour = "tset",
+# 		, fill_colour = "SA2_NAME",
 # 		, stroke_colour = "fillColor",
 # 		, elevation = "elevation"
 # 		, stroke_width = 0
 # 		, tooltip = 'info'
+# 		, legend = F
 # 	)

@@ -91,10 +91,13 @@ add_polygon <- function(
 	layer_id = NULL,
 	digits = 6,
 	palette = "viridis",
-	na_colour = "#808080FF"
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )
+	l[[1]] <- NULL
 	l[["data"]] <- NULL
 	l[["map"]] <- NULL
 	l[["auto_highlight"]] <- NULL
@@ -102,6 +105,7 @@ add_polygon <- function(
 	l[["layer_id"]] <- NULL
 	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
 
 	data <- normaliseSfData(data, "POLYGON", multi = FALSE)
 	polyline <- findEncodedColumn(data, polyline)

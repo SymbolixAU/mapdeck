@@ -98,22 +98,32 @@ inline void resolve_stroke(
 		stroke, alpha, stroke_colour_location, stroke_opacity_location
 	);
 
+	bool make_legend ;
+
+	if ( lst_legend.containsElementNamed("stroke_colour") ) {
+		make_legend = lst_legend[ "stroke_colour" ];
+	}
+
 	lst_defaults[ "stroke_colour" ] = legend[ "colours" ];
 
 	if (lst_legend.containsElementNamed("stroke_colour") && strokeColIndex >= 0 ) {
 
-		std::string title = params[ "stroke_colour" ];
+		Rcpp::Rcout << "make_legend " << make_legend << std::endl;
+		if (  make_legend == true ) {
 
-		Rcpp::List summary = Rcpp::List::create(
-			Rcpp::_["colour"] = legend[ "summary_colours" ],
-      Rcpp::_["variable"] = legend[ "summary_values" ],
-      Rcpp::_["colourType"] = legend[ "colour_type" ],
-      Rcpp::_["type"] = legend["type"],
-      Rcpp::_["title"] = title
-		);
-		lst_legend[ "stroke_colour" ] = summary;
-		// lst_legend[ "colour" ] = legend[ "summary_colours" ];
-		// lst_legend[ "variable" ] = legend[ "summary_values" ];
+			std::string title = params[ "stroke_colour" ];
+
+			Rcpp::List summary = Rcpp::List::create(
+				Rcpp::_["colour"] = legend[ "summary_colours" ],
+	      Rcpp::_["variable"] = legend[ "summary_values" ],
+	      Rcpp::_["colourType"] = legend[ "colour_type" ],
+	      Rcpp::_["type"] = legend["type"],
+	      Rcpp::_["title"] = title
+			);
+			lst_legend[ "stroke_colour" ] = summary;
+			// lst_legend[ "colour" ] = legend[ "summary_colours" ];
+			// lst_legend[ "variable" ] = legend[ "summary_values" ];
+		}
 	}
 }
 
