@@ -113,7 +113,7 @@ add_polygon <- function(
 	}
 
 	shape <- rcpp_polygon( data, l )
-	print( shape )
+	# print( shape )
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 

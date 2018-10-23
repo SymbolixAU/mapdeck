@@ -100,7 +100,7 @@ inline void resolve_stroke(
 
 	lst_defaults[ "stroke_colour" ] = legend[ "colours" ];
 
-	if (lst_legend.containsElementNamed("stroke_colour") ) {
+	if (lst_legend.containsElementNamed("stroke_colour") && strokeColIndex >= 0 ) {
 
 		std::string title = params[ "stroke_colour" ];
 

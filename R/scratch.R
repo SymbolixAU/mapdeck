@@ -197,6 +197,7 @@
 # 		, legend = TRUE
 # 	)
 # # legend
+
 # df <- capitals
 # set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
 #
@@ -209,7 +210,7 @@
 # 		, lat = "lat"
 # 		, radius = 1000
 # 		, fill_colour = "country"
-# 		, legend = T
+# 		, legend = F
 # 	)
 
 
@@ -249,6 +250,7 @@
 #   , auto_highlight = TRUE
 # )
 
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
 # df <- melbourne
 # df$elevation <- sample(100:5000, size = nrow(df))
 # df$info <- paste0("<b>SA2 - </b><br>",df$SA2_NAME)
@@ -262,7 +264,7 @@
 # 		data = df[1:5, ]
 # 		, polyline = "geometry"
 # 		, layer = "polygon_layer"
-# 		, fill_colour = "fillColor",
+# 		, fill_colour = "tset",
 # 		, stroke_colour = "fillColor",
 # 		, elevation = "elevation"
 # 		, stroke_width = 0

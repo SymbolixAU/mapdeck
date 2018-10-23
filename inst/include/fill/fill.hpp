@@ -100,24 +100,34 @@ namespace fill {
   	);
 
 
-  	lst_defaults[ "fill_colour" ] = legend[ "colours" ];
+  	bool make_legend ;
 
-  	if (lst_legend.containsElementNamed("fill_colour") ) {
-  		// need the title to be the name of the variable
-  		std::string title = params[ "fill_colour" ];
-
-  		Rcpp::List summary = Rcpp::List::create(
-  			Rcpp::_["colour"] = legend[ "summary_colours" ],
-        Rcpp::_["variable"] = legend[ "summary_values" ],
-        Rcpp::_["colourType"] = legend[ "colour_type" ],
-        Rcpp::_["type"] = legend[ "type" ],
-        Rcpp::_["title"] = title
-  		);
-  		lst_legend[ "fill_colour" ] = summary;
-  		// lst_legend[ "colour" ] = legend[ "summary_colours" ];
-  		// lst_legend[ "variable" ] = legend[ "summary_values" ];
+  	if ( lst_legend.containsElementNamed("fill_colour") ) {
+  	  make_legend = lst_legend[ "fill_colour" ];
   	}
 
+  	lst_defaults[ "fill_colour" ] = legend[ "colours" ];
+
+  	// TODO( don't build legend if not asked for )
+  	if ( lst_legend.containsElementNamed("fill_colour") && fillColIndex >= 0 ) {
+  		//Rcpp::Rcout << "found fill colour legend" << std::endl;
+  		// need the title to be the name of the variable
+  		Rcpp::Rcout << "make_legend " << make_legend << std::endl;
+  		if (  make_legend == true ) {
+	  		std::string title = params[ "fill_colour" ];
+
+	  		Rcpp::List summary = Rcpp::List::create(
+	  			Rcpp::_["colour"] = legend[ "summary_colours" ],
+	        Rcpp::_["variable"] = legend[ "summary_values" ],
+	        Rcpp::_["colourType"] = legend[ "colour_type" ],
+	        Rcpp::_["type"] = legend[ "type" ],
+	        Rcpp::_["title"] = title
+	  		);
+	  		lst_legend[ "fill_colour" ] = summary;
+	  		// lst_legend[ "colour" ] = legend[ "summary_colours" ];
+	  		// lst_legend[ "variable" ] = legend[ "summary_values" ];
+  		}
+  	}
   }
 
 } // namespace fill

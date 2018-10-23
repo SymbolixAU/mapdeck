@@ -2,37 +2,21 @@ function add_legend(map_id, layer_id, legendValues) {
 
   'use strict';
 
-  var i = 0;
-  console.log( legendValues.length );
-  console.log( legendValues.size );
+  //console.log( legendValues.length );
+  //console.log( legendValues.size );
 
-//  for (i = 0; i < legendValues.length; i++) {
-//    if (legendValues[i].type === "category" || legendValues[i].legend.colour.length === 1) {
-//      add_legend_category(map_id, layer_id, legendValues[i]);  
-//    } else {
-//      add_legend_gradient(map_id, layer_id, legendValues[i]);
-//    }
-//  }
-    
-//    for ( key in legendValues ) {
-//        console.log( key );
-//        if ( key.type == "category" || key.legend.colour.length === 1 ) {
-//            add_legend_category( map_id, layer_id, key );
-//        } else {
-//            add_legend_gradient( map_id, layer_id, key );
-//        }
-//    }
     var this_legend;
-    Object.keys( legendValues ).forEach( function(key, index) {
-        console.log(key);
-        console.log(index);
+    Object.keys( legendValues ).forEach( function(key) {
+
         this_legend = legendValues[ key ];
-        console.log( this_legend );
-        console.log( this_legend.type );
-        if ( this_legend.type === "category" || this_legend.colour.length == 1 ) {
-            add_legend_category( map_id, layer_id, this_legend );
-        } else {
-            add_legend_gradient( map_id, layer_id, this_legend); 
+        
+        if ( this_legend.colour !== undefined ) {
+
+            if ( this_legend.type === "category" || this_legend.colour.length == 1 ) {
+                add_legend_category( map_id, layer_id, this_legend );
+            } else {
+                add_legend_gradient( map_id, layer_id, this_legend); 
+            }
         }
     })
     
@@ -52,14 +36,6 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
         legendTextColour = '#828282',
         style = '',
         isUpdating = false;
-    
-    console.log("add gradient");
-    console.log(legendValues);
-    console.log(legendValues.colourType);
-    console.log(legendValues.colour);
-    console.log(legendValues.variable);
-    console.log(legendValues.type);
-
 
     if (window[map_id + 'legend' + layer_id + legendValues.colourType] == null) {
         window[map_id + 'legend' + layer_id + legendValues.colourType] = document.createElement("div");
@@ -235,6 +211,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
 
 }
 
+// TODO( move / rename )
 function findById( source, id, returnType ) {
     var i = 0;
     for (i = 0; i < source.length; i++) {

@@ -107,10 +107,10 @@ add_scatterplot <- function(
 
 	shape <- rcpp_scatterplot( data, l )
 
-	print(shape)
+	# print(shape)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
-	invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight)
+	invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight, shape[["legend"]])
 }
 
 resolve_palette <- function( l, palette ) {

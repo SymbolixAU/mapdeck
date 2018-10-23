@@ -21,6 +21,8 @@ Rcpp::List construct_legend_list( Rcpp::List& lst_params,
 	}
 	legend.names() = legend_types;
 
+	//Rcpp::Rcout << "legend types: " << legend_types << std::endl;
+
 	// find the 'legend' argument
 	int legend_location = mapdeck::find_character_index_in_vector( param_names, "legend" );
 	//Rcpp::Rcout << "legend location: " << legend_location << std::endl;
@@ -40,7 +42,9 @@ Rcpp::List construct_legend_list( Rcpp::List& lst_params,
 			// the user supplied either legend = T or legend = F
 			// if T, switch all the 'false' elements to true
 			for ( i = 0; i < n; i++ ) {  // TODO( dont' swithc the FALSEs to TRUE)
-			  legend[ i ] = true;
+			  //bool use_legend = lege[i];
+		    //Rcpp::Rcout << "use_legend: " << use_legend;
+			  legend[ i ] = lege;
 		  }
 			//Rcpp::Rcout << "lglsxp legend" << std::endl;
 			break;
@@ -54,7 +58,7 @@ Rcpp::List construct_legend_list( Rcpp::List& lst_params,
 			//Rcpp::Rcout << "names: " << lege_list_names << std::endl;
 			for (i = 0; i < n; i++ ) {
 			  this_legend = lege_list_names[ i ];
-				//Rcpp::Rcout << "this_legend " << this_legend.get_cstring() << std::endl;
+				Rcpp::Rcout << "this_legend " << this_legend.get_cstring() << std::endl;
 				legend[ this_legend ] = lege_list[ i ];
 			}
 			break;
