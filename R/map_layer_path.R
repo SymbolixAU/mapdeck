@@ -56,7 +56,9 @@ add_path <- function(
 	digits = 6,
 	auto_highlight = FALSE,
 	palette = "viridis",
-	na_colour = "#808080FF"
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL
 ) {
 
 	## TODO(sf and lon/lat coordinates)
@@ -70,16 +72,8 @@ add_path <- function(
 	l[["digits"]] <- NULL
 	l[["auto_highlight"]] <- NULL
 
-	# l <- list(
-	# 	stroke_colour = stroke_colour
-	# 	, stroke_width = stroke_width
-	# 	, stroke_opacity = stroke_opacity
-	# 	, tooltip = tooltip
-	# 	, palette = palette
-	# 	, na_colour = na_colour
-	# )
-
 	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
 
 	data <- normaliseSfData(data, "LINESTRING")
 	polyline <- findEncodedColumn(data, polyline)

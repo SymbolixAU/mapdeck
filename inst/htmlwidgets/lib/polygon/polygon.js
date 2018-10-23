@@ -53,9 +53,9 @@ function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_high
   
   console.log( legend );
     
-  //if (legend !== false) {
+  if (legend !== false) {
     add_legend(map_id, layer_id, legend);
-  //}
+  }
 }
 
 function decode_polygons( polylines ) {

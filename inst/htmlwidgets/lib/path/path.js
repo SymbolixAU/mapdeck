@@ -40,7 +40,7 @@ function add_path2( map_id, path_data, layer_id, auto_highlight, legend ) {
   });
   update_layer( map_id, 'path-'+layer_id, pathLayer );
     
-  if ( legend !=== false ) {
+  if ( legend !== false ) {
       add_legend( map_id, layer_id, legend );
   }
 }

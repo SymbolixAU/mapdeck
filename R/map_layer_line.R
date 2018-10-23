@@ -65,6 +65,79 @@ add_line <- function(
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	digits = 6,
+	palette = "viridis",
+	legend = FALSE,
+	legend_options = NULL
+) {
+
+	l <- as.list( match.call() )
+	l[[1]] <- NULL
+	l[["data"]] <- NULL
+	l[["map"]] <- NULL
+	l[["layer_id"]] <- NULL
+	l[["digits"]] <- NULL
+	l[["auto_highlight"]] <- NULL
+
+	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
+
+	## if origin && destination == one column each, it's an sf_encoded
+	## else, it's two column, which need to be encoded!
+	if ( length(origin) == 2 && length(destination) == 2) {
+		## lon / lat columns
+		data[[ origin[1] ]] <- googlePolylines::encode(
+			data[, origin, drop = F ]
+			, lon = origin[1]
+			, lat = origin[2]
+			, byrow = T
+		)
+		data[[ destination[1] ]] <- googlePolylines::encode(
+			data[, destination, drop = F ]
+			, lon = destination[1]
+			, lat = destination[2]
+			, byrow = T
+		)
+
+		l[['origin']] <- origin[1]
+		l[['destination']] <- destination[1]
+
+	} else if (length(origin) == 1 && length(destination) == 1) {
+		## encoded
+		data <- normaliseMultiSfData(data, origin, destination)
+		o <- unlist(data[[origin]])
+		d <- unlist(data[[destination]])
+		if(length(o) != length(d)) {
+			stop("There are a different number of origin and destination POINTs, possibly due to MULTIPOINT geometries?")
+		}
+		data[[origin]] <- o
+		data[[destination]] <- d
+
+	} else {
+		stop("expecting lon/lat origin destinations or sfc columns")
+	}
+
+	shape <- rcpp_path( data, l )
+	#print( shape )
+
+	map <- addDependency(map, mapdeckLineDependency())
+	invoke_method(map, "add_line2", shape[["data"]], layer_id, auto_highlight, shape[["legend"]] )
+}
+
+
+#' @export
+add_line_old <- function(
+	map,
+	data = get_map_data(map),
+	layer_id = NULL,
+	origin,
+	destination,
+	id = NULL,
+	stroke_colour = NULL,
+	stroke_width = NULL,
+	stroke_opacity = NULL,
+	tooltip = NULL,
+	auto_highlight = FALSE,
+	digits = 6,
 	legend = FALSE,
 	legend_options = NULL,
 	palette = viridisLite::viridis
@@ -149,6 +222,7 @@ add_line <- function(
 	map <- addDependency(map, mapdeckLineDependency())
 	invoke_method(map, "add_line", shape, layer_id, auto_highlight, legend )
 }
+
 
 
 #' @rdname clear

@@ -123,7 +123,9 @@
 # 		, tooltip = "ROAD_NAME"
 # 		, auto_highlight = TRUE
 # 		, legend = T
-# 	) %>%
+# 	)
+
+#%>%
 # 	clear_path(layer_id = "path_layer")
 
 # mapdeck(
@@ -184,9 +186,9 @@
 # flights <- read.csv(url)
 # flights$id <- seq_len(nrow(flights))
 # flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
-
+#
 # mapdeck( style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
-# 	add_line(
+# 	add_line_new(
 # 		data = flights
 # 		, layer_id = "line_layer"
 # 		, origin = c("start_lon", "start_lat")
@@ -196,7 +198,7 @@
 # 		, auto_highlight = TRUE
 # 		, legend = TRUE
 # 	)
-# # legend
+
 
 # df <- capitals
 # set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))

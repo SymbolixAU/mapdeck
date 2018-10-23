@@ -8,7 +8,7 @@ add_path(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
   tooltip = NULL, layer_id = NULL, digits = 6,
   auto_highlight = FALSE, palette = "viridis",
-  na_colour = "#808080FF")
+  na_colour = "#808080FF", legend = FALSE, legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -37,6 +37,11 @@ should be used for the latitude / longitude coordinates.}
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
 \item{palette}{a function which generates hex colours}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
 }
 \description{
 The Path Layer takes in lists of coordinate points and renders them as
