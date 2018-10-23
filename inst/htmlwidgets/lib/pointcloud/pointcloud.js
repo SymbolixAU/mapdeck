@@ -5,7 +5,7 @@ function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings, lege
     id: 'pointcloud-'+layer_id,
     data: pointcloud_data,
     radiusPixels: 10,
-    getPosition: d => decode_pointcloud(d.polyline, d.elevation),
+    getPosition: d => decode_pointcloud( d.polyline, d.elevation ),
     getColor: d => hexToRGBA( d.fill_colour, d.fill_opacity ),
     lightSettings: light_settings,
     pickable: true,
@@ -19,19 +19,26 @@ function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings, lege
   }
 }
 
-function add_pointcloud2( map_id, pointcloud_data, layer_id, light_settings ) {
+function add_pointcloud2( map_id, pointcloud_data, layer_id, light_settings, legend ) {
+    
   const pointcloudLayer = new deck.PointCloudLayer({
     id: 'pointcloud-'+layer_id,
     data: pointcloud_data,
     radiusPixels: 10,
-    getPosition: d => decode_pointcloud(d.polyline, d.elevation),
+    getPosition: d => decode_pointcloud( d.polyline, d.elevation ),
     getColor: d => hexToRGBA2( d.fill_colour ),
     lightSettings: light_settings,
     pickable: true,
     onClick: info => layer_click( map_id, "pointcloud", info ),
     onHover: updateTooltip
   });
+    
+  console.log( pointcloudLayer) ;
   update_layer( map_id, 'pointcloud-'+layer_id, pointcloudLayer );
+    
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
 }
 
 

@@ -33,6 +33,7 @@ namespace fill {
 
 		switch ( TYPEOF( fill ) ) {
 		case 16: {
+			//Rcpp::Rcout << "fill category " << std::endl;
 			Rcpp::StringVector fill_colour_vec = Rcpp::as< Rcpp::StringVector >( fill );
 			Rcpp::List legend = mapdeck::palette::colour_with_palette( pal, fill_colour_vec, alpha, na_colour, include_alpha );
 			legend[ "colour_type" ] = "fill_colour";
@@ -112,7 +113,7 @@ namespace fill {
   	if ( lst_legend.containsElementNamed("fill_colour") && fillColIndex >= 0 ) {
   		//Rcpp::Rcout << "found fill colour legend" << std::endl;
   		// need the title to be the name of the variable
-  		Rcpp::Rcout << "make_legend " << make_legend << std::endl;
+  		//Rcpp::Rcout << "make_legend " << make_legend << std::endl;
   		if (  make_legend == true ) {
 	  		std::string title = params[ "fill_colour" ];
 

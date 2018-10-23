@@ -58,7 +58,7 @@ Rcpp::List construct_legend_list( Rcpp::List& lst_params,
 			//Rcpp::Rcout << "names: " << lege_list_names << std::endl;
 			for (i = 0; i < n; i++ ) {
 			  this_legend = lege_list_names[ i ];
-				Rcpp::Rcout << "this_legend " << this_legend.get_cstring() << std::endl;
+				//Rcpp::Rcout << "this_legend " << this_legend.get_cstring() << std::endl;
 				legend[ this_legend ] = lege_list[ i ];
 			}
 			break;

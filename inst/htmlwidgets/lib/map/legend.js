@@ -11,10 +11,14 @@ function add_legend(map_id, layer_id, legendValues) {
         this_legend = legendValues[ key ];
         
         if ( this_legend.colour !== undefined ) {
+            
+            console.log( this_legend );
 
-            if ( this_legend.type === "category" || this_legend.colour.length == 1 ) {
+            if ( this_legend.type[0] === "category" || this_legend.colour.length == 1 ) {
+                console.log(" adding category" );
                 add_legend_category( map_id, layer_id, this_legend );
             } else {
+                console.log( "adding gradient ");
                 add_legend_gradient( map_id, layer_id, this_legend); 
             }
         }
@@ -112,7 +116,7 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
 function generateColourBox(colourType, colour) {
     'use strict';
 
-    if (colourType === "fill_colour") {
+    if (colourType[0] === "fill_colour") {
         return ('height: 20px; width: 15px; background: ' + colour);
     } else {
         // http://jsfiddle.net/UES6U/2/
@@ -139,6 +143,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
     // catch undefined OR null
     // https://stackoverflow.com/questions/2647867/how-to-determine-if-variable-is-undefined-or-null
     if (window[map_id + 'legend' + layer_id + legendValues.colourType] == null) {
+        
         window[map_id + 'legend' + layer_id + legendValues.colourType] = document.createElement("div");
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('id', map_id + 'legend' + layer_id + legendValues.colourType);
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('class', 'legend');
@@ -178,7 +183,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('style', legendValues.css);
     }
 
-    for (i = 0; i < legendValues.legend.colour.length; i++) {
+    for (i = 0; i < legendValues.colour.length; i++) {
 
         var tickVal = 'text-left: center; color: ' + legendTextColour + '; font-size: 12px; height: 20px;',
             divCol = document.createElement('div'),
@@ -186,7 +191,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
             divVal = document.createElement('div');
 
         //colourBox = 'height: 20px; width: 15px; background: ' + legendValues.legend.colour[i];
-        colourBox = generateColourBox(legendValues.colourType, legendValues.legend.colour[i]);
+        colourBox = generateColourBox(legendValues.colourType, legendValues.colour[i]);
         divCol.setAttribute('style', colourBox);
         colourContainer.appendChild(divCol);
 
@@ -195,7 +200,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
         tickContainer.appendChild(divTicks);
 
         divVal.setAttribute('style', tickVal);
-        divVal.innerHTML = legendValues.legend.variable[i];
+        divVal.innerHTML = legendValues.variable[i];
         labelContainer.appendChild(divVal);
     }
 

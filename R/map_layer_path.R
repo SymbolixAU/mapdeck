@@ -94,7 +94,7 @@ add_path <- function(
 	shape <- rcpp_path( data, l );
 
 	map <- addDependency(map, mapdeckPathDependency())
-	invoke_method(map, "add_path2", shape, layer_id, auto_highlight )
+	invoke_method(map, "add_path2", shape[["data"]], layer_id, auto_highlight, shape[["legend"]] )
 }
 
 #' @inheritParams add_path

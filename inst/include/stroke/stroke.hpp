@@ -108,7 +108,7 @@ inline void resolve_stroke(
 
 	if (lst_legend.containsElementNamed("stroke_colour") && strokeColIndex >= 0 ) {
 
-		Rcpp::Rcout << "make_legend " << make_legend << std::endl;
+		//Rcpp::Rcout << "make_legend " << make_legend << std::endl;
 		if (  make_legend == true ) {
 
 			std::string title = params[ "stroke_colour" ];

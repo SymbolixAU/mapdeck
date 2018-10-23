@@ -55,13 +55,22 @@ add_pointcloud <- function(
 	layer_id = NULL,
 	digits = 6,
 	palette = "viridis",
-	na_colour = "#808080FF"
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL
 ) {
 
-	message("Using development version. Please check plots carefully")
+	# message("Using development version. Please check plots carefully")
 
 	l <- as.list( match.call() )
+	l[[1]] <- NULL    ## function call
+	l[["map"]] <- NULL
+	l[["data"]] <- NULL
+	l[["auto_highlight"]] <- NULL
+	l[["layer_id"]] <- NULL
+	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
 
 	data <- normaliseSfData(data, "POINT")
 	polyline <- findEncodedColumn(data, polyline)
@@ -82,11 +91,12 @@ add_pointcloud <- function(
 	}
 
 	shape <- rcpp_pointcloud( data, l )
+	#print(shape)
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
 	map <- addDependency(map, mapdeckPointcloudDependency())
-	invoke_method(map, "add_pointcloud2", shape, layer_id, light_settings)
+	invoke_method(map, "add_pointcloud2", shape[["data"]], layer_id, light_settings, shape[["legend"]] )
 }
 
 
@@ -174,6 +184,7 @@ add_pointcloud_old <- function(
 	}
 
 	shape <- jsonlite::toJSON(shape, digits = digits)
+	print(shape)
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 

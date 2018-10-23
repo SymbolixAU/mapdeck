@@ -8,7 +8,8 @@ add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
   elevation = NULL, polyline = NULL, radius = NULL,
   fill_colour = NULL, fill_opacity = NULL, tooltip = NULL,
   light_settings = list(), layer_id = NULL, digits = 6,
-  palette = "viridis", na_colour = "#808080FF")
+  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
+  legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -47,6 +48,11 @@ should be used for the latitude / longitude coordinates.}
 between [0, 255], where the 4th column represents the alpha.}
 
 \item{na_colour}{hex string colour to use for NA values}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
 }
 \description{
 The Pointcloud Layer takes in coordinate points and renders them as circles
