@@ -58,6 +58,9 @@ namespace mapdeck {
   	// lst_legend[ "stroke_colour" ] = false;
   	Rcpp::List lst_legend = construct_legend_list( lst_params, params, param_names, legend_types );
   	//Rcpp::Rcout << "finished legend" << std::endl;
+  	// lst_legend contains the 'true/false' values for the legends required (fill, stroke, stroke_to, stroke_from)
+  	// for each of the 'trues', make another legend, the size of the TRUEs, and populate
+
 
   	// just creating a bit of JSON to view the result of the legend construction
   	// Rcpp::StringVector js = jsonify::vectors::to_json( legend );

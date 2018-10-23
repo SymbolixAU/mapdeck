@@ -118,7 +118,7 @@ add_polygon <- function(
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
 	map <- addDependency(map, mapdeckPolygonDependency())
-	invoke_method(map, "add_polygon2", shape[["data"]], layer_id, light_settings, auto_highlight)
+	invoke_method(map, "add_polygon2", shape[["data"]], layer_id, light_settings, auto_highlight, shape[["legend"]])
 }
 
 

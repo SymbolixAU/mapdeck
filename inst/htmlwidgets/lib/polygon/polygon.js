@@ -29,7 +29,7 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highl
 
 }
 
-function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_highlight ) {
+function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_highlight, legend ) {
   const polygonLayer = new PolygonLayer({
     id: 'polygon-'+layer_id,
     data: polygon_data,
@@ -50,6 +50,12 @@ function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_high
     onClick: info => layer_click( map_id, "path", info )
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
+  
+  console.log( legend );
+    
+  //if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  //}
 }
 
 function decode_polygons( polylines ) {

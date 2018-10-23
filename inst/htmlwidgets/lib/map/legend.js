@@ -3,24 +3,39 @@ function add_legend(map_id, layer_id, legendValues) {
   'use strict';
 
   var i = 0;
+  console.log( legendValues.length );
+  console.log( legendValues.size );
 
-  for (i = 0; i < legendValues.length; i++) {
-    if (legendValues[i].type === "category" || legendValues[i].legend.colour.length === 1) {
-        
-      add_legend_category(map_id, layer_id, legendValues[i]);
-        
-    } else {
-        
-//      if (legendValues[i].legend.colour.length === 1) {
-//          
-//        add_legend_category(map_id, layer_id, legendValues[i]);
-//          
-//      } else {
-//          
-        add_legend_gradient(map_id, layer_id, legendValues[i]);
-//      }
-    }
-  }
+//  for (i = 0; i < legendValues.length; i++) {
+//    if (legendValues[i].type === "category" || legendValues[i].legend.colour.length === 1) {
+//      add_legend_category(map_id, layer_id, legendValues[i]);  
+//    } else {
+//      add_legend_gradient(map_id, layer_id, legendValues[i]);
+//    }
+//  }
+    
+//    for ( key in legendValues ) {
+//        console.log( key );
+//        if ( key.type == "category" || key.legend.colour.length === 1 ) {
+//            add_legend_category( map_id, layer_id, key );
+//        } else {
+//            add_legend_gradient( map_id, layer_id, key );
+//        }
+//    }
+    var this_legend;
+    Object.keys( legendValues ).forEach( function(key, index) {
+        console.log(key);
+        console.log(index);
+        this_legend = legendValues[ key ];
+        console.log( this_legend );
+        console.log( this_legend.type );
+        if ( this_legend.type === "category" || this_legend.colour.length == 1 ) {
+            add_legend_category( map_id, layer_id, this_legend );
+        } else {
+            add_legend_gradient( map_id, layer_id, this_legend); 
+        }
+    })
+    
 }
 
 function add_legend_gradient(map_id, layer_id, legendValues) {
