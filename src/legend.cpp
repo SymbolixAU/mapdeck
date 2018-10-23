@@ -39,7 +39,7 @@ Rcpp::List construct_legend_list( Rcpp::List& lst_params,
 		case LGLSXP: { // logical
 			// the user supplied either legend = T or legend = F
 			// if T, switch all the 'false' elements to true
-			for ( i = 0; i < n; i++ ) {
+			for ( i = 0; i < n; i++ ) {  // TODO( dont' swithc the FALSEs to TRUE)
 			  legend[ i ] = true;
 		  }
 			//Rcpp::Rcout << "lglsxp legend" << std::endl;
@@ -47,7 +47,7 @@ Rcpp::List construct_legend_list( Rcpp::List& lst_params,
 		}
 		case VECSXP: { // list
 			//Rcpp::Rcout << "list legend " << std::endl;
-			// iterate the list, and, if the itme is true, swithc the element of the list to true
+			// iterate the list, and, if the item is true, switch the element of the list to true
 			Rcpp::List lege_list = Rcpp::as< Rcpp::List >( lege );
 			n = lege_list.size();
 			Rcpp::StringVector lege_list_names = lege_list.names();

@@ -102,11 +102,16 @@ namespace fill {
   	lst_defaults[ "fill_colour" ] = legend[ "colours" ];
 
   	if (lst_legend.containsElementNamed("fill_colour") ) {
+  		// need the title to be the name of the variable
+  		std::string title = params[ "fill_colour" ];
+  		//Rcpp::Rcout << "title: " << title << std::endl;
+
   		Rcpp::List summary = Rcpp::List::create(
   			Rcpp::_["colour"] = legend[ "summary_colours" ],
         Rcpp::_["variable"] = legend[ "summary_values" ],
         Rcpp::_["colourType"] = legend[ "colour_type" ],
-        Rcpp::_["type"] = legend["type"]
+        Rcpp::_["type"] = legend[ "type" ],
+        Rcpp::_["title"] = title
   		);
   		lst_legend[ "fill_colour" ] = summary;
   		// lst_legend[ "colour" ] = legend[ "summary_colours" ];

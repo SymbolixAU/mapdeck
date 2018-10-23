@@ -52,6 +52,13 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
         legendTextColour = '#828282',
         style = '',
         isUpdating = false;
+    
+    console.log("add gradient");
+    console.log(legendValues);
+    console.log(legendValues.colourType);
+    console.log(legendValues.colour);
+    console.log(legendValues.variable);
+    console.log(legendValues.type);
 
 
     if (window[map_id + 'legend' + layer_id + legendValues.colourType] == null) {
@@ -85,8 +92,8 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('style', legendValues.css);
     }
 
-    for (i = 0; i < legendValues.legend.colour.length; i++) {
-        jsColours.push(legendValues.legend.colour[i]);
+    for (i = 0; i < legendValues.colour.length; i++) {
+        jsColours.push(legendValues.colour[i]);
     }
 
     colours = '(' + jsColours.join() + ')';
@@ -101,7 +108,7 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
     legendColours.setAttribute('style', style);
     legendContent.appendChild(legendColours);
 
-    for (i = 0; i < legendValues.legend.colour.length; i++) {
+    for (i = 0; i < legendValues.colour.length; i++) {
 
         var legendValue = 'text-align: left; color: ' + legendTextColour + '; font-size: 12px; height: 20px;',
             divTicks = document.createElement('div'),
@@ -112,7 +119,7 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
         tickContainer.appendChild(divTicks);
 
         divVal.setAttribute('style', legendValue);
-        divVal.innerHTML = legendValues.legend.variable[i];
+        divVal.innerHTML = legendValues.variable[i];
         labelContainer.appendChild(divVal);
     }
 
