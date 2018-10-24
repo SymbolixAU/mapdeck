@@ -11,7 +11,6 @@ Rcpp::List make_colours(
 		Rcpp::DataFrame& data,
 		Rcpp::List& lst_defaults,
 		Rcpp::IntegerVector& data_column_index,
-		//Rcpp::StringVector& hex_strings,
 		SEXP& palette_type,                // string or matrix
 		Rcpp::NumericVector& alpha,
 		const char* colour_name,
@@ -56,8 +55,6 @@ void resolve_colour(
 		Rcpp::List& params,
 		Rcpp::DataFrame& data,
 		Rcpp::List& lst_defaults,
-		// int& stroke_colour_location, // locations of the paramter in the parameter list
-		// int& stroke_opacity_location,
 		const char* colour_name,
 		const char* opacity_name,
 		Rcpp::List& lst_legend,
@@ -69,17 +66,12 @@ void resolve_colour(
 
 	Rcpp::StringVector hex_strings( data.nrows() );
 
-	Rcpp::NumericVector alpha( 1, 255.0 ); // TODO: the user can supply a single value [0,255] to use in place of this
+	Rcpp::NumericVector alpha( 1, 255.0 ); // can be overwritten by user
 
 	SEXP this_colour = lst_defaults[ colour_name ];
 
 	int colour_location = mapdeck::find_character_index_in_vector( param_names, colour_name );
 	int opacity_location = mapdeck::find_character_index_in_vector( param_names, opacity_name );
-
-
-	// TODO( change this to find alpha and colour based on the 'colour_name' object);
-	// int alphaColIndex = stroke_opacity_location >= 0 ? data_column_index[ stroke_opacity_location ] : -1;
-	// int strokeColIndex = stroke_colour_location >= 0 ? data_column_index[ stroke_colour_location ] : -1;
 
 	int colourColIndex = colour_location >= 0 ? data_column_index[ colour_location ] : -1;
 	int alphaColIndex = opacity_location >= 0 ? data_column_index[ opacity_location ] : -1;
@@ -114,21 +106,14 @@ void resolve_colour(
 	bool make_legend;
 
 	if ( lst_legend.containsElementNamed( colour_name ) ) {
-		//Rcpp::Rcout << "list contains element " << colour_name << std::endl;
 		make_legend = lst_legend[ colour_name ];
-		//Rcpp::Rcout << "make legend " << make_legend << std::endl;
 	}
 
-	//Rcpp::StringVector legendColours = legend["colours"];
-	//Rcpp::Rcout << "legendColours: " << legendColours << std::endl;
 	lst_defaults[ colour_name ] = legend[ "colours" ];
 
 	if (lst_legend.containsElementNamed( colour_name ) ) {
 
-		//Rcpp::Rcout << "make_legend " << make_legend << std::endl;
 		if (  make_legend == true ) {
-
-			//Rcpp::Rcout << "making legend" << std::endl;
 
 			std::string title = params[ colour_name ];
 
