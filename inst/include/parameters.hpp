@@ -50,22 +50,47 @@ namespace mapdeck {
   	// for each of the 'trues', make another legend, the size of the TRUEs, and populate
 
   	// for each element in 'lst_legend', if the value is TRUE, resolve given the type of fill:
+  	// int i = 0;
+  	// int n = legend_names.size();
+  	// std::map< std::string, std::string>::iterator it;
+  	//
+  	// for ( i = 0; i < n; i++ ) {
+  	// 	const char* this_name = legend_names[i];
+  	// 	bool include_legend = lst_legend[ this_name ];
+  	//
+  	// 	std::string opacity_column;
+  	// 	for ( it = colour_columns.begin(); it != colour_columns.end(); ++it ) {
+  	// 	  if ( it->first == this_name ) {
+  	// 	    opacity_column = it->second;
+  	// 	  }
+  	// 	}
+  	// 	resolve_colour( lst_params, params, data, lst_defaults, this_name, opacity_column.c_str(),  lst_legend, include_legend );
+  	// }
+
+  	// TODO
+  	// regardless whether it's in the legend or not, the colours stil lneed sorting
   	int i = 0;
-  	int n = legend_names.size();
+  	//int n = colour_columns.size();
   	std::map< std::string, std::string>::iterator it;
 
-  	for ( i = 0; i < n; i++ ) {
-  		const char* this_name = legend_names[i];
-  		bool include_legend = lst_legend[ this_name ];
+  	//for ( i = 0; i < n; i++ ) {
+  		//const char* this_name = legend_names[i];
+  		bool include_legend;
 
+  		std::string colour_column;
   		std::string opacity_column;
   		for ( it = colour_columns.begin(); it != colour_columns.end(); ++it ) {
-  		  if ( it->first == this_name ) {
-  		    opacity_column = it->second;
-  		  }
+
+  			colour_column = it->first;
+  			opacity_column = it->second;
+
+  			// TODO( if 'colour_column' NOT IN lst_legend.names() ), include_legend == false
+  			//include_legend = lst_legend[ colour_column ];
+  			include_legend = mapdeck::find_character_index_in_vector(legend_names, colour_column) >= 0 ? true : false;
+  			Rcpp::Rcout << "include legend: " << include_legend << std::endl;
+  		  resolve_colour( lst_params, params, data, lst_defaults, colour_column.c_str(), opacity_column.c_str(),  lst_legend, include_legend );
   		}
-  		resolve_colour( lst_params, params, data, lst_defaults, this_name, opacity_column.c_str(),  lst_legend, include_legend );
-  	}
+  	//}
 
   	// legend optinos
   	// IT's a list

@@ -40,7 +40,7 @@ function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_high
     extruded: true,
     lineWidthMinPixels: 1,
     getPolygon: d => decode_polygons( d.polyline ),
-    getLineColor: d => hexToRgb_simple( d.stroke_colour ),
+    getLineColor: d => hexToRGBA2( d.stroke_colour ),
     getFillColor: d => hexToRGBA2( d.fill_colour ),
     getLineWidth: d => d.stroke_width,
     getElevation: d => d.elevation,
