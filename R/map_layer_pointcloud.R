@@ -89,6 +89,7 @@ add_pointcloud <- function(
 		l[['polyline']] <- polyline
 	}
 
+	layer_id <- layerId(layer_id, "pointcloud")
 	shape <- rcpp_pointcloud( data, l )
 	#print(shape)
 

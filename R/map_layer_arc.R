@@ -157,6 +157,8 @@ add_arc <- function(
   	stop("expecting lon/lat origin destinations or sfc columns")
   }
 
+	layer_id <- layerId(layer_id, "arc")
+
 	shape <- rcpp_arc( data, l )
 	# print( shape )
 

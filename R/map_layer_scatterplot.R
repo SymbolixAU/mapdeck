@@ -48,7 +48,7 @@ mapdeckScatterplotDependency <- function() {
 #'
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' add_scatterplot(
-#'   data = df[1:5, ]
+#'   data = df
 #'   , lat = "lat"
 #'   , lon = "lng"
 #'   , layer_id = "scatter_layer"
@@ -104,6 +104,8 @@ add_scatterplot <- function(
 		l[['polyline']] <- polyline
 	}
 
+	layer_id <- layerId(layer_id, "scatterplot")
+
 	shape <- rcpp_scatterplot( data, l )
 	#print(shape)
 
@@ -124,25 +126,6 @@ resolve_legend <- function( l, legend ) {
 	l[['legend']] <- legend
 	return( l )
 }
-
-
-
-dispatch_data <- function( data, lon, lat, polyline, l ) UseMethod("dispatch_data")
-
-dispatch_data.data.frame <- function( data, lon, lat, polyline, l ) {
-	## TODO - encode byrow
-}
-
-dispatch_data.sf <- function( data, l, ... ) {
-	## TODO(need to handle MULTI, and 2-col data...)
-
-}
-
-dispatch_data.sfencoded <- function( data, l, ... ) {
-
-}
-
-dispatch_data.default <- function( data, l ) stop("Data type not supported")
 
 
 #' @inheritParams add_scatterplot

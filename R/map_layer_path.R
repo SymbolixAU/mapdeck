@@ -85,6 +85,7 @@ add_path <- function(
 		data <- unlistMultiGeometry( data, polyline )
 	}
 
+	layer_id <- layerId(layer_id, "path")
 	shape <- rcpp_path( data, l );
 
 	map <- addDependency(map, mapdeckPathDependency())

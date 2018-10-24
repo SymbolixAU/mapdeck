@@ -19,7 +19,7 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highl
     lightSettings: light_settings,
     autoHighlight: auto_highlight,
     onHover: updateTooltip,
-    onClick: info => layer_click( map_id, "path", info )
+    onClick: info => layer_click( map_id, "polygon", info )
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
@@ -47,7 +47,7 @@ function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_high
     lightSettings: light_settings,
     autoHighlight: auto_highlight,
     onHover: updateTooltip,
-    onClick: info => layer_click( map_id, "path", info )
+    onClick: info => layer_click( map_id, "polygon", info )
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
   

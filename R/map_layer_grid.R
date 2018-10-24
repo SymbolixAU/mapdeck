@@ -103,6 +103,7 @@ add_grid <- function(
 		l[['polyline']] <- polyline
 	}
 
+	layer_id <- layerId(layer_id, "grid")
 	shape <- rcpp_grid( data, l )
 	# print(shape)
 

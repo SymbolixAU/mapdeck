@@ -115,6 +115,7 @@ add_line <- function(
 		stop("expecting lon/lat origin destinations or sfc columns")
 	}
 
+	layer_id <- layerId(layer_id, "line")
 	shape <- rcpp_line( data, l )
 	#print( shape )
 

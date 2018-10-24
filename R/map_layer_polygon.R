@@ -106,6 +106,7 @@ add_polygon <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 
+
 	data <- normaliseSfData(data, "POLYGON", multi = FALSE)
 	polyline <- findEncodedColumn(data, polyline)
 
@@ -114,6 +115,9 @@ add_polygon <- function(
 	if( !is.null(polyline) && !polyline %in% names(l) ) {
 		l[['polyline']] <- polyline
 	}
+
+
+	layer_id <- layerId(layer_id, "polygon")
 
 	# shape <- rcpp_polygon_timer( data, l )
 	# print( shape )

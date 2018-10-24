@@ -76,7 +76,7 @@ df <- read.csv(paste0(
 
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 add_scatterplot(
-  data = df[1:5, ]
+  data = df
   , lat = "lat"
   , lon = "lng"
   , layer_id = "scatter_layer"
