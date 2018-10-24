@@ -197,8 +197,8 @@
 # library(microbenchmark)
 #
 # sf <- rbind(sf, sf, sf, sf, sf, sf)
-# sf <- rbind(sf, sf, sf, sf, sf)
-# sf <- rbind(sf, sf, sf)
+# #sf <- rbind(sf, sf, sf, sf, sf)
+# #sf <- rbind(sf, sf, sf)
 # # sf <- rbind(sf, sf, sf, sf, sf)
 #
 # sf$n <- 1:nrow(sf)
@@ -209,7 +209,7 @@
 # 			map = m
 # 			, data = sf
 # 			, layer = "polygon_layer"
-# 			, fill_colour = "SA2_NAME16"
+# 			, fill_colour = "n"
 # 		)
 # 	},
 # 	new = {
@@ -217,7 +217,7 @@
 # 		map = m
 # 		, data = sf
 # 		, layer = "polygon_layer"
-# 		, fill_colour = "SA2_NAME16"
+# 		, fill_colour = "n"
 # 	)
 # 	},
 # 	times = 3

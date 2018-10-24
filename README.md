@@ -31,15 +31,9 @@ The fisrt change is `add_scatterplot()`
 ## Until googlePolylines 0.7.2+ is on CRAN you'll need 
 devtools::install_github("SymbolixAU/googlePolylines")
 
-<<<<<<< HEAD
-## and jsonify
-devtools::install_github("SymbolixAU/jsonify")
-
-## and colourvalues
+## and colourvalues requries v0.2.0
 devtools::install_github("SymbolixAU/colourvalues")
 
-=======
->>>>>>> master
 ## then mapdeck
 devtools::install_github("SymbolixAU/mapdeck")
 ```
