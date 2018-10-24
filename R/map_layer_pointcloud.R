@@ -184,7 +184,7 @@ add_pointcloud_old <- function(
 	}
 
 	shape <- jsonlite::toJSON(shape, digits = digits)
-	print(shape)
+	# print(shape)
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 

@@ -1,5 +1,5 @@
-#ifndef R_POLYGON_H
-#define R_POLYGON_H
+#ifndef R_MAPDECK_LAYERS_POLYGON_H
+#define R_MAPDECK_LAYERS_POLYGON_H
 
 #include <Rcpp.h>
 

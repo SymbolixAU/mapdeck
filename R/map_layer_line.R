@@ -116,7 +116,7 @@ add_line <- function(
 		stop("expecting lon/lat origin destinations or sfc columns")
 	}
 
-	shape <- rcpp_path( data, l )
+	shape <- rcpp_line( data, l )
 	#print( shape )
 
 	map <- addDependency(map, mapdeckLineDependency())

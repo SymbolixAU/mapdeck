@@ -116,8 +116,11 @@ add_polygon <- function(
 		l[['polyline']] <- polyline
 	}
 
-	shape <- rcpp_polygon( data, l )
+	# shape <- rcpp_polygon_timer( data, l )
 	# print( shape )
+
+ 	shape <- rcpp_polygon( data, l )
+#  	#print( shape )
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 

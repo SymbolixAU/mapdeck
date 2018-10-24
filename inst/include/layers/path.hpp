@@ -1,5 +1,5 @@
-#ifndef R_PATH_H
-#define R_PATH_H
+#ifndef R_MAPDECK_LAYERS_PATH_H
+#define R_MAPDECK_LAYERS_PATH_H
 
 #include <Rcpp.h>
 

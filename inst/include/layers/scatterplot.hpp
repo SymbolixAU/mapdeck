@@ -1,5 +1,5 @@
-#ifndef R_SCATTERPLOT_H
-#define R_SCATTERPLOT_H
+#ifndef R_MAPDECK_LAYERS_SCATTERPLOT_H
+#define R_MAPDECK_LAYERS_SCATTERPLOT_H
 
 #include <Rcpp.h>
 using namespace Rcpp;

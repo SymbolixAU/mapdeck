@@ -40,8 +40,12 @@ inline Rcpp::List stroke_colour(
 		break;
 	}
 	default: {
+		// Rcpp::Rcout << "numeric stroke " << std::endl;
 		Rcpp::NumericVector stroke_colour_vec = Rcpp::as< Rcpp::NumericVector >( stroke );
+		// Rcpp::Rcout << stroke_colour_vec << std::endl;
 		Rcpp::List legend = mapdeck::palette::colour_with_palette( pal, stroke_colour_vec, alpha, na_colour, include_alpha );
+		// Rcpp::NumericVector summary = legend["summary_values"];
+		// Rcpp::Rcout << summary << std::endl;
 		legend[ "colour_type" ] = "stroke_colour";
 		legend[ "type" ] = "gradient";
 		return legend;
@@ -121,8 +125,6 @@ inline void resolve_stroke(
 	      Rcpp::_["title"] = title
 			);
 			lst_legend[ "stroke_colour" ] = summary;
-			// lst_legend[ "colour" ] = legend[ "summary_colours" ];
-			// lst_legend[ "variable" ] = legend[ "summary_values" ];
 		}
 	}
 }

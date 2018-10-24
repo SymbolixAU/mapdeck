@@ -187,13 +187,15 @@
 # flights$id <- seq_len(nrow(flights))
 # flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 #
+# flights$airport1 <- as.character(flights$airport1)
+#
 # mapdeck( style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
-# 	add_line_new(
+# 	add_line(
 # 		data = flights
 # 		, layer_id = "line_layer"
 # 		, origin = c("start_lon", "start_lat")
 # 		, destination = c("end_lon", "end_lat")
-# 		, stroke_colour = "airport1"
+# 		, stroke_colour = "cnt"
 # 		, stroke_width = "stroke"
 # 		, auto_highlight = TRUE
 # 		, legend = TRUE

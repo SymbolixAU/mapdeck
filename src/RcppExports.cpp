@@ -5,6 +5,18 @@
 
 using namespace Rcpp;
 
+// rcpp_line
+Rcpp::List rcpp_line(Rcpp::DataFrame data, Rcpp::List params);
+RcppExport SEXP _mapdeck_rcpp_line(SEXP dataSEXP, SEXP paramsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_line(data, params));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_path
 Rcpp::List rcpp_path(Rcpp::DataFrame data, Rcpp::List params);
 RcppExport SEXP _mapdeck_rcpp_path(SEXP dataSEXP, SEXP paramsSEXP) {
@@ -41,6 +53,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_polygon_timer
+Rcpp::NumericVector rcpp_polygon_timer(Rcpp::DataFrame data, Rcpp::List params);
+RcppExport SEXP _mapdeck_rcpp_polygon_timer(SEXP dataSEXP, SEXP paramsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_polygon_timer(data, params));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_scatterplot
 Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params);
 RcppExport SEXP _mapdeck_rcpp_scatterplot(SEXP dataSEXP, SEXP paramsSEXP) {
@@ -55,9 +79,11 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_mapdeck_rcpp_line", (DL_FUNC) &_mapdeck_rcpp_line, 2},
     {"_mapdeck_rcpp_path", (DL_FUNC) &_mapdeck_rcpp_path, 2},
     {"_mapdeck_rcpp_pointcloud", (DL_FUNC) &_mapdeck_rcpp_pointcloud, 2},
     {"_mapdeck_rcpp_polygon", (DL_FUNC) &_mapdeck_rcpp_polygon, 2},
+    {"_mapdeck_rcpp_polygon_timer", (DL_FUNC) &_mapdeck_rcpp_polygon_timer, 2},
     {"_mapdeck_rcpp_scatterplot", (DL_FUNC) &_mapdeck_rcpp_scatterplot, 2},
     {NULL, NULL, 0}
 };

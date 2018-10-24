@@ -1,5 +1,5 @@
-#ifndef R_POINTCLOUD_H
-#define R_POINTCLOUD_H
+#ifndef R_MAPDECK_LAYERS_POINTCLOUD_H
+#define R_MAPDECK_LAYERS_POINTCLOUD_H
 
 #include <Rcpp.h>
 

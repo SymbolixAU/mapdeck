@@ -1,102 +1,4 @@
-# #
-# test_scatterplot <- function(
-# 	map,
-# 	data = get_map_data(map),
-# 	lon = NULL,
-# 	lat = NULL,
-# 	polyline = NULL,
-# 	radius = NULL,
-# 	fill_colour = NULL,
-# 	fill_opacity = NULL,
-# 	tooltip = NULL,
-# 	auto_highlight = FALSE,
-# 	layer_id = NULL,
-# 	digits = 6,
-# 	palette = viridisLite::viridis
-# ) {
-#
-# 	objArgs <- match.call(expand.dots = F)
-#
-# 	data <- mapdeck:::normaliseSfData(data, "POINT")
-# 	polyline <- mapdeck:::findEncodedColumn(data, polyline)
-#
-# 	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-# 		objArgs[['polyline']] <- polyline
-# 		data <- mapdeck:::unlistMultiGeometry( data, polyline )
-# 	}
-#
-# 	## parmater checks
-# 	usePolyline <- mapdeck:::isUsingPolyline(polyline)
-# 	mapdeck:::checkNumeric(digits)
-# 	mapdeck:::checkPalette(palette)
-# 	layer_id <- mapdeck:::layerId(layer_id, "scatterplot")
-# 	## TODO(logical check auto_highlight)
-#
-# 	## end parameter checks
-# 	if ( !usePolyline ) {
-# 		## TODO(check only a data.frame)
-# 		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-# 		polyline <- 'polyline'
-# 		## TODO(check lon & lat exist / passed in as arguments )
-# 		objArgs[['lon']] <- NULL
-# 		objArgs[['lat']] <- NULL
-# 		objArgs[['polyline']] <- polyline
-# 	}
-#
-# 	allCols <- mapdeck:::scatterplotColumns()
-# 	requiredCols <- mapdeck:::requiredScatterplotColumns()
-#
-# 	colourColumns <- mapdeck:::shapeAttributes(
-# 		fill_colour = fill_colour
-# 		, stroke_colour = NULL
-# 		, stroke_from = NULL
-# 		, stroke_to = NULL
-# 	)
-#
-# 	shape <- mapdeck:::createMapObject(data, allCols, objArgs)
-#
-# 	pal <- mapdeck:::createPalettes(shape, colourColumns)
-#
-# 	colour_palettes <- mapdeck:::createColourPalettes(data, pal, colourColumns, palette)
-# 	colours <- mapdeck:::createColours(shape, colour_palettes)
-#
-# 	if(length(colours) > 0){
-# 		shape <- mapdeck:::replaceVariableColours(shape, colours)
-# 	}
-#
-# 	requiredDefaults <- setdiff(requiredCols, names(shape))
-#
-# 	if(length(requiredDefaults) > 0){
-# 		shape <- mapdeck:::addDefaults(shape, requiredDefaults, "scatterplot")
-# 	}
-# 	return( shape )
-# }
-#
-#
-#
-# test_scatterplot2 <- function(
-# 	map,
-# 	data = get_map_data(map),
-# 	lon = NULL,
-# 	lat = NULL,
-# 	polyline = NULL,
-# 	radius = NULL,
-# 	fill_colour = NULL,
-# 	fill_opacity = NULL,
-# 	tooltip = NULL,
-# 	auto_highlight = FALSE,
-# 	layer_id = NULL,
-# 	digits = 6,
-# 	palette = viridisLite::viridis
-# ) {
-#
-# 	l <- as.list( match.call() )
-# 	data$polyline <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = T)
-# 	shape <- mapdeck:::rcpp_scatterplot(data, l)
-# 	return( shape )
-# }
-#
-#
+### SCATTERPLOT
 #
 # lons <- seq(-180, 180, by = 0.0001)
 # lats <- seq(-90, 90, by = 0.0001)
@@ -215,7 +117,7 @@
 # 	times = 3
 # )
 
-
+### POINTCLOUD
 # lons <- seq(-180, 180, by = 0.0001)
 # lats <- seq(-90, 90, by = 0.0001)
 #
@@ -245,24 +147,24 @@
 # 			, lat = "lat"
 # 			, lon = "lon"
 # 			, radius = 1000
-# 			, fill_colour = "l"
+# 			, fill_colour = "id"
 # 			#, fill_opacity = "id"
 # 			, tooltip = "id"
 # 		)
-#   },
+# 	},
 #
-#   new = {
-#   	new <- add_pointcloud(
-#   		map = m
-#   		, data = df
-#   		, lat = "lat"
-#   		, lon = "lon"
-#   		, radius = 1000
-#   		, fill_colour = "l"
-#   		#, fill_opacity = "id"
-#   		, tooltip = "id"
-#   	)
-#   },
+# 	new = {
+# 		new <- add_pointcloud(
+# 			map = m
+# 			, data = df
+# 			, lat = "lat"
+# 			, lon = "lon"
+# 			, radius = 1000
+# 			, fill_colour = "id"
+# 			#, fill_opacity = "id"
+# 			, tooltip = "id"
+# 		)
+# 	},
 # 	times = 5
 # )
 #
@@ -276,9 +178,10 @@
 # # fill_colour = 'l'
 # # Unit: milliseconds
 # # expr      min       lq     mean   median       uq      max neval
-# # old 276.9901 286.9193 304.4161 297.4079 315.1527 345.6107     5
-# # new 268.9899 273.5370 305.8971 280.9954 302.2579 403.7051     5
+# # old 258.9929 320.5041 386.6248 358.1111 448.0709 547.4450     5
+# # new 173.4745 183.2885 202.0799 188.7792 225.8983 238.9591     5
 
+### POLYGON
 # library(sf)
 # library(geojsonsf)
 #
@@ -310,12 +213,12 @@
 # 		)
 # 	},
 # 	new = {
-# 		p <- add_polygon(
-# 			map = m
-# 			, data = sf
-# 			, layer = "polygon_layer"
-# 			, fill_colour = "SA2_NAME16"
-# 		)
+# 	p <- add_polygon(
+# 		map = m
+# 		, data = sf
+# 		, layer = "polygon_layer"
+# 		, fill_colour = "SA2_NAME16"
+# 	)
 # 	},
 # 	times = 3
 # )
@@ -359,3 +262,65 @@
 # expr      min       lq     mean   median       uq      max neval
 # numbers 4.460924 4.466449 4.542446 4.480527 4.488406 4.815922     5
 # letters 4.465812 4.467152 4.490861 4.479849 4.508244 4.533247     5
+
+### LINE
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+# m <- mapdeck::mapdeck()
+# library(microbenchmark)
+#
+# microbenchmark(
+# 	old = {
+# 		old <- add_line_old(
+# 			map = m
+# 			,	data = flights
+# 			, layer_id = "line_layer"
+# 			, origin = c("start_lon", "start_lat")
+# 			, destination = c("end_lon", "end_lat")
+# 			, stroke_colour = "cnt"
+# 			, stroke_width = "stroke"
+# 			, auto_highlight = TRUE
+# 			, legend = TRUE
+# 		)
+#   },
+#
+#   new = {
+#   	new <- add_line(
+#   		map = m
+#   		, data = flights
+#   		, layer_id = "line_layer"
+#   		, origin = c("start_lon", "start_lat")
+#   		, destination = c("end_lon", "end_lat")
+#   		, stroke_colour = "cnt"
+#   		, stroke_width = "stroke"
+#   		, auto_highlight = TRUE
+#   		, legend = TRUE
+#   	)
+#   },
+# 	times = 5
+# )
+#
+# # Unit: milliseconds
+# # expr       min        lq      mean    median        uq        max neval
+# # old 17.486042 17.636939 64.697349 19.485457 57.684504 211.193804     5
+# # new  1.070719  1.106256  1.127582  1.127063  1.146071   1.187801     5
+
+
+
+
+# library(microbenchmark)
+# library(colourvalues)
+# library(sf)
+# library(geojsonsf)
+#
+# sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+# sf <- sf::st_cast(sf, "POLYGON")
+#
+# sf <- rbind(sf, sf, sf, sf, sf, sf)
+# sf <- rbind(sf, sf, sf, sf, sf)
+# sf$n <- 1:nrow(sf)
+#
+# microbenchmark(
+#   numeric = { colourvalues::color_values(sf$n, n_summaries = 5)},
+#   category = { colourvalues::colour_values(sf$SA2_NAME16, summary = T)},
+#   times = 5
+# )

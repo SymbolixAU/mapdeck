@@ -5,6 +5,8 @@
 #include "mapdeck.hpp"
 #include "mapdeck_defaults.hpp"
 
+#include <Rcpp/Benchmark/Timer.h>
+
 namespace mapdeck {
 namespace palette {
 
@@ -33,8 +35,6 @@ namespace palette {
   		std::string& na_colour,
   		bool& include_alpha) {
 
-  	int n_summaries = 5;
-
   	switch ( TYPEOF( palette ) ) {
   	case 1: { // SYMSXP
   	Rcpp::stop("Unsupported palette type");
@@ -42,7 +42,7 @@ namespace palette {
   }
   	case 14: { // REALSXP (i.e, matrix)
   		Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( palette );
-  		return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha, n_summaries );
+  		return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha, true );
   		//return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
   		break;
   	}
@@ -68,19 +68,37 @@ namespace palette {
 
 		int n_summaries = 5;
 
+		// Rcpp::Timer timer;
+
 		switch ( TYPEOF( palette ) ) {
 		case 1: { // SYMSXP
 		Rcpp::stop("Unsupported palette type");
 		break;
 	}
 		case 14: { // REALSXP (i.e, matrix)
+			//Rcpp::Rcout << "caes 14" << std::endl;
 			Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( palette );
 			return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha, n_summaries );
 			break;
 		}
 		case 16: {
+			//Rcpp::Rcout << "case 16" << std::endl;
 			std::string thispal = Rcpp::as< std::string>( palette );
-			return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, alpha, include_alpha, true );
+
+			//timer.step("starting to colour");
+
+			Rcpp::List lst = colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, alpha, include_alpha, n_summaries );
+
+			//timer.step("ending colour");
+
+			// Rcpp::NumericVector timeresult( timer );
+			// int n =  1000000;
+			// for( int i = 0; i < timeresult.size(); i++ ) {
+			// 	timeresult[i] = timeresult[i] / n;
+			// }
+			// Rcpp::Rcout << timeresult << std::endl;
+
+			return lst;
 			break;
 		}
 		default: {
