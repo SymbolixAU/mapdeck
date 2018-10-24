@@ -14,7 +14,8 @@ Rcpp::List make_colours(
 		//Rcpp::StringVector& hex_strings,
 		SEXP& palette_type,                // string or matrix
 		Rcpp::NumericVector& alpha,
-		const char* colour_name ) {
+		const char* colour_name,
+		bool include_legend) {
 
 	std::string na_colour = params.containsElementNamed("na_colour") ? params["na_colour" ] : mapdeck::defaults::default_na_colour;
 	bool include_alpha = true;            // always true - deck.gl supports alpha
@@ -25,8 +26,10 @@ Rcpp::List make_colours(
 	case 16: {
 		Rcpp::StringVector colour_vec = Rcpp::as< Rcpp::StringVector >( palette_type );
 		Rcpp::List legend = mapdeck::palette::colour_with_palette( pal, colour_vec, alpha, na_colour, include_alpha );
-		legend[ "colour_type" ] = colour_name;
-		legend[ "type" ] = "category";
+		if ( include_legend ) {
+			legend[ "colour_type" ] = colour_name;
+			legend[ "type" ] = "category";
+		}
 		return legend;
 		break;
 	}
@@ -38,8 +41,10 @@ Rcpp::List make_colours(
 		// Rcpp::Rcout << "colours: " << colours << std::endl;
 		// Rcpp::NumericVector summary = legend["summary_values"];
 		// Rcpp::Rcout << "summary" << summary << std::endl;
-		legend[ "colour_type" ] = colour_name;
-		legend[ "type" ] = "gradient";
+		if ( include_legend ) {
+			legend[ "colour_type" ] = colour_name;
+			legend[ "type" ] = "gradient";
+		}
 		return legend;
 		break;
 	}
@@ -55,7 +60,8 @@ void resolve_colour(
 		// int& stroke_opacity_location,
 		const char* colour_name,
 		const char* opacity_name,
-		Rcpp::List& lst_legend ) {
+		Rcpp::List& lst_legend,
+		bool include_legend ) {
 
 	Rcpp::IntegerVector data_column_index = lst_params[ "data_column_index" ];
 	Rcpp::IntegerVector parameter_type = lst_params[ "parameter_type" ];
@@ -102,7 +108,7 @@ void resolve_colour(
 
 	Rcpp::List legend = make_colours(
 		lst_params, params, data, lst_defaults, data_column_index, //hex_strings,
-		this_colour, alpha, colour_name
+		this_colour, alpha, colour_name, include_legend
 	);
 
 	bool make_legend ;

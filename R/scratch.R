@@ -253,7 +253,7 @@
 #   , layer_id = "grid_layer"
 #   , auto_highlight = TRUE
 # )
-
+#
 # set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
 # df <- melbourne
 # df$elevation <- sample(100:5000, size = nrow(df))
@@ -265,10 +265,11 @@
 # 	, zoom = 8
 # ) %>%
 # 	add_polygon(
-# 		data = df[1:5, ]
+# 		data = df
 # 		, polyline = "geometry"
 # 		, layer = "polygon_layer"
 # 		, fill_colour = "SA2_NAME",
+#
 # 		, stroke_colour = "fillColor",
 # 		, elevation = "elevation"
 # 		, stroke_width = 0

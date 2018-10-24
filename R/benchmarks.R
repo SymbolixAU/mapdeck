@@ -182,46 +182,46 @@
 # # new 173.4745 183.2885 202.0799 188.7792 225.8983 238.9591     5
 
 ### POLYGON
-library(sf)
-library(geojsonsf)
-
-sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
-sf <- sf::st_cast(sf, "POLYGON")
-
-set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
-m <- mapdeck::mapdeck(
-	style = 'mapbox://styles/mapbox/dark-v9'
-	, location = c(144.5, -37)
-	, zoom = 5)
-
-library(microbenchmark)
-
-sf <- rbind(sf, sf, sf, sf, sf, sf)
-sf <- rbind(sf, sf, sf, sf, sf)
-sf <- rbind(sf, sf, sf)
+# library(sf)
+# library(geojsonsf)
+#
+# sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+# sf <- sf::st_cast(sf, "POLYGON")
+#
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+# m <- mapdeck::mapdeck(
+# 	style = 'mapbox://styles/mapbox/dark-v9'
+# 	, location = c(144.5, -37)
+# 	, zoom = 5)
+#
+# library(microbenchmark)
+#
+# sf <- rbind(sf, sf, sf, sf, sf, sf)
 # sf <- rbind(sf, sf, sf, sf, sf)
-
-sf$n <- 1:nrow(sf)
-
-microbenchmark(
-	old = {
-		p <- add_polygon_old(
-			map = m
-			, data = sf
-			, layer = "polygon_layer"
-			, fill_colour = "SA2_NAME16"
-		)
-	},
-	new = {
-	p <- add_polygon(
-		map = m
-		, data = sf
-		, layer = "polygon_layer"
-		, fill_colour = "SA2_NAME16"
-	)
-	},
-	times = 3
-)
+# sf <- rbind(sf, sf, sf)
+# # sf <- rbind(sf, sf, sf, sf, sf)
+#
+# sf$n <- 1:nrow(sf)
+#
+# microbenchmark(
+# 	old = {
+# 		p <- add_polygon_old(
+# 			map = m
+# 			, data = sf
+# 			, layer = "polygon_layer"
+# 			, fill_colour = "SA2_NAME16"
+# 		)
+# 	},
+# 	new = {
+# 	p <- add_polygon(
+# 		map = m
+# 		, data = sf
+# 		, layer = "polygon_layer"
+# 		, fill_colour = "SA2_NAME16"
+# 	)
+# 	},
+# 	times = 3
+# )
 
 # nrow(sf)
 # 554400
