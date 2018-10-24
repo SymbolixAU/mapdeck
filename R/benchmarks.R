@@ -182,46 +182,46 @@
 # # new 173.4745 183.2885 202.0799 188.7792 225.8983 238.9591     5
 
 ### POLYGON
-# library(sf)
-# library(geojsonsf)
-#
-# sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
-# sf <- sf::st_cast(sf, "POLYGON")
-#
-# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
-# m <- mapdeck::mapdeck(
-# 	style = 'mapbox://styles/mapbox/dark-v9'
-# 	, location = c(144.5, -37)
-# 	, zoom = 5)
-#
-# library(microbenchmark)
-#
-# sf <- rbind(sf, sf, sf, sf, sf, sf)
-# #sf <- rbind(sf, sf, sf, sf, sf)
-# #sf <- rbind(sf, sf, sf)
-# # sf <- rbind(sf, sf, sf, sf, sf)
-#
-# sf$n <- 1:nrow(sf)
-#
-# microbenchmark(
-# 	old = {
-# 		p <- add_polygon_old(
-# 			map = m
-# 			, data = sf
-# 			, layer = "polygon_layer"
-# 			, fill_colour = "n"
-# 		)
-# 	},
-# 	new = {
-# 	p <- add_polygon(
-# 		map = m
-# 		, data = sf
-# 		, layer = "polygon_layer"
-# 		, fill_colour = "n"
-# 	)
-# 	},
-# 	times = 3
-# )
+library(sf)
+library(geojsonsf)
+
+sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+sf <- sf::st_cast(sf, "POLYGON")
+
+set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+m <- mapdeck::mapdeck(
+	style = 'mapbox://styles/mapbox/dark-v9'
+	, location = c(144.5, -37)
+	, zoom = 5)
+
+library(microbenchmark)
+
+sf <- rbind(sf, sf, sf, sf, sf, sf)
+sf <- rbind(sf, sf, sf, sf, sf)
+sf <- rbind(sf, sf, sf)
+# sf <- rbind(sf, sf, sf, sf, sf)
+
+sf$n <- 1:nrow(sf)
+
+microbenchmark(
+	old = {
+		p <- add_polygon_old(
+			map = m
+			, data = sf
+			, layer = "polygon_layer"
+			, fill_colour = "SA2_NAME16"
+		)
+	},
+	new = {
+	p <- add_polygon(
+		map = m
+		, data = sf
+		, layer = "polygon_layer"
+		, fill_colour = "SA2_NAME16"
+	)
+	},
+	times = 3
+)
 
 # nrow(sf)
 # 554400
@@ -333,16 +333,45 @@
 # flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 # flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 #
-# mapdeck(
-# 	style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
-#   add_arc(
-#   data = flights
-#   , layer_id = "arc_layer"
-#   , origin = c("start_lon", "start_lat")
-#   , destination = c("end_lon", "end_lat")
-#   , stroke_from = "airport1"
-#   , stroke_to = "airport2"
-#   , stroke_width = "stroke"
-#   , tooltip = "info"
-#   , auto_highlight = TRUE
-#  )
+# library(microbenchmark)
+#
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+# m <- mapdeck::mapdeck()
+# library(microbenchmark)
+#
+# microbenchmark(
+# 	old = {
+# 		old <- add_arc_old(
+# 			map = m
+# 			, data = flights
+# 			, layer_id = "arc_layer"
+# 			, origin = c("start_lon", "start_lat")
+# 			, destination = c("end_lon", "end_lat")
+# 			, stroke_from = "airport1"
+# 			, stroke_to = "airport2"
+# 			, stroke_width = "stroke"
+# 			, tooltip = "info"
+# 			, auto_highlight = TRUE
+# 		)
+#   },
+#
+#   new = {
+#   	new <- add_arc(
+#   		map = m
+#   		, data = flights
+#   		, layer_id = "arc_layer"
+#   		, origin = c("start_lon", "start_lat")
+#   		, destination = c("end_lon", "end_lat")
+#   		, stroke_from = "airport1"
+#   		, stroke_to = "airport2"
+#   		, stroke_width = "stroke"
+#   		, tooltip = "info"
+#   		, auto_highlight = TRUE
+#   	)
+#   },
+# 	times = 5
+# )
+# # Unit: milliseconds
+# # expr       min        lq      mean    median        uq       max neval
+# # old 31.323071 32.116434 35.943007 33.199587 35.084571 47.991374     5
+# # new  1.180305  1.186721  1.311459  1.199241  1.442029  1.549001     5

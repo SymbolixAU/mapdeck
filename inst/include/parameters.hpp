@@ -3,8 +3,9 @@
 
 #include <Rcpp.h>
 #include "palette/palette.hpp"
-#include "fill/fill.hpp"
-#include "stroke/stroke.hpp"
+// #include "fill/fill.hpp"
+// #include "stroke/stroke.hpp"
+#include "colour/colour.hpp"
 #include "data_construction.hpp"
 #include "legend/legend.hpp"
 
@@ -61,7 +62,7 @@ namespace mapdeck {
   	Rcpp::List lst_legend = construct_legend_list( lst_params, params, param_names, legend_types );
 
   	Rcpp::StringVector legend_names = lst_legend.names();
-  	Rcpp::Rcout << legend_names << std::endl;
+  	// Rcpp::Rcout << legend_names << std::endl;
 
   	//Rcpp::Rcout << "finished legend" << std::endl;
   	// lst_legend contains the 'true/false' values for the legends required (fill, stroke, stroke_to, stroke_from)
@@ -78,7 +79,7 @@ namespace mapdeck {
   		const char* this_name = legend_names[i];
   		bool should_resolve = lst_legend[ this_name ];
   		if ( should_resolve ) {
-  			Rcpp::Rcout << "should resolve " << this_name << std::endl;
+  			//Rcpp::Rcout << "should resolve " << this_name << std::endl;
   			//if (strcmp(this_name, "fill_colour") ) {
   			//	mapdeck::fill::resolve_fill( lst_params, params, data, lst_defaults, fill_colour_location, fill_opacity_location, lst_legend, this_name );
   			//} else {
@@ -92,8 +93,9 @@ namespace mapdeck {
   			  	}
   			  }
 
-  			  Rcpp::Rcout << "opacity column: " << opacity_column << std::endl;
-  			  mapdeck::stroke::resolve_stroke( lst_params, params, data, lst_defaults, this_name, opacity_column.c_str(),  lst_legend );
+  			  //Rcpp::Rcout << "opacity column: " << opacity_column << std::endl;
+  			  //mapdeck::stroke::resolve_stroke( lst_params, params, data, lst_defaults, this_name, opacity_column.c_str(),  lst_legend );
+  			  resolve_colour( lst_params, params, data, lst_defaults, this_name, opacity_column.c_str(),  lst_legend );
   				//mapdeck::stroke::resolve_stroke( lst_params, params, data, lst_defaults, stroke_colour_location, stroke_opacity_location, lst_legend, this_name );
   			//}
 
@@ -142,7 +144,8 @@ namespace mapdeck {
   	// need to remove any paramters which won't be used in the data being plotted
   	Rcpp::StringVector legend_params = Rcpp::StringVector::create("legend","legend_options");
   	mapdeck::remove_parameters( params, param_names, legend_params );
-  	//mapdeck::remove_parameters( params, param_names, colour_columns ); // TODO
+  	Rcpp::StringVector colours_remove = Rcpp::StringVector::create("stroke_from","stroke_to","stroke_colour","fill_colour","stroke_from_opacity","stroke_to_opacity","stroke_opacity","fill_opacity","palette");
+  	mapdeck::remove_parameters( params, param_names, colours_remove ); // TODO
 
   	lst_params = mapdeck::construct_params(
   		data, params

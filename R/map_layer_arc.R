@@ -158,10 +158,10 @@ add_arc <- function(
   }
 
 	shape <- rcpp_arc( data, l )
-	print( shape )
+	# print( shape )
 
 	map <- addDependency(map, mapdeckArcDependency())
-	invoke_method(map, "add_arc", shape[["data"]], layer_id, auto_highlight, shape[["legend"]] )
+	invoke_method(map, "add_arc2", shape[["data"]], layer_id, auto_highlight, shape[["legend"]] )
 }
 
 #' @export
