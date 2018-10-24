@@ -28,13 +28,13 @@ to conflict and not plot correctly}
 
 \item{stroke_from}{variable or hex colour to use as the staring stroke colour}
 
-\item{stroke_from_opacity}{value between 1 and 255. Either a string specifying the
+\item{stroke_from_opacity}{Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
 \item{stroke_to}{variable or hex colour to use as the ending stroke colour}
 
-\item{stroke_to_opacity}{value between 1 and 255. Either a string specifying the
+\item{stroke_to_opacity}{Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 

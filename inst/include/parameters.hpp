@@ -37,77 +37,30 @@ namespace mapdeck {
   	// lst_legend[ "fill_colour" ] = true;
   	// lst_legend[ "stroke_colour" ] = false;
 
-  	// TODO(polygon can do fill & stroke. and the user may only supply one, but say 'legend = T')
-  	// so we need to only use a legend IFF the user supplied it as a colour option
-
   	Rcpp::List lst_legend = construct_legend_list( lst_params, params, param_names, legend_types );
 
   	Rcpp::StringVector legend_names = lst_legend.names();
   	//Rcpp::Rcout << "legend_names: " <<  legend_names << std::endl;
 
-  	//Rcpp::Rcout << "finished legend" << std::endl;
-  	// lst_legend contains the 'true/false' values for the legends required (fill, stroke, stroke_to, stroke_from)
-  	// for each of the 'trues', make another legend, the size of the TRUEs, and populate
-
-  	// for each element in 'lst_legend', if the value is TRUE, resolve given the type of fill:
-  	// int i = 0;
-  	// int n = legend_names.size();
-  	// std::map< std::string, std::string>::iterator it;
-  	//
-  	// for ( i = 0; i < n; i++ ) {
-  	// 	const char* this_name = legend_names[i];
-  	// 	bool include_legend = lst_legend[ this_name ];
-  	//
-  	// 	std::string opacity_column;
-  	// 	for ( it = colour_columns.begin(); it != colour_columns.end(); ++it ) {
-  	// 	  if ( it->first == this_name ) {
-  	// 	    opacity_column = it->second;
-  	// 	  }
-  	// 	}
-  	// 	resolve_colour( lst_params, params, data, lst_defaults, this_name, opacity_column.c_str(),  lst_legend, include_legend );
-  	// }
-
-  	// TODO
-  	// regardless whether it's in the legend or not, the colours stil lneed sorting
-  	//int i = 0;
-  	//int n = colour_columns.size();
   	std::map< std::string, std::string>::iterator it;
 
-  	//for ( i = 0; i < n; i++ ) {
-  		//const char* this_name = legend_names[i];
-  		bool include_legend;
+		bool include_legend;
 
-  		std::string colour_column;
-  		std::string opacity_column;
-  		for ( it = colour_columns.begin(); it != colour_columns.end(); ++it ) {
+		std::string colour_column;
+		std::string opacity_column;
+		for ( it = colour_columns.begin(); it != colour_columns.end(); ++it ) {
 
-  			colour_column = it->first;
-  			opacity_column = it->second;
+		  colour_column = it->first;
+		  opacity_column = it->second;
+		  include_legend = mapdeck::find_character_index_in_vector(legend_names, colour_column.c_str()) >= 0 ? true : false;
+	    resolve_colour( lst_params, params, data, lst_defaults, colour_column.c_str(), opacity_column.c_str(),  lst_legend, include_legend );
+		}
 
-  			// TODO( if 'colour_column' NOT IN lst_legend.names() ), include_legend == false
-  			//include_legend = lst_legend[ colour_column ];
-  			include_legend = mapdeck::find_character_index_in_vector(legend_names, colour_column.c_str()) >= 0 ? true : false;
-  			//Rcpp::Rcout << "include legend: " << include_legend << std::endl;
-  		  resolve_colour( lst_params, params, data, lst_defaults, colour_column.c_str(), opacity_column.c_str(),  lst_legend, include_legend );
-  		}
-  	//}
 
   	// legend optinos
   	// IT's a list
   	// iterate the names
-  	//
 
-
-  	// TODO( if stroke & fill colours are the same, don't 'colour values' twice );
-
-  	// make legends (if required)
-  	// logic:
-  	// - check if any of the fill || stroke(s) require a legend. If so, include in the 'resolve_stroke / resolve_fill' funcitons
-  	// - and return a summary (if numeric)
-  	// - IF any( legend  == TRUE ) (because it can be legend( fill_colour = T, stroke_colour = F, stroke_from = T ) )
-  	// -- for each of the TRUE legends, construct it, and sort out the options
-  	// the colours are stored in... lst_params[ "fill_colour" ] / lst_params[ "stroke_colour" ]
-  	//
   	// required:
   	// - legend values
   	//

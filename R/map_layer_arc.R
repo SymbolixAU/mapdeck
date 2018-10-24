@@ -23,11 +23,11 @@ mapdeckArcDependency <- function() {
 #' @param destination vector of longitude and latitude columns, or an \code{sfc} column
 #' @param id an id value in \code{data} to identify layers when interacting in Shiny apps
 #' @param stroke_from variable or hex colour to use as the staring stroke colour
-#' @param stroke_from_opacity value between 1 and 255. Either a string specifying the
+#' @param stroke_from_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes
 #' @param stroke_to variable or hex colour to use as the ending stroke colour
-#' @param stroke_to_opacity value between 1 and 255. Either a string specifying the
+#' @param stroke_to_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes
 #' @param stroke_width width of the stroke
