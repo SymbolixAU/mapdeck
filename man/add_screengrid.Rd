@@ -31,9 +31,6 @@ add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
-
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
 }
 \description{
 The Screen Grid Layer takes in an array of latitude and longitude coordinated points,

@@ -22,7 +22,8 @@ inline Rcpp::List stroke_colour(
 		SEXP& stroke,                // string or matrix
 		Rcpp::NumericVector& alpha,
 		int& stroke_colour_location, // locations of the paramter in the parameter list
-		int& stroke_opacity_location
+		int& stroke_opacity_location,
+		const char* colour_name
 ) {
 
 	std::string na_colour = params.containsElementNamed("na_colour") ? params["na_colour" ] : mapdeck::defaults::default_na_colour;
@@ -32,21 +33,22 @@ inline Rcpp::List stroke_colour(
 
 	switch ( TYPEOF( stroke ) ) {
 	case 16: {
+		Rcpp::Rcout << "string stroke " << std::endl;
 		Rcpp::StringVector stroke_colour_vec = Rcpp::as< Rcpp::StringVector >( stroke );
 		Rcpp::List legend = mapdeck::palette::colour_with_palette( pal, stroke_colour_vec, alpha, na_colour, include_alpha );
-		legend[ "colour_type" ] = "stroke_colour";
+		legend[ "colour_type" ] = colour_name;
 		legend[ "type" ] = "category";
 		return legend;
 		break;
 	}
 	default: {
-		// Rcpp::Rcout << "numeric stroke " << std::endl;
+		Rcpp::Rcout << "numeric stroke " << std::endl;
 		Rcpp::NumericVector stroke_colour_vec = Rcpp::as< Rcpp::NumericVector >( stroke );
 		// Rcpp::Rcout << stroke_colour_vec << std::endl;
 		Rcpp::List legend = mapdeck::palette::colour_with_palette( pal, stroke_colour_vec, alpha, na_colour, include_alpha );
 		// Rcpp::NumericVector summary = legend["summary_values"];
 		// Rcpp::Rcout << summary << std::endl;
-		legend[ "colour_type" ] = "stroke_colour";
+		legend[ "colour_type" ] = colour_name;
 		legend[ "type" ] = "gradient";
 		return legend;
 		break;
@@ -59,21 +61,32 @@ inline void resolve_stroke(
 		Rcpp::List& params,
 		Rcpp::DataFrame& data,
 		Rcpp::List& lst_defaults,
-		int& stroke_colour_location, // locations of the paramter in the parameter list
-		int& stroke_opacity_location,
+		// int& stroke_colour_location, // locations of the paramter in the parameter list
+		// int& stroke_opacity_location,
+		const char* colour_name,
+		const char* opacity_name,
 		Rcpp::List& lst_legend ) {
 
 	Rcpp::IntegerVector data_column_index = lst_params[ "data_column_index" ];
 	Rcpp::IntegerVector parameter_type = lst_params[ "parameter_type" ];
+	Rcpp::StringVector param_names = params.names();
 
 	Rcpp::StringVector hex_strings( data.nrows() );
 
 	Rcpp::NumericVector alpha( 1, 255.0 ); // TODO: the user can supply a single value [0,255] to use in place of this
 
-	SEXP stroke = lst_defaults[ "stroke_colour" ];
+	SEXP stroke = lst_defaults[ colour_name ];
 
-	int alphaColIndex = stroke_opacity_location >= 0 ? data_column_index[ stroke_opacity_location ] : -1;
-	int strokeColIndex = stroke_colour_location >= 0 ? data_column_index[ stroke_colour_location ] : -1;
+	int colour_location = mapdeck::find_character_index_in_vector( param_names, colour_name );
+	int opacity_location = mapdeck::find_character_index_in_vector( param_names, opacity_name );
+
+
+	// TODO( change this to find alpha and colour based on the 'colour_name' object);
+	// int alphaColIndex = stroke_opacity_location >= 0 ? data_column_index[ stroke_opacity_location ] : -1;
+	// int strokeColIndex = stroke_colour_location >= 0 ? data_column_index[ stroke_colour_location ] : -1;
+
+	int strokeColIndex = colour_location >= 0 ? data_column_index[ colour_location ] : -1;
+	int alphaColIndex = opacity_location >= 0 ? data_column_index[ opacity_location ] : -1;
 
 	if ( strokeColIndex >= 0 ) {
 		stroke = data[ strokeColIndex ];
@@ -89,8 +102,8 @@ inline void resolve_stroke(
 	if ( alphaColIndex >= 0 ) {
 		alpha = data[ alphaColIndex ];
 	} else {
-		Rcpp::StringVector sv = params.names();
-		int find_opacity = mapdeck::find_character_index_in_vector( sv, "stroke_opacity" );
+
+		int find_opacity = mapdeck::find_character_index_in_vector( param_names, "stroke_opacity" );
 		if (find_opacity >= 0 ) {
 			int a = params[ find_opacity ]; // will throw an error if not correct type
 			alpha.fill( a );
@@ -99,23 +112,27 @@ inline void resolve_stroke(
 
 	Rcpp::List legend = mapdeck::stroke::stroke_colour(
 		lst_params, params, data, lst_defaults, data_column_index, //hex_strings,
-		stroke, alpha, stroke_colour_location, stroke_opacity_location
+		stroke, alpha, colour_location, opacity_location, colour_name
 	);
 
 	bool make_legend ;
 
-	if ( lst_legend.containsElementNamed("stroke_colour") ) {
-		make_legend = lst_legend[ "stroke_colour" ];
+	if ( lst_legend.containsElementNamed( colour_name ) ) {
+		Rcpp::Rcout << "list contains element " << colour_name << std::endl;
+		make_legend = lst_legend[ colour_name ];
+		Rcpp::Rcout << "make legend " << make_legend << std::endl;
 	}
 
-	lst_defaults[ "stroke_colour" ] = legend[ "colours" ];
+	lst_defaults[ colour_name ] = legend[ "colours" ];
 
-	if (lst_legend.containsElementNamed("stroke_colour") && strokeColIndex >= 0 ) {
+	if (lst_legend.containsElementNamed( colour_name ) ) {
 
 		//Rcpp::Rcout << "make_legend " << make_legend << std::endl;
 		if (  make_legend == true ) {
 
-			std::string title = params[ "stroke_colour" ];
+			Rcpp::Rcout << "making legend" << std::endl;
+
+			std::string title = params[ colour_name ];
 
 			Rcpp::List summary = Rcpp::List::create(
 				Rcpp::_["colour"] = legend[ "summary_colours" ],
@@ -124,7 +141,7 @@ inline void resolve_stroke(
 	      Rcpp::_["type"] = legend["type"],
 	      Rcpp::_["title"] = title
 			);
-			lst_legend[ "stroke_colour" ] = summary;
+			lst_legend[ colour_name ] = summary;
 		}
 	}
 }

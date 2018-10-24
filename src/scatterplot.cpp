@@ -20,12 +20,11 @@ Rcpp::List rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
 	Rcpp::StringVector scatterplot_columns = mapdeck::scatterplot::scatterplot_columns;
-	Rcpp::StringVector scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
+	std::map< std::string, std::string > scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
 	Rcpp::StringVector scatterplot_legend = mapdeck::scatterplot::scatterplot_legend;
 
 	Rcpp::List lst = mapdeck::parameters_to_data(
-		data, params, lst_defaults, scatterplot_columns, scatterplot_colours, scatterplot_legend,
-		data_rows, true, false
+		data, params, lst_defaults, scatterplot_columns, scatterplot_colours, scatterplot_legend, data_rows
 	);
 
 	Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( lst["data"] );

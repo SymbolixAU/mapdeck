@@ -68,7 +68,6 @@ add_scatterplot <- function(
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	layer_id = NULL,
-	digits = 6,
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,

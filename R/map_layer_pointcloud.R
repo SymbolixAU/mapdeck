@@ -53,7 +53,6 @@ add_pointcloud <- function(
 	tooltip = NULL,
 	light_settings = list(),
 	layer_id = NULL,
-	digits = 6,
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,

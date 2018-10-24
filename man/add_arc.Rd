@@ -8,8 +8,8 @@ add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
   destination, id = NULL, stroke_from = NULL,
   stroke_from_opacity = NULL, stroke_to = NULL,
   stroke_to_opacity = NULL, stroke_width = NULL, tooltip = NULL,
-  auto_highlight = FALSE, digits = 6, legend = F,
-  legend_options = NULL, palette = viridisLite::viridis)
+  auto_highlight = FALSE, legend = F, legend_options = NULL,
+  palette = viridisLite::viridis)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -44,10 +44,10 @@ between 1 and 255 to be applied to all the shapes}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
+\item{palette}{a function which generates hex colours}
+
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
-
-\item{palette}{a function which generates hex colours}
 }
 \description{
 The Arc Layer renders raised arcs joining pairs of source and target coordinates

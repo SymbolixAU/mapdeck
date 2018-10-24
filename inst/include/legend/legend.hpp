@@ -9,4 +9,14 @@ Rcpp::List construct_legend_list( Rcpp::List& lst_params,
                                   Rcpp::StringVector& param_names,
                                   Rcpp::StringVector& legend_types );
 
+
+
+// namespace mapdeck {
+// namespace legend {
+//
+//
+//
+// } // namespace legend
+// } // namespace mapdeck
+
 #endif

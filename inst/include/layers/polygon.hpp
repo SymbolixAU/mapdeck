@@ -10,9 +10,14 @@ namespace polygon {
 		"polyline","elevation","tooltip"
 	);
 
-	Rcpp::StringVector polygon_colours = Rcpp::StringVector::create(
-		"fill_colour", "fill_opacity","stroke_colour","stroke_opacity","palette"
-	);
+	// Rcpp::StringVector polygon_colours = Rcpp::StringVector::create(
+	// 	"fill_colour", "fill_opacity","stroke_colour","stroke_opacity","palette"
+	// );
+
+	std::map< std::string, std::string > polygon_colours = {
+		{ "fill_colour", "fill_opacity" },
+		{ "stroke_colour", "stroke_opacity" }
+	};
 
 	Rcpp::StringVector polygon_legend = Rcpp::StringVector::create(
 		"fill_colour", "stroke_colour"

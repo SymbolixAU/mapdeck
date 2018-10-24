@@ -64,7 +64,6 @@ add_line <- function(
 	stroke_opacity = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
-	digits = 6,
 	palette = "viridis",
 	legend = FALSE,
 	legend_options = NULL

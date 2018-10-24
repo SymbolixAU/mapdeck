@@ -7,8 +7,8 @@
 add_scatterplot(map, data = get_map_data(map), lon = NULL,
   lat = NULL, polyline = NULL, radius = NULL, fill_colour = NULL,
   fill_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
-  layer_id = NULL, digits = 6, palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL)
+  layer_id = NULL, palette = "viridis", na_colour = "#808080FF",
+  legend = FALSE, legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -36,9 +36,6 @@ between 1 and 255 to be applied to all the shapes}
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
-
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
 
 \item{palette}{string or matrix. String is either one of "viridis","inferno",
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values

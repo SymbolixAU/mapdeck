@@ -24,7 +24,8 @@ namespace fill {
 			SEXP& fill,                // string or matrix
 			Rcpp::NumericVector& alpha,
 			int& fill_colour_location, // locations of the paramter in the parameter list
-			int& fill_opacity_location
+			int& fill_opacity_location,
+			const char* colour_name
 	) {
 
 		// Rcpp::Timer timer;
@@ -43,7 +44,7 @@ namespace fill {
 
 			Rcpp::StringVector fill_colour_vec = Rcpp::as< Rcpp::StringVector >( fill );
 			Rcpp::List legend = mapdeck::palette::colour_with_palette( pal, fill_colour_vec, alpha, na_colour, include_alpha );
-			legend[ "colour_type" ] = "fill_colour";
+			legend[ "colour_type" ] = colour_name;
 			legend[ "type" ] = "category";
 
 			return legend;
@@ -53,7 +54,7 @@ namespace fill {
 			// timer.step("starting fill");
 			Rcpp::NumericVector fill_colour_vec = Rcpp::as< Rcpp::NumericVector >( fill );
 			Rcpp::List legend = mapdeck::palette::colour_with_palette( pal, fill_colour_vec, alpha, na_colour, include_alpha );
-			legend[ "colour_type" ] = "fill_colour";
+			legend[ "colour_type" ] = colour_name;
 			legend[ "type" ] = "gradient";
 			// timer.step("fill done");
 			//
@@ -78,7 +79,8 @@ namespace fill {
   		Rcpp::List& lst_defaults,
   		int& fill_colour_location, // locations of the paramter in the parameter list
   		int& fill_opacity_location,
-  		Rcpp::List& lst_legend ) {
+  		Rcpp::List& lst_legend,
+  		const char* colour_name) {
 
   	//Rcpp::Timer timer;
   	//timer.step("start");
@@ -91,7 +93,7 @@ namespace fill {
   	Rcpp::NumericVector alpha( 1, 255.0 ); // TODO: the user can supply a single value [0,255] to use in place of this
 
   	//timer.step("fill defaults");
-  	SEXP fill = lst_defaults[ "fill_colour" ];
+  	SEXP fill = lst_defaults[ colour_name ];
 
   	int alphaColIndex = fill_opacity_location >= 0 ? data_column_index[ fill_opacity_location ] : -1;
   	int fillColIndex = fill_colour_location >= 0 ? data_column_index[ fill_colour_location ] : -1;
@@ -122,25 +124,25 @@ namespace fill {
   	//timer.step("starting legend");
   	Rcpp::List legend = mapdeck::fill::fill_colour(
   		lst_params, params, data, lst_defaults, data_column_index, //hex_strings,
-  		fill, alpha, fill_colour_location, fill_opacity_location
+  		fill, alpha, fill_colour_location, fill_opacity_location, colour_name
   	);
   	//timer.step("finished legend");
 
   	bool make_legend ;
 
-  	if ( lst_legend.containsElementNamed("fill_colour") ) {
-  	  make_legend = lst_legend[ "fill_colour" ];
+  	if ( lst_legend.containsElementNamed( colour_name ) ) {
+  	  make_legend = lst_legend[ colour_name ];
   	}
 
-  	lst_defaults[ "fill_colour" ] = legend[ "colours" ];
+  	lst_defaults[ colour_name ] = legend[ "colours" ];
 
   	// TODO( don't build legend if not asked for )
-  	if ( lst_legend.containsElementNamed("fill_colour") && fillColIndex >= 0 ) {
+  	if ( lst_legend.containsElementNamed( colour_name ) ) {
   		//Rcpp::Rcout << "found fill colour legend" << std::endl;
   		// need the title to be the name of the variable
   		//Rcpp::Rcout << "make_legend " << make_legend << std::endl;
   		if (  make_legend == true ) {
-	  		std::string title = params[ "fill_colour" ];
+	  		std::string title = params[ colour_name ];
 
 	  		Rcpp::List summary = Rcpp::List::create(
 	  			Rcpp::_["colour"] = legend[ "summary_colours" ],
@@ -149,7 +151,7 @@ namespace fill {
 	        Rcpp::_["type"] = legend[ "type" ],
 	        Rcpp::_["title"] = title
 	  		);
-	  		lst_legend[ "fill_colour" ] = summary;
+	  		lst_legend[ colour_name ] = summary;
   		}
   	}
 

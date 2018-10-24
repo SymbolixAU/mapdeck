@@ -7,8 +7,7 @@
 add_line(map, data = get_map_data(map), layer_id = NULL, origin,
   destination, id = NULL, stroke_colour = NULL, stroke_width = NULL,
   stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
-  digits = 6, palette = "viridis", legend = FALSE,
-  legend_options = NULL)
+  palette = "viridis", legend = FALSE, legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -36,9 +35,6 @@ between 1 and 255 to be applied to all the shapes}
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
-
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
 
 \item{palette}{a function which generates hex colours}
 }

@@ -31,9 +31,6 @@ between 1 and 255 to be applied to all the shapes}
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
-
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
 \item{palette}{a function which generates hex colours}

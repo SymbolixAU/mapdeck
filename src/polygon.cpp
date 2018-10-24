@@ -21,15 +21,12 @@ Rcpp::List rcpp_polygon( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
 	Rcpp::StringVector polygon_columns = mapdeck::polygon::polygon_columns;
-	Rcpp::StringVector polygon_colours = mapdeck::polygon::polygon_colours;
+	std::map< std::string, std::string > polygon_colours = mapdeck::polygon::polygon_colours;
 	Rcpp::StringVector polygon_legend = mapdeck::polygon::polygon_legend;
 
 	Rcpp::List lst = mapdeck::parameters_to_data(
-		data, params, lst_defaults, polygon_columns, polygon_colours, polygon_legend,
-		data_rows, true, true
+		data, params, lst_defaults, polygon_columns, polygon_colours, polygon_legend, data_rows
 	);
-
-	return lst;
 
 	Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( lst["data"] );
 	Rcpp::StringVector js_data = jsonify::dataframe::to_json( df );
@@ -44,20 +41,19 @@ Rcpp::List rcpp_polygon( Rcpp::DataFrame data, Rcpp::List params ) {
 }
 
 
-// [[Rcpp::export]]
-Rcpp::NumericVector rcpp_polygon_timer( Rcpp::DataFrame data, Rcpp::List params ) {
-
-	int data_rows = data.nrows();
-
-	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
-	Rcpp::StringVector polygon_columns = mapdeck::polygon::polygon_columns;
-	Rcpp::StringVector polygon_colours = mapdeck::polygon::polygon_colours;
-	Rcpp::StringVector polygon_legend = mapdeck::polygon::polygon_legend;
-
-	Rcpp::NumericVector res = mapdeck::parameters_to_data_timer(
-		data, params, lst_defaults, polygon_columns, polygon_colours, polygon_legend,
-		data_rows, true, true
-		);
-
-	return res;
-}
+// // [[Rcpp::export]]
+// Rcpp::NumericVector rcpp_polygon_timer( Rcpp::DataFrame data, Rcpp::List params ) {
+//
+// 	int data_rows = data.nrows();
+//
+// 	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
+// 	Rcpp::StringVector polygon_columns = mapdeck::polygon::polygon_columns;
+// 	std::map< std::string, std::string > polygon_colours = mapdeck::polygon::polygon_colours;
+// 	Rcpp::StringVector polygon_legend = mapdeck::polygon::polygon_legend;
+//
+// 	Rcpp::NumericVector res = mapdeck::parameters_to_data_timer(
+// 		data, params, lst_defaults, polygon_columns, polygon_colours, polygon_legend, data_rows
+// 		);
+//
+// 	return res;
+// }

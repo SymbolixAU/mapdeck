@@ -89,7 +89,6 @@ add_polygon <- function(
 	auto_highlight = FALSE,
 	light_settings = list(),
 	layer_id = NULL,
-	digits = 6,
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,

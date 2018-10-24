@@ -18,9 +18,13 @@ namespace scatterplot {
   	"polyline","elevation","radius","tooltip"
   	);
 
-  Rcpp::StringVector scatterplot_colours = Rcpp::StringVector::create(
-  	"fill_colour", "fill_opacity","palette"
-  );
+  // Rcpp::StringVector scatterplot_colours = Rcpp::StringVector::create(
+  // 	"fill_colour", "fill_opacity","palette"
+  // );
+
+  std::map< std::string, std::string > scatterplot_colours = {
+  	{ "fill_colour", "fill_opacity" }
+  };
 
   Rcpp::StringVector scatterplot_legend = Rcpp::StringVector::create(
   	"fill_colour"
