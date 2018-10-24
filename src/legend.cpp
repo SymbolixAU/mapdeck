@@ -11,6 +11,11 @@ Rcpp::List construct_legend_list( Rcpp::List& lst_params,
 	//Rcpp::Rcout << "n: " << n << std::endl;
 	int i;
 	Rcpp::List legend( n );
+
+	// if ( n == 0 ) {
+	// 	return legend;
+	// }
+
 	Rcpp::String this_legend;
 
 	Rcpp::IntegerVector parameter_type = lst_params[ "parameter_type" ];
@@ -26,6 +31,9 @@ Rcpp::List construct_legend_list( Rcpp::List& lst_params,
 	// find the 'legend' argument
 	int legend_location = mapdeck::find_character_index_in_vector( param_names, "legend" );
 	//Rcpp::Rcout << "legend location: " << legend_location << std::endl;
+
+	// Rcpp::Rcout << "legend - n: " << n << std::endl;
+	// Rcpp::Rcout << "legend location: " << legend_location << std::endl;
 
 	if ( legend_location > -1 ) {
 		// switch on the typ e of legend/

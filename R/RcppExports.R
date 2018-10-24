@@ -5,6 +5,10 @@ rcpp_arc <- function(data, params) {
     .Call(`_mapdeck_rcpp_arc`, data, params)
 }
 
+rcpp_grid <- function(data, params) {
+    .Call(`_mapdeck_rcpp_grid`, data, params)
+}
+
 rcpp_line <- function(data, params) {
     .Call(`_mapdeck_rcpp_line`, data, params)
 }

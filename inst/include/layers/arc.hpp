@@ -7,7 +7,7 @@ namespace mapdeck {
 namespace arc {
 
 Rcpp::StringVector arc_columns = Rcpp::StringVector::create(
-	"polyline","elevation","tooltip"
+	"polyline","tooltip"
 );
 
 // Rcpp::StringVector arc_colours = Rcpp::StringVector::create(

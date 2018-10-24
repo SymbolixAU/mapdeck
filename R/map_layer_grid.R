@@ -63,6 +63,75 @@ add_grid <- function(
 	digits = 6
 ) {
 
+	l <- as.list( match.call( expand.dots = F) )
+	l[[1]] <- NULL
+	l[["data"]] <- NULL
+	l[["map"]] <- NULL
+	l[["elevation_scale"]] <- NULL
+	l[["cell_size"]] <- NULL
+	l[["colour_range"]] <- NULL
+	l[["auto_highlight"]] <- NULL
+	l[["layer_id"]] <- NULL
+	l[["digits"]] <- NULL
+	l <- resolve_palette( l, palette )
+	#l <- resolve_legend( l, legend )
+
+	data <- normaliseSfData(data, "POINT")
+	polyline <- findEncodedColumn(data, polyline)
+
+	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
+		l[['polyline']] <- polyline
+		data <- unlistMultiGeometry( data, polyline )
+	}
+
+	## parmater checks
+	usePolyline <- isUsingPolyline(polyline)
+	checkNumeric(digits)
+	checkNumeric(elevation_scale)
+	checkNumeric(cell_size)
+	checkHex(colour_range)
+	layer_id <- layerId(layer_id, "grid")
+
+	## end parameter checks
+	if ( !usePolyline ) {
+		## TODO(check only a data.frame)
+		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
+		polyline <- 'polyline'
+		## TODO(check lon & lat exist / passed in as arguments )
+		l[['lon']] <- NULL
+		l[['lat']] <- NULL
+		l[['polyline']] <- polyline
+	}
+
+	shape <- rcpp_grid( data, l )
+	# print(shape)
+
+	map <- addDependency(map, mapdeckGridDependency())
+
+	invoke_method(
+		map, "add_grid2", shape[["data"]], layer_id, cell_size,
+		jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale,
+		colour_range, auto_highlight
+		)
+}
+
+
+#' @export
+add_grid_old <- function(
+	map,
+	data = get_map_data(map),
+	lon = NULL,
+	lat = NULL,
+	polyline = NULL,
+	colour_range = viridisLite::viridis(6),
+	cell_size = 1000,
+	extruded = TRUE,
+	elevation_scale = 1,
+	auto_highlight = FALSE,
+	layer_id = NULL,
+	digits = 6
+) {
+
 	objArgs <- match.call(expand.dots = F)
 
 	data <- normaliseSfData(data, "POINT")
@@ -95,23 +164,7 @@ add_grid <- function(
 	allCols <- gridColumns()
 	requiredCols <- requiredGridColumns()
 
-	# colourColumns <- shapeAttributes(
-	# 	fill_colour = NULL
-	# 	, stroke_colour = NULL
-	# 	, stroke_from = NULL
-	# 	, stroke_to = NULL
-	# )
-
 	shape <- createMapObject(data, allCols, objArgs)
-
-	# pal <- createPalettes(shape, colourColumns)
-	#
-	# colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	# colours <- createColours(shape, colour_palettes)
-
-	# if(length(colours) > 0){
-	# 	shape <- replaceVariableColours(shape, colours)
-	# }
 
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
@@ -120,6 +173,7 @@ add_grid <- function(
 	}
 
 	shape <- jsonlite::toJSON(shape, digits = digits)
+	# print(shape)
 
 	map <- addDependency(map, mapdeckGridDependency())
 
@@ -127,7 +181,7 @@ add_grid <- function(
 		map, "add_grid", shape, layer_id, cell_size,
 		jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale,
 		colour_range, auto_highlight
-		)
+	)
 }
 
 
