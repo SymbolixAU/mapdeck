@@ -69,7 +69,7 @@ namespace mapdeck {
 
   	// TODO
   	// regardless whether it's in the legend or not, the colours stil lneed sorting
-  	int i = 0;
+  	//int i = 0;
   	//int n = colour_columns.size();
   	std::map< std::string, std::string>::iterator it;
 
@@ -86,8 +86,8 @@ namespace mapdeck {
 
   			// TODO( if 'colour_column' NOT IN lst_legend.names() ), include_legend == false
   			//include_legend = lst_legend[ colour_column ];
-  			include_legend = mapdeck::find_character_index_in_vector(legend_names, colour_column) >= 0 ? true : false;
-  			Rcpp::Rcout << "include legend: " << include_legend << std::endl;
+  			include_legend = mapdeck::find_character_index_in_vector(legend_names, colour_column.c_str()) >= 0 ? true : false;
+  			//Rcpp::Rcout << "include legend: " << include_legend << std::endl;
   		  resolve_colour( lst_params, params, data, lst_defaults, colour_column.c_str(), opacity_column.c_str(),  lst_legend, include_legend );
   		}
   	//}

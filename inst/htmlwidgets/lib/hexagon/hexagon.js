@@ -1,15 +1,13 @@
 function add_hexagon( map_id, hexagon_data, layer_id ) {
 
-  console.log( hexagon_data );
-
 	const hexagonLayer = new deck.HexagonLayer({
 		id: 'hexagon-'+layer_id,
 		data: hexagon_data,
     pickable: true,
     extruded: true,
-    //elevationRange: [0, 1000],
-    //elevationScale: 1000,
-    //opacity: 1,
+    elevationRange: [0, 100],
+    elevationScale: 1000,
+    opacity: 1,
     //getRadius: d => d.radius,
     getPosition: d => [d.lon, d.lat],
     //centroid: [0, 52]

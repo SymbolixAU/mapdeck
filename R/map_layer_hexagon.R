@@ -50,6 +50,27 @@ add_hexagon <- function(
 	lat,
 	layer_id,
 	radius = NULL,
+	colourRange = viridisLite::viridis(6)
+) {
+
+	objArgs <- match.call(expand.dots = F)
+
+	shape <- rcpp_hexagon( data, l )
+
+
+	map <- addDependency(map, mapdeckHexagonDependency())
+	invoke_method(map, "add_hexagon", shape, layer_id)
+}
+
+
+#' @export
+add_hexagon_old <- function(
+	map,
+	data = get_map_data(map),
+	lon,
+	lat,
+	layer_id,
+	radius = NULL,
 	digits = 6
 	#	colourRange = viridisLite::viridis(6)
 ) {
