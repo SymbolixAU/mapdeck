@@ -36,10 +36,14 @@ namespace mapdeck {
   	// create a list. e.g.,
   	// lst_legend[ "fill_colour" ] = true;
   	// lst_legend[ "stroke_colour" ] = false;
+
+  	// TODO(polygon can do fill & stroke. and the user may only supply one, but say 'legend = T')
+  	// so we need to only use a legend IFF the user supplied it as a colour option
+
   	Rcpp::List lst_legend = construct_legend_list( lst_params, params, param_names, legend_types );
 
   	Rcpp::StringVector legend_names = lst_legend.names();
-  	// Rcpp::Rcout << legend_names << std::endl;
+  	//Rcpp::Rcout << "legend_names: " <<  legend_names << std::endl;
 
   	//Rcpp::Rcout << "finished legend" << std::endl;
   	// lst_legend contains the 'true/false' values for the legends required (fill, stroke, stroke_to, stroke_from)

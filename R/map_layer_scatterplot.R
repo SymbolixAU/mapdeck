@@ -48,7 +48,7 @@ mapdeckScatterplotDependency <- function() {
 #'
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' add_scatterplot(
-#'   data = df
+#'   data = df[1:5, ]
 #'   , lat = "lat"
 #'   , lon = "lng"
 #'   , layer_id = "scatter_layer"
@@ -105,8 +105,7 @@ add_scatterplot <- function(
 	}
 
 	shape <- rcpp_scatterplot( data, l )
-
-	# print(shape)
+	#print(shape)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
 	invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight, shape[["legend"]])

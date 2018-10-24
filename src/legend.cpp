@@ -7,8 +7,16 @@ Rcpp::List construct_legend_list( Rcpp::List& lst_params,
                                   Rcpp::StringVector& param_names,
                                   Rcpp::StringVector& legend_types ) {
 
+	// Rcpp::Rcout << "n: " << n << std::endl;
+	// Rcpp::Rcout << "param names: " << param_names << std::endl;
+
+	// Only include legends if the user supplied it as a paramter
+	legend_types = Rcpp::intersect(legend_types, param_names);
+
 	int n = legend_types.size();
+	//n = legend_types.size();
 	//Rcpp::Rcout << "n: " << n << std::endl;
+
 	int i;
 	Rcpp::List legend( n );
 

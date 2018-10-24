@@ -111,7 +111,7 @@ void resolve_colour(
 		this_colour, alpha, colour_name, include_legend
 	);
 
-	bool make_legend ;
+	bool make_legend;
 
 	if ( lst_legend.containsElementNamed( colour_name ) ) {
 		//Rcpp::Rcout << "list contains element " << colour_name << std::endl;

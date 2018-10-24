@@ -71,11 +71,11 @@ mapdeck(
     data = df
     , polyline = "geometry"
     , layer = "polygon_layer"
-    , fill_colour = "fillColor",
-    , stroke_colour = "fillColor",
+    , fill_colour = "SA2_NAME",
     , elevation = "elevation"
     , stroke_width = 0
     , tooltip = 'info'
+    , legend = T
   )
 
 library(sf)
