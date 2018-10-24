@@ -79,7 +79,7 @@ add_grid <- function(
 	data <- normaliseSfData(data, "POINT")
 	polyline <- findEncodedColumn(data, polyline)
 
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
+	if( !is.null(polyline) && !polyline %in% names(l) ) {
 		l[['polyline']] <- polyline
 		data <- unlistMultiGeometry( data, polyline )
 	}

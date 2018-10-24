@@ -258,9 +258,7 @@ function layer_click( map_id, layer, info ) {
 }
 
 function decode_points( polyline ) {
-    console.log( polyline );
 	var coordinates = decode_polyline( polyline ) ;
-    console.log( coordinates );
 	return coordinates[0];
 }
 

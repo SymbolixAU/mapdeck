@@ -63,6 +63,69 @@ add_text <- function(
 	tooltip = NULL,
 	layer_id = NULL,
 	digits = 6,
+	palette = "viridis",
+	legend = FALSE,
+	legend_options = NULL
+) {
+
+	l <- as.list( match.call( expand.dots = F) )
+	l[[1]] <- NULL
+	l[["data"]] <- NULL
+	l[["map"]] <- NULL
+	l[["layer_id"]] <- NULL
+	l[["digits"]] <- NULL
+	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
+
+	data <- normaliseSfData(data, "POINT")
+	polyline <- findEncodedColumn(data, polyline)
+
+	if( !is.null(polyline) && !polyline %in% names(l) ) {
+		l[['polyline']] <- polyline
+		data <- unlistMultiGeometry( data, polyline )
+	}
+
+	## parmater checks
+	usePolyline <- isUsingPolyline(polyline)
+	checkNumeric(digits)
+	checkNumeric(size)
+	checkNumeric(angle)
+	layer_id <- layerId(layer_id, "text")
+
+	## end parameter checks
+	if ( !usePolyline ) {
+		## TODO(check only a data.frame)
+		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
+		polyline <- 'polyline'
+		## TODO(check lon & lat exist / passed in as arguments )
+		l[['lon']] <- NULL
+		l[['lat']] <- NULL
+		l[['polyline']] <- polyline
+	}
+
+	shape <- rcpp_text( data, l );
+
+	map <- addDependency(map, mapdeckTextDependency())
+	invoke_method(map, "add_text2", shape[["data"]], layer_id, shape[["legend"]])
+}
+
+#' @export
+add_text_old <- function(
+	map,
+	data = get_map_data(map),
+	text,
+	lon = NULL,
+	lat = NULL,
+	polyline = NULL,
+	fill_colour = NULL,
+	fill_opacity = NULL,
+	size = NULL,
+	angle = NULL,
+	anchor = NULL,
+	alignment_baseline = NULL,
+	tooltip = NULL,
+	layer_id = NULL,
+	digits = 6,
 	palette = viridisLite::viridis
 ) {
 
@@ -126,6 +189,7 @@ add_text <- function(
 	map <- addDependency(map, mapdeckTextDependency())
 	invoke_method(map, "add_text", shape, layer_id)
 }
+
 
 #' @rdname clear
 #' @export

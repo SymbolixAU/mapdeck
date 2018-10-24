@@ -29,3 +29,11 @@ rcpp_scatterplot <- function(data, params) {
     .Call(`_mapdeck_rcpp_scatterplot`, data, params)
 }
 
+rcpp_screengrid <- function(data, params) {
+    .Call(`_mapdeck_rcpp_screengrid`, data, params)
+}
+
+rcpp_text <- function(data, params) {
+    .Call(`_mapdeck_rcpp_text`, data, params)
+}
+

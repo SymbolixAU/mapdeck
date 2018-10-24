@@ -89,6 +89,30 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_screengrid
+Rcpp::List rcpp_screengrid(Rcpp::DataFrame data, Rcpp::List params);
+RcppExport SEXP _mapdeck_rcpp_screengrid(SEXP dataSEXP, SEXP paramsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_screengrid(data, params));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_text
+Rcpp::List rcpp_text(Rcpp::DataFrame data, Rcpp::List params);
+RcppExport SEXP _mapdeck_rcpp_text(SEXP dataSEXP, SEXP paramsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_text(data, params));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_arc", (DL_FUNC) &_mapdeck_rcpp_arc, 2},
@@ -98,6 +122,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_pointcloud", (DL_FUNC) &_mapdeck_rcpp_pointcloud, 2},
     {"_mapdeck_rcpp_polygon", (DL_FUNC) &_mapdeck_rcpp_polygon, 2},
     {"_mapdeck_rcpp_scatterplot", (DL_FUNC) &_mapdeck_rcpp_scatterplot, 2},
+    {"_mapdeck_rcpp_screengrid", (DL_FUNC) &_mapdeck_rcpp_screengrid, 2},
+    {"_mapdeck_rcpp_text", (DL_FUNC) &_mapdeck_rcpp_text, 2},
     {NULL, NULL, 0}
 };
 
