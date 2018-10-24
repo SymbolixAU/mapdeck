@@ -3,10 +3,16 @@
 
 #include <Rcpp.h>
 
+// [[Rcpp::depends(colourvalues)]]
+#include "colourvalues/colours/colours_hex.hpp"
+
+// [[Rcpp::depends(jsonify)]]
+#include "jsonify/to_json.hpp"
+
 namespace mapdeck {
 
   /*
-   * find_parameter_index
+   * find_parameter_index_in_vector
    * Finds the location (index) of a string in the list of parameters (as given by the R function call)
    */
   inline int find_character_index_in_vector( Rcpp::StringVector& sv, const char* to_find ) {
@@ -29,9 +35,6 @@ namespace mapdeck {
 	 */
 	inline int data_column_index(Rcpp::StringVector& param_value, Rcpp::StringVector& data_names) {
 
-		// Rcpp::Rcout << "finding: " << param_value << std::endl;
-		// Rcpp::Rcout << "in: " << data_names << std::endl;
-
 		int n = data_names.size();
 		for (int i = 0; i < n; i++ ) {
 
@@ -46,24 +49,22 @@ namespace mapdeck {
 		return -1;
 	}
 
-  inline Rcpp::List construct_df(Rcpp::List df, int nrows) {
+  inline void construct_df(Rcpp::List& df, int& nrows) {
 
   	if (nrows < 1) {
   		Rcpp::stop("Error creating data layer");
   	}
 
   	Rcpp::IntegerVector nv = Rcpp::seq(1, nrows);
-
   	df.attr("class") = "data.frame";
   	df.attr("row.names") = nv;
-
-  	return df;
   }
 
 	inline void remove_parameters(
 			Rcpp::List& params,
 			Rcpp::StringVector& param_names,
 			Rcpp::StringVector& to_remove ) {
+
 		param_names = Rcpp::setdiff( param_names,  to_remove );
 		params = params[ param_names ];
 	}
@@ -75,11 +76,16 @@ namespace mapdeck {
 	/*
 	 * determins the data type in the list of argument parameters (not the data)
 	 */
-	inline int get_parameter_r_type( SEXP param ) {\
+	inline int get_parameter_r_type( SEXP param ) {
 		return TYPEOF( param );
 	}
 
-	void fill_single_vector( Rcpp::List& lst_defaults, Rcpp::String& param_name, SEXP& value, int n_rows ) {
+	inline void fill_single_vector(
+			Rcpp::List& lst_defaults,
+			Rcpp::String& param_name,
+			SEXP& value,
+			int n_rows ) {
+
 		switch( TYPEOF( value ) ) {
 		case 10: { // LGLSXP
 		Rcpp::LogicalVector l = Rcpp::as< Rcpp::LogicalVector >( value );
@@ -109,11 +115,25 @@ namespace mapdeck {
 	}
 
 
+  /*
+   * construct params
+   *
+   * Creates a list
+   * ["parameter"] - StringVector of the names of parameters
+   * ["parameter_type"] - IntegerVector of the TYPE of parameter
+   * ["data_column_index"] - IntegerVector of the column index in the data
+   */
 	inline Rcpp::List construct_params(
 			Rcpp::DataFrame& data,
-			Rcpp::List& params,
-			int& fill_colour_location,
-			int& fill_opacity_location
+			Rcpp::List& params
+			// int& fill_colour_location,
+			// int& fill_opacity_location,
+			// int& stroke_colour_location,
+			// int& stroke_opacity_location,
+			// int& stroke_from_location,
+			// int& stroke_to_location,
+			// int& stroke_from_opacity_location,
+			// int& stroke_to_opacity_location
 	) {
 
 		int n_params = params.size();
@@ -137,13 +157,24 @@ namespace mapdeck {
 				// these colour values are stored for convenience
 				// do I also need 'stroke_colour' as well?
 				// OR, should I just have a function to find a variable in the 'paramter_names' vector
-				// - there shouldn't be much overhead doing that each time for each var?
-				if ( param_names[i] == "fill_colour" ) {
-					fill_colour_location = i;
-				} else if ( param_names[i] == "fill_opacity" ) {
-					fill_opacity_location = i;
-				}
-
+				// // - there shouldn't be much overhead doing that each time for each var?
+				// if ( param_names[i] == "fill_colour" ) {
+				// 	fill_colour_location = i;
+				// } else if ( param_names[i] == "fill_opacity" ) {
+				// 	fill_opacity_location = i;
+				// } else if ( param_names[i] == "stroke_colour" ) {
+				// 	stroke_colour_location = i;
+				// } else if ( param_names[i] == "stroke_opacity" ) {
+				// 	stroke_opacity_location = i;
+				// } else if ( param_names[i] == "stroke_from" ) {
+				// 	stroke_from_location = i;
+				// } else if ( param_names[i] == "stroke_to" ) {
+				// 	stroke_to_location = i;
+				// } else if ( param_names[i] == "stroke_from_opacity" ) {
+				// 	stroke_from_opacity_location = i;
+				// } else if ( param_names[i] == "stroke_to_opacity" ) {
+				// 	stroke_to_opacity_location = i;
+				// }
 			}
 		}
 		return Rcpp::List::create(

@@ -4,8 +4,9 @@
 \alias{add_hexagon}
 \title{Add hexagon}
 \usage{
-add_hexagon(map, data = get_map_data(map), lon, lat, layer_id,
-  radius = NULL, digits = 6)
+add_hexagon(map, data = get_map_data(map), polyline = NULL,
+  lon = NULL, lat = NULL, layer_id, radius = 1000,
+  elevation_scale = 1, colour_range = viridisLite::viridis(6))
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -22,8 +23,7 @@ to conflict and not plot correctly}
 
 \item{radius}{in metres}
 
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
+\item{elevation_scale}{value to sacle the elevations of the hexagons}
 
 \item{colour_range}{palette of colours}
 }
@@ -48,6 +48,7 @@ add_hexagon(
   , lat = "lat"
   , lon = "lng"
   , layer_id = "hex_layer"
+  , elevation_scale = 100
 )
 
 }

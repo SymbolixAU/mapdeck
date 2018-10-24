@@ -20,6 +20,7 @@ mapdeckHexagonDependency <- function() {
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param radius in metres
+#' @param elevation_scale value to sacle the elevations of the hexagons
 #' @param colour_range palette of colours
 #'
 #' @examples
@@ -38,6 +39,7 @@ mapdeckHexagonDependency <- function() {
 #'   , lat = "lat"
 #'   , lon = "lng"
 #'   , layer_id = "hex_layer"
+#'   , elevation_scale = 100
 #' )
 #'
 #' }
@@ -46,69 +48,51 @@ mapdeckHexagonDependency <- function() {
 add_hexagon <- function(
 	map,
 	data = get_map_data(map),
-	lon,
-	lat,
+	polyline = NULL,
+	lon = NULL,
+	lat = NULL,
 	layer_id,
-	radius = NULL,
-	digits = 6
-	#	colourRange = viridisLite::viridis(6)
+	radius = 1000,
+	elevation_scale = 1,
+	colour_range = viridisLite::viridis(6)
 ) {
 
-	objArgs <- match.call(expand.dots = F)
+	l <- as.list( match.call( expand.dots = F) )
+	l[[1]] <- NULL
+	l[["data"]] <- NULL
+	l[["map"]] <- NULL
+	l[["auto_highlight"]] <- NULL
+	l[["light_settings"]] <- NULL
+	l[["layer_id"]] <- NULL
 
-	## parmater checks
+	data <- normaliseSfData(data, "POINT")
+	polyline <- findEncodedColumn(data, polyline)
 
-
-	## end parameter checks
-
-	allCols <- hexagonColumns()
-	requiredCols <- requiredHexagonColumns()
-
-	colourColumns <- shapeAttributes(
-		fill_colour = NULL
-		, stroke_colour = NULL
-		, stroke_from = NULL
-		, stroke_to = NULL
-	)
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	pal <- createPalettes(shape, colourColumns)
-
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
-
-	if(length(colours) > 0){
-		shape <- replaceVariableColours(shape, colours)
+	if( !is.null(polyline) && !polyline %in% names(l) ) {
+		l[['polyline']] <- polyline
+		data <- unlistMultiGeometry( data, polyline )
 	}
 
-	requiredDefaults <- setdiff(requiredCols, names(shape))
+	checkHex(colour_range)
+	usePolyline <- isUsingPolyline(polyline)
 
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "hexagon")
+
+	if ( !usePolyline ) {
+		## TODO(check only a data.frame)
+		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
+		polyline <- 'polyline'
+		## TODO(check lon & lat exist / passed in as arguments )
+		l[['lon']] <- NULL
+		l[['lat']] <- NULL
+		l[['polyline']] <- polyline
 	}
 
-	shape <- jsonlite::toJSON(shape, digits = digits)
+	layer_id <- layerId(layer_id, "hexagon")
+
+	shape <- rcpp_hexagon( data, l )
 
 	map <- addDependency(map, mapdeckHexagonDependency())
-	invoke_method(map, "add_hexagon", shape, layer_id)
-}
-
-
-requiredHexagonColumns <- function() {
-	c('radius')
-}
-
-
-hexagonColumns <- function() {
-	c('lat', 'lon')
-}
-
-hexagonDefaults <- function(n) {
-	data.frame(
-		radius = rep(200, n),
-		stringsAsFactors = F
-	)
+	invoke_method(map, "add_hexagon", shape[["data"]], layer_id, radius, elevation_scale, colour_range )
 }
 
 #' @rdname clear

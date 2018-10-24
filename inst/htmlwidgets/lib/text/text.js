@@ -18,6 +18,28 @@ function add_text( map_id, text_data, layer_id ) {
   update_layer( map_id, 'text-'+layer_id, textLayer );
 }
 
+function add_text2( map_id, text_data, layer_id, legend ) {
+  const textLayer = new TextLayer({
+    id: 'text-'+layer_id,
+    data: text_data,
+    pickable: true,
+    getPosition: d => decode_points( d.polyline ),
+    getColor: d => hexToRGBA2( d.fill_colour ),
+    getText: d => d.text,
+    getSize: d => d.size,
+    getAngle: d => d.angle,
+    getTextAnchor: d => d.anchor,
+    getAlignmentBaseline: d => d.alignment_baseline,
+    onClick: info => layer_click( map_id, "text", info ),
+    onHover: updateTooltip
+  });
+  update_layer( map_id, 'text-'+layer_id, textLayer );
+    
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
+}
+
 function clear_text( map_id, layer_id ) {
   clear_layer( map_id, 'text-'+layer_id );
   clear_legend( map_id, layer_id );

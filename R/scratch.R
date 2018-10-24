@@ -123,7 +123,9 @@
 # 		, tooltip = "ROAD_NAME"
 # 		, auto_highlight = TRUE
 # 		, legend = T
-# 	) %>%
+# 	)
+
+#%>%
 # 	clear_path(layer_id = "path_layer")
 
 # mapdeck(
@@ -184,18 +186,37 @@
 # flights <- read.csv(url)
 # flights$id <- seq_len(nrow(flights))
 # flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
-
+#
+# flights$airport1 <- as.character(flights$airport1)
+#
 # mapdeck( style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 # 	add_line(
 # 		data = flights
 # 		, layer_id = "line_layer"
 # 		, origin = c("start_lon", "start_lat")
 # 		, destination = c("end_lon", "end_lat")
-# 		, stroke_colour = "airport1"
+# 		, stroke_colour = "cnt"
 # 		, stroke_width = "stroke"
 # 		, auto_highlight = TRUE
 # 		, legend = TRUE
 # 	)
+
+
+# df <- capitals
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+#
+# mapdeck(
+# 	style = mapdeck_style("dark")
+# ) %>%
+# 	add_scatterplot(
+# 		data = df[1:10, ]
+# 		, lon = "lon"
+# 		, lat = "lat"
+# 		, radius = 1000
+# 		, fill_colour = "country"
+# 		, legend = F
+# 	)
+
 
 # mapdeck(
 # 	style = 'mapbox://styles/mapbox/dark-v9'
@@ -232,3 +253,26 @@
 #   , layer_id = "grid_layer"
 #   , auto_highlight = TRUE
 # )
+#
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+# df <- melbourne
+# df$elevation <- sample(100:5000, size = nrow(df))
+# df$info <- paste0("<b>SA2 - </b><br>",df$SA2_NAME)
+#
+# mapdeck(
+# 	, style = mapdeck_style('dark')
+# 	, location = c(145, -38)
+# 	, zoom = 8
+# ) %>%
+# 	add_polygon(
+# 		data = df
+# 		, polyline = "geometry"
+# 		, layer = "polygon_layer"
+# 		, fill_colour = "SA2_NAME",
+#
+# 		, stroke_colour = "fillColor",
+# 		, elevation = "elevation"
+# 		, stroke_width = 0
+# 		, tooltip = 'info'
+# 		, legend = F
+# 	)

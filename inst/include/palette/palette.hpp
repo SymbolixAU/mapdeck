@@ -2,13 +2,10 @@
 #define R_MAPDECK_PALETTE_H
 
 #include <Rcpp.h>
-#include "R_mapdeck.hpp"
+#include "mapdeck.hpp"
 #include "mapdeck_defaults.hpp"
 
-
-// [[Rcpp::depends(colourvalues)]]
-#include "colourvalues/colours/colours_hex.hpp"
-
+#include <Rcpp/Benchmark/Timer.h>
 
 namespace mapdeck {
 namespace palette {
@@ -31,7 +28,7 @@ namespace palette {
   	return pal;
   }
 
-  inline Rcpp::StringVector colour_with_palette(
+  inline Rcpp::List colour_with_palette(
   		SEXP& palette,
   		Rcpp::StringVector& fill_colour_vec,
   		Rcpp::NumericVector& alpha,
@@ -45,12 +42,12 @@ namespace palette {
   }
   	case 14: { // REALSXP (i.e, matrix)
   		Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( palette );
-  		return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
+  		return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha, true );
   		break;
   	}
   	case 16: {
   		std::string thispal = Rcpp::as< std::string>( palette );
-  		return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, alpha, include_alpha );
+  		return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, alpha, include_alpha, true );
   		break;
   	}
   	default: {
@@ -61,12 +58,14 @@ namespace palette {
   }
 
 
-	inline Rcpp::StringVector colour_with_palette(
+	inline Rcpp::List colour_with_palette(
 			SEXP& palette,
 			Rcpp::NumericVector& fill_colour_vec,
 			Rcpp::NumericVector& alpha,
 			std::string& na_colour,
 			bool& include_alpha) {
+
+		int n_summaries = 5;
 
 		switch ( TYPEOF( palette ) ) {
 		case 1: { // SYMSXP
@@ -74,13 +73,14 @@ namespace palette {
 		break;
 	}
 		case 14: { // REALSXP (i.e, matrix)
+			//Rcpp::Rcout << "caes 14" << std::endl;
 			Rcpp::NumericMatrix thispal = Rcpp::as< Rcpp::NumericMatrix >( palette );
-			return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha );
+			return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, include_alpha, n_summaries );
 			break;
 		}
 		case 16: {
 			std::string thispal = Rcpp::as< std::string>( palette );
-			return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, alpha, include_alpha );
+			return colourvalues::colours_hex::colour_value_hex( fill_colour_vec, thispal, na_colour, alpha, include_alpha, n_summaries );
 			break;
 		}
 		default: {

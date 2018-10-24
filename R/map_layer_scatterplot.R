@@ -22,6 +22,7 @@ mapdeckScatterplotDependency <- function() {
 #' @param palette string or matrix. String is either one of "viridis","inferno",
 #' "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 #' between [0, 255], where the 4th column represents the alpha.
+#' @param na_colour hex string colour to use for NA values
 #'
 #' @examples
 #'
@@ -67,17 +68,27 @@ add_scatterplot <- function(
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	layer_id = NULL,
-	digits = 6,
-	palette = viridisLite::viridis
+	palette = "viridis",
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL
 ) {
 
 	message("Using development version. Please check plots carefully")
 
 	l <- as.list( match.call() )
+	l[[1]] <- NULL    ## function call
+	l[["map"]] <- NULL
+	l[["data"]] <- NULL
+	l[["auto_highlight"]] <- NULL
+	l[["layer_id"]] <- NULL
+	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
 
 	data <- normaliseSfData(data, "POINT")
 	polyline <- findEncodedColumn(data, polyline)
+
 	if( !is.null(polyline) && !polyline %in% names(l) ) {
 		l[['polyline']] <- polyline
 		data <- unlistMultiGeometry( data, polyline )
@@ -93,11 +104,13 @@ add_scatterplot <- function(
 		l[['polyline']] <- polyline
 	}
 
+	layer_id <- layerId(layer_id, "scatterplot")
 
 	shape <- rcpp_scatterplot( data, l )
+	#print(shape)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
-	invoke_method(map, "add_scatterplot2", shape, layer_id, auto_highlight)
+	invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight, shape[["legend"]])
 }
 
 resolve_palette <- function( l, palette ) {
@@ -109,22 +122,10 @@ resolve_palette <- function( l, palette ) {
 	return( l )
 }
 
-dispatch_data <- function( data, lon, lat, polyline, l ) UseMethod("dispatch_data")
-
-dispatch_data.data.frame <- function( data, lon, lat, polyline, l ) {
-	## TODO - encode byrow
+resolve_legend <- function( l, legend ) {
+	l[['legend']] <- legend
+	return( l )
 }
-
-dispatch_data.sf <- function( data, l, ... ) {
-	## TODO(need to handle MULTI, and 2-col data...)
-
-}
-
-dispatch_data.sfencoded <- function( data, l, ... ) {
-
-}
-
-dispatch_data.default <- function( data, l ) stop("Data type not supported")
 
 
 #' @inheritParams add_scatterplot

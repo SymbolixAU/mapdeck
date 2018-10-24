@@ -236,7 +236,7 @@ test_that("sf MULTIPOLYGON objects not plotted", {
 	sf <- sf::st_sf(geometry = sf::st_sfc(sf::st_multipolygon(x = list(pl1, pl2))))
 
 	m <- mapdeck(token = 'abc') %>%
-		add_polygon(data = sf, layer_id = "poly")
+		add_polygon_old(data = sf, layer_id = "poly")
 
 	df <- jsonlite::fromJSON( m$x$calls[[1]]$args[[1]] )
 	expect_true(length(df) == 0)

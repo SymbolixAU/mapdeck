@@ -8,7 +8,8 @@ add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
   polyline = NULL, fill_colour = NULL, fill_opacity = NULL,
   size = NULL, angle = NULL, anchor = NULL,
   alignment_baseline = NULL, tooltip = NULL, layer_id = NULL,
-  digits = 6, palette = viridisLite::viridis)
+  digits = 6, palette = "viridis", legend = FALSE,
+  legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -45,12 +46,14 @@ between 1 and 255 to be applied to all the shapes}
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
-
 \item{palette}{string or matrix. String is either one of "viridis","inferno",
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 between [0, 255], where the 4th column represents the alpha.}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
 }
 \description{
 The Text Layer takes in coordinate points and renders them as circles

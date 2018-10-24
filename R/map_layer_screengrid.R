@@ -63,6 +63,71 @@ add_screengrid <- function(
 	digits = 6
 ) {
 
+	l <- as.list( match.call( expand.dots = F) )
+	l[[1]] <- NULL
+	l[["data"]] <- NULL
+	l[["map"]] <- NULL
+	l[["elevation_scale"]] <- NULL
+	l[["cell_size"]] <- NULL
+	l[["colour_range"]] <- NULL
+	l[["auto_highlight"]] <- NULL
+	l[["layer_id"]] <- NULL
+	l[["digits"]] <- NULL
+	l <- resolve_palette( l, palette )
+	#l <- resolve_legend( l, legend )
+
+	data <- normaliseSfData(data, "POINT")
+	polyline <- findEncodedColumn(data, polyline)
+
+	if( !is.null(polyline) && !polyline %in% names(l) ) {
+		l[['polyline']] <- polyline
+		data <- unlistMultiGeometry( data, polyline )
+	}
+
+	## parmater checks
+	usePolyline <- isUsingPolyline(polyline)
+	checkNumeric(opacity)
+	checkNumeric(cell_size)
+	checkNumeric(digits)
+	layer_id <- layerId(layer_id, "screengrid")
+
+	if(length(colour_range) != 6)
+		stop("colour_range must have 6 hex colours")
+
+	## end parameter checks
+	if ( !usePolyline ) {
+		## TODO(check only a data.frame)
+		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
+		polyline <- 'polyline'
+		## TODO(check lon & lat exist / passed in as arguments )
+		l[['lon']] <- NULL
+		l[['lat']] <- NULL
+		l[['polyline']] <- polyline
+	}
+
+	## end parameter checks
+
+	shape <- rcpp_screengrid( data, l )
+
+	map <- addDependency(map, mapdeckScreengridDependency())
+	invoke_method(map, "add_screengrid", shape[["data"]], layer_id, opacity, cell_size, colour_range )
+}
+
+#' @export
+add_screengrid_old <- function(
+	map,
+	data = get_map_data(map),
+	lon = NULL,
+	lat = NULL,
+	polyline = NULL,
+	weight = NULL,
+	colour_range = viridisLite::viridis(6),
+	opacity = 0.8,
+	cell_size = 50,
+	layer_id = NULL,
+	digits = 6
+) {
+
 	objArgs <- match.call(expand.dots = F)
 
 	data <- normaliseSfData(data, "POINT")
@@ -99,23 +164,7 @@ add_screengrid <- function(
 	allCols <- screengridColumns()
 	requiredCols <- requiredScreengridColumns()
 
-	# colourColumns <- shapeAttributes(
-	# 	fill_colour = NULL
-	# 	, stroke_colour = NULL
-	# 	, stroke_from = NULL
-	# 	, stroke_to = NULL
-	# )
-
 	shape <- createMapObject(data, allCols, objArgs)
-
-	# pal <- createPalettes(shape, colourColumns)
-	#
-	# colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	# colours <- createColours(shape, colour_palettes)
-#
-# 	if(length(colours) > 0){
-# 		shape <- replaceVariableColours(shape, colours)
-# 	}
 
 	requiredDefaults <- setdiff(requiredCols, names(shape))
 
@@ -128,6 +177,7 @@ add_screengrid <- function(
 	map <- addDependency(map, mapdeckScreengridDependency())
 	invoke_method(map, "add_screengrid", shape, layer_id, opacity, cell_size, colour_range )
 }
+
 
 #' @rdname clear
 #' @export

@@ -2,7 +2,7 @@
 #define R_MAPDECK_DATA_CONSTRUCTION_H
 
 #include <Rcpp.h>
-#include "R_mapdeck.hpp"
+#include "mapdeck.hpp"
 
 namespace mapdeck {
 namespace construction {
@@ -35,10 +35,12 @@ namespace construction {
 
   		Rcpp::String this_param = param_names[i];
   		//Rcpp::Rcout << "this_param: " << this_param.get_cstring() << std::endl;
-  		int idx = mapdeck::find_character_index_in_vector( required_columns, this_param.get_cstring() );
+
+  		//int idx = mapdeck::find_character_index_in_vector( required_columns, this_param.get_cstring() );
   		//Rcpp::Rcout << "index of this param: " << idx << std::endl;
 
-  		if ( idx >= 0 ) {
+  		// If we use R to construct the parameter list, we don't need to do this check
+  		//if ( idx >= 0 ) {
   			// to get into this if statement the parameter passed into the R function is
   			// to be used as a column of data
 
@@ -67,11 +69,10 @@ namespace construction {
   				SEXP value = params[i];
   				mapdeck::fill_single_vector( lst_defaults, this_param, value, data_rows );
   			}
-  		}
-  	}
+  		} // TODO( is there an 'else' condition? )
 
-  	Rcpp::DataFrame df = mapdeck::construct_df( lst_defaults, data_rows );
-  	return df;
+  	mapdeck::construct_df( lst_defaults, data_rows );
+  	return lst_defaults;
   }
 
 } // namespace construction
