@@ -2,7 +2,7 @@
 
 #include "mapdeck.hpp"
 #include "palette/palette.hpp"
-
+#include "legend/legend.hpp"
 
 
 Rcpp::List make_colours(
@@ -103,8 +103,8 @@ void resolve_colour(
 		this_colour, alpha, colour_name, include_legend
 	);
 
+	// TODO( can this be replaced with 'include_legend') ?
 	bool make_legend;
-
 	if ( lst_legend.containsElementNamed( colour_name ) ) {
 		make_legend = lst_legend[ colour_name ];
 	}
@@ -116,13 +116,23 @@ void resolve_colour(
 		if (  make_legend == true ) {
 
 			std::string title = params[ colour_name ];
+			std::string css = "";
+
+			if ( params.containsElementNamed("legend_options") ) {
+
+				Rcpp::List opts = params[ "legend_options" ];
+				set_legend_option( opts, "title", title, colour_name );
+				set_legend_option( opts, "css", css, colour_name );
+			}
+
 
 			Rcpp::List summary = Rcpp::List::create(
 				Rcpp::_["colour"] = legend[ "summary_colours" ],
         Rcpp::_["variable"] = legend[ "summary_values" ],
         Rcpp::_["colourType"] = legend[ "colour_type" ],
         Rcpp::_["type"] = legend["type"],
-        Rcpp::_["title"] = title
+        Rcpp::_["title"] = title,
+        Rcpp::_["css"] = css
 			);
 			lst_legend[ colour_name ] = summary;
 		}

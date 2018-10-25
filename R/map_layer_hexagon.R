@@ -54,7 +54,7 @@ add_hexagon <- function(
 	layer_id,
 	radius = 1000,
 	elevation_scale = 1,
-	colour_range = viridisLite::viridis(6)
+	colour_range = colourvalues::colour_values(1:6, palette = "viridis")
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )

@@ -6,7 +6,8 @@
 \usage{
 add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id, radius = 1000,
-  elevation_scale = 1, colour_range = viridisLite::viridis(6))
+  elevation_scale = 1, colour_range = colourvalues::colour_values(1:6,
+  palette = "viridis"))
 }
 \arguments{
 \item{map}{a mapdeck map object}

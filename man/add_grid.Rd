@@ -5,9 +5,10 @@
 \title{Add Grid}
 \usage{
 add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, colour_range = viridisLite::viridis(6),
-  cell_size = 1000, extruded = TRUE, elevation_scale = 1,
-  auto_highlight = FALSE, layer_id = NULL, digits = 6)
+  polyline = NULL, colour_range = colourvalues::colour_values(1:6,
+  palette = "viridis"), cell_size = 1000, extruded = TRUE,
+  elevation_scale = 1, auto_highlight = FALSE, layer_id = NULL,
+  digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}

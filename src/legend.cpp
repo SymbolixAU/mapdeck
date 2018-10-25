@@ -1,57 +1,43 @@
 #include <Rcpp.h>
 #include "legend/legend.hpp"
 
+void set_legend_option( Rcpp::List& opts, const char* option, std::string& value, const char* colour_name ) {
+	if ( opts.containsElementNamed( option ) ) {
+		Rcpp::String s_value = opts[ option ];
+		value = s_value;
+	} else if ( opts.containsElementNamed( colour_name ) ) {
+		Rcpp::List opts2 = opts[ colour_name ];
+		set_legend_option( opts2, option, value, colour_name );
+	}
+}
+
 
 Rcpp::List construct_legend_list( Rcpp::List& lst_params,
                                   Rcpp::List& params,
                                   Rcpp::StringVector& param_names,
                                   Rcpp::StringVector& legend_types ) {
 
-	// Rcpp::Rcout << "n: " << n << std::endl;
-	// Rcpp::Rcout << "param names: " << param_names << std::endl;
-
-	// Only include legends if the user supplied it as a paramter
 	legend_types = Rcpp::intersect(legend_types, param_names);
 
 	int n = legend_types.size();
-	//n = legend_types.size();
-	//Rcpp::Rcout << "n: " << n << std::endl;
-
 	int i;
 	Rcpp::List legend( n );
-
-	// if ( n == 0 ) {
-	// 	return legend;
-	// }
-
 	Rcpp::String this_legend;
 
 	Rcpp::IntegerVector parameter_type = lst_params[ "parameter_type" ];
 
 	for ( i = 0; i < n; i++ ) {
-		//this_legend = legend_types[i];
 		legend[ i ] = false;
 	}
 	legend.names() = legend_types;
 
-	//Rcpp::Rcout << "legend types: " << legend_types << std::endl;
 
 	// find the 'legend' argument
 	int legend_location = mapdeck::find_character_index_in_vector( param_names, "legend" );
-	//Rcpp::Rcout << "legend location: " << legend_location << std::endl;
-
-	// Rcpp::Rcout << "legend - n: " << n << std::endl;
-	// Rcpp::Rcout << "legend location: " << legend_location << std::endl;
 
 	if ( legend_location > -1 ) {
-		// switch on the typ e of legend/
-		// if it's a Logical Vector, create a lsit with all the possible legend types
-
 
 		SEXP lege = params[ legend_location ];
-
-		//int tp = TYPEOF( lege ) ;
-		//Rcpp::Rcout << "type: " << tp << std::endl;
 
 		switch( TYPEOF( lege ) ) {
 		case LGLSXP: { // logical
