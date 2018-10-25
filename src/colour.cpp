@@ -103,11 +103,18 @@ void resolve_colour(
 		this_colour, alpha, colour_name, include_legend
 	);
 
+	// TODO( can this be replaced with 'include_legend') ?
+	// NO!
+	bool make_legend;
+	if ( lst_legend.containsElementNamed( colour_name ) ) {
+		make_legend = lst_legend[ colour_name ];
+	}
+
 	lst_defaults[ colour_name ] = legend[ "colours" ];
 
 	if (lst_legend.containsElementNamed( colour_name ) ) {
 
-		if ( include_legend ) {
+		if (  make_legend == true ) {
 
 			std::string title = params[ colour_name ];
 			std::string css = "";
