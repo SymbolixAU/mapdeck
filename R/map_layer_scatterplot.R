@@ -24,6 +24,8 @@ mapdeckScatterplotDependency <- function() {
 #' between [0, 255], where the 4th column represents the alpha.
 #' @param na_colour hex string colour to use for NA values
 #'
+#' @inheritSection add_arc legend
+#'
 #' @examples
 #'
 #' \donttest{

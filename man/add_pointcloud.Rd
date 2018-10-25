@@ -54,6 +54,19 @@ a named list indicating which colour attributes should be included in the legend
 The Pointcloud Layer takes in coordinate points and renders them as circles
 with a certain radius.
 }
+\section{legend}{
+
+
+The \code{legend_options} can be used to control the appearance of the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{css - a string of valid \code{css} for controlling the appearance of the legend}
+  \item{title - a string to use for the title of the legend}
+}
+
+If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+}
+
 \examples{
 \donttest{
 ## You need a valid access token from Mapbox

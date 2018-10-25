@@ -35,7 +35,24 @@ mapdeckArcDependency <- function() {
 #' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
 #' @param digits integer. Use this parameter to specify how many digits (decimal places)
 #' should be used for the latitude / longitude coordinates.
-#' @param palette a function which generates hex colours
+#' @param palette string or matrix. String is either one of "viridis","inferno",
+#' "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
+#' between [0, 255], where the 4th column represents the alpha.
+#' @param legend either a logical indiciating if the legend(s) should be displayed, or
+#' a named list indicating which colour attributes should be included in the legend.
+#' @param legend_options A list of options for controlling the legend.
+#'
+#'
+#' @section legend:
+#'
+#' The \code{legend_options} can be used to control the appearance of the legend.
+#' This should be a named list, where the names are one of
+#' \itemize{
+#'   \item{css - a string of valid \code{css} for controlling the appearance of the legend}
+#'   \item{title - a string to use for the title of the legend}
+#' }
+#'
+#' If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
 #'
 #' @examples
 #' \donttest{
@@ -60,6 +77,8 @@ mapdeckArcDependency <- function() {
 #'   , stroke_width = "stroke"
 #'   , tooltip = "info"
 #'   , auto_highlight = TRUE
+#'   , legend = T
+#'   , legend_options = list(stroke_from = list( title = "Origin airport" ), css = "max-height: 100px;")
 #'  )
 #'
 #' ## Using a 2-sfc-column sf object
@@ -108,7 +127,7 @@ add_arc <- function(
 	auto_highlight = FALSE,
 	legend = F,
 	legend_options = NULL,
-	palette = viridisLite::viridis
+	palette = "viridis"
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )

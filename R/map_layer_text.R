@@ -25,6 +25,8 @@ mapdeckTextDependency <- function() {
 #' 'top', 'center' or 'bottom'
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #'
+#' @inheritSection add_arc legend
+#'
 #' @examples
 #'
 #' \donttest{

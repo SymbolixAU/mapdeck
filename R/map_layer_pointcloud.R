@@ -19,6 +19,8 @@ mapdeckPointcloudDependency <- function() {
 #' @param elevation column containing the elevation values
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #'
+#' @inheritSection add_arc legend
+#'
 #' @examples
 #' \donttest{
 #' ## You need a valid access token from Mapbox

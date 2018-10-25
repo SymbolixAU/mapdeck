@@ -36,7 +36,14 @@ between 1 and 255 to be applied to all the shapes}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
-\item{palette}{a function which generates hex colours}
+\item{palette}{string or matrix. String is either one of "viridis","inferno",
+"magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
+between [0, 255], where the 4th column represents the alpha.}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
 }
 \description{
 The Line Layer renders raised lines joining pairs of source and target coordinates
@@ -48,6 +55,19 @@ be expanded to two rows of single POINTs.
 Therefore, if the origin is a MULTIPOINT of two points, and the destination is
 a single POINT, the code will error as there will be an uneven number of rows
 }
+\section{legend}{
+
+
+The \code{legend_options} can be used to control the appearance of the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{css - a string of valid \code{css} for controlling the appearance of the legend}
+  \item{title - a string to use for the title of the legend}
+}
+
+If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+}
+
 \examples{
 \donttest{
 

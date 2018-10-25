@@ -103,17 +103,11 @@ void resolve_colour(
 		this_colour, alpha, colour_name, include_legend
 	);
 
-	// TODO( can this be replaced with 'include_legend') ?
-	bool make_legend;
-	if ( lst_legend.containsElementNamed( colour_name ) ) {
-		make_legend = lst_legend[ colour_name ];
-	}
-
 	lst_defaults[ colour_name ] = legend[ "colours" ];
 
 	if (lst_legend.containsElementNamed( colour_name ) ) {
 
-		if (  make_legend == true ) {
+		if ( include_legend ) {
 
 			std::string title = params[ colour_name ];
 			std::string css = "";
@@ -124,7 +118,6 @@ void resolve_colour(
 				set_legend_option( opts, "title", title, colour_name );
 				set_legend_option( opts, "css", css, colour_name );
 			}
-
 
 			Rcpp::List summary = Rcpp::List::create(
 				Rcpp::_["colour"] = legend[ "summary_colours" ],

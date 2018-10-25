@@ -26,10 +26,9 @@ mapdeckPolygonDependency <- function() {
 #' @param stroke_width width of the stroke
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param elevation the height of the polygon
-#' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
-#' @param legend either a logical indiciating if the legend(s) should be displayed, or
-#' a named list indicating which colour attributes should be included in the legend.
-#' @param legend_options A list of options for controlling the legend.
+#'
+#'
+#' @inheritSection add_arc legend
 #'
 #' @examples
 #' \donttest{

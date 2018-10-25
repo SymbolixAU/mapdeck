@@ -20,6 +20,8 @@ mapdeckLineDependency <- function() {
 #' between 1 and 255 to be applied to all the shapes
 #' @param stroke_colour variable or hex colour to use as the ending stroke colour
 #'
+#' @inheritSection add_arc legend
+#'
 #' @examples
 #' \donttest{
 #'
