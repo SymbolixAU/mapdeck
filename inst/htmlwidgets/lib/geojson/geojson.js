@@ -23,6 +23,7 @@ function add_geojson( map_id, geojson, layer_id, lineColor, fillColor, radius, l
     onClick: info => layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour )
+    //onHover: updateTooltip
   });
 
   update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );

@@ -14,7 +14,7 @@ function add_hexagon( map_id, hexagon_data, layer_id, radius, elevation_scale, a
         autoHighlight: auto_highlight,
         highlightColor: hexToRGBA2( highlight_colour ),
         onClick: info => layer_click( map_id, "hexagon", info ),
-        onHover: updateTooltip,
+        onHover: updateTooltip
 	});
 	update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
 }
