@@ -21,7 +21,7 @@ function add_scatterplot( map_id, scatter_data, layer_id, auto_highlight, legend
 }
 
 
-function add_scatterplot2( map_id, scatter_data, layer_id, auto_highlight, legend ) {
+function add_scatterplot2( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend ) {
   const scatterLayer = new deck.ScatterplotLayer({
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
@@ -32,6 +32,7 @@ function add_scatterplot2( map_id, scatter_data, layer_id, auto_highlight, legen
     getColor: d => hexToRGBA2( d.fill_colour ),
     pickable: true,
     autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour ),
     onClick: info => layer_click( map_id, "scatterplot", info ),
     onHover: updateTooltip
   });

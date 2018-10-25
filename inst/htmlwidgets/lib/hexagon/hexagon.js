@@ -1,4 +1,4 @@
-function add_hexagon( map_id, hexagon_data, layer_id, radius, elevation_scale, colour_range ) {
+function add_hexagon( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range ) {
     
 	const hexagonLayer = new deck.HexagonLayer({
 		id: 'hexagon-'+layer_id,
@@ -10,7 +10,8 @@ function add_hexagon( map_id, hexagon_data, layer_id, radius, elevation_scale, c
     elevationScale: elevation_scale,
     radius: radius,
     getPosition: d => decode_polyline( d.polyline )[0],
-    //centroid: [0, 52]
+    autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour ),
     onClick: info => layer_click( map_id, "hexagon", info ),
     onHover: updateTooltip,
 	});

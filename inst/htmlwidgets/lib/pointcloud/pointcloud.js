@@ -1,5 +1,5 @@
 
-function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings, legend ) {
+function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings, auto_highlight, legend ) {
 
   const pointcloudLayer = new deck.PointCloudLayer({
     id: 'pointcloud-'+layer_id,
@@ -9,6 +9,7 @@ function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings, lege
     getColor: d => hexToRGBA( d.fill_colour, d.fill_opacity ),
     lightSettings: light_settings,
     pickable: true,
+    autoHighlight: auto_highlight,
     onClick: info => layer_click( map_id, "pointcloud", info ),
     onHover: updateTooltip
   });
@@ -19,7 +20,7 @@ function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings, lege
   }
 }
 
-function add_pointcloud2( map_id, pointcloud_data, layer_id, light_settings, legend ) {
+function add_pointcloud2( map_id, pointcloud_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
 
   const pointcloudLayer = new deck.PointCloudLayer({
     id: 'pointcloud-'+layer_id,
@@ -29,6 +30,8 @@ function add_pointcloud2( map_id, pointcloud_data, layer_id, light_settings, leg
     getColor: d => hexToRGBA2( d.fill_colour ),
     lightSettings: light_settings,
     pickable: true,
+    autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour ),
     onClick: info => layer_click( map_id, "pointcloud", info ),
     onHover: updateTooltip
   });

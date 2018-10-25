@@ -6,8 +6,9 @@
 \usage{
 add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id, radius = 1000,
-  elevation_scale = 1, colour_range = colourvalues::colour_values(1:6,
-  palette = "viridis"))
+  elevation_scale = 1, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  colour_range = colourvalues::colour_values(1:6, palette = "viridis"))
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -26,6 +27,10 @@ to conflict and not plot correctly}
 
 \item{elevation_scale}{value to sacle the elevations of the hexagons}
 
+\item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
+
+\item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
+
 \item{colour_range}{palette of colours}
 }
 \description{
@@ -36,12 +41,12 @@ The color and height of the hexagon is scaled by number of points it contains.
 \examples{
 \dontrun{
 
+## You need a valid access token from Mapbox
+key <- 'abc'
+
 df <- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'
 ))
-
-## You need a valid access token from Mapbox
-key <- 'abc'
 
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 add_hexagon(

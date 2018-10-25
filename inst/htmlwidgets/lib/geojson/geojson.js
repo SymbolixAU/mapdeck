@@ -1,5 +1,5 @@
 
-function add_geojson( map_id, geojson, layer_id, lineColor, fillColor, radius, lineWidth, elevation, light_settings, auto_highlight ) {
+function add_geojson( map_id, geojson, layer_id, lineColor, fillColor, radius, lineWidth, elevation, light_settings, auto_highlight, highlight_colour ) {
 
   const geojsonLayer = new deck.GeoJsonLayer({
     id: 'geojson-'+layer_id,
@@ -20,7 +20,8 @@ function add_geojson( map_id, geojson, layer_id, lineColor, fillColor, radius, l
     getElevation: d => d.properties.elevation || elevation,
     lightSettings: light_settings,
     onClick: info => layer_click( map_id, "geojson", info ),
-    autoHighlight: auto_highlight
+    autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour )
   });
 
   update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );

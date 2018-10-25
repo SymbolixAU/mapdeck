@@ -12,6 +12,8 @@ function add_screengrid( map_id, screengrid_data, layer_id, opacity, cell_size, 
     onClick: info => layer_click( map_id, "screengrid", info ),
     onHover: updateTooltip,
     pickable: true
+    //autoHighlight: true
+    //highlightColor: hexToRGBA2( highlight_colour ),
   });
   update_layer( map_id, 'screengrid-'+layer_id, screengridLayer );
 }

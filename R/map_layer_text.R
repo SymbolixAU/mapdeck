@@ -64,7 +64,8 @@ add_text <- function(
 	alignment_baseline = NULL,
 	tooltip = NULL,
 	layer_id = NULL,
-	digits = 6,
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
 	legend = FALSE,
 	legend_options = NULL
@@ -75,7 +76,6 @@ add_text <- function(
 	l[["data"]] <- NULL
 	l[["map"]] <- NULL
 	l[["layer_id"]] <- NULL
-	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
@@ -90,9 +90,9 @@ add_text <- function(
 
 	## parmater checks
 	usePolyline <- isUsingPolyline(polyline)
-	checkNumeric(digits)
 	checkNumeric(size)
 	checkNumeric(angle)
+	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "text")
 
 	## end parameter checks
@@ -109,7 +109,7 @@ add_text <- function(
 	shape <- rcpp_text( data, l );
 
 	map <- addDependency(map, mapdeckTextDependency())
-	invoke_method(map, "add_text2", shape[["data"]], layer_id, shape[["legend"]])
+	invoke_method(map, "add_text2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
 }
 
 #' @export

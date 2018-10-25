@@ -33,6 +33,7 @@ mapdeckArcDependency <- function() {
 #' @param stroke_width width of the stroke
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
+#' @param highlight_colour hex string colour to use for highlighting. Must contain the alpha component.
 #' @param digits integer. Use this parameter to specify how many digits (decimal places)
 #' should be used for the latitude / longitude coordinates.
 #' @param palette string or matrix. String is either one of "viridis","inferno",
@@ -125,6 +126,7 @@ add_arc <- function(
 	stroke_width = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
 	legend = F,
 	legend_options = NULL,
 	palette = "viridis"
@@ -137,7 +139,6 @@ add_arc <- function(
 	l[["auto_highlight"]] <- NULL
 	l[["light_settings"]] <- NULL
 	l[["layer_id"]] <- NULL
-	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
@@ -178,12 +179,13 @@ add_arc <- function(
   }
 
 	layer_id <- layerId(layer_id, "arc")
+	checkHexAlpha(highlight_colour)
 
 	shape <- rcpp_arc( data, l )
 	# print( shape )
 
 	map <- addDependency(map, mapdeckArcDependency())
-	invoke_method(map, "add_arc2", shape[["data"]], layer_id, auto_highlight, shape[["legend"]] )
+	invoke_method(map, "add_arc2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }
 
 #' @export
@@ -245,7 +247,6 @@ add_arc_old <- function(
 	}
 
 	## parameter checks
-	checkNumeric(digits)
 	checkPalette(palette)
 	layer_id <- layerId(layer_id, "arc")
 

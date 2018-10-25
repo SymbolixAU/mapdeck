@@ -59,8 +59,8 @@ add_grid <- function(
 	extruded = TRUE,
 	elevation_scale = 1,
 	auto_highlight = FALSE,
-	layer_id = NULL,
-	digits = 6
+	highlight_colour = "#AAFFFFFF",
+	layer_id = NULL
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )
@@ -72,7 +72,6 @@ add_grid <- function(
 	l[["colour_range"]] <- NULL
 	l[["auto_highlight"]] <- NULL
 	l[["layer_id"]] <- NULL
-	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
 	#l <- resolve_legend( l, legend )
 
@@ -86,10 +85,10 @@ add_grid <- function(
 
 	## parmater checks
 	usePolyline <- isUsingPolyline(polyline)
-	checkNumeric(digits)
 	checkNumeric(elevation_scale)
 	checkNumeric(cell_size)
 	checkHex(colour_range)
+	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "grid")
 
 	## end parameter checks
@@ -112,7 +111,7 @@ add_grid <- function(
 	invoke_method(
 		map, "add_grid2", shape[["data"]], layer_id, cell_size,
 		jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale,
-		colour_range, auto_highlight
+		colour_range, auto_highlight, highlight_colour
 		)
 }
 

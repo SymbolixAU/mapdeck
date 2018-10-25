@@ -7,6 +7,7 @@
 add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
   elevation = NULL, polyline = NULL, radius = NULL,
   fill_colour = NULL, fill_opacity = NULL, tooltip = NULL,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   light_settings = list(), layer_id = NULL, palette = "viridis",
   na_colour = "#808080FF", legend = FALSE, legend_options = NULL)
 }
@@ -32,6 +33,10 @@ column of \code{data} containing the fill opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
+
+\item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
+
+\item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
 \item{light_settings}{list of light setting parameters. See \link{light_settings}}
 

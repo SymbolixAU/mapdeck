@@ -6,8 +6,8 @@
 \usage{
 add_path(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
-  tooltip = NULL, layer_id = NULL, digits = 6,
-  auto_highlight = FALSE, palette = "viridis",
+  tooltip = NULL, layer_id = NULL, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF", palette = "viridis",
   na_colour = "#808080FF", legend = FALSE, legend_options = NULL)
 }
 \arguments{
@@ -32,6 +32,8 @@ distinguish between shape layers of the same type. Layers with the same id are l
 to conflict and not plot correctly}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
+
+\item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
 \item{palette}{string or matrix. String is either one of "viridis","inferno",
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values

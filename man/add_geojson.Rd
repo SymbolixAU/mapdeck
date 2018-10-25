@@ -7,7 +7,7 @@
 add_geojson(map, data = get_map_data(map), layer_id = NULL,
   lineColor = "#440154", fillColor = "#440154", radius = 1,
   lineWidth = 1, light_settings = list(), elevation = 0,
-  auto_highlight = FALSE)
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF")
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -31,6 +31,8 @@ to conflict and not plot correctly}
 \item{elevation}{elevation of polygons. See details}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
+
+\item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 }
 \description{
 The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,

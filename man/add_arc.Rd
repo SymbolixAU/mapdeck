@@ -8,8 +8,8 @@ add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
   destination, id = NULL, stroke_from = NULL,
   stroke_from_opacity = NULL, stroke_to = NULL,
   stroke_to_opacity = NULL, stroke_width = NULL, tooltip = NULL,
-  auto_highlight = FALSE, legend = F, legend_options = NULL,
-  palette = "viridis")
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF", legend = F,
+  legend_options = NULL, palette = "viridis")
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -43,6 +43,8 @@ between 1 and 255 to be applied to all the shapes}
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
+
+\item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
 \item{legend}{either a logical indiciating if the legend(s) should be displayed, or
 a named list indicating which colour attributes should be included in the legend.}

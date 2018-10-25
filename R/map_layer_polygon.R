@@ -86,6 +86,7 @@ add_polygon <- function(
 	elevation = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
 	light_settings = list(),
 	layer_id = NULL,
 	palette = "viridis",
@@ -101,7 +102,6 @@ add_polygon <- function(
 	l[["auto_highlight"]] <- NULL
 	l[["light_settings"]] <- NULL
 	l[["layer_id"]] <- NULL
-	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
@@ -117,6 +117,7 @@ add_polygon <- function(
 	}
 
 
+	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "polygon")
 
 	# shape <- rcpp_polygon_timer( data, l )
@@ -128,7 +129,7 @@ add_polygon <- function(
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
 	map <- addDependency(map, mapdeckPolygonDependency())
-	invoke_method(map, "add_polygon2", shape[["data"]], layer_id, light_settings, auto_highlight, shape[["legend"]])
+	invoke_method(map, "add_polygon2", shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]])
 }
 
 

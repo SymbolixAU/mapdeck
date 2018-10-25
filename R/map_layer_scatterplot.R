@@ -69,6 +69,7 @@ add_scatterplot <- function(
 	fill_opacity = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
 	layer_id = NULL,
 	palette = "viridis",
 	na_colour = "#808080FF",
@@ -84,7 +85,6 @@ add_scatterplot <- function(
 	l[["data"]] <- NULL
 	l[["auto_highlight"]] <- NULL
 	l[["layer_id"]] <- NULL
-	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
@@ -108,12 +108,13 @@ add_scatterplot <- function(
 	}
 
 	layer_id <- layerId(layer_id, "scatterplot")
+	checkHexAlpha(highlight_colour)
 
 	shape <- rcpp_scatterplot( data, l )
 	#print(shape)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
-	invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight, shape[["legend"]])
+	invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
 }
 
 resolve_palette <- function( l, palette ) {

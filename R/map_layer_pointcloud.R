@@ -53,6 +53,8 @@ add_pointcloud <- function(
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	tooltip = NULL,
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
 	light_settings = list(),
 	layer_id = NULL,
 	palette = "viridis",
@@ -69,7 +71,6 @@ add_pointcloud <- function(
 	l[["data"]] <- NULL
 	l[["auto_highlight"]] <- NULL
 	l[["layer_id"]] <- NULL
-	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
@@ -93,13 +94,14 @@ add_pointcloud <- function(
 	}
 
 	layer_id <- layerId(layer_id, "pointcloud")
+	checkHexAlpha(highlight_colour)
 	shape <- rcpp_pointcloud( data, l )
 	#print(shape)
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
 	map <- addDependency(map, mapdeckPointcloudDependency())
-	invoke_method(map, "add_pointcloud2", shape[["data"]], layer_id, light_settings, shape[["legend"]] )
+	invoke_method(map, "add_pointcloud2", shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]] )
 }
 
 
@@ -149,7 +151,6 @@ add_pointcloud_old <- function(
 		objArgs[['polyline']] <- polyline
 	}
 
-	checkNumeric(digits)
 	checkPalette(palette)
 	layer_id <- layerId(layer_id, "pointcloud")
 	## TODO(light_settings)

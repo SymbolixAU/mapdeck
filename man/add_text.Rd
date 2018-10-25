@@ -8,8 +8,8 @@ add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
   polyline = NULL, fill_colour = NULL, fill_opacity = NULL,
   size = NULL, angle = NULL, anchor = NULL,
   alignment_baseline = NULL, tooltip = NULL, layer_id = NULL,
-  digits = 6, palette = "viridis", legend = FALSE,
-  legend_options = NULL)
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  palette = "viridis", legend = FALSE, legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -45,6 +45,10 @@ between 1 and 255 to be applied to all the shapes}
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
+
+\item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
+
+\item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
 \item{palette}{string or matrix. String is either one of "viridis","inferno",
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values

@@ -22,7 +22,7 @@ function add_line( map_id, line_data, layer_id, auto_highlight, legend ) {
 }
 
 
-function add_line2( map_id, line_data, layer_id, auto_highlight, legend ) {
+function add_line2( map_id, line_data, layer_id, auto_highlight, highlight_colour, legend ) {
 
   const lineLayer = new LineLayer({
     id: 'line-'+layer_id,
@@ -34,7 +34,8 @@ function add_line2( map_id, line_data, layer_id, auto_highlight, legend ) {
     getColor: d => hexToRGBA2( d.stroke_colour ),
     onClick: info => layer_click( map_id, "line", info ),
     onHover: updateTooltip,
-    autoHighlight: auto_highlight
+    autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour )
   });
 
   update_layer( map_id, 'line-'+layer_id, lineLayer );

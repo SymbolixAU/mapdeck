@@ -18,7 +18,7 @@ function add_text( map_id, text_data, layer_id ) {
   update_layer( map_id, 'text-'+layer_id, textLayer );
 }
 
-function add_text2( map_id, text_data, layer_id, legend ) {
+function add_text2( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend ) {
   const textLayer = new TextLayer({
     id: 'text-'+layer_id,
     data: text_data,
@@ -30,6 +30,8 @@ function add_text2( map_id, text_data, layer_id, legend ) {
     getAngle: d => d.angle,
     getTextAnchor: d => d.anchor,
     getAlignmentBaseline: d => d.alignment_baseline,
+    autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour ),
     onClick: info => layer_click( map_id, "text", info ),
     onHover: updateTooltip
   });

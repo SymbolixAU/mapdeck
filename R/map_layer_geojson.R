@@ -92,7 +92,8 @@ add_geojson <- function(
 	lineWidth = 1,
 	light_settings = list(),
 	elevation = 0,
-	auto_highlight = FALSE
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF"
 	) {
 
 	data <- normalisesGeojsonData(data)
@@ -103,13 +104,15 @@ add_geojson <- function(
 	checkNumeric(elevation)
 	isHexColour(lineColor)
 	isHexColour(fillColor)
+	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "geojson")
 	## TODO(light_settings - test options are accurate)
 
 	### end parameter checks
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
-	invoke_method(map, "add_geojson", data, layer_id, lineColor, fillColor, radius, lineWidth, elevation, light_settings, auto_highlight)
+	invoke_method(map, "add_geojson", data, layer_id, lineColor, fillColor, radius,
+								lineWidth, elevation, light_settings, auto_highlight, highlight_colour)
 }
 
 

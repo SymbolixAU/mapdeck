@@ -26,12 +26,12 @@ mapdeckHexagonDependency <- function() {
 #' @examples
 #' \dontrun{
 #'
+#' ## You need a valid access token from Mapbox
+#' key <- 'abc'
+#'
 #' df <- read.csv(paste0(
 #' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'
 #' ))
-#'
-#' ## You need a valid access token from Mapbox
-#' key <- 'abc'
 #'
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' add_hexagon(
@@ -54,6 +54,8 @@ add_hexagon <- function(
 	layer_id,
 	radius = 1000,
 	elevation_scale = 1,
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
 	colour_range = colourvalues::colour_values(1:6, palette = "viridis")
 ) {
 
@@ -74,6 +76,7 @@ add_hexagon <- function(
 	}
 
 	checkHex(colour_range)
+	checkHexAlpha(highlight_colour)
 	usePolyline <- isUsingPolyline(polyline)
 
 
@@ -92,7 +95,7 @@ add_hexagon <- function(
 	shape <- rcpp_hexagon( data, l )
 
 	map <- addDependency(map, mapdeckHexagonDependency())
-	invoke_method(map, "add_hexagon", shape[["data"]], layer_id, radius, elevation_scale, colour_range )
+	invoke_method(map, "add_hexagon", shape[["data"]], layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range )
 }
 
 #' @rdname clear

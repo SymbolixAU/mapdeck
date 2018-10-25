@@ -59,8 +59,7 @@ add_screengrid <- function(
 	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
 	opacity = 0.8,
 	cell_size = 50,
-	layer_id = NULL,
-	digits = 6
+	layer_id = NULL
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )
@@ -88,7 +87,6 @@ add_screengrid <- function(
 	usePolyline <- isUsingPolyline(polyline)
 	checkNumeric(opacity)
 	checkNumeric(cell_size)
-	checkNumeric(digits)
 	layer_id <- layerId(layer_id, "screengrid")
 
 	if(length(colour_range) != 6)

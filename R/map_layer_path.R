@@ -55,8 +55,8 @@ add_path <- function(
 	stroke_opacity = NULL,
 	tooltip = NULL,
 	layer_id = NULL,
-	digits = 6,
 	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
@@ -71,7 +71,6 @@ add_path <- function(
 	l[["data"]] <- NULL
 	l[["map"]] <- NULL
 	l[["layer_id"]] <- NULL
-	l[["digits"]] <- NULL
 	l[["auto_highlight"]] <- NULL
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -88,10 +87,11 @@ add_path <- function(
 	}
 
 	layer_id <- layerId(layer_id, "path")
+	checkHexAlpha(highlight_colour)
 	shape <- rcpp_path( data, l );
 
 	map <- addDependency(map, mapdeckPathDependency())
-	invoke_method(map, "add_path2", shape[["data"]], layer_id, auto_highlight, shape[["legend"]] )
+	invoke_method(map, "add_path2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }
 
 #' @inheritParams add_path

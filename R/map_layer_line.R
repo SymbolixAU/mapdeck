@@ -66,6 +66,7 @@ add_line <- function(
 	stroke_opacity = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
 	legend = FALSE,
 	legend_options = NULL
@@ -76,7 +77,6 @@ add_line <- function(
 	l[["data"]] <- NULL
 	l[["map"]] <- NULL
 	l[["layer_id"]] <- NULL
-	l[["digits"]] <- NULL
 	l[["auto_highlight"]] <- NULL
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -118,11 +118,12 @@ add_line <- function(
 	}
 
 	layer_id <- layerId(layer_id, "line")
+	checkHexAlpha(highlight_colour)
 	shape <- rcpp_line( data, l )
 	#print( shape )
 
 	map <- addDependency(map, mapdeckLineDependency())
-	invoke_method(map, "add_line2", shape[["data"]], layer_id, auto_highlight, shape[["legend"]] )
+	invoke_method(map, "add_line2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }
 
 

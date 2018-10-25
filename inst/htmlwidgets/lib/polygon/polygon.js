@@ -29,7 +29,7 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highl
 
 }
 
-function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_highlight, legend ) {
+function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
   const polygonLayer = new PolygonLayer({
     id: 'polygon-'+layer_id,
     data: polygon_data,
@@ -46,6 +46,7 @@ function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_high
     getElevation: d => d.elevation,
     lightSettings: light_settings,
     autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour ),
     onHover: updateTooltip,
     onClick: info => layer_click( map_id, "polygon", info )
   });
