@@ -19,13 +19,16 @@ HTMLWidgets.widget({
 
         var mapDiv = document.getElementById(el.id);
         mapDiv.className = 'mapdeckmap';
-          
+        
+        console.log( el.id );
         var legendContainer = document.createElement('div');
         legendContainer.className = "legendContainer";
+        legendContainer.id = "legendContainer"+el.id;
         mapDiv.appendChild( legendContainer );
 
         var tooltipdiv = document.createElement('div');
-        tooltipdiv.id = 'tooltip';
+        //tooltipdiv.className = "tooltip";
+        tooltipdiv.id = "tooltip";
         mapDiv.appendChild(tooltipdiv);
 
         // INITIAL VIEW
@@ -76,6 +79,8 @@ function change_location( map_id, location, duration, transition, zoom ) {
 // following: https://codepen.io/vis-gl/pen/pLLQpN
 // and: https://beta.observablehq.com/@pessimistress/deck-gl-geojsonlayer-example
 function updateTooltip({x, y, object}) {
+    // object is the data object sent to the layer function
+
   const tooltip = document.getElementById('tooltip');
   if (object) {
   	if(object.tooltip === undefined) {
