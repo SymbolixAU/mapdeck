@@ -336,6 +336,6 @@
 # 				, tooltip = 'info'
 # 				, legend = T
 # 			)
-# 	})
+# })
 # }
 # shinyApp(ui, server)

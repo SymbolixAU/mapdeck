@@ -254,8 +254,6 @@ function placeControl( map_id, object, position ) {
     //var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
     //var mapbox_ctrl = document.getElementsByClassName("legendContainer"+map_id);
     var mapbox_ctrl = document.getElementById( "legendContainer"+map_id);
-    console.log( map_id );
-    console.log( mapbox_ctrl );
 
     //mapbox_ctrl[0].appendChild( object );
     mapbox_ctrl.appendChild( object );

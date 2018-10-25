@@ -1,7 +1,7 @@
-#tooltip:empty {
+.tooltip:empty {
   display: none;
 }
-#tooltip {
+.tooltip {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 11px;
   position: absolute;
