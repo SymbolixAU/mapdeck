@@ -25,6 +25,7 @@ function add_path( map_id, path_data, layer_id, auto_highlight, legend ) {
 function add_path2( map_id, path_data, layer_id, auto_highlight, highlight_colour, legend ) {
 
   const pathLayer = new PathLayer({
+    map_id: map_id,
     id: 'path-'+layer_id,
     data: path_data,
     pickable: true,

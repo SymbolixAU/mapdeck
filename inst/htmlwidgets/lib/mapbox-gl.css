@@ -1,7 +1,7 @@
-.tooltip:empty {
+.mapdecktooltip:empty {
   display: none;
 }
-.tooltip {
+.mapdecktooltip {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 11px;
   position: absolute;

@@ -23,6 +23,7 @@ function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings, auto
 function add_pointcloud2( map_id, pointcloud_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
 
   const pointcloudLayer = new deck.PointCloudLayer({
+    map_id: map_id,
     id: 'pointcloud-'+layer_id,
     data: pointcloud_data,
     radiusPixels: 10,

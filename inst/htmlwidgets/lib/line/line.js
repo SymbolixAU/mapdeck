@@ -25,6 +25,7 @@ function add_line( map_id, line_data, layer_id, auto_highlight, legend ) {
 function add_line2( map_id, line_data, layer_id, auto_highlight, highlight_colour, legend ) {
 
   const lineLayer = new LineLayer({
+    map_id: map_id,
     id: 'line-'+layer_id,
     data: line_data,
     pickable: true,

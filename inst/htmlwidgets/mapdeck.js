@@ -19,22 +19,16 @@ HTMLWidgets.widget({
 
         var mapDiv = document.getElementById(el.id);
         mapDiv.className = 'mapdeckmap';
-        
-        console.log( el.id );
+
         var legendContainer = document.createElement('div');
         legendContainer.className = "legendContainer";
         legendContainer.id = "legendContainer"+el.id;
         mapDiv.appendChild( legendContainer );
 
         var tooltipdiv = document.createElement('div');
-        tooltipdiv.className = "tooltip";
-        console.log( "tooltip el.id ");
-        tooltipdiv.id = "tooltip"+el.id;
-        console.log( tooltipdiv );
+        tooltipdiv.setAttribute("class", "mapdecktooltip");
+        tooltipdiv.setAttribute("id", "mapdecktooltip"+el.id);
         mapDiv.appendChild(tooltipdiv);
-          
-          
-        console.log( tooltipdiv.id );
 
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
@@ -86,11 +80,8 @@ function change_location( map_id, location, duration, transition, zoom ) {
 function updateTooltip({x, y, object, layer, index}) {
     // object is the data object sent to the layer function
 
-  const tooltip = document.getElementById('tooltip'+layer.props.map_id);
-    
-  console.log( tooltip );
-  //console.log( object.tooltip );
-    
+  const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
+
   if (object) {
   	if(object.tooltip === undefined) {
   		return;

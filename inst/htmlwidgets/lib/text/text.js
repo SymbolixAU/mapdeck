@@ -20,6 +20,7 @@ function add_text( map_id, text_data, layer_id ) {
 
 function add_text2( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend ) {
   const textLayer = new TextLayer({
+    map_id: map_id,
     id: 'text-'+layer_id,
     data: text_data,
     pickable: true,
