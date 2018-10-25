@@ -281,7 +281,7 @@
 # library(shiny)
 # library(shinydashboard)
 # library(mapdeck)
-# set_token(read.dcf("~/.googleAPI", fields = "MAPBOX"))
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
 #
 # ui <- dashboardPage(
 # 	dashboardHeader()
@@ -336,6 +336,6 @@
 # 				, tooltip = 'info'
 # 				, legend = T
 # 			)
-# 	})
+#   })
 # }
 # shinyApp(ui, server)

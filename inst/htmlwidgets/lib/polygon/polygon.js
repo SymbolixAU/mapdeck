@@ -32,6 +32,7 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highl
 function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
 
   const polygonLayer = new PolygonLayer({
+    map_id: map_id,
     id: 'polygon-'+layer_id,
     data: polygon_data,
     pickable: true,
