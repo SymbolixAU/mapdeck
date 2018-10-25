@@ -27,7 +27,8 @@ Imports:
     viridisLite,
     Rcpp,
     colourvalues (>= 0.2.0),
-    jsonify (>= 0.1.0001)
+    jsonify (>= 0.1.1),
+    geojsonsf (>= 1.2.1)
 RoxygenNote: 6.1.0
 Suggests: 
     covr,
@@ -42,4 +43,5 @@ LinkingTo:
     colourvalues,
     jsonify,
     rapidjsonr,
+    geojsonsf,
     BH

@@ -37,6 +37,18 @@ rcpp_screengrid <- function(data, params) {
     .Call(`_mapdeck_rcpp_screengrid`, data, params)
 }
 
+rcpp_sfc_to_geojson <- function(sfc) {
+    .Call(`_mapdeck_rcpp_sfc_to_geojson`, sfc)
+}
+
+rcpp_sf_to_geojson_atomise <- function(sf) {
+    .Call(`_mapdeck_rcpp_sf_to_geojson_atomise`, sf)
+}
+
+rcpp_sf_to_geojson <- function(sf) {
+    .Call(`_mapdeck_rcpp_sf_to_geojson`, sf)
+}
+
 rcpp_text <- function(data, params) {
     .Call(`_mapdeck_rcpp_text`, data, params)
 }

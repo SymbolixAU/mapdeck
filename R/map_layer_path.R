@@ -76,15 +76,15 @@ add_path <- function(
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
 
-	data <- normaliseSfData(data, "LINESTRING")
-	polyline <- findEncodedColumn(data, polyline)
-
-	## - if sf object, and geometry column has not been supplied, it needs to be
-	## added to objArgs after the match.call() function
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
+	# data <- normaliseSfData(data, "LINESTRING")
+	# polyline <- findEncodedColumn(data, polyline)
+	#
+	# ## - if sf object, and geometry column has not been supplied, it needs to be
+	# ## added to objArgs after the match.call() function
+	# if( !is.null(polyline) && !polyline %in% names(l) ) {
+	# 	l[['polyline']] <- polyline
+	# 	data <- unlistMultiGeometry( data, polyline )
+	# }
 
 	layer_id <- layerId(layer_id, "path")
 	checkHexAlpha(highlight_colour)

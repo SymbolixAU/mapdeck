@@ -375,3 +375,69 @@
 # # expr       min        lq      mean    median        uq       max neval
 # # old 31.323071 32.116434 35.943007 33.199587 35.084571 47.991374     5
 # # new  1.180305  1.186721  1.311459  1.199241  1.442029  1.549001     5
+#
+# library(sf)
+# library(mapdeck)
+# library(jsonify)
+# library(googlePolylines)
+# library(microbenchmark)
+#
+# sf <- mapdeck::roads
+#
+# microbenchmark(
+# 	google = { googlePolylines::encode( sf ) },
+# 	jsonify = { jsonify::to_json( sf ) },
+# 	geojson = { geojsonsf::sf_geojson( sf ) },
+# 	times = 5
+# )
+#
+# # Unit: milliseconds
+# # expr      min       lq     mean   median       uq      max neval
+# # google 754.0125 782.9268 821.1052 819.7165 854.9187 893.9515     5
+# # jsonify 118.5501 118.8821 125.6056 125.7312 129.9120 134.9523     5
+# # geojson 139.2036 143.3345 145.7768 145.2627 149.1138 151.9693     5
+#
+# google = googlePolylines::encode( sf )
+# jsonify = jsonify::to_json( sf )
+# geojson = geojsonsf::sf_geojson( sf )
+#
+# format( object.size( google ), units = "Mb" )
+# # [1] "11.2 Mb"
+# format( object.size( jsonify ), units = "Mb" )
+# # [1] "6.6 Mb"
+# format( object.size( geojson ), units = "Mb" )
+# # [1] "7.9 Mb"
+#
+# js <- jsonify::to_json( sf )
+#
+# substr(js, 1, 500)
+#
+# nc <- st_read(system.file("shape/nc.shp", package="sf"))
+#
+#
+# microbenchmark(
+# 	google = { googlePolylines::encode( sf ) },
+# 	jsonify = { jsonify::to_json( sf ) },
+# 	geojson = { geojsonsf::sf_geojson( sf ) },
+# 	times = 5
+# )
+#
+# google = googlePolylines::encode( sf )
+# jsonify = jsonify::to_json( sf )
+# geojson = geojsonsf::sf_geojson( sf )
+#
+# format( object.size( google ), units = "Mb" )
+# # [1] "11.2 Mb"
+# format( object.size( jsonify ), units = "Mb" )
+# # [1] "6.6 Mb"
+# format( object.size( geojson ), units = "Mb" )
+# # [1] "7.9 Mb"
+#
+#
+# substr(jsonify, 1, 500)
+# substr(geojson, 1, 500)
+#
+
+
+
+
