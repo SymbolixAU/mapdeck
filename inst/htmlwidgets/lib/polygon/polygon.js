@@ -50,9 +50,7 @@ function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_high
     onClick: info => layer_click( map_id, "polygon", info )
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
-  
-  console.log( legend );
-    
+
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }

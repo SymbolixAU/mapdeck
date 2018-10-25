@@ -13,14 +13,14 @@ function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings, lege
     onHover: updateTooltip
   });
   update_layer( map_id, 'pointcloud-'+layer_id, pointcloudLayer );
-    
+
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
 }
 
 function add_pointcloud2( map_id, pointcloud_data, layer_id, light_settings, legend ) {
-    
+
   const pointcloudLayer = new deck.PointCloudLayer({
     id: 'pointcloud-'+layer_id,
     data: pointcloud_data,
@@ -32,10 +32,8 @@ function add_pointcloud2( map_id, pointcloud_data, layer_id, light_settings, leg
     onClick: info => layer_click( map_id, "pointcloud", info ),
     onHover: updateTooltip
   });
-    
-  console.log( pointcloudLayer) ;
   update_layer( map_id, 'pointcloud-'+layer_id, pointcloudLayer );
-    
+
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }

@@ -9,21 +9,16 @@ function add_legend(map_id, layer_id, legendValues) {
     Object.keys( legendValues ).forEach( function(key) {
 
         this_legend = legendValues[ key ];
-        
-        if ( this_legend.colour !== undefined ) {
-            
-            console.log( this_legend );
 
+        if ( this_legend.colour !== undefined ) {
             if ( this_legend.type[0] === "category" || this_legend.colour.length == 1 ) {
-                console.log(" adding category" );
                 add_legend_category( map_id, layer_id, this_legend );
             } else {
-                console.log( "adding gradient ");
-                add_legend_gradient( map_id, layer_id, this_legend); 
+                add_legend_gradient( map_id, layer_id, this_legend);
             }
         }
     })
-    
+
 }
 
 function add_legend_gradient(map_id, layer_id, legendValues) {
@@ -143,7 +138,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
     // catch undefined OR null
     // https://stackoverflow.com/questions/2647867/how-to-determine-if-variable-is-undefined-or-null
     if (window[map_id + 'legend' + layer_id + legendValues.colourType] == null) {
-        
+
         window[map_id + 'legend' + layer_id + legendValues.colourType] = document.createElement("div");
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('id', map_id + 'legend' + layer_id + legendValues.colourType);
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('class', 'legend');
@@ -261,7 +256,7 @@ function placeControl( map_id, object, position ) {
 
     mapbox_ctrl[0].appendChild( object );
     var ledge = {};
-/*    
+/*
     switch (position) {
     case 'TOP_LEFT':
         window[map_id + 'map'].controls["TOP_LEFT"].push( object );
@@ -291,10 +286,10 @@ function placeControl( map_id, object, position ) {
 
 
 function removeControl( map_id, legend_id, position ) {
-    
+
     var element = document.getElementById(legend_id);
     element.parentNode.removeChild(element);
-    
+
 /*
     switch (position) {
     case 'TOP_LEFT':

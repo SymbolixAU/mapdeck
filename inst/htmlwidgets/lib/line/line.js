@@ -15,7 +15,7 @@ function add_line( map_id, line_data, layer_id, auto_highlight, legend ) {
   });
 
   update_layer( map_id, 'line-'+layer_id, lineLayer );
-    
+
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
@@ -36,11 +36,9 @@ function add_line2( map_id, line_data, layer_id, auto_highlight, legend ) {
     onHover: updateTooltip,
     autoHighlight: auto_highlight
   });
-    
-  console.log(lineLayer);
 
   update_layer( map_id, 'line-'+layer_id, lineLayer );
-    
+
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
