@@ -140,6 +140,7 @@ add_arc <- function(
 	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
 
 	## if origin && destination == one column each, it's an sf_encoded
 	## else, it's two column, which need to be encoded!

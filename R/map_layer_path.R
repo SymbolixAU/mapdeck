@@ -73,9 +73,9 @@ add_path <- function(
 	l[["layer_id"]] <- NULL
 	l[["digits"]] <- NULL
 	l[["auto_highlight"]] <- NULL
-
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
 
 	data <- normaliseSfData(data, "LINESTRING")
 	polyline <- findEncodedColumn(data, polyline)

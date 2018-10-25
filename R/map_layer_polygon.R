@@ -104,6 +104,7 @@ add_polygon <- function(
 	l[["digits"]] <- NULL
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
 
 
 	data <- normaliseSfData(data, "POLYGON", multi = FALSE)
