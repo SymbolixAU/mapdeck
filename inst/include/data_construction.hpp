@@ -29,12 +29,14 @@ namespace construction {
   	int n = params.size();
   	int colIndex = -1;
 
+  	Rcpp::Rcout << "param names: " << param_names << std::endl;
+
   	// iterate each of the parameters
   	for (int i = 0; i < n; i ++ ) {
   		// if the param element is length 1; check if it's a column name
 
   		Rcpp::String this_param = param_names[i];
-  		//Rcpp::Rcout << "this_param: " << this_param.get_cstring() << std::endl;
+  		Rcpp::Rcout << "this_param: " << this_param.get_cstring() << std::endl;
 
   		//int idx = mapdeck::find_character_index_in_vector( required_columns, this_param.get_cstring() );
   		//Rcpp::Rcout << "index of this param: " << idx << std::endl;
@@ -49,9 +51,11 @@ namespace construction {
   				// is it also a column name
 
   				Rcpp::StringVector param_value = params[i];
+  				Rcpp::Rcout << "param value: " << param_value << std::endl;
 
   				// returns -1 if length != 1
   				colIndex = mapdeck::data_column_index( param_value, data_names );
+  				Rcpp::Rcout << "colIndex: " << colIndex << std::endl;
 
   				if ( colIndex >= 0 ) {
   					// The param_value IS a column name
@@ -71,6 +75,7 @@ namespace construction {
   			}
   		} // TODO( is there an 'else' condition? )
 
+  	Rcpp::Rcout << "constructing df: " << std::endl;
   	mapdeck::construct_df( lst_defaults, data_rows );
   	return lst_defaults;
   }

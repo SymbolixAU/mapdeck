@@ -40,7 +40,7 @@ namespace mapdeck {
   	Rcpp::List lst_legend = construct_legend_list( lst_params, params, param_names, legend_types );
 
   	Rcpp::StringVector legend_names = lst_legend.names();
-  	//Rcpp::Rcout << "legend_names: " <<  legend_names << std::endl;
+  	Rcpp::Rcout << "legend_names: " <<  legend_names << std::endl;
 
   	std::map< std::string, std::string>::iterator it;
 
@@ -81,6 +81,8 @@ namespace mapdeck {
 
   	lst_params = mapdeck::construct_params( data, params );
 
+  	Rcpp::Rcout << "constructing data " << std::endl;
+
   	Rcpp::DataFrame df = mapdeck::construction::construct_data(
   		param_names,
   		layer_columns,
@@ -90,6 +92,8 @@ namespace mapdeck {
   		data,
   		data_rows
   	);
+
+  	Rcpp::Rcout << "data has been constructed" << std::endl;
 
   	Rcpp::List result = Rcpp::List::create(
   		Rcpp::_["data"] = df,

@@ -132,33 +132,14 @@ void make_gc_type(Writer& writer, Rcpp::List& sfg,
 	}
 }
 
-
-// [[Rcpp::export]]
-Rcpp::StringVector rcpp_sfc_to_geojson( Rcpp::List& sfc ) {
-	// atomise - each row is a separate GeoJSON string
-
-	size_t n_rows = sfc.size();
-	size_t i;
-
-	Rcpp::StringVector geojson( n_rows );
-
-	for( i = 0; i < n_rows; i++ ) {
-
-		rapidjson::StringBuffer sb;
-		rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
-
-		write_geometry( writer, sfc, i );
-
-		geojson[i] = sb.GetString();
-	}
-	geojson.attr("class") = Rcpp::CharacterVector::create("geojson","json");
-	return geojson;
-}
-
-// [[Rcpp::export]]
+/*
+ * a variation on the atomise function to return an array of atomised features
+ */
 Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 
+	//Rcpp::Rcout << "atomising" << std::endl;
 	std::string geom_column = sf.attr("sf_column");
+	Rcpp::Rcout << "got the geom column " << std::endl;
 
 	size_t n_cols = sf.ncol();
 	size_t n_properties = n_cols - 1;
@@ -167,7 +148,7 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 	Rcpp::StringVector column_names = sf.names();
 	Rcpp::StringVector property_names(sf.size() - 1);
 
-	Rcpp::StringVector geojson( n_rows );
+	//Rcpp::StringVector geojson( n_rows );
 
 	int property_counter = 0;
 	for (int i = 0; i < sf.length(); i++) {
@@ -177,11 +158,11 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 		}
 	}
 
+	rapidjson::StringBuffer sb;
+	rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
+  writer.StartArray();
 
 	for( i = 0; i < n_rows; i++ ) {
-
-		rapidjson::StringBuffer sb;
-		rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
 
 		if ( n_properties > 0 ) {
 			writer.StartObject();
@@ -215,14 +196,15 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 			writer.EndObject();
 		}
 
-		geojson[i] = sb.GetString();
+		//geojson[i] = sb.GetString();
 	}
+	writer.EndArray();
 
+	Rcpp::StringVector geojson = sb.GetString();
 	geojson.attr("class") = Rcpp::CharacterVector::create("geojson","json");
 	return geojson;
 }
 
-// [[Rcpp::export]]
 Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf ) {
 	rapidjson::StringBuffer sb;
 	rapidjson::Writer < rapidjson::StringBuffer > writer( sb );

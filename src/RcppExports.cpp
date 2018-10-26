@@ -65,6 +65,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_path_geo
+Rcpp::List rcpp_path_geo(Rcpp::DataFrame data, Rcpp::List params);
+RcppExport SEXP _mapdeck_rcpp_path_geo(SEXP dataSEXP, SEXP paramsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_path_geo(data, params));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_pointcloud
 Rcpp::List rcpp_pointcloud(Rcpp::DataFrame data, Rcpp::List params);
 RcppExport SEXP _mapdeck_rcpp_pointcloud(SEXP dataSEXP, SEXP paramsSEXP) {
@@ -113,39 +125,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_sfc_to_geojson
-Rcpp::StringVector rcpp_sfc_to_geojson(Rcpp::List& sfc);
-RcppExport SEXP _mapdeck_rcpp_sfc_to_geojson(SEXP sfcSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List& >::type sfc(sfcSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_to_geojson(sfc));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_sf_to_geojson_atomise
-Rcpp::StringVector rcpp_sf_to_geojson_atomise(Rcpp::DataFrame& sf);
-RcppExport SEXP _mapdeck_rcpp_sf_to_geojson_atomise(SEXP sfSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame& >::type sf(sfSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_to_geojson_atomise(sf));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_sf_to_geojson
-Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::DataFrame& sf);
-RcppExport SEXP _mapdeck_rcpp_sf_to_geojson(SEXP sfSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame& >::type sf(sfSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_to_geojson(sf));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_text
 Rcpp::List rcpp_text(Rcpp::DataFrame data, Rcpp::List params);
 RcppExport SEXP _mapdeck_rcpp_text(SEXP dataSEXP, SEXP paramsSEXP) {
@@ -165,13 +144,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_hexagon", (DL_FUNC) &_mapdeck_rcpp_hexagon, 2},
     {"_mapdeck_rcpp_line", (DL_FUNC) &_mapdeck_rcpp_line, 2},
     {"_mapdeck_rcpp_path", (DL_FUNC) &_mapdeck_rcpp_path, 2},
+    {"_mapdeck_rcpp_path_geo", (DL_FUNC) &_mapdeck_rcpp_path_geo, 2},
     {"_mapdeck_rcpp_pointcloud", (DL_FUNC) &_mapdeck_rcpp_pointcloud, 2},
     {"_mapdeck_rcpp_polygon", (DL_FUNC) &_mapdeck_rcpp_polygon, 2},
     {"_mapdeck_rcpp_scatterplot", (DL_FUNC) &_mapdeck_rcpp_scatterplot, 2},
     {"_mapdeck_rcpp_screengrid", (DL_FUNC) &_mapdeck_rcpp_screengrid, 2},
-    {"_mapdeck_rcpp_sfc_to_geojson", (DL_FUNC) &_mapdeck_rcpp_sfc_to_geojson, 1},
-    {"_mapdeck_rcpp_sf_to_geojson_atomise", (DL_FUNC) &_mapdeck_rcpp_sf_to_geojson_atomise, 1},
-    {"_mapdeck_rcpp_sf_to_geojson", (DL_FUNC) &_mapdeck_rcpp_sf_to_geojson, 1},
     {"_mapdeck_rcpp_text", (DL_FUNC) &_mapdeck_rcpp_text, 2},
     {NULL, NULL, 0}
 };

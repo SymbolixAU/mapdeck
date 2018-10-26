@@ -21,6 +21,10 @@ rcpp_path <- function(data, params) {
     .Call(`_mapdeck_rcpp_path`, data, params)
 }
 
+rcpp_path_geo <- function(data, params) {
+    .Call(`_mapdeck_rcpp_path_geo`, data, params)
+}
+
 rcpp_pointcloud <- function(data, params) {
     .Call(`_mapdeck_rcpp_pointcloud`, data, params)
 }
@@ -35,18 +39,6 @@ rcpp_scatterplot <- function(data, params) {
 
 rcpp_screengrid <- function(data, params) {
     .Call(`_mapdeck_rcpp_screengrid`, data, params)
-}
-
-rcpp_sfc_to_geojson <- function(sfc) {
-    .Call(`_mapdeck_rcpp_sfc_to_geojson`, sfc)
-}
-
-rcpp_sf_to_geojson_atomise <- function(sf) {
-    .Call(`_mapdeck_rcpp_sf_to_geojson_atomise`, sf)
-}
-
-rcpp_sf_to_geojson <- function(sf) {
-    .Call(`_mapdeck_rcpp_sf_to_geojson`, sf)
 }
 
 rcpp_text <- function(data, params) {
