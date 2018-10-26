@@ -5,10 +5,11 @@
 \title{Add Path}
 \usage{
 add_path(map, data = get_map_data(map), polyline = NULL,
-  stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
-  tooltip = NULL, layer_id = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL)
+  geometry = NULL, stroke_colour = NULL, stroke_width = NULL,
+  stroke_opacity = NULL, tooltip = NULL, layer_id = NULL,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
+  legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}

@@ -53,18 +53,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_path
-Rcpp::List rcpp_path(Rcpp::DataFrame data, Rcpp::List params);
-RcppExport SEXP _mapdeck_rcpp_path(SEXP dataSEXP, SEXP paramsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_path(data, params));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_path_geo
 Rcpp::List rcpp_path_geo(Rcpp::DataFrame data, Rcpp::List params);
 RcppExport SEXP _mapdeck_rcpp_path_geo(SEXP dataSEXP, SEXP paramsSEXP) {
@@ -143,7 +131,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_grid", (DL_FUNC) &_mapdeck_rcpp_grid, 2},
     {"_mapdeck_rcpp_hexagon", (DL_FUNC) &_mapdeck_rcpp_hexagon, 2},
     {"_mapdeck_rcpp_line", (DL_FUNC) &_mapdeck_rcpp_line, 2},
-    {"_mapdeck_rcpp_path", (DL_FUNC) &_mapdeck_rcpp_path, 2},
     {"_mapdeck_rcpp_path_geo", (DL_FUNC) &_mapdeck_rcpp_path_geo, 2},
     {"_mapdeck_rcpp_pointcloud", (DL_FUNC) &_mapdeck_rcpp_pointcloud, 2},
     {"_mapdeck_rcpp_polygon", (DL_FUNC) &_mapdeck_rcpp_polygon, 2},

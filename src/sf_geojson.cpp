@@ -139,7 +139,7 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 
 	//Rcpp::Rcout << "atomising" << std::endl;
 	std::string geom_column = sf.attr("sf_column");
-	Rcpp::Rcout << "got the geom column " << std::endl;
+	// Rcpp::Rcout << "got the geom column " << std::endl;
 
 	size_t n_cols = sf.ncol();
 	size_t n_properties = n_cols - 1;

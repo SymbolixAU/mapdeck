@@ -1,6 +1,8 @@
 
 function add_path( map_id, path_data, layer_id, auto_highlight, legend ) {
 
+  console.log( path_data );
+    
   const pathLayer = new PathLayer({
     id: 'path-'+layer_id,
     data: path_data,
@@ -23,6 +25,8 @@ function add_path( map_id, path_data, layer_id, auto_highlight, legend ) {
 }
 
 function add_path2( map_id, path_data, layer_id, auto_highlight, highlight_colour, legend ) {
+    
+  console.log( path_data );
 
   const pathLayer = new PathLayer({
     map_id: map_id,
@@ -57,7 +61,6 @@ function add_path_geo( map_id, path_data, layer_id, auto_highlight, highlight_co
     widthScale: 20,
     widthMinPixels: 1,
     rounded: true,
-    //getPath: d => decode_polyline( d.polyline ),  // needs to be one row per polyline
     getPath: d => d.geometry.coordinates,
     getColor: d => hexToRGBA2( d.properties.stroke_colour ),
     getWidth: d => d.properties.stroke_width,

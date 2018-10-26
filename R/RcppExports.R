@@ -17,10 +17,6 @@ rcpp_line <- function(data, params) {
     .Call(`_mapdeck_rcpp_line`, data, params)
 }
 
-rcpp_path <- function(data, params) {
-    .Call(`_mapdeck_rcpp_path`, data, params)
-}
-
 rcpp_path_geo <- function(data, params) {
     .Call(`_mapdeck_rcpp_path_geo`, data, params)
 }

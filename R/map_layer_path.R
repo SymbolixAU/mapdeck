@@ -49,6 +49,7 @@ add_path <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,
+	geometry = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	stroke_opacity = NULL,
@@ -123,7 +124,9 @@ add_path_geo <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_data( data, l )
 
+	if(!is.null(l[["data"]])) data <- l[["data"]]
 	# data <- normaliseSfData(data, "LINESTRING")
 	# polyline <- findEncodedColumn(data, polyline)
 	#
@@ -137,17 +140,62 @@ add_path_geo <- function(
 	## TODO
 	## - sf_column attribute
 	## - make the 'polyline' column the sf_column so it goes into the rcpp_path function correctly
-	sf_column <- attr(data, "sf_column");
-	data$polyline <- data[[sf_column]]
-	attr(data, "sf_column") <- "polyline"
+	# sf_column <- attr(data, "sf_column");
+	# data$polyline <- data[[sf_column]]
+	# attr(data, "sf_column") <- "polyline"
 
 	layer_id <- layerId(layer_id, "path")
 	checkHexAlpha(highlight_colour)
-	shape <- rcpp_path_geo( data, l );
 
 	map <- addDependency(map, mapdeckPathDependency())
-	invoke_method(map, "add_path_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+
+	# if ( l[["jsfunction"]] == "geojson" ) {
+	  shape <- rcpp_path_geo( data, l );
+	  print(" invoking geo " )
+	  invoke_method(map, "add_path_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	# } else if ( l[["jsfunction"]] == "decode") {
+	# 	print(" invoking path2 ")
+	# 	shape <- rcpp_path( data, l);
+	# 	invoke_method(map, "add_path_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	# }
 }
+
+## data using a single geometry ()
+resolve_data <- function( data, l ) UseMethod( "resolve_data" )
+
+## use the specificed st_geometry column
+#' @export
+resolve_data.sf <- function( data, l ) {
+	l[["polyline"]] <- attr(data, "sf_column")
+	l[["jsfunction"]] <- "geojson"
+	print(l)
+	return(l)
+}
+
+## TODO( needs to call the JS function which decodes the polyline )
+#' @export
+resolve_data.sfencoded <- function( data, l ) {
+	data <- normaliseSfData(data, "LINESTRING")
+	polyline <- findEncodedColumn(data, l[["polyline"]])
+
+	## - if sf object, and geometry column has not been supplied, it needs to be
+	## added to objArgs after the match.call() function
+	if( !is.null(polyline) && !polyline %in% names(l) ) {
+		l[['polyline']] <- polyline
+		data <- unlistMultiGeometry( data, polyline )
+	}
+
+	l[["data"]] <- data ## attach the data becaue it gets modified and it needs to be returend
+	l[["jsfunction"]] <- "decode"
+
+	return( l )
+}
+
+resolve_data.data.frame <- function( data, l ) {
+ stop("not done yet")
+}
+
+resolve_data.default <- function( data ) stop("This type of data is not supported")
 
 
 #' @inheritParams add_path

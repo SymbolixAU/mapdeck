@@ -40,7 +40,7 @@ namespace mapdeck {
   	Rcpp::List lst_legend = construct_legend_list( lst_params, params, param_names, legend_types );
 
   	Rcpp::StringVector legend_names = lst_legend.names();
-  	Rcpp::Rcout << "legend_names: " <<  legend_names << std::endl;
+  	// Rcpp::Rcout << "legend_names: " <<  legend_names << std::endl;
 
   	std::map< std::string, std::string>::iterator it;
 
@@ -74,7 +74,7 @@ namespace mapdeck {
   	//)
 
   	// need to remove any paramters which won't be used in the data being plotted
-  	Rcpp::StringVector legend_params = Rcpp::StringVector::create("legend","legend_options");
+  	Rcpp::StringVector legend_params = Rcpp::StringVector::create("legend","legend_options","jsfunction");
   	mapdeck::remove_parameters( params, param_names, legend_params );
   	Rcpp::StringVector colours_remove = Rcpp::StringVector::create("stroke_from","stroke_to","stroke_colour","fill_colour","stroke_from_opacity","stroke_to_opacity","stroke_opacity","fill_opacity","palette");
   	mapdeck::remove_parameters( params, param_names, colours_remove ); // TODO

@@ -440,4 +440,47 @@
 
 
 
+# library(microbenchmark)
+#
+# microbenchmark(
+#
+# 	polyline = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path(
+# 				data = roads
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 			)
+# 	},
+#
+# 	geojson = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path_geo(
+# 				data = roads
+# 				, polyline = "polyline"
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 				)
+# 	},
+# 	times = 5
+# )
+# nrow(roads)
+# # [1] 18286
+#
+# # expr       min        lq      mean    median        uq      max neval
+# # polyline 857.15165 857.70272 884.07185 858.52182 902.52413 944.4589     5
+# # geojson  55.79172  57.61001  61.17769  61.47958  65.02255  65.9846     5
+
 
