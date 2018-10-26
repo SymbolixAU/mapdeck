@@ -24,14 +24,14 @@ Version v0.1.002+ sees quite a lot of changes, so I need users to test their fun
 If you install the latest dev version and your plots aren't working, you can still use the old function, just add `_old` to the function call. 
 
 
-The fisrt change is `add_scatterplot()`
+The first change is `add_scatterplot()`
 
 
 ```r
 ## Until googlePolylines 0.7.2+ is on CRAN you'll need 
 devtools::install_github("SymbolixAU/googlePolylines")
 
-## and colourvalues requries v0.2.0
+## and colourvalues requires v0.2.0
 devtools::install_github("SymbolixAU/colourvalues")
 
 ## then mapdeck
