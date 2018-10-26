@@ -126,14 +126,6 @@ namespace mapdeck {
 	inline Rcpp::List construct_params(
 			Rcpp::DataFrame& data,
 			Rcpp::List& params
-			// int& fill_colour_location,
-			// int& fill_opacity_location,
-			// int& stroke_colour_location,
-			// int& stroke_opacity_location,
-			// int& stroke_from_location,
-			// int& stroke_to_location,
-			// int& stroke_from_opacity_location,
-			// int& stroke_to_opacity_location
 	) {
 
 		int n_params = params.size();
@@ -153,28 +145,6 @@ namespace mapdeck {
 
 				Rcpp::StringVector param_value = params[i];
 				data_column_index[i] = mapdeck::data_column_index( param_value, data_names );
-
-				// these colour values are stored for convenience
-				// do I also need 'stroke_colour' as well?
-				// OR, should I just have a function to find a variable in the 'paramter_names' vector
-				// // - there shouldn't be much overhead doing that each time for each var?
-				// if ( param_names[i] == "fill_colour" ) {
-				// 	fill_colour_location = i;
-				// } else if ( param_names[i] == "fill_opacity" ) {
-				// 	fill_opacity_location = i;
-				// } else if ( param_names[i] == "stroke_colour" ) {
-				// 	stroke_colour_location = i;
-				// } else if ( param_names[i] == "stroke_opacity" ) {
-				// 	stroke_opacity_location = i;
-				// } else if ( param_names[i] == "stroke_from" ) {
-				// 	stroke_from_location = i;
-				// } else if ( param_names[i] == "stroke_to" ) {
-				// 	stroke_to_location = i;
-				// } else if ( param_names[i] == "stroke_from_opacity" ) {
-				// 	stroke_from_opacity_location = i;
-				// } else if ( param_names[i] == "stroke_to_opacity" ) {
-				// 	stroke_to_opacity_location = i;
-				// }
 			}
 		}
 		return Rcpp::List::create(
@@ -185,6 +155,15 @@ namespace mapdeck {
 	}
 
 } // namespace mapdeck
+
+Rcpp::List create_data(
+		Rcpp::DataFrame& data,
+		Rcpp::List& params, Rcpp::List& lst_defaults,
+		Rcpp::StringVector& layer_columns,
+		std::map< std::string, std::string >& layer_colours,
+		Rcpp::StringVector& layer_legend,
+		int& data_rows);
+
 
 
 #endif

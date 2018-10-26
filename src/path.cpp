@@ -24,38 +24,9 @@ Rcpp::List rcpp_path_geo( Rcpp::DataFrame data, Rcpp::List params ) {
 	std::map< std::string, std::string > path_colours = mapdeck::path::path_colours;
 	Rcpp::StringVector path_legend = mapdeck::path::path_legend;
 
-	std::string jsfunction = params["jsfunction"];
-	Rcpp::Rcout << "cppjsfunction - " << jsfunction << std::endl;
-
-	Rcpp::List lst = mapdeck::parameters_to_data(
-		data, params, lst_defaults, path_columns, path_colours, path_legend, data_rows
-	);
-
-	Rcpp::Rcout << "now making data frame" << std::endl;
-
-	Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( lst["data"] );
-	SEXP legend = lst[ "legend" ];
-  Rcpp::StringVector js_legend = jsonify::vectors::to_json( legend );
-
-  if ( jsfunction == "geojson" ) {
-	  df.attr("sf_column") = "polyline";
-	  Rcpp::StringVector js_data = rcpp_sf_to_geojson_atomise( df );
-
-	  return Rcpp::List::create(
-	  	Rcpp::_["data"] = js_data,
-	  	Rcpp::_["legend"] = js_legend
-	  );
-
-  } else {
-  	Rcpp::StringVector js_data = jsonify::dataframe::to_json( df );
-
-  	return Rcpp::List::create(
-  		Rcpp::_["data"] = js_data,
-  		Rcpp::_["legend"] = js_legend
-  	);
-
-  }
-
-	Rcpp::List resultlist;
-  return resultlist; // never reached
-}
+	return create_data(
+		data, params, lst_defaults,
+    path_columns, path_colours, path_legend,
+		 data_rows
+		);
+ }

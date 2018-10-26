@@ -81,7 +81,7 @@ namespace mapdeck {
 
   	lst_params = mapdeck::construct_params( data, params );
 
-  	Rcpp::Rcout << "constructing data " << std::endl;
+  	// Rcpp::Rcout << "constructing data " << std::endl;
 
   	Rcpp::DataFrame df = mapdeck::construction::construct_data(
   		param_names,
@@ -93,7 +93,7 @@ namespace mapdeck {
   		data_rows
   	);
 
-  	Rcpp::Rcout << "data has been constructed" << std::endl;
+  	// Rcpp::Rcout << "data has been constructed" << std::endl;
 
   	Rcpp::List result = Rcpp::List::create(
   		Rcpp::_["data"] = df,

@@ -483,4 +483,97 @@
 # # polyline 857.15165 857.70272 884.07185 858.52182 902.52413 944.4589     5
 # # geojson  55.79172  57.61001  61.17769  61.47958  65.02255  65.9846     5
 
+# library(microbenchmark)
+#
+# enc <- googlePolylines::encode( roads )
+# enclite <- googlePolylines::encode( roads, strip = T)
+#
+# microbenchmark(
+#
+# 	sf = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path_geo(
+# 				data = roads
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 			)
+# 	},
+#
+# 	sfforce = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path_geo(
+# 				data = roads
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 				, force = T
+# 			)
+# 	},
+#
+# 	encoded = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path_geo(
+# 				data = enc
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 				)
+# 	},
+#
+# 	encodedforce = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path_geo(
+# 				data = enc
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 				, force = T
+# 			)
+# 	},
+#
+# 	encodedLite = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path_geo(
+# 				data = enclite
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, polyline = "geometry"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 			)
+# 	},
+# 	times = 5
+# )
+# # Unit: milliseconds
+# #         expr      min       lq     mean   median       uq      max neval
+# #           sf 876.5825 901.8953 905.6867 909.8664 910.8772 929.2119     5
+# #      sfforce 136.1841 152.3212 183.0024 167.6558 168.4932 290.3578     5
+# #      encoded 176.2694 206.0231 240.8336 222.8789 234.8613 364.1355     5
+# # encodedforce 149.4357 150.0709 208.2837 153.7314 272.7069 315.4735     5
+# #  encodedLite 129.8332 136.0603 139.3556 141.9229 144.0768 144.8848     5
 

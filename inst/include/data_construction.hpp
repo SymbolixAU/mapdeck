@@ -36,7 +36,7 @@ namespace construction {
   		// if the param element is length 1; check if it's a column name
 
   		Rcpp::String this_param = param_names[i];
-  		// Rcpp::Rcout << "this_param: " << this_param.get_cstring() << std::endl;
+  		//Rcpp::Rcout << "this_param: " << this_param.get_cstring() << std::endl;
 
   		//int idx = mapdeck::find_character_index_in_vector( required_columns, this_param.get_cstring() );
   		//Rcpp::Rcout << "index of this param: " << idx << std::endl;
