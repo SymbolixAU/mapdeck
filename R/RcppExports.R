@@ -5,6 +5,10 @@ rcpp_arc <- function(data, params) {
     .Call(`_mapdeck_rcpp_arc`, data, params)
 }
 
+rcpp_df_to_geojson_atomise <- function(df, lon, lat) {
+    .Call(`_mapdeck_rcpp_df_to_geojson_atomise`, df, lon, lat)
+}
+
 rcpp_grid <- function(data, params) {
     .Call(`_mapdeck_rcpp_grid`, data, params)
 }
@@ -29,8 +33,8 @@ rcpp_polygon <- function(data, params) {
     .Call(`_mapdeck_rcpp_polygon`, data, params)
 }
 
-rcpp_scatterplot <- function(data, params) {
-    .Call(`_mapdeck_rcpp_scatterplot`, data, params)
+rcpp_scatterplot_geo <- function(data, params) {
+    .Call(`_mapdeck_rcpp_scatterplot_geo`, data, params)
 }
 
 rcpp_screengrid <- function(data, params) {

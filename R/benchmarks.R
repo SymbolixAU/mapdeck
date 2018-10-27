@@ -577,3 +577,17 @@
 # # encodedforce 149.4357 150.0709 208.2837 153.7314 272.7069 315.4735     5
 # #  encodedLite 129.8332 136.0603 139.3556 141.9229 144.0768 144.8848     5
 
+
+# key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+#
+# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+# add_scatterplot_geo(
+#   data = capitals
+#   , lat = "lat"
+#   , lon = "lon"
+#   , radius = 100000
+#   , fill_colour = "country"
+#   , layer_id = "scatter_layer"
+#   , tooltip = "capital"
+# )
+

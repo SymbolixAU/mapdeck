@@ -10,33 +10,36 @@ sfrow <- function( sf , sfc_type ) {
 
 
 ## data using a single geometry ()
-resolve_data <- function( data, l, force ) UseMethod( "resolve_data" )
+resolve_data <- function( data, l, force, sf_geom ) UseMethod( "resolve_data" )
 
 ## use the specificed st_geometry column
 #' @export
-resolve_data.sf <- function( data, l, force ) {
+resolve_data.sf <- function( data, l, force, sf_geom ) {
 	## TODO( if there are rows other than LINESTRING, need to filter)
+	## TODO( if attr(roads$geometry, "class") == sf_geom we can set force = TRUE, becaues the whole geometry is one type )
 	sfc_col <- attr(data, "sf_column")
 	if ( !force ) {
-		data[ sfrow(data, "LINESTRING") , ]
+		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
 	}
 	l[["polyline"]] <- sfc_col
 	l[["jsfunction"]] <- "geojson"
+	l[["geoconversion"]] <- "sf"
 	return(l)
 }
 
 ## TODO( needs to call the JS function which decodes the polyline )
 #' @export
-resolve_data.sfencoded <- function( data, l, force ) {
+resolve_data.sfencoded <- function( data, l, force, sf_geom ) {
 	if( !force ) {
-		data <- data[ googlePolylines::geometryRow(data, geometry = "LINESTRING", multi = TRUE), ]
+		data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom, multi = TRUE), ]
 	}
+	l[["geoconversion"]] <- "sfencoded"
 	l <- resolve_data.sfencodedLite( data, l )
 	return( l )
 }
 
 #' @export
-resolve_data.sfencodedLite <- function( data, l, force ) {
+resolve_data.sfencodedLite <- function( data, l, force, sf_geom ) {
 	## TODO( requries polyline parameter )
 	polyline <- findEncodedColumn(data, l[["polyline"]])
 
@@ -49,12 +52,27 @@ resolve_data.sfencodedLite <- function( data, l, force ) {
 
 	l[["data"]] <- data ## attach the data becaue it gets modified and it needs to be returend
 	l[["jsfunction"]] <- "decode"
+	l[["geoconversion"]] <- "sfencodedLite"
 
 	return( l )
 }
 
-resolve_data.data.frame <- function( data, l ) {
-	stop("not done yet")
+resolve_data.data.frame <- function( data, l, force, sf_geom ) {
+
+	## data.frame will only really work for points, with a lon & lat column
+	## for speed, need to turn to GeoJSON?
+	if ( sf_geom != "POINT" )
+		stop("only POINTS are supported for data.frames")
+	## TODO( lon & lat are required )
+	# lon <- l[["lon"]]
+	# lat <- l[["lat"]]
+
+	l[["data"]] <- data
+	l[["geoconversion"]] <- "dataframe"
+	l[["jsfunction"]] <- "geojson"
+
+	return( l )
+	#stop("not done yet")
 }
 
 resolve_data.default <- function( data ) stop("This type of data is not supported")

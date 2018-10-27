@@ -14,7 +14,7 @@ Rcpp::List scatterplot_defaults(int n) {
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
+Rcpp::List rcpp_scatterplot_geo( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	int data_rows = data.nrows();
 
@@ -23,19 +23,10 @@ Rcpp::List rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
 	std::map< std::string, std::string > scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
 	Rcpp::StringVector scatterplot_legend = mapdeck::scatterplot::scatterplot_legend;
 
-	Rcpp::List lst = mapdeck::parameters_to_data(
-		data, params, lst_defaults, scatterplot_columns, scatterplot_colours, scatterplot_legend, data_rows
-	);
-
-	Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( lst["data"] );
-	Rcpp::StringVector js_data = jsonify::dataframe::to_json( df );
-
-	SEXP legend = lst[ "legend" ];
-	Rcpp::StringVector js_legend = jsonify::vectors::to_json( legend );
-
-	return Rcpp::List::create(
-		Rcpp::_["data"] = js_data,
-		Rcpp::_["legend"] = js_legend
+	return create_data(
+		data, params, lst_defaults,
+		scatterplot_columns, scatterplot_colours, scatterplot_legend,
+		data_rows
 	);
 }
 

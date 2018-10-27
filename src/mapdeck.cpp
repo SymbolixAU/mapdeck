@@ -13,6 +13,7 @@ Rcpp::List create_data(
 		int& data_rows) {
 
 	std::string jsfunction = params["jsfunction"];
+	std::string geoconversion = params["geoconversion"];
 
 	Rcpp::List lst = mapdeck::parameters_to_data(
 		data, params, lst_defaults, layer_columns, layer_colours, layer_legend, data_rows
@@ -24,21 +25,37 @@ Rcpp::List create_data(
 
 	if ( jsfunction == "geojson" ) {
 
-		df.attr("sf_column") = "polyline";
-		Rcpp::StringVector js_data = rcpp_sf_to_geojson_atomise( df );
+		// TODO( if POINT data.frame, use rcpp_df_to_geojson_atomise )
 
-		return Rcpp::List::create(
-			Rcpp::_["data"] = js_data,
-			Rcpp::_["legend"] = js_legend
-		);
+		if ( geoconversion == "sf" ) {
+			df.attr("sf_column") = "polyline";
+			Rcpp::StringVector js_data = rcpp_sf_to_geojson_atomise( df );
 
-	} else {
+			return Rcpp::List::create(
+				Rcpp::_["data"] = js_data,
+				Rcpp::_["legend"] = js_legend
+			);
+		} else if ( geoconversion == "dataframe" ) {
+
+			const char* lon = params["lon"];
+			const char* lat = params["lat"];
+			Rcpp::StringVector js_data = rcpp_df_to_geojson_atomise( df, lon, lat );
+
+			return Rcpp::List::create(
+				Rcpp::_["data"] = js_data,
+				Rcpp::_["legend"] = js_legend
+			);
+		}
+
+	} else if ( jsfunction == "decode" ) {
 		Rcpp::StringVector js_data = jsonify::dataframe::to_json( df );
 
 		return Rcpp::List::create(
 			Rcpp::_["data"] = js_data,
 			Rcpp::_["legend"] = js_legend
 		);
+	} else {
+		Rcpp::stop("not yet supported");
 	}
 
 	Rcpp::List resultlist;

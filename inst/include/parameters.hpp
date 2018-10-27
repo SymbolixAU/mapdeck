@@ -74,7 +74,7 @@ namespace mapdeck {
   	//)
 
   	// need to remove any paramters which won't be used in the data being plotted
-  	Rcpp::StringVector legend_params = Rcpp::StringVector::create("legend","legend_options","jsfunction");
+  	Rcpp::StringVector legend_params = Rcpp::StringVector::create("legend","legend_options","jsfunction","geoconversion");
   	mapdeck::remove_parameters( params, param_names, legend_params );
   	Rcpp::StringVector colours_remove = Rcpp::StringVector::create("stroke_from","stroke_to","stroke_colour","fill_colour","stroke_from_opacity","stroke_to_opacity","stroke_opacity","fill_opacity","palette");
   	mapdeck::remove_parameters( params, param_names, colours_remove ); // TODO

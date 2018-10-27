@@ -17,6 +17,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_df_to_geojson_atomise
+Rcpp::StringVector rcpp_df_to_geojson_atomise(Rcpp::DataFrame& df, const char* lon, const char* lat);
+RcppExport SEXP _mapdeck_rcpp_df_to_geojson_atomise(SEXP dfSEXP, SEXP lonSEXP, SEXP latSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame& >::type df(dfSEXP);
+    Rcpp::traits::input_parameter< const char* >::type lon(lonSEXP);
+    Rcpp::traits::input_parameter< const char* >::type lat(latSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_df_to_geojson_atomise(df, lon, lat));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_grid
 Rcpp::List rcpp_grid(Rcpp::DataFrame data, Rcpp::List params);
 RcppExport SEXP _mapdeck_rcpp_grid(SEXP dataSEXP, SEXP paramsSEXP) {
@@ -89,15 +102,15 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_scatterplot
-Rcpp::List rcpp_scatterplot(Rcpp::DataFrame data, Rcpp::List params);
-RcppExport SEXP _mapdeck_rcpp_scatterplot(SEXP dataSEXP, SEXP paramsSEXP) {
+// rcpp_scatterplot_geo
+Rcpp::List rcpp_scatterplot_geo(Rcpp::DataFrame data, Rcpp::List params);
+RcppExport SEXP _mapdeck_rcpp_scatterplot_geo(SEXP dataSEXP, SEXP paramsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_scatterplot(data, params));
+    rcpp_result_gen = Rcpp::wrap(rcpp_scatterplot_geo(data, params));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -128,13 +141,14 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_arc", (DL_FUNC) &_mapdeck_rcpp_arc, 2},
+    {"_mapdeck_rcpp_df_to_geojson_atomise", (DL_FUNC) &_mapdeck_rcpp_df_to_geojson_atomise, 3},
     {"_mapdeck_rcpp_grid", (DL_FUNC) &_mapdeck_rcpp_grid, 2},
     {"_mapdeck_rcpp_hexagon", (DL_FUNC) &_mapdeck_rcpp_hexagon, 2},
     {"_mapdeck_rcpp_line", (DL_FUNC) &_mapdeck_rcpp_line, 2},
     {"_mapdeck_rcpp_path_geo", (DL_FUNC) &_mapdeck_rcpp_path_geo, 2},
     {"_mapdeck_rcpp_pointcloud", (DL_FUNC) &_mapdeck_rcpp_pointcloud, 2},
     {"_mapdeck_rcpp_polygon", (DL_FUNC) &_mapdeck_rcpp_polygon, 2},
-    {"_mapdeck_rcpp_scatterplot", (DL_FUNC) &_mapdeck_rcpp_scatterplot, 2},
+    {"_mapdeck_rcpp_scatterplot_geo", (DL_FUNC) &_mapdeck_rcpp_scatterplot_geo, 2},
     {"_mapdeck_rcpp_screengrid", (DL_FUNC) &_mapdeck_rcpp_screengrid, 2},
     {"_mapdeck_rcpp_text", (DL_FUNC) &_mapdeck_rcpp_text, 2},
     {NULL, NULL, 0}

@@ -117,6 +117,77 @@ add_scatterplot <- function(
 	invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
 }
 
+
+#' @export
+add_scatterplot_geo <- function(
+	map,
+	data = get_map_data(map),
+	lon = NULL,
+	lat = NULL,
+	polyline = NULL,
+	radius = NULL,
+	fill_colour = NULL,
+	fill_opacity = NULL,
+	tooltip = NULL,
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
+	layer_id = NULL,
+	palette = "viridis",
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL,
+	force = FALSE
+) {
+
+	message("Using development version. Please check plots carefully")
+
+	l <- as.list( match.call() )
+	l[[1]] <- NULL    ## function call
+	l[["map"]] <- NULL
+	l[["data"]] <- NULL
+	l[["auto_highlight"]] <- NULL
+	l[["layer_id"]] <- NULL
+	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_data( data, l, force, "POINT" )
+
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
+	}
+
+	# usePolyline <- isUsingPolyline(polyline)
+	# if ( !usePolyline ) {
+	# 	## TODO(check only a data.frame)
+	# 	data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
+	# 	polyline <- 'polyline'
+	# 	## TODO(check lon & lat exist / passed in as arguments )
+	# 	l[['lon']] <- NULL
+	# 	l[['lat']] <- NULL
+	# 	l[['polyline']] <- polyline
+	# }
+
+	layer_id <- layerId(layer_id, "scatterplot")
+	checkHexAlpha(highlight_colour)
+
+	shape <- rcpp_scatterplot_geo( data, l )
+	#print(shape)
+
+	map <- addDependency(map, mapdeckScatterplotDependency())
+
+	if ( l[["jsfunction"]] == "geojson" ) {
+
+		# print(shape)
+
+		invoke_method(map, "add_scatterplot_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+
+	} else if ( l[["jsfunction"]] == "decode") {
+
+		invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	}
+}
+
 resolve_palette <- function( l, palette ) {
 
 	if ( is.matrix( palette ) ) {

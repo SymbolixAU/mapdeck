@@ -137,9 +137,7 @@ void make_gc_type(Writer& writer, Rcpp::List& sfg,
  */
 Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 
-	//Rcpp::Rcout << "atomising" << std::endl;
 	std::string geom_column = sf.attr("sf_column");
-	// Rcpp::Rcout << "got the geom column " << std::endl;
 
 	size_t n_cols = sf.ncol();
 	size_t n_properties = n_cols - 1;
@@ -147,8 +145,6 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 	size_t i, j;
 	Rcpp::StringVector column_names = sf.names();
 	Rcpp::StringVector property_names(sf.size() - 1);
-
-	//Rcpp::StringVector geojson( n_rows );
 
 	int property_counter = 0;
 	for (int i = 0; i < sf.length(); i++) {
@@ -165,6 +161,7 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 	for( i = 0; i < n_rows; i++ ) {
 
 		if ( n_properties > 0 ) {
+
 			writer.StartObject();
 			geojsonsf::writers::start_features( writer );
 			geojsonsf::writers::start_properties( writer );
@@ -180,7 +177,6 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 				jsonify::writers::write_value( writer, h );
 				jsonify::dataframe::dataframe_cell( writer, this_vec, i );
 			}
-
 			writer.EndObject();
 		}
 
@@ -195,8 +191,6 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 		if( n_properties > 0 ) {
 			writer.EndObject();
 		}
-
-		//geojson[i] = sb.GetString();
 	}
 	writer.EndArray();
 
