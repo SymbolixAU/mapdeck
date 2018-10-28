@@ -491,18 +491,18 @@
 # microbenchmark(
 #
 # 	sf = {
-# 		mapdeck(
-# 			token = key
-# 			, style = 'mapbox://styles/mapbox/dark-v9'
-# 			, location = c(145, -37.8)
-# 			, zoom = 10) %>%
-# 			add_path_geo(
-# 				data = roads
-# 				, stroke_colour = "RIGHT_LOC"
-# 				, layer_id = "path_layer"
-# 				, tooltip = "ROAD_NAME"
-# 				, auto_highlight = TRUE
-# 			)
+#		mapdeck(
+#			token = key
+#			, style = 'mapbox://styles/mapbox/dark-v9'
+#			, location = c(145, -37.8)
+#			, zoom = 10) %>%
+#			add_path_geo(
+#				data = roads
+#				, stroke_colour = "RIGHT_LOC"
+#				, layer_id = "path_layer"
+#				, tooltip = "ROAD_NAME"
+#				, auto_highlight = TRUE
+#			)
 # 	},
 #
 # 	sfforce = {
@@ -575,8 +575,22 @@
 # #      sfforce 136.1841 152.3212 183.0024 167.6558 168.4932 290.3578     5
 # #      encoded 176.2694 206.0231 240.8336 222.8789 234.8613 364.1355     5
 # # encodedforce 149.4357 150.0709 208.2837 153.7314 272.7069 315.4735     5
-# #  encodedLite 129.8332 136.0603 139.3556 141.9229 144.0768 144.8848     5
+# # #  encodedLite 129.8332 136.0603 139.3556 141.9229 144.0768 144.8848     5
 
+
+
+
+#
+# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+# add_scatterplot(
+#   data = capitals[1:5, ]
+#   , lat = "lat"
+#   , lon = "lon"
+#   , radius = 100000
+#   , fill_colour = "country"
+#   , layer_id = "scatter_layer"
+#   , tooltip = "capital"
+# )
 
 # key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 #

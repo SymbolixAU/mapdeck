@@ -110,8 +110,11 @@ add_scatterplot <- function(
 	layer_id <- layerId(layer_id, "scatterplot")
 	checkHexAlpha(highlight_colour)
 
+	l[["jsfunction"]] <- "decode"
+	l[["geoconversion"]] <- "sf"
+
 	shape <- rcpp_scatterplot( data, l )
-	#print(shape)
+	print(shape)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
 	invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
@@ -157,28 +160,17 @@ add_scatterplot_geo <- function(
 		l[["data"]] <- NULL
 	}
 
-	# usePolyline <- isUsingPolyline(polyline)
-	# if ( !usePolyline ) {
-	# 	## TODO(check only a data.frame)
-	# 	data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-	# 	polyline <- 'polyline'
-	# 	## TODO(check lon & lat exist / passed in as arguments )
-	# 	l[['lon']] <- NULL
-	# 	l[['lat']] <- NULL
-	# 	l[['polyline']] <- polyline
-	# }
-
 	layer_id <- layerId(layer_id, "scatterplot")
 	checkHexAlpha(highlight_colour)
 
-	shape <- rcpp_scatterplot_geo( data, l )
+	shape <- rcpp_scatterplot( data, l )
 	#print(shape)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
 
 	if ( l[["jsfunction"]] == "geojson" ) {
 
-		# print(shape)
+		#print(shape)
 
 		invoke_method(map, "add_scatterplot_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 
@@ -188,24 +180,6 @@ add_scatterplot_geo <- function(
 	}
 }
 
-resolve_palette <- function( l, palette ) {
-
-	if ( is.matrix( palette ) ) {
-		#print("resolving matrix palette")
-		l[['palette']] <- palette
-	}
-	return( l )
-}
-
-resolve_legend <- function( l, legend ) {
-	l[['legend']] <- legend
-	return( l )
-}
-
-resolve_legend_options <- function( l, legend_options ) {
-	l[["legend_options"]] <- legend_options
-	return( l )
-}
 
 
 #' @inheritParams add_scatterplot

@@ -47,17 +47,15 @@ function add_scatterplot2( map_id, scatter_data, layer_id, auto_highlight, highl
 
 function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend ) {
     
-  console.log( scatter_data );
-
   const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
     radiusScale: 1,
     radiusMinPixels: 1,
-    getRadius: d => d.radius,
+    getRadius: d => d.properties.radius,
     getPosition: d => d.geometry.coordinates,
-    getColor: d => hexToRGBA2( d.fill_colour ),
+    getColor: d => hexToRGBA2( d.properties.fill_colour ),
     pickable: true,
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour ),

@@ -28,7 +28,8 @@ Imports:
     Rcpp,
     colourvalues (>= 0.2.0),
     jsonify (>= 0.1.1),
-    geojsonsf (>= 1.2.1)
+    geojsonsf (>= 1.2.2),
+    spatialwidget
 RoxygenNote: 6.1.0
 Suggests: 
     covr,
@@ -44,4 +45,5 @@ LinkingTo:
     jsonify,
     rapidjsonr,
     geojsonsf,
-    BH
+    BH,
+    spatialwidget

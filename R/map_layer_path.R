@@ -132,11 +132,14 @@ add_path_geo <- function(
 		l[["data"]] <- NULL
 	}
 
+	## TODO( move this to 'resovle data' )
+	l[["geometry"]] <- "geometry"
+
 	layer_id <- layerId(layer_id, "path")
 	checkHexAlpha(highlight_colour)
 
 	map <- addDependency(map, mapdeckPathDependency())
-	shape <- rcpp_path_geo( data, l);
+	shape <- rcpp_path_geojson( data, l);
 
 	if ( l[["jsfunction"]] == "geojson" ) {
 

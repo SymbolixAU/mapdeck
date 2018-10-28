@@ -1,10 +1,10 @@
 #include <Rcpp.h>
 
-#include "mapdeck.hpp"
+#include "mapdeck_defaults.hpp"
 #include "layers/path.hpp"
-#include "parameters.hpp"
-
-#include "sf_geojson.hpp"
+#include "spatialwidget/spatialwidget.hpp"
+//#include "spatialwidget/parameters/parameters.hpp"
+//#include "spatialwidget/geojson/geojson.hpp"
 
 Rcpp::List path_defaults(int n) {
 	return Rcpp::List::create(
@@ -15,18 +15,34 @@ Rcpp::List path_defaults(int n) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_path_geo( Rcpp::DataFrame data, Rcpp::List params ) {
+Rcpp::List rcpp_path_geojson( Rcpp::DataFrame data, Rcpp::List params ) {
 
 	int data_rows = data.nrows();
-
 	Rcpp::List lst_defaults = path_defaults( data_rows );  // initialise with defaults
-	Rcpp::StringVector path_columns = mapdeck::path::path_columns;
 	std::map< std::string, std::string > path_colours = mapdeck::path::path_colours;
 	Rcpp::StringVector path_legend = mapdeck::path::path_legend;
 
-	return create_data(
+	return spatialwidget::api::create_geojson(
 		data, params, lst_defaults,
-    path_columns, path_colours, path_legend,
-		 data_rows
-		);
- }
+		path_colours, path_legend,
+		data_rows
+	);
+}
+
+//
+// // [[Rcpp::export]]
+// Rcpp::List rcpp_path_geo( Rcpp::DataFrame data, Rcpp::List params ) {
+//
+// 	int data_rows = data.nrows();
+//
+// 	Rcpp::List lst_defaults = path_defaults( data_rows );  // initialise with defaults
+// 	Rcpp::StringVector path_columns = mapdeck::path::path_columns;
+// 	std::map< std::string, std::string > path_colours = mapdeck::path::path_colours;
+// 	Rcpp::StringVector path_legend = mapdeck::path::path_legend;
+//
+// 	return create_data(
+// 		data, params, lst_defaults,
+//     path_columns, path_colours, path_legend,
+// 		 data_rows
+// 		);
+//  }

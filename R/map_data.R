@@ -76,3 +76,23 @@ resolve_data.data.frame <- function( data, l, force, sf_geom ) {
 }
 
 resolve_data.default <- function( data ) stop("This type of data is not supported")
+
+
+resolve_palette <- function( l, palette ) {
+
+	if ( is.matrix( palette ) ) {
+		#print("resolving matrix palette")
+		l[['palette']] <- palette
+	}
+	return( l )
+}
+
+resolve_legend <- function( l, legend ) {
+	l[['legend']] <- legend
+	return( l )
+}
+
+resolve_legend_options <- function( l, legend_options ) {
+	l[["legend_options"]] <- legend_options
+	return( l )
+}
