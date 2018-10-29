@@ -133,13 +133,17 @@ add_path_geo <- function(
 	}
 
 	## TODO( move this to 'resovle data' )
-	l[["geometry"]] <- "geometry"
+	## and in stead of using 'geometry' as a parameter name (& therefore column name)
+	## there needs to be a column in the data for each entry in l[["geometry"]]
+	## for example, if l[["geometry"]] <- c("origin","destination")
+	## these need to both be set on the data.
+	l[["geometry"]] <- "path"
 
 	layer_id <- layerId(layer_id, "path")
 	checkHexAlpha(highlight_colour)
 
 	map <- addDependency(map, mapdeckPathDependency())
-	shape <- rcpp_path_geojson( data, l);
+	shape <- rcpp_path_geojson( data, l, l[["geometry"]]);
 
 	if ( l[["jsfunction"]] == "geojson" ) {
 

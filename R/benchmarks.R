@@ -591,7 +591,7 @@
 #   , layer_id = "scatter_layer"
 #   , tooltip = "capital"
 # )
-
+#
 # key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 #
 # mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%

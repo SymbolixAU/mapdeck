@@ -15,7 +15,7 @@ Rcpp::List path_defaults(int n) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_path_geojson( Rcpp::DataFrame data, Rcpp::List params ) {
+Rcpp::List rcpp_path_geojson( Rcpp::DataFrame data, Rcpp::List params, Rcpp::StringVector geometry_columns  ) {
 
 	int data_rows = data.nrows();
 	Rcpp::List lst_defaults = path_defaults( data_rows );  // initialise with defaults
@@ -25,7 +25,8 @@ Rcpp::List rcpp_path_geojson( Rcpp::DataFrame data, Rcpp::List params ) {
 	return spatialwidget::api::create_geojson(
 		data, params, lst_defaults,
 		path_colours, path_legend,
-		data_rows
+		data_rows,
+		geometry_columns
 	);
 }
 

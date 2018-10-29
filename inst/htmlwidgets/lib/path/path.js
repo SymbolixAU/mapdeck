@@ -61,7 +61,7 @@ function add_path_geo( map_id, path_data, layer_id, auto_highlight, highlight_co
     widthScale: 20,
     widthMinPixels: 1,
     rounded: true,
-    getPath: d => d.geometry.coordinates,
+    getPath: d => d.geometry.path.coordinates,
     getColor: d => hexToRGBA2( d.properties.stroke_colour ),
     getWidth: d => d.properties.stroke_width,
     onClick: info => layer_click( map_id, "path", info ),

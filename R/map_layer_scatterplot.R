@@ -163,8 +163,14 @@ add_scatterplot_geo <- function(
 	layer_id <- layerId(layer_id, "scatterplot")
 	checkHexAlpha(highlight_colour)
 
-	shape <- rcpp_scatterplot( data, l )
-	#print(shape)
+	if (l[["geoconversion"]] == "dataframe" ) {
+	  shape <- rcpp_scatterplot_df( data, l, lon, lat)
+	} else if ( l[["geoconversion"]] == "sf" ) {
+
+		shape <- rcpp_scatterplot( data, l )
+
+	}
+
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
 
