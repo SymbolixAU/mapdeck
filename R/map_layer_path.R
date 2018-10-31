@@ -99,6 +99,7 @@ add_path_geo <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,
+	geometry = NULL,            ## TODO( geometry - user can specify if there are more than one )
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	stroke_opacity = NULL,
@@ -147,7 +148,7 @@ add_path_geo <- function(
 
 	#print( l )
 
-	geometry_column <- "geometry" ## This is where we woudl also specify 'origin' or 'destination'
+	geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
 	## l[["geometry"]] <- NULL
 	#print( geometry_column )
 
