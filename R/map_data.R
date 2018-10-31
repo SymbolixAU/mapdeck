@@ -17,10 +17,13 @@ resolve_data <- function( data, l, force, sf_geom ) UseMethod( "resolve_data" )
 resolve_data.sf <- function( data, l, force, sf_geom ) {
 	## TODO( if there are rows other than LINESTRING, need to filter)
 	## TODO( if attr(roads$geometry, "class") == sf_geom we can set force = TRUE, becaues the whole geometry is one type )
-	#sfc_col <- attr(data, "sf_column")
+	sfc_col <- attr(data, "sf_column") ## TODO( handle multiple geometry columns, such as origin & destination )
+	#print("sfc_col: ")
+	#print(sfc_col)
 	if ( !force ) {
 		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
 	}
+	l[["geometry"]] <- sfc_col
 	# l[["polyline"]] <- sfc_col
 	# l[["jsfunction"]] <- "geojson"
 	# l[["geoconversion"]] <- "sf"

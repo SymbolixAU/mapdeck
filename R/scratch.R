@@ -341,9 +341,12 @@
 # shinyApp(ui, server)
 
 
+# key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 # sf_line <- mapdeck::roads
-# sf_line <- rbind(sf_line, sf_line, sf_line, sf_line, sf_line, sf_line)
-# sf_line$dte <- sample( seq( as.Date("2018-01-01"), as.Date("2018-12-30"), length.out = 300), size = nrow(sf_line), replace = T )
+# names(sf_line) <- gsub("geometry", "path", names(sf_line))
+# sf::st_geometry( sf_line ) <- "path"
+# # sf_line <- rbind(sf_line, sf_line, sf_line, sf_line, sf_line, sf_line)
+# sf_line$dte <- sample( seq( as.Date("2018-01-01"), as.Date("2018-12-30"), length.out = 300), size = nrow( sf_line ), replace = T )
 # sf_line$psx <- sample( seq( as.POSIXct("2018-01-01 00:00:00"), as.POSIXct("2018-12-30 00:00:00"), length.out = 300), size = nrow(sf_line), replace = T )
 #
 # mapdeck(
@@ -352,7 +355,7 @@
 # 	, location = c(145, -37.8)
 # 	, zoom = 10) %>%
 # 	add_path_geo(
-# 		data = sf_line
+# 		data = sf_line[1:5, ]
 # 		, stroke_colour = "dte"
 # 		, layer_id = "path_layer"
 # 		, tooltip = "ROAD_NAME"
@@ -360,3 +363,15 @@
 # 		, legend = T
 # 		, legend_options = list( title = "my date yo")
 # 	)
+#
+# data_types <- vapply( sf_line, function(x) class(x)[[1]], "")
+# l <- list()
+# l[["stroke_colour"]] <- "dte"
+# l[["tooltip"]] <- "ROAD_NAME"
+# ## l[["path"]] <- "path"  ## works
+# l[["origin"]] <- "path" ## doesn't work, but should
+# spatialwidget:::line_example_geojson(sf_line[1:2, ], data_types, l, c("origin"))
+
+## Need to make the data object have the name 'geometry' in the geometry column, not the one
+## on the actual sf object...
+## then, 'origin' and 'destination' will also need to replace the names in sf

@@ -137,14 +137,23 @@ add_path_geo <- function(
 	## there needs to be a column in the data for each entry in l[["geometry"]]
 	## for example, if l[["geometry"]] <- c("origin","destination")
 	## these need to both be set on the data.
-	l[["geometry"]] <- "geometry"
+	# l[["geometry"]] <- "geometry"
 
 	layer_id <- layerId(layer_id, "path")
-	checkHexAlpha(highlight_colour)
+	checkHexAlpha( highlight_colour )
 
 	map <- addDependency(map, mapdeckPathDependency())
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
-	shape <- rcpp_path_geojson( data, data_types, l, l[["geometry"]]);
+
+	#print( l )
+
+	geometry_column <- "geometry" ## This is where we woudl also specify 'origin' or 'destination'
+	## l[["geometry"]] <- NULL
+	#print( geometry_column )
+
+	# print( head( data ) )
+
+	shape <- rcpp_path_geojson( data, data_types, l, geometry_column );
 
 	#print( shape )
 
