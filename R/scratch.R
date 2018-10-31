@@ -340,8 +340,9 @@
 # }
 # shinyApp(ui, server)
 
-#
+
 # sf_line <- mapdeck::roads
+# sf_line <- rbind(sf_line, sf_line, sf_line, sf_line, sf_line, sf_line)
 # sf_line$dte <- sample( seq( as.Date("2018-01-01"), as.Date("2018-12-30"), length.out = 300), size = nrow(sf_line), replace = T )
 # sf_line$psx <- sample( seq( as.POSIXct("2018-01-01 00:00:00"), as.POSIXct("2018-12-30 00:00:00"), length.out = 300), size = nrow(sf_line), replace = T )
 #
