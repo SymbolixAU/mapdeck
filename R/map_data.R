@@ -22,8 +22,8 @@ resolve_data.sf <- function( data, l, force, sf_geom ) {
 		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
 	}
 	# l[["polyline"]] <- sfc_col
-	l[["jsfunction"]] <- "geojson"
-	l[["geoconversion"]] <- "sf"
+	# l[["jsfunction"]] <- "geojson"
+	# l[["geoconversion"]] <- "sf"
 	return(l)
 }
 
@@ -33,7 +33,7 @@ resolve_data.sfencoded <- function( data, l, force, sf_geom ) {
 	if( !force ) {
 		data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom, multi = TRUE), ]
 	}
-	l[["geoconversion"]] <- "sfencoded"
+	# l[["geoconversion"]] <- "sfencoded"
 	l <- resolve_data.sfencodedLite( data, l )
 	return( l )
 }
@@ -51,8 +51,8 @@ resolve_data.sfencodedLite <- function( data, l, force, sf_geom ) {
 	}
 
 	l[["data"]] <- data ## attach the data becaue it gets modified and it needs to be returend
-	l[["jsfunction"]] <- "decode"
-	l[["geoconversion"]] <- "sfencodedLite"
+	# l[["jsfunction"]] <- "decode"
+	# l[["geoconversion"]] <- "sfencodedLite"
 
 	return( l )
 }
@@ -68,8 +68,8 @@ resolve_data.data.frame <- function( data, l, force, sf_geom ) {
 	# lat <- l[["lat"]]
 
 	l[["data"]] <- data
-	l[["geoconversion"]] <- "dataframe"
-	l[["jsfunction"]] <- "geojson"
+	# l[["geoconversion"]] <- "dataframe"
+	# l[["jsfunction"]] <- "geojson"
 
 	return( l )
 	#stop("not done yet")

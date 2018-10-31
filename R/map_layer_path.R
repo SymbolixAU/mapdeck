@@ -137,21 +137,26 @@ add_path_geo <- function(
 	## there needs to be a column in the data for each entry in l[["geometry"]]
 	## for example, if l[["geometry"]] <- c("origin","destination")
 	## these need to both be set on the data.
-	l[["geometry"]] <- "path"
+	l[["geometry"]] <- "geometry"
 
 	layer_id <- layerId(layer_id, "path")
 	checkHexAlpha(highlight_colour)
 
 	map <- addDependency(map, mapdeckPathDependency())
-	shape <- rcpp_path_geojson( data, l, l[["geometry"]]);
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	shape <- rcpp_path_geojson( data, data_types, l, l[["geometry"]]);
 
-	if ( l[["jsfunction"]] == "geojson" ) {
+	#print( shape )
+
+	# if ( l[["jsfunction"]] == "geojson" ) {
+	# 	l[["jsfunction"]] <- NULL
+	# 	l[["geoconversion"]] <- NULL
 
 	  invoke_method(map, "add_path_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
-	} else if ( l[["jsfunction"]] == "decode") {
-
-		invoke_method(map, "add_path2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
-	}
+	# } else if ( l[["jsfunction"]] == "decode") {
+	#
+	# 	invoke_method(map, "add_path2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	# }
 }
 
 

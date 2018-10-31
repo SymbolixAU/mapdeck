@@ -6,7 +6,7 @@
 namespace mapdeck {
 namespace path {
 
-	const std::map< std::string, std::string > path_colours = {
+	const std::unordered_map< std::string, std::string > path_colours = {
 		{ "stroke_colour", "stroke_opacity" }
 	};
 
