@@ -18,6 +18,10 @@ add_path(map, data = get_map_data(map), polyline = NULL,
 
 \item{polyline}{column of \code{data} containing the polylines}
 
+\item{geometry}{string specifying the `sfc` column of an SF object. If NULL and
+\code{data} is an `sf` object the \code{geometry} will be automatically assinged
+from \code{ sf::st_geometry( data ) }}
+
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke}
 
 \item{stroke_width}{width of the stroke}

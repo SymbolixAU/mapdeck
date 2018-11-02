@@ -14,7 +14,7 @@ namespace polygon {
 	// 	"fill_colour", "fill_opacity","stroke_colour","stroke_opacity","palette"
 	// );
 
-	std::map< std::string, std::string > polygon_colours = {
+	std::unordered_map< std::string, std::string > polygon_colours = {
 		{ "fill_colour", "fill_opacity" },
 		{ "stroke_colour", "stroke_opacity" }
 	};
