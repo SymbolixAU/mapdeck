@@ -363,15 +363,25 @@
 # 		, legend = T
 # 		, legend_options = list( title = "my date yo")
 # 	)
-#
-# data_types <- vapply( sf_line, function(x) class(x)[[1]], "")
-# l <- list()
-# l[["stroke_colour"]] <- "dte"
-# l[["tooltip"]] <- "ROAD_NAME"
-# ## l[["path"]] <- "path"  ## works
-# l[["origin"]] <- "path" ## doesn't work, but should
-# spatialwidget:::line_example_geojson(sf_line[1:2, ], data_types, l, c("origin"))
 
-## Need to make the data object have the name 'geometry' in the geometry column, not the one
-## on the actual sf object...
-## then, 'origin' and 'destination' will also need to replace the names in sf
+
+# ### POLYGON
+# library(sf)
+# library(geojsonsf)
+#
+# sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+# sf <- sf::st_cast(sf, "POLYGON")
+#
+# set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+#
+# mapdeck::mapdeck(
+# 	style = 'mapbox://styles/mapbox/dark-v9'
+# 	, location = c(144.5, -37)
+# 	, zoom = 5
+# 	) %>%
+# add_polygon(
+# 		data = sf
+# 		, layer = "polygon_layer"
+# 		, fill_colour = "SA2_NAME16"
+# 		#, stroke_colour = "SA2_NAME16"
+# 	)

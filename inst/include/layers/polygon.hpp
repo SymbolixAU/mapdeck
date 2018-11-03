@@ -6,18 +6,19 @@
 namespace mapdeck {
 namespace polygon {
 
-	Rcpp::StringVector polygon_columns = Rcpp::StringVector::create(
-		"polyline","elevation","tooltip"
-	);
+	// Rcpp::StringVector polygon_columns = Rcpp::StringVector::create(
+	// 	"polyline","elevation","tooltip"
+	// );
 
 	// Rcpp::StringVector polygon_colours = Rcpp::StringVector::create(
 	// 	"fill_colour", "fill_opacity","stroke_colour","stroke_opacity","palette"
 	// );
+	int xyz;
 
-	std::unordered_map< std::string, std::string > polygon_colours = {
+	std::unordered_map< std::string, std::string > polygon_colours({
 		{ "fill_colour", "fill_opacity" },
 		{ "stroke_colour", "stroke_opacity" }
-	};
+	});
 
 	Rcpp::StringVector polygon_legend = Rcpp::StringVector::create(
 		"fill_colour", "stroke_colour"

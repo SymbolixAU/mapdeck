@@ -144,7 +144,7 @@ add_polygon <- function(
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
-	invoke_method(map, "add_polygon2", shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]])
+	invoke_method(map, "add_polygon_geo", shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]])
 }
 
 

@@ -6,7 +6,7 @@
 
 Rcpp::List polygon_defaults(int n) {
 	return Rcpp::List::create(
-		_["polyline"] = mapdeck::defaults::default_polyline(n),
+		//_["polyline"] = mapdeck::defaults::default_polyline(n),
 		_["elevation"] = mapdeck::defaults::default_elevation(n),
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n),
 		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour(n)
@@ -22,6 +22,8 @@ Rcpp::List rcpp_polygon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
 	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::polygon::polygon_colours;
 	Rcpp::StringVector polygon_legend = mapdeck::polygon::polygon_legend;
+
+	spatialwidget::api::test_api();
 
 	return spatialwidget::api::create_geojson(
 		data,
