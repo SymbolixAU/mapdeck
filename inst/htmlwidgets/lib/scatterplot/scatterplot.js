@@ -54,7 +54,7 @@ function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, hi
     radiusScale: 1,
     radiusMinPixels: 1,
     getRadius: d => d.properties.radius,
-    getPosition: d => d.geometry.coordinates,
+    getPosition: d => d.geometry.geometry.coordinates,
     getColor: d => hexToRGBA2( d.properties.fill_colour ),
     pickable: true,
     autoHighlight: auto_highlight,

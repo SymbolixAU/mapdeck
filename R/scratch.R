@@ -354,8 +354,8 @@
 # 	, style = 'mapbox://styles/mapbox/dark-v9'
 # 	, location = c(145, -37.8)
 # 	, zoom = 10) %>%
-# 	add_path_geo(
-# 		data = sf_line[1:5, ]
+# 	add_path(
+# 		data = sf_line[1:500, ]
 # 		, stroke_colour = "dte"
 # 		, layer_id = "path_layer"
 # 		, tooltip = "ROAD_NAME"
@@ -385,3 +385,48 @@
 # 		, fill_colour = "SA2_NAME16"
 # 		#, stroke_colour = "SA2_NAME16"
 # 	)
+
+## Scatterplot
+# sf <- sf::st_as_sf( capitals, coords = c("lon","lat"))
+# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+# add_scatterplot_geo(
+#   data = sf
+#   , radius = 100000
+#   , fill_colour = "country"
+#   , layer_id = "scatter_layer"
+#   , tooltip = "capital"
+# )
+
+## pointcloud
+# df <- capitals
+# df$z <- sample(10000:10000000, size = nrow(df))
+# sf <- sf::st_as_sf( df, coords = c("lon","lat","z"))
+#
+# mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
+# add_pointcloud(
+# 	data = sf
+#   # , elevation = 'z'
+#   , layer_id = 'point'
+#   , fill_colour = "country"
+#   , tooltip = "country"
+# )
+
+
+# df <- read.csv(paste0(
+# 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+# 'examples/3d-heatmap/heatmap-data.csv'
+# ))
+#
+# df$weight <- sample(1:10, size = nrow(df), replace = T)
+# df <- df[!is.na(df$lng), ]
+# sf <- sf::st_as_sf( df, coords = c("lng","lat"))
+#
+# mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%
+# add_screengrid(
+#   data = sf[1:1000, ]
+#   , weight = "weight"
+#   , layer_id = "screengrid_layer"
+#   , cell_size = 10
+#   , opacity = 0.3
+# )
+

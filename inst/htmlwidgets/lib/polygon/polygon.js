@@ -29,9 +29,10 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highl
 
 }
 
-function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, legend ) {
+function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
 
-  //console.log( polygon_data ) ;
+  console.log( polygon_data ) ;
+    
   //console.log( legend );
   const polygonLayer = new PolygonLayer({
     id: 'polygon-'+layer_id,
@@ -43,10 +44,10 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     extruded: true,
     lineWidthMinPixels: 1,
     getPolygon: d => d.geometry.geometry.coordinates,
-    getLineColor: d => hexToRGBA2( d.stroke_colour ),
-    getFillColor: d => hexToRGBA2( d.fill_colour ),
-    getLineWidth: d => d.stroke_width,
-    getElevation: d => d.elevation,
+    getLineColor: d => hexToRGBA2( d.properties.stroke_colour ),
+    getFillColor: d => hexToRGBA2( d.properties.fill_colour ),
+    getLineWidth: d => d.properties.stroke_width,
+    getElevation: d => d.properties.elevation,
     lightSettings: light_settings,
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour ),
@@ -54,6 +55,8 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     onClick: info => layer_click( map_id, "polygon", info )
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
+    
+    console.log( polygonLayer );
 
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);

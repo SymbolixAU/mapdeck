@@ -49,56 +49,6 @@ add_path <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,
-	geometry = NULL,
-	stroke_colour = NULL,
-	stroke_width = NULL,
-	stroke_opacity = NULL,
-	tooltip = NULL,
-	layer_id = NULL,
-	auto_highlight = FALSE,
-	highlight_colour = "#AAFFFFFF",
-	palette = "viridis",
-	na_colour = "#808080FF",
-	legend = FALSE,
-	legend_options = NULL
-) {
-
-	## TODO(sf and lon/lat coordinates)
-	#message("Using development version. Please check plots carefully")
-
-	l <- as.list( match.call() )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["layer_id"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l <- resolve_palette( l, palette )
-	l <- resolve_legend( l, legend )
-	l <- resolve_legend_options( l, legend_options )
-
-	data <- normaliseSfData(data, "LINESTRING")
-	polyline <- findEncodedColumn(data, polyline)
-
-	## - if sf object, and geometry column has not been supplied, it needs to be
-	## added to objArgs after the match.call() function
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
-
-	layer_id <- layerId(layer_id, "path")
-	checkHexAlpha(highlight_colour)
-	shape <- rcpp_path( data, l );
-
-	map <- addDependency(map, mapdeckPathDependency())
-	invoke_method(map, "add_path", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
-}
-
-#' @export
-add_path_geo <- function(
-	map,
-	data = get_map_data(map),
-	polyline = NULL,
 	geometry = NULL,            ## TODO( geometry - user can specify if there are more than one )
 	stroke_colour = NULL,
 	stroke_width = NULL,

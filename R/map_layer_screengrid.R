@@ -59,7 +59,8 @@ add_screengrid <- function(
 	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
 	opacity = 0.8,
 	cell_size = 50,
-	layer_id = NULL
+	layer_id = NULL,
+	force = FALSE
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )
@@ -72,15 +73,11 @@ add_screengrid <- function(
 	l[["auto_highlight"]] <- NULL
 	l[["layer_id"]] <- NULL
 	l[["digits"]] <- NULL
-	l <- resolve_palette( l, palette )
-	#l <- resolve_legend( l, legend )
+	l <- resolve_data( data, l, force, "POINT" )
 
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
 	## parmater checks
@@ -91,24 +88,15 @@ add_screengrid <- function(
 
 	if(length(colour_range) != 6)
 		stop("colour_range must have 6 hex colours")
-
 	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		l[['lon']] <- NULL
-		l[['lat']] <- NULL
-		l[['polyline']] <- polyline
-	}
-
-	## end parameter checks
-
-	shape <- rcpp_screengrid( data, l )
 
 	map <- addDependency(map, mapdeckScreengridDependency())
-	invoke_method(map, "add_screengrid", shape[["data"]], layer_id, opacity, cell_size, colour_range )
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+
+	geometry_column <- c( "geometry" )
+	shape <- rcpp_screengrid_geojson( data, data_types, l, geometry_column )
+
+	invoke_method(map, "add_screengrid_geo", shape[["data"]], layer_id, opacity, cell_size, colour_range )
 }
 
 #' @export

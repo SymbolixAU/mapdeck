@@ -9,7 +9,8 @@ add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
   fill_colour = NULL, fill_opacity = NULL, tooltip = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   light_settings = list(), layer_id = NULL, palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL)
+  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
+  force = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}

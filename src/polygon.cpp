@@ -23,8 +23,6 @@ Rcpp::List rcpp_polygon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::polygon::polygon_colours;
 	Rcpp::StringVector polygon_legend = mapdeck::polygon::polygon_legend;
 
-	spatialwidget::api::test_api();
-
 	return spatialwidget::api::create_geojson(
 		data,
 		data_types,

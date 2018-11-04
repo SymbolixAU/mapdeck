@@ -9,7 +9,7 @@ add_path(map, data = get_map_data(map), polyline = NULL,
   stroke_opacity = NULL, tooltip = NULL, layer_id = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL)
+  legend_options = NULL, force = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}

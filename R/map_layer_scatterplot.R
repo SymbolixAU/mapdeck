@@ -163,27 +163,31 @@ add_scatterplot_geo <- function(
 	layer_id <- layerId(layer_id, "scatterplot")
 	checkHexAlpha(highlight_colour)
 
-	if (l[["geoconversion"]] == "dataframe" ) {
-	  shape <- rcpp_scatterplot_df( data, l, lon, lat)
-	} else if ( l[["geoconversion"]] == "sf" ) {
-
-		shape <- rcpp_scatterplot( data, l )
-
-	}
-
-
 	map <- addDependency(map, mapdeckScatterplotDependency())
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
 
-	if ( l[["jsfunction"]] == "geojson" ) {
-
-		#print(shape)
+	# if (l[["geoconversion"]] == "dataframe" ) {
+	#   shape <- rcpp_scatterplot_df( data, l, lon, lat)
+	# } else if ( l[["geoconversion"]] == "sf" ) {
+	#
+	#
+		geometry_column <- c( "geometry" )
+		shape <- rcpp_scatterplot_geojson( data, data_types, l, geometry_column );
+#
+# 	}
+#
+#
+#
+# 	if ( l[["jsfunction"]] == "geojson" ) {
+#
+# 		#print(shape)
 
 		invoke_method(map, "add_scatterplot_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
-
-	} else if ( l[["jsfunction"]] == "decode") {
-
-		invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
-	}
+#
+# 	} else if ( l[["jsfunction"]] == "decode") {
+#
+# 		invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+# 	}
 }
 
 

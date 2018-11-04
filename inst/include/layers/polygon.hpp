@@ -13,7 +13,6 @@ namespace polygon {
 	// Rcpp::StringVector polygon_colours = Rcpp::StringVector::create(
 	// 	"fill_colour", "fill_opacity","stroke_colour","stroke_opacity","palette"
 	// );
-	int xyz;
 
 	std::unordered_map< std::string, std::string > polygon_colours({
 		{ "fill_colour", "fill_opacity" },
