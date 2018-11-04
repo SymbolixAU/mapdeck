@@ -5,6 +5,20 @@
 
 using namespace Rcpp;
 
+// rcpp_arc_geojson
+Rcpp::List rcpp_arc_geojson(Rcpp::DataFrame data, Rcpp::List data_types, Rcpp::List params, Rcpp::StringVector geometry_columns);
+RcppExport SEXP _mapdeck_rcpp_arc_geojson(SEXP dataSEXP, SEXP data_typesSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type data_types(data_typesSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type geometry_columns(geometry_columnsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_arc_geojson(data, data_types, params, geometry_columns));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_path_geojson
 Rcpp::List rcpp_path_geojson(Rcpp::DataFrame data, Rcpp::List data_types, Rcpp::List params, Rcpp::StringVector geometry_columns);
 RcppExport SEXP _mapdeck_rcpp_path_geojson(SEXP dataSEXP, SEXP data_typesSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP) {
@@ -77,6 +91,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_mapdeck_rcpp_arc_geojson", (DL_FUNC) &_mapdeck_rcpp_arc_geojson, 4},
     {"_mapdeck_rcpp_path_geojson", (DL_FUNC) &_mapdeck_rcpp_path_geojson, 4},
     {"_mapdeck_rcpp_pointcloud_geojson", (DL_FUNC) &_mapdeck_rcpp_pointcloud_geojson, 4},
     {"_mapdeck_rcpp_polygon_geojson", (DL_FUNC) &_mapdeck_rcpp_polygon_geojson, 4},

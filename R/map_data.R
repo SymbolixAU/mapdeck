@@ -8,6 +8,15 @@ sfrow <- function( sf , sfc_type ) {
 }
 
 
+resolve_od_data <- function( data, l ) UseMethod("resolve_od_data")
+
+resolve_od_data.sf <- function( data, l ) {
+	if ( is.null( l[["origin"]] ) || is.null( l[["destination"]] ) ) {
+		stop("origin and destination columns required")
+	}
+	return( l )
+}
+
 
 ## data using a single geometry ()
 resolve_data <- function( data, l, force, sf_geom ) UseMethod( "resolve_data" )
@@ -23,8 +32,7 @@ resolve_data.sf <- function( data, l, force, sf_geom ) {
 		sfc_col <- attr(data, "sf_column") ## TODO( handle multiple geometry columns, such as origin & destination )
 		l[["geometry"]] <- sfc_col
 	}
-	#print("sfc_col: ")
-	#print(sfc_col)
+
 	if ( !force ) {
 		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
 	}
