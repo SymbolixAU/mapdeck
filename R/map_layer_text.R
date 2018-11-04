@@ -68,7 +68,8 @@ add_text <- function(
 	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
 	legend = FALSE,
-	legend_options = NULL
+	legend_options = NULL,
+	force = FALSE
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )
@@ -79,13 +80,11 @@ add_text <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_data( data, l, force, "POINT")
 
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
 	## parmater checks
@@ -95,21 +94,14 @@ add_text <- function(
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "text")
 
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		l[['lon']] <- NULL
-		l[['lat']] <- NULL
-		l[['polyline']] <- polyline
-	}
-
-	shape <- rcpp_text( data, l );
-
 	map <- addDependency(map, mapdeckTextDependency())
-	invoke_method(map, "add_text2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+
+	geometry_column <- c("geometry")
+	shape <- rcpp_text_geojson( data, data_types, l, geometry_column );
+	#print( shape )
+
+	invoke_method(map, "add_text_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
 }
 
 #' @export

@@ -8,7 +8,7 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, colour_range = colourvalues::colour_values(1:6,
   palette = "viridis"), cell_size = 1000, extruded = TRUE,
   elevation_scale = 1, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", layer_id = NULL)
+  highlight_colour = "#AAFFFFFF", layer_id = NULL, force = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}

@@ -8,7 +8,7 @@ namespace grid {
 
 Rcpp::StringVector grid_columns = Rcpp::StringVector::create("polyline");
 
-std::map< std::string, std::string > grid_colours = {};
+std::unordered_map< std::string, std::string > grid_colours = {};
 
 Rcpp::StringVector grid_legend = Rcpp::StringVector::create();
 } // namespace grid

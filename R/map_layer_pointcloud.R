@@ -66,11 +66,12 @@ add_pointcloud <- function(
 
 	# message("Using development version. Please check plots carefully")
 
-	l <- as.list( match.call() )
+	l <- as.list( match.call( expand.dots = F) )
 	l[[1]] <- NULL    ## function call
 	l[["map"]] <- NULL
 	l[["data"]] <- NULL
 	l[["auto_highlight"]] <- NULL
+	l[["light_settings"]] <- NULL
 	l[["layer_id"]] <- NULL
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -82,10 +83,10 @@ add_pointcloud <- function(
 		l[["data"]] <- NULL
 	}
 
-	layer_id <- layerId(layer_id, "pointcloud")
 	checkHexAlpha(highlight_colour)
+	layer_id <- layerId(layer_id, "pointcloud")
 
-	map <- addDependency(map, mapdeckScatterplotDependency())
+	map <- addDependency(map, mapdeckPointcloudDependency())
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
 
 	# if (l[["geoconversion"]] == "dataframe" ) {
@@ -104,7 +105,7 @@ add_pointcloud <- function(
 	#
 	# print(shape)
 
-	invoke_method(map, "add_pointcloud_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	invoke_method(map, "add_pointcloud_geo", shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]] )
 	#
 	# 	} else if ( l[["jsfunction"]] == "decode") {
 	#

@@ -21,7 +21,7 @@ function add_arc( map_id, arc_data, layer_id, auto_highlight, legend ) {
   }
 }
 
-function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, legend ) {
+function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend ) {
 
   const arcLayer = new ArcLayer({
     id: 'arc-'+layer_id,
@@ -34,7 +34,8 @@ function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, legend ) {
     getTargetColor: d => hexToRGBA2( d.properties.stroke_to ),
     onClick: info => layer_click( map_id, "arc", info ),
     onHover: updateTooltip,
-    autoHighlight: auto_highlight
+    autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour )
   });
 
   update_layer( map_id, 'arc-'+layer_id, arcLayer );

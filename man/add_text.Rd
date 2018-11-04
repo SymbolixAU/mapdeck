@@ -9,7 +9,8 @@ add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
   size = NULL, angle = NULL, anchor = NULL,
   alignment_baseline = NULL, tooltip = NULL, layer_id = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  palette = "viridis", legend = FALSE, legend_options = NULL)
+  palette = "viridis", legend = FALSE, legend_options = NULL,
+  force = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}

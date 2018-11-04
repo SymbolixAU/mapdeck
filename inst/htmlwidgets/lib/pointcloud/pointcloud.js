@@ -21,7 +21,7 @@ function add_pointcloud( map_id, pointcloud_data, layer_id, light_settings, auto
 }
 
 
-function add_pointcloud_geo( map_id, pointcloud_data, layer_id, light_settings, auto_highlight, legend ) {
+function add_pointcloud_geo( map_id, pointcloud_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
     
     console.log( "add_pointcloud_geo" );
     console.log( pointcloud_data );
@@ -29,7 +29,7 @@ function add_pointcloud_geo( map_id, pointcloud_data, layer_id, light_settings, 
   const pointcloudLayer = new deck.PointCloudLayer({
     id: 'pointcloud-'+layer_id,
     data: pointcloud_data,
-    radiusPixels: d.properties.radius,
+    radiusPixels: 10,
     getPosition: d => d.geometry.geometry.coordinates,
     getColor: d => hexToRGBA2( d.properties.fill_colour ),
     lightSettings: light_settings,

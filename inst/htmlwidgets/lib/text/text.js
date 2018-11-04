@@ -18,6 +18,28 @@ function add_text( map_id, text_data, layer_id ) {
   update_layer( map_id, 'text-'+layer_id, textLayer );
 }
 
+
+function add_text_geo( map_id, text_data, layer_id ) {
+    
+  console.log( text_data );
+    
+  const textLayer = new TextLayer({
+    id: 'text-'+layer_id,
+    data: text_data,
+    pickable: true,
+    getPosition: d => d.geometry.geometry.coordinates,
+    getColor: d => hexToRGBA2( d.properties.fill_colour ),
+    getText: d => d.properties.text,
+    getSize: d => d.properties.size,
+    getAngle: d => d.properties.angle,
+    getTextAnchor: d => d.properties.anchor,
+    getAlignmentBaseline: d => d.properties.alignment_baseline,
+    onClick: info => layer_click( map_id, "text", info ),
+    onHover: updateTooltip
+  });
+  update_layer( map_id, 'text-'+layer_id, textLayer );
+}
+
 function add_text2( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend ) {
   const textLayer = new TextLayer({
     map_id: map_id,

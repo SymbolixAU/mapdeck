@@ -397,6 +397,19 @@
 #   , tooltip = "capital"
 # )
 
+## TEXT
+# sf <- sf::st_as_sf( capitals, coords = c("lon","lat"))
+# mapdeck(
+#   token = key,
+#   style = mapdeck_style('dark')
+# ) %>%
+#   add_text(
+#     data = sf
+#     , fill_colour = 'country'
+#     , text = 'capital'
+#     , layer_id = 'text'
+#   )
+
 ## pointcloud
 # df <- capitals
 # df$z <- sample(10000:10000000, size = nrow(df))
@@ -411,7 +424,7 @@
 #   , tooltip = "country"
 # )
 
-
+## SCREENGRID
 # df <- read.csv(paste0(
 # 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
 # 'examples/3d-heatmap/heatmap-data.csv'
@@ -467,3 +480,73 @@
 #   , legend = T
 #   , legend_options = list(stroke_from = list( title = "Origin airport" ), css = "max-height: 100px;")
 #  )
+
+## LINE
+# url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
+# flights <- read.csv(url)
+# flights$id <- seq_len(nrow(flights))
+# flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
+# flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
+#
+# sf_o <- sf::st_as_sf( flights[, c("start_lat", "start_lon")], coords = c("start_lon","start_lat"))
+# sf_d <- sf::st_as_sf( flights[, c("end_lat", "end_lon")], coords = c("end_lon", "end_lat"))
+#
+# sf <- cbind(sf_o, sf_d)
+# sf <- setNames(sf, c("origin", "destination"))
+# sf::st_geometry( sf ) <- "origin"
+#
+# sf$airline <- flights$airline
+# sf$airport1 <- flights$airport1
+# sf$airport2 <- flights$airport2
+# sf$cnt <- flights$cnt
+# sf$id <- flights$id
+# sf$stroke <- flights$stroke
+# sf$info <- flights$info
+#
+#
+# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#   add_line(
+#   data = sf
+#   , layer_id = "arc_layer"
+#   , origin = "origin"
+#   , destination = "destination"
+#   , stroke_colour = "airport1"
+#   , stroke_width = "stroke"
+#   , tooltip = "info"
+#   , auto_highlight = TRUE
+#   , legend = T
+#   , legend_options = list(stroke_from = list( title = "Origin airport" ), css = "max-height: 100px;")
+#  )
+
+# ## HEXAGON
+# df <- read.csv(paste0(
+# 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'
+# ))
+#
+# df <- df[!is.na(df$lng), ]
+# sf <- sf::st_as_sf( df, coords = c("lng","lat"))
+#
+# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+# add_hexagon(
+#   data = sf
+#   , layer_id = "hex_layer"
+#   , elevation_scale = 100
+# )
+
+
+## SCREENGRID
+# df <- read.csv(paste0(
+# 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+# 'examples/3d-heatmap/heatmap-data.csv'
+# ))
+#
+# df$weight <- sample(1:10, size = nrow(df), replace = T)
+# df <- df[!is.na(df$lng), ]
+# sf <- sf::st_as_sf( df, coords = c("lng","lat"))
+#
+# mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%
+# add_grid(
+#   data = sf[1:1000, ]
+#   , cell_size = 10
+# )
+

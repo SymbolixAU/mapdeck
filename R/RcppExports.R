@@ -5,6 +5,18 @@ rcpp_arc_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_arc_geojson`, data, data_types, params, geometry_columns)
 }
 
+rcpp_grid_geojson <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_grid_geojson`, data, data_types, params, geometry_columns)
+}
+
+rcpp_hexagon_geo <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_hexagon_geo`, data, data_types, params, geometry_columns)
+}
+
+rcpp_line_geojson <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_line_geojson`, data, data_types, params, geometry_columns)
+}
+
 rcpp_path_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_path_geojson`, data, data_types, params, geometry_columns)
 }
@@ -23,5 +35,9 @@ rcpp_scatterplot_geojson <- function(data, data_types, params, geometry_columns)
 
 rcpp_screengrid_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_screengrid_geojson`, data, data_types, params, geometry_columns)
+}
+
+rcpp_text_geojson <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_text_geojson`, data, data_types, params, geometry_columns)
 }
 

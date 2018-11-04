@@ -56,6 +56,51 @@ add_hexagon <- function(
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
+	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
+	force = FALSE
+) {
+
+	l <- as.list( match.call( expand.dots = F) )
+	l[[1]] <- NULL
+	l[["data"]] <- NULL
+	l[["map"]] <- NULL
+	l[["auto_highlight"]] <- NULL
+	l[["light_settings"]] <- NULL
+	l[["layer_id"]] <- NULL
+
+	l <- resolve_data( data, l, force, "POINT" )
+
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
+	}
+
+	checkHex(colour_range)
+	checkHexAlpha(highlight_colour)
+
+	layer_id <- layerId(layer_id, "hexagon")
+	map <- addDependency(map, mapdeckHexagonDependency())
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+
+	geometry_column <- c( "geometry" )
+	shape <- rcpp_hexagon_geo( data, data_types, l, geometry_column )
+
+	invoke_method(map, "add_hexagon_geo", shape[["data"]], layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range )
+}
+
+
+#' @export
+add_hexagon_old <- function(
+	map,
+	data = get_map_data(map),
+	polyline = NULL,
+	lon = NULL,
+	lat = NULL,
+	layer_id,
+	radius = 1000,
+	elevation_scale = 1,
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
 	colour_range = colourvalues::colour_values(1:6, palette = "viridis")
 ) {
 
