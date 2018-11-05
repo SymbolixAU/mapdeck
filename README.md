@@ -19,20 +19,18 @@ install.packages("mapdeck")
 
 #### Development version
 
-Version v0.1.002+ sees quite a lot of changes, so I need users to test their functions and report any errors. 
+Version v0.1.006+ sees quite a lot of changes, so I need users to test their functions and report any errors. 
 
 If you install the latest dev version and your plots aren't working, you can still use the old function, just add `_old` to the function call. 
 
 
-The fisrt change is `add_scatterplot()`
-
+To use the development version you need some other development dependant libraries
 
 ```r
-## Until googlePolylines 0.7.2+ is on CRAN you'll need 
-devtools::install_github("SymbolixAU/googlePolylines")
-
-## and colourvalues requries v0.2.0
+## install dependent libraries first
 devtools::install_github("SymbolixAU/colourvalues")
+devtools::install_github("SymbolixAU/spatialwidget")
+devtools::install_github("SymbolixAU/googlePolylines")
 
 ## then mapdeck
 devtools::install_github("SymbolixAU/mapdeck")
@@ -70,6 +68,7 @@ Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox you need 
 - Arc
 - GeoJSON
 - Grid
+- Hexagon
 - Line
 - Path 
 - Point cloud

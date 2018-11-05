@@ -1,4 +1,4 @@
-# mapdeck 0.1.005
+# mapdeck 0.1.006
 
 
 * `highlight_colour` argument
