@@ -38,3 +38,26 @@ Rcpp::List rcpp_text_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		geometry_columns
 	);
 }
+
+// [[Rcpp::export]]
+Rcpp::List rcpp_text_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
+                              Rcpp::List params, Rcpp::List geometry_columns ) {
+
+	int data_rows = data.nrows();
+
+	Rcpp::List lst_defaults = text_defaults( data_rows );  // initialise with defaults
+
+	std::unordered_map< std::string, std::string > text_colours = mapdeck::text::text_colours;
+	Rcpp::StringVector text_legend = mapdeck::text::text_legend;
+
+	return spatialwidget::api::create_geojson(
+		data,
+		data_types,
+		params,
+		lst_defaults,
+		text_colours,
+		text_legend,
+		data_rows,
+		geometry_columns
+	);
+}

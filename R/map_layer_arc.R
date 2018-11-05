@@ -129,8 +129,7 @@ add_arc <- function(
 	highlight_colour = "#AAFFFFFF",
 	legend = F,
 	legend_options = NULL,
-	palette = "viridis",
-	force = FALSE
+	palette = "viridis"
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )
@@ -184,6 +183,7 @@ add_arc <- function(
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
+	l[["data_type"]] <- NULL
 
 	layer_id <- layerId(layer_id, "arc")
 	checkHexAlpha(highlight_colour)

@@ -3,7 +3,7 @@
 # lons <- seq(-180, 180, by = 0.0001)
 # lats <- seq(-90, 90, by = 0.0001)
 #
-# n <- 1e5
+# n <- 5e5
 # df <- data.frame(
 # 	#	id = sample(letters[1:10], size = 26, replace = T)
 # 	id = 1:n
@@ -60,6 +60,10 @@
 # expr       min        lq     mean    median        uq       max neval
 # old 77.033577 77.695166 77.88357 77.887395 77.968052 78.833664     5
 # new  3.581377  3.682539  3.94304  4.018411  4.170176  4.262699     5
+
+
+
+
 
 
 # system.time({

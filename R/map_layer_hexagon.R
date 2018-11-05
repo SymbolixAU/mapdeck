@@ -56,8 +56,7 @@ add_hexagon <- function(
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
-	force = FALSE
+	colour_range = colourvalues::colour_values(1:6, palette = "viridis")
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )
@@ -68,7 +67,7 @@ add_hexagon <- function(
 	l[["light_settings"]] <- NULL
 	l[["layer_id"]] <- NULL
 
-	l <- resolve_data( data, l, force, "POINT" )
+	l <- resolve_data( data, l, "POINT" )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -82,8 +81,16 @@ add_hexagon <- function(
 	map <- addDependency(map, mapdeckHexagonDependency())
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
 
-	geometry_column <- c( "geometry" )
-	shape <- rcpp_hexagon_geo( data, data_types, l, geometry_column )
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+
+	if ( tp == "sf" ) {
+		geometry_column <- c( "geometry" )
+		shape <- rcpp_hexagon_geo( data, data_types, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( geometry = c("lon", "lat") )
+		shape <- rcpp_hexagon_geojson_df( data, data_types, l, geometry_column )
+	}
 
 	invoke_method(map, "add_hexagon_geo", shape[["data"]], layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range )
 }

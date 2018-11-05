@@ -34,6 +34,7 @@ mapdeckScreengridDependency <- function() {
 #' 'examples/3d-heatmap/heatmap-data.csv'
 #' ))
 #'
+#' df <- df[ !is.na(df$lng), ]
 #' df$weight <- sample(1:10, size = nrow(df), replace = T)
 #'
 #' mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%
@@ -59,8 +60,7 @@ add_screengrid <- function(
 	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
 	opacity = 0.8,
 	cell_size = 50,
-	layer_id = NULL,
-	force = FALSE
+	layer_id = NULL
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )
@@ -73,7 +73,7 @@ add_screengrid <- function(
 	l[["auto_highlight"]] <- NULL
 	l[["layer_id"]] <- NULL
 	l[["digits"]] <- NULL
-	l <- resolve_data( data, l, force, "POINT" )
+	l <- resolve_data( data, l, "POINT" )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -93,8 +93,16 @@ add_screengrid <- function(
 	map <- addDependency(map, mapdeckScreengridDependency())
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
 
-	geometry_column <- c( "geometry" )
-	shape <- rcpp_screengrid_geojson( data, data_types, l, geometry_column )
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+
+	if( tp == "sf" ) {
+		geometry_column <- c( "geometry" )
+		shape <- rcpp_screengrid_geojson( data, data_types, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( geometry = c("lon", "lat") )
+		shape <- rcpp_screengrid_geojson_df( data, data_types, l, geometry_column )
+	}
 
 	invoke_method(map, "add_screengrid_geo", shape[["data"]], layer_id, opacity, cell_size, colour_range )
 }

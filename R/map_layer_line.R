@@ -69,8 +69,7 @@ add_line <- function(
 	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
 	legend = FALSE,
-	legend_options = NULL,
-	force = FALSE
+	legend_options = NULL
 ) {
 
 	l <- as.list( match.call() )

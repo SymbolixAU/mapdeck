@@ -10,7 +10,7 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
   tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", light_settings = list(),
   layer_id = NULL, palette = "viridis", na_colour = "#808080FF",
-  legend = FALSE, legend_options = NULL, force = FALSE)
+  legend = FALSE, legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}

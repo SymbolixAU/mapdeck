@@ -34,6 +34,7 @@ mapdeckGridDependency <- function() {
 #' 'examples/3d-heatmap/heatmap-data.csv'
 #' ))
 #'
+#' df <- df[ !is.na(df$lng ), ]
 #'
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' add_grid(
@@ -60,8 +61,7 @@ add_grid <- function(
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
-	layer_id = NULL,
-	force = FALSE
+	layer_id = NULL
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )
@@ -73,7 +73,7 @@ add_grid <- function(
 	l[["colour_range"]] <- NULL
 	l[["auto_highlight"]] <- NULL
 	l[["layer_id"]] <- NULL
-	l <- resolve_data( data, l, force, "POINT" )
+	l <- resolve_data( data, l, "POINT" )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -90,10 +90,18 @@ add_grid <- function(
 
 	map <- addDependency(map, mapdeckGridDependency())
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
-	geometry_column <- c( "geometry" )
 
-	shape <- rcpp_grid_geojson( data, data_types, l, geometry_column )
-	# print(shape)
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+
+	if ( tp == "sf" ) {
+	  geometry_column <- c( "geometry" )
+	  shape <- rcpp_grid_geojson( data, data_types, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( geometry = c("lon", "lat") )
+		shape <- rcpp_grid_geojson_df( data, data_types, l, geometry_column )
+
+	}
 
 
 	invoke_method(

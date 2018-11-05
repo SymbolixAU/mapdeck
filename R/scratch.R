@@ -369,7 +369,7 @@
 # library(sf)
 # library(geojsonsf)
 #
-# sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+# sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
 # sf <- sf::st_cast(sf, "POLYGON")
 #
 # set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))

@@ -96,8 +96,7 @@ add_polygon <- function(
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
-	legend_options = NULL,
-	force = FALSE
+	legend_options = NULL
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )
@@ -110,7 +109,7 @@ add_polygon <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, force, "POLYGON" )
+	l <- resolve_data( data, l, "POLYGON" )
 
 
 	# data <- normaliseSfData(data, "POLYGON", multi = FALSE)
