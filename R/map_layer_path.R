@@ -96,26 +96,23 @@ add_path <- function(
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
 
 	#print( l )
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
 
-	geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-	## l[["geometry"]] <- NULL
-	#print( geometry_column )
+	if ( tp == "sf" ) {
+		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
+		shape <- rcpp_path_geojson( data, data_types, l, geometry_column )
+		jsfunc <- "add_path_geo"
+	} else if ( tp == "sfencoded" ) {
+		jsfunc <- "add_path_polyline"
+		geometry_column <- "polyline"
+		shape <- rcpp_path_polyline( data, data_types, l, geometry_column )
+	}
 
-	# print( head( data ) )
-
-	shape <- rcpp_path_geojson( data, data_types, l, geometry_column );
-
-	#print( shape )
-
-	# if ( l[["jsfunction"]] == "geojson" ) {
-	# 	l[["jsfunction"]] <- NULL
-	# 	l[["geoconversion"]] <- NULL
-
-	  invoke_method(map, "add_path_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
-	# } else if ( l[["jsfunction"]] == "decode") {
-	#
-	# 	invoke_method(map, "add_path2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
-	# }
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
+		highlight_colour, shape[["legend"]]
+		)
 }
 
 

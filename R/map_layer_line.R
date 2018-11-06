@@ -122,6 +122,10 @@ add_line <- function(
 		geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
 		shape <- rcpp_line_geojson_df( data, data_types, l, geometry_column )
 	}
+	# } else if ( tp == "sfencoded" ) {
+	# 	geometry_column <- "geometry"
+	# 	shape <- rcpp_line_polyline( data, data_types, l, geometry_column )
+	# }
 
 	invoke_method(map, "add_line_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }

@@ -24,7 +24,7 @@ function add_path( map_id, path_data, layer_id, auto_highlight, legend ) {
   }
 }
 
-function add_path2( map_id, path_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_path_polyline( map_id, path_data, layer_id, auto_highlight, highlight_colour, legend ) {
     
   console.log( path_data );
 

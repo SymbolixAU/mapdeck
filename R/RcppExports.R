@@ -17,6 +17,10 @@ rcpp_grid_geojson_df <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_grid_geojson_df`, data, data_types, params, geometry_columns)
 }
 
+rcpp_grid_polyline <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_grid_polyline`, data, data_types, params, geometry_columns)
+}
+
 rcpp_hexagon_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_hexagon_geojson`, data, data_types, params, geometry_columns)
 }
@@ -35,6 +39,10 @@ rcpp_line_geojson_df <- function(data, data_types, params, geometry_columns) {
 
 rcpp_path_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_path_geojson`, data, data_types, params, geometry_columns)
+}
+
+rcpp_path_polyline <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_path_polyline`, data, data_types, params, geometry_columns)
 }
 
 rcpp_pointcloud_geojson <- function(data, data_types, params, geometry_columns) {

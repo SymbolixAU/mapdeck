@@ -35,7 +35,7 @@ function add_grid_geo( map_id, grid_data, layer_id, cell_size, extruded, elevati
   update_layer( map_id, 'grid-'+layer_id, gridLayer );
 }
 
-function add_grid2( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour ) {
+function add_grid_polyline( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour ) {
 
   const gridLayer = new deck.GridLayer({
     map_id: map_id,

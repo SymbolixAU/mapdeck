@@ -37,23 +37,25 @@ Rcpp::List rcpp_path_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 	);
 }
 
+// [[Rcpp::export]]
+Rcpp::List rcpp_path_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
+                               Rcpp::List params, Rcpp::StringVector geometry_columns ) {
 
+	int data_rows = data.nrows();
 
+	Rcpp::List lst_defaults = path_defaults( data_rows );  // initialise with defaults
+	std::unordered_map< std::string, std::string > path_colours = mapdeck::path::path_colours;
+	Rcpp::StringVector path_legend = mapdeck::path::path_legend;
 
-//
-// // [[Rcpp::export]]
-// Rcpp::List rcpp_path_geo( Rcpp::DataFrame data, Rcpp::List params ) {
-//
-// 	int data_rows = data.nrows();
-//
-// 	Rcpp::List lst_defaults = path_defaults( data_rows );  // initialise with defaults
-// 	Rcpp::StringVector path_columns = mapdeck::path::path_columns;
-// 	std::map< std::string, std::string > path_colours = mapdeck::path::path_colours;
-// 	Rcpp::StringVector path_legend = mapdeck::path::path_legend;
-//
-// 	return create_data(
-// 		data, params, lst_defaults,
-//     path_columns, path_colours, path_legend,
-// 		 data_rows
-// 		);
-//  }
+	return spatialwidget::api::create_polyline(
+		data,
+		data_types,
+		params,
+		lst_defaults,
+		path_colours,
+		path_legend,
+		data_rows,
+		geometry_columns,
+		true  // jsonify legend
+	);
+}

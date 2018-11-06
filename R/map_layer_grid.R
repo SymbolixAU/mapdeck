@@ -46,6 +46,20 @@ mapdeckGridDependency <- function() {
 #'   , layer_id = "grid_layer"
 #'   , auto_highlight = TRUE
 #' )
+#'
+#' ## using sf object
+#' library(sf)
+#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#'
+#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' add_grid(
+#'   data = sf
+#'   , cell_size = 5000
+#'   , elevation_scale = 50
+#'   , layer_id = "grid_layer"
+#'   , auto_highlight = TRUE
+#' )
+#'
 #' }
 #'
 #' @export
@@ -94,18 +108,22 @@ add_grid <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
+	jsfunc <- "add_grid_geo"
+
 	if ( tp == "sf" ) {
 	  geometry_column <- c( "geometry" )
 	  shape <- rcpp_grid_geojson( data, data_types, l, geometry_column )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
 		shape <- rcpp_grid_geojson_df( data, data_types, l, geometry_column )
-
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_grid_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_grid_polyline"
 	}
 
-
 	invoke_method(
-		map, "add_grid_geo", shape[["data"]], layer_id, cell_size,
+		map, jsfunc, shape[["data"]], layer_id, cell_size,
 		jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale,
 		colour_range, auto_highlight, highlight_colour
 		)

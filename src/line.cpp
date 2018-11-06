@@ -59,3 +59,6 @@ Rcpp::List rcpp_line_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 		true  // jsonify legend
 	);
 }
+
+
+

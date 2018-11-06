@@ -64,6 +64,20 @@ add_grid(
   , layer_id = "grid_layer"
   , auto_highlight = TRUE
 )
+
+## using sf object
+library(sf)
+sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+
+mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+add_grid(
+  data = sf
+  , cell_size = 5000
+  , elevation_scale = 50
+  , layer_id = "grid_layer"
+  , auto_highlight = TRUE
+)
+
 }
 
 }

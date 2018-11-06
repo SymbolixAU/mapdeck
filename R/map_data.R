@@ -79,6 +79,8 @@ resolve_data.sfencoded <- function( data, l, sf_geom ) {
 
 	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom, multi = TRUE), ]
 
+	l[["data_type"]] <- "sfencoded"
+	l[["data"]] <- data
 	l <- resolve_data.sfencodedLite( data, l )
 	return( l )
 }
@@ -86,15 +88,19 @@ resolve_data.sfencoded <- function( data, l, sf_geom ) {
 #' @export
 resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
 	## TODO( requries polyline parameter )
-	polyline <- findEncodedColumn(data, l[["polyline"]])
+	# polyline <- findEncodedColumn(data, l[["polyline"]])
 
 	## - if sf object, and geometry column has not been supplied, it needs to be
 	## added to objArgs after the match.call() function
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
+	# if( !is.null(polyline) && !polyline %in% names(l) ) {
+	#	l[['polyline']] <- polyline
+	polyline <- attr( data, "encoded_column")
+	data <- unlistMultiGeometry( data, polyline )  ## TODO( move this to C++)
+	# }
 
+	l[["polyline"]] <- polyline
+
+	l[["data_type"]] <- "sfencoded"
 	l[["data"]] <- data ## attach the data becaue it gets modified and it needs to be returend
 	return( l )
 }
