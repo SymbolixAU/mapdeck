@@ -1,6 +1,6 @@
 #include <Rcpp.h>
 
-#include "mapdeck_defaults.hpp"".hpp"
+#include "mapdeck_defaults.hpp"
 #include "layers/hexagon.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 

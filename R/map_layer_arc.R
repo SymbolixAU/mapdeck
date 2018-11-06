@@ -98,6 +98,8 @@ mapdeckArcDependency <- function() {
 #'    , origin = 'geometry'
 #'    , destination = 'geometry.1'
 #'    , layer_id = 'arcs'
+#'    , stroke_from = "airport1"
+#'    , stroke_to = "airport2"
 #' )
 #'
 #'
@@ -142,47 +144,13 @@ add_arc <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_od_data( data, l )
-
-# 	## if origin && destination == one column each, it's an sf_encoded
-# 	## else, it's two column, which need to be encoded!
-#   if ( length(origin) == 2 && length(destination) == 2) {
-#   	## lon / lat columns
-#   	data[[ origin[1] ]] <- googlePolylines::encode(
-#   		data[, origin, drop = F ]
-#   		, lon = origin[1]
-#   		, lat = origin[2]
-#   		, byrow = T
-#   		)
-#   	data[[ destination[1] ]] <- googlePolylines::encode(
-#   		data[, destination, drop = F ]
-#   		, lon = destination[1]
-#   		, lat = destination[2]
-#   		, byrow = T
-#   		)
-#
-#   	l[['origin']] <- origin[1]
-#   	l[['destination']] <- destination[1]
-#
-#   } else if (length(origin) == 1 && length(destination) == 1) {
-#   	## encoded
-#   	data <- normaliseMultiSfData(data, origin, destination)
-#   	o <- unlist(data[[origin]])
-#   	d <- unlist(data[[destination]])
-#   	if(length(o) != length(d)) {
-#   		stop("There are a different number of origin and destination POINTs, possibly due to MULTIPOINT geometries?")
-#   	}
-#   	data[[origin]] <- o
-#   	data[[destination]] <- d
-#
-#   } else {
-#   	stop("expecting lon/lat origin destinations or sfc columns")
-#   }
+	l <- resolve_od_data( data, l, origin, destination )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
+	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
 	layer_id <- layerId(layer_id, "arc")
@@ -191,10 +159,13 @@ add_arc <- function(
 	map <- addDependency(map, mapdeckArcDependency())
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
 
-	geometry_column <- c( "origin", "destination" )
-
-	shape <- rcpp_arc_geojson( data, data_types, l, geometry_column )
-	# print( shape )
+  if ( tp == "sf" ) {
+		geometry_column <- c( "origin", "destination" )
+		shape <- rcpp_arc_geojson( data, data_types, l, geometry_column )
+  } else if ( tp == "df" ) {
+  	geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
+  	shape <- rcpp_arc_geojson_df( data, data_types, l, geometry_column )
+  }
 
 	invoke_method(map, "add_arc_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }

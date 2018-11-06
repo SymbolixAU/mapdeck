@@ -22,6 +22,7 @@ std::unordered_map< std::string, std::string > arc_colours = {
 Rcpp::StringVector arc_legend = Rcpp::StringVector::create(
 	"stroke_from", "stroke_to"
 );
+
 } // namespace arc
 } // namespace mapdeck
 

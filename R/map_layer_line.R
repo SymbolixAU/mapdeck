@@ -45,6 +45,25 @@ mapdeckLineDependency <- function() {
 #'  )
 #' }
 #'
+#' ## Using a 2-sfc-column sf object
+#' library(sf)
+#'
+#' sf_flights <- cbind(
+#'   sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
+#'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
+#' )
+#'
+#' mapdeck(
+#'   token = key
+#' ) %>%
+#'  add_line(
+#'    data = sf_flights
+#'    , origin = 'geometry'
+#'    , destination = 'geometry.1'
+#'    , layer_id = 'arcs'
+#'    , stroke_colour = "airport1"
+#' )
+#'
 #' @details
 #'
 #' MULTIPOINT objects will be treated as single points. That is, if an sf objet
@@ -81,12 +100,14 @@ add_line <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_od_data( data, l )
+	l <- resolve_od_data( data, l, origin, destination )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
 
 	layer_id <- layerId(layer_id, "line")
 	checkHexAlpha(highlight_colour)
@@ -94,10 +115,13 @@ add_line <- function(
 	map <- addDependency(map, mapdeckLineDependency())
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
 
-	geometry_column <- c( "origin", "destination" )
-
-	shape <- rcpp_line_geojson( data, data_types, l, geometry_column )
-	#print( shape )
+	if ( tp == "sf" ) {
+		geometry_column <- c( "origin", "destination" )
+		shape <- rcpp_line_geojson( data, data_types, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
+		shape <- rcpp_line_geojson_df( data, data_types, l, geometry_column )
+	}
 
 	invoke_method(map, "add_line_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }

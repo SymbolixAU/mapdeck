@@ -8,15 +8,36 @@ sfrow <- function( sf , sfc_type ) {
 }
 
 
-resolve_od_data <- function( data, l ) UseMethod("resolve_od_data")
+resolve_od_data <- function( data, l, origin, destination ) UseMethod("resolve_od_data")
 
-resolve_od_data.sf <- function( data, l ) {
+resolve_od_data.sf <- function( data, l, origin, destination ) {
 	if ( is.null( l[["origin"]] ) || is.null( l[["destination"]] ) ) {
 		stop("origin and destination columns required")
 	}
+	l[["data_type"]] <- "sf"
 	return( l )
 }
 
+resolve_od_data.data.frame <- function( data, l, origin, destination ) {
+	if ( is.null( l[["origin"]] ) || is.null( l[["destination"]] ) ) {
+		stop("origin and destination columns required")
+	}
+	#l[["data"]] <- data
+	l[["data_type"]] <- "df"
+
+	l[["start_lon"]] <- origin[1]
+	l[["start_lat"]] <- origin[2]
+	l[["end_lon"]] <- destination[1]
+	l[["end_lat"]] <- destination[2]
+
+	l[["origin"]] <- NULL
+	l[["destination"]] <- NULL
+
+	#print("data.frame OD")
+	#print(l)
+
+	return( l )
+}
 
 ## data using a single geometry ()
 resolve_data <- function( data, l, sf_geom ) UseMethod( "resolve_data" )
@@ -89,6 +110,8 @@ resolve_data.data.frame <- function( data, l, sf_geom ) {
 	# l[["geoconversion"]] <- "dataframe"
 	# l[["jsfunction"]] <- "geojson"
 
+	print("data.frame" )
+	#print(l)
 	return( l )
 	#stop("not done yet")
 }

@@ -5,6 +5,10 @@ rcpp_arc_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_arc_geojson`, data, data_types, params, geometry_columns)
 }
 
+rcpp_arc_geojson_df <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_arc_geojson_df`, data, data_types, params, geometry_columns)
+}
+
 rcpp_grid_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_grid_geojson`, data, data_types, params, geometry_columns)
 }
@@ -23,6 +27,10 @@ rcpp_hexagon_geojson_df <- function(data, data_types, params, geometry_columns) 
 
 rcpp_line_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_line_geojson`, data, data_types, params, geometry_columns)
+}
+
+rcpp_line_geojson_df <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_line_geojson_df`, data, data_types, params, geometry_columns)
 }
 
 rcpp_path_geojson <- function(data, data_types, params, geometry_columns) {
