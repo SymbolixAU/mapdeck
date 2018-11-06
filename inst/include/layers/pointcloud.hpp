@@ -21,6 +21,7 @@ namespace pointcloud {
 	Rcpp::StringVector pointcloud_legend = Rcpp::StringVector::create(
 		"fill_colour"
 	);
+
 } // namespace pointcloud
 } // namespace mapdeck
 

@@ -94,4 +94,23 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>
  )
 }
 
+## Using a 2-sfc-column sf object
+library(sf)
+
+sf_flights <- cbind(
+  sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
+  , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
+)
+
+mapdeck(
+  token = key
+) \%>\%
+ add_line(
+   data = sf_flights
+   , origin = 'geometry'
+   , destination = 'geometry.1'
+   , layer_id = 'arcs'
+   , stroke_colour = "airport1"
+)
+
 }

@@ -35,7 +35,8 @@ Rcpp::List rcpp_text_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		text_colours,
 		text_legend,
 		data_rows,
-		geometry_columns
+		geometry_columns,
+		true  // jsonify legend
 	);
 }
 
@@ -58,6 +59,7 @@ Rcpp::List rcpp_text_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 		text_colours,
 		text_legend,
 		data_rows,
-		geometry_columns
+		geometry_columns,
+		true  // jsonify legend
 	);
 }

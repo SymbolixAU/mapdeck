@@ -82,7 +82,7 @@ df$z <- sample(10000:10000000, size = nrow(df))
 
 mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') \%>\%
 add_pointcloud(
-  data = df
+  data = df[1:5, ]
   , lon = 'lon'
   , lat = 'lat'
   , elevation = 'z'

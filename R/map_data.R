@@ -22,7 +22,6 @@ resolve_od_data.data.frame <- function( data, l, origin, destination ) {
 	if ( is.null( l[["origin"]] ) || is.null( l[["destination"]] ) ) {
 		stop("origin and destination columns required")
 	}
-	#l[["data"]] <- data
 	l[["data_type"]] <- "df"
 
 	l[["start_lon"]] <- origin[1]
@@ -33,10 +32,27 @@ resolve_od_data.data.frame <- function( data, l, origin, destination ) {
 	l[["origin"]] <- NULL
 	l[["destination"]] <- NULL
 
-	#print("data.frame OD")
-	#print(l)
+	return( l )
+}
+
+resolve_elevation_data <- function( data, l, elevation, sf_geom ) UseMethod( "resolve_elevation_data" )
+
+#' @export
+resolve_elevation_data.data.frame <- function( data, l, elevation, sf_geom ) {
+	if ( sf_geom != "POINT" )
+		stop("only POINTS are supported for data.frames")
+
+	l[["data"]] <- data
+	l[["data_type"]] <- "df"
 
 	return( l )
+}
+
+#' @export
+resolve_elevation_data.sf <- function( data, l, elevation, sf_geom ) {
+	return(
+		resolve_data( data, l, sf_geom )
+	)
 }
 
 ## data using a single geometry ()
@@ -50,14 +66,10 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 	sfc_col <- attr( data, "sf_column" )
 	l[["geometry"]] <- sfc_col
 
-	if( paste0( "sfc_", sf_col) != toupper( sf_geom ) ) {
+	if( paste0( "sfc_", sfc_col) != toupper( sf_geom ) ) {
 		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
-
 	}
-
-	# l[["polyline"]] <- sfc_col
-	# l[["jsfunction"]] <- "geojson"
-	# l[["geoconversion"]] <- "sf"
+	l[["data_type"]] <- "sf"
 	return(l)
 }
 
@@ -67,7 +79,6 @@ resolve_data.sfencoded <- function( data, l, sf_geom ) {
 
 	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom, multi = TRUE), ]
 
-	# l[["geoconversion"]] <- "sfencoded"
 	l <- resolve_data.sfencodedLite( data, l )
 	return( l )
 }
@@ -85,9 +96,6 @@ resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
 	}
 
 	l[["data"]] <- data ## attach the data becaue it gets modified and it needs to be returend
-	# l[["jsfunction"]] <- "decode"
-	# l[["geoconversion"]] <- "sfencodedLite"
-	l[["data_type"]] <- "sf"
 	return( l )
 }
 
@@ -99,21 +107,11 @@ resolve_data.data.frame <- function( data, l, sf_geom ) {
 
 	if ( sf_geom != "POINT" )
 		stop("only POINTS are supported for data.frames")
-	## TODO( lon & lat are required )
-	# lon <- l[["lon"]]
-	# lat <- l[["lat"]]
-
-	## convert lon & lat columns to a matrix? like waht sf::st_as_sf(df, coords = c() ) does?
 
 	l[["data"]] <- data
 	l[["data_type"]] <- "df"
-	# l[["geoconversion"]] <- "dataframe"
-	# l[["jsfunction"]] <- "geojson"
 
-	print("data.frame" )
-	#print(l)
 	return( l )
-	#stop("not done yet")
 }
 
 resolve_data.default <- function( data ) stop("This type of data is not supported")
@@ -122,7 +120,6 @@ resolve_data.default <- function( data ) stop("This type of data is not supporte
 resolve_palette <- function( l, palette ) {
 
 	if ( is.matrix( palette ) ) {
-		#print("resolving matrix palette")
 		l[['palette']] <- palette
 	}
 	return( l )

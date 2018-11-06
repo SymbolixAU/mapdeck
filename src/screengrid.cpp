@@ -29,7 +29,8 @@ Rcpp::List rcpp_screengrid_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		screengrid_colours,
 		screengrid_legend,
 		data_rows,
-		geometry_columns
+		geometry_columns,
+		true  // jsonify legend
 	);
 }
 
@@ -52,6 +53,7 @@ Rcpp::List rcpp_screengrid_geojson_df( Rcpp::DataFrame data, Rcpp::List data_typ
 		screengrid_colours,
 		screengrid_legend,
 		data_rows,
-		geometry_columns
+		geometry_columns,
+		true  // jsonify legend
 	);
 }

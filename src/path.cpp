@@ -32,9 +32,13 @@ Rcpp::List rcpp_path_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		path_colours,
 		path_legend,
 		data_rows,
-		geometry_columns
+		geometry_columns,
+		true  // jsonify legend
 	);
 }
+
+
+
 
 //
 // // [[Rcpp::export]]

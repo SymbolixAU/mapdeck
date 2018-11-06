@@ -32,7 +32,8 @@ Rcpp::List rcpp_scatterplot_geojson( Rcpp::DataFrame data, Rcpp::List data_types
 		scatterplot_colours,
 		scatterplot_legend,
 		data_rows,
-		geometry_columns
+		geometry_columns,
+		true  // jsonify legend
 	);
 }
 
@@ -55,6 +56,7 @@ Rcpp::List rcpp_scatterplot_geojson_df( Rcpp::DataFrame data, Rcpp::List data_ty
 		scatterplot_colours,
 		scatterplot_legend,
 		data_rows,
-		geometry_columns
+		geometry_columns,
+		true  // jsonify legend
 	);
 }

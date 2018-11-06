@@ -30,7 +30,8 @@ Rcpp::List rcpp_grid_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		grid_colours,
 		grid_legend,
 		data_rows,
-		geometry_columns
+		geometry_columns,
+		true  // jsonify legend
 	);
 
 }
@@ -54,7 +55,8 @@ Rcpp::List rcpp_grid_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 		grid_colours,
 		grid_legend,
 		data_rows,
-		geometry_columns
+		geometry_columns,
+		true  // jsonify legend
 	);
 
 }

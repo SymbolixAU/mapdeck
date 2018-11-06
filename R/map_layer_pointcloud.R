@@ -31,7 +31,7 @@ mapdeckPointcloudDependency <- function() {
 #'
 #' mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
 #' add_pointcloud(
-#'   data = df
+#'   data = df[1:5, ]
 #'   , lon = 'lon'
 #'   , lat = 'lat'
 #'   , elevation = 'z'
@@ -75,7 +75,7 @@ add_pointcloud <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, "POINT" )
+	l <- resolve_elevation_data( data, l, elevation, "POINT" )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -88,12 +88,6 @@ add_pointcloud <- function(
 	map <- addDependency(map, mapdeckPointcloudDependency())
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
 
-	# if (l[["geoconversion"]] == "dataframe" ) {
-	#   shape <- rcpp_scatterplot_df( data, l, lon, lat)
-	# } else if ( l[["geoconversion"]] == "sf" ) {
-	#
-	#
-
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
@@ -101,24 +95,14 @@ add_pointcloud <- function(
 		geometry_column <- c( "geometry" )
 		shape <- rcpp_pointcloud_geojson( data, data_types, l, geometry_column )
 	} else if ( tp == "df" ) {
-		geometry_column <- list( geometry = c("lon","lat"))
+		geometry_column <- list( geometry = c("lon","lat","elevation") )
 		shape <- rcpp_pointcloud_geojson_df( data, data_types, l, geometry_column )
 	}
-	#
-	# 	}
-	#
-	#
-	#
-	# 	if ( l[["jsfunction"]] == "geojson" ) {
-	#
-	# print(shape)
 
-	invoke_method(map, "add_pointcloud_geo", shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]] )
-	#
-	# 	} else if ( l[["jsfunction"]] == "decode") {
-	#
-	# 		invoke_method(map, "add_scatterplot2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
-	# 	}
+	invoke_method(
+		map, "add_pointcloud_geo", shape[["data"]], layer_id, light_settings,
+		auto_highlight, highlight_colour, shape[["legend"]]
+		)
 }
 
 

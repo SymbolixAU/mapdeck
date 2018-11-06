@@ -33,7 +33,8 @@ Rcpp::List rcpp_pointcloud_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		pointcloud_colours,
 		pointcloud_legend,
 		data_rows,
-		geometry_columns
+		geometry_columns,
+		true  // jsonify legend
 	);
 }
 
@@ -56,6 +57,8 @@ Rcpp::List rcpp_pointcloud_geojson_df( Rcpp::DataFrame data, Rcpp::List data_typ
 		pointcloud_colours,
 		pointcloud_legend,
 		data_rows,
-		geometry_columns
+		geometry_columns,
+		true,  // jsonify legend
+		true   // elevation
 	);
 }

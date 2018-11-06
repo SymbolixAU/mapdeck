@@ -31,7 +31,8 @@ Rcpp::List rcpp_polygon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		polygon_colours,
 		polygon_legend,
 		data_rows,
-		geometry_columns
+		geometry_columns,
+		true  // jsonify legend
 	);
 }
 
