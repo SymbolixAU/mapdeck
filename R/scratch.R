@@ -550,3 +550,18 @@
 #   , cell_size = 10
 # )
 
+# x <- "lat"
+# lat <- capitals
+# mapdeck (
+# 					 style = 'mapbox://styles/mapbox/dark-v9',
+# 					 pitch = 45) %>%
+# 	add_scatterplot (
+# 		data = lat,
+# 		lat = x,
+# 		lon = "lon",
+# 		radius = 1000000,
+# 		fill_colour = "country",
+# 		layer_id = "scatter_layer"
+# 	)
+
+
