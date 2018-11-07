@@ -79,10 +79,6 @@ add_pointcloud <- function(
 
 	# message("Using development version. Please check plots carefully")
 
-	if ( inherits( data, "sfencoded" ) || inherits( data, "sfencoded" ) ) {
-		stop("data type not supported")
-	}
-
 	l <- as.list( match.call( expand.dots = F) )
 	l[[1]] <- NULL    ## function call
 	l[["map"]] <- NULL
@@ -108,6 +104,7 @@ add_pointcloud <- function(
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
+	jsfunc <- "add_pointcloud_geo"
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
@@ -115,10 +112,14 @@ add_pointcloud <- function(
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon","lat","elevation") )
 		shape <- rcpp_pointcloud_geojson_df( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_pointcloud_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_pointcloud_polyline"
 	}
 
 	invoke_method(
-		map, "add_pointcloud_geo", shape[["data"]], layer_id, light_settings,
+		map, jsfunc, shape[["data"]], layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]]
 		)
 }

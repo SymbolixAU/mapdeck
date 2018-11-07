@@ -61,6 +61,10 @@ rcpp_pointcloud_geojson_df <- function(data, data_types, params, geometry_column
     .Call(`_mapdeck_rcpp_pointcloud_geojson_df`, data, data_types, params, geometry_columns)
 }
 
+rcpp_pointcloud_polyline <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_pointcloud_polyline`, data, data_types, params, geometry_columns)
+}
+
 rcpp_polygon_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_polygon_geojson`, data, data_types, params, geometry_columns)
 }

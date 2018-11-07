@@ -169,9 +169,9 @@ add_arc <- function(
   	geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
   	shape <- rcpp_arc_geojson_df( data, data_types, l, geometry_column )
   } else if ( tp == "sfencoded" ) {
-  	# geometry_column <- c("origin", "destination")
-  	# shape <- rcpp_arc_polyline( data, data_types, l, geometry_column )
-  	# jsfunc <- "add_arc_polyline"
+  	geometry_column <- c("origin", "destination")
+  	shape <- rcpp_arc_polyline( data, data_types, l, geometry_column )
+  	jsfunc <- "add_arc_polyline"
   }
 
 	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )

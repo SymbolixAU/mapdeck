@@ -8,7 +8,7 @@
 Rcpp::List scatterplot_defaults(int n) {
 	return Rcpp::List::create(
 		//_["polyline"] = mapdeck::defaults::default_polyline(n),
-		_["radius"] = mapdeck::defaults::default_radius(n),
+		//_["radius"] = mapdeck::defaults::default_radius(n),
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n)
 	);
 }

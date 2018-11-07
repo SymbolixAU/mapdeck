@@ -123,6 +123,8 @@ add_grid <- function(
 		jsfunc <- "add_grid_polyline"
 	}
 
+	#print( shape )
+
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, cell_size,
 		jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale,

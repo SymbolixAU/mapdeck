@@ -75,11 +75,18 @@ resolve_elevation_data <- function( data, l, elevation, sf_geom ) UseMethod( "re
 
 #' @export
 resolve_elevation_data.data.frame <- function( data, l, elevation, sf_geom ) {
-	if ( sf_geom != "POINT" )
-		stop("only POINTS are supported for data.frames")
+
+	if ( !is.null( l[["polyline"]] ) ) {
+		## the user supplied a polyline in a data.frame, so we need to allow this through
+		l[["data_type"]] <- "sfencoded"
+	} else {
+	  if ( sf_geom != "POINT" )
+		  stop("unsupported data type")
+
+		l[["data_type"]] <- "df"
+	}
 
 	l[["data"]] <- data
-	l[["data_type"]] <- "df"
 
 	return( l )
 }
@@ -89,6 +96,31 @@ resolve_elevation_data.sf <- function( data, l, elevation, sf_geom ) {
 	return(
 		resolve_data( data, l, sf_geom )
 	)
+}
+
+#' @export
+resolve_elevation_data.sfencoded <- function( data, l, elevation, sf_geom ) {
+
+	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom, multi = TRUE), ]
+
+	l[["data_type"]] <- "sfencoded"
+	l[["data"]] <- data
+	l <- resolve_elevation_data.sfencodedLite( data, l, elevation, sf_geom )
+	return( l )
+}
+
+#' @export
+resolve_elevation_data.sfencodedLite <- function( data, l, elevation, sf_geom ) {
+	polyline <- attr( data, "encoded_column")
+	if ( sf_geom != "POLYGON" ) {   ## TODO( I don't like this)
+		data <- unlistMultiGeometry( data, polyline )  ## TODO( move this to C++)
+	}
+
+	l[["polyline"]] <- polyline
+
+	l[["data_type"]] <- "sfencoded"
+	l[["data"]] <- data ## attach the data becaue it gets modified and it needs to be returend
+	return( l )
 }
 
 ## data using a single geometry ()
@@ -147,13 +179,16 @@ resolve_data.data.frame <- function( data, l, sf_geom ) {
 
 	## data.frame will only really work for points, with a lon & lat column
 	## for speed, need to turn to GeoJSON?
+	if ( !is.null( l[["polyline"]] ) ) {
+		## the user supplied a polyline in a data.frame, so we need to allow this through
+		l[["data_type"]] <- "sfencoded"
+	} else {
+		if ( sf_geom != "POINT" )
+			stop("unsupported data type")
 
-	if ( sf_geom != "POINT" )
-		stop("only POINTS are supported for data.frames")
-
+		l[["data_type"]] <- "df"
+	}
 	l[["data"]] <- data
-	l[["data_type"]] <- "df"
-
 	return( l )
 }
 

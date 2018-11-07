@@ -6,7 +6,7 @@
 
 Rcpp::List grid_defaults(int n) {
 	return Rcpp::List::create(
-		_["polyline"] = mapdeck::defaults::default_polyline(n)
+		//_["polyline"] = mapdeck::defaults::default_polyline(n)
 	);
 }
 
