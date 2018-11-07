@@ -40,7 +40,8 @@ function add_text_geo( map_id, text_data, layer_id ) {
   update_layer( map_id, 'text-'+layer_id, textLayer );
 }
 
-function add_text2( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend ) {
+    
   const textLayer = new TextLayer({
     map_id: map_id,
     id: 'text-'+layer_id,

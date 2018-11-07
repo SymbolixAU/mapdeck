@@ -64,6 +64,7 @@ add_text <- function(
 	alignment_baseline = NULL,
 	tooltip = NULL,
 	layer_id = NULL,
+	id = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
@@ -98,6 +99,7 @@ add_text <- function(
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
+	jsfunc <- "add_text_geo"
 
 	if( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
@@ -105,9 +107,13 @@ add_text <- function(
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
 		shape <- rcpp_text_geojson_df( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_text_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_text_polyline"
 	}
 
-	invoke_method(map, "add_text_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
 }
 
 #' @export

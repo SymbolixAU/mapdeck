@@ -44,7 +44,9 @@ function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colo
   }
 }
 
-function add_arc2( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_arc_polyline( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend ) {
+    
+    console.log( arc_data );
 
   const arcLayer = new ArcLayer({
     map_id: map_id,

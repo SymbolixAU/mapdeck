@@ -30,8 +30,6 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highl
 }
 
 function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
-
-  console.log( polygon_data ) ;
     
   //console.log( legend );
   const polygonLayer = new PolygonLayer({
@@ -64,7 +62,8 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
 }
 
 
-function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
+function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
+    
 
   const polygonLayer = new PolygonLayer({
     map_id: map_id,
@@ -89,6 +88,7 @@ function add_polygon2( map_id, polygon_data, layer_id, light_settings, auto_high
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
+    console.log( polygonLayer );
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
@@ -103,7 +103,6 @@ function decode_polygons( polylines ) {
       coordinates.push( decode_polyline( p ) );
     }
   }
-
   return coordinates;
 }
 

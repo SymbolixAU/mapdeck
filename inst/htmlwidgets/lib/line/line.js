@@ -46,7 +46,7 @@ function add_line_geo( map_id, line_data, layer_id, auto_highlight, highlight_co
 }
 
 
-function add_line2( map_id, line_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_line_polyline( map_id, line_data, layer_id, auto_highlight, highlight_colour, legend ) {
 
   const lineLayer = new LineLayer({
     map_id: map_id,

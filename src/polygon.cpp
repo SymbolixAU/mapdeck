@@ -36,6 +36,29 @@ Rcpp::List rcpp_polygon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 	);
 }
 
+// [[Rcpp::export]]
+Rcpp::List rcpp_polygon_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
+                                 Rcpp::List params, Rcpp::StringVector geometry_columns  ) {
+
+	int data_rows = data.nrows();
+
+	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
+	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::polygon::polygon_colours;
+	Rcpp::StringVector polygon_legend = mapdeck::polygon::polygon_legend;
+
+	return spatialwidget::api::create_polyline(
+		data,
+		data_types,
+		params,
+		lst_defaults,
+		polygon_colours,
+		polygon_legend,
+		data_rows,
+		geometry_columns,
+		true  // jsonify legend
+	);
+}
+
 
 // // [[Rcpp::export]]
 // Rcpp::List rcpp_polygon( Rcpp::DataFrame data, Rcpp::List params ) {

@@ -5,7 +5,7 @@
 \title{Add Geojson}
 \usage{
 add_geojson(map, data = get_map_data(map), layer_id = NULL,
-  lineColor = "#440154", fillColor = "#440154", radius = 1,
+  stroke_colour = "#440154", fill_colour = "#440154", radius = 1,
   lineWidth = 1, light_settings = list(), elevation = 0,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF")
 }
@@ -18,10 +18,6 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{lineColor}{hex value for all line colours. See details}
-
-\item{fillColor}{hex value for all fill colours. See details}
-
 \item{radius}{radius of points in meters. See details}
 
 \item{lineWidth}{width of lines in meters. See details}
@@ -33,6 +29,10 @@ to conflict and not plot correctly}
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
+
+\item{lineColor}{hex value for all line colours. See details}
+
+\item{fillColor}{hex value for all fill colours. See details}
 }
 \description{
 The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,

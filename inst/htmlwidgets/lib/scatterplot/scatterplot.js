@@ -21,7 +21,7 @@ function add_scatterplot( map_id, scatter_data, layer_id, auto_highlight, legend
 }
 
 
-function add_scatterplot2( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend ) {
   const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,

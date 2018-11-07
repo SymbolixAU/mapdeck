@@ -93,6 +93,7 @@ add_polygon <- function(
 	highlight_colour = "#AAFFFFFF",
 	light_settings = list(),
 	layer_id = NULL,
+	id = NULL,
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
@@ -133,17 +134,23 @@ add_polygon <- function(
 	map <- addDependency(map, mapdeckPolygonDependency())
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
 
-	geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
 
-	# shape <- rcpp_polygon_timer( data, l )
-	# print( shape )
+	jsfunc <- "add_polygon_geo"
 
- 	shape <- rcpp_polygon_geojson( data, data_types, l, geometry_column )
- 	# print( shape )
+	if ( tp == "sf" ) {
+		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
+	 	shape <- rcpp_polygon_geojson( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_polygon_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_polygon_polyline"
+	}
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
-	invoke_method(map, "add_polygon_geo", shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]])
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]])
 }
 
 

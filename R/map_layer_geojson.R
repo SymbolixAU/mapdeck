@@ -86,8 +86,8 @@ add_geojson <- function(
 	map,
 	data = get_map_data(map),
 	layer_id = NULL,
-	lineColor = "#440154",
-	fillColor = "#440154",
+	stroke_colour = "#440154",
+	fill_colour = "#440154",
 	radius = 1,
 	lineWidth = 1,
 	light_settings = list(),
@@ -102,8 +102,8 @@ add_geojson <- function(
 	checkNumeric(radius)
 	checkNumeric(lineWidth)
 	checkNumeric(elevation)
-	isHexColour(lineColor)
-	isHexColour(fillColor)
+	isHexColour(stroke_colour)
+	isHexColour(fill_colour)
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "geojson")
 	## TODO(light_settings - test options are accurate)
@@ -111,7 +111,7 @@ add_geojson <- function(
 	### end parameter checks
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
-	invoke_method(map, "add_geojson", data, layer_id, lineColor, fillColor, radius,
+	invoke_method(map, "add_geojson", data, layer_id, stroke_colour, fill_colour, radius,
 								lineWidth, elevation, light_settings, auto_highlight, highlight_colour)
 }
 

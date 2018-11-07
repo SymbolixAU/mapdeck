@@ -75,7 +75,8 @@ add_grid <- function(
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
-	layer_id = NULL
+	layer_id = NULL,
+	id = NULL
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )

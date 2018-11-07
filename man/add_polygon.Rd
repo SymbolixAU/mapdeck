@@ -9,8 +9,8 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
   fill_colour = NULL, fill_opacity = NULL, elevation = NULL,
   tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", light_settings = list(),
-  layer_id = NULL, palette = "viridis", na_colour = "#808080FF",
-  legend = FALSE, legend_options = NULL)
+  layer_id = NULL, id = NULL, palette = "viridis",
+  na_colour = "#808080FF", legend = FALSE, legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -46,6 +46,8 @@ between 1 and 255 to be applied to all the shapes}
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
+
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
 
 \item{palette}{string or matrix. String is either one of "viridis","inferno",
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values

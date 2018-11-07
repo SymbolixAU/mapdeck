@@ -31,7 +31,7 @@ mapdeckPointcloudDependency <- function() {
 #'
 #' mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
 #' add_pointcloud(
-#'   data = df[1:5, ]
+#'   data = df
 #'   , lon = 'lon'
 #'   , lat = 'lat'
 #'   , elevation = 'z'
@@ -39,6 +39,19 @@ mapdeckPointcloudDependency <- function() {
 #'   , fill_colour = "country"
 #'   , tooltip = "country"
 #' )
+#'
+#' ## as an sf object wtih a Z attribute
+#' library(sf)
+#' sf <- sf::st_as_sf( df , coords = c("lon","lat","z"))
+#'
+#' mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
+#' add_pointcloud(
+#'   data = sf
+#'   , layer_id = 'point'
+#'   , fill_colour = "country"
+#'   , tooltip = "country"
+#' )
+#'
 #' }
 #'
 #' @export
@@ -57,6 +70,7 @@ add_pointcloud <- function(
 	highlight_colour = "#AAFFFFFF",
 	light_settings = list(),
 	layer_id = NULL,
+	id = NULL,
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
@@ -64,6 +78,10 @@ add_pointcloud <- function(
 ) {
 
 	# message("Using development version. Please check plots carefully")
+
+	if ( inherits( data, "sfencoded" ) || inherits( data, "sfencoded" ) ) {
+		stop("data type not supported")
+	}
 
 	l <- as.list( match.call( expand.dots = F) )
 	l[[1]] <- NULL    ## function call

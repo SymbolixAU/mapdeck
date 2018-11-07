@@ -73,6 +73,7 @@ add_scatterplot <- function(
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	layer_id = NULL,
+	id = NULL,
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
@@ -107,16 +108,20 @@ add_scatterplot <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
+	jsfunc <- "add_scatterplot_geo"
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_scatterplot_geo( data, data_types, l, geometry_column )
+		shape <- rcpp_scatterplot_geojson( data, data_types, l, geometry_column )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
 		shape <- rcpp_scatterplot_geojson_df( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- c( "polyline" )
+		shape <- rcpp_scatterplot_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_scatterplot_polyline"
 	}
 
-	invoke_method(map, "add_scatterplot_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
-
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }
 
 

@@ -9,6 +9,10 @@ rcpp_arc_geojson_df <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_arc_geojson_df`, data, data_types, params, geometry_columns)
 }
 
+rcpp_arc_polyline <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_arc_polyline`, data, data_types, params, geometry_columns)
+}
+
 rcpp_grid_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_grid_geojson`, data, data_types, params, geometry_columns)
 }
@@ -27,6 +31,10 @@ rcpp_hexagon_geojson <- function(data, data_types, params, geometry_columns) {
 
 rcpp_hexagon_geojson_df <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_hexagon_geojson_df`, data, data_types, params, geometry_columns)
+}
+
+rcpp_hexagon_polyline <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_hexagon_polyline`, data, data_types, params, geometry_columns)
 }
 
 rcpp_line_geojson <- function(data, data_types, params, geometry_columns) {
@@ -57,12 +65,20 @@ rcpp_polygon_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_polygon_geojson`, data, data_types, params, geometry_columns)
 }
 
+rcpp_polygon_polyline <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_polygon_polyline`, data, data_types, params, geometry_columns)
+}
+
 rcpp_scatterplot_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_scatterplot_geojson`, data, data_types, params, geometry_columns)
 }
 
 rcpp_scatterplot_geojson_df <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_scatterplot_geojson_df`, data, data_types, params, geometry_columns)
+}
+
+rcpp_scatterplot_polyline <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_scatterplot_polyline`, data, data_types, params, geometry_columns)
 }
 
 rcpp_screengrid_geojson <- function(data, data_types, params, geometry_columns) {
@@ -73,11 +89,19 @@ rcpp_screengrid_geojson_df <- function(data, data_types, params, geometry_column
     .Call(`_mapdeck_rcpp_screengrid_geojson_df`, data, data_types, params, geometry_columns)
 }
 
+rcpp_screengrid_polyline <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_screengrid_polyline`, data, data_types, params, geometry_columns)
+}
+
 rcpp_text_geojson <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_text_geojson`, data, data_types, params, geometry_columns)
 }
 
 rcpp_text_geojson_df <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_text_geojson_df`, data, data_types, params, geometry_columns)
+}
+
+rcpp_text_polyline <- function(data, data_types, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_text_polyline`, data, data_types, params, geometry_columns)
 }
 

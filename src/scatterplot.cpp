@@ -60,3 +60,26 @@ Rcpp::List rcpp_scatterplot_geojson_df( Rcpp::DataFrame data, Rcpp::List data_ty
 		true  // jsonify legend
 	);
 }
+
+// [[Rcpp::export]]
+Rcpp::List rcpp_scatterplot_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
+                                     Rcpp::List params, Rcpp::StringVector geometry_columns) {
+
+	int data_rows = data.nrows();
+
+	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
+	std::unordered_map< std::string, std::string > scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
+	Rcpp::StringVector scatterplot_legend = mapdeck::scatterplot::scatterplot_legend;
+
+	return spatialwidget::api::create_polyline(
+		data,
+		data_types,
+		params,
+		lst_defaults,
+		scatterplot_colours,
+		scatterplot_legend,
+		data_rows,
+		geometry_columns,
+		true  // jsonify legend
+	);
+}

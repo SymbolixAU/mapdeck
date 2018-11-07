@@ -62,3 +62,27 @@ Rcpp::List rcpp_arc_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 	);
 }
 
+
+// [[Rcpp::export]]
+Rcpp::List rcpp_arc_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
+                             Rcpp::List params, Rcpp::StringVector geometry_columns ) {
+
+	int data_rows = data.nrows();
+
+	Rcpp::List lst_defaults = arc_defaults( data_rows );  // initialise with defaults
+
+	std::unordered_map< std::string, std::string > arc_colours = mapdeck::arc::arc_colours;
+	Rcpp::StringVector arc_legend = mapdeck::arc::arc_legend;
+
+	return spatialwidget::api::create_polyline(
+		data,
+		data_types,
+		params,
+		lst_defaults,
+		arc_colours,
+		arc_legend,
+		data_rows,
+		geometry_columns,
+		true  // jsonify legend
+	);
+}

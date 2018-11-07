@@ -55,6 +55,7 @@ add_path <- function(
 	stroke_opacity = NULL,
 	tooltip = NULL,
 	layer_id = NULL,
+	id = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",

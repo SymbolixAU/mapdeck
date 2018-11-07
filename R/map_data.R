@@ -10,6 +10,7 @@ sfrow <- function( sf , sfc_type ) {
 
 resolve_od_data <- function( data, l, origin, destination ) UseMethod("resolve_od_data")
 
+#' @export
 resolve_od_data.sf <- function( data, l, origin, destination ) {
 	if ( is.null( l[["origin"]] ) || is.null( l[["destination"]] ) ) {
 		stop("origin and destination columns required")
@@ -18,6 +19,41 @@ resolve_od_data.sf <- function( data, l, origin, destination ) {
 	return( l )
 }
 
+#' @export
+resolve_od_data.sfencoded <- function( data, l, origin, destination ) {
+	# if ( is.null( l[["origin"]] ) || is.null( l[["destination"]] ) ) {
+	# 	stop("origin and destination columns required")
+	# }
+	#
+	# #data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom, multi = TRUE), ]
+	#
+	# # l[["data_type"]] <- "sfencoded"
+	# # l[["data"]] <- data
+	# l <- resolve_od_data.sfencodedLite( data, l, origin, destination )
+	# return( l )
+  stop("data type not supported")
+}
+
+#' @export
+resolve_od_data.sfencodedLite <- function( data, l, origin, destination ) {
+#
+# 	# if ( sf_geom != "POLYGON" ) {   ## TODO( I don't like this)
+# 	# 	data <- unlistMultiGeometry( data, polyline )  ## TODO( move this to C++)
+# 	# }
+#
+# 	data <- unlistMultiGeometry( data, origin )
+# 	data <- unlistMultiGeometry( data, destination )
+#
+# 	l[["origin"]] <- origin
+# 	l[["destination"]] <- destination
+#
+# 	l[["data_type"]] <- "sfencoded"
+# 	l[["data"]] <- data ## attach the data becaue it gets modified and it needs to be returend
+# 	return( l )
+	stop("data type not supported")
+}
+
+#' @export
 resolve_od_data.data.frame <- function( data, l, origin, destination ) {
 	if ( is.null( l[["origin"]] ) || is.null( l[["destination"]] ) ) {
 		stop("origin and destination columns required")
@@ -81,7 +117,7 @@ resolve_data.sfencoded <- function( data, l, sf_geom ) {
 
 	l[["data_type"]] <- "sfencoded"
 	l[["data"]] <- data
-	l <- resolve_data.sfencodedLite( data, l )
+	l <- resolve_data.sfencodedLite( data, l, sf_geom )
 	return( l )
 }
 
@@ -95,8 +131,9 @@ resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
 	# if( !is.null(polyline) && !polyline %in% names(l) ) {
 	#	l[['polyline']] <- polyline
 	polyline <- attr( data, "encoded_column")
-	data <- unlistMultiGeometry( data, polyline )  ## TODO( move this to C++)
-	# }
+	if ( sf_geom != "POLYGON" ) {   ## TODO( I don't like this)
+  	data <- unlistMultiGeometry( data, polyline )  ## TODO( move this to C++)
+	}
 
 	l[["polyline"]] <- polyline
 
@@ -124,12 +161,12 @@ resolve_data.default <- function( data ) stop("This type of data is not supporte
 
 
 resolve_palette <- function( l, palette ) {
-
 	if ( is.matrix( palette ) ) {
 		l[['palette']] <- palette
 	}
 	return( l )
 }
+
 
 resolve_legend <- function( l, legend ) {
 	l[['legend']] <- legend

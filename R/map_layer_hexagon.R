@@ -33,6 +33,7 @@ mapdeckHexagonDependency <- function() {
 #' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'
 #' ))
 #'
+#' df <- df[!is.na(df$lng), ]
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' add_hexagon(
 #'   data = df
@@ -51,7 +52,8 @@ add_hexagon <- function(
 	polyline = NULL,
 	lon = NULL,
 	lat = NULL,
-	layer_id,
+	layer_id = NULL,
+	id = NULL,
 	radius = 1000,
 	elevation_scale = 1,
 	auto_highlight = FALSE,
@@ -66,6 +68,7 @@ add_hexagon <- function(
 	l[["auto_highlight"]] <- NULL
 	l[["light_settings"]] <- NULL
 	l[["layer_id"]] <- NULL
+	l[["colour_range"]] <- NULL
 
 	l <- resolve_data( data, l, "POINT" )
 
@@ -83,16 +86,21 @@ add_hexagon <- function(
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
+	jsfunc <- "add_hexagon_geo"
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_hexagon_geo( data, data_types, l, geometry_column )
+		shape <- rcpp_hexagon_geojson( data, data_types, l, geometry_column )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
 		shape <- rcpp_hexagon_geojson_df( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_hexagon_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_hexagon_polyline"
 	}
 
-	invoke_method(map, "add_hexagon_geo", shape[["data"]], layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range )
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range )
 }
 
 

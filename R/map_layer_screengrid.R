@@ -60,7 +60,8 @@ add_screengrid <- function(
 	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
 	opacity = 0.8,
 	cell_size = 50,
-	layer_id = NULL
+	layer_id = NULL,
+	id = NULL
 ) {
 
 	l <- as.list( match.call( expand.dots = F) )
@@ -96,15 +97,20 @@ add_screengrid <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
+	jsfunc <- "add_screengrid_geo"
 	if( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
 		shape <- rcpp_screengrid_geojson( data, data_types, l, geometry_column )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
 		shape <- rcpp_screengrid_geojson_df( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_screengrid_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_screengrid_polyline"
 	}
 
-	invoke_method(map, "add_screengrid_geo", shape[["data"]], layer_id, opacity, cell_size, colour_range )
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, opacity, cell_size, colour_range )
 }
 
 #' @export

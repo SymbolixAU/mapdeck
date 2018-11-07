@@ -146,15 +146,18 @@ add_arc <- function(
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_od_data( data, l, origin, destination )
 
+	layer_id <- layerId(layer_id, "arc")
+	checkHexAlpha(highlight_colour)
+
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
+
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
+	jsfunc <- "add_arc_geo"
 
-	layer_id <- layerId(layer_id, "arc")
-	checkHexAlpha(highlight_colour)
 
 	map <- addDependency(map, mapdeckArcDependency())
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
@@ -165,9 +168,13 @@ add_arc <- function(
   } else if ( tp == "df" ) {
   	geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
   	shape <- rcpp_arc_geojson_df( data, data_types, l, geometry_column )
+  } else if ( tp == "sfencoded" ) {
+  	# geometry_column <- c("origin", "destination")
+  	# shape <- rcpp_arc_polyline( data, data_types, l, geometry_column )
+  	# jsfunc <- "add_arc_polyline"
   }
 
-	invoke_method(map, "add_arc_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }
 
 #' @export
