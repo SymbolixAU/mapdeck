@@ -13,6 +13,9 @@ namespace path {
 	const Rcpp::StringVector path_legend = Rcpp::StringVector::create(
 		"stroke_colour"
 	);
+
+	int x;
+
 } // namespace path
 } // namespace mapdeck
 

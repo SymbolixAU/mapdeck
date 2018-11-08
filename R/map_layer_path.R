@@ -40,6 +40,7 @@ mapdeckPathDependency <- function() {
 #'     , layer_id = "path_layer"
 #'     , tooltip = "ROAD_NAME"
 #'     , auto_highlight = TRUE
+#'     , legend = T
 #'   )
 #'
 #' }
@@ -82,6 +83,10 @@ add_path <- function(
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 
+	# l[["legend"]] <- force( legend )
+	# l[["legend_options"]] <- force( legend_options )
+	# l[["palette"]] <- force( palette )
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
@@ -92,12 +97,7 @@ add_path <- function(
 		l[["data"]] <- NULL
 	}
 
-	## TODO( move this to 'resovle data' )
-	## and in stead of using 'geometry' as a parameter name (& therefore column name)
-	## there needs to be a column in the data for each entry in l[["geometry"]]
-	## for example, if l[["geometry"]] <- c("origin","destination")
-	## these need to both be set on the data.
-	# l[["geometry"]] <- "geometry"
+	# print(l)
 
 	layer_id <- layerId(layer_id, "path")
 	checkHexAlpha( highlight_colour )
@@ -118,6 +118,8 @@ add_path <- function(
 		geometry_column <- "polyline"
 		shape <- rcpp_path_polyline( data, data_types, l, geometry_column )
 	}
+
+	#print(shape[["legend"]])
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
