@@ -57,6 +57,20 @@ mapdeckScatterplotDependency <- function() {
 #'   , lon = "lng"
 #'   , layer_id = "scatter_layer"
 #' )
+#'
+#' ## as an sf object
+#' library(sf)
+#' sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
+#'
+#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' add_scatterplot(
+#'   data = sf
+#'   , radius = 100000
+#'   , fill_colour = "country"
+#'   , layer_id = "scatter_layer"
+#'   , tooltip = "capital"
+#' )
+#'
 #' }
 #'
 #' @export
@@ -82,16 +96,18 @@ add_scatterplot <- function(
 
 	message("Using development version. Please check plots carefully")
 
-	l <- as.list( match.call() )
+	l <- as.list( match.call( expand.dots = F) )
 	l[[1]] <- NULL    ## function call
 	l[["map"]] <- NULL
 	l[["data"]] <- NULL
 	l[["auto_highlight"]] <- NULL
 	l[["layer_id"]] <- NULL
+	# l <- resolve_args( l, scatterplot_data_args() )
+	# print( l )
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, "POINT" )
+	l <- resolve_data( data, l, c( "POINT", "MULTIPOINT") )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -121,9 +137,16 @@ add_scatterplot <- function(
 		jsfunc <- "add_scatterplot_polyline"
 	}
 
+	print(shape)
 	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }
 
+
+scatterplot_data_args <- function() {
+	return(
+		c("lon", "lat", "polyline", "radius", "fill_colour", "fill_opacity")
+	)
+}
 
 
 #' @inheritParams add_scatterplot

@@ -565,3 +565,70 @@
 # 	)
 
 
+# f <- function( data, fill_colour = NULL, stroke_colour = NULL ) {
+# 	l <- as.list( match.call( expand.dots = F ) )
+# 	args <- c("fill_colour", "stroke_colour")
+# 	nms <- names( data )
+#
+# 	x <- vapply( names(l), function(x) { x %in% args }, T )
+# 	x <- x[x]
+#
+# 	l <- l[names(x)]
+# 	tp <- lapply(l, typeof)
+#
+# 	#print( tp )
+#
+# 	lapply( names(tp), function(x) {
+#
+# 		if ( tp[[ x ]] == "symbol" ) {
+# 			print("1")
+# 			if ( eval( l[[ x ]] ) %in% nms ) {
+# 				print("2")
+# 				eval( l[[ x ]] )
+# 			} else {
+# 				print("3")
+# 				as.character( force( l[[ x ]] ) )
+# 			}
+# 		} else {
+# 			print("4")
+# 			l[[ x ]]
+# 		}
+# 	})
+#
+# }
+#
+# df <- data.frame(a = 1:5, x = letters[1:5])
+#
+# f( df, fill_colour = "a" )
+# f( df, fill_colour = a )
+# x <- "a"
+# f( df, fill_colour = x )
+# col <- "a"
+# f( df, fill_colour = col )
+#
+#
+# resolve_args <- function( l, layer_args ) {
+# 	x <- vapply( names(l), function(x) { x %in% layer_args }, T )
+# 	x <- x[x]
+# 	l <- l[names(x)]
+#
+# 	lapply(l, eval)
+# }
+#
+#
+# f2 <- function( data, fill_colour = NULL, stroke_colour = NULL ) {
+#   args <- c("fill_colour", "stroke_colour")
+# 	l <- as.list( match.call( expand.dots = FALSE ) )
+#
+# 	l <- resolve_args( l, args )
+# 	l
+# }
+#
+#
+# f2( df, fill_colour = "a" )
+# f2( df, fill_colour = a )
+# x <- "a"
+# f2( df, fill_colour = x )
+# col <- "a"
+# f2( df, fill_colour = col )
+

@@ -101,6 +101,20 @@ add_scatterplot(
   , lon = "lng"
   , layer_id = "scatter_layer"
 )
+
+## as an sf object
+library(sf)
+sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
+
+mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+add_scatterplot(
+  data = sf
+  , radius = 100000
+  , fill_colour = "country"
+  , layer_id = "scatter_layer"
+  , tooltip = "capital"
+)
+
 }
 
 }
