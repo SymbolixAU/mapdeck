@@ -41,6 +41,7 @@ libraries
 
 ``` r
 ## install dependent libraries first
+devtools::install_github("SymbolixAU/geojsonsf")
 devtools::install_github("SymbolixAU/spatialwidget")
 devtools::install_github("SymbolixAU/googlePolylines")
 
