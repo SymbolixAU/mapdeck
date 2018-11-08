@@ -83,11 +83,13 @@ add_scatterplot <- function(
 	message("Using development version. Please check plots carefully")
 
 	l <- as.list( match.call() )
-	l[[1]] <- NULL    ## function call
-	l[["map"]] <- NULL
-	l[["data"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["layer_id"]] <- NULL
+	# l[[1]] <- NULL    ## function call
+	# l[["map"]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["layer_id"]] <- NULL
+	l <- resolve_args( l, scatterplot_args() )
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
@@ -121,10 +123,26 @@ add_scatterplot <- function(
 		jsfunc <- "add_scatterplot_polyline"
 	}
 
+	print(layer_id)
 	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }
 
+resolve_args <- function( l, layer_args ) {
 
+	## This implementation will allow variables passed in as column names
+	## but NOT un-quoted column variables
+	x <- vapply(names(l), function(x) { x %in% layer_args }, T)
+	x <- x[x]    ## x is the set of arguments we need to evaluate
+	l <- l[names(x)]
+	lapply( l, eval )
+}
+
+## args used which can be columns of 'data'
+scatterplot_args <- function() {
+	return(
+		c("lon", "lat", "polyline", "radius", "fill_colour", "fill_opacity", "tooltip")
+	)
+}
 
 #' @inheritParams add_scatterplot
 #' @export

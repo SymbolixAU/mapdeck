@@ -565,3 +565,101 @@
 # 	)
 
 
+#
+# ## handle:
+# ## 1. it's a string - do nothing
+# ## 2. it's a symbol representing the column of data.frame
+# ## 4. it's a symbol representing a value - do nothing
+#
+# df <- data.frame(a = 1:5, b = letters[1:5])
+#
+# f <- function( data, fill_colour = NULL, stroke_colour = NULL ) {
+# 	l <- as.list( match.call( expand.dots = F) )
+# 	args <- c("fill_colour","stroke_colour")
+# 	nms <- names( data )
+#
+# 	x <- vapply(names(l), function(x) { x %in% args }, T)
+# 	x <- x[x]    ## x is the set of arguments we need to evaluate
+# 	#x
+# 	#lapply(l, typeof)
+# 	l <- l[names(x)]
+# 	tp <- lapply(l, typeof)
+#
+# 	print( tp )
+# 	print( lapply( names(tp), function(x) is.symbol(tp[[ x ]] ) ) )
+#
+# 	## if symbol, evaluate it
+# 	lapply( names(tp), function(x) {
+# 		if ( tp[[ x ]] == "symbol" ) {
+# 			if( eval( l[[ x ]] ) %in% nms ) {
+# 		    eval( l[[ x ]] )
+# 	    } else {
+# 	    	eval( l[[ x ]] , parent.frame() )    ## need to evaluate 'x' and get teh value out of it
+# 	    }
+# 		} else {
+# 			l[[ x ]]
+# 		}
+#
+# 	})
+# 	#tp
+# }
+#
+#
+# ## 1
+# f( data = df, fill_colour = "a")
+#
+#
+# ## 2
+# fc <- "a"
+# f( data = df, fill_colour = fc)
+#
+# x <- 1
+# f( data = df, fill_colour = x)
+#
+# f( data = df, fill_colour = a)
+#
+# ## for symbols, if the quote of them is in the name of data, quote it, otherwaise evaluate it
+#
+#
+#
+# g <- function(x) force(x)
+# g( fc )
+# g( "a" )
+# g( 1 )
+# g( x )
+#
+# h <- function(x) {
+# 	g(x)
+# }
+#
+# h( fc )
+# h( "a" )
+# h( 1 )
+# h( x )
+#
+#
+# f2 <- function( data, fill_colour = NULL, stroke_colour = NULL ) {
+#
+# 	l <- as.list( match.call( expand.dots = F) )
+# 	layer_args <- c("fill_colour","stroke_colour")
+# 	nms <- names( data )
+#
+# 	x <- vapply(names(l), function(x) { x %in% layer_args }, T)
+# 	x <- x[x]    ## x is the set of arguments we need to evaluate
+# 	l <- l[names(x)]
+# 	lapply(l, eval)
+# }
+#
+# ## 1
+# f2( data = df, fill_colour = "a")
+#
+# ## 2
+# fc <- "a"
+# f2( data = df, fill_colour = fc)
+#
+# x <- 1
+# f2( data = df, fill_colour = x)
+#
+# f2( data = df, stroke_colour = fc, fill_colour = x)
+#
+# f2( data = df, stroke_colour = fc, fill_colour = colourvalues::color_values(1:2) )
