@@ -81,6 +81,7 @@ mapdeck(
     , layer_id = "path_layer"
     , tooltip = "ROAD_NAME"
     , auto_highlight = TRUE
+    , legend = T
   )
 
 }
