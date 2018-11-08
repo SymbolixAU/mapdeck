@@ -134,13 +134,25 @@ add_arc <- function(
 	palette = "viridis"
 ) {
 
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["light_settings"]] <- NULL
-	l[["layer_id"]] <- NULL
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["light_settings"]] <- NULL
+	# l[["layer_id"]] <- NULL
+
+	l <- list()
+	l[["origin"]] <- force(origin)
+	l[["destination"]] <- force(destination)
+	l[["stroke_from"]] <- force(stroke_from)
+	l[["stroke_to"]] <- force(stroke_to)
+	l[["stroke_from_opacity"]] <- force(stroke_from_opacity)
+	l[["stroke_to_opacity"]] <- force(stroke_to_opacity)
+	l[["stroke_width"]] <- force(stroke_width)
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )

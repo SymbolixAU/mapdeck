@@ -82,7 +82,7 @@ add_polygon <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,
-	geometry = NULL,
+	#geometry = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	fill_colour = NULL,
@@ -100,13 +100,24 @@ add_polygon <- function(
 	legend_options = NULL
 ) {
 
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["light_settings"]] <- NULL
-	l[["layer_id"]] <- NULL
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["light_settings"]] <- NULL
+	# l[["layer_id"]] <- NULL
+
+	l <- list()
+	l[["polyline"]] <- force( polyline )
+	l[["stroke_colour"]] <- force( stroke_colour)
+	l[["stroke_width"]] <- force( stroke_width )
+	l[["fill_colour"]] <- force( fill_colour)
+	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["elevation"]] <- force( elevation )
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )

@@ -79,15 +79,20 @@ add_grid <- function(
 	id = NULL
 ) {
 
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["elevation_scale"]] <- NULL
-	l[["cell_size"]] <- NULL
-	l[["colour_range"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["layer_id"]] <- NULL
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["elevation_scale"]] <- NULL
+	# l[["cell_size"]] <- NULL
+	# l[["colour_range"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["layer_id"]] <- NULL
+	l <- list()
+	l[["lon"]] <- force(lon)
+	l[["lat"]] <- force(lat)
+	l[["polyline"]] <- force(polyline)
+
 	l <- resolve_data( data, l, "POINT" )
 
 	if ( !is.null(l[["data"]]) ) {
@@ -123,7 +128,7 @@ add_grid <- function(
 		jsfunc <- "add_grid_polyline"
 	}
 
-	print( shape )
+	# print( shape )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, cell_size,

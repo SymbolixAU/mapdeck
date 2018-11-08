@@ -5,9 +5,9 @@
 \title{Add Path}
 \usage{
 add_path(map, data = get_map_data(map), polyline = NULL,
-  geometry = NULL, stroke_colour = NULL, stroke_width = NULL,
-  stroke_opacity = NULL, tooltip = NULL, layer_id = NULL,
-  id = NULL, auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
+  tooltip = NULL, layer_id = NULL, id = NULL,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL)
 }
@@ -17,10 +17,6 @@ add_path(map, data = get_map_data(map), polyline = NULL,
 \item{data}{data to be used in the layer}
 
 \item{polyline}{column of \code{data} containing the polylines}
-
-\item{geometry}{string specifying the `sfc` column of an SF object. If NULL and
-\code{data} is an `sf` object the \code{geometry} will be automatically assinged
-from \code{ sf::st_geometry( data ) }}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke}
 

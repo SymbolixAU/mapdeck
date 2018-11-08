@@ -79,13 +79,24 @@ add_pointcloud <- function(
 
 	# message("Using development version. Please check plots carefully")
 
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL    ## function call
-	l[["map"]] <- NULL
-	l[["data"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["light_settings"]] <- NULL
-	l[["layer_id"]] <- NULL
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL    ## function call
+	# l[["map"]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["light_settings"]] <- NULL
+	# l[["layer_id"]] <- NULL
+
+	l <- list()
+	l[["lon"]] <- force( lon )
+	l[["lat"]] <- force( lat )
+	l[["elevation"]] <- force( elevation )
+	l[["polyline"]] <- force( polyline )
+	l[["fill_colour"]] <- force( fill_colour)
+	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
@@ -110,8 +121,12 @@ add_pointcloud <- function(
 		geometry_column <- c( "geometry" )
 		shape <- rcpp_pointcloud_geojson( data, data_types, l, geometry_column )
 	} else if ( tp == "df" ) {
+		if( is.null(elevation) ){
+			l[["elevation"]] <- 0
+		}
+
 		geometry_column <- list( geometry = c("lon","lat","elevation") )
-		shape <- rcpp_pointcloud_geojson_df( data, data_types, l, geometry_column )
+	  shape <- rcpp_pointcloud_geojson_df( data, data_types, l, geometry_column )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
 		shape <- rcpp_pointcloud_polyline( data, data_types, l, geometry_column )

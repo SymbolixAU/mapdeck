@@ -5,12 +5,12 @@
 \title{Add Polygon}
 \usage{
 add_polygon(map, data = get_map_data(map), polyline = NULL,
-  geometry = NULL, stroke_colour = NULL, stroke_width = NULL,
-  fill_colour = NULL, fill_opacity = NULL, elevation = NULL,
-  tooltip = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", light_settings = list(),
-  layer_id = NULL, id = NULL, palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL)
+  stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL,
+  fill_opacity = NULL, elevation = NULL, tooltip = NULL,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  light_settings = list(), layer_id = NULL, id = NULL,
+  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
+  legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -18,10 +18,6 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
 \item{data}{data to be used in the layer}
 
 \item{polyline}{column of \code{data} containing the polylines}
-
-\item{geometry}{string specifying the `sfc` column of an SF object. If NULL and
-\code{data} is an `sf` object the \code{geometry} will be automatically assinged
-from \code{ sf::st_geometry( data ) }}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke}
 
@@ -57,6 +53,10 @@ between [0, 255], where the 4th column represents the alpha.}
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
+
+\item{geometry}{string specifying the `sfc` column of an SF object. If NULL and
+\code{data} is an `sf` object the \code{geometry} will be automatically assinged
+from \code{ sf::st_geometry( data ) }}
 }
 \description{
 The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects

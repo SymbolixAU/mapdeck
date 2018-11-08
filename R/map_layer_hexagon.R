@@ -71,14 +71,20 @@ add_hexagon <- function(
 	colour_range = colourvalues::colour_values(1:6, palette = "viridis")
 ) {
 
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["light_settings"]] <- NULL
-	l[["layer_id"]] <- NULL
-	l[["colour_range"]] <- NULL
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["light_settings"]] <- NULL
+	# l[["layer_id"]] <- NULL
+	# l[["colour_range"]] <- NULL
+
+	l <- list()
+	l[["polyline"]] <- force(polyline)
+	l[["lon"]] <- force(lon)
+	l[["lat"]] <- force(lat)
+	l[["id"]] <- force(id)
 
 	l <- resolve_data( data, l, "POINT" )
 

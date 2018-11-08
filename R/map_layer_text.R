@@ -72,11 +72,26 @@ add_text <- function(
 	legend_options = NULL
 ) {
 
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["layer_id"]] <- NULL
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["layer_id"]] <- NULL
+
+	l <- list()
+	l[["lon"]] <- force( lon )
+	l[["lat"]] <- force( lat )
+	l[["fill_colour"]] <- force( fill_colour )
+	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["size"]] <- force( size )
+	l[["text"]] <- force( text )
+	l[["polyline"]] <- force( polyline )
+	l[["angle"]] <- force( angle )
+	l[["anchor"]] <- force( anchor )
+	l[["alignment_baseline"]] <- force( alignment_baseline )
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )

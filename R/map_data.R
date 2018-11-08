@@ -1,10 +1,16 @@
 
+resolve_args <- function( l, layer_args ) {
+	x <- vapply( names(l), function(x) { x %in% layer_args }, T )
+	x <- x[x]
+	l <- l[names(x)]
+	lapply( l, eval )
+}
 
 
 ## TODO( allow MULTI* objects)
 sfrow <- function( sf , sfc_type ) {
 	geom_column <- attr(sf, "sf_column")
-	return( which(vapply(sf[[geom_column]], function(x) attr(x, "class")[[2]], "") == sfc_type ) )
+	return( which(vapply(sf[[geom_column]], function(x) attr(x, "class")[[2]], "") %in% sfc_type ) )
 }
 
 
@@ -134,7 +140,7 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 	sfc_col <- attr( data, "sf_column" )
 	l[["geometry"]] <- sfc_col
 
-	if( paste0( "sfc_", sfc_col) != toupper( sf_geom ) ) {
+	if( !paste0( "sfc_", sfc_col) %in% toupper( sf_geom ) ) {
 		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
 	}
 	l[["data_type"]] <- "sf"

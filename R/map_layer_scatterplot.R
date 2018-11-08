@@ -57,6 +57,20 @@ mapdeckScatterplotDependency <- function() {
 #'   , lon = "lng"
 #'   , layer_id = "scatter_layer"
 #' )
+#'
+#' ## as an sf object
+#' library(sf)
+#' sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
+#'
+#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' add_scatterplot(
+#'   data = sf
+#'   , radius = 100000
+#'   , fill_colour = "country"
+#'   , layer_id = "scatter_layer"
+#'   , tooltip = "capital"
+#' )
+#'
 #' }
 #'
 #' @export
@@ -80,20 +94,27 @@ add_scatterplot <- function(
 	legend_options = NULL
 ) {
 
-	message("Using development version. Please check plots carefully")
-
-	l <- as.list( match.call() )
+	# l <- as.list( match.call() )
 	# l[[1]] <- NULL    ## function call
 	# l[["map"]] <- NULL
 	# l[["data"]] <- NULL
 	# l[["auto_highlight"]] <- NULL
 	# l[["layer_id"]] <- NULL
-	l <- resolve_args( l, scatterplot_args() )
+	#l <- resolve_args( l, scatterplot_data_args() )
+	l <- list()
+	l[["lon"]] <- force(lon)
+	l[["lat"]] <- force(lat)
+	l[["polyline"]] <- force(polyline)
+	l[["radius"]] <- force(radius)
+	l[["fill_colour"]] <- force(fill_colour)
+	l[["fill_opacity"]] <- force(fill_opacity)
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, "POINT" )
+	l <- resolve_data( data, l, c( "POINT") )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -122,8 +143,6 @@ add_scatterplot <- function(
 		shape <- rcpp_scatterplot_polyline( data, data_types, l, geometry_column )
 		jsfunc <- "add_scatterplot_polyline"
 	}
-
-	print(layer_id)
 	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }
 
@@ -137,12 +156,14 @@ resolve_args <- function( l, layer_args ) {
 	lapply( l, eval )
 }
 
+
 ## args used which can be columns of 'data'
-scatterplot_args <- function() {
+scatterplot_data_args <- function() {
 	return(
 		c("lon", "lat", "polyline", "radius", "fill_colour", "fill_opacity", "tooltip")
 	)
 }
+
 
 #' @inheritParams add_scatterplot
 #' @export

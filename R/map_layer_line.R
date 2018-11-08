@@ -91,12 +91,22 @@ add_line <- function(
 	legend_options = NULL
 ) {
 
-	l <- as.list( match.call() )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["layer_id"]] <- NULL
-	l[["auto_highlight"]] <- NULL
+	# l <- as.list( match.call() )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["layer_id"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+
+	l <- list()
+	l[["origin"]] <- force( origin )
+	l[["destination"]] <- force( destination)
+	l[["stroke_colour"]] <- force( stroke_colour )
+	l[["stroke_width"]] <- force( stroke_width )
+	l[["stroke_opacity"]] <- force( stroke_opacity )
+	l[["tooltip"]] <- force( tooltip)
+	l[["id"]] <- force( id )
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )

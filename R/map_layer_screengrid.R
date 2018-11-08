@@ -75,16 +75,24 @@ add_screengrid <- function(
 	id = NULL
 ) {
 
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["elevation_scale"]] <- NULL
-	l[["cell_size"]] <- NULL
-	l[["colour_range"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["layer_id"]] <- NULL
-	l[["digits"]] <- NULL
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["elevation_scale"]] <- NULL
+	# l[["cell_size"]] <- NULL
+	# l[["colour_range"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["layer_id"]] <- NULL
+	# l[["digits"]] <- NULL
+
+	l <- list()
+	l[["polyline"]] <- force( polyline )
+	l[["weight"]] <- force( weight )
+	l[["lon"]] <- force( lon )
+	l[["lat"]] <- force( lat)
+	l[["id"]] <- force(id)
+
 	l <- resolve_data( data, l, "POINT" )
 
 	if ( !is.null(l[["data"]]) ) {
