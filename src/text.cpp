@@ -1,12 +1,12 @@
 #include <Rcpp.h>
 
-#include "mapdeck.hpp"
+#include "mapdeck_defaults.hpp"
 #include "layers/text.hpp"
-#include "parameters.hpp"
+#include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List text_defaults(int n) {
 	return Rcpp::List::create(
-		_["polyline"] = mapdeck::defaults::default_polyline(n),
+		//_["polyline"] = mapdeck::defaults::default_polyline(n),
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n),
 		_["anchor"] = mapdeck::defaults::default_text_anchor(n),
 		_["angle"] = mapdeck::defaults::default_angle(n),
@@ -17,27 +17,73 @@ Rcpp::List text_defaults(int n) {
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_text( Rcpp::DataFrame data, Rcpp::List params ) {
+Rcpp::List rcpp_text_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
+                      Rcpp::List params, Rcpp::StringVector geometry_columns ) {
 
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = text_defaults( data_rows );  // initialise with defaults
-	Rcpp::StringVector text_columns = mapdeck::text::text_columns;
-	std::map< std::string, std::string > text_colours = mapdeck::text::text_colours;
+
+	std::unordered_map< std::string, std::string > text_colours = mapdeck::text::text_colours;
 	Rcpp::StringVector text_legend = mapdeck::text::text_legend;
 
-	Rcpp::List lst = mapdeck::parameters_to_data(
-		data, params, lst_defaults, text_columns, text_colours, text_legend, data_rows
+	return spatialwidget::api::create_geojson(
+		data,
+		data_types,
+		params,
+		lst_defaults,
+		text_colours,
+		text_legend,
+		data_rows,
+		geometry_columns,
+		true  // jsonify legend
 	);
+}
 
-	Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( lst["data"] );
-	Rcpp::StringVector js_data = jsonify::dataframe::to_json( df );
+// [[Rcpp::export]]
+Rcpp::List rcpp_text_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
+                              Rcpp::List params, Rcpp::List geometry_columns ) {
 
-	SEXP legend = lst[ "legend" ];
-	Rcpp::StringVector js_legend = jsonify::vectors::to_json( legend );
+	int data_rows = data.nrows();
 
-	return Rcpp::List::create(
-		Rcpp::_["data"] = js_data,
-		Rcpp::_["legend"] = js_legend
+	Rcpp::List lst_defaults = text_defaults( data_rows );  // initialise with defaults
+
+	std::unordered_map< std::string, std::string > text_colours = mapdeck::text::text_colours;
+	Rcpp::StringVector text_legend = mapdeck::text::text_legend;
+
+	return spatialwidget::api::create_geojson(
+		data,
+		data_types,
+		params,
+		lst_defaults,
+		text_colours,
+		text_legend,
+		data_rows,
+		geometry_columns,
+		true  // jsonify legend
+	);
+}
+
+// [[Rcpp::export]]
+Rcpp::List rcpp_text_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
+                              Rcpp::List params, Rcpp::StringVector geometry_columns ) {
+
+	int data_rows = data.nrows();
+
+	Rcpp::List lst_defaults = text_defaults( data_rows );  // initialise with defaults
+
+	std::unordered_map< std::string, std::string > text_colours = mapdeck::text::text_colours;
+	Rcpp::StringVector text_legend = mapdeck::text::text_legend;
+
+	return spatialwidget::api::create_polyline(
+		data,
+		data_types,
+		params,
+		lst_defaults,
+		text_colours,
+		text_legend,
+		data_rows,
+		geometry_columns,
+		true  // jsonify legend
 	);
 }

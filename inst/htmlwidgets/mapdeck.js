@@ -248,6 +248,8 @@ function layer_click( map_id, layer, info ) {
   if ( !HTMLWidgets.shinyMode ) {
     return;
   }
+    
+  console.log( info );
 
   var eventInfo = {
   	index: info.index,

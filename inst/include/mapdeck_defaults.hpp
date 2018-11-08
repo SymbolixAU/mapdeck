@@ -6,13 +6,24 @@
 namespace mapdeck {
 namespace defaults {
 
-  const Rcpp::StringVector default_palette = "viridis";
-  const std::string default_na_colour = "#808080FF";
+  // const Rcpp::StringVector default_palette = "viridis";
+  // const std::string default_na_colour = "#808080FF";
 
-	inline Rcpp::StringVector default_polyline(int n) {
+  // TODO( dont' necessarily need polyline anymore )
+	inline Rcpp::StringVector default_polyline( int n ) {
 		// created so it's pre-allocated - every data set will require a polylne vector
 		Rcpp::StringVector sv(n);
 		return sv;
+	}
+  // TODO( use lon & lat defauts in stead of polyline if using a data.frame of points!)
+	inline Rcpp::NumericVector default_lon( int n ) {
+		Rcpp::NumericVector nv(n, 0.0);
+		return nv;
+	}
+
+	inline Rcpp::NumericVector default_lat( int n ) {
+		Rcpp::NumericVector nv(n, 0.0);
+		return nv;
 	}
 
 	inline Rcpp::IntegerVector default_elevation(int n) {
@@ -35,22 +46,22 @@ namespace defaults {
 		return nv;
 	}
 
-	inline Rcpp::NumericVector default_fill_opacity(int n) {
+	inline Rcpp::NumericVector default_fill_opacity( int n ) {
 		Rcpp::NumericVector nv(n, 255.0);
 		return nv;
 	}
 
-	inline Rcpp::NumericVector default_stroke_opacity(int n) {
+	inline Rcpp::NumericVector default_stroke_opacity( int n ) {
 		Rcpp::NumericVector nv(n, 255.0);
 		return nv;
 	}
 
-	inline Rcpp::NumericVector default_stroke_width(int n) {
+	inline Rcpp::NumericVector default_stroke_width( int n ) {
 		Rcpp::NumericVector nv(n, 1.0);
 		return nv;
 	}
 
-	inline Rcpp::StringVector default_text_anchor(int n) {
+	inline Rcpp::StringVector default_text_anchor( int n ) {
 		Rcpp::StringVector sv(n, "middle");
 		return sv;
 	}

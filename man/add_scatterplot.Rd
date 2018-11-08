@@ -7,7 +7,7 @@
 add_scatterplot(map, data = get_map_data(map), lon = NULL,
   lat = NULL, polyline = NULL, radius = NULL, fill_colour = NULL,
   fill_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", layer_id = NULL,
+  highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL)
 }
@@ -39,6 +39,8 @@ between 1 and 255 to be applied to all the shapes}
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
+
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
 
 \item{palette}{string or matrix. String is either one of "viridis","inferno",
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
@@ -90,6 +92,8 @@ df <- read.csv(paste0(
 'examples/3d-heatmap/heatmap-data.csv'
 ))
 
+df <- df[ !is.na(df$lng), ]
+
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 add_scatterplot(
   data = df
@@ -97,6 +101,20 @@ add_scatterplot(
   , lon = "lng"
   , layer_id = "scatter_layer"
 )
+
+## as an sf object
+library(sf)
+sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
+
+mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+add_scatterplot(
+  data = sf
+  , radius = 100000
+  , fill_colour = "country"
+  , layer_id = "scatter_layer"
+  , tooltip = "capital"
+)
+
 }
 
 }

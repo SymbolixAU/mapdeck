@@ -98,6 +98,8 @@ mapdeckArcDependency <- function() {
 #'    , origin = 'geometry'
 #'    , destination = 'geometry.1'
 #'    , layer_id = 'arcs'
+#'    , stroke_from = "airport1"
+#'    , stroke_to = "airport2"
 #' )
 #'
 #'
@@ -132,60 +134,59 @@ add_arc <- function(
 	palette = "viridis"
 ) {
 
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["light_settings"]] <- NULL
-	l[["layer_id"]] <- NULL
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["light_settings"]] <- NULL
+	# l[["layer_id"]] <- NULL
+
+	l <- list()
+	l[["origin"]] <- force(origin)
+	l[["destination"]] <- force(destination)
+	l[["stroke_from"]] <- force(stroke_from)
+	l[["stroke_to"]] <- force(stroke_to)
+	l[["stroke_from_opacity"]] <- force(stroke_from_opacity)
+	l[["stroke_to_opacity"]] <- force(stroke_to_opacity)
+	l[["stroke_width"]] <- force(stroke_width)
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-
-	## if origin && destination == one column each, it's an sf_encoded
-	## else, it's two column, which need to be encoded!
-  if ( length(origin) == 2 && length(destination) == 2) {
-  	## lon / lat columns
-  	data[[ origin[1] ]] <- googlePolylines::encode(
-  		data[, origin, drop = F ]
-  		, lon = origin[1]
-  		, lat = origin[2]
-  		, byrow = T
-  		)
-  	data[[ destination[1] ]] <- googlePolylines::encode(
-  		data[, destination, drop = F ]
-  		, lon = destination[1]
-  		, lat = destination[2]
-  		, byrow = T
-  		)
-
-  	l[['origin']] <- origin[1]
-  	l[['destination']] <- destination[1]
-
-  } else if (length(origin) == 1 && length(destination) == 1) {
-  	## encoded
-  	data <- normaliseMultiSfData(data, origin, destination)
-  	o <- unlist(data[[origin]])
-  	d <- unlist(data[[destination]])
-  	if(length(o) != length(d)) {
-  		stop("There are a different number of origin and destination POINTs, possibly due to MULTIPOINT geometries?")
-  	}
-  	data[[origin]] <- o
-  	data[[destination]] <- d
-
-  } else {
-  	stop("expecting lon/lat origin destinations or sfc columns")
-  }
+	l <- resolve_od_data( data, l, origin, destination )
 
 	layer_id <- layerId(layer_id, "arc")
 	checkHexAlpha(highlight_colour)
 
-	shape <- rcpp_arc( data, l )
-	# print( shape )
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
+	}
+
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+	jsfunc <- "add_arc_geo"
+
 
 	map <- addDependency(map, mapdeckArcDependency())
-	invoke_method(map, "add_arc2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+
+  if ( tp == "sf" ) {
+		geometry_column <- c( "origin", "destination" )
+		shape <- rcpp_arc_geojson( data, data_types, l, geometry_column )
+  } else if ( tp == "df" ) {
+  	geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
+  	shape <- rcpp_arc_geojson_df( data, data_types, l, geometry_column )
+  } else if ( tp == "sfencoded" ) {
+  	geometry_column <- c("origin", "destination")
+  	shape <- rcpp_arc_polyline( data, data_types, l, geometry_column )
+  	jsfunc <- "add_arc_polyline"
+  }
+
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }
 
 #' @export

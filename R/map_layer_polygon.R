@@ -18,6 +18,9 @@ mapdeckPolygonDependency <- function() {
 #' @inheritParams add_arc
 #'
 #' @param polyline column of \code{data} containing the polylines
+#' @param geometry string specifying the `sfc` column of an SF object. If NULL and
+#' \code{data} is an `sf` object the \code{geometry} will be automatically assinged
+#' from \code{ sf::st_geometry( data ) }
 #' @param fill_colour column of \code{data} or hex colour for the fill colour
 #' @param fill_opacity value between 1 and 255. Either a string specifying the
 #' column of \code{data} containing the fill opacity of each shape, or a value
@@ -79,6 +82,7 @@ add_polygon <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,
+	#geometry = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	fill_colour = NULL,
@@ -89,47 +93,75 @@ add_polygon <- function(
 	highlight_colour = "#AAFFFFFF",
 	light_settings = list(),
 	layer_id = NULL,
+	id = NULL,
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
 	legend_options = NULL
 ) {
 
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["light_settings"]] <- NULL
-	l[["layer_id"]] <- NULL
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["light_settings"]] <- NULL
+	# l[["layer_id"]] <- NULL
+
+	l <- list()
+	l[["polyline"]] <- force( polyline )
+	l[["stroke_colour"]] <- force( stroke_colour)
+	l[["stroke_width"]] <- force( stroke_width )
+	l[["fill_colour"]] <- force( fill_colour)
+	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["elevation"]] <- force( elevation )
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_data( data, l, "POLYGON" )
 
 
-	data <- normaliseSfData(data, "POLYGON", multi = FALSE)
-	polyline <- findEncodedColumn(data, polyline)
+	# data <- normaliseSfData(data, "POLYGON", multi = FALSE)
+	# polyline <- findEncodedColumn(data, polyline)
+	#
+	# ## - if sf object, and geometry column has not been supplied, it needs to be
+	# ## added to objArgs after the match.call() function
+	# if( !is.null(polyline) && !polyline %in% names(l) ) {
+	# 	l[['polyline']] <- polyline
+	# }
 
-	## - if sf object, and geometry column has not been supplied, it needs to be
-	## added to objArgs after the match.call() function
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
 
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "polygon")
 
-	# shape <- rcpp_polygon_timer( data, l )
-	# print( shape )
+	map <- addDependency(map, mapdeckPolygonDependency())
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
 
- 	shape <- rcpp_polygon( data, l )
- 	# print( shape )
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+
+	jsfunc <- "add_polygon_geo"
+
+	if ( tp == "sf" ) {
+		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
+	 	shape <- rcpp_polygon_geojson( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_polygon_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_polygon_polyline"
+	}
 
 	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
 
-	map <- addDependency(map, mapdeckPolygonDependency())
-	invoke_method(map, "add_polygon2", shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]])
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]])
 }
 
 

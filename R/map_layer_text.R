@@ -64,6 +64,7 @@ add_text <- function(
 	alignment_baseline = NULL,
 	tooltip = NULL,
 	layer_id = NULL,
+	id = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
@@ -71,21 +72,34 @@ add_text <- function(
 	legend_options = NULL
 ) {
 
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["layer_id"]] <- NULL
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["layer_id"]] <- NULL
+
+	l <- list()
+	l[["lon"]] <- force( lon )
+	l[["lat"]] <- force( lat )
+	l[["fill_colour"]] <- force( fill_colour )
+	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["size"]] <- force( size )
+	l[["text"]] <- force( text )
+	l[["polyline"]] <- force( polyline )
+	l[["angle"]] <- force( angle )
+	l[["anchor"]] <- force( anchor )
+	l[["alignment_baseline"]] <- force( alignment_baseline )
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_data( data, l, "POINT")
 
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
 	## parmater checks
@@ -95,21 +109,26 @@ add_text <- function(
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "text")
 
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		l[['lon']] <- NULL
-		l[['lat']] <- NULL
-		l[['polyline']] <- polyline
+	map <- addDependency(map, mapdeckTextDependency())
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+	jsfunc <- "add_text_geo"
+
+	if( tp == "sf" ) {
+		geometry_column <- c( "geometry" )
+		shape <- rcpp_text_geojson( data, data_types, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( geometry = c("lon", "lat") )
+		shape <- rcpp_text_geojson_df( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_text_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_text_polyline"
 	}
 
-	shape <- rcpp_text( data, l );
-
-	map <- addDependency(map, mapdeckTextDependency())
-	invoke_method(map, "add_text2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
 }
 
 #' @export

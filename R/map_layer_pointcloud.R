@@ -39,6 +39,19 @@ mapdeckPointcloudDependency <- function() {
 #'   , fill_colour = "country"
 #'   , tooltip = "country"
 #' )
+#'
+#' ## as an sf object wtih a Z attribute
+#' library(sf)
+#' sf <- sf::st_as_sf( df , coords = c("lon","lat","z"))
+#'
+#' mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
+#' add_pointcloud(
+#'   data = sf
+#'   , layer_id = 'point'
+#'   , fill_colour = "country"
+#'   , tooltip = "country"
+#' )
+#'
 #' }
 #'
 #' @export
@@ -57,6 +70,7 @@ add_pointcloud <- function(
 	highlight_colour = "#AAFFFFFF",
 	light_settings = list(),
 	layer_id = NULL,
+	id = NULL,
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
@@ -65,43 +79,64 @@ add_pointcloud <- function(
 
 	# message("Using development version. Please check plots carefully")
 
-	l <- as.list( match.call() )
-	l[[1]] <- NULL    ## function call
-	l[["map"]] <- NULL
-	l[["data"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["layer_id"]] <- NULL
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL    ## function call
+	# l[["map"]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["light_settings"]] <- NULL
+	# l[["layer_id"]] <- NULL
+
+	l <- list()
+	l[["lon"]] <- force( lon )
+	l[["lat"]] <- force( lat )
+	l[["elevation"]] <- force( elevation )
+	l[["polyline"]] <- force( polyline )
+	l[["fill_colour"]] <- force( fill_colour)
+	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_elevation_data( data, l, elevation, "POINT" )
 
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
-	usePolyline <- isUsingPolyline(polyline)
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		l[['lon']] <- NULL
-		l[['lat']] <- NULL
-		l[['polyline']] <- polyline
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
-	layer_id <- layerId(layer_id, "pointcloud")
 	checkHexAlpha(highlight_colour)
-	shape <- rcpp_pointcloud( data, l )
-	#print(shape)
-
-	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
+	layer_id <- layerId(layer_id, "pointcloud")
 
 	map <- addDependency(map, mapdeckPointcloudDependency())
-	invoke_method(map, "add_pointcloud2", shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]] )
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+	jsfunc <- "add_pointcloud_geo"
+
+	if ( tp == "sf" ) {
+		geometry_column <- c( "geometry" )
+		shape <- rcpp_pointcloud_geojson( data, data_types, l, geometry_column )
+	} else if ( tp == "df" ) {
+		if( is.null(elevation) ){
+			l[["elevation"]] <- 0
+		}
+
+		geometry_column <- list( geometry = c("lon","lat","elevation") )
+	  shape <- rcpp_pointcloud_geojson_df( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_pointcloud_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_pointcloud_polyline"
+	}
+
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, light_settings,
+		auto_highlight, highlight_colour, shape[["legend"]]
+		)
 }
 
 

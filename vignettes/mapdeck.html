@@ -11,7 +11,7 @@
 
 <meta name="author" content="David Cooley" />
 
-<meta name="date" content="2018-09-02" />
+<meta name="date" content="2018-11-07" />
 
 <title>mapdeck</title>
 
@@ -1366,6 +1366,9 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
 }
@@ -1490,7 +1493,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">mapdeck</h1>
 <h4 class="author"><em>David Cooley</em></h4>
-<h4 class="date"><em>2018-09-02</em></h4>
+<h4 class="date"><em>2018-11-07</em></h4>
 
 </div>
 
@@ -1773,7 +1776,7 @@ ui &lt;- dashboardPage(
 )
 server &lt;- function(input, output) {
     
-    set_token('abc') ## set your access token
+    #set_token('abc') ## set your access token
     
     origin &lt;- capitals[capitals$country == &quot;Australia&quot;, ]
     destination &lt;- capitals[capitals$country != &quot;Australia&quot;, ]
@@ -1812,6 +1815,7 @@ server &lt;- function(input, output) {
                 , origin = c(&quot;lon.x&quot;, &quot;lat.x&quot;)
                 , destination = c(&quot;lon.y&quot;, &quot;lat.y&quot;)
                 , layer_id = &quot;myArcLayer&quot;
+                , id = &quot;country.x&quot;
                 , stroke_width = 4
             )
     })

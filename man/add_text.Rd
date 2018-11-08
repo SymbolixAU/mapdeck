@@ -8,7 +8,7 @@ add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
   polyline = NULL, fill_colour = NULL, fill_opacity = NULL,
   size = NULL, angle = NULL, anchor = NULL,
   alignment_baseline = NULL, tooltip = NULL, layer_id = NULL,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  id = NULL, auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", legend = FALSE, legend_options = NULL)
 }
 \arguments{
@@ -45,6 +45,8 @@ between 1 and 255 to be applied to all the shapes}
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
+
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 

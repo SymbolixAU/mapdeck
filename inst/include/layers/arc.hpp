@@ -6,15 +6,15 @@
 namespace mapdeck {
 namespace arc {
 
-Rcpp::StringVector arc_columns = Rcpp::StringVector::create(
-	"polyline","tooltip"
-);
+// Rcpp::StringVector arc_columns = Rcpp::StringVector::create(
+// 	"polyline","tooltip"
+// );
 
 // Rcpp::StringVector arc_colours = Rcpp::StringVector::create(
 // 	"stroke_from","stroke_from_opacity", "stroke_to","stroke_to_opacity","palette"
 // );
 
-std::map< std::string, std::string > arc_colours = {
+std::unordered_map< std::string, std::string > arc_colours = {
 	{ "stroke_from", "stroke_from_opacity" },
 	{ "stroke_to", "stroke_to_opacity" } // palette??
 };
@@ -22,6 +22,7 @@ std::map< std::string, std::string > arc_colours = {
 Rcpp::StringVector arc_legend = Rcpp::StringVector::create(
 	"stroke_from", "stroke_to"
 );
+
 } // namespace arc
 } // namespace mapdeck
 

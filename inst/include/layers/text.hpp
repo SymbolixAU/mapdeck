@@ -6,11 +6,11 @@
 namespace mapdeck {
 namespace text {
 
-Rcpp::StringVector text_columns = Rcpp::StringVector::create(
-	"polyline","tooltip","angle","alignment_baseline","anchor","size"
-);
+// Rcpp::StringVector text_columns = Rcpp::StringVector::create(
+// 	"polyline","tooltip","angle","alignment_baseline","anchor","size"
+// );
 
-std::map< std::string, std::string > text_colours = {
+std::unordered_map< std::string, std::string > text_colours = {
 	{ "fill_colour", "fill_opacity" }
 };
 

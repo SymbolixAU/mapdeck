@@ -45,16 +45,17 @@ mapdeckPathDependency <- function() {
 #' }
 #'
 #' @export
-#' @export
 add_path <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,
+	#geometry = NULL,            ## TODO( geometry - user can specify if there are more than one )
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	stroke_opacity = NULL,
 	tooltip = NULL,
 	layer_id = NULL,
+	id = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
@@ -65,34 +66,65 @@ add_path <- function(
 
 	## TODO(sf and lon/lat coordinates)
 	#message("Using development version. Please check plots carefully")
+#
+# 	l <- as.list( match.call() )
+# 	l[[1]] <- NULL
+# 	l[["data"]] <- NULL
+# 	l[["map"]] <- NULL
+# 	l[["layer_id"]] <- NULL
+# 	l[["auto_highlight"]] <- NULL
 
-	l <- as.list( match.call() )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["layer_id"]] <- NULL
-	l[["auto_highlight"]] <- NULL
+	l <- list()
+	l[["polyline"]] <- force( polyline )
+	l[["stroke_colour"]] <- force( stroke_colour)
+	l[["stroke_width"]] <- force( stroke_width )
+	l[["stroke_opacity"]] <- force( stroke_opacity )
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_data( data, l, "LINESTRING" )
 
-	data <- normaliseSfData(data, "LINESTRING")
-	polyline <- findEncodedColumn(data, polyline)
-
-	## - if sf object, and geometry column has not been supplied, it needs to be
-	## added to objArgs after the match.call() function
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
+	## TODO( move this to 'resovle data' )
+	## and in stead of using 'geometry' as a parameter name (& therefore column name)
+	## there needs to be a column in the data for each entry in l[["geometry"]]
+	## for example, if l[["geometry"]] <- c("origin","destination")
+	## these need to both be set on the data.
+	# l[["geometry"]] <- "geometry"
+
 	layer_id <- layerId(layer_id, "path")
-	checkHexAlpha(highlight_colour)
-	shape <- rcpp_path( data, l );
+	checkHexAlpha( highlight_colour )
 
 	map <- addDependency(map, mapdeckPathDependency())
-	invoke_method(map, "add_path2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+
+	#print( l )
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+
+	if ( tp == "sf" ) {
+		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
+		shape <- rcpp_path_geojson( data, data_types, l, geometry_column )
+		jsfunc <- "add_path_geo"
+	} else if ( tp == "sfencoded" ) {
+		jsfunc <- "add_path_polyline"
+		geometry_column <- "polyline"
+		shape <- rcpp_path_polyline( data, data_types, l, geometry_column )
+	}
+
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
+		highlight_colour, shape[["legend"]]
+		)
 }
+
 
 #' @inheritParams add_path
 #' @export

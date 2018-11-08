@@ -33,6 +33,7 @@ mapdeckHexagonDependency <- function() {
 #' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'
 #' ))
 #'
+#' df <- df[!is.na(df$lng), ]
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' add_hexagon(
 #'   data = df
@@ -42,10 +43,88 @@ mapdeckHexagonDependency <- function() {
 #'   , elevation_scale = 100
 #' )
 #'
+#' library( sf )
+#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' add_hexagon(
+#'   data = sf
+#'   , layer_id = "hex_layer"
+#'   , elevation_scale = 100
+#' )
+#'
+#'
 #' }
 #'
 #' @export
 add_hexagon <- function(
+	map,
+	data = get_map_data(map),
+	polyline = NULL,
+	lon = NULL,
+	lat = NULL,
+	layer_id = NULL,
+	id = NULL,
+	radius = 1000,
+	elevation_scale = 1,
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
+	colour_range = colourvalues::colour_values(1:6, palette = "viridis")
+) {
+
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["light_settings"]] <- NULL
+	# l[["layer_id"]] <- NULL
+	# l[["colour_range"]] <- NULL
+
+	l <- list()
+	l[["polyline"]] <- force(polyline)
+	l[["lon"]] <- force(lon)
+	l[["lat"]] <- force(lat)
+	l[["id"]] <- force(id)
+
+	l <- resolve_data( data, l, "POINT" )
+
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
+	}
+
+	checkHex(colour_range)
+	checkHexAlpha(highlight_colour)
+
+	layer_id <- layerId(layer_id, "hexagon")
+	map <- addDependency(map, mapdeckHexagonDependency())
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+	jsfunc <- "add_hexagon_geo"
+
+	if ( tp == "sf" ) {
+		geometry_column <- c( "geometry" )
+		shape <- rcpp_hexagon_geojson( data, data_types, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( geometry = c("lon", "lat") )
+		shape <- rcpp_hexagon_geojson_df( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_hexagon_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_hexagon_polyline"
+	}
+
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, radius, elevation_scale,
+		auto_highlight, highlight_colour, colour_range
+		)
+}
+
+
+#' @export
+add_hexagon_old <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,

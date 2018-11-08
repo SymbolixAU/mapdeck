@@ -124,6 +124,8 @@ mapdeck(
    , origin = 'geometry'
    , destination = 'geometry.1'
    , layer_id = 'arcs'
+   , stroke_from = "airport1"
+   , stroke_to = "airport2"
 )
 
 

@@ -1,8 +1,8 @@
 Package: mapdeck
 Type: Package
 Title: Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'
-Version: 0.1.005
-Date: 2018-08-16
+Version: 0.1.006
+Date: 2018-11-05
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
@@ -27,7 +27,9 @@ Imports:
     viridisLite,
     Rcpp,
     colourvalues (>= 0.2.0),
-    jsonify (>= 0.1.0001)
+    jsonify (>= 0.1.1),
+    geojsonsf (>= 1.2.2),
+    spatialwidget
 RoxygenNote: 6.1.0
 Suggests: 
     covr,
@@ -42,4 +44,6 @@ LinkingTo:
     colourvalues,
     jsonify,
     rapidjsonr,
-    BH
+    geojsonsf,
+    BH,
+    spatialwidget

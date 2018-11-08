@@ -8,7 +8,7 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, colour_range = colourvalues::colour_values(1:6,
   palette = "viridis"), cell_size = 1000, extruded = TRUE,
   elevation_scale = 1, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", layer_id = NULL)
+  highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -36,6 +36,8 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
+
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
 }
 \description{
 The Grid Layer renders a grid heatmap based on an array of points.
@@ -52,6 +54,7 @@ df <- read.csv(paste0(
 'examples/3d-heatmap/heatmap-data.csv'
 ))
 
+df <- df[ !is.na(df$lng ), ]
 
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 add_grid(
@@ -63,6 +66,20 @@ add_grid(
   , layer_id = "grid_layer"
   , auto_highlight = TRUE
 )
+
+## using sf object
+library(sf)
+sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+
+mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+add_grid(
+  data = sf
+  , cell_size = 5000
+  , elevation_scale = 50
+  , layer_id = "grid_layer"
+  , auto_highlight = TRUE
+)
+
 }
 
 }

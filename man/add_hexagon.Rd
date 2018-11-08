@@ -5,8 +5,8 @@
 \title{Add hexagon}
 \usage{
 add_hexagon(map, data = get_map_data(map), polyline = NULL,
-  lon = NULL, lat = NULL, layer_id, radius = 1000,
-  elevation_scale = 1, auto_highlight = FALSE,
+  lon = NULL, lat = NULL, layer_id = NULL, id = NULL,
+  radius = 1000, elevation_scale = 1, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF",
   colour_range = colourvalues::colour_values(1:6, palette = "viridis"))
 }
@@ -22,6 +22,8 @@ add_hexagon(map, data = get_map_data(map), polyline = NULL,
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
+
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
 
 \item{radius}{in metres}
 
@@ -48,6 +50,7 @@ df <- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'
 ))
 
+df <- df[!is.na(df$lng), ]
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 add_hexagon(
   data = df
@@ -56,6 +59,16 @@ add_hexagon(
   , layer_id = "hex_layer"
   , elevation_scale = 100
 )
+
+library( sf )
+sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+add_hexagon(
+  data = sf
+  , layer_id = "hex_layer"
+  , elevation_scale = 100
+)
+
 
 }
 
