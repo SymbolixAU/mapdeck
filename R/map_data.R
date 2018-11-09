@@ -13,7 +13,6 @@ sfrow <- function( sf , sfc_type ) {
 	return( which(vapply(sf[[geom_column]], function(x) attr(x, "class")[[2]], "") %in% sfc_type ) )
 }
 
-
 resolve_od_data <- function( data, l, origin, destination ) UseMethod("resolve_od_data")
 
 #' @export
