@@ -7,6 +7,7 @@
 Rcpp::List screengrid_defaults(int n) {
 	return Rcpp::List::create(
 		//_["polyline"] = mapdeck::defaults::default_polyline(n)
+		_["weight"] = mapdeck::defaults::default_weight(n)
 	);
 }
 

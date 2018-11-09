@@ -61,6 +61,11 @@ namespace defaults {
 		return nv;
 	}
 
+	inline Rcpp::NumericVector default_weight( int n ) {
+		Rcpp::NumericVector nv(n, 1.0);
+		return nv;
+	}
+
 	inline Rcpp::StringVector default_text_anchor( int n ) {
 		Rcpp::StringVector sv(n, "middle");
 		return sv;
