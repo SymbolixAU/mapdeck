@@ -104,7 +104,7 @@ add_line <- function(
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_width"]] <- force( stroke_width )
 	l[["stroke_opacity"]] <- force( stroke_opacity )
-	l[["tooltip"]] <- force( tooltip)
+	l[["tooltip"]] <- force( tooltip )
 	l[["id"]] <- force( id )
 
 	l <- resolve_palette( l, palette )

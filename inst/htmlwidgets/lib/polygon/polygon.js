@@ -31,7 +31,7 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highl
 
 function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
     
-  console.log( polygon_data );
+  //console.log( polygon_data );
   //console.log( legend );
   const polygonLayer = new PolygonLayer({
     id: 'polygon-'+layer_id,

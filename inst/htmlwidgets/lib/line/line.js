@@ -23,7 +23,7 @@ function add_line( map_id, line_data, layer_id, auto_highlight, legend ) {
 
 function add_line_geo( map_id, line_data, layer_id, auto_highlight, highlight_colour, legend ) {
 
-    console.log( line_data );
+    //console.log( line_data );
   const lineLayer = new LineLayer({
     id: 'line-'+layer_id,
     data: line_data,
