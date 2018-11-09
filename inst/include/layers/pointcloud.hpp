@@ -6,19 +6,11 @@
 namespace mapdeck {
 namespace pointcloud {
 
-	// Rcpp::StringVector pointcloud_columns = Rcpp::StringVector::create(
-	// 	"polyline","elevation","radius","tooltip"
-	// );
-
-	// Rcpp::StringVector pointcloud_colours = Rcpp::StringVector::create(
-	// 	"fill_colour", "fill_opacity","palette"
-	// );
-
-	std::unordered_map< std::string, std::string > pointcloud_colours = {
+	const std::unordered_map< std::string, std::string > pointcloud_colours = {
 		{ "fill_colour", "fill_opacity" }
 	};
 
-	Rcpp::StringVector pointcloud_legend = Rcpp::StringVector::create(
+	const Rcpp::StringVector pointcloud_legend = Rcpp::StringVector::create(
 		"fill_colour"
 	);
 

@@ -3,7 +3,7 @@ context("text")
 test_that("add_text accepts multiple objects", {
 
 	geo <- '[{"type":"Feature","properties":{"fill_colour":"#440154FF","anchor":"middle","angle":0.0,"alignment_baseline":"center","size":32.0,"text":"Kabul"},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
-	poly <- '[{"fill_colour":"#440154FF","anchor":"middle","angle":0.0,"alignment_baseline":"center","size":32.0,"polyline":"_ifpEo`ydL","text":"Kabul"}]'
+	poly <- '[{"fill_colour":"#440154FF","anchor":"middle","angle":0.0,"alignment_baseline":"center","size":32.0,"text":"Kabul","polyline":"_ifpEo`ydL"}]'
 
 	## sf
 	set_token("abc")

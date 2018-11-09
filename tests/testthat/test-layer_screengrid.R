@@ -3,7 +3,7 @@ context("screengrid")
 
 test_that("add_screengrid accepts multiple objects", {
 
-	geo <- '[{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}]'
+	geo <- '[{"type":"Feature","properties":{},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
 	poly <- '[{"polyline":"_ifpEo`ydL"}]'
 
 	## sf

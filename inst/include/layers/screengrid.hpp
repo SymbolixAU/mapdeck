@@ -6,11 +6,10 @@
 namespace mapdeck {
 namespace screengrid {
 
-// Rcpp::StringVector screengrid_columns = Rcpp::StringVector::create("polyline");
+  const std::unordered_map< std::string, std::string > screengrid_colours = {};
 
-  std::unordered_map< std::string, std::string > screengrid_colours = {};
+  const Rcpp::StringVector screengrid_legend = Rcpp::StringVector::create();
 
-  Rcpp::StringVector screengrid_legend = Rcpp::StringVector::create();
 } // namespace screengrid
 } // namespace mapdeck
 
