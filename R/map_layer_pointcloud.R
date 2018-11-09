@@ -119,15 +119,25 @@ add_pointcloud <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
+
+		print(data)
+		print( data_types )
+		print( l )
+		print( geometry_column )
+
 		shape <- rcpp_pointcloud_geojson( data, data_types, l, geometry_column )
 	} else if ( tp == "df" ) {
+
+		## TODO( here or in rcpp? )
 		if( is.null(elevation) ){
 			l[["elevation"]] <- 0
 		}
 
 		geometry_column <- list( geometry = c("lon","lat","elevation") )
 	  shape <- rcpp_pointcloud_geojson_df( data, data_types, l, geometry_column )
+
 	} else if ( tp == "sfencoded" ) {
+
 		geometry_column <- "polyline"
 		shape <- rcpp_pointcloud_polyline( data, data_types, l, geometry_column )
 		jsfunc <- "add_pointcloud_polyline"

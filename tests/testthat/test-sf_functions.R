@@ -34,4 +34,14 @@ test_that("sf objects are subset correctly", {
 
 	expect_identical( f(roads), c(T,T,F,T,T,T) )
 
+	l <- list()
+	l <- mapdeck:::resolve_data( sf, l, "LINESTRING" )
+	expect_true(nrow(l$data) == 1)
+
+	l <- list()
+	l <- mapdeck:::resolve_data( sf, l, "MULTILINESTRING" )
+	expect_true(nrow(l$data) == 1)
+
 })
+
+

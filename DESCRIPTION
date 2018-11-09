@@ -17,19 +17,19 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
 Imports:
+    colourvalues (>= 0.2.0),
+    geojsonsf (>= 1.2.2),
     googlePolylines (>= 0.7.1004),
     htmlwidgets,
     htmltools,
+    jsonlite,
+    jsonify (>= 0.1.1),
+    magrittr,
+    Rcpp,
     scales,
     shiny,
-    jsonlite,
-    magrittr,
-    viridisLite,
-    Rcpp,
-    colourvalues (>= 0.2.0),
-    jsonify (>= 0.1.1),
-    geojsonsf (>= 1.2.2),
-    spatialwidget
+    spatialwidget,
+    viridisLite
 RoxygenNote: 6.1.0
 Suggests: 
     covr,

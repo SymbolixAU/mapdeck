@@ -42,3 +42,20 @@ test_that("add_pointcloud accepts multiple objects", {
 	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), geo )
 
 })
+
+test_that("pointcloud reads elevation from sf Z attribute", {
+
+	geo <- '[{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[0,0,1]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[0,0,2]}}]'
+	sf <- geojsonsf::geojson_sf( geo )
+	mapdeck:::resolve_data( sf, list(), "POINT" )
+
+	l <- list()
+	l[["palette"]] <- "viridis"
+	l[["legend"]] <- FALSE
+	l[["geometry"]] <- "geometry"
+	geometry_column <- "geometry"
+	data_types <- vapply(sf, function(x) class(x)[[1]], "")
+	shape <- mapdeck:::rcpp_pointcloud_geojson( sf, data_types, l, geometry_column )
+	js <- '[{"type":"Feature","properties":{"fill_colour":"#440154FF"},"geometry":{"geometry":{"type":"Point","coordinates":[0.0,0.0,1.0]}}},{"type":"Feature","properties":{"fill_colour":"#440154FF"},"geometry":{"geometry":{"type":"Point","coordinates":[0.0,0.0,2.0]}}}]'
+	expect_equal(as.character( shape$data ), js)
+})
