@@ -132,6 +132,16 @@ resolve_elevation_data.sfencodedLite <- function( data, l, elevation, sf_geom ) 
 ## data using a single geometry ()
 resolve_data <- function( data, l, sf_geom ) UseMethod( "resolve_data" )
 
+sfc_type <- function( sf, sfc_col ) {
+	cls <- attr(sf[[sfc_col]], "class")
+	return( gsub("sfc_", "", cls[1] ) )
+}
+
+##
+sf_needs_subsetting <- function( data, sfc_col, sf_geom ) {
+	return( !sfc_type( data, sfc_col ) %in% toupper( sf_geom ) )
+}
+
 ## use the specificed st_geometry column
 #' @export
 resolve_data.sf <- function( data, l, sf_geom ) {
@@ -140,7 +150,7 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 	sfc_col <- attr( data, "sf_column" )
 	l[["geometry"]] <- sfc_col
 
-	if( !paste0( "sfc_", sfc_col) %in% toupper( sf_geom ) ) {
+	if( sf_needs_subsetting( data, sfc_col, sf_geom ) ) {
 		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
 	}
 	l[["data_type"]] <- "sf"

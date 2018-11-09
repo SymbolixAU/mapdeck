@@ -609,3 +609,33 @@
 #   , tooltip = "capital"
 # )
 
+
+# library(microbenchmark)
+#
+# m <- mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 )
+#
+# library(sf)
+# sf <- sf::st_as_sf( df, coords = c("lng", "lat") )
+#
+# microbenchmark(
+#   df = {
+#   	p <- add_scatterplot(
+#   		map = m
+#   		, data = df
+#   		, lat = "lat"
+#   		, lon = "lng"
+#   	)
+#   },
+#   sf = {
+#   	p <- add_scatterplot(
+#   		map = m
+#   		, data = sf
+#   	)
+#   },
+#   times = 5
+# )
+#
+# # Unit: milliseconds
+# # expr      min       lq     mean   median       uq      max neval
+# #   df 425.9679 435.5465 455.6931 446.2684 471.3066 499.3762     5
+# #   sf 393.3265 425.2497 423.5915 429.6698 432.6935 437.0179     5
