@@ -81,7 +81,7 @@ function updateTooltip({x, y, object, layer, index}) {
     // object is the data object sent to the layer function
 
   //console.log( layer.props.map_id);
-    
+
   const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
 
   if (object) {
@@ -250,8 +250,8 @@ function layer_click( map_id, layer, info ) {
   if ( !HTMLWidgets.shinyMode ) {
     return;
   }
-    
-  console.log( info );
+
+  //console.log( info );
 
   var eventInfo = {
   	index: info.index,

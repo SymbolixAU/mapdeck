@@ -4,7 +4,7 @@ function add_legend(map_id, layer_id, legendValues) {
 
   //console.log( legendValues.length );
   //console.log( legendValues.size );
-    console.log( legendValues );
+    //console.log( legendValues );
 
     var this_legend;
     Object.keys( legendValues ).forEach( function(key) {

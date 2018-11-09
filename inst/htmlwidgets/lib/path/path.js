@@ -1,8 +1,8 @@
 
 function add_path( map_id, path_data, layer_id, auto_highlight, legend ) {
 
-  console.log( path_data );
-    
+  //console.log( path_data );
+
   const pathLayer = new PathLayer({
     id: 'path-'+layer_id,
     data: path_data,
@@ -18,15 +18,15 @@ function add_path( map_id, path_data, layer_id, auto_highlight, legend ) {
     autoHighlight: auto_highlight
   });
   update_layer( map_id, 'path-'+layer_id, pathLayer );
-    
+
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
 }
 
 function add_path_polyline( map_id, path_data, layer_id, auto_highlight, highlight_colour, legend ) {
-    
-  console.log( path_data );
+
+  //console.log( path_data );
 
   const pathLayer = new PathLayer({
     map_id: map_id,
@@ -45,7 +45,7 @@ function add_path_polyline( map_id, path_data, layer_id, auto_highlight, highlig
     highlightColor: hexToRGBA2( highlight_colour )
   });
   update_layer( map_id, 'path-'+layer_id, pathLayer );
-    
+
   if ( legend !== false ) {
       add_legend( map_id, layer_id, legend );
   }
@@ -70,7 +70,7 @@ function add_path_geo( map_id, path_data, layer_id, auto_highlight, highlight_co
     highlightColor: hexToRGBA2( highlight_colour )
   });
   update_layer( map_id, 'path-'+layer_id, pathLayer );
-    
+
   if ( legend !== false ) {
       add_legend( map_id, layer_id, legend );
   }

@@ -20,9 +20,9 @@ function add_text( map_id, text_data, layer_id ) {
 
 
 function add_text_geo( map_id, text_data, layer_id ) {
-    
-  console.log( text_data );
-    
+
+  //console.log( text_data );
+
   const textLayer = new TextLayer({
     id: 'text-'+layer_id,
     data: text_data,
@@ -41,7 +41,7 @@ function add_text_geo( map_id, text_data, layer_id ) {
 }
 
 function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend ) {
-    
+
   const textLayer = new TextLayer({
     map_id: map_id,
     id: 'text-'+layer_id,
@@ -60,7 +60,7 @@ function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlig
     onHover: updateTooltip
   });
   update_layer( map_id, 'text-'+layer_id, textLayer );
-    
+
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
