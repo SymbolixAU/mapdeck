@@ -48,6 +48,8 @@ mapdeckScreengridDependency <- function() {
 #'   , opacity = 0.3
 #' )
 #'
+#' ## as an sf object
+#' library(sf)
 #' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
 #' mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_screengrid(

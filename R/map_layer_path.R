@@ -119,7 +119,7 @@ add_path <- function(
 		shape <- rcpp_path_polyline( data, data_types, l, geometry_column )
 	}
 
-	#print(shape[["legend"]])
+	# print(shape[["legend"]])
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,

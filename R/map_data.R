@@ -202,9 +202,9 @@ resolve_data.default <- function( data ) stop("This type of data is not supporte
 
 
 resolve_palette <- function( l, palette ) {
-	if ( is.matrix( palette ) ) {
+	#if ( is.matrix( palette ) ) {
 		l[['palette']] <- palette
-	}
+	#}
 	return( l )
 }
 

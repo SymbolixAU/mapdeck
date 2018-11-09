@@ -14,8 +14,6 @@ namespace path {
 		"stroke_colour"
 	);
 
-	int x;
-
 } // namespace path
 } // namespace mapdeck
 

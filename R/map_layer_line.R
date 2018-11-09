@@ -116,6 +116,7 @@ add_line <- function(
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
+
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
