@@ -47,8 +47,6 @@ function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colo
     }
   });
 
-  console.log( arcLayer );
-
   update_layer( map_id, 'arc-'+layer_id, arcLayer );
   if (legend !== false) {
     add_legend( map_id, layer_id, legend );
