@@ -21,7 +21,9 @@ function add_arc( map_id, arc_data, layer_id, auto_highlight, legend ) {
   }
 }
 
-function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend, transitions ) {
+
+	console.log( transitions );
 
   const arcLayer = new ArcLayer({
     id: 'arc-'+layer_id,
@@ -35,8 +37,17 @@ function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colo
     onClick: info => layer_click( map_id, "arc", info ),
     onHover: updateTooltip,
     autoHighlight: auto_highlight,
-    highlightColor: hexToRGBA2( highlight_colour )
+    highlightColor: hexToRGBA2( highlight_colour ),
+    transitions: {
+    	getSourcePosition: transitions.origin[0] ,
+    	getTargetPosition: transitions.destination[0],
+    	getSourceColor: transitions.stroke_from[0],
+    	getTargetColor: transitions.stroke_to[0],
+    	getStrokeWidth: transitions.stroke_width[0]
+    }
   });
+
+  console.log( arcLayer );
 
   update_layer( map_id, 'arc-'+layer_id, arcLayer );
   if (legend !== false) {

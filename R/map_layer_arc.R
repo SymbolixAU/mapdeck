@@ -131,7 +131,8 @@ add_arc <- function(
 	highlight_colour = "#AAFFFFFF",
 	legend = F,
 	legend_options = NULL,
-	palette = "viridis"
+	palette = "viridis",
+	transitions = NULL
 ) {
 
 	# l <- as.list( match.call( expand.dots = F) )
@@ -186,7 +187,16 @@ add_arc <- function(
   	jsfunc <- "add_arc_polyline"
   }
 
-	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	transitions <- list(
+		origin = 800,
+		destination = 600,
+		stroke_from = 1000,
+		stroke_to = 500,
+		stroke_width = 1500
+	)
+
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight,
+								highlight_colour, shape[["legend"]], jsonify::to_json( transitions ) )
 }
 
 #' @export
