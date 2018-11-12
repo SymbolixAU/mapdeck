@@ -90,7 +90,7 @@ add_path <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, "LINESTRING" )
+	l <- resolve_data( data, l, c("LINESTRING","MULTILINESTRING") )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]

@@ -13,7 +13,7 @@ Rcpp::List hexagon_defaults(int n) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_hexagon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
-                         Rcpp::List params, Rcpp::StringVector geometry_columns ) {
+                         Rcpp::List params, std::string geometry_columns ) {
 
 	int data_rows = data.nrows();
 
@@ -22,7 +22,7 @@ Rcpp::List rcpp_hexagon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 	std::unordered_map< std::string, std::string > hexagon_colours = mapdeck::hexagon::hexagon_colours;
 	Rcpp::StringVector hexagon_legend = mapdeck::hexagon::hexagon_legend;
 
-	return spatialwidget::api::create_geojson(
+	return spatialwidget::api::create_geojson_downcast(
 		data,
 		data_types,
 		params,

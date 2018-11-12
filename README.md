@@ -32,10 +32,6 @@ their functions and report any errors.
 If you install the latest dev version and your plots aren’t working, you
 can still use the old function, just add `_old` to the function call.
 
-If using `sf` objects, currently `MULTI*` objects will not work. You
-will need to cast them to their simpler structure before plotting using
-`sf::st_cast()`
-
 To use the development version you need some other development dependant
 libraries
 

@@ -95,7 +95,7 @@ add_screengrid <- function(
 	l[["lat"]] <- force( lat)
 	l[["id"]] <- force(id)
 
-	l <- resolve_data( data, l, "POINT" )
+	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -103,7 +103,7 @@ add_screengrid <- function(
 	}
 
 	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
+	#usePolyline <- isUsingPolyline(polyline)
 	checkNumeric(opacity)
 	checkNumeric(cell_size)
 	layer_id <- layerId(layer_id, "screengrid")

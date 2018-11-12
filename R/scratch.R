@@ -663,3 +663,61 @@
 # f2( data = df, stroke_colour = fc, fill_colour = x)
 #
 # f2( data = df, stroke_colour = fc, fill_colour = colourvalues::color_values(1:2) )
+
+# library(sf)
+# library(geojsonsf)
+# sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+#
+# mapdeck(
+#   token = key
+#   , style = 'mapbox://styles/mapbox/dark-v9'
+# ) %>%
+#   add_polygon(
+#     data = sf[1:10, ]
+#     , layer = "polygon_layer"
+#     , fill_colour = "SA2_NAME16"
+#   )
+#
+
+
+# nc <- st_read(system.file("shape/nc.shp", package="sf"))
+# nc
+# mapdeck(
+# 	token = key
+# 	, style = 'mapbox://styles/mapbox/dark-v9'
+# ) %>%
+# 	add_polygon(
+# 		data = nc
+# 		, fill_colour = "NAME"
+# 	)
+
+
+#
+# library(sf)
+# library(geojsonsf)
+# pt1 <- sf::st_sf( geometry = sf::st_sfc( sf::st_point(c(0,0))))
+# mp1 <- sf::st_sf( geometry = sf::st_sfc( sf::st_multipoint(x = matrix(1:6, ncol = 2))))
+# mp2 <- sf::st_sf( geometry = sf::st_sfc( sf::st_multipoint(x = matrix(1:6, ncol = 3))))
+# mp3 <- sf::st_sf( geometry = sf::st_sfc( sf::st_multipoint(x = matrix(1:8, ncol = 4))))
+# pt2 <- sf::st_sf( geometry = sf::st_sfc( sf::st_point(c(1,1,3,4))))
+# ls1 <- sf::st_sf( geometry = sf::st_sfc( sf::st_linestring(x = matrix(1:6, ncol = 2))))
+# ls2 <- sf::st_sf( geometry = sf::st_sfc( sf::st_linestring(x = matrix(1:6, ncol = 3))))
+# mls1 <- sf::st_sf( geometry = sf::st_sfc( sf::st_multilinestring(x = list(matrix(1:6, ncol = 2), matrix(6:1, ncol = 2), matrix(1:6, ncol = 2)))))
+#
+# js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[0.5,0.5],[0.5,0.75],[0.75,0.75],[0.75,0.5],[0.5,0.5]]],[[[2.0,2.0],[2.0,3.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
+# mp <- geojson_sf( js )
+# sf::st_crs( mp ) <- sf::st_crs( mls1 )
+# sf <- rbind(pt1, mp1, mp2, mp3, pt2, ls1, ls2, mls1, mp)
+# sf$id <- 1:nrow(sf)
+#
+#
+#
+#
+# mapdeck:::sf_needs_subsetting(sf, "geometry", c("MULTIPOINT", "POINT") )
+# mapdeck:::sfrow(sf, c("POINT"))
+#
+# sf <- rbind(pt1, mp1)
+#
+# mapdeck:::sf_needs_subsetting(sf, "geometry", c("MULTIPOINT", "POINT") )
+# mapdeck:::sfrow(sf, c("POINT","MULTIPOINT"))
+#

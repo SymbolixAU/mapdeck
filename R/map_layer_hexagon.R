@@ -86,7 +86,7 @@ add_hexagon <- function(
 	l[["lat"]] <- force(lat)
 	l[["id"]] <- force(id)
 
-	l <- resolve_data( data, l, "POINT" )
+	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]

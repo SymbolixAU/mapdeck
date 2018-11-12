@@ -16,7 +16,7 @@ Rcpp::List path_defaults(int n) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_path_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
-                              Rcpp::List params, Rcpp::StringVector geometry_columns  ) {
+                              Rcpp::List params, std::string geometry_columns  ) {
 
 	int data_rows = data.nrows();
 
@@ -24,7 +24,7 @@ Rcpp::List rcpp_path_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 	std::unordered_map< std::string, std::string > path_colours = mapdeck::path::path_colours;
 	Rcpp::StringVector path_legend = mapdeck::path::path_legend;
 
-	return spatialwidget::api::create_geojson(
+	return spatialwidget::api::create_geojson_downcast(
 		data,
 		data_types,
 		params,

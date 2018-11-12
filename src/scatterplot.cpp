@@ -16,7 +16,7 @@ Rcpp::List scatterplot_defaults(int n) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_scatterplot_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
-                                     Rcpp::List params, Rcpp::StringVector geometry_columns) {
+                                     Rcpp::List params, std::string geometry_columns) {
 
 	int data_rows = data.nrows();
 
@@ -24,7 +24,7 @@ Rcpp::List rcpp_scatterplot_geojson( Rcpp::DataFrame data, Rcpp::List data_types
 	std::unordered_map< std::string, std::string > scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
 	Rcpp::StringVector scatterplot_legend = mapdeck::scatterplot::scatterplot_legend;
 
-	return spatialwidget::api::create_geojson(
+	return spatialwidget::api::create_geojson_downcast(
 		data,
 		data_types,
 		params,

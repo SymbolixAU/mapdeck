@@ -85,7 +85,7 @@ resolve_elevation_data.data.frame <- function( data, l, elevation, sf_geom ) {
 		## the user supplied a polyline in a data.frame, so we need to allow this through
 		l[["data_type"]] <- "sfencoded"
 	} else {
-	  if ( sf_geom != "POINT" )
+	  if ( !(all(sf_geom %in% c( "POINT", "MULTIPOINT") ) ) )
 		  stop("unsupported data type")
 
 		l[["data_type"]] <- "df"
@@ -106,7 +106,7 @@ resolve_elevation_data.sf <- function( data, l, elevation, sf_geom ) {
 #' @export
 resolve_elevation_data.sfencoded <- function( data, l, elevation, sf_geom ) {
 
-	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom, multi = TRUE), ]
+	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom[1], multi = TRUE), ]
 
 	l[["data_type"]] <- "sfencoded"
 	l[["data"]] <- data
@@ -117,7 +117,7 @@ resolve_elevation_data.sfencoded <- function( data, l, elevation, sf_geom ) {
 #' @export
 resolve_elevation_data.sfencodedLite <- function( data, l, elevation, sf_geom ) {
 	polyline <- attr( data, "encoded_column")
-	if ( sf_geom != "POLYGON" ) {   ## TODO( I don't like this)
+	if ( !all(sf_geom %in% c("POLYGON","MULTIPOLYGON") ) ) {   ## TODO( I don't like this)
 		data <- unlistMultiGeometry( data, polyline )  ## TODO( move this to C++)
 	}
 
@@ -160,7 +160,7 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 #' @export
 resolve_data.sfencoded <- function( data, l, sf_geom ) {
 
-	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom, multi = TRUE), ]
+	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom[1], multi = TRUE), ]
 
 	l[["data_type"]] <- "sfencoded"
 	l[["data"]] <- data
@@ -178,7 +178,7 @@ resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
 	# if( !is.null(polyline) && !polyline %in% names(l) ) {
 	#	l[['polyline']] <- polyline
 	polyline <- attr( data, "encoded_column")
-	if ( sf_geom != "POLYGON" ) {   ## TODO( I don't like this)
+	if ( sf_geom[1] != "POLYGON" ) {   ## TODO( I don't like this)
   	data <- unlistMultiGeometry( data, polyline )  ## TODO( move this to C++)
 	}
 
@@ -198,7 +198,7 @@ resolve_data.data.frame <- function( data, l, sf_geom ) {
 		## the user supplied a polyline in a data.frame, so we need to allow this through
 		l[["data_type"]] <- "sfencoded"
 	} else {
-		if ( sf_geom != "POINT" )
+		if ( sf_geom[1] != "POINT" )
 			stop("unsupported data type")
 
 		l[["data_type"]] <- "df"

@@ -18,7 +18,7 @@ Rcpp::List text_defaults(int n) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_text_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
-                      Rcpp::List params, Rcpp::StringVector geometry_columns ) {
+                      Rcpp::List params, std::string geometry_columns ) {
 
 	int data_rows = data.nrows();
 
@@ -27,7 +27,7 @@ Rcpp::List rcpp_text_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 	std::unordered_map< std::string, std::string > text_colours = mapdeck::text::text_colours;
 	Rcpp::StringVector text_legend = mapdeck::text::text_legend;
 
-	return spatialwidget::api::create_geojson(
+	return spatialwidget::api::create_geojson_downcast(
 		data,
 		data_types,
 		params,

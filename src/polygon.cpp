@@ -15,7 +15,7 @@ Rcpp::List polygon_defaults(int n) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_polygon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
-                              Rcpp::List params, Rcpp::StringVector geometry_columns  ) {
+                              Rcpp::List params, std::string geometry_columns  ) {
 
 	int data_rows = data.nrows();
 
@@ -23,7 +23,7 @@ Rcpp::List rcpp_polygon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::polygon::polygon_colours;
 	Rcpp::StringVector polygon_legend = mapdeck::polygon::polygon_legend;
 
-	return spatialwidget::api::create_geojson(
+	return spatialwidget::api::create_geojson_downcast(
 		data,
 		data_types,
 		params,

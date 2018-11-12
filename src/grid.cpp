@@ -13,7 +13,7 @@ Rcpp::List grid_defaults(int n) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_grid_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
-                              Rcpp::List params, Rcpp::StringVector geometry_columns ) {
+                              Rcpp::List params, std::string geometry_column ) {
 
 	int data_rows = data.nrows();
 
@@ -22,7 +22,7 @@ Rcpp::List rcpp_grid_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 	std::unordered_map< std::string, std::string > grid_colours = mapdeck::grid::grid_colours;
 	Rcpp::StringVector grid_legend = mapdeck::grid::grid_legend;
 
-	return spatialwidget::api::create_geojson(
+	return spatialwidget::api::create_geojson_downcast(
 		data,
 		data_types,
 		params,
@@ -30,7 +30,7 @@ Rcpp::List rcpp_grid_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		grid_colours,
 		grid_legend,
 		data_rows,
-		geometry_columns,
+		geometry_column,
 		true  // jsonify legend
 	);
 }

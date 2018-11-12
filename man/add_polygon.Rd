@@ -106,7 +106,6 @@ library(sf)
 library(geojsonsf)
 
 sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
-sf <- sf::st_cast(sf, "POLYGON")
 
 mapdeck(
   token = key

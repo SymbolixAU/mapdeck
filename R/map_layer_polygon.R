@@ -64,7 +64,6 @@ mapdeckPolygonDependency <- function() {
 #' library(geojsonsf)
 #'
 #' sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
-#' sf <- sf::st_cast(sf, "POLYGON")
 #'
 #' mapdeck(
 #'   token = key
@@ -121,7 +120,8 @@ add_polygon <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, "POLYGON" )
+	l <- resolve_data( data, l, c("POLYGON","MULTIPOLYGON") )
+
 
 
 	# data <- normaliseSfData(data, "POLYGON", multi = FALSE)

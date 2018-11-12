@@ -100,7 +100,7 @@ add_pointcloud <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_elevation_data( data, l, elevation, "POINT" )
+	l <- resolve_elevation_data( data, l, elevation, c("POINT","MULTIPOINT") )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -120,10 +120,10 @@ add_pointcloud <- function(
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
 
-		print(data)
-		print( data_types )
-		print( l )
-		print( geometry_column )
+		# print(data)
+		# print( data_types )
+		# print( l )
+		# print( geometry_column )
 
 		shape <- rcpp_pointcloud_geojson( data, data_types, l, geometry_column )
 	} else if ( tp == "df" ) {
