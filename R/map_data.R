@@ -6,8 +6,6 @@ resolve_args <- function( l, layer_args ) {
 	lapply( l, eval )
 }
 
-
-## TODO( allow MULTI* objects)
 sfrow <- function( sf , sfc_type ) {
 	geom_column <- attr(sf, "sf_column")
 	return( which(vapply(sf[[geom_column]], function(x) attr(x, "class")[[2]], "") %in% sfc_type ) )
@@ -144,7 +142,6 @@ sf_needs_subsetting <- function( data, sfc_col, sf_geom ) {
 ## use the specificed st_geometry column
 #' @export
 resolve_data.sf <- function( data, l, sf_geom ) {
-	## TODO( allow MULTI* objects)
 
 	sfc_col <- attr( data, "sf_column" )
 	l[["geometry"]] <- sfc_col

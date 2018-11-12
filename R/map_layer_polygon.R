@@ -67,7 +67,7 @@ mapdeckPolygonDependency <- function() {
 #'
 #' mapdeck(
 #'   token = key
-#'   , style = 'mapbox://styles/mapbox/dark-v9'
+#'   , style = mapdeck_style('dark')
 #' ) %>%
 #'   add_polygon(
 #'     data = sf
