@@ -6,8 +6,8 @@
 \usage{
 add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, weight = NULL,
-  colour_range = viridisLite::viridis(6), opacity = 0.8,
-  cell_size = 50, layer_id = NULL, digits = 6)
+  colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
+  opacity = 0.8, cell_size = 50, layer_id = NULL, id = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -32,8 +32,7 @@ add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
 }
 \description{
 The Screen Grid Layer takes in an array of latitude and longitude coordinated points,
@@ -50,6 +49,7 @@ df <- read.csv(paste0(
 'examples/3d-heatmap/heatmap-data.csv'
 ))
 
+df <- df[ !is.na(df$lng), ]
 df$weight <- sample(1:10, size = nrow(df), replace = T)
 
 mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) \%>\%
@@ -62,6 +62,19 @@ add_screengrid(
   , cell_size = 10
   , opacity = 0.3
 )
+
+## as an sf object
+library(sf)
+sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) \%>\%
+add_screengrid(
+  data = sf
+  , weight = "weight",
+  , layer_id = "screengrid_layer"
+  , cell_size = 10
+  , opacity = 0.3
+)
+
 }
 
 }

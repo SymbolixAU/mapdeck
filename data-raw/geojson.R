@@ -103,7 +103,7 @@ mapdeck(
 usethis::use_data(geojson, overwrite = T)
 
 sf <- geojsonsf::geojson_sf(geojson)
-sf$fillColor <- sample(viridisLite::viridis(5), size = nrow(sf), replace = T)
+sf$fillColor <- sample(colourvalues::colour_values(1:5, palette = "viridis"), size = nrow(sf), replace = T)
 geojson <- geojsonsf::sf_geojson(sf)
 attr(geojson, 'class') <- 'json'
 

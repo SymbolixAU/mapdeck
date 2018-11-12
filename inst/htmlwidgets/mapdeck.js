@@ -14,13 +14,20 @@ HTMLWidgets.widget({
       	//window.params.push({ 'map_id' : el.id });
 
       	window[el.id + 'layers'] = []; // keep track of layers for overlaying multiple
+        window[el.id + 'legendPositions'] = [];     // array for keeping a referene to legend positions
       	// needs to be an array because .props takes an array of layers
 
         var mapDiv = document.getElementById(el.id);
         mapDiv.className = 'mapdeckmap';
 
+        var legendContainer = document.createElement('div');
+        legendContainer.className = "legendContainer";
+        legendContainer.id = "legendContainer"+el.id;
+        mapDiv.appendChild( legendContainer );
+
         var tooltipdiv = document.createElement('div');
-        tooltipdiv.id = 'tooltip';
+        tooltipdiv.setAttribute("class", "mapdecktooltip");
+        tooltipdiv.setAttribute("id", "mapdecktooltip"+el.id);
         mapDiv.appendChild(tooltipdiv);
 
         // INITIAL VIEW
@@ -31,7 +38,7 @@ HTMLWidgets.widget({
         	pitch: x.pitch
         };
 
-        const	deckgl = new deck.DeckGL({
+        const deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
@@ -70,8 +77,13 @@ function change_location( map_id, location, duration, transition, zoom ) {
 
 // following: https://codepen.io/vis-gl/pen/pLLQpN
 // and: https://beta.observablehq.com/@pessimistress/deck-gl-geojsonlayer-example
-function updateTooltip({x, y, object}) {
-  const tooltip = document.getElementById('tooltip');
+function updateTooltip({x, y, object, layer, index}) {
+    // object is the data object sent to the layer function
+
+  //console.log( layer.props.map_id);
+
+  const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
+
   if (object) {
   	if(object.tooltip === undefined) {
   		return;
@@ -161,6 +173,14 @@ function update_layer( map_id, layer_id, layer ) {
   window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
 }
 
+function clear_layer( map_id, layer_id ) {
+  var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
+  if ( elem != -1 ) {
+  	window[ map_id + 'layers'].splice( elem, 1 );
+  }
+  window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
+}
+
 
 /**
  * hex to rgb
@@ -230,6 +250,8 @@ function layer_click( map_id, layer, info ) {
   if ( !HTMLWidgets.shinyMode ) {
     return;
   }
+
+  //console.log( info );
 
   var eventInfo = {
   	index: info.index,

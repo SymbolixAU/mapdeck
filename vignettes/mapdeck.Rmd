@@ -365,7 +365,7 @@ ui <- dashboardPage(
 )
 server <- function(input, output) {
 	
-	set_token('abc') ## set your access token
+	#set_token('abc') ## set your access token
 	
 	origin <- capitals[capitals$country == "Australia", ]
 	destination <- capitals[capitals$country != "Australia", ]
@@ -404,6 +404,7 @@ server <- function(input, output) {
 				, origin = c("lon.x", "lat.x")
 				, destination = c("lon.y", "lat.y")
 				, layer_id = "myArcLayer"
+				, id = "country.x"
 				, stroke_width = 4
 			)
 	})

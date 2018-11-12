@@ -6,8 +6,10 @@
 \usage{
 add_path(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
-  tooltip = NULL, layer_id = NULL, digits = 6,
-  auto_highlight = FALSE, palette = viridisLite::viridis)
+  tooltip = NULL, layer_id = NULL, id = NULL,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
+  legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -30,17 +32,38 @@ between 1 and 255 to be applied to all the shapes}
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
-\item{palette}{a function which generates hex colours}
+\item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
+
+\item{palette}{string or matrix. String is either one of "viridis","inferno",
+"magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
+between [0, 255], where the 4th column represents the alpha.}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
 }
 \description{
 The Path Layer takes in lists of coordinate points and renders them as
 extruded lines with mitering.
 }
+\section{legend}{
+
+
+The \code{legend_options} can be used to control the appearance of the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{css - a string of valid \code{css} for controlling the appearance of the legend}
+  \item{title - a string to use for the title of the legend}
+}
+
+If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+}
+
 \examples{
 \donttest{
 
@@ -58,6 +81,7 @@ mapdeck(
     , layer_id = "path_layer"
     , tooltip = "ROAD_NAME"
     , auto_highlight = TRUE
+    , legend = T
   )
 
 }

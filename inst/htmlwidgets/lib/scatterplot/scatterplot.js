@@ -1,5 +1,5 @@
 
-function add_scatterplot( map_id, scatter_data, layer_id, auto_highlight ) {
+function add_scatterplot( map_id, scatter_data, layer_id, auto_highlight, legend ) {
   const scatterLayer = new deck.ScatterplotLayer({
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
@@ -14,11 +14,16 @@ function add_scatterplot( map_id, scatter_data, layer_id, auto_highlight ) {
     onHover: updateTooltip
   });
   update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
+    
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
 }
 
 
-function add_scatterplot2( map_id, scatter_data, layer_id, auto_highlight ) {
+function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend ) {
   const scatterLayer = new deck.ScatterplotLayer({
+    map_id: map_id,
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
     radiusScale: 1,
@@ -28,8 +33,44 @@ function add_scatterplot2( map_id, scatter_data, layer_id, auto_highlight ) {
     getColor: d => hexToRGBA2( d.fill_colour ),
     pickable: true,
     autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour ),
     onClick: info => layer_click( map_id, "scatterplot", info ),
     onHover: updateTooltip
   });
   update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
+    
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
+}
+
+
+function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend ) {
+    
+  const scatterLayer = new deck.ScatterplotLayer({
+    map_id: map_id,
+    id: 'scatterplot-'+layer_id,
+    data: scatter_data,
+    radiusScale: 1,
+    radiusMinPixels: 1,
+    getRadius: d => d.properties.radius,
+    getPosition: d => d.geometry.geometry.coordinates,
+    getColor: d => hexToRGBA2( d.properties.fill_colour ),
+    pickable: true,
+    autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour ),
+    onClick: info => layer_click( map_id, "scatterplot", info ),
+    onHover: updateTooltip
+  });
+  update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
+    
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
+}
+
+
+function clear_scatterplot( map_id, layer_id ) {
+  clear_layer( map_id, 'scatterplot-'+layer_id );
+  clear_legend( map_id, layer_id );
 }

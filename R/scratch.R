@@ -1,8 +1,12 @@
 #
+# url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
+# flights <- read.csv(url)
+# flights$id <- seq_len(nrow(flights))
+# flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
+# flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 #
 # library(shiny)
 # library(shinydashboard)
-#
 #
 # ui <- dashboardPage(
 # 	dashboardHeader()
