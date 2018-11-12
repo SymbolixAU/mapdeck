@@ -207,10 +207,19 @@ add_arc_old <- function(
 	digits = 6,
 	legend = F,
 	legend_options = NULL,
+	transitions = NULL,
 	palette = viridisLite::viridis
 ) {
 
 	objArgs <- match.call(expand.dots = F)
+
+	transitions <- list(
+		origin = 800,
+		destination = 600,
+		stroke_from = 1000,
+		stroke_to = 500,
+		stroke_width = 1500
+	)
 
 	## if origin && destination == one column each, it's an sf_encoded
 	## else, it's two column, which need to be encoded!
@@ -287,7 +296,7 @@ add_arc_old <- function(
 	shape <- jsonlite::toJSON(shape, digits = digits)
 
 	map <- addDependency(map, mapdeckArcDependency())
-	invoke_method(map, "add_arc", shape, layer_id, auto_highlight, legend )
+	invoke_method(map, "add_arc", shape, layer_id, auto_highlight, jsonify::to_json( transitions ) )
 }
 
 
