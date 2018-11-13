@@ -38,9 +38,9 @@ function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, hi
     highlightColor: hexToRGBA2( highlight_colour ),
     onClick: info => layer_click( map_id, "scatterplot", info ),
     onHover: updateTooltip,
-    transitions: {
-        getRadius: 300
-    }
+    //transitions: {
+    //    getRadius: 300
+    //}
   });
   update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
     

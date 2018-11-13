@@ -13,11 +13,11 @@ function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colo
     onHover: updateTooltip,
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour ),
-      transitions: {
-    	getSourceColor: 10000,
-    	getTargetcolor: 10000,
-    	getStrokeWidth: 1000
-    }
+    //transitions: {
+    //	getSourceColor: 10000,
+    //	getTargetcolor: 10000,
+    //	getStrokeWidth: 1000
+    //}
   });
 
   update_layer( map_id, 'arc-'+layer_id, arcLayer );

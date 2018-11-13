@@ -170,7 +170,6 @@ add_arc <- function(
 	l[["data_type"]] <- NULL
 	jsfunc <- "add_arc_geo"
 
-
 	map <- addDependency(map, mapdeckArcDependency())
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
 
