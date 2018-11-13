@@ -1,18 +1,23 @@
-
-function add_arc( map_id, arc_data, layer_id, auto_highlight, legend ) {
+function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend ) {
 
   const arcLayer = new ArcLayer({
     id: 'arc-'+layer_id,
     data: arc_data,
     pickable: true,
-    getStrokeWidth: d => d.stroke_width,
-    getSourcePosition: d => decode_points( d.origin ),
-    getTargetPosition: d => decode_points( d.destination ),
-    getSourceColor: d => hexToRGBA( d.stroke_from, d.stroke_from_opacity ),
-    getTargetColor: d => hexToRGBA( d.stroke_to, d.stroke_to_opacity ),
+    getStrokeWidth: d => d.properties.stroke_width,
+    getSourcePosition: d => d.geometry.origin.coordinates,
+    getTargetPosition: d => d.geometry.destination.coordinates,
+    getSourceColor: d => hexToRGBA2( d.properties.stroke_from ),
+    getTargetColor: d => hexToRGBA2( d.properties.stroke_to ),
     onClick: info => layer_click( map_id, "arc", info ),
     onHover: updateTooltip,
-    autoHighlight: auto_highlight
+    autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour ),
+    //transitions: {
+    //	getSourceColor: 10000,
+    //	getTargetcolor: 10000,
+    //	getStrokeWidth: 1000
+    //}
   });
 
   update_layer( map_id, 'arc-'+layer_id, arcLayer );
@@ -21,7 +26,9 @@ function add_arc( map_id, arc_data, layer_id, auto_highlight, legend ) {
   }
 }
 
-function add_arc2( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_arc_polyline( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend ) {
+
+    //console.log( arc_data );
 
   const arcLayer = new ArcLayer({
     map_id: map_id,

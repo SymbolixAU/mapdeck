@@ -34,6 +34,7 @@ mapdeckGridDependency <- function() {
 #' 'examples/3d-heatmap/heatmap-data.csv'
 #' ))
 #'
+#' df <- df[ !is.na(df$lng ), ]
 #'
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' add_grid(
@@ -45,6 +46,20 @@ mapdeckGridDependency <- function() {
 #'   , layer_id = "grid_layer"
 #'   , auto_highlight = TRUE
 #' )
+#'
+#' ## using sf object
+#' library(sf)
+#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#'
+#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' add_grid(
+#'   data = sf
+#'   , cell_size = 5000
+#'   , elevation_scale = 50
+#'   , layer_id = "grid_layer"
+#'   , auto_highlight = TRUE
+#' )
+#'
 #' }
 #'
 #' @export
@@ -60,27 +75,29 @@ add_grid <- function(
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
-	layer_id = NULL
+	layer_id = NULL,
+	id = NULL
 ) {
 
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["elevation_scale"]] <- NULL
-	l[["cell_size"]] <- NULL
-	l[["colour_range"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["layer_id"]] <- NULL
-	l <- resolve_palette( l, palette )
-	#l <- resolve_legend( l, legend )
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["elevation_scale"]] <- NULL
+	# l[["cell_size"]] <- NULL
+	# l[["colour_range"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["layer_id"]] <- NULL
+	l <- list()
+	l[["lon"]] <- force(lon)
+	l[["lat"]] <- force(lat)
+	l[["polyline"]] <- force(polyline)
 
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
+	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
 	## parmater checks
@@ -91,97 +108,33 @@ add_grid <- function(
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "grid")
 
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		l[['lon']] <- NULL
-		l[['lat']] <- NULL
-		l[['polyline']] <- polyline
+	map <- addDependency(map, mapdeckGridDependency())
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+
+	jsfunc <- "add_grid_geo"
+
+	if ( tp == "sf" ) {
+	  geometry_column <- c( "geometry" )
+	  shape <- rcpp_grid_geojson( data, data_types, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( geometry = c("lon", "lat") )
+		shape <- rcpp_grid_geojson_df( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_grid_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_grid_polyline"
 	}
 
-	layer_id <- layerId(layer_id, "grid")
-	shape <- rcpp_grid( data, l )
-	# print(shape)
-
-	map <- addDependency(map, mapdeckGridDependency())
+	# print( shape )
 
 	invoke_method(
-		map, "add_grid2", shape[["data"]], layer_id, cell_size,
+		map, jsfunc, shape[["data"]], layer_id, cell_size,
 		jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale,
 		colour_range, auto_highlight, highlight_colour
 		)
-}
-
-
-#' @export
-add_grid_old <- function(
-	map,
-	data = get_map_data(map),
-	lon = NULL,
-	lat = NULL,
-	polyline = NULL,
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
-	cell_size = 1000,
-	extruded = TRUE,
-	elevation_scale = 1,
-	auto_highlight = FALSE,
-	layer_id = NULL,
-	digits = 6
-) {
-
-	objArgs <- match.call(expand.dots = F)
-
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-		objArgs[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
-
-	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
-	checkNumeric(digits)
-	checkNumeric(elevation_scale)
-	checkNumeric(cell_size)
-	checkHex(colour_range)
-	layer_id <- layerId(layer_id, "grid")
-
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		objArgs[['lon']] <- NULL
-		objArgs[['lat']] <- NULL
-		objArgs[['polyline']] <- polyline
-	}
-
-	allCols <- gridColumns()
-	requiredCols <- requiredGridColumns()
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	requiredDefaults <- setdiff(requiredCols, names(shape))
-
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "grid")
-	}
-
-	shape <- jsonlite::toJSON(shape, digits = digits)
-	# print(shape)
-
-	map <- addDependency(map, mapdeckGridDependency())
-
-	invoke_method(
-		map, "add_grid", shape, layer_id, cell_size,
-		jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale,
-		colour_range, auto_highlight
-	)
 }
 
 
@@ -190,19 +143,4 @@ add_grid_old <- function(
 clear_grid <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "grid")
 	invoke_method(map, "clear_grid", layer_id )
-}
-
-requiredGridColumns <- function() {
-	c()
-}
-
-
-gridColumns <- function() {
-	c("polyline")
-}
-
-gridDefaults <- function(n) {
-	data.frame(
-		stringsAsFactors = F
-	)
 }

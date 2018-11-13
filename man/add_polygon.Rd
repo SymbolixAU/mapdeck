@@ -8,8 +8,9 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL,
   fill_opacity = NULL, elevation = NULL, tooltip = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  light_settings = list(), layer_id = NULL, palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL)
+  light_settings = list(), layer_id = NULL, id = NULL,
+  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
+  legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -42,6 +43,8 @@ between 1 and 255 to be applied to all the shapes}
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+
 \item{palette}{string or matrix. String is either one of "viridis","inferno",
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 between [0, 255], where the 4th column represents the alpha.}
@@ -50,6 +53,10 @@ between [0, 255], where the 4th column represents the alpha.}
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
+
+\item{geometry}{string specifying the `sfc` column of an SF object. If NULL and
+\code{data} is an `sf` object the \code{geometry} will be automatically assinged
+from \code{ sf::st_geometry( data ) }}
 }
 \description{
 The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects
@@ -99,11 +106,10 @@ library(sf)
 library(geojsonsf)
 
 sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
-sf <- sf::st_cast(sf, "POLYGON")
 
 mapdeck(
   token = key
-  , style = 'mapbox://styles/mapbox/dark-v9'
+  , style = mapdeck_style('dark')
 ) \%>\%
   add_polygon(
     data = sf

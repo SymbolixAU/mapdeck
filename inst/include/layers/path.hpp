@@ -6,21 +6,14 @@
 namespace mapdeck {
 namespace path {
 
-	Rcpp::StringVector path_columns = Rcpp::StringVector::create(
-		"polyline", "stroke_width", "tooltip"
-	);
-
-	// Rcpp::StringVector path_colours = Rcpp::StringVector::create(
-	//   "stroke_colour","stroke_opacity","palette"
-	// );
-
-	std::map< std::string, std::string > path_colours = {
+	const std::unordered_map< std::string, std::string > path_colours = {
 		{ "stroke_colour", "stroke_opacity" }
 	};
 
-	Rcpp::StringVector path_legend = Rcpp::StringVector::create(
+	const Rcpp::StringVector path_legend = Rcpp::StringVector::create(
 		"stroke_colour"
 	);
+
 } // namespace path
 } // namespace mapdeck
 

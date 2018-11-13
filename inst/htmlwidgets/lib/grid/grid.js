@@ -1,5 +1,4 @@
-
-function add_grid( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight ) {
+function add_grid_geo( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour ) {
 
   const gridLayer = new deck.GridLayer({
     id: 'grid-'+layer_id,
@@ -9,14 +8,15 @@ function add_grid( map_id, grid_data, layer_id, cell_size, extruded, elevation_s
     cellSize: cell_size,
     colorRange: to_rgba( colour_range ),
     elevationScale: elevation_scale,
-    getPosition: d => decode_polyline( d.polyline )[0],
+    getPosition: d => d.geometry.geometry.coordinates,
     onClick: info => layer_click( map_id, "grid", info ),
-    autoHighlight: auto_highlight
+    autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour )
   });
   update_layer( map_id, 'grid-'+layer_id, gridLayer );
 }
 
-function add_grid2( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour ) {
+function add_grid_polyline( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour ) {
 
   const gridLayer = new deck.GridLayer({
     map_id: map_id,

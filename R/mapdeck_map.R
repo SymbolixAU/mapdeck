@@ -150,6 +150,6 @@ mapdeck_view <- function(
 #
 # @param map a mapdeck_map object
 #
-get_map_data = function(map){
-	attr(map$x, "map_map_data", exact = TRUE)
+get_map_data = function( map ) {
+	attr( map$x, "map_map_data", exact = TRUE )
 }

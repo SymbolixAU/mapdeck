@@ -6,11 +6,10 @@
 namespace mapdeck {
 namespace hexagon {
 
-Rcpp::StringVector hexagon_columns = Rcpp::StringVector::create("polyline");
+	const std::unordered_map< std::string, std::string > hexagon_colours = {};
 
-std::map< std::string, std::string > hexagon_colours = {};
+	const Rcpp::StringVector hexagon_legend = Rcpp::StringVector::create();
 
-Rcpp::StringVector hexagon_legend = Rcpp::StringVector::create();
 } // namespace hexagon
 } // namespace mapdeck
 

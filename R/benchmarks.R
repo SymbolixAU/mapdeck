@@ -3,7 +3,7 @@
 # lons <- seq(-180, 180, by = 0.0001)
 # lats <- seq(-90, 90, by = 0.0001)
 #
-# n <- 1e5
+# n <- 5e5
 # df <- data.frame(
 # 	#	id = sample(letters[1:10], size = 26, replace = T)
 # 	id = 1:n
@@ -60,6 +60,10 @@
 # expr       min        lq     mean    median        uq       max neval
 # old 77.033577 77.695166 77.88357 77.887395 77.968052 78.833664     5
 # new  3.581377  3.682539  3.94304  4.018411  4.170176  4.262699     5
+
+
+
+
 
 
 # system.time({
@@ -375,3 +379,263 @@
 # # expr       min        lq      mean    median        uq       max neval
 # # old 31.323071 32.116434 35.943007 33.199587 35.084571 47.991374     5
 # # new  1.180305  1.186721  1.311459  1.199241  1.442029  1.549001     5
+#
+# library(sf)
+# library(mapdeck)
+# library(jsonify)
+# library(googlePolylines)
+# library(microbenchmark)
+#
+# sf <- mapdeck::roads
+#
+# microbenchmark(
+# 	google = { googlePolylines::encode( sf ) },
+# 	jsonify = { jsonify::to_json( sf ) },
+# 	geojson = { geojsonsf::sf_geojson( sf ) },
+# 	times = 5
+# )
+#
+# # Unit: milliseconds
+# # expr      min       lq     mean   median       uq      max neval
+# # google 754.0125 782.9268 821.1052 819.7165 854.9187 893.9515     5
+# # jsonify 118.5501 118.8821 125.6056 125.7312 129.9120 134.9523     5
+# # geojson 139.2036 143.3345 145.7768 145.2627 149.1138 151.9693     5
+#
+# google = googlePolylines::encode( sf )
+# jsonify = jsonify::to_json( sf )
+# geojson = geojsonsf::sf_geojson( sf )
+#
+# format( object.size( google ), units = "Mb" )
+# # [1] "11.2 Mb"
+# format( object.size( jsonify ), units = "Mb" )
+# # [1] "6.6 Mb"
+# format( object.size( geojson ), units = "Mb" )
+# # [1] "7.9 Mb"
+#
+# js <- jsonify::to_json( sf )
+#
+# substr(js, 1, 500)
+#
+# nc <- st_read(system.file("shape/nc.shp", package="sf"))
+#
+#
+# microbenchmark(
+# 	google = { googlePolylines::encode( sf ) },
+# 	jsonify = { jsonify::to_json( sf ) },
+# 	geojson = { geojsonsf::sf_geojson( sf ) },
+# 	times = 5
+# )
+#
+# google = googlePolylines::encode( sf )
+# jsonify = jsonify::to_json( sf )
+# geojson = geojsonsf::sf_geojson( sf )
+#
+# format( object.size( google ), units = "Mb" )
+# # [1] "11.2 Mb"
+# format( object.size( jsonify ), units = "Mb" )
+# # [1] "6.6 Mb"
+# format( object.size( geojson ), units = "Mb" )
+# # [1] "7.9 Mb"
+#
+#
+# substr(jsonify, 1, 500)
+# substr(geojson, 1, 500)
+#
+
+
+
+# library(microbenchmark)
+#
+# microbenchmark(
+#
+# 	polyline = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path(
+# 				data = roads
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 			)
+# 	},
+#
+# 	geojson = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path_geo(
+# 				data = roads
+# 				, polyline = "polyline"
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 				)
+# 	},
+# 	times = 5
+# )
+# nrow(roads)
+# # [1] 18286
+#
+# # expr       min        lq      mean    median        uq      max neval
+# # polyline 857.15165 857.70272 884.07185 858.52182 902.52413 944.4589     5
+# # geojson  55.79172  57.61001  61.17769  61.47958  65.02255  65.9846     5
+
+# library(microbenchmark)
+#
+# enc <- googlePolylines::encode( roads )
+# enclite <- googlePolylines::encode( roads, strip = T)
+#
+# microbenchmark(
+#
+# 	sf = {
+#		mapdeck(
+#			token = key
+#			, style = 'mapbox://styles/mapbox/dark-v9'
+#			, location = c(145, -37.8)
+#			, zoom = 10) %>%
+#			add_path_geo(
+#				data = roads
+#				, stroke_colour = "RIGHT_LOC"
+#				, layer_id = "path_layer"
+#				, tooltip = "ROAD_NAME"
+#				, auto_highlight = TRUE
+#			)
+# 	},
+#
+# 	sfforce = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path_geo(
+# 				data = roads
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 				, force = T
+# 			)
+# 	},
+#
+# 	encoded = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path_geo(
+# 				data = enc
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 				)
+# 	},
+#
+# 	encodedforce = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path_geo(
+# 				data = enc
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 				, force = T
+# 			)
+# 	},
+#
+# 	encodedLite = {
+# 		mapdeck(
+# 			token = key
+# 			, style = 'mapbox://styles/mapbox/dark-v9'
+# 			, location = c(145, -37.8)
+# 			, zoom = 10) %>%
+# 			add_path_geo(
+# 				data = enclite
+# 				, stroke_colour = "RIGHT_LOC"
+# 				, polyline = "geometry"
+# 				, layer_id = "path_layer"
+# 				, tooltip = "ROAD_NAME"
+# 				, auto_highlight = TRUE
+# 			)
+# 	},
+# 	times = 5
+# )
+# # Unit: milliseconds
+# #         expr      min       lq     mean   median       uq      max neval
+# #           sf 876.5825 901.8953 905.6867 909.8664 910.8772 929.2119     5
+# #      sfforce 136.1841 152.3212 183.0024 167.6558 168.4932 290.3578     5
+# #      encoded 176.2694 206.0231 240.8336 222.8789 234.8613 364.1355     5
+# # encodedforce 149.4357 150.0709 208.2837 153.7314 272.7069 315.4735     5
+# # #  encodedLite 129.8332 136.0603 139.3556 141.9229 144.0768 144.8848     5
+
+
+
+
+#
+# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+# add_scatterplot(
+#   data = capitals[1:5, ]
+#   , lat = "lat"
+#   , lon = "lon"
+#   , radius = 100000
+#   , fill_colour = "country"
+#   , layer_id = "scatter_layer"
+#   , tooltip = "capital"
+# )
+#
+# key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+#
+# mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+# add_scatterplot_geo(
+#   data = capitals
+#   , lat = "lat"
+#   , lon = "lon"
+#   , radius = 100000
+#   , fill_colour = "country"
+#   , layer_id = "scatter_layer"
+#   , tooltip = "capital"
+# )
+
+
+# library(microbenchmark)
+#
+# m <- mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 )
+#
+# library(sf)
+# sf <- sf::st_as_sf( df, coords = c("lng", "lat") )
+#
+# microbenchmark(
+#   df = {
+#   	p <- add_scatterplot(
+#   		map = m
+#   		, data = df
+#   		, lat = "lat"
+#   		, lon = "lng"
+#   	)
+#   },
+#   sf = {
+#   	p <- add_scatterplot(
+#   		map = m
+#   		, data = sf
+#   	)
+#   },
+#   times = 5
+# )
+#
+# # Unit: milliseconds
+# # expr      min       lq     mean   median       uq      max neval
+# #   df 425.9679 435.5465 455.6931 446.2684 471.3066 499.3762     5
+# #   sf 393.3265 425.2497 423.5915 429.6698 432.6935 437.0179     5

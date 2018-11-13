@@ -64,6 +64,7 @@ add_text <- function(
 	alignment_baseline = NULL,
 	tooltip = NULL,
 	layer_id = NULL,
+	id = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
@@ -71,128 +72,64 @@ add_text <- function(
 	legend_options = NULL
 ) {
 
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["layer_id"]] <- NULL
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["layer_id"]] <- NULL
+
+	l <- list()
+	l[["lon"]] <- force( lon )
+	l[["lat"]] <- force( lat )
+	l[["fill_colour"]] <- force( fill_colour )
+	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["size"]] <- force( size )
+	l[["text"]] <- force( text )
+	l[["polyline"]] <- force( polyline )
+	l[["angle"]] <- force( angle )
+	l[["anchor"]] <- force( anchor )
+	l[["alignment_baseline"]] <- force( alignment_baseline )
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_data( data, l, c("POINT","MULTIPOINT"))
 
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
 	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
+	#usePolyline <- isUsingPolyline(polyline)
 	checkNumeric(size)
 	checkNumeric(angle)
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "text")
 
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		l[['lon']] <- NULL
-		l[['lat']] <- NULL
-		l[['polyline']] <- polyline
-	}
-
-	shape <- rcpp_text( data, l );
-
 	map <- addDependency(map, mapdeckTextDependency())
-	invoke_method(map, "add_text2", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+	jsfunc <- "add_text_geo"
+
+	if( tp == "sf" ) {
+		geometry_column <- c( "geometry" )
+		shape <- rcpp_text_geojson( data, data_types, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( geometry = c("lon", "lat") )
+		shape <- rcpp_text_geojson_df( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_text_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_text_polyline"
+	}
+
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
 }
-
-#' @export
-add_text_old <- function(
-	map,
-	data = get_map_data(map),
-	text,
-	lon = NULL,
-	lat = NULL,
-	polyline = NULL,
-	fill_colour = NULL,
-	fill_opacity = NULL,
-	size = NULL,
-	angle = NULL,
-	anchor = NULL,
-	alignment_baseline = NULL,
-	tooltip = NULL,
-	layer_id = NULL,
-	digits = 6,
-	palette = viridisLite::viridis
-) {
-
-	objArgs <- match.call(expand.dots = F)
-
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-		objArgs[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
-
-	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
-	checkNumeric(digits)
-	checkPalette(palette)
-	checkNumeric(size)
-	checkNumeric(angle)
-	layer_id <- layerId(layer_id, "text")
-
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		objArgs[['lon']] <- NULL
-		objArgs[['lat']] <- NULL
-		objArgs[['polyline']] <- polyline
-	}
-
-	allCols <- textColumns()
-	requiredCols <- requiredTextColumns()
-
-	colourColumns <- shapeAttributes(
-		fill_colour = fill_colour
-		, stroke_colour = NULL
-		, stroke_from = NULL
-		, stroke_to = NULL
-	)
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	pal <- createPalettes(shape, colourColumns)
-
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
-
-	if(length(colours) > 0){
-		shape <- replaceVariableColours(shape, colours)
-	}
-
-	requiredDefaults <- setdiff(requiredCols, names(shape))
-
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "text")
-	}
-	shape <- jsonlite::toJSON(shape, digits = digits)
-
-	map <- addDependency(map, mapdeckTextDependency())
-	invoke_method(map, "add_text", shape, layer_id)
-}
-
 
 #' @rdname clear
 #' @export
@@ -201,22 +138,3 @@ clear_text <- function( map, layer_id = NULL) {
 	invoke_method(map, "clear_text", layer_id )
 }
 
-requiredTextColumns <- function() {
-	c('fill_colour', 'size','angle','anchor','alignment_baseline')
-}
-
-
-textColumns <- function() {
-	c('polyline', 'fill_colour', 'size','angle','anchor','alignment_baseline')
-}
-
-textDefaults <- function(n) {
-	data.frame(
-		"size" = rep(32, n),
-		"angle" = rep(0, n),
-		"fill_colour" = rep("#440154", n),
-		"anchor" = rep('middle', n),
-		"alignment_baseline" = rep('center', n),
-		stringsAsFactors = F
-	)
-}

@@ -6,11 +6,10 @@
 namespace mapdeck {
 namespace grid {
 
-Rcpp::StringVector grid_columns = Rcpp::StringVector::create("polyline");
+	const std::unordered_map< std::string, std::string > grid_colours = {};
 
-std::map< std::string, std::string > grid_colours = {};
+	const Rcpp::StringVector grid_legend = Rcpp::StringVector::create();
 
-Rcpp::StringVector grid_legend = Rcpp::StringVector::create();
 } // namespace grid
 } // namespace mapdeck
 
