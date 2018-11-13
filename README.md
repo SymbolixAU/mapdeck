@@ -32,6 +32,7 @@ their functions and report any errors.
 To use the development version you need some other development dependant
 libraries
 
+``` r
 ## install dependent libraries first
 devtools::install_github("SymbolixAU/geojsonsf", force = T)
 devtools::install_github("SymbolixAU/spatialwidget", force = T)
@@ -41,19 +42,20 @@ devtools::install_github("SymbolixAU/googlePolylines", force = T)
 devtools::install_github("SymbolixAU/mapdeck")
 ```
 
-## Access Token
+## Getting Started
 
-Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox you need an [access token](https://www.mapbox.com/help/how-access-tokens-work/).
+Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox
+you need an [access
+token](https://www.mapbox.com/help/how-access-tokens-work/).
 
-## Basic Use
+Once you’ve generate a token you can use their maps.
 
-Generate a token from Mapbox so you can use their maps.
-
-Use this token inside `mapdeck(token = 'your_token')` to generate a basic map. You then start adding layers by using one of the various `add_*()` functions. 
+Call `mapdeck(token = 'your_token')` to generate a basic map. Then start
+adding layers by using one of the various `add_*()`
+functions.
 
 ``` r
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
-
 flights <- read.csv(url)
 flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 
@@ -73,17 +75,17 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
 
 ## Available Layers
 
-  - Arc
-  - GeoJSON
-  - Grid
-  - Hexagon
-  - Line
-  - Path
-  - Point cloud
-  - Polygon
-  - Scatter plot
-  - Screen grid
-  - Text
+  - arc
+  - geojson
+  - grid
+  - hexagon
+  - line
+  - path
+  - pointcloud
+  - polygon
+  - scatterplot
+  - screengrid
+  - text
 
 ## Shiny
 
