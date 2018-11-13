@@ -138,93 +138,9 @@ add_grid <- function(
 }
 
 
-#' @export
-add_grid_old <- function(
-	map,
-	data = get_map_data(map),
-	lon = NULL,
-	lat = NULL,
-	polyline = NULL,
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
-	cell_size = 1000,
-	extruded = TRUE,
-	elevation_scale = 1,
-	auto_highlight = FALSE,
-	layer_id = NULL,
-	digits = 6
-) {
-
-	objArgs <- match.call(expand.dots = F)
-
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-		objArgs[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
-
-	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
-	checkNumeric(digits)
-	checkNumeric(elevation_scale)
-	checkNumeric(cell_size)
-	checkHex(colour_range)
-	layer_id <- layerId(layer_id, "grid")
-
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		objArgs[['lon']] <- NULL
-		objArgs[['lat']] <- NULL
-		objArgs[['polyline']] <- polyline
-	}
-
-	allCols <- gridColumns()
-	requiredCols <- requiredGridColumns()
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	requiredDefaults <- setdiff(requiredCols, names(shape))
-
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "grid")
-	}
-
-	shape <- jsonlite::toJSON(shape, digits = digits)
-	# print(shape)
-
-	map <- addDependency(map, mapdeckGridDependency())
-
-	invoke_method(
-		map, "add_grid", shape, layer_id, cell_size,
-		jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale,
-		colour_range, auto_highlight
-	)
-}
-
-
 #' @rdname clear
 #' @export
 clear_grid <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "grid")
 	invoke_method(map, "clear_grid", layer_id )
-}
-
-requiredGridColumns <- function() {
-	c()
-}
-
-
-gridColumns <- function() {
-	c("polyline")
-}
-
-gridDefaults <- function(n) {
-	data.frame(
-		stringsAsFactors = F
-	)
 }

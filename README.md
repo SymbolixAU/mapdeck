@@ -29,9 +29,6 @@ install.packages("mapdeck")
 Version v0.1.006+ sees quite a lot of changes, so I need users to test
 their functions and report any errors.
 
-If you install the latest dev version and your plots aren’t working, you
-can still use the old function, just add `_old` to the function call.
-
 To use the development version you need some other development dependant
 libraries
 
