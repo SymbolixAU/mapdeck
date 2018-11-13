@@ -2,25 +2,24 @@ function add_legend(map_id, layer_id, legendValues) {
 
   'use strict';
 
-  var i = 0;
+  //console.log( legendValues.length );
+  //console.log( legendValues.size );
+    //console.log( legendValues );
 
-  for (i = 0; i < legendValues.length; i++) {
-    if (legendValues[i].type === "category" || legendValues[i].legend.colour.length === 1) {
-        
-      add_legend_category(map_id, layer_id, legendValues[i]);
-        
-    } else {
-        
-//      if (legendValues[i].legend.colour.length === 1) {
-//          
-//        add_legend_category(map_id, layer_id, legendValues[i]);
-//          
-//      } else {
-//          
-        add_legend_gradient(map_id, layer_id, legendValues[i]);
-//      }
-    }
-  }
+    var this_legend;
+    Object.keys( legendValues ).forEach( function(key) {
+
+        this_legend = legendValues[ key ];
+
+        if ( this_legend.colour !== undefined ) {
+            if ( this_legend.type[0] === "category" || this_legend.colour.length == 1 ) {
+                add_legend_category( map_id, layer_id, this_legend );
+            } else {
+                add_legend_gradient( map_id, layer_id, this_legend);
+            }
+        }
+    })
+
 }
 
 function add_legend_gradient(map_id, layer_id, legendValues) {
@@ -37,7 +36,6 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
         legendTextColour = '#828282',
         style = '',
         isUpdating = false;
-
 
     if (window[map_id + 'legend' + layer_id + legendValues.colourType] == null) {
         window[map_id + 'legend' + layer_id + legendValues.colourType] = document.createElement("div");
@@ -70,8 +68,8 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('style', legendValues.css);
     }
 
-    for (i = 0; i < legendValues.legend.colour.length; i++) {
-        jsColours.push(legendValues.legend.colour[i]);
+    for (i = 0; i < legendValues.colour.length; i++) {
+        jsColours.push(legendValues.colour[i]);
     }
 
     colours = '(' + jsColours.join() + ')';
@@ -86,7 +84,7 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
     legendColours.setAttribute('style', style);
     legendContent.appendChild(legendColours);
 
-    for (i = 0; i < legendValues.legend.colour.length; i++) {
+    for (i = 0; i < legendValues.colour.length; i++) {
 
         var legendValue = 'text-align: left; color: ' + legendTextColour + '; font-size: 12px; height: 20px;',
             divTicks = document.createElement('div'),
@@ -97,7 +95,7 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
         tickContainer.appendChild(divTicks);
 
         divVal.setAttribute('style', legendValue);
-        divVal.innerHTML = legendValues.legend.variable[i];
+        divVal.innerHTML = legendValues.variable[i];
         labelContainer.appendChild(divVal);
     }
 
@@ -114,7 +112,7 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
 function generateColourBox(colourType, colour) {
     'use strict';
 
-    if (colourType === "fill_colour") {
+    if (colourType[0] === "fill_colour") {
         return ('height: 20px; width: 15px; background: ' + colour);
     } else {
         // http://jsfiddle.net/UES6U/2/
@@ -141,6 +139,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
     // catch undefined OR null
     // https://stackoverflow.com/questions/2647867/how-to-determine-if-variable-is-undefined-or-null
     if (window[map_id + 'legend' + layer_id + legendValues.colourType] == null) {
+
         window[map_id + 'legend' + layer_id + legendValues.colourType] = document.createElement("div");
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('id', map_id + 'legend' + layer_id + legendValues.colourType);
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('class', 'legend');
@@ -180,7 +179,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('style', legendValues.css);
     }
 
-    for (i = 0; i < legendValues.legend.colour.length; i++) {
+    for (i = 0; i < legendValues.colour.length; i++) {
 
         var tickVal = 'text-left: center; color: ' + legendTextColour + '; font-size: 12px; height: 20px;',
             divCol = document.createElement('div'),
@@ -188,7 +187,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
             divVal = document.createElement('div');
 
         //colourBox = 'height: 20px; width: 15px; background: ' + legendValues.legend.colour[i];
-        colourBox = generateColourBox(legendValues.colourType, legendValues.legend.colour[i]);
+        colourBox = generateColourBox(legendValues.colourType, legendValues.colour[i]);
         divCol.setAttribute('style', colourBox);
         colourContainer.appendChild(divCol);
 
@@ -197,7 +196,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
         tickContainer.appendChild(divTicks);
 
         divVal.setAttribute('style', tickVal);
-        divVal.innerHTML = legendValues.legend.variable[i];
+        divVal.innerHTML = legendValues.variable[i];
         labelContainer.appendChild(divVal);
     }
 
@@ -213,6 +212,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
 
 }
 
+// TODO( move / rename )
 function findById( source, id, returnType ) {
     var i = 0;
     for (i = 0; i < source.length; i++) {
@@ -253,11 +253,13 @@ function clear_legend( map_id, layer_id ) {
 function placeControl( map_id, object, position ) {
 
     //var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
-    var mapbox_ctrl = document.getElementsByClassName("legendContainer");
+    //var mapbox_ctrl = document.getElementsByClassName("legendContainer"+map_id);
+    var mapbox_ctrl = document.getElementById( "legendContainer"+map_id);
 
-    mapbox_ctrl[0].appendChild( object );
+    //mapbox_ctrl[0].appendChild( object );
+    mapbox_ctrl.appendChild( object );
     var ledge = {};
-/*    
+/*
     switch (position) {
     case 'TOP_LEFT':
         window[map_id + 'map'].controls["TOP_LEFT"].push( object );
@@ -287,10 +289,10 @@ function placeControl( map_id, object, position ) {
 
 
 function removeControl( map_id, legend_id, position ) {
-    
+
     var element = document.getElementById(legend_id);
     element.parentNode.removeChild(element);
-    
+
 /*
     switch (position) {
     case 'TOP_LEFT':

@@ -9,6 +9,15 @@ checkHex <- function(arg) {
 	}
 }
 
+# Check Hex Alpha
+# checks if the paramter is HEX AND has the alpha component
+checkHexAlpha <- function(arg) {
+	checkHex(arg)
+	if(!nchar(arg) %in% c(9)) {
+		stop(paste0(deparse(substitute(arg)), " must be a valid hex colour with an alpha component"))
+	}
+}
+
 
 # Check Palette
 #

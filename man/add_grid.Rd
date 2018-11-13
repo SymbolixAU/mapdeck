@@ -5,9 +5,10 @@
 \title{Add Grid}
 \usage{
 add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, colour_range = viridisLite::viridis(5),
-  cell_size = 1000, extruded = TRUE, elevation_scale = 1,
-  auto_highlight = FALSE, layer_id = NULL, digits = 6)
+  polyline = NULL, colour_range = colourvalues::colour_values(1:6,
+  palette = "viridis"), cell_size = 1000, extruded = TRUE,
+  elevation_scale = 1, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -20,7 +21,7 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 
 \item{polyline}{column of \code{data} containing the polylines}
 
-\item{colour_range}{vector of hex colours}
+\item{colour_range}{vector of 6 hex colours}
 
 \item{cell_size}{size of each cell in meters}
 
@@ -30,12 +31,13 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
+\item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
+
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
 }
 \description{
 The Grid Layer renders a grid heatmap based on an array of points.
@@ -52,6 +54,7 @@ df <- read.csv(paste0(
 'examples/3d-heatmap/heatmap-data.csv'
 ))
 
+df <- df[ !is.na(df$lng ), ]
 
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 add_grid(
@@ -63,6 +66,20 @@ add_grid(
   , layer_id = "grid_layer"
   , auto_highlight = TRUE
 )
+
+## using sf object
+library(sf)
+sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+
+mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+add_grid(
+  data = sf
+  , cell_size = 5000
+  , elevation_scale = 50
+  , layer_id = "grid_layer"
+  , auto_highlight = TRUE
+)
+
 }
 
 }

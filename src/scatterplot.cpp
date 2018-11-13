@@ -1,108 +1,85 @@
 #include <Rcpp.h>
 
-#include "R_mapdeck.hpp"
-#include "R_scatterplot.hpp"
-#include "palette/palette.hpp"
-#include "fill/fill.hpp"
-#include "data_construction.hpp"
 
-// [[Rcpp::depends(jsonify)]]
-#include "jsonify/to_json.hpp"
-
-// [[Rcpp::depends(googlePolylines)]]
-//#include "googlePolylines/encode/encode_api.hpp"
+#include "mapdeck_defaults.hpp"
+#include "layers/scatterplot.hpp"
+#include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List scatterplot_defaults(int n) {
-
 	return Rcpp::List::create(
-		_["polyline"] = mapdeck::defaults::default_polyline(n),
-		_["elevation"] = mapdeck::defaults::default_elevation(n),
-		_["radius"] = mapdeck::defaults::default_radius(n),
+		//_["polyline"] = mapdeck::defaults::default_polyline(n),
+		//_["radius"] = mapdeck::defaults::default_radius(n),
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n)
 	);
 }
 
-void resolve_fill(
-		Rcpp::List& lst_params,
-		Rcpp::List& params,
-		Rcpp::DataFrame& data,
-		Rcpp::List& lst_defaults,
-		int& fill_colour_location, // locations of the paramter in the parameter list
-		int& fill_opacity_location ) {
 
-  Rcpp::IntegerVector data_column_index = lst_params[ "data_column_index" ];
-	Rcpp::IntegerVector parameter_type = lst_params[ "parameter_type" ];
+// [[Rcpp::export]]
+Rcpp::List rcpp_scatterplot_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
+                                     Rcpp::List params, std::string geometry_columns) {
 
-	Rcpp::StringVector hex_strings( data.nrows() );
+	int data_rows = data.nrows();
 
-	Rcpp::NumericVector alpha( 1, 255.0 ); // TODO: the user can supply a single value [0,255] to use in place of this
+	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
+	std::unordered_map< std::string, std::string > scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
+	Rcpp::StringVector scatterplot_legend = mapdeck::scatterplot::scatterplot_legend;
 
-	SEXP fill = lst_defaults[ "fill_colour" ];
-
-	int alphaColIndex = fill_opacity_location >= 0 ? data_column_index[ fill_opacity_location ] : -1;
-	int fillColIndex = fill_colour_location >= 0 ? data_column_index[ fill_colour_location ] : -1;
-
-	if ( fillColIndex >= 0 ) {
-		fill = data[ fillColIndex ];
-	} else {
-		// TODO ( if it's a hex string, apply it to all rows of data )
-		// i.e., when not a column of data, but ISS a hex string
-		// so this will be
-		// } else if (is_hex_string() ) {
-			// Rcpp::StringVector hex( data_rows, hex );
-		//}
-	}
-
-	if ( alphaColIndex >= 0 ) {
-		alpha = data[ alphaColIndex ];
-	} else {
-		Rcpp::StringVector sv = params.names();
-		int find_opacity = mapdeck::find_character_index_in_vector( sv, "fill_opacity" );
-		if (find_opacity >= 0 ) {
-			int a = params[ find_opacity ]; // will throw an error if not correct type
-			alpha.fill( a );
-		}
-	}
-
-	mapdeck::fill::fill_colour(
-		lst_params, params, data, lst_defaults, data_column_index, hex_strings,
-		fill, alpha, fill_colour_location, fill_opacity_location
-		);
-
-	lst_defaults[ "fill_colour" ] = hex_strings;
+	return spatialwidget::api::create_geojson_downcast(
+		data,
+		data_types,
+		params,
+		lst_defaults,
+		scatterplot_colours,
+		scatterplot_legend,
+		data_rows,
+		geometry_columns,
+		true  // jsonify legend
+	);
 }
 
 
 // [[Rcpp::export]]
-Rcpp::StringVector rcpp_scatterplot( Rcpp::DataFrame data, Rcpp::List params ) {
+Rcpp::List rcpp_scatterplot_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
+                                     Rcpp::List params, Rcpp::List geometry_columns) {
 
-	int fill_colour_location = -1;
-	int fill_opacity_location = -1;
 	int data_rows = data.nrows();
 
-	Rcpp::StringVector param_names = params.names();
 	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
-	Rcpp::StringVector scatterplot_columns = mapdeck::scatterplot::scatterplot_columns;
+	std::unordered_map< std::string, std::string > scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
+	Rcpp::StringVector scatterplot_legend = mapdeck::scatterplot::scatterplot_legend;
 
-	Rcpp::StringVector data_names = data.names();
-	Rcpp::List lst_params = mapdeck::construct_params( data, params, fill_colour_location, fill_opacity_location );
-	mapdeck::palette::resolve_palette( lst_params, params );
-
-	resolve_fill( lst_params, params, data, lst_defaults, fill_colour_location, fill_opacity_location );
-
-	Rcpp::StringVector cols_remove = mapdeck::scatterplot::scatterplot_colours;
-	mapdeck::remove_parameters( params, param_names, cols_remove );
-	lst_params = mapdeck::construct_params( data, params, fill_colour_location, fill_opacity_location );
-
-	Rcpp::DataFrame df = mapdeck::construction::construct_data(
-		param_names,
-		scatterplot_columns,
-		params,
-		data_names,
-		lst_defaults,
+	return spatialwidget::api::create_geojson(
 		data,
-		data_rows
+		data_types,
+		params,
+		lst_defaults,
+		scatterplot_colours,
+		scatterplot_legend,
+		data_rows,
+		geometry_columns,
+		true  // jsonify legend
 	);
+}
 
-	return jsonify::dataframe::to_json( df );
+// [[Rcpp::export]]
+Rcpp::List rcpp_scatterplot_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
+                                     Rcpp::List params, Rcpp::StringVector geometry_columns) {
+
+	int data_rows = data.nrows();
+
+	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
+	std::unordered_map< std::string, std::string > scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
+	Rcpp::StringVector scatterplot_legend = mapdeck::scatterplot::scatterplot_legend;
+
+	return spatialwidget::api::create_polyline(
+		data,
+		data_types,
+		params,
+		lst_defaults,
+		scatterplot_colours,
+		scatterplot_legend,
+		data_rows,
+		geometry_columns,
+		true  // jsonify legend
+	);
 }

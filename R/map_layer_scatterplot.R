@@ -22,6 +22,9 @@ mapdeckScatterplotDependency <- function() {
 #' @param palette string or matrix. String is either one of "viridis","inferno",
 #' "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 #' between [0, 255], where the 4th column represents the alpha.
+#' @param na_colour hex string colour to use for NA values
+#'
+#' @inheritSection add_arc legend
 #'
 #' @examples
 #'
@@ -45,6 +48,8 @@ mapdeckScatterplotDependency <- function() {
 #' 'examples/3d-heatmap/heatmap-data.csv'
 #' ))
 #'
+#' df <- df[ !is.na(df$lng), ]
+#'
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = df
@@ -52,6 +57,20 @@ mapdeckScatterplotDependency <- function() {
 #'   , lon = "lng"
 #'   , layer_id = "scatter_layer"
 #' )
+#'
+#' ## as an sf object
+#' library(sf)
+#' sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
+#'
+#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' add_scatterplot(
+#'   data = sf
+#'   , radius = 100000
+#'   , fill_colour = "country"
+#'   , layer_id = "scatter_layer"
+#'   , tooltip = "capital"
+#' )
+#'
 #' }
 #'
 #' @export
@@ -66,148 +85,83 @@ add_scatterplot <- function(
 	fill_opacity = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
 	layer_id = NULL,
-	digits = 6,
-	palette = viridisLite::viridis
+	id = NULL,
+	palette = "viridis",
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL
 ) {
 
-	message("Using development version. Please check plots carefully")
+	# l <- as.list( match.call() )
+	# l[[1]] <- NULL    ## function call
+	# l[["map"]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["layer_id"]] <- NULL
+	#l <- resolve_args( l, scatterplot_data_args() )
+	l <- list()
+	l[["lon"]] <- force(lon)
+	l[["lat"]] <- force(lat)
+	l[["polyline"]] <- force(polyline)
+	l[["radius"]] <- force(radius)
+	l[["fill_colour"]] <- force(fill_colour)
+	l[["fill_opacity"]] <- force(fill_opacity)
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
 
-	l <- as.list( match.call() )
 	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_data( data, l, c( "POINT", "MULTIPOINT") )
 
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
-	usePolyline <- isUsingPolyline(polyline)
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		l[['lon']] <- NULL
-		l[['lat']] <- NULL
-		l[['polyline']] <- polyline
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
-
-	shape <- rcpp_scatterplot( data, l )
-
-	map <- addDependency(map, mapdeckScatterplotDependency())
-	invoke_method(map, "add_scatterplot2", shape, layer_id, auto_highlight)
-}
-
-resolve_palette <- function( l, palette ) {
-
-	if ( is.matrix( palette ) ) {
-		#print("resolving matrix palette")
-		l[['palette']] <- palette
-	}
-	return( l )
-}
-
-dispatch_data <- function( data, lon, lat, polyline, l ) UseMethod("dispatch_data")
-
-dispatch_data.data.frame <- function( data, lon, lat, polyline, l ) {
-	## TODO - encode byrow
-}
-
-dispatch_data.sf <- function( data, l, ... ) {
-	## TODO(need to handle MULTI, and 2-col data...)
-
-}
-
-dispatch_data.sfencoded <- function( data, l, ... ) {
-
-}
-
-dispatch_data.default <- function( data, l ) stop("Data type not supported")
-
-
-#' @inheritParams add_scatterplot
-#' @export
-add_scatterplot_old <- function(
-	map,
-	data = get_map_data(map),
-	lon = NULL,
-	lat = NULL,
-	polyline = NULL,
-	radius = NULL,
-	fill_colour = NULL,
-	fill_opacity = NULL,
-	tooltip = NULL,
-	auto_highlight = FALSE,
-	layer_id = NULL,
-	digits = 6,
-	legend = FALSE,
-	legend_options = NULL,
-	palette = viridisLite::viridis
-	) {
-
-	objArgs <- match.call(expand.dots = F)
-
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-		objArgs[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
-
-	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
-	checkNumeric(digits)
-	checkPalette(palette)
 	layer_id <- layerId(layer_id, "scatterplot")
-	## TODO(logical check auto_highlight)
-
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-    ## TODO(check lon & lat exist / passed in as arguments )
-		objArgs[['lon']] <- NULL
-		objArgs[['lat']] <- NULL
-		objArgs[['polyline']] <- polyline
-	}
-
-	allCols <- scatterplotColumns()
-	requiredCols <- requiredScatterplotColumns()
-
-	colourColumns <- shapeAttributes(
-		fill_colour = fill_colour
-		, stroke_colour = NULL
-		, stroke_from = NULL
-		, stroke_to = NULL
-		)
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	pal <- createPalettes(shape, colourColumns)
-
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
-
-	if(length(colours) > 0){
-		shape <- replaceVariableColours(shape, colours)
-	}
-
-	## LEGEND
-	legend <- resolveLegend(legend, legend_options, colour_palettes)
-
-	requiredDefaults <- setdiff(requiredCols, names(shape))
-
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "scatterplot")
-	}
-	shape <- jsonlite::toJSON(shape, digits = digits)
+	checkHexAlpha(highlight_colour)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
-	invoke_method(map, "add_scatterplot", shape, layer_id, auto_highlight, legend )
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+
+
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+
+	jsfunc <- "add_scatterplot_geo"
+	if ( tp == "sf" ) {
+		geometry_column <- c( "geometry" )
+		shape <- rcpp_scatterplot_geojson( data, data_types, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( geometry = c("lon", "lat") )
+		shape <- rcpp_scatterplot_geojson_df( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- c( "polyline" )
+		shape <- rcpp_scatterplot_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_scatterplot_polyline"
+	}
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+}
+
+resolve_args <- function( l, layer_args ) {
+
+	## This implementation will allow variables passed in as column names
+	## but NOT un-quoted column variables
+	x <- vapply(names(l), function(x) { x %in% layer_args }, T)
+	x <- x[x]    ## x is the set of arguments we need to evaluate
+	l <- l[names(x)]
+	lapply( l, eval )
+}
+
+
+## args used which can be columns of 'data'
+scatterplot_data_args <- function() {
+	return(
+		c("lon", "lat", "polyline", "radius", "fill_colour", "fill_opacity", "tooltip")
+	)
 }
 
 
@@ -216,24 +170,4 @@ add_scatterplot_old <- function(
 clear_scatterplot <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "scatterplot")
 	invoke_method(map, "clear_scatterplot", layer_id )
-}
-
-requiredScatterplotColumns <- function() {
-	c("radius",	"fill_colour", "fill_opacity")
-}
-
-
-scatterplotColumns <- function() {
-	c('polyline', "elevation", "radius",
-		'fill_colour', 'fill_opacity')
-}
-
-scatterplotDefaults <- function(n) {
-	data.frame(
-		"elevation" = rep(0, n),
-		"radius" = rep(1, n),
-		"fill_colour" = rep("#440154", n),
-		"fill_opacity" = rep(255, n),
-		stringsAsFactors = F
-	)
 }

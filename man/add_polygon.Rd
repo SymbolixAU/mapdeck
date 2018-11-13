@@ -7,9 +7,10 @@
 add_polygon(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL,
   fill_opacity = NULL, elevation = NULL, tooltip = NULL,
-  auto_highlight = FALSE, light_settings = list(), layer_id = NULL,
-  digits = 6, legend = F, legend_options = NULL,
-  palette = viridisLite::viridis)
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  light_settings = list(), layer_id = NULL, id = NULL,
+  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
+  legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -34,26 +35,46 @@ between 1 and 255 to be applied to all the shapes}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
+\item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
+
 \item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+
+\item{palette}{string or matrix. String is either one of "viridis","inferno",
+"magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
+between [0, 255], where the 4th column represents the alpha.}
 
 \item{legend}{either a logical indiciating if the legend(s) should be displayed, or
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
 
-\item{palette}{a function which generates hex colours}
+\item{geometry}{string specifying the `sfc` column of an SF object. If NULL and
+\code{data} is an `sf` object the \code{geometry} will be automatically assinged
+from \code{ sf::st_geometry( data ) }}
 }
 \description{
 The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects
 only POLYGONs are supported, MULTIPOLYGONs are ignored.
 }
+\section{legend}{
+
+
+The \code{legend_options} can be used to control the appearance of the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{css - a string of valid \code{css} for controlling the appearance of the legend}
+  \item{title - a string to use for the title of the legend}
+}
+
+If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+}
+
 \examples{
 \donttest{
 
@@ -74,11 +95,11 @@ mapdeck(
     data = df
     , polyline = "geometry"
     , layer = "polygon_layer"
-    , fill_colour = "fillColor",
-    , stroke_colour = "fillColor",
+    , fill_colour = "SA2_NAME",
     , elevation = "elevation"
     , stroke_width = 0
     , tooltip = 'info'
+    , legend = T
   )
 
 library(sf)
@@ -88,7 +109,7 @@ sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
 
 mapdeck(
   token = key
-  , style = 'mapbox://styles/mapbox/dark-v9'
+  , style = mapdeck_style('dark')
 ) \%>\%
   add_polygon(
     data = sf
@@ -97,5 +118,4 @@ mapdeck(
   )
 
 }
-
 }

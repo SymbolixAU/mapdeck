@@ -4,8 +4,11 @@
 \alias{add_hexagon}
 \title{Add hexagon}
 \usage{
-add_hexagon(map, data = get_map_data(map), lon, lat, layer_id,
-  radius = NULL, digits = 6)
+add_hexagon(map, data = get_map_data(map), polyline = NULL,
+  lon = NULL, lat = NULL, layer_id = NULL, id = NULL,
+  radius = 1000, elevation_scale = 1, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  colour_range = colourvalues::colour_values(1:6, palette = "viridis"))
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -20,10 +23,15 @@ add_hexagon(map, data = get_map_data(map), lon, lat, layer_id,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+
 \item{radius}{in metres}
 
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
+\item{elevation_scale}{value to sacle the elevations of the hexagons}
+
+\item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
+
+\item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
 \item{colour_range}{palette of colours}
 }
@@ -35,20 +43,32 @@ The color and height of the hexagon is scaled by number of points it contains.
 \examples{
 \dontrun{
 
+## You need a valid access token from Mapbox
+key <- 'abc'
+
 df <- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'
 ))
 
-## You need a valid access token from Mapbox
-key <- 'abc'
-
+df <- df[!is.na(df$lng), ]
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
 add_hexagon(
   data = df
   , lat = "lat"
   , lon = "lng"
   , layer_id = "hex_layer"
+  , elevation_scale = 100
 )
+
+library( sf )
+sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+add_hexagon(
+  data = sf
+  , layer_id = "hex_layer"
+  , elevation_scale = 100
+)
+
 
 }
 

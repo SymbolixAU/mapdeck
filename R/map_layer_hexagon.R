@@ -20,25 +20,38 @@ mapdeckHexagonDependency <- function() {
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param radius in metres
+#' @param elevation_scale value to sacle the elevations of the hexagons
 #' @param colour_range palette of colours
 #'
 #' @examples
 #' \dontrun{
 #'
+#' ## You need a valid access token from Mapbox
+#' key <- 'abc'
+#'
 #' df <- read.csv(paste0(
 #' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'
 #' ))
 #'
-#' ## You need a valid access token from Mapbox
-#' key <- 'abc'
-#'
+#' df <- df[!is.na(df$lng), ]
 #' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 #' add_hexagon(
 #'   data = df
 #'   , lat = "lat"
 #'   , lon = "lng"
 #'   , layer_id = "hex_layer"
+#'   , elevation_scale = 100
 #' )
+#'
+#' library( sf )
+#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' add_hexagon(
+#'   data = sf
+#'   , layer_id = "hex_layer"
+#'   , elevation_scale = 100
+#' )
+#'
 #'
 #' }
 #'
@@ -46,70 +59,69 @@ mapdeckHexagonDependency <- function() {
 add_hexagon <- function(
 	map,
 	data = get_map_data(map),
-	lon,
-	lat,
-	layer_id,
-	radius = NULL,
-	digits = 6
-	#	colourRange = viridisLite::viridis(6)
+	polyline = NULL,
+	lon = NULL,
+	lat = NULL,
+	layer_id = NULL,
+	id = NULL,
+	radius = 1000,
+	elevation_scale = 1,
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
+	colour_range = colourvalues::colour_values(1:6, palette = "viridis")
 ) {
 
-	objArgs <- match.call(expand.dots = F)
+	# l <- as.list( match.call( expand.dots = F) )
+	# l[[1]] <- NULL
+	# l[["data"]] <- NULL
+	# l[["map"]] <- NULL
+	# l[["auto_highlight"]] <- NULL
+	# l[["light_settings"]] <- NULL
+	# l[["layer_id"]] <- NULL
+	# l[["colour_range"]] <- NULL
 
-	## parmater checks
+	l <- list()
+	l[["polyline"]] <- force(polyline)
+	l[["lon"]] <- force(lon)
+	l[["lat"]] <- force(lat)
+	l[["id"]] <- force(id)
 
+	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 
-	## end parameter checks
-
-	allCols <- hexagonColumns()
-	requiredCols <- requiredHexagonColumns()
-
-	colourColumns <- shapeAttributes(
-		fill_colour = NULL
-		, stroke_colour = NULL
-		, stroke_from = NULL
-		, stroke_to = NULL
-	)
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	pal <- createPalettes(shape, colourColumns)
-
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
-
-	if(length(colours) > 0){
-		shape <- replaceVariableColours(shape, colours)
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
-	requiredDefaults <- setdiff(requiredCols, names(shape))
+	checkHex(colour_range)
+	checkHexAlpha(highlight_colour)
 
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "hexagon")
-	}
-
-	shape <- jsonlite::toJSON(shape, digits = digits)
-
+	layer_id <- layerId(layer_id, "hexagon")
 	map <- addDependency(map, mapdeckHexagonDependency())
-	invoke_method(map, "add_hexagon", shape, layer_id)
+	data_types <- vapply(data, function(x) class(x)[[1]], "")
+
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+	jsfunc <- "add_hexagon_geo"
+
+	if ( tp == "sf" ) {
+		geometry_column <- c( "geometry" )
+		shape <- rcpp_hexagon_geojson( data, data_types, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( geometry = c("lon", "lat") )
+		shape <- rcpp_hexagon_geojson_df( data, data_types, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_hexagon_polyline( data, data_types, l, geometry_column )
+		jsfunc <- "add_hexagon_polyline"
+	}
+
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, radius, elevation_scale,
+		auto_highlight, highlight_colour, colour_range
+		)
 }
 
-
-requiredHexagonColumns <- function() {
-	c('radius')
-}
-
-
-hexagonColumns <- function() {
-	c('lat', 'lon')
-}
-
-hexagonDefaults <- function(n) {
-	data.frame(
-		radius = rep(200, n),
-		stringsAsFactors = F
-	)
-}
 
 #' @rdname clear
 #' @export

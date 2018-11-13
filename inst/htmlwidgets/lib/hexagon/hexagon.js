@@ -1,23 +1,42 @@
-function add_hexagon( map_id, hexagon_data, layer_id ) {
-
-  console.log( hexagon_data );
-
+function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range ) {
+    
 	const hexagonLayer = new deck.HexagonLayer({
-		id: 'hexagon-'+layer_id,
-		data: hexagon_data,
-    pickable: true,
-    extruded: true,
-    //elevationRange: [0, 1000],
-    //elevationScale: 1000,
-    //opacity: 1,
-    //getRadius: d => d.radius,
-    getPosition: d => [d.lon, d.lat],
-    //centroid: [0, 52]
-    //onClick: info => layer_click( map_id, "hexagon", info )
+        map_id: map_id,
+        id: 'hexagon-'+layer_id,
+        data: hexagon_data,
+        pickable: true,
+        extruded: true,
+        //elevationRange: [0, 100],
+        colorRange: to_rgba( colour_range ),
+        elevationScale: elevation_scale,
+        radius: radius,
+        getPosition: d => d.geometry.geometry.coordinates,
+        autoHighlight: auto_highlight,
+        highlightColor: hexToRGBA2( highlight_colour ),
+        onClick: info => layer_click( map_id, "hexagon", info ),
+        onHover: updateTooltip
 	});
+	update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
+}
 
-	console.log( hexagonLayer );
-
+function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range ) {
+    
+	const hexagonLayer = new deck.HexagonLayer({
+        map_id: map_id,
+        id: 'hexagon-'+layer_id,
+        data: hexagon_data,
+        pickable: true,
+        extruded: true,
+        //elevationRange: [0, 100],
+        colorRange: to_rgba( colour_range ),
+        elevationScale: elevation_scale,
+        radius: radius,
+        getPosition: d => decode_points( d.polyline ),
+        autoHighlight: auto_highlight,
+        highlightColor: hexToRGBA2( highlight_colour ),
+        onClick: info => layer_click( map_id, "hexagon", info ),
+        onHover: updateTooltip
+	});
 	update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
 }
 
