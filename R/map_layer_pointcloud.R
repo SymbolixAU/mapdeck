@@ -55,6 +55,10 @@ mapdeckPointcloudDependency <- function() {
 #'
 #' }
 #'
+#' @details
+#'
+#' \code{add_pointcloud} supports POINT and MULTIPOINT sf objects
+#'
 #' @export
 add_pointcloud <- function(
 	map,

@@ -40,6 +40,9 @@ The Hexagon Layer renders a hexagon heatmap based on an array of points.
 It takes the radius of hexagon bin, projects points into hexagon bins.
 The color and height of the hexagon is scaled by number of points it contains.
 }
+\details{
+\code{add_hexagon} supports POINT and MULTIPOINT sf objects
+}
 \examples{
 \dontrun{
 
@@ -69,7 +72,6 @@ add_hexagon(
   , layer_id = "hex_layer"
   , elevation_scale = 100
 )
-
 
 }
 

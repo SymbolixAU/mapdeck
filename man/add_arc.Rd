@@ -62,6 +62,8 @@ should be used for the latitude / longitude coordinates.}
 The Arc Layer renders raised arcs joining pairs of source and target coordinates
 }
 \details{
+\code{add_arc} supports POINT sf objects
+
 MULTIPOINT objects will be treated as single points. That is, if an sf objet
 has one row with a MULTIPOINT object consisting of two points, this will
 be expanded to two rows of single POINTs.

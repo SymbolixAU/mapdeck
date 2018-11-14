@@ -60,7 +60,14 @@ mapdeckGridDependency <- function() {
 #'   , auto_highlight = TRUE
 #' )
 #'
+#'
 #' }
+#'
+#' @details
+#'
+#' \code{add_grid} supports POINT and MULTIPOINT sf objects
+#'
+#'
 #'
 #' @export
 add_grid <- function(

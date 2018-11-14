@@ -74,6 +74,11 @@ mapdeckPolygonDependency <- function() {
 #'   )
 #'
 #' }
+#'
+#' @details
+#'
+#' \code{add_polygon} supports POLYGON and MULTIPOLYGON sf objects
+#'
 #' @export
 add_polygon <- function(
 	map,

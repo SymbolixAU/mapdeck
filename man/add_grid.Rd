@@ -44,6 +44,9 @@ The Grid Layer renders a grid heatmap based on an array of points.
 It takes the constant size all each cell, projects points into cells.
 The color and height of the cell is scaled by number of points it contains.
 }
+\details{
+\code{add_grid} supports POINT and MULTIPOINT sf objects
+}
 \examples{
 \donttest{
 ## You need a valid access token from Mapbox
@@ -79,6 +82,7 @@ add_grid(
   , layer_id = "grid_layer"
   , auto_highlight = TRUE
 )
+
 
 }
 

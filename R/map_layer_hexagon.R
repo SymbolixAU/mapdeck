@@ -53,8 +53,12 @@ mapdeckHexagonDependency <- function() {
 #'   , elevation_scale = 100
 #' )
 #'
-#'
 #' }
+#'
+#' @details
+#'
+#' \code{add_hexagon} supports POINT and MULTIPOINT sf objects
+#'
 #'
 #' @export
 add_hexagon <- function(

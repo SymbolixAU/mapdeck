@@ -51,6 +51,9 @@ a named list indicating which colour attributes should be included in the legend
 The Path Layer takes in lists of coordinate points and renders them as
 extruded lines with mitering.
 }
+\details{
+\code{add_path} supports LINESTRING and MULTILINESTRING sf objects
+}
 \section{legend}{
 
 
@@ -95,7 +98,6 @@ mapdeck(
     , auto_highlight = TRUE
     , legend = T
   )
-
 }
 
 }

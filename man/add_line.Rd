@@ -52,7 +52,10 @@ a named list indicating which colour attributes should be included in the legend
 The Line Layer renders raised lines joining pairs of source and target coordinates
 }
 \details{
-MULTIPOINT objects will be treated as single points. That is, if an sf objet
+\code{add_line} supports POINT sf objects
+
+
+MULTIPOINT objects will be treated as single points. That is, if an sf object
 has one row with a MULTIPOINT object consisting of two points, this will
 be expanded to two rows of single POINTs.
 Therefore, if the origin is a MULTIPOINT of two points, and the destination is

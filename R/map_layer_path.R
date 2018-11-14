@@ -43,8 +43,11 @@ mapdeckPathDependency <- function() {
 #'     , auto_highlight = TRUE
 #'     , legend = T
 #'   )
-#'
 #' }
+#'
+#' @details
+#'
+#' \code{add_path} supports LINESTRING and MULTILINESTRING sf objects
 #'
 #' @export
 add_path <- function(

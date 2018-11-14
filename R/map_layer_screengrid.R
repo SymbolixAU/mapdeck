@@ -62,6 +62,10 @@ mapdeckScreengridDependency <- function() {
 #'
 #' }
 #'
+#' @details
+#'
+#' \code{add_screengrid} supports POINT and MULTIPOINT sf objects
+#'
 #' @export
 add_screengrid <- function(
 	map,

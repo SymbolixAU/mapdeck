@@ -68,6 +68,9 @@ a named list indicating which colour attributes should be included in the legend
 The Text Layer takes in coordinate points and renders them as circles
 with a certain radius.
 }
+\details{
+\code{add_text} supports POINT and MULTIPOINT sf objects
+}
 \section{legend}{
 
 

@@ -38,6 +38,9 @@ to conflict and not plot correctly}
 The Screen Grid Layer takes in an array of latitude and longitude coordinated points,
 aggregates them into histogram bins and renders as a grid
 }
+\details{
+\code{add_screengrid} supports POINT and MULTIPOINT sf objects
+}
 \examples{
 \donttest{
 

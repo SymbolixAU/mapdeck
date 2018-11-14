@@ -58,6 +58,9 @@ a named list indicating which colour attributes should be included in the legend
 The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects
 only POLYGONs are supported, MULTIPOLYGONs are ignored.
 }
+\details{
+\code{add_polygon} supports POLYGON and MULTIPOLYGON sf objects
+}
 \section{legend}{
 
 
@@ -126,4 +129,5 @@ mapdeck(
   )
 
 }
+
 }

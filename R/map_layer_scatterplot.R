@@ -74,6 +74,10 @@ mapdeckScatterplotDependency <- function() {
 #'
 #' }
 #'
+#' @details
+#'
+#' \code{add_scatterplot} supports POINT and MULTIPOINT sf objects
+#'
 #' @export
 add_scatterplot <- function(
 	map,

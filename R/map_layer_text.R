@@ -49,6 +49,10 @@ mapdeckTextDependency <- function() {
 #'   )
 #' }
 #'
+#' @details
+#'
+#' \code{add_text} supports POINT and MULTIPOINT sf objects
+#'
 #' @export
 add_text <- function(
 	map,
