@@ -1,11 +1,3 @@
-
-resolve_args <- function( l, layer_args ) {
-	x <- vapply( names(l), function(x) { x %in% layer_args }, T )
-	x <- x[x]
-	l <- l[names(x)]
-	lapply( l, eval )
-}
-
 sfrow <- function( sf , sfc_type ) {
 	geom_column <- attr(sf, "sf_column")
 	return( which(vapply(sf[[geom_column]], function(x) attr(x, "class")[[2]], "") %in% sfc_type ) )
