@@ -208,9 +208,11 @@ resolve_data.default <- function( data ) stop("This type of data is not supporte
 
 
 resolve_palette <- function( l, palette ) {
-	#if ( is.matrix( palette ) ) {
+	if ( is.function( palette ) ) {
+		warning("Function palettes have been deprecated, reverting to the viridis palette. See the palette arguemnt in the help file for valid arguments")
+	} else {
 		l[['palette']] <- palette
-	#}
+	}
 	return( l )
 }
 

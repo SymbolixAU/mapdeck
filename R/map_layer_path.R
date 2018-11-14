@@ -82,6 +82,7 @@ add_path <- function(
 	l[["stroke_opacity"]] <- force( stroke_opacity )
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
+	l[["na_colour"]] <- force(na_colour)
 
 	# l[["legend"]] <- force( legend )
 	# l[["legend_options"]] <- force( legend_options )

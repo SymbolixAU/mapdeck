@@ -68,6 +68,7 @@ add_text <- function(
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
+	na_colour = "#808080FF",
 	legend = FALSE,
 	legend_options = NULL
 ) {
@@ -91,6 +92,7 @@ add_text <- function(
 	l[["alignment_baseline"]] <- force( alignment_baseline )
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
+	l[["na_colour"]] <- force(na_colour)
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )

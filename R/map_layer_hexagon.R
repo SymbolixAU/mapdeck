@@ -30,7 +30,8 @@ mapdeckHexagonDependency <- function() {
 #' key <- 'abc'
 #'
 #' df <- read.csv(paste0(
-#' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'
+#' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/'
+#' , '3d-heatmap/heatmap-data.csv'
 #' ))
 #'
 #' df <- df[!is.na(df$lng), ]

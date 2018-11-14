@@ -79,7 +79,9 @@ mapdeckArcDependency <- function() {
 #'   , tooltip = "info"
 #'   , auto_highlight = TRUE
 #'   , legend = T
-#'   , legend_options = list(stroke_from = list( title = "Origin airport" ), css = "max-height: 100px;")
+#'   , legend_options = list(
+#'     stroke_from = list( title = "Origin airport" ),
+#'     css = "max-height: 100px;")
 #'  )
 #'
 #' ## Using a 2-sfc-column sf object
@@ -152,6 +154,7 @@ add_arc <- function(
 	l[["stroke_width"]] <- force(stroke_width)
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
+	l[["na_colour"]] <- force(na_colour)
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )

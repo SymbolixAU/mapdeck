@@ -26,14 +26,11 @@ Imports:
     jsonify (>= 0.1.1),
     magrittr,
     Rcpp,
-    scales,
     shiny,
-    spatialwidget,
-    viridisLite
+    spatialwidget
 RoxygenNote: 6.1.0
 Suggests: 
     covr,
-    geojsonsf,
     knitr,
     rmarkdown,
     sf,

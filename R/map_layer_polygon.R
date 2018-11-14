@@ -18,9 +18,6 @@ mapdeckPolygonDependency <- function() {
 #' @inheritParams add_arc
 #'
 #' @param polyline column of \code{data} containing the polylines
-#' @param geometry string specifying the `sfc` column of an SF object. If NULL and
-#' \code{data} is an `sf` object the \code{geometry} will be automatically assinged
-#' from \code{ sf::st_geometry( data ) }
 #' @param fill_colour column of \code{data} or hex colour for the fill colour
 #' @param fill_opacity value between 1 and 255. Either a string specifying the
 #' column of \code{data} containing the fill opacity of each shape, or a value
@@ -81,7 +78,6 @@ add_polygon <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,
-	#geometry = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	fill_colour = NULL,
@@ -116,6 +112,7 @@ add_polygon <- function(
 	l[["elevation"]] <- force( elevation )
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
+	l[["na_colour"]] <- force(na_colour)
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )

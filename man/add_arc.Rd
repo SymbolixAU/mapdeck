@@ -105,7 +105,9 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>
   , tooltip = "info"
   , auto_highlight = TRUE
   , legend = T
-  , legend_options = list(stroke_from = list( title = "Origin airport" ), css = "max-height: 100px;")
+  , legend_options = list(
+    stroke_from = list( title = "Origin airport" ),
+    css = "max-height: 100px;")
  )
 
 ## Using a 2-sfc-column sf object

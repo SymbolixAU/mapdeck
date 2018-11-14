@@ -96,6 +96,7 @@ add_pointcloud <- function(
 	l[["fill_opacity"]] <- force( fill_opacity )
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
+	l[["na_colour"]] <- force(na_colour)
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
