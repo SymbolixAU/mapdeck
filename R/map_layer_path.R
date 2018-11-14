@@ -108,7 +108,7 @@ add_path <- function(
 	checkHexAlpha( highlight_colour )
 
 	map <- addDependency(map, mapdeckPathDependency())
-	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	data_types <- data_types( data )
 
 	#print( l )
 	tp <- l[["data_type"]]

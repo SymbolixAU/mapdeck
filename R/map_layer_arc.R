@@ -185,7 +185,7 @@ add_arc <- function(
 	jsfunc <- "add_arc_geo"
 
 	map <- addDependency(map, mapdeckArcDependency())
-	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	data_types <- data_types( data )
 
   if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )

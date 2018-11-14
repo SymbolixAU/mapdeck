@@ -131,7 +131,7 @@ add_scatterplot <- function(
 	checkHexAlpha(highlight_colour)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
-	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	data_types <- data_types( data )
 
 
 	tp <- l[["data_type"]]

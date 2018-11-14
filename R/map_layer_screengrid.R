@@ -117,7 +117,7 @@ add_screengrid <- function(
 	## end parameter checks
 
 	map <- addDependency(map, mapdeckScreengridDependency())
-	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL

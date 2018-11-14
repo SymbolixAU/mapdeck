@@ -130,7 +130,7 @@ add_line <- function(
 	checkHexAlpha(highlight_colour)
 
 	map <- addDependency(map, mapdeckLineDependency())
-	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	data_types <- data_types( data )
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )

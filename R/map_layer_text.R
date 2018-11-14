@@ -117,7 +117,7 @@ add_text <- function(
 	layer_id <- layerId(layer_id, "text")
 
 	map <- addDependency(map, mapdeckTextDependency())
-	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL

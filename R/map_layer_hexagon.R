@@ -103,7 +103,7 @@ add_hexagon <- function(
 
 	layer_id <- layerId(layer_id, "hexagon")
 	map <- addDependency(map, mapdeckHexagonDependency())
-	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL

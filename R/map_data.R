@@ -1,3 +1,6 @@
+
+data_types <- function( data ) vapply(data, function(x) class(x)[[1]], "")
+
 sfrow <- function( sf , sfc_type ) {
 	geom_column <- attr(sf, "sf_column")
 	return( which(vapply(sf[[geom_column]], function(x) attr(x, "class")[[2]], "") %in% sfc_type ) )

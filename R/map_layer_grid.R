@@ -116,7 +116,7 @@ add_grid <- function(
 	layer_id <- layerId(layer_id, "grid")
 
 	map <- addDependency(map, mapdeckGridDependency())
-	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL

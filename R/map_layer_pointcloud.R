@@ -117,7 +117,7 @@ add_pointcloud <- function(
 	layer_id <- layerId(layer_id, "pointcloud")
 
 	map <- addDependency(map, mapdeckPointcloudDependency())
-	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
