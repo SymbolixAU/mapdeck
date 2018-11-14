@@ -22,6 +22,7 @@ mapdeckPathDependency <- function() {
 #' between 1 and 255 to be applied to all the shapes
 #'
 #' @inheritSection add_arc legend
+#' @inheritSection add_arc id
 #'
 #' @examples
 #' \donttest{
@@ -82,6 +83,7 @@ add_path <- function(
 	l[["stroke_opacity"]] <- force( stroke_opacity )
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
+	l[["na_colour"]] <- force(na_colour)
 
 	# l[["legend"]] <- force( legend )
 	# l[["legend_options"]] <- force( legend_options )
@@ -128,103 +130,11 @@ add_path <- function(
 }
 
 
-#' @inheritParams add_path
-#' @export
-add_path_old <- function(
-	map,
-	data = get_map_data(map),
-	polyline = NULL,
-	stroke_colour = NULL,
-	stroke_width = NULL,
-	stroke_opacity = NULL,
-	tooltip = NULL,
-	layer_id = NULL,
-	digits = 6,
-	auto_highlight = FALSE,
-	legend = FALSE,
-	legend_options = NULL,
-	palette = viridisLite::viridis
-) {
-
-	## TODO(sf and lon/lat coordinates)
-
-	objArgs <- match.call(expand.dots = F)
-
-	data <- normaliseSfData(data, "LINESTRING")
-	polyline <- findEncodedColumn(data, polyline)
-
-	## - if sf object, and geometry column has not been supplied, it needs to be
-	## added to objArgs after the match.call() function
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-		objArgs[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
-
-	## parameter checks
-	checkNumeric(digits)
-	checkPalette(palette)
-	layer_id <- layerId(layer_id, "path")
-
-	## end parameter checks
-
-	allCols <- pathColumns()
-	requiredCols <- requiredPathColumns()
-
-	colourColumns <- shapeAttributes(
-		fill_colour = NULL
-		, stroke_colour = stroke_colour
-		, stroke_from = NULL
-		, stroke_to = NULL
-	)
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	pal <- createPalettes(shape, colourColumns)
-
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
-
-	if(length(colours) > 0) {
-		shape <- replaceVariableColours(shape, colours)
-	}
-
-	## LEGEND
-	legend <- resolveLegend(legend, legend_options, colour_palettes)
-
-	requiredDefaults <- setdiff(requiredCols, names(shape))
-
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "path")
-	}
-
-	shape <- jsonlite::toJSON(shape, digits = digits)
-
-	map <- addDependency(map, mapdeckPathDependency())
-	invoke_method(map, "add_path", shape, layer_id, auto_highlight, legend )
-}
-
 #' @rdname clear
 #' @export
 clear_path <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "path")
 	invoke_method(map, "clear_path", layer_id )
-}
-
-requiredPathColumns <- function() {
-	c("stroke_width", "stroke_colour","stroke_opacity")
-}
-
-pathColumns <- function() {
-	c("polyline", "stroke_width", "stroke_colour", "stroke_opacity")
-}
-
-pathDefaults <- function(n) {
-	data.frame(
-		"stroke_colour" = rep("#440154", n),
-		"stroke_width" = rep(1, n),
-		"stroke_opacity" = rep(255, n),
-		stringsAsFactors = F
-	)
 }
 
 

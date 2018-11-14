@@ -21,7 +21,7 @@ mapdeckArcDependency <- function() {
 #' to conflict and not plot correctly
 #' @param origin vector of longitude and latitude columns, or an \code{sfc} column
 #' @param destination vector of longitude and latitude columns, or an \code{sfc} column
-#' @param id an id value in \code{data} to identify layers when interacting in Shiny apps
+#' @param id an id value in \code{data} to identify layers when interacting in Shiny apps.
 #' @param stroke_from variable or hex colour to use as the staring stroke colour
 #' @param stroke_from_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
@@ -43,6 +43,15 @@ mapdeckArcDependency <- function() {
 #' a named list indicating which colour attributes should be included in the legend.
 #' @param legend_options A list of options for controlling the legend.
 #'
+#' @section id:
+#'
+#' The \code{id} is returned to your R session from an interactive shiny environment
+#' by observing layer clicks. This is useful for returning the data.frame row relating to the
+#' cliked shape.
+#'
+#' From within a shiny server you would typically use \code{ observeEvent({input$map_arc_click})},
+#' where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the layer
+#' you are clicking on
 #'
 #' @section legend:
 #'
@@ -79,7 +88,9 @@ mapdeckArcDependency <- function() {
 #'   , tooltip = "info"
 #'   , auto_highlight = TRUE
 #'   , legend = T
-#'   , legend_options = list(stroke_from = list( title = "Origin airport" ), css = "max-height: 100px;")
+#'   , legend_options = list(
+#'     stroke_from = list( title = "Origin airport" ),
+#'     css = "max-height: 100px;")
 #'  )
 #'
 #' ## Using a 2-sfc-column sf object
@@ -152,6 +163,7 @@ add_arc <- function(
 	l[["stroke_width"]] <- force(stroke_width)
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
+	l[["na_colour"]] <- force(na_colour)
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -169,7 +181,6 @@ add_arc <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 	jsfunc <- "add_arc_geo"
-
 
 	map <- addDependency(map, mapdeckArcDependency())
 	data_types <- vapply(data, function(x) class(x)[[1]], "")
@@ -189,108 +200,6 @@ add_arc <- function(
 	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
 }
 
-#' @export
-add_arc_old <- function(
-	map,
-	data = get_map_data(map),
-	layer_id = NULL,
-	origin,
-	destination,
-	id = NULL,
-	stroke_from = NULL,
-	stroke_from_opacity = NULL,
-	stroke_to = NULL,
-	stroke_to_opacity = NULL,
-	stroke_width = NULL,
-	tooltip = NULL,
-	auto_highlight = FALSE,
-	digits = 6,
-	legend = F,
-	legend_options = NULL,
-	palette = viridisLite::viridis
-) {
-
-	objArgs <- match.call(expand.dots = F)
-
-	## if origin && destination == one column each, it's an sf_encoded
-	## else, it's two column, which need to be encoded!
-	if ( length(origin) == 2 && length(destination) == 2) {
-		## lon / lat columns
-		data[[ origin[1] ]] <- googlePolylines::encode(
-			data[, origin, drop = F ]
-			, lon = origin[1]
-			, lat = origin[2]
-			, byrow = T
-		)
-		data[[ destination[1] ]] <- googlePolylines::encode(
-			data[, destination, drop = F ]
-			, lon = destination[1]
-			, lat = destination[2]
-			, byrow = T
-		)
-
-		objArgs[['origin']] <- origin[1]
-		objArgs[['destination']] <- destination[1]
-
-	} else if (length(origin) == 1 && length(destination) == 1) {
-		## encoded
-		data <- normaliseMultiSfData(data, origin, destination)
-		o <- unlist(data[[origin]])
-		d <- unlist(data[[destination]])
-		if(length(o) != length(d)) {
-			stop("There are a different number of origin and destination POINTs, possibly due to MULTIPOINT geometries?")
-		}
-		data[[origin]] <- o
-		data[[destination]] <- d
-
-	} else {
-		stop("expecting lon/lat origin destinations or sfc columns")
-	}
-
-	## parameter checks
-	checkPalette(palette)
-	layer_id <- layerId(layer_id, "arc")
-
-	## end parameter checks
-
-	allCols <- arcColumns()
-	requiredCols <- requiredArcColumns()
-
-	colourColumns <- shapeAttributes(
-		fill_colour = NULL
-		, stroke_colour = NULL
-		, stroke_from = stroke_from
-		, stroke_to = stroke_to
-	)
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	pal <- createPalettes(shape, colourColumns)
-
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
-
-	if(length(colours) > 0) {
-		shape <- replaceVariableColours(shape, colours)
-	}
-
-	## LEGEND
-	legend <- resolveLegend(legend, legend_options, colour_palettes)
-	#print(legend)
-
-	requiredDefaults <- setdiff(requiredCols, names(shape))
-
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "arc")
-	}
-
-	shape <- jsonlite::toJSON(shape, digits = digits)
-
-	map <- addDependency(map, mapdeckArcDependency())
-	invoke_method(map, "add_arc", shape, layer_id, auto_highlight, legend )
-}
-
-
 #' Clear Arc
 #'
 #' Clears elements from a map
@@ -301,26 +210,4 @@ add_arc_old <- function(
 clear_arc <- function( map, layer_id = NULL ) {
 	layer_id <- layerId(layer_id, "arc")
 	invoke_method(map, "clear_arc", layer_id )
-}
-
-requiredArcColumns <- function() {
-	c("stroke_width", "stroke_from", "stroke_to",
-		"stroke_from_opacity","stroke_to_opacity")
-}
-
-arcColumns <- function() {
-	c("origin", "destination",
-		"stroke_width", "stroke_from", "stroke_to",
-		"stroke_from_opacity", "stroke_to_opacity")
-}
-
-arcDefaults <- function(n) {
-	data.frame(
-		"stroke_from" = rep("#440154", n),
-		"stroke_to" = rep("#FDE725", n),
-		"stroke_from_opacity" = rep(255, n),
-		"stroke_to_opacity" = rep(255, n),
-		"stroke_width" = rep(1, n),
-		stringsAsFactors = F
-	)
 }

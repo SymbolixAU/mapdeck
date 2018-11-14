@@ -18,6 +18,8 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
+\item{fill_colour}{hex value for all fill colours. See details}
+
 \item{radius}{radius of points in meters. See details}
 
 \item{lineWidth}{width of lines in meters. See details}
@@ -30,9 +32,7 @@ to conflict and not plot correctly}
 
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
-\item{lineColor}{hex value for all line colours. See details}
-
-\item{fillColor}{hex value for all fill colours. See details}
+\item{line_colour}{hex value for all line colours. See details}
 }
 \description{
 The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,

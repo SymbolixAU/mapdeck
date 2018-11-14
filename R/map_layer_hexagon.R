@@ -30,7 +30,8 @@ mapdeckHexagonDependency <- function() {
 #' key <- 'abc'
 #'
 #' df <- read.csv(paste0(
-#' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'
+#' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/'
+#' , '3d-heatmap/heatmap-data.csv'
 #' ))
 #'
 #' df <- df[!is.na(df$lng), ]
@@ -122,60 +123,6 @@ add_hexagon <- function(
 		)
 }
 
-
-#' @export
-add_hexagon_old <- function(
-	map,
-	data = get_map_data(map),
-	polyline = NULL,
-	lon = NULL,
-	lat = NULL,
-	layer_id,
-	radius = 1000,
-	elevation_scale = 1,
-	auto_highlight = FALSE,
-	highlight_colour = "#AAFFFFFF",
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis")
-) {
-
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["light_settings"]] <- NULL
-	l[["layer_id"]] <- NULL
-
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
-
-	checkHex(colour_range)
-	checkHexAlpha(highlight_colour)
-	usePolyline <- isUsingPolyline(polyline)
-
-
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		l[['lon']] <- NULL
-		l[['lat']] <- NULL
-		l[['polyline']] <- polyline
-	}
-
-	layer_id <- layerId(layer_id, "hexagon")
-
-	shape <- rcpp_hexagon( data, l )
-
-	map <- addDependency(map, mapdeckHexagonDependency())
-	invoke_method(map, "add_hexagon", shape[["data"]], layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range )
-}
 
 #' @rdname clear
 #' @export

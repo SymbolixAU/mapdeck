@@ -134,71 +134,6 @@ add_screengrid <- function(
 	invoke_method(map, jsfunc, shape[["data"]], layer_id, opacity, cell_size, colour_range )
 }
 
-#' @export
-add_screengrid_old <- function(
-	map,
-	data = get_map_data(map),
-	lon = NULL,
-	lat = NULL,
-	polyline = NULL,
-	weight = NULL,
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
-	opacity = 0.8,
-	cell_size = 50,
-	layer_id = NULL,
-	digits = 6
-) {
-
-	objArgs <- match.call(expand.dots = F)
-
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-		objArgs[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
-
-	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
-	checkNumeric(opacity)
-	checkNumeric(cell_size)
-	checkNumeric(digits)
-	layer_id <- layerId(layer_id, "screengrid")
-
-	if(length(colour_range) != 6)
-		stop("colour_range must have 6 hex colours")
-
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		objArgs[['lon']] <- NULL
-		objArgs[['lat']] <- NULL
-		objArgs[['polyline']] <- polyline
-	}
-
-	## end parameter checks
-
-	allCols <- screengridColumns()
-	requiredCols <- requiredScreengridColumns()
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	requiredDefaults <- setdiff(requiredCols, names(shape))
-
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "screengrid")
-	}
-
-	shape <- jsonlite::toJSON(shape, digits = digits)
-
-	map <- addDependency(map, mapdeckScreengridDependency())
-	invoke_method(map, "add_screengrid", shape, layer_id, opacity, cell_size, colour_range )
-}
-
 
 #' @rdname clear
 #' @export
@@ -207,19 +142,3 @@ clear_screengrid <- function( map, layer_id = NULL) {
 	invoke_method(map, "clear_screengrid", layer_id )
 }
 
-
-requiredScreengridColumns <- function() {
-	c('weight')
-}
-
-
-screengridColumns <- function() {
-	c('polyline', 'weight')
-}
-
-screengridDefaults <- function(n) {
-	data.frame(
-		weight = rep(1, n),
-		stringsAsFactors = F
-	)
-}

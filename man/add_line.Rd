@@ -8,7 +8,7 @@ add_line(map, data = get_map_data(map), layer_id = NULL, origin,
   destination, id = NULL, stroke_colour = NULL, stroke_width = NULL,
   stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
-  legend = FALSE, legend_options = NULL)
+  na_colour = "#808080FF", legend = FALSE, legend_options = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -23,7 +23,7 @@ to conflict and not plot correctly}
 
 \item{destination}{vector of longitude and latitude columns, or an \code{sfc} column}
 
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
 \item{stroke_colour}{variable or hex colour to use as the ending stroke colour}
 
@@ -71,6 +71,18 @@ This should be a named list, where the names are one of
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
 }
 
+\section{id}{
+
+
+The \code{id} is returned to your R session from an interactive shiny environment
+by observing layer clicks. This is useful for returning the data.frame row relating to the
+cliked shape.
+
+From within a shiny server you would typically use \code{ observeEvent({input$map_arc_click})},
+where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the layer
+you are clicking on
+}
+
 \examples{
 \donttest{
 
@@ -92,7 +104,6 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>
     , stroke_width = "stroke"
     , auto_highlight = TRUE
  )
-}
 
 ## Using a 2-sfc-column sf object
 library(sf)
@@ -112,5 +123,6 @@ mapdeck(
    , layer_id = 'arcs'
    , stroke_colour = "airport1"
 )
+}
 
 }

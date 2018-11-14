@@ -43,7 +43,7 @@ between 1 and 255 to be applied to all the shapes}
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
 \item{palette}{string or matrix. String is either one of "viridis","inferno",
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
@@ -53,10 +53,6 @@ between [0, 255], where the 4th column represents the alpha.}
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
-
-\item{geometry}{string specifying the `sfc` column of an SF object. If NULL and
-\code{data} is an `sf` object the \code{geometry} will be automatically assinged
-from \code{ sf::st_geometry( data ) }}
 }
 \description{
 The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects
@@ -73,6 +69,18 @@ This should be a named list, where the names are one of
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+}
+
+\section{id}{
+
+
+The \code{id} is returned to your R session from an interactive shiny environment
+by observing layer clicks. This is useful for returning the data.frame row relating to the
+cliked shape.
+
+From within a shiny server you would typically use \code{ observeEvent({input$map_arc_click})},
+where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the layer
+you are clicking on
 }
 
 \examples{
@@ -109,7 +117,7 @@ sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
 
 mapdeck(
   token = key
-  , style = 'mapbox://styles/mapbox/dark-v9'
+  , style = mapdeck_style('dark')
 ) \%>\%
   add_polygon(
     data = sf

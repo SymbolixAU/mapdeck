@@ -18,7 +18,7 @@ LazyData: true
 Depends: R (>= 3.3.0)
 Imports:
     colourvalues (>= 0.2.0),
-    geojsonsf (>= 1.2.2),
+    geojsonsf (>= 1.2.1),
     googlePolylines (>= 0.7.1004),
     htmlwidgets,
     htmltools,
@@ -26,14 +26,11 @@ Imports:
     jsonify (>= 0.1.1),
     magrittr,
     Rcpp,
-    scales,
     shiny,
-    spatialwidget,
-    viridisLite
+    spatialwidget
 RoxygenNote: 6.1.0
 Suggests: 
     covr,
-    geojsonsf,
     knitr,
     rmarkdown,
     sf,

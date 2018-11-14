@@ -24,7 +24,7 @@ to conflict and not plot correctly}
 
 \item{destination}{vector of longitude and latitude columns, or an \code{sfc} column}
 
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
 \item{stroke_from}{variable or hex colour to use as the staring stroke colour}
 
@@ -68,6 +68,18 @@ be expanded to two rows of single POINTs.
 Therefore, if the origin is a MULTIPOINT of two points, and the destination is
 a single POINT, the code will error as there will be an uneven number of rows
 }
+\section{id}{
+
+
+The \code{id} is returned to your R session from an interactive shiny environment
+by observing layer clicks. This is useful for returning the data.frame row relating to the
+cliked shape.
+
+From within a shiny server you would typically use \code{ observeEvent({input$map_arc_click})},
+where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the layer
+you are clicking on
+}
+
 \section{legend}{
 
 
@@ -105,7 +117,9 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>
   , tooltip = "info"
   , auto_highlight = TRUE
   , legend = T
-  , legend_options = list(stroke_from = list( title = "Origin airport" ), css = "max-height: 100px;")
+  , legend_options = list(
+    stroke_from = list( title = "Origin airport" ),
+    css = "max-height: 100px;")
  )
 
 ## Using a 2-sfc-column sf object

@@ -18,7 +18,7 @@ test_that("sf objects are subset correctly", {
 	expect_identical( f(sf), c(T,F,T,T,T,T) )
 	sf <- geojsonsf::geojson_sf('{"type":"LineString","coordinates":[[0,0],[1,1]]}')
 	expect_identical( f(sf), c(T,T,F,T,T,T) )
-	sf <- geojsonsf::geojson_sf('{"type":"MultiLineString","coordinates":[[[0,0],[1,1]],[[0,0]]]}')
+	sf <- geojsonsf::geojson_sf('{"type":"MultiLineString","coordinates":[[[0,0],[1,1]],[[0,0],[1,1]]]}')
 	expect_identical( f(sf), c(T,T,T,F,T,T) )
 	sf <- geojsonsf::geojson_sf('{"type":"Polygon","coordinates":[[[0,0],[0,1],[1,1],[1,0],[0,0]]]}')
 	expect_identical( f(sf), c(T,T,T,T,F,T) )

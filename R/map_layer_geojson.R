@@ -17,8 +17,8 @@ mapdeckGeojsonDependency <- function() {
 #' lines and points
 #'
 #' @inheritParams add_arc
-#' @param lineColor hex value for all line colours. See details
-#' @param fillColor hex value for all fill colours. See details
+#' @param line_colour hex value for all line colours. See details
+#' @param fill_colour hex value for all fill colours. See details
 #' @param radius radius of points in meters. See details
 #' @param lineWidth width of lines in meters. See details
 #' @param elevation elevation of polygons. See details

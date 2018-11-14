@@ -32,7 +32,7 @@ add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 }
 \description{
 The Screen Grid Layer takes in an array of latitude and longitude coordinated points,
