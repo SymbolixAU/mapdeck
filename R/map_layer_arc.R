@@ -144,7 +144,8 @@ add_arc <- function(
 	highlight_colour = "#AAFFFFFF",
 	legend = F,
 	legend_options = NULL,
-	palette = "viridis"
+	palette = "viridis",
+	na_colour = "#808080FF"
 ) {
 
 	# l <- as.list( match.call( expand.dots = F) )

@@ -9,7 +9,8 @@ add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
   stroke_from_opacity = NULL, stroke_to = NULL,
   stroke_to_opacity = NULL, stroke_width = NULL, tooltip = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF", legend = F,
-  legend_options = NULL, palette = "viridis")
+  legend_options = NULL, palette = "viridis",
+  na_colour = "#808080FF")
 }
 \arguments{
 \item{map}{a mapdeck map object}
