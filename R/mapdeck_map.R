@@ -31,7 +31,7 @@ mapdeck <- function(
     , style = style
     , pitch = pitch
     , zoom = zoom
-    , location = location
+    , location = extract_location(location)
   )
 
   # create widget
