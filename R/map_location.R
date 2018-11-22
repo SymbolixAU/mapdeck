@@ -4,8 +4,7 @@ extract_location <- function(x)
     UseMethod("extract_location")
 
 extract_location.numeric <- function(x){
-    names(x) <- NULL
-    return(x)
+    as.numeric(x) # as.numeric automatically strips names
 }
 
 extract_location.matrix <- function(x){
