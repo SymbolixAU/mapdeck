@@ -15,6 +15,8 @@ namespace arc {
 		"stroke_from", "stroke_to"
 	);
 
+	int x;
+
 } // namespace arc
 } // namespace mapdeck
 
