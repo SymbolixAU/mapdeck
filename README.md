@@ -34,8 +34,8 @@ libraries
 
 ``` r
 ## install dependent libraries first
+devtools::install_github("SymbolixAU/jsonify", force = T)
 devtools::install_github("SymbolixAU/spatialwidget", force = T)
-devtools::install_github("SymbolixAU/googlePolylines", force = T)
 
 ## then mapdeck
 devtools::install_github("SymbolixAU/mapdeck")
