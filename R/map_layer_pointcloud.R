@@ -99,9 +99,9 @@ add_pointcloud <- function(
 	l[["elevation"]] <- force( elevation )
 	l[["fill_colour"]] <- force( fill_colour)
 	l[["fill_opacity"]] <- force( fill_opacity )
-	l[["tooltip"]] <- force(tooltip)
-	l[["id"]] <- force(id)
-	l[["na_colour"]] <- force(na_colour)
+	l[["tooltip"]] <- force( tooltip )
+	l[["id"]] <- force( id )
+	l[["na_colour"]] <- force( na_colour )
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -116,7 +116,7 @@ add_pointcloud <- function(
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "pointcloud")
 
-	map <- addDependency(map, mapdeckPointcloudDependency())
+	map <- addDependency( map, mapdeckPointcloudDependency() )
 	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
@@ -159,7 +159,7 @@ add_pointcloud <- function(
 #' @rdname clear
 #' @export
 clear_pointcloud <- function( map, layer_id = NULL) {
-	layer_id <- layerId(layer_id, "pointcloud")
+	layer_id <- layerId( layer_id, "pointcloud" )
 	invoke_method(map, "clear_pointcloud", layer_id )
 }
 

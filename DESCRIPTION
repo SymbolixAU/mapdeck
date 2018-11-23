@@ -22,8 +22,7 @@ Imports:
     googlePolylines (>= 0.7.1004),
     htmlwidgets,
     htmltools,
-    jsonlite,
-    jsonify (>= 0.1.1),
+    jsonify (>= 0.1.2),
     magrittr,
     Rcpp,
     shiny,
@@ -31,6 +30,7 @@ Imports:
 RoxygenNote: 6.1.0
 Suggests: 
     covr,
+    jsonlite,
     knitr,
     rmarkdown,
     sf,

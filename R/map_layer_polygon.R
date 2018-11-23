@@ -162,7 +162,7 @@ add_polygon <- function(
 		jsfunc <- "add_polygon_polyline"
 	}
 
-	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
+	light_settings <- jsonify::to_json(light_settings, auto_unbox = T)
 
 	invoke_method(map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]])
 }
