@@ -6,7 +6,6 @@
 
 Rcpp::List text_defaults(int n) {
 	return Rcpp::List::create(
-		//_["polyline"] = mapdeck::defaults::default_polyline(n),
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n),
 		_["anchor"] = mapdeck::defaults::default_text_anchor(n),
 		_["angle"] = mapdeck::defaults::default_angle(n),

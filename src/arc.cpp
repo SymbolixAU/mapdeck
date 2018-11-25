@@ -6,8 +6,6 @@
 
 Rcpp::List arc_defaults(int n) {
 	return Rcpp::List::create(
-		//_["origin"] = mapdeck::defaults::default_polyline(n),
-		//_["destination"] = mapdeck::defaults::default_polyline(n),
 		_["stroke_from"] = mapdeck::defaults::default_stroke_colour(n),
 		_["stroke_to"] = mapdeck::defaults::default_stroke_colour(n)
 	);

@@ -3,12 +3,9 @@
 #include "mapdeck_defaults.hpp"
 #include "layers/path.hpp"
 #include "spatialwidget/spatialwidget.hpp"
-//#include "spatialwidget/parameters/parameters.hpp"
-//#include "spatialwidget/geojson/geojson.hpp"
 
 Rcpp::List path_defaults(int n) {
 	return Rcpp::List::create(
-		//_["polyline"] = mapdeck::defaults::default_polyline(n),
 		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour( n ),
 		_["stroke_width"] = mapdeck::defaults::default_stroke_width( n )
 	);

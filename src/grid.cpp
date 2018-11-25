@@ -5,9 +5,7 @@
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List grid_defaults(int n) {
-	return Rcpp::List::create(
-		//_["polyline"] = mapdeck::defaults::default_polyline(n)
-	);
+	return Rcpp::List::create();
 }
 
 

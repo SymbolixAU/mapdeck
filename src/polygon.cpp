@@ -6,7 +6,6 @@
 
 Rcpp::List polygon_defaults(int n) {
 	return Rcpp::List::create(
-		//_["polyline"] = mapdeck::defaults::default_polyline(n),
 		_["elevation"] = mapdeck::defaults::default_elevation(n),
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n),
 		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour(n)
