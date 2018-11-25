@@ -149,6 +149,8 @@ add_pointcloud <- function(
 		jsfunc <- "add_pointcloud_polyline"
 	}
 
+	light_settings <- jsonify::to_json(light_settings, auto_unbox = T)
+
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]]

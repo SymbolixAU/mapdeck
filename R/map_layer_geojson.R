@@ -110,6 +110,8 @@ add_geojson <- function(
 
 	### end parameter checks
 
+	light_settings <- jsonify::to_json(light_settings, auto_unbox = T)
+
 	map <- addDependency(map, mapdeckGeojsonDependency())
 	invoke_method(map, "add_geojson", data, layer_id, stroke_colour, fill_colour, radius,
 								lineWidth, elevation, light_settings, auto_highlight, highlight_colour)
