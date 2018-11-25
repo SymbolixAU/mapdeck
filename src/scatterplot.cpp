@@ -23,6 +23,7 @@ Rcpp::List rcpp_scatterplot_geojson( Rcpp::DataFrame data, Rcpp::List data_types
 	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
 	std::unordered_map< std::string, std::string > scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
 	Rcpp::StringVector scatterplot_legend = mapdeck::scatterplot::scatterplot_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson_downcast(
 		data,
@@ -32,6 +33,7 @@ Rcpp::List rcpp_scatterplot_geojson( Rcpp::DataFrame data, Rcpp::List data_types
 		scatterplot_colours,
 		scatterplot_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -47,6 +49,7 @@ Rcpp::List rcpp_scatterplot_geojson_df( Rcpp::DataFrame data, Rcpp::List data_ty
 	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
 	std::unordered_map< std::string, std::string > scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
 	Rcpp::StringVector scatterplot_legend = mapdeck::scatterplot::scatterplot_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(
 		data,
@@ -56,6 +59,7 @@ Rcpp::List rcpp_scatterplot_geojson_df( Rcpp::DataFrame data, Rcpp::List data_ty
 		scatterplot_colours,
 		scatterplot_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -70,6 +74,7 @@ Rcpp::List rcpp_scatterplot_polyline( Rcpp::DataFrame data, Rcpp::List data_type
 	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
 	std::unordered_map< std::string, std::string > scatterplot_colours = mapdeck::scatterplot::scatterplot_colours;
 	Rcpp::StringVector scatterplot_legend = mapdeck::scatterplot::scatterplot_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(
 		data,
@@ -79,6 +84,7 @@ Rcpp::List rcpp_scatterplot_polyline( Rcpp::DataFrame data, Rcpp::List data_type
 		scatterplot_colours,
 		scatterplot_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);

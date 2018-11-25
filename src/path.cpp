@@ -23,6 +23,7 @@ Rcpp::List rcpp_path_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 	Rcpp::List lst_defaults = path_defaults( data_rows );  // initialise with defaults
 	std::unordered_map< std::string, std::string > path_colours = mapdeck::path::path_colours;
 	Rcpp::StringVector path_legend = mapdeck::path::path_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson_downcast(
 		data,
@@ -32,6 +33,7 @@ Rcpp::List rcpp_path_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		path_colours,
 		path_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -46,6 +48,7 @@ Rcpp::List rcpp_path_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
 	Rcpp::List lst_defaults = path_defaults( data_rows );  // initialise with defaults
 	std::unordered_map< std::string, std::string > path_colours = mapdeck::path::path_colours;
 	Rcpp::StringVector path_legend = mapdeck::path::path_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(
 		data,
@@ -55,6 +58,7 @@ Rcpp::List rcpp_path_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
 		path_colours,
 		path_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);

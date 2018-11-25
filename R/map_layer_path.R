@@ -125,6 +125,7 @@ add_path <- function(
 	}
 
 	# print(shape[["legend"]])
+	# print( shape )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,

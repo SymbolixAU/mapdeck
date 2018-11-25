@@ -21,6 +21,7 @@ Rcpp::List rcpp_hexagon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > hexagon_colours = mapdeck::hexagon::hexagon_colours;
 	Rcpp::StringVector hexagon_legend = mapdeck::hexagon::hexagon_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson_downcast(
 		data,
@@ -30,6 +31,7 @@ Rcpp::List rcpp_hexagon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		hexagon_colours,
 		hexagon_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -45,6 +47,7 @@ Rcpp::List rcpp_hexagon_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > hexagon_colours = mapdeck::hexagon::hexagon_colours;
 	Rcpp::StringVector hexagon_legend = mapdeck::hexagon::hexagon_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(
 		data,
@@ -54,6 +57,7 @@ Rcpp::List rcpp_hexagon_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 		hexagon_colours,
 		hexagon_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -70,6 +74,7 @@ Rcpp::List rcpp_hexagon_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > hexagon_colours = mapdeck::hexagon::hexagon_colours;
 	Rcpp::StringVector hexagon_legend = mapdeck::hexagon::hexagon_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(
 		data,
@@ -79,6 +84,7 @@ Rcpp::List rcpp_hexagon_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
 		hexagon_colours,
 		hexagon_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);

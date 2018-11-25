@@ -24,6 +24,7 @@ Rcpp::List rcpp_pointcloud_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > pointcloud_colours = mapdeck::pointcloud::pointcloud_colours;
 	Rcpp::StringVector pointcloud_legend = mapdeck::pointcloud::pointcloud_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson_downcast(
 		data,
@@ -33,6 +34,7 @@ Rcpp::List rcpp_pointcloud_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		pointcloud_colours,
 		pointcloud_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -48,6 +50,7 @@ Rcpp::List rcpp_pointcloud_geojson_df( Rcpp::DataFrame data, Rcpp::List data_typ
 
 	std::unordered_map< std::string, std::string > pointcloud_colours = mapdeck::pointcloud::pointcloud_colours;
 	Rcpp::StringVector pointcloud_legend = mapdeck::pointcloud::pointcloud_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(
 		data,
@@ -57,6 +60,7 @@ Rcpp::List rcpp_pointcloud_geojson_df( Rcpp::DataFrame data, Rcpp::List data_typ
 		pointcloud_colours,
 		pointcloud_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true,  // jsonify legend
 		true   // elevation
@@ -74,6 +78,7 @@ Rcpp::List rcpp_pointcloud_polyline( Rcpp::DataFrame data, Rcpp::List data_types
 
 	std::unordered_map< std::string, std::string > pointcloud_colours = mapdeck::pointcloud::pointcloud_colours;
 	Rcpp::StringVector pointcloud_legend = mapdeck::pointcloud::pointcloud_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(
 		data,
@@ -83,6 +88,7 @@ Rcpp::List rcpp_pointcloud_polyline( Rcpp::DataFrame data, Rcpp::List data_types
 		pointcloud_colours,
 		pointcloud_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
