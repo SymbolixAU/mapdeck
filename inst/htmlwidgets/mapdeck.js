@@ -48,6 +48,9 @@ HTMLWidgets.widget({
 			  });
 
 			    window[el.id + 'map'] = deckgl;
+
+			    //console.log( window[el.id + 'map']);
+
 			    initialise_map(el, x);
       },
 

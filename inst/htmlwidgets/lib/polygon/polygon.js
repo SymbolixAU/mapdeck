@@ -1,5 +1,5 @@
 function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
-    
+
   //console.log( polygon_data );
   //console.log( legend );
   const polygonLayer = new PolygonLayer({
@@ -31,7 +31,7 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
 
 
 function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
-    
+
 
   const polygonLayer = new PolygonLayer({
     map_id: map_id,
@@ -56,7 +56,7 @@ function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, a
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
-    console.log( polygonLayer );
+    //console.log( polygonLayer );
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
