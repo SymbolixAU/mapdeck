@@ -5,7 +5,7 @@
 \title{Add Pointcloud}
 \usage{
 add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  elevation = NULL, polyline = NULL, radius = NULL,
+  elevation = NULL, polyline = NULL, radius = 10,
   fill_colour = NULL, fill_opacity = NULL, tooltip = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   light_settings = list(), layer_id = NULL, id = NULL,
@@ -25,7 +25,7 @@ add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
 
 \item{polyline}{column of \code{data} containing the polylines}
 
-\item{radius}{in metres}
+\item{radius}{value in pixels of each point}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour}
 

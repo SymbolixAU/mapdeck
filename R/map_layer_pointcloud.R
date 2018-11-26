@@ -17,6 +17,7 @@ mapdeckPointcloudDependency <- function() {
 #'
 #' @inheritParams add_scatterplot
 #' @param elevation column containing the elevation values
+#' @param radius value in pixels of each point
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #'
 #' @inheritSection add_arc legend
@@ -67,7 +68,7 @@ add_pointcloud <- function(
 	lat = NULL,
 	elevation = NULL,
 	polyline = NULL,
-	radius = NULL,
+	radius = 10,
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	tooltip = NULL,
@@ -115,6 +116,7 @@ add_pointcloud <- function(
 
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "pointcloud")
+	checkNumeric( radius )
 
 	map <- addDependency( map, mapdeckPointcloudDependency() )
 	data_types <- data_types( data )
@@ -152,7 +154,7 @@ add_pointcloud <- function(
 	light_settings <- jsonify::to_json(light_settings, auto_unbox = T)
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, light_settings,
+		map, jsfunc, shape[["data"]], radius, layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]]
 		)
 }
