@@ -1,10 +1,20 @@
+
+function get_coordinates ( obj ) {
+	console.log( obj.geometry.geometry );
+	if ( obj.geometry.geometry === null ) {
+		return [null, null];
+	}
+	return obj.geometry.geometry.coordinates;
+}
+
 function add_pointcloud_geo( map_id, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
 
   const pointcloudLayer = new deck.PointCloudLayer({
     id: 'pointcloud-'+layer_id,
     data: pointcloud_data,
     radiusPixels: radius,
-    getPosition: d => d.geometry.geometry.coordinates,
+    //getPosition: d => d.geometry.geometry.coordinates,
+    getPosition: d => get_coordinates( d ),
     getColor: d => hexToRGBA2( d.properties.fill_colour ),
     lightSettings: light_settings,
     pickable: true,
