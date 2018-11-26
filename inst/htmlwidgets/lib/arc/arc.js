@@ -1,6 +1,8 @@
+
 function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend ) {
 
   const arcLayer = new ArcLayer({
+  	map_id: map_id,
     id: 'arc-'+layer_id,
     data: arc_data,
     pickable: true,

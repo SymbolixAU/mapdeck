@@ -155,7 +155,7 @@ add_polygon <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-	 	shape <- rcpp_polygon_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_polygon_geojson( data, data_types, l, geometry_column )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
 		shape <- rcpp_polygon_polyline( data, data_types, l, geometry_column )

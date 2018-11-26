@@ -83,17 +83,25 @@ function change_location( map_id, location, duration, transition, zoom ) {
 function updateTooltip({x, y, object, layer, index}) {
     // object is the data object sent to the layer function
 
-  //console.log( layer.props.map_id);
-
   const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
+  var tt;
+
 
   if (object) {
-  	if(object.tooltip === undefined) {
-  		return;
-  	}
+  	//if(object.tooltip === undefined && object.properties.tooltip === undefined ) {
+  	//	return;
+  	//}
+  	if ( object.properties.tooltip !== undefined ) {
+	  	tt = object.properties.tooltip;
+	  } else if ( object.tooltip !== undefined ) {
+	  	tt = object.tooltip;
+	  } else {
+	  	return;
+	  }
+
     tooltip.style.top = `${y}px`;
     tooltip.style.left = `${x}px`;
-    tooltip.innerHTML = `<div>${object.tooltip}</div>`;
+    tooltip.innerHTML = `<div>${tt}</div>`;
   } else {
     tooltip.innerHTML = '';
   }

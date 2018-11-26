@@ -2,6 +2,7 @@
 function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
 
   const polygonLayer = new PolygonLayer({
+  	map_id: map_id,
     id: 'polygon-'+layer_id,
     data: polygon_data,
     pickable: true,

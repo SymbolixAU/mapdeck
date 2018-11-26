@@ -2,6 +2,7 @@
 function add_line_geo( map_id, line_data, layer_id, auto_highlight, highlight_colour, legend ) {
 
   const lineLayer = new LineLayer({
+  	map_id: map_id,
     id: 'line-'+layer_id,
     data: line_data,
     pickable: true,

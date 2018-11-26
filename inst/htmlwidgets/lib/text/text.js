@@ -2,6 +2,7 @@
 function add_text_geo( map_id, text_data, layer_id ) {
 
   const textLayer = new TextLayer({
+  	map_id: map_id,
     id: 'text-'+layer_id,
     data: text_data,
     pickable: true,

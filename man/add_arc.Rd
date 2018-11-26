@@ -108,7 +108,7 @@ flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
   add_arc(
   data = flights
   , layer_id = "arc_layer"

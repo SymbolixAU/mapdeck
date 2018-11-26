@@ -1,6 +1,7 @@
 function add_grid_geo( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour ) {
 
   const gridLayer = new deck.GridLayer({
+  	map_id: map_id,
     id: 'grid-'+layer_id,
     data: grid_data,
     pickable: true,

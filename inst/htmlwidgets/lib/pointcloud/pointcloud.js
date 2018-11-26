@@ -1,6 +1,8 @@
+
 function add_pointcloud_geo( map_id, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
 
   const pointcloudLayer = new deck.PointCloudLayer({
+  	map_id: map_id,
     id: 'pointcloud-'+layer_id,
     data: pointcloud_data,
     radiusPixels: radius,
