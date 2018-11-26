@@ -1,12 +1,11 @@
-function add_text_geo( map_id, text_data, layer_id ) {
 
-  //console.log( text_data );
+function add_text_geo( map_id, text_data, layer_id ) {
 
   const textLayer = new TextLayer({
     id: 'text-'+layer_id,
     data: text_data,
     pickable: true,
-    getPosition: d => d.geometry.geometry.coordinates,
+    getPosition: d => get_point_coordinates( d ),
     getColor: d => hexToRGBA2( d.properties.fill_colour ),
     getText: d => d.properties.text,
     getSize: d => d.properties.size,

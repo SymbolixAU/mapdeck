@@ -322,4 +322,42 @@ function decode_polyline(str, precision) {
   return coordinates;
 }
 
+function get_point_coordinates ( obj ) {
+	if ( obj.geometry.geometry === null ) {
+		return [-179.999,-89.999];
+	}
+	return obj.geometry.geometry.coordinates;
+}
+
+function get_origin_coordinates ( obj ) {
+	if ( obj.geometry.origin === null ) {
+		return [-179.999,-89.999];
+	}
+	return obj.geometry.origin.coordinates;
+}
+
+function get_destination_coordinates ( obj ) {
+	if ( obj.geometry.destination === null ) {
+		return [-179.999,-89.999];
+	}
+	return obj.geometry.destination.coordinates;
+}
+
+
+function get_line_coordinates ( obj ) {
+	if ( obj.geometry.geometry === null ) {
+		return [[-179.999,-89.999],[-179.999,-89.999]];
+	}
+	return obj.geometry.geometry.coordinates;
+}
+
+function get_polygon_coordinates ( obj ) {
+	if ( obj.geometry.geometry === null ) {
+		return [[-179.999,-89.999],[-179.999,-89.999],[-179.999,-89.999]];
+	}
+	return obj.geometry.geometry.coordinates;
+}
+
+
+
 

@@ -139,7 +139,7 @@ add_grid <- function(
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, cell_size,
-		jsonify::to_json(extruded, auto_unbox = TRUE), elevation_scale,
+		jsonify::to_json(extruded, unbox = TRUE), elevation_scale,
 		colour_range, auto_highlight, highlight_colour
 		)
 }

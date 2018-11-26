@@ -151,7 +151,7 @@ add_pointcloud <- function(
 		jsfunc <- "add_pointcloud_polyline"
 	}
 
-	light_settings <- jsonify::to_json(light_settings, auto_unbox = T)
+	light_settings <- jsonify::to_json(light_settings, unbox = T)
 
 	#print( shape )
 

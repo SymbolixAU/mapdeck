@@ -1,5 +1,5 @@
 function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range ) {
-    
+
 	const hexagonLayer = new deck.HexagonLayer({
         map_id: map_id,
         id: 'hexagon-'+layer_id,
@@ -10,7 +10,7 @@ function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scal
         colorRange: to_rgba( colour_range ),
         elevationScale: elevation_scale,
         radius: radius,
-        getPosition: d => d.geometry.geometry.coordinates,
+        getPosition: d => get_point_coordinates( d ),
         autoHighlight: auto_highlight,
         highlightColor: hexToRGBA2( highlight_colour ),
         onClick: info => layer_click( map_id, "hexagon", info ),
@@ -20,7 +20,7 @@ function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scal
 }
 
 function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range ) {
-    
+
 	const hexagonLayer = new deck.HexagonLayer({
         map_id: map_id,
         id: 'hexagon-'+layer_id,

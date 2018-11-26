@@ -1,7 +1,6 @@
+
 function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
 
-  //console.log( polygon_data );
-  //console.log( legend );
   const polygonLayer = new PolygonLayer({
     id: 'polygon-'+layer_id,
     data: polygon_data,
@@ -11,7 +10,7 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     wireframe: false,
     extruded: true,
     lineWidthMinPixels: 1,
-    getPolygon: d => d.geometry.geometry.coordinates,
+    getPolygon: d => get_polygon_coordinates( d ),
     getLineColor: d => hexToRGBA2( d.properties.stroke_colour ),
     getFillColor: d => hexToRGBA2( d.properties.fill_colour ),
     getLineWidth: d => d.properties.stroke_width,
