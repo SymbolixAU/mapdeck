@@ -17,16 +17,13 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
 Imports:
-    colourvalues (>= 0.2.0),
-    geojsonsf (>= 1.2.1),
     googlePolylines (>= 0.7.1004),
     htmlwidgets,
     htmltools,
     jsonify (>= 0.1.2),
     magrittr,
     Rcpp,
-    shiny,
-    spatialwidget
+    shiny
 RoxygenNote: 6.1.0
 Suggests: 
     covr,
