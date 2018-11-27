@@ -29,7 +29,7 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
 column of \code{data} containing the fill opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
-\item{elevation}{the height of the polygon}
+\item{elevation}{the height the polygon extrudes from the map.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 

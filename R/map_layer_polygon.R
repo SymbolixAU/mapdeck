@@ -25,7 +25,7 @@ mapdeckPolygonDependency <- function() {
 #' @param stroke_colour variable of \code{data} or hex colour for the stroke
 #' @param stroke_width width of the stroke
 #' @param light_settings list of light setting parameters. See \link{light_settings}
-#' @param elevation the height of the polygon
+#' @param elevation the height the polygon extrudes from the map.
 #'
 #'
 #' @inheritSection add_arc legend
