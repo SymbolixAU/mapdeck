@@ -86,34 +86,64 @@ add_geojson <- function(
 	map,
 	data = get_map_data(map),
 	layer_id = NULL,
-	stroke_colour = "#440154",
-	fill_colour = "#440154",
+	stroke_colour = NULL,
+	stroke_opacity = NULL,
+	fill_colour = NULL,
+	fill_opacity = NULL,
 	radius = 1,
-	lineWidth = 1,
+	line_width = 1,
 	light_settings = list(),
 	elevation = 0,
+	palette = "viridis",
+	legend = F,
+	legend_options = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF"
 	) {
 
-	data <- normalisesGeojsonData(data)
+	l <- list()
+	l[["stroke_colour"]] <- force( stroke_colour )
+	l[["stroke_opacity"]] <- force( stroke_opacity )
+	l[["fill_colour"]] <- force( fill_colour )
+	l[["fill_opacity"]] <- force( fill_opacity )
+
+	l[["geometry"]] <- "geometry"   ## TODO
+
+	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
+
+	## TODO( fill_colour, stroke_colour can refer to a .property. value? )
+	## - it will have to be rendered as an sf object, though...
+
+	## if SF object, we can do all the colour stuff
+
+
+	# data <- normalisesGeojsonData( data )
 	## Parameter checks
 
-	checkNumeric(radius)
-	checkNumeric(lineWidth)
-	checkNumeric(elevation)
-	isHexColour(stroke_colour)
-	isHexColour(fill_colour)
-	checkHexAlpha(highlight_colour)
-	layer_id <- layerId(layer_id, "geojson")
+	checkNumeric( radius )
+	checkNumeric( line_width )
+	checkNumeric( elevation )
+	isHexColour( stroke_colour )
+	isHexColour( fill_colour )
+	checkHexAlpha( highlight_colour )
+	layer_id <- layerId( layer_id, "geojson" )
 	## TODO(light_settings - test options are accurate)
 
 	### end parameter checks
 
+	data_types <- data_types( data )
+	shape <- rcpp_geojson_geojson( data, data_types, l, "geometry" )
+
+	print( shape )
+
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
-	invoke_method(map, "add_geojson", data, layer_id, stroke_colour, fill_colour, radius,
+
+	## TODO( invoke different methods for when using pure GeoJSON and when using sf)
+	invoke_method(map, "add_geojson", shape[["data"]], layer_id, stroke_colour, fill_colour, radius,
 								lineWidth, elevation, light_settings, auto_highlight, highlight_colour)
 }
 

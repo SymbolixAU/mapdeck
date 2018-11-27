@@ -5,9 +5,11 @@
 \title{Add Geojson}
 \usage{
 add_geojson(map, data = get_map_data(map), layer_id = NULL,
-  stroke_colour = "#440154", fill_colour = "#440154", radius = 1,
-  lineWidth = 1, light_settings = list(), elevation = 0,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF")
+  stroke_colour = NULL, stroke_opacity = NULL, fill_colour = NULL,
+  fill_opacity = NULL, radius = 1, line_width = 1,
+  light_settings = list(), elevation = 0, palette = "viridis",
+  legend = F, legend_options = NULL, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF")
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -22,17 +24,26 @@ to conflict and not plot correctly}
 
 \item{radius}{radius of points in meters. See details}
 
-\item{lineWidth}{width of lines in meters. See details}
-
 \item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
 \item{elevation}{elevation of polygons. See details}
+
+\item{palette}{string or matrix. String is either one of "viridis","inferno",
+"magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
+between [0, 255], where the 4th column represents the alpha.}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
 \item{line_colour}{hex value for all line colours. See details}
+
+\item{lineWidth}{width of lines in meters. See details}
 }
 \description{
 The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,
