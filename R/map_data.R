@@ -202,6 +202,38 @@ resolve_data.data.frame <- function( data, l, sf_geom ) {
 resolve_data.default <- function( data ) stop("This type of data is not supported")
 
 
+resolve_geojson_data <- function( data, l ) UseMethod("resolve_geojson_data")
+
+#' @export
+resolve_geojson_data.sf <- function( data, l ) {
+	geom <- attr(data, "sf_column")
+	l[["geometry"]] <- geom
+	l[["data_type"]] <- "sf"
+	return( l )
+}
+
+#' @export
+resolve_geojson_data.json <- function( data, l ) {
+  l[["data_type"]] <- "geojson"
+	return( l )
+}
+
+#' @export
+resolve_geojson_data.geojson <- function( data, l ) {
+  l[["data_type"]] <- "geojson"
+  return( l )
+}
+
+#' @export
+resolve_geojson_data.character <- function( data, l ) {
+	l[["data_type"]] <- "geojson"
+	return( l )
+}
+
+#' @export
+resolve_geojson_data.default <- function( data ) stop("I don't know how to handle this type of data")
+
+
 resolve_palette <- function( l, palette ) {
 	if ( is.function( palette ) ) {
 		warning("Function palettes have been deprecated, reverting to the viridis palette. See the palette arguemnt in the help file for valid arguments")

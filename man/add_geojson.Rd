@@ -5,11 +5,11 @@
 \title{Add Geojson}
 \usage{
 add_geojson(map, data = get_map_data(map), layer_id = NULL,
-  stroke_colour = NULL, stroke_opacity = NULL, fill_colour = NULL,
-  fill_opacity = NULL, radius = 1, line_width = 1,
-  light_settings = list(), elevation = 0, palette = "viridis",
-  legend = F, legend_options = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF")
+  stroke_colour = NULL, stroke_opacity = NULL, stroke_width = NULL,
+  fill_colour = NULL, fill_opacity = NULL, radius = 1,
+  line_width = 1, light_settings = list(), elevation = 0,
+  palette = "viridis", legend = F, legend_options = NULL,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF")
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -19,6 +19,8 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
+
+\item{stroke_width}{width of the stroke}
 
 \item{fill_colour}{hex value for all fill colours. See details}
 

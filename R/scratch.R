@@ -1,4 +1,14 @@
 #
+# key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
+# set_token( key )
+#
+# mapdeck() %>%
+# 	add_geojson(
+# 		data = roads[1:3, ]
+# 	)
+
+
+#
 # url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 # flights <- read.csv(url)
 # flights$id <- seq_len(nrow(flights))

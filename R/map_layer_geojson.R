@@ -88,6 +88,7 @@ add_geojson <- function(
 	layer_id = NULL,
 	stroke_colour = NULL,
 	stroke_opacity = NULL,
+	stroke_width = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	radius = 1,
@@ -107,11 +108,17 @@ add_geojson <- function(
 	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- force( fill_opacity )
 
-	l[["geometry"]] <- "geometry"   ## TODO
+	#l[["geometry"]] <- "geometry"   ## TODO
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_geojson_data( data, l )
+
+	if( !is.null(l[["data"]] ) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
+	}
 
 	## TODO( fill_colour, stroke_colour can refer to a .property. value? )
 	## - it will have to be rendered as an sf object, though...
@@ -134,17 +141,24 @@ add_geojson <- function(
 	### end parameter checks
 
 	data_types <- data_types( data )
-	shape <- rcpp_geojson_geojson( data, data_types, l, "geometry" )
 
-	print( shape )
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+
+	if( tp == "sf" ) {
+	  shape <- rcpp_geojson_geojson( data, data_types, l, "geometry" )
+	  jsfunc <- "add_geojson_sf"
+	} else if ( tp == "geojson" ) {
+		## leave as is?
+		jsfunc <- "add_geojson"
+	}
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
 
 	## TODO( invoke different methods for when using pure GeoJSON and when using sf)
-	invoke_method(map, "add_geojson", shape[["data"]], layer_id, stroke_colour, fill_colour, radius,
-								lineWidth, elevation, light_settings, auto_highlight, highlight_colour)
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour)
 }
 
 

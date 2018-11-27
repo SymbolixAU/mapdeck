@@ -1,4 +1,43 @@
 
+
+function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour ) {
+
+  console.log( geojson );
+  geojson = geojson.features;
+  console.log( geojson );
+
+  console.log( light_settings );
+  console.log( auto_highlight );
+  console.log( highlight_colour );
+
+  const geojsonLayer = new deck.GeoJsonLayer({
+    map_id: map_id,
+    id: 'geojson-'+layer_id,
+    data: geojson,
+    pickable: true,
+    stroked: true,
+    filled: true,
+    extruded: true,
+    pointRadiusScale: 1,
+    pointRadiusMinPixels: 0.5,
+    lineWidthScale: 1,
+    lineWidthMinPixels: 1,
+    lineJointRounded: true,
+    getFillColor: g => hexToRGBA2( g.properties.fill_colour ),
+    getLineColor: g => hexToRGBA2( g.properties.stroke_colour),
+    getRadius: g => g.properties.radius,
+    getLineWidth: g => g.properties.stroke_width,
+    getElevation: g => g.properties.elevation,
+    lightSettings: light_settings,
+    onClick: info => layer_click( map_id, "geojson", info ),
+    autoHighlight: auto_highlight,
+    highlightColor: hexToRGBA2( highlight_colour )
+    //onHover: updateTooltip
+  });
+
+  update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
+}
+
 function add_geojson( map_id, geojson, layer_id, lineColor, fillColor, radius, lineWidth, elevation, light_settings, auto_highlight, highlight_colour ) {
 
   const geojsonLayer = new deck.GeoJsonLayer({
