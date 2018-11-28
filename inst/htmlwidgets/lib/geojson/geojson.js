@@ -54,9 +54,9 @@ function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight,
     lineJointRounded: true,
     getFillColor: g => hexToRGBA2( geojson_fill_colour( g ) ),
     getLineColor: g => hexToRGBA2( geojson_line_colour( g ) ),
-    //getRadius: g => geojson_radius( g ),
-    //getLineWidth: g => geojson_lineWidth( g ),
-    //getElevation: d => d.properties.elevation || 0,
+    getRadius: g => geojson_radius( g ),
+    getLineWidth: g => geojson_line_width( g ),
+    getElevation: g => geojson_elevation( g ),
     lightSettings: light_settings,
     onClick: info => layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
@@ -68,14 +68,24 @@ function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight,
 }
 
 // TODO( update these accessors to find variations on // fillColor, fillColour, fill_colour, fill_color )
-function geojson_radius( g, radius ) {
+function geojson_radius( g ) {
   if (g.properties === undefined) {
-    return radius;
+    return 10;
   }
   if (g.properties.radius === undefined) {
-    return radius;
+    return 10;
   }
   return g.properties.radius;
+}
+
+function geojson_elevation( g ) {
+  if (g.properties === undefined) {
+    return 0;
+  }
+  if (g.properties.elevation === undefined) {
+    return 0;
+  }
+  return g.properties.elevation;
 }
 
 function get_fill_colour( p ) {
@@ -136,9 +146,29 @@ function geojson_line_colour( g ) {
 }
 
 
+function get_line_width( p ) {
+	switch( true ) {
+		case p.line_width !== undefined:
+			return p.line_width;
+		case p.lineWidth !== undefined:
+			return p.lineWidth;
+		case p.stroke_width !== undefined:
+			return p.stroke_width;
+		case p.strokeWidth !== undefined:
+			return p.strokeWidth;
+		default:
+		  return 10;
+	}
+}
 
-
-
+function geojson_line_width( g ) {
+	switch( true ) {
+		case g.properties !== undefined:
+			return get_line_width( g.properties );
+		default:
+		  return 10;
+	}
+}
 
 
 

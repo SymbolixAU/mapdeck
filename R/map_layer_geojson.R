@@ -89,7 +89,7 @@ add_geojson <- function(
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	radius = NULL,
-	force = FALSE,            ## TODO( if TRUE, use has supplied GeoJSON & the fill_colour / stroke_colour are values in 'properties')
+	evaluate = FALSE,            ## TODO( if TRUE, make to SF and resolve all teh stuff)
 	light_settings = list(),
 	elevation = 0,
 	palette = "viridis",
@@ -107,10 +107,10 @@ add_geojson <- function(
 	l[["fill_opacity"]] <- force( fill_opacity )
 	l[["radius"]] <- force( radius )
 
-	force <- force( force )
+	evaluate <- force( evaluate )
 
 	## if the user supplied any of the 'get' accessors, AND they supplied geoJSON, conver to SF.
-	if ( !force ) {
+	if ( evaluate ) {
 		if ( any (
 			!is.null( l[["stroke_colour"]] ) |
 			!is.null( l[["stroke_opacity"]] ) |

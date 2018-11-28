@@ -7,7 +7,7 @@
 add_geojson(map, data = get_map_data(map), layer_id = NULL,
   stroke_colour = NULL, stroke_opacity = NULL, stroke_width = NULL,
   fill_colour = NULL, fill_opacity = NULL, radius = NULL,
-  force = FALSE, light_settings = list(), elevation = 0,
+  evaluate = FALSE, light_settings = list(), elevation = 0,
   palette = "viridis", legend = F, legend_options = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF")
 }
