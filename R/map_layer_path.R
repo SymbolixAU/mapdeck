@@ -103,6 +103,8 @@ add_path <- function(
 	}
 
 	# print(l)
+	bbox <- attr(roads$geometry, "bbox")
+	bbox <- jsonify::to_json( bbox )
 
 	layer_id <- layerId(layer_id, "path")
 	checkHexAlpha( highlight_colour )
@@ -129,7 +131,7 @@ add_path <- function(
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
-		highlight_colour, shape[["legend"]]
+		highlight_colour, shape[["legend"]], bbox
 		)
 }
 
