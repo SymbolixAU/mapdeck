@@ -22,7 +22,7 @@ test_that("layers are cleared", {
 	expect_true( layer$x$calls[[2]]$functions[[1]] == "clear_arc" )
 	expect_true( layer$x$calls[[2]]$args[[1]] == lx('arc') )
 
-	layer <- add_geojson(m, data = df, layer_id = layer_id)
+	layer <- add_geojson(m, data = geojson, layer_id = layer_id)
 	layer <- clear_geojson( layer )
 	expect_true( layer$x$calls[[2]]$functions[[1]] == "clear_geojson" )
 	expect_true( layer$x$calls[[2]]$args[[1]] == lx('geojson') )

@@ -231,7 +231,7 @@ resolve_geojson_data.character <- function( data, l ) {
 }
 
 #' @export
-resolve_geojson_data.default <- function( data ) stop("I don't know how to handle this type of data")
+resolve_geojson_data.default <- function( data, l ) stop("I don't know how to handle this type of data")
 
 
 resolve_palette <- function( l, palette ) {
