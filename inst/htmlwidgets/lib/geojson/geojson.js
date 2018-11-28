@@ -3,7 +3,6 @@
 function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
 
   geojson = geojson.features;
-  //console.log( geojson );
 
   const geojsonLayer = new deck.GeoJsonLayer({
     map_id: map_id,
@@ -13,6 +12,7 @@ function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlig
     stroked: true,
     filled: true,
     extruded: true,
+    wireframe: false,
     pointRadiusScale: 1,
     pointRadiusMinPixels: 0.5,
     lineWidthScale: 1,
@@ -26,8 +26,8 @@ function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlig
     lightSettings: light_settings,
     onClick: info => layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
-    highlightColor: hexToRGBA2( highlight_colour )
-    //onHover: updateTooltip
+    highlightColor: hexToRGBA2( highlight_colour ),
+    onHover: updateTooltip
   });
 
   update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
@@ -47,6 +47,7 @@ function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight,
     stroked: true,
     filled: true,
     extruded: true,
+    wireframe: false,
     pointRadiusScale: 1,
     pointRadiusMinPixels: 0.5,
     lineWidthScale: 1,
@@ -60,8 +61,8 @@ function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight,
     lightSettings: light_settings,
     onClick: info => layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
-    highlightColor: hexToRGBA2( highlight_colour )
-    //onHover: updateTooltip
+    highlightColor: hexToRGBA2( highlight_colour ),
+    onHover: updateTooltip
   });
 
   update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
@@ -98,6 +99,8 @@ function get_fill_colour( p ) {
 			return p.fillColour;
 		case p.fillColor !== undefined:
 			return p.fillColor;
+		case p.fill !== undefined:
+			return p.fill;
 		default:
 		  return "#440154FF";
 	}
@@ -123,6 +126,8 @@ function get_line_colour( p ) {
 			return p.lineColour;
 		case p.lineColor !== undefined:
 			return p.lineColor;
+		case p.line !== undefined:
+			return p.line;
 		case p.stroke_colour !== undefined:
 			return p.stroke_colour;
 		case p.stroke_color !== undefined:
@@ -131,6 +136,8 @@ function get_line_colour( p ) {
 			return p.strokeColour;
 		case p.strokeColor !== undefined:
 			return p.strokeColor;
+		case p.stroke !== undefined:
+			return p.stroke;
 		default:
 		  return "#440154FF";
 	}
@@ -156,6 +163,8 @@ function get_line_width( p ) {
 			return p.stroke_width;
 		case p.strokeWidth !== undefined:
 			return p.strokeWidth;
+		case p.width !== undefined:
+			return p.width;
 		default:
 		  return 10;
 	}
@@ -170,18 +179,6 @@ function geojson_line_width( g ) {
 	}
 }
 
-
-
-
-function geojson_lineWidth( g, lineWidth ) {
-  if ( g.properties === undefined ) {
-    return lineWidth;
-  }
-  if ( g.properties.lineWidth === undefined ) {
-    return lineWidth;
-  }
-  return g.properties.lineWidth;
-}
 
 function clear_geojson( map_id, layer_id ) {
   clear_layer( map_id, 'geojson-'+layer_id );

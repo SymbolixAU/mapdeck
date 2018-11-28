@@ -7,9 +7,10 @@
 add_geojson(map, data = get_map_data(map), layer_id = NULL,
   stroke_colour = NULL, stroke_opacity = NULL, stroke_width = NULL,
   fill_colour = NULL, fill_opacity = NULL, radius = NULL,
-  evaluate = FALSE, light_settings = list(), elevation = 0,
-  palette = "viridis", legend = F, legend_options = NULL,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF")
+  elevation = NULL, light_settings = list(), legend = F,
+  legend_options = NULL, auto_highlight = FALSE, tooltip = NULL,
+  highlight_colour = "#AAFFFFFF", palette = "viridis",
+  na_colour = "#808080FF")
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -20,25 +21,21 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{stroke_colour}{variable of \code{data} or hex colour for the stroke}
+\item{stroke_colour}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for colour}
 
-\item{stroke_width}{width of the stroke}
+\item{stroke_opacity}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for opacity}
 
-\item{fill_colour}{column of \code{data} or hex colour for the fill colour}
+\item{stroke_width}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for width}
 
-\item{fill_opacity}{value between 1 and 255. Either a string specifying the
-column of \code{data} containing the fill opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{fill_colour}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for colour}
+
+\item{fill_opacity}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for opacity}
 
 \item{radius}{radius of points in meters. See details}
 
-\item{light_settings}{list of light setting parameters. See \link{light_settings}}
-
 \item{elevation}{elevation of polygons. See details}
 
-\item{palette}{string or matrix. String is either one of "viridis","inferno",
-"magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
-between [0, 255], where the 4th column represents the alpha.}
+\item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
 \item{legend}{either a logical indiciating if the legend(s) should be displayed, or
 a named list indicating which colour attributes should be included in the legend.}
@@ -47,64 +44,149 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
+\item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip.
+Only works on \code{sf} objects.}
+
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
+
+\item{palette}{string or matrix. String is either one of "viridis","inferno",
+"magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
+between [0, 255], where the 4th column represents the alpha.}
 }
 \description{
 The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,
 lines and points
 }
 \details{
-The GeoJSON string needs to have a \code{class} attribute of 'json'
 
-If the GeoJSON contains the following fields in the \code{properties} object,
-they will be used as the attribute properties for each feature.
-Otherwise the values supplied to the arguments will be applied to all the features.
+}
+\section{Raw Geojson}{
+
+
+If using a GeoJSON string, and you \strong{do not} suppply one of the colouring arguments, the
+function will look for these fields inside the \code{properties} field of the Geojson
+
+\strong{fill_colour}
+\itemize{
+  \item{fill_colour}
+  \item{fillColour}
+  \item{fill_color}
+  \item{fillColor}
+  \item{fill}
+}
+
+\strong{stroke_colour}
+\itemize{
+  \item{stroke_colour}
+  \item{strokeColour}
+  \item{stroke_color}
+  \item{strokeColor}
+  \item{stroke}
+  \item{line_colour}
+  \item{lineColour}
+  \item{line_color}
+  \item{lineColor}
+  \item{line}
+}
+
+\strong{stroke_width}
+\itemize{
+  \item{stroke_width}
+  \item{strokeWdith}
+  \item{line_width}
+  \item{lineWidth}
+  \item{width}
+}
 
 \itemize{
-  \item{fillColor - fill colour of polygons and points}
-  \item{lineColor - line colour of lines}
-  \item{lineWidth - line width of lines}
-  \item{elevation - elevation of polygons}
-  \item{radius - radius of points}
+  \item{elevation}
+  \item{radius}
 }
+
+These colour values should be valid hex-colour strings.
+
+If you \strong{do} provide values for the colouring arguments, the function will assume
+you want to use specific fields in the geojson for colouring. However, if you only supply a
+\code{fill_colour} value, the function will not automatically detect the \code{stroke_colour}
+(and vice versa)
 }
+
 \examples{
 \donttest{
 
 ## You need a valid access token from Mapbox
 key <- 'abc'
 
+## Not supplying colouring arguments, the function will try and find them in the GeoJSON
 mapdeck(
  token = key
  , location = c(145, -37.9)
  , zoom = 8
- , style = "mapbox://styles/mapbox/dark-v9"
+ , style = mapdeck_style("dark")
  , pitch = 35
 ) \%>\%
  add_geojson(
    data = geojson
-   , layer_id = "geojson"
    , auto_highlight = TRUE
  )
 
-## add colours, elevation and opacities
-sf <- geojsonsf::geojson_sf(geojson)
-sf$elevation <- sample(100:1000, size = nrow(sf), replace = T)
-sf$fillOpacity <- sample(200:255, size = nrow(sf), replace = T)
-sf$radius <- sample(1:100, size = nrow(sf), replace = T)
+## only supplying values to use for fill, the stroke will be default
+mapdeck(
+ token = key
+ , location = c(145, -37.9)
+ , zoom = 8
+ , style = mapdeck_style("dark")
+ , pitch = 35
+) \%>\%
+ add_geojson(
+   data = geojson
+   , fill_colour = "random"
+ )
 
 mapdeck(
-  token = key
-  , location = c(145, -37.9)
-  , zoom = 8
-  , style = "mapbox://styles/mapbox/dark-v9"
-  , pitch = 35
+ token = key
+ , location = c(145, -37.9)
+ , zoom = 8
+ , style = mapdeck_style("dark")
+ , pitch = 35
 ) \%>\%
-  add_geojson(
-    data = sf
-    , lineWidth = 250,
-    , layer_id = "geojson"
+ add_geojson(
+   data = geojson
+   , fill_colour = "random"
+   , stroke_colour = "random"
  )
+
+mapdeck(
+ token = key
+ , location = c(145, -37.9)
+ , zoom = 8
+ , style = mapdeck_style("dark")
+ , pitch = 35
+) \%>\%
+ add_geojson(
+   data = geojson
+   , fill_colour = "random"
+   , stroke_colour = "random"
+   , elevation = 300
+ )
+
+## putting elevation and width values onto raw GeoJSON
+sf <- geojsonsf::geojson_sf( geojson )
+sf$width <- sample(1:100, size = nrow(sf), replace = TRUE)
+sf$elevation <- sample(100:1000, size = nrow(sf), replace = T)
+geo <- geojsonsf::sf_geojson( sf )
+
+mapdeck(
+ token = key
+ , location = c(145, -37.9)
+ , zoom = 8
+ , style = mapdeck_style("dark")
+ , pitch = 35
+) \%>\%
+ add_geojson(
+   data = geo
+ )
+
 }
 
 

@@ -86,7 +86,6 @@ function updateTooltip({x, y, object, layer, index}) {
   const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
   var tt;
 
-
   if (object) {
   	//if(object.tooltip === undefined && object.properties.tooltip === undefined ) {
   	//	return;
