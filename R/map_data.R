@@ -1,4 +1,6 @@
 
+init_bbox <- function() return(  list(c(-180,90),c(180,90)) )
+
 data_types <- function( data ) vapply(data, function(x) class(x)[[1]], "")
 
 sfrow <- function( sf , sfc_type ) {
@@ -144,6 +146,11 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 	if( sf_needs_subsetting( data, sfc_col, sf_geom ) ) {
 		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
 	}
+
+	bbox <- attr(data$geometry, "bbox")
+	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
+	l[["bbox"]] <- jsonify::to_json( bbox )
+
 	l[["data_type"]] <- "sf"
 	return(l)
 }

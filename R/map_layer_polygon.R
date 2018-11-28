@@ -98,7 +98,9 @@ add_polygon <- function(
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
-	legend_options = NULL
+	legend_options = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	# l <- as.list( match.call( expand.dots = F) )
@@ -125,7 +127,7 @@ add_polygon <- function(
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_data( data, l, c("POLYGON","MULTIPOLYGON") )
 
-
+	bbox <- init_bbox()
 
 	# data <- normaliseSfData(data, "POLYGON", multi = FALSE)
 	# polyline <- findEncodedColumn(data, polyline)
@@ -141,9 +143,11 @@ add_polygon <- function(
 		l[["data"]] <- NULL
 	}
 
-	bbox <- attr(data$geometry, "bbox")
-	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
-	bbox <- jsonify::to_json( bbox )
+	## sf objects come with a bounding box
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
+	}
 
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "polygon")
@@ -169,7 +173,7 @@ add_polygon <- function(
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings,
-		auto_highlight, highlight_colour, shape[["legend"]], bbox
+		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
 		)
 }
 

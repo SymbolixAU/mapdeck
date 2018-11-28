@@ -66,7 +66,9 @@ add_path <- function(
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
-	legend_options = NULL
+	legend_options = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	## TODO(sf and lon/lat coordinates)
@@ -97,15 +99,21 @@ add_path <- function(
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_data( data, l, c("LINESTRING","MULTILINESTRING") )
 
+	bbox <- init_bbox()
+
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
 
 	# print(l)
-	bbox <- attr(data$geometry, "bbox")
-	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
-	bbox <- jsonify::to_json( bbox )
+	# bbox <- attr(data$geometry, "bbox")
+	# bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
+	# bbox <- jsonify::to_json( bbox )
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
+	}
 
 	layer_id <- layerId(layer_id, "path")
 	checkHexAlpha( highlight_colour )
@@ -132,7 +140,7 @@ add_path <- function(
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
-		highlight_colour, shape[["legend"]], bbox
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
 		)
 }
 

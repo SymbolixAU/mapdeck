@@ -1,5 +1,5 @@
 
-function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox ) {
+function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
 
   const polygonLayer = new PolygonLayer({
   	map_id: map_id,
@@ -28,13 +28,16 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     add_legend(map_id, layer_id, legend);
   }
 
-    add_to_bounds( map_id, bbox, layer_id );
-  console.log( window[ map_id + 'currentZoomLevel'] );
-  // TODO( change location )
-  var loc = center_location( window[ map_id + 'globalBox'] );
-  console.log("path loc: " );
-  console.log( loc );
-  change_location( map_id, loc, 0, "linear", window[ map_id + 'currentZoomLevel'] );
+  if( focus_layer ) {
+  	clear_bounds( map_id );
+  	update_view = true;     // force this
+  }
+
+  if( bbox !== undefined && update_view) {
+	  add_to_bounds( map_id, bbox, layer_id );
+	  var loc = center_location( window[ map_id + 'globalBox'] );
+	  change_location( map_id, loc, 0, "linear", window[ map_id + 'currentZoomLevel'] );
+  }
 }
 
 

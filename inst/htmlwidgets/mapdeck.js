@@ -215,6 +215,12 @@ function remove_from_bounds( map_id, bbox, layer_id ) {
 	window[ map_id + 'currentZoomLevel'] = get_zoom_level( map_id, window[ map_id + 'globalBox'] );
 }
 
+function clear_bounds( map_id ) {
+	window[ map_id + 'mapdeckBounds'] = [];
+	window[ map_id + 'globalBox'] = [];
+	window[ map_id + 'currentZoomLevel'] = 0;
+}
+
 function calculate_bounds( map_id, mapdeckBounds ) {
 
   var ymin, xmin, ymax, xmax, thisBox;
