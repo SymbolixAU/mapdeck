@@ -177,8 +177,17 @@ function findObjectElementByKey(array, key, value ) {
 }
 
 
-function add_to_bounds( map_id, bbox, layer_id ) {
+function center_location( bbox ) {
+	cLon = (bbox[0][0] + bbox[1][0]) / 2;
+	cLat = (bbox[1][1] + bbox[1][1]) / 2;
+	var location = [cLon, cLat];
+	console.log( "center location ");
+	console.log( location  );
+	return location;
+}
 
+
+function add_to_bounds( map_id, bbox, layer_id ) {
   var thisBox = {
   	layer_id: layer_id,
   	bbox: bbox

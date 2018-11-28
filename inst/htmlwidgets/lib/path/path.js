@@ -30,6 +30,12 @@ function add_path_geo( map_id, path_data, layer_id, auto_highlight, highlight_co
 
   add_to_bounds( map_id, bbox, layer_id );
   console.log( window[ map_id + 'currentZoomLevel'] );
+  // TODO( change location )
+  var loc = center_location( window[ map_id + 'globalBox'] );
+  console.log("path loc: " );
+  console.log( loc );
+  change_location( map_id, loc, 0, "linear", window[ map_id + 'currentZoomLevel'] );
+
 }
 
 

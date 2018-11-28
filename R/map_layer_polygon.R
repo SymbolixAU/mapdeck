@@ -141,6 +141,9 @@ add_polygon <- function(
 		l[["data"]] <- NULL
 	}
 
+	bbox <- attr(data$geometry, "bbox")
+	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
+	bbox <- jsonify::to_json( bbox )
 
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "polygon")
@@ -164,7 +167,10 @@ add_polygon <- function(
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 
-	invoke_method(map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]])
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, light_settings,
+		auto_highlight, highlight_colour, shape[["legend"]], bbox
+		)
 }
 
 

@@ -103,7 +103,8 @@ add_path <- function(
 	}
 
 	# print(l)
-	bbox <- attr(roads$geometry, "bbox")
+	bbox <- attr(data$geometry, "bbox")
+	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
 	bbox <- jsonify::to_json( bbox )
 
 	layer_id <- layerId(layer_id, "path")
