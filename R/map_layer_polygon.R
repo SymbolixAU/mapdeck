@@ -128,6 +128,8 @@ add_polygon <- function(
 	l <- resolve_data( data, l, c("POLYGON","MULTIPOLYGON") )
 
 	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
 
 	# data <- normaliseSfData(data, "POLYGON", multi = FALSE)
 	# polyline <- findEncodedColumn(data, polyline)

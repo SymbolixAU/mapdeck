@@ -41,7 +41,7 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
 }
 
 
-function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
+function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
 
 
   const polygonLayer = new PolygonLayer({
@@ -71,6 +71,17 @@ function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, a
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
+
+  if( focus_layer ) {
+  	clear_bounds( map_id );
+  	update_view = true;     // force this
+  }
+
+  if( bbox !== undefined && update_view) {
+	  add_to_bounds( map_id, bbox, layer_id );
+	  var loc = center_location( window[ map_id + 'globalBox'] );
+	  change_location( map_id, loc, 0, "linear", window[ map_id + 'currentZoomLevel'] );
+  }
 }
 
 function decode_polygons( polylines ) {
@@ -88,4 +99,6 @@ function decode_polygons( polylines ) {
 function clear_polygon( map_id, layer_id ) {
   clear_layer( map_id, 'polygon-'+layer_id );
   clear_legend( map_id, layer_id );
+  remove_from_bounds( map_id, layer_id );
+  update_location( map_id );
 }

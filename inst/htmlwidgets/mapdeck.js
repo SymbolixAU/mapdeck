@@ -193,7 +193,7 @@ function add_to_bounds( map_id, bbox, layer_id ) {
   	bbox: bbox
   };
 
-  var elem = findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'id', layer_id );
+  var elem = findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'layer_id', layer_id );
 	if ( elem != -1 ) {
 		window[ map_id + 'mapdeckBounds' ][elem] = thisBox;
 	} else {
@@ -201,18 +201,24 @@ function add_to_bounds( map_id, bbox, layer_id ) {
 	}
 	console.log( window[ map_id + 'mapdeckBounds'] );
 	calculate_bounds( map_id, window[ map_id + 'mapdeckBounds'] );
-	console.log( "global box: " ) ;
+
+	console.log( "add_to_bounds() global box: " ) ;
 	console.log( window[ map_id + 'globalBox'] );
+
 	window[ map_id + 'currentZoomLevel'] = get_zoom_level( window[ map_id + 'globalBox'] );
 }
 
-function remove_from_bounds( map_id, bbox, layer_id ) {
-	var elem = findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'id', layer_id );
+function remove_from_bounds( map_id, layer_id ) {
+	var elem = findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'layer_id', layer_id );
 	if ( elem != -1 ) {
 		window[ map_id + 'mapdeckBounds'].splice( elem, 1 );
 	}
 	calculate_bounds( map_id, window[ map_id + 'mapdeckBounds'] );
-	window[ map_id + 'currentZoomLevel'] = get_zoom_level( map_id, window[ map_id + 'globalBox'] );
+
+	console.log( "remove_from_bounds() global box: ");
+	console.log( window[ map_id + 'globalBox'] );
+
+	window[ map_id + 'currentZoomLevel'] = get_zoom_level( window[ map_id + 'globalBox'] );
 }
 
 function clear_bounds( map_id ) {
@@ -220,6 +226,17 @@ function clear_bounds( map_id ) {
 	window[ map_id + 'globalBox'] = [];
 	window[ map_id + 'currentZoomLevel'] = 0;
 }
+
+function update_location( map_id ) {
+	var loc = center_location( window[ map_id + 'globalBox' ] );
+	var zoom =  window[ map_id + 'currentZoomLevel' ];
+
+	console.log("updating location:");
+	console.log( loc );
+	console.log( zoom );
+  change_location( map_id, loc, 0, "linear", zoom );
+}
+
 
 function calculate_bounds( map_id, mapdeckBounds ) {
 
@@ -271,8 +288,8 @@ function get_zoom_level( globalBox ) {
   for ( i = 0; i < maxIndex; i++ ) {
     thisZoom = zoomLevel[i];
     nextZoom = zoomLevel[(i+1)];
-    console.log( "thisZoom: " + thisZoom );
-    console.log( "londiff: " + londiff );
+    //console.log( "thisZoom: " + thisZoom );
+    //console.log( "londiff: " + londiff );
     if ( thisZoom >= londiff && londiff > nextZoom ) {
       return i;
     }

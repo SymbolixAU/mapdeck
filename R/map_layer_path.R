@@ -100,16 +100,14 @@ add_path <- function(
 	l <- resolve_data( data, l, c("LINESTRING","MULTILINESTRING") )
 
 	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
 
-	# print(l)
-	# bbox <- attr(data$geometry, "bbox")
-	# bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
-	# bbox <- jsonify::to_json( bbox )
 	if( !is.null(l[["bbox"]] ) ) {
 		bbox <- l[["bbox"]]
 		l[["bbox"]] <- NULL

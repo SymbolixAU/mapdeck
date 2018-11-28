@@ -44,7 +44,8 @@ legend, bbox, update_view, focus_layer ) {
 
 
 
-function add_path_polyline( map_id, path_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_path_polyline( map_id, path_data, layer_id, auto_highlight, highlight_colour,
+legend, bbox, update_view, focus_layer ) {
 
   const pathLayer = new PathLayer({
     map_id: map_id,
@@ -67,11 +68,25 @@ function add_path_polyline( map_id, path_data, layer_id, auto_highlight, highlig
   if ( legend !== false ) {
       add_legend( map_id, layer_id, legend );
   }
+
+  if( focus_layer ) {
+  	clear_bounds( map_id );
+  	update_view = true;     // force this
+  }
+
+  if( bbox !== undefined && update_view) {
+	  add_to_bounds( map_id, bbox, layer_id );
+	  var loc = center_location( window[ map_id + 'globalBox'] );
+	  change_location( map_id, loc, 0, "linear", window[ map_id + 'currentZoomLevel'] );
+  }
+
 }
 
 function clear_path( map_id, layer_id ) {
   clear_layer( map_id, 'path-'+layer_id );
   clear_legend( map_id, layer_id );
+  remove_from_bounds( map_id, layer_id );
+  update_location( map_id );
 }
 
 

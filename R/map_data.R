@@ -1,5 +1,5 @@
 
-init_bbox <- function() return(  list(c(-180,90),c(180,90)) )
+init_bbox <- function() return(  list(c(-180,-90),c(180,90)) )
 
 data_types <- function( data ) vapply(data, function(x) class(x)[[1]], "")
 
