@@ -16,11 +16,8 @@ mapdeckGeojsonDependency <- function() {
 #' The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,
 #' lines and points
 #'
-#' @inheritParams add_arc
-#' @param line_colour hex value for all line colours. See details
-#' @param fill_colour hex value for all fill colours. See details
+#' @inheritParams add_polygon
 #' @param radius radius of points in meters. See details
-#' @param lineWidth width of lines in meters. See details
 #' @param elevation elevation of polygons. See details
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #'
@@ -91,8 +88,8 @@ add_geojson <- function(
 	stroke_width = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
-	radius = 1,
-	line_width = 1,
+	radius = NULL,
+	force = FALSE,            ## TODO( if TRUE, use has supplied GeoJSON & the fill_colour / stroke_colour are values in 'properties')
 	light_settings = list(),
 	elevation = 0,
 	palette = "viridis",
@@ -105,10 +102,28 @@ add_geojson <- function(
 	l <- list()
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_opacity"]] <- force( stroke_opacity )
+	l[["stroke_width"]] <- force( stroke_width )
 	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["radius"]] <- force( radius )
 
-	#l[["geometry"]] <- "geometry"   ## TODO
+	force <- force( force )
+
+	## if the user supplied any of the 'get' accessors, AND they supplied geoJSON, conver to SF.
+	if ( !force ) {
+		if ( any (
+			!is.null( l[["stroke_colour"]] ) |
+			!is.null( l[["stroke_opacity"]] ) |
+			!is.null( l[["stroke_width"]] ) |
+			!is.null( l[["fill_colour"]] ) |
+			!is.null( l[["fill_opacity"]] )
+		) ) {
+			if( inherits(data, "geojson") | inherits(data, "json") | inherits(data, "character")) {
+				message("converting geojson to sf")
+				data <- geojsonsf::geojson_sf( data )
+			}
+		}
+	}
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -124,13 +139,15 @@ add_geojson <- function(
 	## - it will have to be rendered as an sf object, though...
 
 	## if SF object, we can do all the colour stuff
+	## If the user supplies fill_colour / stroke_colour, convert to sf, then use as sf
+	## if none are supplied, the javascript function will look for `fillColor`, / `lineColor` etc.
 
 
 	# data <- normalisesGeojsonData( data )
 	## Parameter checks
 
 	checkNumeric( radius )
-	checkNumeric( line_width )
+	checkNumeric( stroke_width )
 	checkNumeric( elevation )
 	isHexColour( stroke_colour )
 	isHexColour( fill_colour )
@@ -151,14 +168,18 @@ add_geojson <- function(
 	} else if ( tp == "geojson" ) {
 		## leave as is?
 		jsfunc <- "add_geojson"
+		shape <- list()
+		shape[["data"]] <- data
 	}
+
+	# print( shape )
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
 
 	## TODO( invoke different methods for when using pure GeoJSON and when using sf)
-	invoke_method(map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour)
+	invoke_method(map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]])
 }
 
 

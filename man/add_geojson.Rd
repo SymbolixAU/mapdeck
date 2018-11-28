@@ -6,8 +6,8 @@
 \usage{
 add_geojson(map, data = get_map_data(map), layer_id = NULL,
   stroke_colour = NULL, stroke_opacity = NULL, stroke_width = NULL,
-  fill_colour = NULL, fill_opacity = NULL, radius = 1,
-  line_width = 1, light_settings = list(), elevation = 0,
+  fill_colour = NULL, fill_opacity = NULL, radius = NULL,
+  force = FALSE, light_settings = list(), elevation = 0,
   palette = "viridis", legend = F, legend_options = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF")
 }
@@ -20,9 +20,15 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
+\item{stroke_colour}{variable of \code{data} or hex colour for the stroke}
+
 \item{stroke_width}{width of the stroke}
 
-\item{fill_colour}{hex value for all fill colours. See details}
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour}
+
+\item{fill_opacity}{value between 1 and 255. Either a string specifying the
+column of \code{data} containing the fill opacity of each shape, or a value
+between 1 and 255 to be applied to all the shapes}
 
 \item{radius}{radius of points in meters. See details}
 
@@ -42,10 +48,6 @@ a named list indicating which colour attributes should be included in the legend
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
-
-\item{line_colour}{hex value for all line colours. See details}
-
-\item{lineWidth}{width of lines in meters. See details}
 }
 \description{
 The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,

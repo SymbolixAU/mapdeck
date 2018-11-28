@@ -1,3 +1,4 @@
+
 function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range ) {
 
 	const hexagonLayer = new deck.HexagonLayer({
