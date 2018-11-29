@@ -106,7 +106,7 @@ resolve_elevation_data.sfencoded <- function( data, l, elevation, sf_geom ) {
 	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom[1], multi = TRUE), ]
 
 	l[["data_type"]] <- "sfencoded"
-	l[["bbox"]] <- get_box()
+	l[["bbox"]] <- get_box( data, l )
 	l[["data"]] <- data
 	l <- resolve_elevation_data.sfencodedLite( data, l, elevation, sf_geom )
 	return( l )
