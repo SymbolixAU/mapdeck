@@ -1,4 +1,4 @@
-# mapdeck 0.1.006
+# mapdeck 0.2
 
 * `mapdeck()` argument order changed so `data` is first ( to work better with pipes ) 
 * `update_view` and `focus_layer` added to focus layers on data

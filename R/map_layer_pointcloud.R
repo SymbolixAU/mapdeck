@@ -160,8 +160,6 @@ add_pointcloud <- function(
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 
-	#print( shape )
-
 	invoke_method(
 		map, jsfunc, shape[["data"]], radius, layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer

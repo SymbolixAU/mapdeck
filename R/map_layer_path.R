@@ -119,7 +119,6 @@ add_path <- function(
 	map <- addDependency(map, mapdeckPathDependency())
 	data_types <- data_types( data )
 
-	#print( l )
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
@@ -132,9 +131,6 @@ add_path <- function(
 		geometry_column <- "polyline"
 		shape <- rcpp_path_polyline( data, data_types, l, geometry_column )
 	}
-
-	# print(shape[["legend"]])
-	# print( shape )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,

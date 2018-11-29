@@ -272,8 +272,6 @@ add_geojson <- function(
 		shape[["data"]] <- data
 	}
 
-	# print( shape )
-
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
