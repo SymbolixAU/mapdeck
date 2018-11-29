@@ -179,7 +179,9 @@ add_geojson <- function(
 	tooltip = NULL,
 	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
-	na_colour = "#808080FF"
+	na_colour = "#808080FF",
+	update_view = TRUE,
+	focus_layer = FALSE
 	) {
 
 	l <- list()
@@ -192,6 +194,11 @@ add_geojson <- function(
 	l[["radius"]] <- force( radius )
 	l[["tooltip"]] <- force( tooltip )
 	l[["na_colour"]] <- force(na_colour)
+
+
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
 
 	#evaluate <- force( evaluate )
 
@@ -221,6 +228,11 @@ add_geojson <- function(
 	if( !is.null(l[["data"]] ) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
+	}
+
+	if( !is.null( l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
 	## TODO( fill_colour, stroke_colour can refer to a .property. value? )
@@ -267,7 +279,10 @@ add_geojson <- function(
 	map <- addDependency(map, mapdeckGeojsonDependency())
 
 	## TODO( invoke different methods for when using pure GeoJSON and when using sf)
-	invoke_method(map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]])
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight,
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
+		)
 }
 
 

@@ -1,6 +1,6 @@
 
 
-function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
+function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
 
   geojson = geojson.features;
 
@@ -35,9 +35,11 @@ function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlig
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
+
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour ) {
+function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour, bbox, update_view, focus_layer ) {
 
   const geojsonLayer = new deck.GeoJsonLayer({
     map_id: map_id,

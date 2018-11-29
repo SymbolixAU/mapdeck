@@ -53,6 +53,10 @@ between [0, 255], where the 4th column represents the alpha.}
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
 The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects

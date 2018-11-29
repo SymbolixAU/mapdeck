@@ -10,7 +10,7 @@
 #' @param style the style of the map
 #' @param pitch the pitch angle of the map
 #' @param zoom zoom level of the map
-#' @param location vector of lon and lat coordinates (in that order)
+#' @param location unnamed vector of lon and lat coordinates (in that order)
 #'
 #' @export
 mapdeck <- function(

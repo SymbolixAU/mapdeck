@@ -56,6 +56,10 @@ a named list indicating which colour attributes should be included in the legend
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 between [0, 255], where the 4th column represents the alpha.}
 
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
 }

@@ -35,6 +35,10 @@ to conflict and not plot correctly}
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
 \item{colour_range}{palette of colours}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
 The Hexagon Layer renders a hexagon heatmap based on an array of points.
@@ -57,7 +61,7 @@ df <- read.csv(paste0(
 
 df <- df[!is.na(df$lng), ]
 
-mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_hexagon(
   data = df
   , lat = "lat"

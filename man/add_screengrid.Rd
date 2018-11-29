@@ -34,6 +34,10 @@ distinguish between shape layers of the same type. Layers with the same id are l
 to conflict and not plot correctly}
 
 \item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
 The Screen Grid Layer takes in an array of latitude and longitude coordinated points,

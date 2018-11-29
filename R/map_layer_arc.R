@@ -42,6 +42,8 @@ mapdeckArcDependency <- function() {
 #' @param legend either a logical indiciating if the legend(s) should be displayed, or
 #' a named list indicating which colour attributes should be included in the legend.
 #' @param legend_options A list of options for controlling the legend.
+#' @param update_view logical indicating if the map should update the bounds to include this layer
+#' @param focus_layer logical indicating if the map should update the bounds to only include this layer
 #'
 #' @section id:
 #'

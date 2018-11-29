@@ -26,7 +26,7 @@ mapdeck(token = get_access_token(api = "mapbox"), data = NULL,
 
 \item{zoom}{zoom level of the map}
 
-\item{location}{vector of lon and lat coordinates (in that order)}
+\item{location}{unnamed vector of lon and lat coordinates (in that order)}
 }
 \description{
 mapdeck
