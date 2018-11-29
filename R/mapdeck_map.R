@@ -10,6 +10,7 @@
 #' @param style the style of the map
 #' @param pitch the pitch angle of the map
 #' @param zoom zoom level of the map
+#' @param bearing bearing of the map between 0 and 360
 #' @param location unnamed vector of lon and lat coordinates (in that order)
 #'
 #' @export
@@ -22,16 +23,18 @@ mapdeck <- function(
 	style = 'mapbox://styles/mapbox/streets-v9',
 	pitch = 0,
 	zoom = 0,
+	bearing = 0,
 	location = c(0, 0)
 	) {
 
   # forward options using x
   x = list(
-    access_token = token
-    , style = style
-    , pitch = pitch
-    , zoom = zoom
-    , location = location
+    access_token = force( token )
+    , style = force( style )
+    , pitch = force( pitch )
+    , zoom = force( zoom )
+    , location = force( location )
+    , bearing = force( bearing )
   )
 
   # create widget
@@ -134,14 +137,16 @@ mapdeck_update <- function(
 #' @export
 mapdeck_view <- function(
 	map,
-	location,
-	zoom = 6,
-	duration = 0,
+	location = NULL,
+	zoom = NULL,
+	pitch = NULL,
+	bearing = NULL,
+	duration = NULL,
 	transition = c("linear", "fly")
 	) {
 
 	transition <- match.arg(transition)
-	invoke_method(map, 'change_location', location, duration, transition, zoom)
+	invoke_method(map, 'change_location', location, zoom, pitch, bearing, duration, transition)
 }
 
 # Get Map Data

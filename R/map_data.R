@@ -85,6 +85,7 @@ resolve_elevation_data.data.frame <- function( data, l, elevation, sf_geom ) {
 		  stop("unsupported data type")
 
 		l[["data_type"]] <- "df"
+		l[["bbox"]] <- get_box( data, l )
 	}
 
 	l[["data"]] <- data
@@ -219,7 +220,6 @@ resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
 resolve_data.data.frame <- function( data, l, sf_geom ) {
 
 	## data.frame will only really work for points, with a lon & lat column
-	## for speed, need to turn to GeoJSON?
 	if ( !is.null( l[["polyline"]] ) ) {
 		## the user supplied a polyline in a data.frame, so we need to allow this through
 		l[["data_type"]] <- "sfencoded"

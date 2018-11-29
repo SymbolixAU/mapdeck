@@ -39,7 +39,8 @@ HTMLWidgets.widget({
         	longitude: x.location[0],
         	latitude: x.location[1],
         	zoom: x.zoom,
-        	pitch: x.pitch
+        	pitch: x.pitch,
+        	bearing: x.bearing
         };
 
         const deckgl = new deck.DeckGL({
@@ -82,34 +83,40 @@ HTMLWidgets.widget({
   }
 });
 
-function change_location( map_id, location, duration, transition, zoom ) {
+function change_location( map_id, location, zoom, pitch, bearing, duration, transition ) {
 
-  console.log( "changing location to :" );
-  console.log( "location: " + location );
-  console.log( "zoom: " + zoom );
+/*
+  console.log( location );
+  console.log( zoom );
+  console.log( pitch );
+  console.log( bearing );
+  console.log( duration );
+*/
+  var currentLon = location === null ? window[ map_id + 'map'].viewState.longitude : location[0];
+  var currentLat = location === null ? window[ map_id + 'map'].viewState.latitude : location[1];
+  var currentPitch = pitch === null ? window[ map_id + 'map'].viewState.pitch : pitch;
+  var currentBearing = bearing === null ? window[ map_id + 'map' ].viewState.bearing : bearing;
+  var currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
 
-  console.log( "current location settings" );
-  console.log( window[map_id + 'map'] );
-
-  var currentPitch = window[ map_id + 'map'].viewState.pitch;
-  var currentBearing = window[ map_id + 'map' ].viewState.bearing;
+/*
+  console.log( currentLon );
+  console.log( currentLat );
   console.log( currentPitch );
+  console.log( currentBearing );
+  console.log( currentZoom );
+*/
 
 	window[map_id + 'map'].setProps({
     viewState: {
-      longitude: location[0],
-      latitude: location[1],
-      zoom: zoom,
-      pitch: currentPitch || 0,
-      bearing: currentBearing || 0,
+      longitude: currentLon,
+      latitude: currentLat,
+      zoom: currentZoom,
+      pitch: currentPitch,
+      bearing: currentBearing,
       transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
       transitionDuration: duration
     },
   });
-
-  console.log("updatinb viewstate");
-  console.log( window[ map_id + 'map' ] );
-
 }
 
 // following: https://codepen.io/vis-gl/pen/pLLQpN
@@ -215,7 +222,7 @@ function layer_view(map_id, layer_id, focus_layer, bbox, update_view ) {
   if( bbox !== undefined && update_view) {
 	  add_to_bounds( map_id, bbox, layer_id );
 	  var loc = center_location( window[ map_id + 'globalBox'] );
-	  change_location( map_id, loc, 0, "linear", window[ map_id + 'currentZoomLevel'] );
+	  change_location( map_id, loc, window[ map_id + 'currentZoomLevel'], null, null, 0, "linear" );
   }
 }
 
@@ -280,10 +287,10 @@ function update_location( map_id ) {
 	var loc = center_location( window[ map_id + 'globalBox' ] );
 	var zoom =  window[ map_id + 'currentZoomLevel' ];
 
-	console.log("updating location:");
-	console.log( loc );
-	console.log( zoom );
-  change_location( map_id, loc, 0, "linear", zoom );
+	//console.log("updating location:");
+	//console.log( loc );
+	//console.log( zoom );
+  change_location( map_id, loc, zoom, null, null, 0, "linear" );
 }
 
 

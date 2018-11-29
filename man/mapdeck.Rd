@@ -7,7 +7,7 @@
 mapdeck(token = get_access_token(api = "mapbox"), data = NULL,
   width = NULL, height = NULL, padding = 0,
   style = "mapbox://styles/mapbox/streets-v9", pitch = 0, zoom = 0,
-  location = c(0, 0))
+  bearing = 0, location = c(0, 0))
 }
 \arguments{
 \item{token}{Mapbox Acess token. Use \code{set_token()} to set a global token}
@@ -25,6 +25,8 @@ mapdeck(token = get_access_token(api = "mapbox"), data = NULL,
 \item{pitch}{the pitch angle of the map}
 
 \item{zoom}{zoom level of the map}
+
+\item{bearing}{bearing of the map between 0 and 360}
 
 \item{location}{unnamed vector of lon and lat coordinates (in that order)}
 }

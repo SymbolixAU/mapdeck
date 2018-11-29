@@ -1,5 +1,9 @@
 # mapdeck 0.1.006
 
+* `bearing` argument to `mapdeck()`
+* `add_geojson()` fully supported
+* `add_sf()` convenience function
+* Z attributes supported
 * `MULTI`-geometry sf objects supported 
 * can use variables in place of string arguments
 * `highlight_colour` argument

@@ -127,8 +127,8 @@ add_pointcloud <- function(
 		l[["bbox"]] <- NULL
 	}
 
-	checkHexAlpha(highlight_colour)
-	layer_id <- layerId(layer_id, "pointcloud")
+	checkHexAlpha( highlight_colour )
+	layer_id <- layerId( layer_id, "pointcloud" )
 	checkNumeric( radius )
 
 	map <- addDependency( map, mapdeckPointcloudDependency() )
