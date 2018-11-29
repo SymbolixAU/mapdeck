@@ -1,4 +1,3 @@
-#
 # key <- read.dcf("~/Documents/.googleAPI", fields = "MAPBOX")
 # set_token( key )
 #
@@ -6,6 +5,54 @@
 # 	add_geojson(
 # 		data = roads[1:3, ]
 # 	)
+
+# library(sf)
+# nc <- sf::st_read( system.file("shape/nc.shp", package = "sf"))
+#
+# library(shiny)
+# library(shinydashboard)
+#
+# ui <- dashboardPage(
+# 	dashboardHeader()
+# 	, dashboardSidebar()
+# 	, dashboardBody(
+# 		box(
+# 			width = 8
+# 			, mapdeckOutput(
+# 				outputId = "map"
+# 			)
+# 		)
+# 		, sliderInput(
+# 			inputId = "airports"
+# 			, label = "airports"
+# 			, min = 1
+# 			, max = 178
+# 			, step = 1
+# 			, value = 178
+# 		)
+# 	)
+# )
+#
+# server <- function( input, output ) {
+# 	output$map <- renderMapdeck({
+# 		mapdeck()
+# 	})
+#
+# 	observeEvent({input$airports},{
+# 		mapdeck_update(
+# 			map_id = "map"
+# 		) %>%
+# 			add_arc(
+# 				data = sf_flights[1:input$airports, ]
+# 				, origin = "geometry"
+# 				, destination = "geometry.1"
+# 				, stroke_from = "airport1"
+# 				, stroke_to = "airport2"
+# 			)
+# 	})
+# }
+#
+# shinyApp( ui, server )
 
 
 #

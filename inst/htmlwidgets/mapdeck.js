@@ -83,42 +83,6 @@ HTMLWidgets.widget({
   }
 });
 
-function change_location( map_id, location, zoom, pitch, bearing, duration, transition ) {
-
-/*
-  console.log( location );
-  console.log( zoom );
-  console.log( pitch );
-  console.log( bearing );
-  console.log( duration );
-*/
-  var currentLon = location === null ? window[ map_id + 'map'].viewState.longitude : location[0];
-  var currentLat = location === null ? window[ map_id + 'map'].viewState.latitude : location[1];
-  var currentPitch = pitch === null ? window[ map_id + 'map'].viewState.pitch : pitch;
-  var currentBearing = bearing === null ? window[ map_id + 'map' ].viewState.bearing : bearing;
-  var currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
-
-/*
-  console.log( currentLon );
-  console.log( currentLat );
-  console.log( currentPitch );
-  console.log( currentBearing );
-  console.log( currentZoom );
-*/
-
-	window[map_id + 'map'].setProps({
-    viewState: {
-      longitude: currentLon,
-      latitude: currentLat,
-      zoom: currentZoom,
-      pitch: currentPitch,
-      bearing: currentBearing,
-      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
-      transitionDuration: duration
-    },
-  });
-}
-
 // following: https://codepen.io/vis-gl/pen/pLLQpN
 // and: https://beta.observablehq.com/@pessimistress/deck-gl-geojsonlayer-example
 function updateTooltip({x, y, object, layer, index}) {
@@ -213,7 +177,62 @@ function findObjectElementByKey(array, key, value ) {
     return -1;
 }
 
-function layer_view(map_id, layer_id, focus_layer, bbox, update_view ) {
+function change_location( map_id, location, zoom, pitch, bearing, duration, transition ) {
+
+  console.log( window[ map_id + 'map'] );
+  console.log( window[ map_id + 'map'].viewState );
+
+  console.log( "location: " + location );
+  console.log( "zoom: " + zoom );
+  console.log( "pitch: " + pitch + ", " + window[ map_id + 'map'].viewState.pitch );
+  console.log( "bearing: " + bearing + ", " + window[ map_id + 'map' ].viewState.bearing );
+  console.log( "duration: " + duration );
+
+/*
+  var currentLon = location === null ? window[ map_id + 'map'].viewState["default-view"].longitude : location[0];
+  var currentLat = location === null ? window[ map_id + 'map'].viewState["default-view"].latitude : location[1];
+  var currentPitch = pitch === null ? window[ map_id + 'map'].viewState["default-view"].pitch : pitch;
+  var currentBearing = bearing === null ? window[ map_id + 'map' ].viewState["default-view"].bearing : bearing;
+  var currentZoom = zoom === null ? window[ map_id + 'map'].viewState["default-view"].zoom : zoom;
+*/
+
+  var currentLon, currentLat, currentPitch, currentBearing, currentZoom;
+
+  if ( window[ map_id + 'map'].viewState["default-view"] !== undefined ) {
+  	currentLon = location === null ? window[ map_id + 'map'].viewState["default-view"].longitude : location[0];
+  	currentLat = location === null ? window[ map_id + 'map'].viewState["default-view"].latitude : location[1];
+    currentPitch = pitch === null ? window[ map_id + 'map'].viewState["default-view"].pitch : pitch;
+    currentBearing = bearing === null ? window[ map_id + 'map' ].viewState["default-view"].bearing : bearing;
+    currentZoom = zoom === null ? window[ map_id + 'map'].viewState["default-view"].zoom : zoom;
+  } else {
+  	currentLon = location === null ? window[ map_id + 'map'].viewState.longitude : location[0];
+  	currentLat = location === null ? window[ map_id + 'map'].viewState.latitude : location[1];
+    currentPitch = pitch === null ? window[ map_id + 'map'].viewState.pitch : pitch;
+    currentBearing = bearing === null ? window[ map_id + 'map' ].viewState.bearing : bearing;
+    currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
+  }
+/*
+  console.log( currentLon );
+  console.log( currentLat );
+  console.log( currentPitch );
+  console.log( currentBearing );
+  console.log( currentZoom );
+*/
+	window[map_id + 'map'].setProps({
+    viewState: {
+      longitude: currentLon,
+      latitude: currentLat,
+      zoom: currentZoom,
+      pitch: currentPitch,
+      bearing: currentBearing,
+      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
+      transitionDuration: duration
+    },
+  });
+}
+
+
+function layer_view( map_id, layer_id, focus_layer, bbox, update_view ) {
 	if( focus_layer ) {
   	clear_bounds( map_id );
   	update_view = true;     // force this
@@ -237,8 +256,8 @@ function center_location( bbox ) {
 	cLon = (bbox[0][0] + bbox[1][0]) / 2;
 	cLat = (bbox[0][1] + bbox[1][1]) / 2;
 	var location = [cLon, cLat];
-	console.log( "center location ");
-	console.log( location  );
+	//console.log( "center location ");
+	//console.log( location  );
 	return location;
 }
 
@@ -255,11 +274,11 @@ function add_to_bounds( map_id, bbox, layer_id ) {
 	} else {
 		window[ map_id + 'mapdeckBounds'].push( thisBox );
 	}
-	console.log( window[ map_id + 'mapdeckBounds'] );
+	//console.log( window[ map_id + 'mapdeckBounds'] );
 	calculate_bounds( map_id, window[ map_id + 'mapdeckBounds'] );
 
-	console.log( "add_to_bounds() global box: " ) ;
-	console.log( window[ map_id + 'globalBox'] );
+	//console.log( "add_to_bounds() global box: " ) ;
+	//console.log( window[ map_id + 'globalBox'] );
 
 	window[ map_id + 'currentZoomLevel'] = get_zoom_level( window[ map_id + 'globalBox'] );
 }
@@ -271,8 +290,8 @@ function remove_from_bounds( map_id, layer_id ) {
 	}
 	calculate_bounds( map_id, window[ map_id + 'mapdeckBounds'] );
 
-	console.log( "remove_from_bounds() global box: ");
-	console.log( window[ map_id + 'globalBox'] );
+	//console.log( "remove_from_bounds() global box: ");
+	//console.log( window[ map_id + 'globalBox'] );
 
 	window[ map_id + 'currentZoomLevel'] = get_zoom_level( window[ map_id + 'globalBox'] );
 }
@@ -287,9 +306,9 @@ function update_location( map_id ) {
 	var loc = center_location( window[ map_id + 'globalBox' ] );
 	var zoom =  window[ map_id + 'currentZoomLevel' ];
 
-	//console.log("updating location:");
-	//console.log( loc );
-	//console.log( zoom );
+	console.log("updating location:");
+	console.log( loc );
+	console.log( zoom );
   change_location( map_id, loc, zoom, null, null, 0, "linear" );
 }
 
@@ -319,7 +338,7 @@ function lon_diff( globalBox ) {
   xmin = globalBox[0][0];
   xmax = globalBox[1][0];
   xdiff = Math.abs( xmax - xmin );
-  console.log( "londiff: " + xdiff );
+  //console.log( "londiff: " + xdiff );
   //return get_zoom_level( xdiff );
   return xdiff;
 }
@@ -327,7 +346,7 @@ function lon_diff( globalBox ) {
 function get_zoom_level( globalBox ) {
 
   var londiff = lon_diff( globalBox );
-  console.log( "londiff: " + londiff );
+  //console.log( "londiff: " + londiff );
 
   var zoomLevel = [
     360, 180, 90, 45, 22.5, 11.25, 5.65,2.813, 1.406,
@@ -350,7 +369,7 @@ function get_zoom_level( globalBox ) {
       return i;
     }
   }
-  console.log( "zoom level: " + i );
+  //console.log( "zoom level: " + i );
   return i;
 }
 
