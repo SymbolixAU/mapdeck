@@ -16,7 +16,7 @@ resolve_od_data.sf <- function( data, l, origin, destination ) {
 		stop("origin and destination columns required")
 	}
 	l[["data_type"]] <- "sf"
-	l[["bbox"]] <- get_sf_box( data, l )
+	l[["bbox"]] <- get_box( data, l )
 	return( l )
 }
 
@@ -105,6 +105,7 @@ resolve_elevation_data.sfencoded <- function( data, l, elevation, sf_geom ) {
 	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom[1], multi = TRUE), ]
 
 	l[["data_type"]] <- "sfencoded"
+	l[["bbox"]] <- get_box()
 	l[["data"]] <- data
 	l <- resolve_elevation_data.sfencodedLite( data, l, elevation, sf_geom )
 	return( l )
@@ -148,14 +149,35 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
 	}
 
-	l[["bbox"]] <- get_sf_box( data, l )
+	l[["bbox"]] <- get_box( data, l )
 	l[["data_type"]] <- "sf"
 	return(l)
 }
 
-get_sf_box <- function( data, l ) {
+get_box <- function( data, l ) UseMethod("get_box")
+
+#' @export
+get_box.sfencoded <- function( data, l ) {
+	bbox <- attr( enc, "sfAttributes")[["bbox"]]
+	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
+	return( jsonify::to_json( bbox ) )
+}
+
+#' @export
+get_box.sf <- function( data, l ) {
 	bbox <- attr(data$geometry, "bbox")
 	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
+	return( jsonify::to_json( bbox ) )
+}
+
+#' @export
+get_box.data.frame <- function( data, l ) {
+
+	lat <- data[, l[["lat"]] ]
+	lon <- data[, l[["lon"]] ]
+	xmin <- min(lon); xmax <- max(lon)
+	ymin <- min(lat); ymax <- max(lat)
+	bbox <- list( c(xmin, ymin), c(xmax, ymax) )
 	return( jsonify::to_json( bbox ) )
 }
 
@@ -165,6 +187,7 @@ resolve_data.sfencoded <- function( data, l, sf_geom ) {
 
 	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom[1], multi = TRUE), ]
 
+	l[["bbox"]] <- get_box( data, l )
 	l[["data_type"]] <- "sfencoded"
 	l[["data"]] <- data
 	l <- resolve_data.sfencodedLite( data, l, sf_geom )
@@ -204,12 +227,14 @@ resolve_data.data.frame <- function( data, l, sf_geom ) {
 		if ( sf_geom[1] != "POINT" )
 			stop("unsupported data type")
 
+		l[["bbox"]] <- get_box( data, l )
 		l[["data_type"]] <- "df"
 	}
 	l[["data"]] <- data
 	return( l )
 }
 
+#' @export
 resolve_data.default <- function( data ) stop("This type of data is not supported")
 
 
@@ -220,7 +245,7 @@ resolve_geojson_data.sf <- function( data, l ) {
 	geom <- attr(data, "sf_column")
 	l[["geometry"]] <- geom
 	l[["data_type"]] <- "sf"
-	l[["bbox"]] <- get_sf_box( data, l )
+	l[["bbox"]] <- get_box( data, l )
 	return( l )
 }
 
