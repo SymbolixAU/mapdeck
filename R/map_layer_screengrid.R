@@ -34,6 +34,7 @@ mapdeckScreengridDependency <- function() {
 #' 'examples/3d-heatmap/heatmap-data.csv'
 #' ))
 #'
+#' df <- df[ !is.na(df$lng), ]
 #' df$weight <- sample(1:10, size = nrow(df), replace = T)
 #'
 #' mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%

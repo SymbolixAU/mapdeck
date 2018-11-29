@@ -98,7 +98,7 @@ flights <- read.csv(url)
 flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
   add_line(
     data = flights
     , layer_id = "line_layer"

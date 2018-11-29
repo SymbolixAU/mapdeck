@@ -33,7 +33,7 @@ mapdeckScatterplotDependency <- function() {
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
 #'
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' mapdeck( token = key, style = style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = capitals
 #'   , lat = "lat"
@@ -51,7 +51,7 @@ mapdeckScatterplotDependency <- function() {
 #'
 #' df <- df[ !is.na(df$lng), ]
 #'
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = df
 #'   , lat = "lat"
@@ -63,7 +63,7 @@ mapdeckScatterplotDependency <- function() {
 #' library(sf)
 #' sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
 #'
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = sf
 #'   , radius = 100000

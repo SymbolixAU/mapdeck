@@ -88,13 +88,20 @@ function change_location( map_id, location, duration, transition, zoom ) {
   console.log( "location: " + location );
   console.log( "zoom: " + zoom );
 
+  console.log( "current location settings" );
+  console.log( window[map_id + 'map'] );
+
+  var currentPitch = window[ map_id + 'map'].viewState.pitch;
+  var currentBearing = window[ map_id + 'map' ].viewState.bearing;
+  console.log( currentPitch );
+
 	window[map_id + 'map'].setProps({
     viewState: {
       longitude: location[0],
       latitude: location[1],
       zoom: zoom,
-      pitch: 0,
-      bearing: 0,
+      pitch: currentPitch || 0,
+      bearing: currentBearing || 0,
       transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
       transitionDuration: duration
     },
@@ -221,7 +228,7 @@ function layer_clear( map_id, layer_id, layer ) {
 
 function center_location( bbox ) {
 	cLon = (bbox[0][0] + bbox[1][0]) / 2;
-	cLat = (bbox[1][1] + bbox[1][1]) / 2;
+	cLat = (bbox[0][1] + bbox[1][1]) / 2;
 	var location = [cLon, cLat];
 	console.log( "center location ");
 	console.log( location  );
@@ -317,7 +324,7 @@ function get_zoom_level( globalBox ) {
 
   var zoomLevel = [
     360, 180, 90, 45, 22.5, 11.25, 5.65,2.813, 1.406,
-    //0.703, 0.352, 0.176, 0.088, 0.044, 0.022, 0.011, 0.005
+    0.703, 0.352, 0.176, 0.088, 0.044, 0.022, 0.011, 0.005
   ];
 
   if ( londiff >= zoomLevel[0] ) {

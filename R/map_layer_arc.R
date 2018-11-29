@@ -192,8 +192,6 @@ add_arc <- function(
 		l[["bbox"]] <- NULL
 	}
 
-	print( bbox )
-
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 	jsfunc <- "add_arc_geo"

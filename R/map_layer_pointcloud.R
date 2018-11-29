@@ -31,7 +31,7 @@ mapdeckPointcloudDependency <- function() {
 #' df <- capitals
 #' df$z <- sample(10000:10000000, size = nrow(df))
 #'
-#' mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
+#' mapdeck(token = key, style = mapdeck_style("dark")) %>%
 #' add_pointcloud(
 #'   data = df
 #'   , lon = 'lon'
@@ -40,18 +40,20 @@ mapdeckPointcloudDependency <- function() {
 #'   , layer_id = 'point'
 #'   , fill_colour = "country"
 #'   , tooltip = "country"
+#'   , update_view = FALSE
 #' )
 #'
 #' ## as an sf object wtih a Z attribute
 #' library(sf)
 #' sf <- sf::st_as_sf( df , coords = c("lon","lat","z"))
 #'
-#' mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
+#' mapdeck(token = key, style = mapdeck_style("dark")) %>%
 #' add_pointcloud(
 #'   data = sf
 #'   , layer_id = 'point'
 #'   , fill_colour = "country"
 #'   , tooltip = "country"
+#'   , update_view = FALSE
 #' )
 #'
 #' }

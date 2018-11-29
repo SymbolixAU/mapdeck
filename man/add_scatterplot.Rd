@@ -91,7 +91,7 @@ you are clicking on
 ## You need a valid access token from Mapbox
 key <- 'abc'
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_scatterplot(
   data = capitals
   , lat = "lat"
@@ -109,7 +109,7 @@ df <- read.csv(paste0(
 
 df <- df[ !is.na(df$lng), ]
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_scatterplot(
   data = df
   , lat = "lat"
@@ -121,7 +121,7 @@ add_scatterplot(
 library(sf)
 sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_scatterplot(
   data = sf
   , radius = 100000
