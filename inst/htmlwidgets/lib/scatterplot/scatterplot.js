@@ -1,6 +1,6 @@
 
 
-function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer) {
 
   const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
@@ -25,9 +25,10 @@ function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, hi
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
   const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
@@ -48,10 +49,5 @@ function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highligh
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
-}
-
-
-function clear_scatterplot( map_id, layer_id ) {
-  clear_layer( map_id, 'scatterplot-'+layer_id );
-  clear_legend( map_id, layer_id );
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }

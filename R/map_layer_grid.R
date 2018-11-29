@@ -83,7 +83,9 @@ add_grid <- function(
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	layer_id = NULL,
-	id = NULL
+	id = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	# l <- as.list( match.call( expand.dots = F) )
@@ -102,13 +104,21 @@ add_grid <- function(
 
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
 
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
+	}
+
 	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
 	checkNumeric(elevation_scale)
 	checkNumeric(cell_size)
 	checkHex(colour_range)
@@ -140,7 +150,7 @@ add_grid <- function(
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, cell_size,
 		jsonify::to_json(extruded, unbox = TRUE), elevation_scale,
-		colour_range, auto_highlight, highlight_colour
+		colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer
 		)
 }
 
@@ -149,5 +159,5 @@ add_grid <- function(
 #' @export
 clear_grid <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "grid")
-	invoke_method(map, "clear_grid", layer_id )
+	invoke_method(map, "layer_clear", layer_id, "grid" )
 }

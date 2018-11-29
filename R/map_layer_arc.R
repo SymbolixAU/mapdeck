@@ -145,7 +145,9 @@ add_arc <- function(
 	legend = F,
 	legend_options = NULL,
 	palette = "viridis",
-	na_colour = "#808080FF"
+	na_colour = "#808080FF",
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	# l <- as.list( match.call( expand.dots = F) )
@@ -173,6 +175,10 @@ add_arc <- function(
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_od_data( data, l, origin, destination )
 
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
 	layer_id <- layerId(layer_id, "arc")
 	checkHexAlpha(highlight_colour)
 
@@ -180,6 +186,13 @@ add_arc <- function(
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
+
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
+	}
+
+	print( bbox )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
@@ -200,7 +213,10 @@ add_arc <- function(
   	jsfunc <- "add_arc_polyline"
   }
 
-	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
+		)
 }
 
 #' Clear Arc
@@ -212,5 +228,5 @@ add_arc <- function(
 #' @export
 clear_arc <- function( map, layer_id = NULL ) {
 	layer_id <- layerId(layer_id, "arc")
-	invoke_method(map, "clear_arc", layer_id )
+	invoke_method(map, "layer_clear", layer_id, "arc" )
 }

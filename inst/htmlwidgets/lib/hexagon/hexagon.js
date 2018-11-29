@@ -1,5 +1,5 @@
 
-function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range ) {
+function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer ) {
 
 	const hexagonLayer = new deck.HexagonLayer({
         map_id: map_id,
@@ -18,9 +18,10 @@ function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scal
         onHover: updateTooltip
 	});
 	update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
+	layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range ) {
+function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer ) {
 
 	const hexagonLayer = new deck.HexagonLayer({
         map_id: map_id,
@@ -39,9 +40,5 @@ function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation
         onHover: updateTooltip
 	});
 	update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
-}
-
-function clear_hexagon( map_id, layer_id ) {
-  clear_layer( map_id, 'hexagon-'+layer_id );
-  clear_legend( map_id, layer_id );
+	layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }

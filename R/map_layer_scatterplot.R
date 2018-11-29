@@ -96,7 +96,9 @@ add_scatterplot <- function(
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
-	legend_options = NULL
+	legend_options = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	# l <- as.list( match.call() )
@@ -122,9 +124,18 @@ add_scatterplot <- function(
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_data( data, l, c( "POINT", "MULTIPOINT") )
 
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
+	}
+
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
 	layer_id <- layerId(layer_id, "scatterplot")
@@ -149,7 +160,10 @@ add_scatterplot <- function(
 		shape <- rcpp_scatterplot_polyline( data, data_types, l, geometry_column )
 		jsfunc <- "add_scatterplot_polyline"
 	}
-	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
+		shape[["legend"]], bbox, update_view, focus_layer
+		)
 }
 
 resolve_args <- function( l, layer_args ) {
@@ -175,5 +189,5 @@ scatterplot_data_args <- function() {
 #' @export
 clear_scatterplot <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "scatterplot")
-	invoke_method(map, "clear_scatterplot", layer_id )
+	invoke_method(map, "layer_clear", layer_id, "scatterplot" )
 }

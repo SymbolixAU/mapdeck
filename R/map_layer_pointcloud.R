@@ -80,7 +80,9 @@ add_pointcloud <- function(
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
-	legend_options = NULL
+	legend_options = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	# message("Using development version. Please check plots carefully")
@@ -109,9 +111,18 @@ add_pointcloud <- function(
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_elevation_data( data, l, elevation, c("POINT","MULTIPOINT") )
 
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
+	}
+
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
 	checkHexAlpha(highlight_colour)
@@ -127,12 +138,6 @@ add_pointcloud <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-
-		# print(data)
-		# print( data_types )
-		# print( l )
-		# print( geometry_column )
-
 		shape <- rcpp_pointcloud_geojson( data, data_types, l, geometry_column )
 	} else if ( tp == "df" ) {
 
@@ -157,7 +162,7 @@ add_pointcloud <- function(
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], radius, layer_id, light_settings,
-		auto_highlight, highlight_colour, shape[["legend"]]
+		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
 		)
 }
 
@@ -166,6 +171,6 @@ add_pointcloud <- function(
 #' @export
 clear_pointcloud <- function( map, layer_id = NULL) {
 	layer_id <- layerId( layer_id, "pointcloud" )
-	invoke_method(map, "clear_pointcloud", layer_id )
+	invoke_method(map, "layer_clear", layer_id, "pointcloud" )
 }
 

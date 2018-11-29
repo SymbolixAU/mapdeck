@@ -51,6 +51,21 @@ HTMLWidgets.widget({
 			      //onLayerHover: setTooltip
 			  });
 
+        // https://github.com/uber/deck.gl/issues/2114
+        /*
+			  const viewPort = WebMercartorViewport({
+			  	width: 800,
+				  height: 600,
+				  longitude: -122.45,
+				  latitude: 37.78,
+				  zoom: 12,
+				  pitch: 60,
+				  bearing: 30
+			  });
+			  console.log( viewPort );
+			  */
+
+
 			    window[el.id + 'map'] = deckgl;
 
 			    //console.log( window[el.id + 'map']);
@@ -69,6 +84,10 @@ HTMLWidgets.widget({
 
 function change_location( map_id, location, duration, transition, zoom ) {
 
+  console.log( "changing location to :" );
+  console.log( "location: " + location );
+  console.log( "zoom: " + zoom );
+
 	window[map_id + 'map'].setProps({
     viewState: {
       longitude: location[0],
@@ -80,6 +99,10 @@ function change_location( map_id, location, duration, transition, zoom ) {
       transitionDuration: duration
     },
   });
+
+  console.log("updatinb viewstate");
+  console.log( window[ map_id + 'map' ] );
+
 }
 
 // following: https://codepen.io/vis-gl/pen/pLLQpN
@@ -176,6 +199,25 @@ function findObjectElementByKey(array, key, value ) {
     return -1;
 }
 
+function layer_view(map_id, layer_id, focus_layer, bbox, update_view ) {
+	if( focus_layer ) {
+  	clear_bounds( map_id );
+  	update_view = true;     // force this
+  }
+
+  if( bbox !== undefined && update_view) {
+	  add_to_bounds( map_id, bbox, layer_id );
+	  var loc = center_location( window[ map_id + 'globalBox'] );
+	  change_location( map_id, loc, 0, "linear", window[ map_id + 'currentZoomLevel'] );
+  }
+}
+
+function layer_clear( map_id, layer_id, layer ) {
+	clear_layer( map_id, layer+'-'+layer_id );
+  clear_legend( map_id, layer_id );
+  remove_from_bounds( map_id, layer_id );
+  update_location( map_id );
+}
 
 function center_location( bbox ) {
 	cLon = (bbox[0][0] + bbox[1][0]) / 2;
@@ -275,7 +317,7 @@ function get_zoom_level( globalBox ) {
 
   var zoomLevel = [
     360, 180, 90, 45, 22.5, 11.25, 5.65,2.813, 1.406,
-    0.703, 0.352, 0.176, 0.088, 0.044, 0.022, 0.011, 0.005
+    //0.703, 0.352, 0.176, 0.088, 0.044, 0.022, 0.011, 0.005
   ];
 
   if ( londiff >= zoomLevel[0] ) {

@@ -16,6 +16,7 @@ resolve_od_data.sf <- function( data, l, origin, destination ) {
 		stop("origin and destination columns required")
 	}
 	l[["data_type"]] <- "sf"
+	l[["bbox"]] <- get_sf_box( data, l )
 	return( l )
 }
 
@@ -147,12 +148,15 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
 	}
 
-	bbox <- attr(data$geometry, "bbox")
-	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
-	l[["bbox"]] <- jsonify::to_json( bbox )
-
+	l[["bbox"]] <- get_sf_box( data, l )
 	l[["data_type"]] <- "sf"
 	return(l)
+}
+
+get_sf_box <- function( data, l ) {
+	bbox <- attr(data$geometry, "bbox")
+	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
+	return( jsonify::to_json( bbox ) )
 }
 
 ## TODO( needs to call the JS function which decodes the polyline )
@@ -216,6 +220,7 @@ resolve_geojson_data.sf <- function( data, l ) {
 	geom <- attr(data, "sf_column")
 	l[["geometry"]] <- geom
 	l[["data_type"]] <- "sf"
+	l[["bbox"]] <- get_sf_box( data, l )
 	return( l )
 }
 

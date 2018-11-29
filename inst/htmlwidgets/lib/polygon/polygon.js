@@ -28,16 +28,7 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     add_legend(map_id, layer_id, legend);
   }
 
-  if( focus_layer ) {
-  	clear_bounds( map_id );
-  	update_view = true;     // force this
-  }
-
-  if( bbox !== undefined && update_view) {
-	  add_to_bounds( map_id, bbox, layer_id );
-	  var loc = center_location( window[ map_id + 'globalBox'] );
-	  change_location( map_id, loc, 0, "linear", window[ map_id + 'currentZoomLevel'] );
-  }
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 
@@ -72,16 +63,7 @@ function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, a
     add_legend(map_id, layer_id, legend);
   }
 
-  if( focus_layer ) {
-  	clear_bounds( map_id );
-  	update_view = true;     // force this
-  }
-
-  if( bbox !== undefined && update_view) {
-	  add_to_bounds( map_id, bbox, layer_id );
-	  var loc = center_location( window[ map_id + 'globalBox'] );
-	  change_location( map_id, loc, 0, "linear", window[ map_id + 'currentZoomLevel'] );
-  }
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 function decode_polygons( polylines ) {
@@ -94,11 +76,4 @@ function decode_polygons( polylines ) {
     }
   }
   return coordinates;
-}
-
-function clear_polygon( map_id, layer_id ) {
-  clear_layer( map_id, 'polygon-'+layer_id );
-  clear_legend( map_id, layer_id );
-  remove_from_bounds( map_id, layer_id );
-  update_location( map_id );
 }

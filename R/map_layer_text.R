@@ -75,7 +75,9 @@ add_text <- function(
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
-	legend_options = NULL
+	legend_options = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	# l <- as.list( match.call( expand.dots = F) )
@@ -104,9 +106,18 @@ add_text <- function(
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT"))
 
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
+	}
+
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
 	## parmater checks
@@ -135,13 +146,16 @@ add_text <- function(
 		jsfunc <- "add_text_polyline"
 	}
 
-	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]])
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
+		shape[["legend"]], bbox, update_view, focus_layer
+		)
 }
 
 #' @rdname clear
 #' @export
 clear_text <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "text")
-	invoke_method(map, "clear_text", layer_id )
+	invoke_method(map, "layer_clear", layer_id, "text" )
 }
 

@@ -74,7 +74,9 @@ add_hexagon <- function(
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis")
+	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	# l <- as.list( match.call( expand.dots = F) )
@@ -94,9 +96,18 @@ add_hexagon <- function(
 
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
+	}
+
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
 	checkHex(colour_range)
@@ -124,7 +135,7 @@ add_hexagon <- function(
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, radius, elevation_scale,
-		auto_highlight, highlight_colour, colour_range
+		auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer
 		)
 }
 
@@ -133,5 +144,5 @@ add_hexagon <- function(
 #' @export
 clear_hexagon <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "hexagon")
-	invoke_method(map, "clear_hexagon", layer_id )
+	invoke_method(map, "layer_clear", layer_id, "hexagon" )
 }

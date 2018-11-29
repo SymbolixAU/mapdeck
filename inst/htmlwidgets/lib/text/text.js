@@ -1,5 +1,5 @@
 
-function add_text_geo( map_id, text_data, layer_id ) {
+function add_text_geo( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer) {
 
   const textLayer = new TextLayer({
   	map_id: map_id,
@@ -17,9 +17,14 @@ function add_text_geo( map_id, text_data, layer_id ) {
     onHover: updateTooltip
   });
   update_layer( map_id, 'text-'+layer_id, textLayer );
+
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
 
   const textLayer = new TextLayer({
     map_id: map_id,
@@ -43,9 +48,5 @@ function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlig
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
-}
-
-function clear_text( map_id, layer_id ) {
-  clear_layer( map_id, 'text-'+layer_id );
-  clear_legend( map_id, layer_id );
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }

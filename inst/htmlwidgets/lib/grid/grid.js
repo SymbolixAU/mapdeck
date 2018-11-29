@@ -1,4 +1,4 @@
-function add_grid_geo( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour ) {
+function add_grid_geo( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer ) {
 
   const gridLayer = new deck.GridLayer({
   	map_id: map_id,
@@ -15,9 +15,10 @@ function add_grid_geo( map_id, grid_data, layer_id, cell_size, extruded, elevati
     highlightColor: hexToRGBA2( highlight_colour )
   });
   update_layer( map_id, 'grid-'+layer_id, gridLayer );
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_grid_polyline( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour ) {
+function add_grid_polyline( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer ) {
 
   const gridLayer = new deck.GridLayer({
     map_id: map_id,
@@ -34,9 +35,5 @@ function add_grid_polyline( map_id, grid_data, layer_id, cell_size, extruded, el
     highlightColor: hexToRGBA2( highlight_colour )
   });
   update_layer( map_id, 'grid-'+layer_id, gridLayer );
-}
-
-function clear_grid( map_id, layer_id ) {
-  clear_layer( map_id, 'grid-'+layer_id );
-  clear_legend( map_id, layer_id );
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }

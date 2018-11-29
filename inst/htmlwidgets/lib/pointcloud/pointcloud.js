@@ -1,5 +1,5 @@
 
-function add_pointcloud_geo( map_id, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
+function add_pointcloud_geo( map_id, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
 
   const pointcloudLayer = new deck.PointCloudLayer({
   	map_id: map_id,
@@ -20,9 +20,10 @@ function add_pointcloud_geo( map_id, pointcloud_data, radius, layer_id, light_se
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_pointcloud_polyline( map_id, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
+function add_pointcloud_polyline( map_id, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
 
   const pointcloudLayer = new deck.PointCloudLayer({
     map_id: map_id,
@@ -43,6 +44,7 @@ function add_pointcloud_polyline( map_id, pointcloud_data, radius, layer_id, lig
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 
@@ -53,9 +55,4 @@ function decode_pointcloud( polyline, elevation ) {
   position[1] = coords[1];
   position[2] = elevation;
   return position;
-}
-
-function clear_pointcloud( map_id, layer_id ) {
-  clear_layer( map_id, 'pointcloud-'+layer_id );
-  clear_legend( map_id, layer_id );
 }

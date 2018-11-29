@@ -1,5 +1,5 @@
 
-function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
 
   const arcLayer = new ArcLayer({
   	map_id: map_id,
@@ -26,9 +26,11 @@ function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colo
   if (legend !== false) {
     add_legend( map_id, layer_id, legend );
   }
+
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_arc_polyline( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_arc_polyline( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer  ) {
 
     //console.log( arc_data );
 
@@ -52,9 +54,6 @@ function add_arc_polyline( map_id, arc_data, layer_id, auto_highlight, highlight
   if (legend !== false) {
     add_legend( map_id, layer_id, legend );
   }
-}
 
-function clear_arc( map_id, layer_id ) {
-  clear_layer( map_id, 'arc-'+layer_id );
-  clear_legend( map_id, layer_id );
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }

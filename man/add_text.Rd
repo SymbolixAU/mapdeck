@@ -10,7 +10,7 @@ add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
   alignment_baseline = NULL, tooltip = NULL, layer_id = NULL,
   id = NULL, auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL)
+  legend_options = NULL, update_view = TRUE, focus_layer = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}

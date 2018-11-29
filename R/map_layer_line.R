@@ -93,7 +93,9 @@ add_line <- function(
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
-	legend_options = NULL
+	legend_options = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	# l <- as.list( match.call() )
@@ -118,9 +120,18 @@ add_line <- function(
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_od_data( data, l, origin, destination )
 
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
+	}
+
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
 	tp <- l[["data_type"]]
@@ -144,7 +155,10 @@ add_line <- function(
 	# 	shape <- rcpp_line_polyline( data, data_types, l, geometry_column )
 	# }
 
-	invoke_method(map, "add_line_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	invoke_method(
+		map, "add_line_geo", shape[["data"]], layer_id, auto_highlight,
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
+		)
 }
 
 
@@ -153,6 +167,6 @@ add_line <- function(
 #' @export
 clear_line <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "line")
-	invoke_method(map, "clear_line", layer_id )
+	invoke_method(map, "layer_clear", layer_id, "line" )
 }
 

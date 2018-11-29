@@ -8,7 +8,8 @@ add_line(map, data = get_map_data(map), layer_id = NULL, origin,
   destination, id = NULL, stroke_colour = NULL, stroke_width = NULL,
   stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL)
+  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
+  update_view = TRUE, focus_layer = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}

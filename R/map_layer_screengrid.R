@@ -77,7 +77,9 @@ add_screengrid <- function(
 	opacity = 0.8,
 	cell_size = 50,
 	layer_id = NULL,
-	id = NULL
+	id = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	# l <- as.list( match.call( expand.dots = F) )
@@ -100,9 +102,18 @@ add_screengrid <- function(
 
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
+	}
+
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
 	## parmater checks
@@ -134,7 +145,10 @@ add_screengrid <- function(
 		jsfunc <- "add_screengrid_polyline"
 	}
 
-	invoke_method(map, jsfunc, shape[["data"]], layer_id, opacity, cell_size, colour_range )
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, opacity, cell_size, colour_range,
+		bbox, update_view, focus_layer
+		)
 }
 
 
@@ -142,6 +156,6 @@ add_screengrid <- function(
 #' @export
 clear_screengrid <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "screengrid")
-	invoke_method(map, "clear_screengrid", layer_id )
+	invoke_method(map, "layer_clear", layer_id, "screengrid" )
 }
 

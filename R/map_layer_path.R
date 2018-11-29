@@ -147,7 +147,7 @@ add_path <- function(
 #' @export
 clear_path <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "path")
-	invoke_method(map, "clear_path", layer_id )
+	invoke_method(map, "layer_clear", layer_id, "path" )
 }
 
 
