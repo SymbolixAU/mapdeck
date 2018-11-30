@@ -25,12 +25,16 @@
 # 				outputId = "map"
 # 				, height = "600"
 # 			)
-# 			, sliderInput(
-# 				inputId = "width"
-# 				, label = "stroke width"
-# 				, min = 0
-# 				, max = 10
-# 				, value = 2
+# 			# , sliderInput(
+# 			# 	inputId = "width"
+# 			# 	, label = "stroke width"
+# 			# 	, min = 0
+# 			# 	, max = 10
+# 			# 	, value = 2
+# 			# )
+# 			, actionButton(
+# 				inputId = "button"
+# 				, label = "transitions"
 # 			)
 # 		)
 # 	)
@@ -46,25 +50,25 @@
 # 		)
 # 	})
 #
-# 	observeEvent({input$width},{
+# 	observeEvent({input$button},{
 #
-# 		flights$stroke <- sample(0:5, size = nrow(flights), replace = TRUE)
+# 		#flights$stroke <- sample(0:5, size = nrow(flights), replace = TRUE)
 # 		flights$rand <- sample(0:3, size = nrow(flights), replace = TRUE)
-# 		flights$start_lat <- sample(origins$start_lat, size = nrow(flights), replace = FALSE)
-# 		flights$start_lon <- sample(origins$start_lon, size = nrow(flights), replace = FALSE)
-# 		flights$start_lat <- sample(destinations$end_lat, size = nrow(flights), replace = FALSE)
-# 		flights$end_lon <- sample(destinations$end_lon, size = nrow(flights), replace = FALSE)
+# 		#flights$start_lat <- sample(origins$start_lat, size = nrow(flights), replace = FALSE)
+# 		#flights$start_lon <- sample(origins$start_lon, size = nrow(flights), replace = FALSE)
+# 		#flights$start_lat <- sample(destinations$end_lat, size = nrow(flights), replace = FALSE)
+# 		#flights$end_lon <- sample(destinations$end_lon, size = nrow(flights), replace = FALSE)
 #
 # 		mapdeck_update(
 # 			map_id = "map"
 # 		) %>%
 # 			add_arc(
-# 				data = flights
+# 				data = flights[flights$airport1 == "DFW", ]
 # 				, layer_id = "arc_layer"
 # 				, origin = c("start_lon", "start_lat")
 # 				, destination = c("end_lon", "end_lat")
-# 				, stroke_from = "rand"
-# 				, stroke_to = "airport2"
+# 				, stroke_from = "airport1"
+# 				, stroke_to = "rand"
 # 				, stroke_width = "stroke"
 # 				, tooltip = "info"
 # 				, auto_highlight = TRUE

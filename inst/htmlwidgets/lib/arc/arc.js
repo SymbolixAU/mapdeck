@@ -1,6 +1,9 @@
 
 function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
+	console.log( js_transition );
+	console.log( JSON.parse( js_transition ) );
+
   const arcLayer = new ArcLayer({
   	map_id: map_id,
     id: 'arc-'+layer_id,
@@ -16,6 +19,18 @@ function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colo
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour ),
     transitions: js_transition || {}
+    /*
+    transitions: {
+    	getSourcePosition: 1000.0,
+    	getTargetPosition: 1000.0,
+    	getTargetColor: {
+    		duration: 1000.0,
+    		enter: value => [ value[0], value[1], value[2], 0]
+
+    	},
+    	getStrokeWidth:1000.0
+    }
+    */
   });
 
   update_layer( map_id, 'arc-'+layer_id, arcLayer );

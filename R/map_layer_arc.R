@@ -215,11 +215,14 @@ add_arc <- function(
   }
 
 	transitions <- list(
-
 		getSourcePosition = 1000
-		, getTargetPosition = 100
-		, getSourceColor = 1000
-		, getTargetColor = 1000
+		, getTargetPosition = 1000
+		, getTargetColor = list(
+			duration = 1000
+			, enter = "value => [ value[0], value[1], value[2], 0]"
+		)
+		#, getSourceColor = 1000
+		#, getTargetColor = 1000
 		, getStrokeWidth = 1000
 	)
 
