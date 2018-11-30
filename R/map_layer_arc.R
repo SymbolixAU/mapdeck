@@ -213,9 +213,18 @@ add_arc <- function(
   	jsfunc <- "add_arc_polyline"
   }
 
+	transitions <- list(
+		getSourcePosition = 1000
+		, getTargetPosition = 100
+		, getSourceColor = 1000
+		, getTargetColor = 1000
+		, getStrokeWidth = 1000
+	)
+	js_transition <- jsonify::to_json( transitions , unbox = TRUE )
+
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
-		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition
 		)
 }
 
