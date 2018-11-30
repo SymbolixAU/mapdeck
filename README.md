@@ -29,30 +29,27 @@ install.packages("mapdeck")
 Version v0.1.006+ sees quite a lot of changes, so I need users to test
 their functions and report any errors.
 
-If you install the latest dev version and your plots aren’t working, you
-can still use the old function, just add `_old` to the function call.
-
-If using `sf` objects, currently `MULTI*` objects will not work. You
-will need to cast them to their simpler structure before plotting using
-`sf::st_cast()`
-
 To use the development version you need some other development dependant
 libraries
 
 ``` r
-
 ## install dependent libraries first
-devtools::install_github("SymbolixAU/geojsonsf", force = T)
+devtools::install_github("SymbolixAU/jsonify", force = T)
 devtools::install_github("SymbolixAU/spatialwidget", force = T)
-devtools::install_github("SymbolixAU/googlePolylines", force = T)
 
 ## then mapdeck
 devtools::install_github("SymbolixAU/mapdeck")
 ```
 
-## Basic Use
+## Getting Started
 
-`mapdeck(token = 'your_token')` will give you a map. You then start
+Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox
+you need an [access
+token](https://www.mapbox.com/help/how-access-tokens-work/).
+
+Once you’ve generate a token you can use their maps.
+
+Call `mapdeck(token = 'your_token')` to generate a basic map. Then start
 adding layers by using one of the various `add_*()`
 functions.
 
@@ -75,25 +72,19 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
 
 ![Arcs](./vignettes/img/readme_arcs_small.gif)
 
-## Access Token
-
-Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox
-you need an [access
-token](https://www.mapbox.com/help/how-access-tokens-work/)
-
 ## Available Layers
 
-  - Arc
-  - GeoJSON
-  - Grid
-  - Hexagon
-  - Line
-  - Path
-  - Point cloud
-  - Polygon
-  - Scatter plot
-  - Screen grid
-  - Text
+  - arc
+  - geojson
+  - grid
+  - hexagon
+  - line
+  - path
+  - pointcloud
+  - polygon
+  - scatterplot
+  - screengrid
+  - text
 
 ## Shiny
 

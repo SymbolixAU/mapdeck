@@ -1,13 +1,8 @@
 
-resolve_args <- function( l, layer_args ) {
-	x <- vapply( names(l), function(x) { x %in% layer_args }, T )
-	x <- x[x]
-	l <- l[names(x)]
-	lapply( l, eval )
-}
+init_bbox <- function() return(  list(c(-180,-90),c(180,90)) )
 
+data_types <- function( data ) vapply(data, function(x) class(x)[[1]], "")
 
-## TODO( allow MULTI* objects)
 sfrow <- function( sf , sfc_type ) {
 	geom_column <- attr(sf, "sf_column")
 	return( which(vapply(sf[[geom_column]], function(x) attr(x, "class")[[2]], "") %in% sfc_type ) )
@@ -21,6 +16,7 @@ resolve_od_data.sf <- function( data, l, origin, destination ) {
 		stop("origin and destination columns required")
 	}
 	l[["data_type"]] <- "sf"
+	l[["bbox"]] <- get_box( data, l )
 	return( l )
 }
 
@@ -85,10 +81,11 @@ resolve_elevation_data.data.frame <- function( data, l, elevation, sf_geom ) {
 		## the user supplied a polyline in a data.frame, so we need to allow this through
 		l[["data_type"]] <- "sfencoded"
 	} else {
-	  if ( sf_geom != "POINT" )
+	  if ( !(all(sf_geom %in% c( "POINT", "MULTIPOINT") ) ) )
 		  stop("unsupported data type")
 
 		l[["data_type"]] <- "df"
+		l[["bbox"]] <- get_box( data, l )
 	}
 
 	l[["data"]] <- data
@@ -106,9 +103,10 @@ resolve_elevation_data.sf <- function( data, l, elevation, sf_geom ) {
 #' @export
 resolve_elevation_data.sfencoded <- function( data, l, elevation, sf_geom ) {
 
-	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom, multi = TRUE), ]
+	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom[1], multi = TRUE), ]
 
 	l[["data_type"]] <- "sfencoded"
+	l[["bbox"]] <- get_box( data, l )
 	l[["data"]] <- data
 	l <- resolve_elevation_data.sfencodedLite( data, l, elevation, sf_geom )
 	return( l )
@@ -117,7 +115,7 @@ resolve_elevation_data.sfencoded <- function( data, l, elevation, sf_geom ) {
 #' @export
 resolve_elevation_data.sfencodedLite <- function( data, l, elevation, sf_geom ) {
 	polyline <- attr( data, "encoded_column")
-	if ( sf_geom != "POLYGON" ) {   ## TODO( I don't like this)
+	if ( !all(sf_geom %in% c("POLYGON","MULTIPOLYGON") ) ) {   ## TODO( I don't like this)
 		data <- unlistMultiGeometry( data, polyline )  ## TODO( move this to C++)
 	}
 
@@ -144,7 +142,6 @@ sf_needs_subsetting <- function( data, sfc_col, sf_geom ) {
 ## use the specificed st_geometry column
 #' @export
 resolve_data.sf <- function( data, l, sf_geom ) {
-	## TODO( allow MULTI* objects)
 
 	sfc_col <- attr( data, "sf_column" )
 	l[["geometry"]] <- sfc_col
@@ -152,16 +149,46 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 	if( sf_needs_subsetting( data, sfc_col, sf_geom ) ) {
 		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
 	}
+
+	l[["bbox"]] <- get_box( data, l )
 	l[["data_type"]] <- "sf"
 	return(l)
+}
+
+get_box <- function( data, l ) UseMethod("get_box")
+
+#' @export
+get_box.sfencoded <- function( data, l ) {
+	bbox <- attr( enc, "sfAttributes")[["bbox"]]
+	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
+	return( jsonify::to_json( bbox ) )
+}
+
+#' @export
+get_box.sf <- function( data, l ) {
+	bbox <- attr(data$geometry, "bbox")
+	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
+	return( jsonify::to_json( bbox ) )
+}
+
+#' @export
+get_box.data.frame <- function( data, l ) {
+
+	lat <- data[, l[["lat"]] ]
+	lon <- data[, l[["lon"]] ]
+	xmin <- min(lon); xmax <- max(lon)
+	ymin <- min(lat); ymax <- max(lat)
+	bbox <- list( c(xmin, ymin), c(xmax, ymax) )
+	return( jsonify::to_json( bbox ) )
 }
 
 ## TODO( needs to call the JS function which decodes the polyline )
 #' @export
 resolve_data.sfencoded <- function( data, l, sf_geom ) {
 
-	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom, multi = TRUE), ]
+	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom[1], multi = TRUE), ]
 
+	l[["bbox"]] <- get_box( data, l )
 	l[["data_type"]] <- "sfencoded"
 	l[["data"]] <- data
 	l <- resolve_data.sfencodedLite( data, l, sf_geom )
@@ -178,7 +205,7 @@ resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
 	# if( !is.null(polyline) && !polyline %in% names(l) ) {
 	#	l[['polyline']] <- polyline
 	polyline <- attr( data, "encoded_column")
-	if ( sf_geom != "POLYGON" ) {   ## TODO( I don't like this)
+	if ( sf_geom[1] != "POLYGON" ) {   ## TODO( I don't like this)
   	data <- unlistMultiGeometry( data, polyline )  ## TODO( move this to C++)
 	}
 
@@ -193,27 +220,63 @@ resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
 resolve_data.data.frame <- function( data, l, sf_geom ) {
 
 	## data.frame will only really work for points, with a lon & lat column
-	## for speed, need to turn to GeoJSON?
 	if ( !is.null( l[["polyline"]] ) ) {
 		## the user supplied a polyline in a data.frame, so we need to allow this through
 		l[["data_type"]] <- "sfencoded"
 	} else {
-		if ( sf_geom != "POINT" )
+		if ( sf_geom[1] != "POINT" )
 			stop("unsupported data type")
 
+		l[["bbox"]] <- get_box( data, l )
 		l[["data_type"]] <- "df"
 	}
 	l[["data"]] <- data
 	return( l )
 }
 
+#' @export
 resolve_data.default <- function( data ) stop("This type of data is not supported")
 
 
+resolve_geojson_data <- function( data, l ) UseMethod("resolve_geojson_data")
+
+#' @export
+resolve_geojson_data.sf <- function( data, l ) {
+	geom <- attr(data, "sf_column")
+	l[["geometry"]] <- geom
+	l[["data_type"]] <- "sf"
+	l[["bbox"]] <- get_box( data, l )
+	return( l )
+}
+
+#' @export
+resolve_geojson_data.json <- function( data, l ) {
+  l[["data_type"]] <- "geojson"
+	return( l )
+}
+
+#' @export
+resolve_geojson_data.geojson <- function( data, l ) {
+  l[["data_type"]] <- "geojson"
+  return( l )
+}
+
+#' @export
+resolve_geojson_data.character <- function( data, l ) {
+	l[["data_type"]] <- "geojson"
+	return( l )
+}
+
+#' @export
+resolve_geojson_data.default <- function( data, l ) stop("I don't know how to handle this type of data")
+
+
 resolve_palette <- function( l, palette ) {
-	#if ( is.matrix( palette ) ) {
+	if ( is.function( palette ) ) {
+		warning("Function palettes have been deprecated, reverting to the viridis palette. See the palette arguemnt in the help file for valid arguments")
+	} else {
 		l[['palette']] <- palette
-	#}
+	}
 	return( l )
 }
 

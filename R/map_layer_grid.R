@@ -36,7 +36,7 @@ mapdeckGridDependency <- function() {
 #'
 #' df <- df[ !is.na(df$lng ), ]
 #'
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_grid(
 #'   data = df
 #'   , lat = "lat"
@@ -51,7 +51,7 @@ mapdeckGridDependency <- function() {
 #' library(sf)
 #' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
 #'
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_grid(
 #'   data = sf
 #'   , cell_size = 5000
@@ -60,7 +60,14 @@ mapdeckGridDependency <- function() {
 #'   , auto_highlight = TRUE
 #' )
 #'
+#'
 #' }
+#'
+#' @details
+#'
+#' \code{add_grid} supports POINT and MULTIPOINT sf objects
+#'
+#'
 #'
 #' @export
 add_grid <- function(
@@ -76,7 +83,9 @@ add_grid <- function(
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	layer_id = NULL,
-	id = NULL
+	id = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	# l <- as.list( match.call( expand.dots = F) )
@@ -93,15 +102,23 @@ add_grid <- function(
 	l[["lat"]] <- force(lat)
 	l[["polyline"]] <- force(polyline)
 
-	l <- resolve_data( data, l, "POINT" )
+	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
 
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
+	}
+
 	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
 	checkNumeric(elevation_scale)
 	checkNumeric(cell_size)
 	checkHex(colour_range)
@@ -109,7 +126,7 @@ add_grid <- function(
 	layer_id <- layerId(layer_id, "grid")
 
 	map <- addDependency(map, mapdeckGridDependency())
-	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
@@ -128,82 +145,11 @@ add_grid <- function(
 		jsfunc <- "add_grid_polyline"
 	}
 
-	# print( shape )
-
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, cell_size,
-		jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale,
-		colour_range, auto_highlight, highlight_colour
+		jsonify::to_json(extruded, unbox = TRUE), elevation_scale,
+		colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer
 		)
-}
-
-
-#' @export
-add_grid_old <- function(
-	map,
-	data = get_map_data(map),
-	lon = NULL,
-	lat = NULL,
-	polyline = NULL,
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
-	cell_size = 1000,
-	extruded = TRUE,
-	elevation_scale = 1,
-	auto_highlight = FALSE,
-	layer_id = NULL,
-	digits = 6
-) {
-
-	objArgs <- match.call(expand.dots = F)
-
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-		objArgs[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
-
-	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
-	checkNumeric(digits)
-	checkNumeric(elevation_scale)
-	checkNumeric(cell_size)
-	checkHex(colour_range)
-	layer_id <- layerId(layer_id, "grid")
-
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		objArgs[['lon']] <- NULL
-		objArgs[['lat']] <- NULL
-		objArgs[['polyline']] <- polyline
-	}
-
-	allCols <- gridColumns()
-	requiredCols <- requiredGridColumns()
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	requiredDefaults <- setdiff(requiredCols, names(shape))
-
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "grid")
-	}
-
-	shape <- jsonlite::toJSON(shape, digits = digits)
-	# print(shape)
-
-	map <- addDependency(map, mapdeckGridDependency())
-
-	invoke_method(
-		map, "add_grid", shape, layer_id, cell_size,
-		jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale,
-		colour_range, auto_highlight
-	)
 }
 
 
@@ -211,20 +157,5 @@ add_grid_old <- function(
 #' @export
 clear_grid <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "grid")
-	invoke_method(map, "clear_grid", layer_id )
-}
-
-requiredGridColumns <- function() {
-	c()
-}
-
-
-gridColumns <- function() {
-	c("polyline")
-}
-
-gridDefaults <- function(n) {
-	data.frame(
-		stringsAsFactors = F
-	)
+	invoke_method(map, "layer_clear", layer_id, "grid" )
 }

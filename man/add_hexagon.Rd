@@ -8,7 +8,8 @@ add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id = NULL, id = NULL,
   radius = 1000, elevation_scale = 1, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF",
-  colour_range = colourvalues::colour_values(1:6, palette = "viridis"))
+  colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
+  update_view = TRUE, focus_layer = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -23,7 +24,7 @@ add_hexagon(map, data = get_map_data(map), polyline = NULL,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
 \item{radius}{in metres}
 
@@ -34,11 +35,18 @@ to conflict and not plot correctly}
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
 \item{colour_range}{palette of colours}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
 The Hexagon Layer renders a hexagon heatmap based on an array of points.
 It takes the radius of hexagon bin, projects points into hexagon bins.
 The color and height of the hexagon is scaled by number of points it contains.
+}
+\details{
+\code{add_hexagon} supports POINT and MULTIPOINT sf objects
 }
 \examples{
 \dontrun{
@@ -47,11 +55,13 @@ The color and height of the hexagon is scaled by number of points it contains.
 key <- 'abc'
 
 df <- read.csv(paste0(
-'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'
+'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/'
+, '3d-heatmap/heatmap-data.csv'
 ))
 
 df <- df[!is.na(df$lng), ]
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_hexagon(
   data = df
   , lat = "lat"
@@ -62,13 +72,12 @@ add_hexagon(
 
 library( sf )
 sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_hexagon(
   data = sf
   , layer_id = "hex_layer"
   , elevation_scale = 100
 )
-
 
 }
 

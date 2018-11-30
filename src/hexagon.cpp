@@ -5,15 +5,13 @@
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List hexagon_defaults(int n) {
-	return Rcpp::List::create(
-		//_["polyline"] = mapdeck::defaults::default_polyline(n)
-	);
+	return Rcpp::List::create();
 }
 
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_hexagon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
-                         Rcpp::List params, Rcpp::StringVector geometry_columns ) {
+                         Rcpp::List params, std::string geometry_columns ) {
 
 	int data_rows = data.nrows();
 
@@ -21,8 +19,9 @@ Rcpp::List rcpp_hexagon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > hexagon_colours = mapdeck::hexagon::hexagon_colours;
 	Rcpp::StringVector hexagon_legend = mapdeck::hexagon::hexagon_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
-	return spatialwidget::api::create_geojson(
+	return spatialwidget::api::create_geojson_downcast(
 		data,
 		data_types,
 		params,
@@ -30,6 +29,7 @@ Rcpp::List rcpp_hexagon_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		hexagon_colours,
 		hexagon_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -45,6 +45,7 @@ Rcpp::List rcpp_hexagon_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > hexagon_colours = mapdeck::hexagon::hexagon_colours;
 	Rcpp::StringVector hexagon_legend = mapdeck::hexagon::hexagon_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(
 		data,
@@ -54,6 +55,7 @@ Rcpp::List rcpp_hexagon_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 		hexagon_colours,
 		hexagon_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -70,6 +72,7 @@ Rcpp::List rcpp_hexagon_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > hexagon_colours = mapdeck::hexagon::hexagon_colours;
 	Rcpp::StringVector hexagon_legend = mapdeck::hexagon::hexagon_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(
 		data,
@@ -79,6 +82,7 @@ Rcpp::List rcpp_hexagon_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
 		hexagon_colours,
 		hexagon_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);

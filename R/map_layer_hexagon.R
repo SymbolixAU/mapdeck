@@ -30,11 +30,13 @@ mapdeckHexagonDependency <- function() {
 #' key <- 'abc'
 #'
 #' df <- read.csv(paste0(
-#' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'
+#' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/'
+#' , '3d-heatmap/heatmap-data.csv'
 #' ))
 #'
 #' df <- df[!is.na(df$lng), ]
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#'
+#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45) %>%
 #' add_hexagon(
 #'   data = df
 #'   , lat = "lat"
@@ -45,15 +47,19 @@ mapdeckHexagonDependency <- function() {
 #'
 #' library( sf )
 #' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_hexagon(
 #'   data = sf
 #'   , layer_id = "hex_layer"
 #'   , elevation_scale = 100
 #' )
 #'
-#'
 #' }
+#'
+#' @details
+#'
+#' \code{add_hexagon} supports POINT and MULTIPOINT sf objects
+#'
 #'
 #' @export
 add_hexagon <- function(
@@ -68,7 +74,9 @@ add_hexagon <- function(
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis")
+	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	# l <- as.list( match.call( expand.dots = F) )
@@ -86,11 +94,20 @@ add_hexagon <- function(
 	l[["lat"]] <- force(lat)
 	l[["id"]] <- force(id)
 
-	l <- resolve_data( data, l, "POINT" )
+	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
+	}
+
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
 	checkHex(colour_range)
@@ -98,7 +115,7 @@ add_hexagon <- function(
 
 	layer_id <- layerId(layer_id, "hexagon")
 	map <- addDependency(map, mapdeckHexagonDependency())
-	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
@@ -118,68 +135,14 @@ add_hexagon <- function(
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, radius, elevation_scale,
-		auto_highlight, highlight_colour, colour_range
+		auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer
 		)
 }
 
-
-#' @export
-add_hexagon_old <- function(
-	map,
-	data = get_map_data(map),
-	polyline = NULL,
-	lon = NULL,
-	lat = NULL,
-	layer_id,
-	radius = 1000,
-	elevation_scale = 1,
-	auto_highlight = FALSE,
-	highlight_colour = "#AAFFFFFF",
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis")
-) {
-
-	l <- as.list( match.call( expand.dots = F) )
-	l[[1]] <- NULL
-	l[["data"]] <- NULL
-	l[["map"]] <- NULL
-	l[["auto_highlight"]] <- NULL
-	l[["light_settings"]] <- NULL
-	l[["layer_id"]] <- NULL
-
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
-
-	if( !is.null(polyline) && !polyline %in% names(l) ) {
-		l[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
-	}
-
-	checkHex(colour_range)
-	checkHexAlpha(highlight_colour)
-	usePolyline <- isUsingPolyline(polyline)
-
-
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		l[['lon']] <- NULL
-		l[['lat']] <- NULL
-		l[['polyline']] <- polyline
-	}
-
-	layer_id <- layerId(layer_id, "hexagon")
-
-	shape <- rcpp_hexagon( data, l )
-
-	map <- addDependency(map, mapdeckHexagonDependency())
-	invoke_method(map, "add_hexagon", shape[["data"]], layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range )
-}
 
 #' @rdname clear
 #' @export
 clear_hexagon <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "hexagon")
-	invoke_method(map, "clear_hexagon", layer_id )
+	invoke_method(map, "layer_clear", layer_id, "hexagon" )
 }

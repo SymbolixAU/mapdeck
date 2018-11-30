@@ -20,19 +20,19 @@ test_that("add_pointcloud accepts multiple objects", {
 	enc <- googlePolylines::encode( sf )
 	enc$z <- 123
 	p <- add_pointcloud( map = m, data = enc, elevation = "z" )
-	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), poly2 )
+	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), poly1 )
 
 	## sfencodedLite
 	enc <- googlePolylines::encode( sf, strip = T )
 	enc$z <- 123
 	p <- add_pointcloud( map = m, data = enc, elevation = "z" )
-	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), poly2 )
+	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), poly1 )
 
 	## data.frame with polyline
 	df <- as.data.frame( enc )
 	df$geometry <- unlist( df$geometry )
 	p <- add_pointcloud( map = m, data = df, elevation = "z", polyline = "geometry")
-	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), poly1 )
+	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), poly2 )
 
 	## data.frame
 	df <- capitals[1, ]

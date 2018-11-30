@@ -18,9 +18,6 @@ mapdeckPolygonDependency <- function() {
 #' @inheritParams add_arc
 #'
 #' @param polyline column of \code{data} containing the polylines
-#' @param geometry string specifying the `sfc` column of an SF object. If NULL and
-#' \code{data} is an `sf` object the \code{geometry} will be automatically assinged
-#' from \code{ sf::st_geometry( data ) }
 #' @param fill_colour column of \code{data} or hex colour for the fill colour
 #' @param fill_opacity value between 1 and 255. Either a string specifying the
 #' column of \code{data} containing the fill opacity of each shape, or a value
@@ -28,10 +25,11 @@ mapdeckPolygonDependency <- function() {
 #' @param stroke_colour variable of \code{data} or hex colour for the stroke
 #' @param stroke_width width of the stroke
 #' @param light_settings list of light setting parameters. See \link{light_settings}
-#' @param elevation the height of the polygon
+#' @param elevation the height the polygon extrudes from the map.
 #'
 #'
 #' @inheritSection add_arc legend
+#' @inheritSection add_arc id
 #'
 #' @examples
 #' \donttest{
@@ -64,11 +62,10 @@ mapdeckPolygonDependency <- function() {
 #' library(geojsonsf)
 #'
 #' sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
-#' sf <- sf::st_cast(sf, "POLYGON")
 #'
 #' mapdeck(
 #'   token = key
-#'   , style = 'mapbox://styles/mapbox/dark-v9'
+#'   , style = mapdeck_style('dark')
 #' ) %>%
 #'   add_polygon(
 #'     data = sf
@@ -77,12 +74,16 @@ mapdeckPolygonDependency <- function() {
 #'   )
 #'
 #' }
+#'
+#' @details
+#'
+#' \code{add_polygon} supports POLYGON and MULTIPOLYGON sf objects
+#'
 #' @export
 add_polygon <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,
-	#geometry = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	fill_colour = NULL,
@@ -97,7 +98,9 @@ add_polygon <- function(
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
-	legend_options = NULL
+	legend_options = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
 
 	# l <- as.list( match.call( expand.dots = F) )
@@ -117,12 +120,16 @@ add_polygon <- function(
 	l[["elevation"]] <- force( elevation )
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
+	l[["na_colour"]] <- force(na_colour)
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, "POLYGON" )
+	l <- resolve_data( data, l, c("POLYGON","MULTIPOLYGON") )
 
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
 
 	# data <- normaliseSfData(data, "POLYGON", multi = FALSE)
 	# polyline <- findEncodedColumn(data, polyline)
@@ -138,12 +145,17 @@ add_polygon <- function(
 		l[["data"]] <- NULL
 	}
 
+	## sf objects come with a bounding box
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
+	}
 
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "polygon")
 
 	map <- addDependency(map, mapdeckPolygonDependency())
-	data_types <- vapply(data, function(x) class(x)[[1]], "")
+	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
@@ -152,124 +164,28 @@ add_polygon <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-	 	shape <- rcpp_polygon_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_polygon_geojson( data, data_types, l, geometry_column )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
 		shape <- rcpp_polygon_polyline( data, data_types, l, geometry_column )
 		jsfunc <- "add_polygon_polyline"
 	}
 
-	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
+	light_settings <- jsonify::to_json(light_settings, unbox = T)
 
-	invoke_method(map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight, highlight_colour, shape[["legend"]])
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, light_settings,
+		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
+		)
 }
 
-
-
-#' @export
-add_polygon_old <- function(
-	map,
-	data = get_map_data(map),
-	polyline = NULL,
-	stroke_colour = NULL,
-	stroke_width = NULL,
-	fill_colour = NULL,
-	fill_opacity = NULL,
-	elevation = NULL,
-	tooltip = NULL,
-	auto_highlight = FALSE,
-	light_settings = list(),
-	layer_id = NULL,
-	digits = 6,
-	legend = F,
-	legend_options = NULL,
-	palette = viridisLite::viridis
-) {
-
-	objArgs <- match.call(expand.dots = F)
-
-	data <- normaliseSfData(data, "POLYGON", multi = FALSE)
-	polyline <- findEncodedColumn(data, polyline)
-
-	## - if sf object, and geometry column has not been supplied, it needs to be
-	## added to objArgs after the match.call() function
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-		objArgs[['polyline']] <- polyline
-	}
-
-	# parameter checks
-	checkNumeric(digits)
-	checkPalette(palette)
-	layer_id <- layerId(layer_id, "polygon")
-	## TODO(light_settings)
-
-	## TODO(check highlight_colour)
-
-	## end parameter checks
-
-	allCols <- polygonColumns()
-	requiredCols <- requiredPolygonColumns()
-
-	colourColumns <- shapeAttributes(
-		fill_colour = fill_colour
-		, stroke_colour = stroke_colour
-		, stroke_from = NULL
-		, stroke_to = NULL
-	)
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	pal <- createPalettes(shape, colourColumns)
-
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
-
-	if(length(colours) > 0) {
-		shape <- replaceVariableColours(shape, colours)
-	}
-
-	## LEGEND
-	legend <- resolveLegend(legend, legend_options, colour_palettes)
-
-	requiredDefaults <- setdiff(requiredCols, names(shape))
-
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "polygon")
-	}
-
-	shape <- jsonlite::toJSON(shape, digits = digits)
-	# print( shape )
-
-	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
-
-	map <- addDependency(map, mapdeckPolygonDependency())
-	invoke_method(map, "add_polygon", shape, layer_id, light_settings, auto_highlight, legend)
-}
 
 
 #' @rdname clear
 #' @export
 clear_polygon <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "polygon")
-	invoke_method(map, "clear_polygon", layer_id )
+	invoke_method(map, "layer_clear", layer_id, "polygon" )
 }
 
 
-requiredPolygonColumns <- function() {
-	c("fill_colour", "fill_opacity", "stroke_width", "stroke_colour","elevation")
-}
-
-polygonColumns <- function() {
-	c("polyline", "fill_colour", "fill_opacity","stroke_width", "stroke_colour","elevation")
-}
-
-polygonDefaults <- function(n) {
-	data.frame(
-		"fill_colour" = rep("#440154", n),
-		"fill_opacity" = rep(255, n),
-		"stroke_colour" = rep("#440154", n),
-		"stroke_width" = rep(1, n),
-		"elevation" = rep(0, n),
-		stringsAsFactors = F
-	)
-}

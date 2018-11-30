@@ -1,8 +1,8 @@
 Package: mapdeck
 Type: Package
 Title: Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'
-Version: 0.1.006
-Date: 2018-11-05
+Version: 0.1.007
+Date: 2018-11-12
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
@@ -17,33 +17,27 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
 Imports:
-    colourvalues (>= 0.2.0),
-    geojsonsf (>= 1.2.2),
-    googlePolylines (>= 0.7.1004),
+    googlePolylines (>= 0.7.2),
     htmlwidgets,
     htmltools,
-    jsonlite,
-    jsonify (>= 0.1.1),
+    jsonify (>= 0.1.2),
     magrittr,
     Rcpp,
-    scales,
-    shiny,
-    spatialwidget,
-    viridisLite
+    shiny
 RoxygenNote: 6.1.0
 Suggests: 
     covr,
-    geojsonsf,
+    jsonlite,
     knitr,
     rmarkdown,
     sf,
     testthat
 VignetteBuilder: knitr
 LinkingTo: 
-    Rcpp,
+    BH,
     colourvalues,
+    geojsonsf,
     jsonify,
     rapidjsonr,
-    geojsonsf,
-    BH,
+    Rcpp,
     spatialwidget

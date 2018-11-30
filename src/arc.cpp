@@ -6,8 +6,6 @@
 
 Rcpp::List arc_defaults(int n) {
 	return Rcpp::List::create(
-		//_["origin"] = mapdeck::defaults::default_polyline(n),
-		//_["destination"] = mapdeck::defaults::default_polyline(n),
 		_["stroke_from"] = mapdeck::defaults::default_stroke_colour(n),
 		_["stroke_to"] = mapdeck::defaults::default_stroke_colour(n)
 	);
@@ -24,6 +22,7 @@ Rcpp::List rcpp_arc_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > arc_colours = mapdeck::arc::arc_colours;
 	Rcpp::StringVector arc_legend = mapdeck::arc::arc_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(
 		data,
@@ -33,6 +32,7 @@ Rcpp::List rcpp_arc_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		arc_colours,
 		arc_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -48,6 +48,7 @@ Rcpp::List rcpp_arc_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > arc_colours = mapdeck::arc::arc_colours;
 	Rcpp::StringVector arc_legend = mapdeck::arc::arc_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(
 		data,
@@ -57,6 +58,7 @@ Rcpp::List rcpp_arc_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 		arc_colours,
 		arc_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -73,6 +75,7 @@ Rcpp::List rcpp_arc_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > arc_colours = mapdeck::arc::arc_colours;
 	Rcpp::StringVector arc_legend = mapdeck::arc::arc_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(
 		data,
@@ -82,6 +85,7 @@ Rcpp::List rcpp_arc_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
 		arc_colours,
 		arc_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);

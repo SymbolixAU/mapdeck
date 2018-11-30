@@ -15,6 +15,10 @@ HTMLWidgets.widget({
 
       	window[el.id + 'layers'] = []; // keep track of layers for overlaying multiple
         window[el.id + 'legendPositions'] = [];     // array for keeping a referene to legend positions
+        window[el.id + 'mapdeckBounds'] = [];       // store the bounding box of each layer
+        window[el.id + 'globalBox'] = [];
+        window[el.id + 'currentZoomLevel'] = 0;
+
       	// needs to be an array because .props takes an array of layers
 
         var mapDiv = document.getElementById(el.id);
@@ -35,7 +39,8 @@ HTMLWidgets.widget({
         	longitude: x.location[0],
         	latitude: x.location[1],
         	zoom: x.zoom,
-        	pitch: x.pitch
+        	pitch: x.pitch,
+        	bearing: x.bearing
         };
 
         const deckgl = new deck.DeckGL({
@@ -47,7 +52,25 @@ HTMLWidgets.widget({
 			      //onLayerHover: setTooltip
 			  });
 
+        // https://github.com/uber/deck.gl/issues/2114
+        /*
+			  const viewPort = WebMercartorViewport({
+			  	width: 800,
+				  height: 600,
+				  longitude: -122.45,
+				  latitude: 37.78,
+				  zoom: 12,
+				  pitch: 60,
+				  bearing: 30
+			  });
+			  console.log( viewPort );
+			  */
+
+
 			    window[el.id + 'map'] = deckgl;
+
+			    //console.log( window[el.id + 'map']);
+
 			    initialise_map(el, x);
       },
 
@@ -60,37 +83,29 @@ HTMLWidgets.widget({
   }
 });
 
-function change_location( map_id, location, duration, transition, zoom ) {
-
-	window[map_id + 'map'].setProps({
-    viewState: {
-      longitude: location[0],
-      latitude: location[1],
-      zoom: zoom,
-      pitch: 0,
-      bearing: 0,
-      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
-      transitionDuration: duration
-    },
-  });
-}
-
 // following: https://codepen.io/vis-gl/pen/pLLQpN
 // and: https://beta.observablehq.com/@pessimistress/deck-gl-geojsonlayer-example
 function updateTooltip({x, y, object, layer, index}) {
     // object is the data object sent to the layer function
 
-  //console.log( layer.props.map_id);
-
   const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
+  var tt;
 
   if (object) {
-  	if(object.tooltip === undefined) {
-  		return;
-  	}
+  	//if(object.tooltip === undefined && object.properties.tooltip === undefined ) {
+  	//	return;
+  	//}
+  	if ( object.properties.tooltip !== undefined ) {
+	  	tt = object.properties.tooltip;
+	  } else if ( object.tooltip !== undefined ) {
+	  	tt = object.tooltip;
+	  } else {
+	  	return;
+	  }
+
     tooltip.style.top = `${y}px`;
     tooltip.style.left = `${x}px`;
-    tooltip.innerHTML = `<div>${object.tooltip}</div>`;
+    tooltip.innerHTML = `<div>${tt}</div>`;
   } else {
     tooltip.innerHTML = '';
   }
@@ -153,8 +168,8 @@ function initialise_map(el, x) {
 }
 
 
-function findObjectElementByKey(array, key, value, layer_data ) {
-    for (var i = 0; i < array.length; i++) {
+function findObjectElementByKey(array, key, value ) {
+    for ( var i = 0; i < array.length; i++) {
         if (array[i][key] === value) {
             return i;
         }
@@ -162,9 +177,205 @@ function findObjectElementByKey(array, key, value, layer_data ) {
     return -1;
 }
 
+function change_location( map_id, location, zoom, pitch, bearing, duration, transition ) {
+
+  console.log( window[ map_id + 'map'] );
+  console.log( window[ map_id + 'map'].viewState );
+
+  console.log( "location: " + location );
+  console.log( "zoom: " + zoom );
+  console.log( "pitch: " + pitch + ", " + window[ map_id + 'map'].viewState.pitch );
+  console.log( "bearing: " + bearing + ", " + window[ map_id + 'map' ].viewState.bearing );
+  console.log( "duration: " + duration );
+
+/*
+  var currentLon = location === null ? window[ map_id + 'map'].viewState["default-view"].longitude : location[0];
+  var currentLat = location === null ? window[ map_id + 'map'].viewState["default-view"].latitude : location[1];
+  var currentPitch = pitch === null ? window[ map_id + 'map'].viewState["default-view"].pitch : pitch;
+  var currentBearing = bearing === null ? window[ map_id + 'map' ].viewState["default-view"].bearing : bearing;
+  var currentZoom = zoom === null ? window[ map_id + 'map'].viewState["default-view"].zoom : zoom;
+*/
+
+  var currentLon, currentLat, currentPitch, currentBearing, currentZoom;
+
+  if ( window[ map_id + 'map'].viewState["default-view"] !== undefined ) {
+  	currentLon = location === null ? window[ map_id + 'map'].viewState["default-view"].longitude : location[0];
+  	currentLat = location === null ? window[ map_id + 'map'].viewState["default-view"].latitude : location[1];
+    currentPitch = pitch === null ? window[ map_id + 'map'].viewState["default-view"].pitch : pitch;
+    currentBearing = bearing === null ? window[ map_id + 'map' ].viewState["default-view"].bearing : bearing;
+    currentZoom = zoom === null ? window[ map_id + 'map'].viewState["default-view"].zoom : zoom;
+  } else {
+  	currentLon = location === null ? window[ map_id + 'map'].viewState.longitude : location[0];
+  	currentLat = location === null ? window[ map_id + 'map'].viewState.latitude : location[1];
+    currentPitch = pitch === null ? window[ map_id + 'map'].viewState.pitch : pitch;
+    currentBearing = bearing === null ? window[ map_id + 'map' ].viewState.bearing : bearing;
+    currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
+  }
+/*
+  console.log( currentLon );
+  console.log( currentLat );
+  console.log( currentPitch );
+  console.log( currentBearing );
+  console.log( currentZoom );
+*/
+	window[map_id + 'map'].setProps({
+    viewState: {
+      longitude: currentLon,
+      latitude: currentLat,
+      zoom: currentZoom,
+      pitch: currentPitch,
+      bearing: currentBearing,
+      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
+      transitionDuration: duration
+    },
+  });
+}
+
+
+function layer_view( map_id, layer_id, focus_layer, bbox, update_view ) {
+	if( focus_layer ) {
+  	clear_bounds( map_id );
+  	update_view = true;     // force this
+  }
+
+  if( bbox !== undefined && update_view) {
+	  add_to_bounds( map_id, bbox, layer_id );
+	  var loc = center_location( window[ map_id + 'globalBox'] );
+	  change_location( map_id, loc, window[ map_id + 'currentZoomLevel'], null, null, 0, "linear" );
+  }
+}
+
+function layer_clear( map_id, layer_id, layer ) {
+	clear_layer( map_id, layer+'-'+layer_id );
+  clear_legend( map_id, layer_id );
+  remove_from_bounds( map_id, layer_id );
+  update_location( map_id );
+}
+
+function center_location( bbox ) {
+	cLon = (bbox[0][0] + bbox[1][0]) / 2;
+	cLat = (bbox[0][1] + bbox[1][1]) / 2;
+	var location = [cLon, cLat];
+	//console.log( "center location ");
+	//console.log( location  );
+	return location;
+}
+
+
+function add_to_bounds( map_id, bbox, layer_id ) {
+  var thisBox = {
+  	layer_id: layer_id,
+  	bbox: bbox
+  };
+
+  var elem = findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'layer_id', layer_id );
+	if ( elem != -1 ) {
+		window[ map_id + 'mapdeckBounds' ][elem] = thisBox;
+	} else {
+		window[ map_id + 'mapdeckBounds'].push( thisBox );
+	}
+	//console.log( window[ map_id + 'mapdeckBounds'] );
+	calculate_bounds( map_id, window[ map_id + 'mapdeckBounds'] );
+
+	//console.log( "add_to_bounds() global box: " ) ;
+	//console.log( window[ map_id + 'globalBox'] );
+
+	window[ map_id + 'currentZoomLevel'] = get_zoom_level( window[ map_id + 'globalBox'] );
+}
+
+function remove_from_bounds( map_id, layer_id ) {
+	var elem = findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'layer_id', layer_id );
+	if ( elem != -1 ) {
+		window[ map_id + 'mapdeckBounds'].splice( elem, 1 );
+	}
+	calculate_bounds( map_id, window[ map_id + 'mapdeckBounds'] );
+
+	//console.log( "remove_from_bounds() global box: ");
+	//console.log( window[ map_id + 'globalBox'] );
+
+	window[ map_id + 'currentZoomLevel'] = get_zoom_level( window[ map_id + 'globalBox'] );
+}
+
+function clear_bounds( map_id ) {
+	window[ map_id + 'mapdeckBounds'] = [];
+	window[ map_id + 'globalBox'] = [];
+	window[ map_id + 'currentZoomLevel'] = 0;
+}
+
+function update_location( map_id ) {
+	var loc = center_location( window[ map_id + 'globalBox' ] );
+	var zoom =  window[ map_id + 'currentZoomLevel' ];
+
+	console.log("updating location:");
+	console.log( loc );
+	console.log( zoom );
+  change_location( map_id, loc, zoom, null, null, 0, "linear" );
+}
+
+
+function calculate_bounds( map_id, mapdeckBounds ) {
+
+  var ymin, xmin, ymax, xmax, thisBox;
+  for( var i = 0; i < mapdeckBounds.length; i++ ) {
+    thisBox = mapdeckBounds[i].bbox;
+
+    if ( i === 0 ) {
+      xmin = thisBox[0][0];
+      ymin = thisBox[0][1];
+      xmax = thisBox[1][0];
+      ymax = thisBox[1][1];
+    } else {
+      xmin = Math.min( xmin, thisBox[0][0] );
+      ymin = Math.min( ymin, thisBox[0][1] );
+      xmax = Math.max( xmax, thisBox[1][0] );
+      ymax = Math.max( ymax, thisBox[1][1] );
+    }
+  }
+  window[ map_id + 'globalBox'] = [[xmin, ymin],[xmax,ymax]];
+}
+
+function lon_diff( globalBox ) {
+  xmin = globalBox[0][0];
+  xmax = globalBox[1][0];
+  xdiff = Math.abs( xmax - xmin );
+  //console.log( "londiff: " + xdiff );
+  //return get_zoom_level( xdiff );
+  return xdiff;
+}
+
+function get_zoom_level( globalBox ) {
+
+  var londiff = lon_diff( globalBox );
+  //console.log( "londiff: " + londiff );
+
+  var zoomLevel = [
+    360, 180, 90, 45, 22.5, 11.25, 5.65,2.813, 1.406,
+    0.703, 0.352, 0.176, 0.088, 0.044, 0.022, 0.011, 0.005
+  ];
+
+  if ( londiff >= zoomLevel[0] ) {
+    return 0;
+  }
+  var maxIndex = zoomLevel.length - 2;
+  var currentValue = zoomLevel[0];
+  var i;
+  var thisZoom, nextZoom;
+  for ( i = 0; i < maxIndex; i++ ) {
+    thisZoom = zoomLevel[i];
+    nextZoom = zoomLevel[(i+1)];
+    //console.log( "thisZoom: " + thisZoom );
+    //console.log( "londiff: " + londiff );
+    if ( thisZoom >= londiff && londiff > nextZoom ) {
+      return i;
+    }
+  }
+  //console.log( "zoom level: " + i );
+  return i;
+}
+
 
 function update_layer( map_id, layer_id, layer ) {
-  var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
+  var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id );
   if ( elem != -1 ) {
   	window[ map_id + 'layers'][elem] = layer;
   } else {
@@ -318,5 +529,43 @@ function decode_polyline(str, precision) {
   }
   return coordinates;
 }
+
+function get_point_coordinates ( obj ) {
+	if ( obj.geometry.geometry === null ) {
+		return [-179.999,-89.999];
+	}
+	return obj.geometry.geometry.coordinates;
+}
+
+function get_origin_coordinates ( obj ) {
+	if ( obj.geometry.origin === null ) {
+		return [-179.999,-89.999];
+	}
+	return obj.geometry.origin.coordinates;
+}
+
+function get_destination_coordinates ( obj ) {
+	if ( obj.geometry.destination === null ) {
+		return [-179.999,-89.999];
+	}
+	return obj.geometry.destination.coordinates;
+}
+
+
+function get_line_coordinates ( obj ) {
+	if ( obj.geometry.geometry === null ) {
+		return [[-179.999,-89.999],[-179.999,-89.999]];
+	}
+	return obj.geometry.geometry.coordinates;
+}
+
+function get_polygon_coordinates ( obj ) {
+	if ( obj.geometry.geometry === null ) {
+		return [[-179.999,-89.999],[-179.999,-89.999],[-179.999,-89.999]];
+	}
+	return obj.geometry.geometry.coordinates;
+}
+
+
 
 

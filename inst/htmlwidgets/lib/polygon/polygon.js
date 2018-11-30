@@ -1,8 +1,8 @@
-function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highlight, legend ) {
 
-  //console.log( polygon_data ) ;
-  //console.log( legend );
+function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
+
   const polygonLayer = new PolygonLayer({
+  	map_id: map_id,
     id: 'polygon-'+layer_id,
     data: polygon_data,
     pickable: true,
@@ -11,38 +11,7 @@ function add_polygon( map_id, polygon_data, layer_id, light_settings, auto_highl
     wireframe: false,
     extruded: true,
     lineWidthMinPixels: 1,
-    getPolygon: d => decode_polygons( d.polyline ),
-    getLineColor: d => hexToRgb_simple( d.stroke_colour ),
-    getFillColor: d => hexToRGBA( d.fill_colour, d.fill_opacity ),
-    getLineWidth: d => d.stroke_width,
-    getElevation: d => d.elevation,
-    lightSettings: light_settings,
-    autoHighlight: auto_highlight,
-    onHover: updateTooltip,
-    onClick: info => layer_click( map_id, "polygon", info )
-  });
-  update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
-
-  if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
-  }
-
-}
-
-function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
-    
-  //console.log( polygon_data );
-  //console.log( legend );
-  const polygonLayer = new PolygonLayer({
-    id: 'polygon-'+layer_id,
-    data: polygon_data,
-    pickable: true,
-    stroked: true,
-    filled: true,
-    wireframe: false,
-    extruded: true,
-    lineWidthMinPixels: 1,
-    getPolygon: d => d.geometry.geometry.coordinates,
+    getPolygon: d => get_polygon_coordinates( d ),
     getLineColor: d => hexToRGBA2( d.properties.stroke_colour ),
     getFillColor: d => hexToRGBA2( d.properties.fill_colour ),
     getLineWidth: d => d.properties.stroke_width,
@@ -58,11 +27,13 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
+
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 
-function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend ) {
-    
+function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
+
 
   const polygonLayer = new PolygonLayer({
     map_id: map_id,
@@ -87,10 +58,12 @@ function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, a
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
-    console.log( polygonLayer );
+    //console.log( polygonLayer );
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
+
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 function decode_polygons( polylines ) {
@@ -103,9 +76,4 @@ function decode_polygons( polylines ) {
     }
   }
   return coordinates;
-}
-
-function clear_polygon( map_id, layer_id ) {
-  clear_layer( map_id, 'polygon-'+layer_id );
-  clear_legend( map_id, layer_id );
 }

@@ -9,7 +9,9 @@ add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
   stroke_from_opacity = NULL, stroke_to = NULL,
   stroke_to_opacity = NULL, stroke_width = NULL, tooltip = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF", legend = F,
-  legend_options = NULL, palette = "viridis")
+  legend_options = NULL, palette = "viridis",
+  na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -24,7 +26,7 @@ to conflict and not plot correctly}
 
 \item{destination}{vector of longitude and latitude columns, or an \code{sfc} column}
 
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
 \item{stroke_from}{variable or hex colour to use as the staring stroke colour}
 
@@ -55,6 +57,10 @@ a named list indicating which colour attributes should be included in the legend
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 between [0, 255], where the 4th column represents the alpha.}
 
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
 \item{digits}{integer. Use this parameter to specify how many digits (decimal places)
 should be used for the latitude / longitude coordinates.}
 }
@@ -62,12 +68,26 @@ should be used for the latitude / longitude coordinates.}
 The Arc Layer renders raised arcs joining pairs of source and target coordinates
 }
 \details{
+\code{add_arc} supports POINT sf objects
+
 MULTIPOINT objects will be treated as single points. That is, if an sf objet
 has one row with a MULTIPOINT object consisting of two points, this will
 be expanded to two rows of single POINTs.
 Therefore, if the origin is a MULTIPOINT of two points, and the destination is
 a single POINT, the code will error as there will be an uneven number of rows
 }
+\section{id}{
+
+
+The \code{id} is returned to your R session from an interactive shiny environment
+by observing layer clicks. This is useful for returning the data.frame row relating to the
+cliked shape.
+
+From within a shiny server you would typically use \code{ observeEvent({input$map_arc_click})},
+where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the layer
+you are clicking on
+}
+
 \section{legend}{
 
 
@@ -93,7 +113,7 @@ flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
   add_arc(
   data = flights
   , layer_id = "arc_layer"
@@ -105,7 +125,9 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>
   , tooltip = "info"
   , auto_highlight = TRUE
   , legend = T
-  , legend_options = list(stroke_from = list( title = "Origin airport" ), css = "max-height: 100px;")
+  , legend_options = list(
+    stroke_from = list( title = "Origin airport" ),
+    css = "max-height: 100px;")
  )
 
 ## Using a 2-sfc-column sf object

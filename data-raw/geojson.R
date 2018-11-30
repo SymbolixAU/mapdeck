@@ -104,8 +104,10 @@ usethis::use_data(geojson, overwrite = T)
 
 sf <- geojsonsf::geojson_sf(geojson)
 sf$fillColor <- sample(colourvalues::colour_values(1:5, palette = "viridis"), size = nrow(sf), replace = T)
+sf$line_colour <- sample(colourvalues::colour_values(1:5, palette = "plasma"), size = nrow(sf), replace = T)
+sf$random <- rnorm(n = nrow(sf))
 geojson <- geojsonsf::sf_geojson(sf)
-attr(geojson, 'class') <- 'json'
+# attr(geojson, 'class') <- 'json'
 
 usethis::use_data(geojson, overwrite = T)
 

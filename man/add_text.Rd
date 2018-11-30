@@ -9,7 +9,8 @@ add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
   size = NULL, angle = NULL, anchor = NULL,
   alignment_baseline = NULL, tooltip = NULL, layer_id = NULL,
   id = NULL, auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  palette = "viridis", legend = FALSE, legend_options = NULL)
+  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
+  legend_options = NULL, update_view = TRUE, focus_layer = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -46,7 +47,7 @@ between 1 and 255 to be applied to all the shapes}
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
@@ -56,14 +57,23 @@ to conflict and not plot correctly}
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 between [0, 255], where the 4th column represents the alpha.}
 
+\item{na_colour}{hex string colour to use for NA values}
+
 \item{legend}{either a logical indiciating if the legend(s) should be displayed, or
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
 The Text Layer takes in coordinate points and renders them as circles
 with a certain radius.
+}
+\details{
+\code{add_text} supports POINT and MULTIPOINT sf objects
 }
 \section{legend}{
 
@@ -76,6 +86,18 @@ This should be a named list, where the names are one of
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+}
+
+\section{id}{
+
+
+The \code{id} is returned to your R session from an interactive shiny environment
+by observing layer clicks. This is useful for returning the data.frame row relating to the
+cliked shape.
+
+From within a shiny server you would typically use \code{ observeEvent({input$map_arc_click})},
+where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the layer
+you are clicking on
 }
 
 \examples{

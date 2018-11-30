@@ -8,7 +8,8 @@ add_line(map, data = get_map_data(map), layer_id = NULL, origin,
   destination, id = NULL, stroke_colour = NULL, stroke_width = NULL,
   stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
-  legend = FALSE, legend_options = NULL)
+  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
+  update_view = TRUE, focus_layer = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -23,7 +24,7 @@ to conflict and not plot correctly}
 
 \item{destination}{vector of longitude and latitude columns, or an \code{sfc} column}
 
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
 \item{stroke_colour}{variable or hex colour to use as the ending stroke colour}
 
@@ -47,12 +48,19 @@ between [0, 255], where the 4th column represents the alpha.}
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
 The Line Layer renders raised lines joining pairs of source and target coordinates
 }
 \details{
-MULTIPOINT objects will be treated as single points. That is, if an sf objet
+\code{add_line} supports POINT sf objects
+
+
+MULTIPOINT objects will be treated as single points. That is, if an sf object
 has one row with a MULTIPOINT object consisting of two points, this will
 be expanded to two rows of single POINTs.
 Therefore, if the origin is a MULTIPOINT of two points, and the destination is
@@ -71,6 +79,18 @@ This should be a named list, where the names are one of
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
 }
 
+\section{id}{
+
+
+The \code{id} is returned to your R session from an interactive shiny environment
+by observing layer clicks. This is useful for returning the data.frame row relating to the
+cliked shape.
+
+From within a shiny server you would typically use \code{ observeEvent({input$map_arc_click})},
+where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the layer
+you are clicking on
+}
+
 \examples{
 \donttest{
 
@@ -82,7 +102,7 @@ flights <- read.csv(url)
 flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
   add_line(
     data = flights
     , layer_id = "line_layer"
@@ -92,7 +112,6 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>
     , stroke_width = "stroke"
     , auto_highlight = TRUE
  )
-}
 
 ## Using a 2-sfc-column sf object
 library(sf)
@@ -112,5 +131,6 @@ mapdeck(
    , layer_id = 'arcs'
    , stroke_colour = "airport1"
 )
+}
 
 }

@@ -10,7 +10,7 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   light_settings = list(), layer_id = NULL, id = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL)
+  legend_options = NULL, update_view = TRUE, focus_layer = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -29,7 +29,7 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
 column of \code{data} containing the fill opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
-\item{elevation}{the height of the polygon}
+\item{elevation}{the height the polygon extrudes from the map.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -43,7 +43,7 @@ between 1 and 255 to be applied to all the shapes}
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
 \item{palette}{string or matrix. String is either one of "viridis","inferno",
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
@@ -54,13 +54,16 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{legend_options}{A list of options for controlling the legend.}
 
-\item{geometry}{string specifying the `sfc` column of an SF object. If NULL and
-\code{data} is an `sf` object the \code{geometry} will be automatically assinged
-from \code{ sf::st_geometry( data ) }}
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
 The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects
 only POLYGONs are supported, MULTIPOLYGONs are ignored.
+}
+\details{
+\code{add_polygon} supports POLYGON and MULTIPOLYGON sf objects
 }
 \section{legend}{
 
@@ -73,6 +76,18 @@ This should be a named list, where the names are one of
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+}
+
+\section{id}{
+
+
+The \code{id} is returned to your R session from an interactive shiny environment
+by observing layer clicks. This is useful for returning the data.frame row relating to the
+cliked shape.
+
+From within a shiny server you would typically use \code{ observeEvent({input$map_arc_click})},
+where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the layer
+you are clicking on
 }
 
 \examples{
@@ -106,11 +121,10 @@ library(sf)
 library(geojsonsf)
 
 sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
-sf <- sf::st_cast(sf, "POLYGON")
 
 mapdeck(
   token = key
-  , style = 'mapbox://styles/mapbox/dark-v9'
+  , style = mapdeck_style('dark')
 ) \%>\%
   add_polygon(
     data = sf
@@ -119,4 +133,5 @@ mapdeck(
   )
 
 }
+
 }

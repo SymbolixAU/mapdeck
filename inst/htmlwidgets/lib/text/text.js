@@ -1,33 +1,12 @@
 
+function add_text_geo( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer) {
 
-function add_text( map_id, text_data, layer_id ) {
   const textLayer = new TextLayer({
+  	map_id: map_id,
     id: 'text-'+layer_id,
     data: text_data,
     pickable: true,
-    getPosition: d => decode_points( d.polyline ),
-    getColor: d => hexToRGBA( d.fill_colour, d.fill_opacity ),
-    getText: d => d.text,
-    getSize: d => d.size,
-    getAngle: d => d.angle,
-    getTextAnchor: d => d.anchor,
-    getAlignmentBaseline: d => d.alignment_baseline,
-    onClick: info => layer_click( map_id, "text", info ),
-    onHover: updateTooltip
-  });
-  update_layer( map_id, 'text-'+layer_id, textLayer );
-}
-
-
-function add_text_geo( map_id, text_data, layer_id ) {
-
-  //console.log( text_data );
-
-  const textLayer = new TextLayer({
-    id: 'text-'+layer_id,
-    data: text_data,
-    pickable: true,
-    getPosition: d => d.geometry.geometry.coordinates,
+    getPosition: d => get_point_coordinates( d ),
     getColor: d => hexToRGBA2( d.properties.fill_colour ),
     getText: d => d.properties.text,
     getSize: d => d.properties.size,
@@ -38,9 +17,14 @@ function add_text_geo( map_id, text_data, layer_id ) {
     onHover: updateTooltip
   });
   update_layer( map_id, 'text-'+layer_id, textLayer );
+
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend ) {
+function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
 
   const textLayer = new TextLayer({
     map_id: map_id,
@@ -64,9 +48,5 @@ function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlig
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
-}
-
-function clear_text( map_id, layer_id ) {
-  clear_layer( map_id, 'text-'+layer_id );
-  clear_legend( map_id, layer_id );
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }

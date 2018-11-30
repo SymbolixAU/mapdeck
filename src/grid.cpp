@@ -5,15 +5,13 @@
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List grid_defaults(int n) {
-	return Rcpp::List::create(
-		//_["polyline"] = mapdeck::defaults::default_polyline(n)
-	);
+	return Rcpp::List::create();
 }
 
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_grid_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
-                              Rcpp::List params, Rcpp::StringVector geometry_columns ) {
+                              Rcpp::List params, std::string geometry_column ) {
 
 	int data_rows = data.nrows();
 
@@ -21,8 +19,9 @@ Rcpp::List rcpp_grid_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > grid_colours = mapdeck::grid::grid_colours;
 	Rcpp::StringVector grid_legend = mapdeck::grid::grid_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
-	return spatialwidget::api::create_geojson(
+	return spatialwidget::api::create_geojson_downcast(
 		data,
 		data_types,
 		params,
@@ -30,7 +29,8 @@ Rcpp::List rcpp_grid_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		grid_colours,
 		grid_legend,
 		data_rows,
-		geometry_columns,
+		parameter_exclusions,
+		geometry_column,
 		true  // jsonify legend
 	);
 }
@@ -45,6 +45,7 @@ Rcpp::List rcpp_grid_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > grid_colours = mapdeck::grid::grid_colours;
 	Rcpp::StringVector grid_legend = mapdeck::grid::grid_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(
 		data,
@@ -54,6 +55,7 @@ Rcpp::List rcpp_grid_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 		grid_colours,
 		grid_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -69,6 +71,7 @@ Rcpp::List rcpp_grid_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	std::unordered_map< std::string, std::string > grid_colours = mapdeck::grid::grid_colours;
 	Rcpp::StringVector grid_legend = mapdeck::grid::grid_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(
 		data,
@@ -78,6 +81,7 @@ Rcpp::List rcpp_grid_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
 		grid_colours,
 		grid_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);

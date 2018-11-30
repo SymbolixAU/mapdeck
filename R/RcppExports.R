@@ -13,8 +13,12 @@ rcpp_arc_polyline <- function(data, data_types, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_arc_polyline`, data, data_types, params, geometry_columns)
 }
 
-rcpp_grid_geojson <- function(data, data_types, params, geometry_columns) {
-    .Call(`_mapdeck_rcpp_grid_geojson`, data, data_types, params, geometry_columns)
+rcpp_geojson_geojson <- function(data, data_types, params, geometry_column) {
+    .Call(`_mapdeck_rcpp_geojson_geojson`, data, data_types, params, geometry_column)
+}
+
+rcpp_grid_geojson <- function(data, data_types, params, geometry_column) {
+    .Call(`_mapdeck_rcpp_grid_geojson`, data, data_types, params, geometry_column)
 }
 
 rcpp_grid_geojson_df <- function(data, data_types, params, geometry_columns) {

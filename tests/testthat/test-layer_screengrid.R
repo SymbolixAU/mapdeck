@@ -3,8 +3,8 @@ context("screengrid")
 
 test_that("add_screengrid accepts multiple objects", {
 
-	geo <- '[{"type":"Feature","properties":{},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
-	poly <- '[{"polyline":"_ifpEo`ydL"}]'
+	geo <- '[{"type":"Feature","properties":{"weight":1.0},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
+	poly <- '[{"weight":1.0,"polyline":"_ifpEo`ydL"}]'
 
 	## sf
 	set_token("abc")

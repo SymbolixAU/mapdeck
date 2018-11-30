@@ -6,7 +6,6 @@
 
 Rcpp::List screengrid_defaults(int n) {
 	return Rcpp::List::create(
-		//_["polyline"] = mapdeck::defaults::default_polyline(n)
 		_["weight"] = mapdeck::defaults::default_weight(n)
 	);
 }
@@ -14,15 +13,16 @@ Rcpp::List screengrid_defaults(int n) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_screengrid_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
-                            Rcpp::List params, Rcpp::StringVector geometry_columns ) {
+                            Rcpp::List params, std::string geometry_columns ) {
 
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = screengrid_defaults( data_rows );  // initialise with defaults
 	std::unordered_map< std::string, std::string > screengrid_colours = mapdeck::screengrid::screengrid_colours;
 	Rcpp::StringVector screengrid_legend = mapdeck::screengrid::screengrid_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
-	return spatialwidget::api::create_geojson(
+	return spatialwidget::api::create_geojson_downcast(
 		data,
 		data_types,
 		params,
@@ -30,6 +30,7 @@ Rcpp::List rcpp_screengrid_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 		screengrid_colours,
 		screengrid_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -45,6 +46,7 @@ Rcpp::List rcpp_screengrid_geojson_df( Rcpp::DataFrame data, Rcpp::List data_typ
 	Rcpp::List lst_defaults = screengrid_defaults( data_rows );  // initialise with defaults
 	std::unordered_map< std::string, std::string > screengrid_colours = mapdeck::screengrid::screengrid_colours;
 	Rcpp::StringVector screengrid_legend = mapdeck::screengrid::screengrid_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(
 		data,
@@ -54,6 +56,7 @@ Rcpp::List rcpp_screengrid_geojson_df( Rcpp::DataFrame data, Rcpp::List data_typ
 		screengrid_colours,
 		screengrid_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);
@@ -68,6 +71,7 @@ Rcpp::List rcpp_screengrid_polyline( Rcpp::DataFrame data, Rcpp::List data_types
 	Rcpp::List lst_defaults = screengrid_defaults( data_rows );  // initialise with defaults
 	std::unordered_map< std::string, std::string > screengrid_colours = mapdeck::screengrid::screengrid_colours;
 	Rcpp::StringVector screengrid_legend = mapdeck::screengrid::screengrid_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(
 		data,
@@ -77,6 +81,7 @@ Rcpp::List rcpp_screengrid_polyline( Rcpp::DataFrame data, Rcpp::List data_types
 		screengrid_colours,
 		screengrid_legend,
 		data_rows,
+		parameter_exclusions,
 		geometry_columns,
 		true  // jsonify legend
 	);

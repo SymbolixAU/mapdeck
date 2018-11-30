@@ -8,7 +8,8 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, colour_range = colourvalues::colour_values(1:6,
   palette = "viridis"), cell_size = 1000, extruded = TRUE,
   elevation_scale = 1, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL)
+  highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL,
+  update_view = TRUE, focus_layer = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -37,12 +38,19 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
 The Grid Layer renders a grid heatmap based on an array of points.
 It takes the constant size all each cell, projects points into cells.
 The color and height of the cell is scaled by number of points it contains.
+}
+\details{
+\code{add_grid} supports POINT and MULTIPOINT sf objects
 }
 \examples{
 \donttest{
@@ -56,7 +64,7 @@ df <- read.csv(paste0(
 
 df <- df[ !is.na(df$lng ), ]
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_grid(
   data = df
   , lat = "lat"
@@ -71,7 +79,7 @@ add_grid(
 library(sf)
 sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_grid(
   data = sf
   , cell_size = 5000
@@ -79,6 +87,7 @@ add_grid(
   , layer_id = "grid_layer"
   , auto_highlight = TRUE
 )
+
 
 }
 
