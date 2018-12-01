@@ -181,7 +181,8 @@ add_geojson <- function(
 	palette = "viridis",
 	na_colour = "#808080FF",
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	transitions = NULL
 	) {
 
 	l <- list()
@@ -246,12 +247,12 @@ add_geojson <- function(
 	# data <- normalisesGeojsonData( data )
 	## Parameter checks
 
-	checkNumeric( radius )
-	checkNumeric( stroke_width )
-	checkNumeric( elevation )
-	isHexColour( stroke_colour )
-	isHexColour( fill_colour )
-	checkHexAlpha( highlight_colour )
+	# checkNumeric( radius )
+	# checkNumeric( stroke_width )
+	# checkNumeric( elevation )
+	# isHexColour( stroke_colour )
+	# isHexColour( fill_colour )
+	# checkHexAlpha( highlight_colour )
 	layer_id <- layerId( layer_id, "geojson" )
 	## TODO(light_settings - test options are accurate)
 
@@ -273,13 +274,15 @@ add_geojson <- function(
 	}
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
+	js_transitions <- resolve_transitions( transitions, "geojson" )
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
 
 	## TODO( invoke different methods for when using pure GeoJSON and when using sf)
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight,
-		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		js_transitions
 		)
 }
 

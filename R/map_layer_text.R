@@ -117,8 +117,8 @@ add_text <- function(
 
 	## parmater checks
 	#usePolyline <- isUsingPolyline(polyline)
-	checkNumeric(size)
-	checkNumeric(angle)
+	# checkNumeric(size)
+	# checkNumeric(angle)
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "text")
 

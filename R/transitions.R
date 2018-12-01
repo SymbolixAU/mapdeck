@@ -80,6 +80,7 @@ resolve_transitions <- function( transitions, layer ) {
 	transitions <- switch(
 		layer,
 		"arc" = transitions_arc( transitions ),
+		"geojson" = transitions_geojson( transitions ),
 		"line" = transitions_line( transitions ),
 		"path" = transitions_path( transitions ),
 		"pointcloud" = transitions_pointcloud( transitions ),
@@ -96,6 +97,15 @@ transitions_arc <- function( transitions ) {
 	transitions <- replace_name( transitions, "stroke_from", "getSourceColor" )
 	transitions <- replace_name( transitions, "stroke_to", "getTargetColor" )
 	transitions <- replace_name( transitions, "stroke_width", "getStrokeWidth" )
+	return( transitions )
+}
+
+transitions_geojson <- function( transitions ) {
+	transitions <- replace_name( transitions, "fill_colour", "getFillColor" )
+	transitions <- replace_name( transitions, "stroke_colour", "getLineColor" )
+	transitions <- replace_name( transitions, "radius", "getRadius" )
+	transitions <- replace_name( transitions, "stroke_width", "getLineWidth" )
+	transitions <- replace_name( transitions, "elevation", "getElevation" )
 	return( transitions )
 }
 
@@ -121,7 +131,8 @@ transitions_pointcloud <- function( transitions ) {
 }
 
 transitions_polygon <- function( transitions ) {
-	transitions <- replace_name( transitions, "fill_colour", "getColor" )
+	transitions <- replace_name( transitions, "polygon", "getPolygon" )
+	transitions <- replace_name( transitions, "fill_colour", "getFillColor" )
 	transitions <- replace_name( transitions, "stroke_colour", "getLineColor" )
 	transitions <- replace_name( transitions, "stroke_width", "getLineWidth" )
 	transitions <- replace_name( transitions, "elevation", "getElevation" )
@@ -129,11 +140,13 @@ transitions_polygon <- function( transitions ) {
 }
 
 transitions_scatterplot <- function( transitions ) {
+	transitions <- replace_name( transitions, "position", "getPosition" )
 	transitions <- replace_name( transitions, "fill_colour", "getColor" )
 	transitions <- replace_name( transitions, "radius", "getRadius" )
 }
 
 transitions_text <- function( transitions ) {
+	transitions <- replace_name( transitions, "position", "getPosition" )
 	transitions <- replace_name( transitions, "size", "getSize" )
 	transitions <- replace_name( transitions, "fill_colour", "getColor" )
 	transitions <- replace_name( transitions, "angle", "getAngle" )
