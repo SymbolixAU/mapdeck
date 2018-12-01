@@ -19,6 +19,7 @@ mapdeckHexagonDependency <- function() {
 #' @inheritParams add_arc
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
+#' @param polyline column of \code{data} containing the polylines
 #' @param radius in metres
 #' @param elevation_scale value to sacle the elevations of the hexagons
 #' @param colour_range palette of colours
@@ -78,15 +79,6 @@ add_hexagon <- function(
 	update_view = TRUE,
 	focus_layer = FALSE
 ) {
-
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
-	# l[["light_settings"]] <- NULL
-	# l[["layer_id"]] <- NULL
-	# l[["colour_range"]] <- NULL
 
 	l <- list()
 	l[["polyline"]] <- force(polyline)

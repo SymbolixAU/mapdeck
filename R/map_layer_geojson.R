@@ -28,7 +28,22 @@ mapdeckGeojsonDependency <- function() {
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip.
 #' Only works on \code{sf} objects.
 #'
-#' @details
+#'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny).
+#' The time is in milliseconds
+#'
+#' Available transitions for geojson
+#'
+#' list(
+#' fill_colour = 0,
+#' stroke_colour = 0,
+#' stroke_width = 0,
+#' elevation = 0,
+#' radius = 0
+#' )
 #'
 #' @section Raw Geojson:
 #'
@@ -140,6 +155,7 @@ mapdeckGeojsonDependency <- function() {
 #'  )
 #'
 #' ## putting elevation and width values onto raw GeoJSON
+#' library(geojsonsf)
 #' sf <- geojsonsf::geojson_sf( geojson )
 #' sf$width <- sample(1:100, size = nrow(sf), replace = TRUE)
 #' sf$elevation <- sample(100:1000, size = nrow(sf), replace = T)

@@ -24,6 +24,21 @@ mapdeckPathDependency <- function() {
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny).
+#' The time is in milliseconds
+#'
+#' Available transitions for path
+#'
+#' list(
+#' path = 0,
+#' stroke_colour = 0,
+#' stroke_width = 0
+#' )
+#'
+#'
 #' @examples
 #' \donttest{
 #'

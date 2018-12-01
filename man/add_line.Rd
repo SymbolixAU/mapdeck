@@ -20,18 +20,16 @@ add_line(map, data = get_map_data(map), layer_id = NULL, origin,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{origin}{vector of longitude and latitude columns, or an \code{sfc} column.
-transition enabled}
+\item{origin}{vector of longitude and latitude columns, or an \code{sfc} column}
 
-\item{destination}{vector of longitude and latitude columns, or an \code{sfc} column.
-transition enabled}
+\item{destination}{vector of longitude and latitude columns, or an \code{sfc} column}
 
 \item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
 \item{stroke_colour}{variable or hex colour to use as the ending stroke colour.
 transition enabled}
 
-\item{stroke_width}{width of the stroke. transition enabled}
+\item{stroke_width}{width of the stroke}
 
 \item{stroke_opacity}{value between 1 and 255. Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
@@ -47,6 +45,8 @@ between 1 and 255 to be applied to all the shapes}
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 between [0, 255], where the 4th column represents the alpha.}
 
+\item{na_colour}{hex string colour to use for NA values}
+
 \item{legend}{either a logical indiciating if the legend(s) should be displayed, or
 a named list indicating which colour attributes should be included in the legend.}
 
@@ -56,7 +56,7 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
-\item{transitions}{}
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
 The Line Layer renders raised lines joining pairs of source and target coordinates
@@ -71,6 +71,23 @@ be expanded to two rows of single POINTs.
 Therefore, if the origin is a MULTIPOINT of two points, and the destination is
 a single POINT, the code will error as there will be an uneven number of rows
 }
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny).
+The time is in milliseconds
+
+Available transitions for line
+
+list(
+origin = 0,
+destination = 0,
+stroke_colour = 0,
+stroke_width = 0
+)
+}
+
 \section{legend}{
 
 

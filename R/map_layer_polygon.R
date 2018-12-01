@@ -33,6 +33,22 @@ mapdeckPolygonDependency <- function() {
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny).
+#' The time is in milliseconds
+#'
+#' Available transitions for polygon
+#'
+#' list(
+#' polygon = 0,
+#' fill_colour = 0,
+#' stroke_colour = 0,
+#' stroke_width = 0,
+#' elevation = 0
+#' )
+#'
 #' @examples
 #' \donttest{
 #'
@@ -63,7 +79,7 @@ mapdeckPolygonDependency <- function() {
 #' library(sf)
 #' library(geojsonsf)
 #'
-#' sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+#' sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
 #'
 #' mapdeck(
 #'   token = key

@@ -70,7 +70,7 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
-\item{transitions}{}
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
 The Text Layer takes in coordinate points and renders them as circles
@@ -79,6 +79,23 @@ with a certain radius.
 \details{
 \code{add_text} supports POINT and MULTIPOINT sf objects
 }
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny).
+The time is in milliseconds
+
+Available transitions for text
+
+list(
+position = 0,
+fill_colour = 0,
+angle = 0,
+size = 0
+)
+}
+
 \section{legend}{
 
 

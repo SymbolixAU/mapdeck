@@ -88,15 +88,6 @@ add_grid <- function(
 	focus_layer = FALSE
 ) {
 
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["elevation_scale"]] <- NULL
-	# l[["cell_size"]] <- NULL
-	# l[["colour_range"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
-	# l[["layer_id"]] <- NULL
 	l <- list()
 	l[["lon"]] <- force(lon)
 	l[["lat"]] <- force(lat)

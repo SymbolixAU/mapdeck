@@ -22,10 +22,23 @@ mapdeckScatterplotDependency <- function() {
 #' @param palette string or matrix. String is either one of "viridis","inferno",
 #' "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 #' between [0, 255], where the 4th column represents the alpha.
-#' @param na_colour hex string colour to use for NA values
 #'
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
+#'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny).
+#' The time is in milliseconds
+#'
+#' Available transitions for scatterplot
+#'
+#' list(
+#' position = 0,
+#' fill_colour = 0,
+#' radius = 0
+#' )
 #'
 #' @examples
 #'
@@ -33,7 +46,7 @@ mapdeckScatterplotDependency <- function() {
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
 #'
-#' mapdeck( token = key, style = style = mapdeck_style("dark"), pitch = 45 ) %>%
+#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = capitals
 #'   , lat = "lat"

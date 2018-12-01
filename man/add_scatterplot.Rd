@@ -59,7 +59,7 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
-\item{transitions}{}
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
 The Scatterplot Layer takes in coordinate points and renders them as circles
@@ -68,6 +68,22 @@ with a certain radius.
 \details{
 \code{add_scatterplot} supports POINT and MULTIPOINT sf objects
 }
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny).
+The time is in milliseconds
+
+Available transitions for scatterplot
+
+list(
+position = 0,
+fill_colour = 0,
+radius = 0
+)
+}
+
 \section{legend}{
 
 
@@ -99,7 +115,7 @@ you are clicking on
 ## You need a valid access token from Mapbox
 key <- 'abc'
 
-mapdeck( token = key, style = style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_scatterplot(
   data = capitals
   , lat = "lat"

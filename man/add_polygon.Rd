@@ -52,6 +52,8 @@ to conflict and not plot correctly}
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 between [0, 255], where the 4th column represents the alpha.}
 
+\item{na_colour}{hex string colour to use for NA values}
+
 \item{legend}{either a logical indiciating if the legend(s) should be displayed, or
 a named list indicating which colour attributes should be included in the legend.}
 
@@ -61,7 +63,7 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
-\item{transitions}{}
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
 The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects
@@ -70,6 +72,24 @@ only POLYGONs are supported, MULTIPOLYGONs are ignored.
 \details{
 \code{add_polygon} supports POLYGON and MULTIPOLYGON sf objects
 }
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny).
+The time is in milliseconds
+
+Available transitions for polygon
+
+list(
+polygon = 0,
+fill_colour = 0,
+stroke_colour = 0,
+stroke_width = 0,
+elevation = 0
+)
+}
+
 \section{legend}{
 
 
@@ -125,7 +145,7 @@ mapdeck(
 library(sf)
 library(geojsonsf)
 
-sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
 
 mapdeck(
   token = key

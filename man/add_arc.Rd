@@ -22,29 +22,25 @@ add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{origin}{vector of longitude and latitude columns, or an \code{sfc} column.
-transition enabled}
+\item{origin}{vector of longitude and latitude columns, or an \code{sfc} column}
 
-\item{destination}{vector of longitude and latitude columns, or an \code{sfc} column.
-transition enabled}
+\item{destination}{vector of longitude and latitude columns, or an \code{sfc} column}
 
 \item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
-\item{stroke_from}{variable or hex colour to use as the staring stroke colour.
-transition enabled}
+\item{stroke_from}{variable or hex colour to use as the staring stroke colour}
 
 \item{stroke_from_opacity}{Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
-\item{stroke_to}{variable or hex colour to use as the ending stroke colour.
-transition enabled}
+\item{stroke_to}{variable or hex colour to use as the ending stroke colour}
 
 \item{stroke_to_opacity}{Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
-\item{stroke_width}{width of the stroke. transition enabled}
+\item{stroke_width}{width of the stroke}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -61,14 +57,13 @@ a named list indicating which colour attributes should be included in the legend
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 between [0, 255], where the 4th column represents the alpha.}
 
+\item{na_colour}{hex string colour to use for NA values}
+
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
-\item{transitions}{}
-
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
 The Arc Layer renders raised arcs joining pairs of source and target coordinates
@@ -105,6 +100,24 @@ This should be a named list, where the names are one of
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+}
+
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny).
+The time is in milliseconds
+
+Available transitions for arc
+
+list(
+origin = 0,
+destination = 0,
+stroke_from = 0,
+stroke_to = 0,
+stroke_width = 0
+)
 }
 
 \examples{

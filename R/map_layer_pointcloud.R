@@ -23,6 +23,19 @@ mapdeckPointcloudDependency <- function() {
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny).
+#' The time is in milliseconds
+#'
+#' Available transitions for pointcloud
+#'
+#' list(
+#' position = 0,
+#' fill_colour = 0
+#' )
+#'
 #' @examples
 #' \donttest{
 #' ## You need a valid access token from Mapbox
