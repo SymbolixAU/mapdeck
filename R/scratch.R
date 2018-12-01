@@ -52,12 +52,12 @@
 #
 # 	observeEvent({input$button},{
 #
-# 		#flights$stroke <- sample(0:5, size = nrow(flights), replace = TRUE)
+# 		flights$stroke <- sample(0:5, size = nrow(flights), replace = TRUE)
 # 		flights$rand <- sample(0:3, size = nrow(flights), replace = TRUE)
-# 		#flights$start_lat <- sample(origins$start_lat, size = nrow(flights), replace = FALSE)
-# 		#flights$start_lon <- sample(origins$start_lon, size = nrow(flights), replace = FALSE)
-# 		#flights$start_lat <- sample(destinations$end_lat, size = nrow(flights), replace = FALSE)
-# 		#flights$end_lon <- sample(destinations$end_lon, size = nrow(flights), replace = FALSE)
+# 		flights$start_lat <- sample(origins$start_lat, size = nrow(flights), replace = FALSE)
+# 		flights$start_lon <- sample(origins$start_lon, size = nrow(flights), replace = FALSE)
+# 		flights$start_lat <- sample(destinations$end_lat, size = nrow(flights), replace = FALSE)
+# 		flights$end_lon <- sample(destinations$end_lon, size = nrow(flights), replace = FALSE)
 #
 # 		mapdeck_update(
 # 			map_id = "map"
@@ -73,6 +73,13 @@
 # 				, tooltip = "info"
 # 				, auto_highlight = TRUE
 # 				, update_view = FALSE
+# 				, transitions = list(
+# 					origin = 1000
+# 					, destination = 1000
+# 					, stroke_from = 1000
+# 					, stroke_to = 1000
+# 					, stroke_width = 600
+# 				)
 # 			)
 #
 # 	})
