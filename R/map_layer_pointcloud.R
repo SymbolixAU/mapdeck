@@ -84,7 +84,8 @@ add_pointcloud <- function(
 	legend = FALSE,
 	legend_options = NULL,
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
 
 	# message("Using development version. Please check plots carefully")

@@ -10,7 +10,8 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   light_settings = list(), layer_id = NULL, id = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, update_view = TRUE, focus_layer = FALSE)
+  legend_options = NULL, update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -19,17 +20,19 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
 
 \item{polyline}{column of \code{data} containing the polylines}
 
-\item{stroke_colour}{variable of \code{data} or hex colour for the stroke}
+\item{stroke_colour}{variable of \code{data} or hex colour for the stroke.
+transition enabled}
 
-\item{stroke_width}{width of the stroke}
+\item{stroke_width}{width of the stroke. transition enabled}
 
-\item{fill_colour}{column of \code{data} or hex colour for the fill colour}
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour.
+transition enabled}
 
 \item{fill_opacity}{value between 1 and 255. Either a string specifying the
 column of \code{data} containing the fill opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
-\item{elevation}{the height the polygon extrudes from the map.}
+\item{elevation}{the height the polygon extrudes from the map. transition enabled}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -57,6 +60,8 @@ a named list indicating which colour attributes should be included in the legend
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{transitions}{}
 }
 \description{
 The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects

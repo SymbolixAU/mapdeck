@@ -2,13 +2,6 @@
 
 S3method(findEncodedColumn,default)
 S3method(findEncodedColumn,sfencoded)
-S3method(flattenLegend,list)
-S3method(flattenLegend,logical)
-S3method(formatLegendValue,POSIXct)
-S3method(formatLegendValue,default)
-S3method(formatLegendValue,numeric)
-S3method(getLegendType,default)
-S3method(getLegendType,numeric)
 S3method(get_box,data.frame)
 S3method(get_box,sf)
 S3method(get_box,sfencoded)

@@ -19,18 +19,22 @@ mapdeckArcDependency <- function() {
 #' @param layer_id single value specifying an id for the layer. Use this value to
 #' distinguish between shape layers of the same type. Layers with the same id are likely
 #' to conflict and not plot correctly
-#' @param origin vector of longitude and latitude columns, or an \code{sfc} column
-#' @param destination vector of longitude and latitude columns, or an \code{sfc} column
+#' @param origin vector of longitude and latitude columns, or an \code{sfc} column.
+#' transition enabled
+#' @param destination vector of longitude and latitude columns, or an \code{sfc} column.
+#' transition enabled
 #' @param id an id value in \code{data} to identify layers when interacting in Shiny apps.
-#' @param stroke_from variable or hex colour to use as the staring stroke colour
+#' @param stroke_from variable or hex colour to use as the staring stroke colour.
+#' transition enabled
 #' @param stroke_from_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes
-#' @param stroke_to variable or hex colour to use as the ending stroke colour
+#' @param stroke_to variable or hex colour to use as the ending stroke colour.
+#' transition enabled
 #' @param stroke_to_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes
-#' @param stroke_width width of the stroke
+#' @param stroke_width width of the stroke. transition enabled
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
 #' @param highlight_colour hex string colour to use for highlighting. Must contain the alpha component.
@@ -44,6 +48,7 @@ mapdeckArcDependency <- function() {
 #' @param legend_options A list of options for controlling the legend.
 #' @param update_view logical indicating if the map should update the bounds to include this layer
 #' @param focus_layer logical indicating if the map should update the bounds to only include this layer
+#' @param transitions
 #'
 #' @section id:
 #'
@@ -153,14 +158,6 @@ add_arc <- function(
 	transitions = NULL
 ) {
 
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
-	# l[["light_settings"]] <- NULL
-	# l[["layer_id"]] <- NULL
-
 	l <- list()
 	l[["origin"]] <- force(origin)
 	l[["destination"]] <- force(destination)
@@ -214,25 +211,15 @@ add_arc <- function(
   	jsfunc <- "add_arc_polyline"
   }
 
-	transitions <- list(
-		getSourcePosition = 1000
-		, getTargetPosition = 1000
-		, getTargetColor = list(
-			duration = 1000
-			, enter = "value => [ value[0], value[1], value[2], 0]"
-		)
-		#, getSourceColor = 1000
-		#, getTargetColor = 1000
-		, getStrokeWidth = 1000
-	)
-
-	js_transition <- jsonify::to_json( transitions , unbox = TRUE )
+	js_transition <- resolve_transitions( transitions, "arc" )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition
 		)
 }
+
+
 
 #' Clear Arc
 #'

@@ -98,16 +98,10 @@ add_scatterplot <- function(
 	legend = FALSE,
 	legend_options = NULL,
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
 
-	# l <- as.list( match.call() )
-	# l[[1]] <- NULL    ## function call
-	# l[["map"]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
-	# l[["layer_id"]] <- NULL
-	#l <- resolve_args( l, scatterplot_data_args() )
 	l <- list()
 	l[["lon"]] <- force(lon)
 	l[["lat"]] <- force(lat)
@@ -160,9 +154,12 @@ add_scatterplot <- function(
 		shape <- rcpp_scatterplot_polyline( data, data_types, l, geometry_column )
 		jsfunc <- "add_scatterplot_polyline"
 	}
+
+	js_transitions <- resolve_transitions( transitions, "scatterplot" )
+
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
-		shape[["legend"]], bbox, update_view, focus_layer
+		shape[["legend"]], bbox, update_view, focus_layer, js_transitions
 		)
 }
 

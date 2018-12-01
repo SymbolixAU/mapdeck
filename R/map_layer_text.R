@@ -77,14 +77,9 @@ add_text <- function(
 	legend = FALSE,
 	legend_options = NULL,
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
-
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["layer_id"]] <- NULL
 
 	l <- list()
 	l[["lon"]] <- force( lon )
@@ -146,9 +141,11 @@ add_text <- function(
 		jsfunc <- "add_text_polyline"
 	}
 
+	js_transitions <- resolve_transitions( transitions, "text" )
+
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
-		shape[["legend"]], bbox, update_view, focus_layer
+		shape[["legend"]], bbox, update_view, focus_layer, js_transitions
 		)
 }
 

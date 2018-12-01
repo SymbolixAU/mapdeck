@@ -18,14 +18,16 @@ mapdeckPolygonDependency <- function() {
 #' @inheritParams add_arc
 #'
 #' @param polyline column of \code{data} containing the polylines
-#' @param fill_colour column of \code{data} or hex colour for the fill colour
+#' @param fill_colour column of \code{data} or hex colour for the fill colour.
+#' transition enabled
 #' @param fill_opacity value between 1 and 255. Either a string specifying the
 #' column of \code{data} containing the fill opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes
-#' @param stroke_colour variable of \code{data} or hex colour for the stroke
-#' @param stroke_width width of the stroke
+#' @param stroke_colour variable of \code{data} or hex colour for the stroke.
+#' transition enabled
+#' @param stroke_width width of the stroke. transition enabled
 #' @param light_settings list of light setting parameters. See \link{light_settings}
-#' @param elevation the height the polygon extrudes from the map.
+#' @param elevation the height the polygon extrudes from the map. transition enabled
 #'
 #'
 #' @inheritSection add_arc legend
@@ -100,16 +102,9 @@ add_polygon <- function(
 	legend = FALSE,
 	legend_options = NULL,
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
-
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
-	# l[["light_settings"]] <- NULL
-	# l[["layer_id"]] <- NULL
 
 	l <- list()
 	l[["polyline"]] <- force( polyline )
@@ -172,10 +167,12 @@ add_polygon <- function(
 	}
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
+	js_transitions <- resolve_transitions( transitions, "polygon" )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings,
-		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
+		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		js_transitions
 		)
 }
 

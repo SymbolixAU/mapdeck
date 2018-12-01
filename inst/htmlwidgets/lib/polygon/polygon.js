@@ -1,5 +1,5 @@
 
-function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
+function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
   const polygonLayer = new PolygonLayer({
   	map_id: map_id,
@@ -20,7 +20,8 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour ),
     onHover: updateTooltip,
-    onClick: info => layer_click( map_id, "polygon", info )
+    onClick: info => layer_click( map_id, "polygon", info ),
+    transitions: js_transition || {}
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
@@ -32,7 +33,7 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
 }
 
 
-function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
+function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
 
   const polygonLayer = new PolygonLayer({
@@ -54,7 +55,8 @@ function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, a
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour ),
     onHover: updateTooltip,
-    onClick: info => layer_click( map_id, "polygon", info )
+    onClick: info => layer_click( map_id, "polygon", info ),
+    transitions: js_transition || {}
   });
   update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 

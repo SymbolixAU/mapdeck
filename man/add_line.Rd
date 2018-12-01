@@ -9,7 +9,7 @@ add_line(map, data = get_map_data(map), layer_id = NULL, origin,
   stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
   na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
-  update_view = TRUE, focus_layer = FALSE)
+  update_view = TRUE, focus_layer = FALSE, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -20,15 +20,18 @@ add_line(map, data = get_map_data(map), layer_id = NULL, origin,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{origin}{vector of longitude and latitude columns, or an \code{sfc} column}
+\item{origin}{vector of longitude and latitude columns, or an \code{sfc} column.
+transition enabled}
 
-\item{destination}{vector of longitude and latitude columns, or an \code{sfc} column}
+\item{destination}{vector of longitude and latitude columns, or an \code{sfc} column.
+transition enabled}
 
 \item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
-\item{stroke_colour}{variable or hex colour to use as the ending stroke colour}
+\item{stroke_colour}{variable or hex colour to use as the ending stroke colour.
+transition enabled}
 
-\item{stroke_width}{width of the stroke}
+\item{stroke_width}{width of the stroke. transition enabled}
 
 \item{stroke_opacity}{value between 1 and 255. Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
@@ -52,6 +55,8 @@ a named list indicating which colour attributes should be included in the legend
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{transitions}{}
 }
 \description{
 The Line Layer renders raised lines joining pairs of source and target coordinates
