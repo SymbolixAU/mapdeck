@@ -1,5 +1,5 @@
 
-function add_line_geo( map_id, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
+function add_line_geo( map_id, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
   const lineLayer = new LineLayer({
   	map_id: map_id,
@@ -14,6 +14,7 @@ function add_line_geo( map_id, line_data, layer_id, auto_highlight, highlight_co
     onHover: updateTooltip,
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour ),
+    transitions: js_transition || {}
   });
 
   update_layer( map_id, 'line-'+layer_id, lineLayer );
@@ -25,7 +26,7 @@ function add_line_geo( map_id, line_data, layer_id, auto_highlight, highlight_co
 }
 
 
-function add_line_polyline( map_id, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
+function add_line_polyline( map_id, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
   const lineLayer = new LineLayer({
     map_id: map_id,
@@ -39,7 +40,8 @@ function add_line_polyline( map_id, line_data, layer_id, auto_highlight, highlig
     onClick: info => layer_click( map_id, "line", info ),
     onHover: updateTooltip,
     autoHighlight: auto_highlight,
-    highlightColor: hexToRGBA2( highlight_colour )
+    highlightColor: hexToRGBA2( highlight_colour ),
+    transitions: js_transition || {}
   });
 
   update_layer( map_id, 'line-'+layer_id, lineLayer );

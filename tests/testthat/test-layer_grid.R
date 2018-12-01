@@ -36,3 +36,4 @@ test_that("add_grid accepts multiple objects", {
 	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), geo )
 
 })
+

@@ -10,7 +10,8 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
   elevation = NULL, light_settings = list(), legend = F,
   legend_options = NULL, auto_highlight = FALSE, tooltip = NULL,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
-  na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE)
+  na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -53,17 +54,36 @@ Only works on \code{sf} objects.}
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 between [0, 255], where the 4th column represents the alpha.}
 
+\item{na_colour}{hex string colour to use for NA values}
+
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
 The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,
 lines and points
 }
-\details{
+\section{transitions}{
 
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny).
+The time is in milliseconds
+
+Available transitions for geojson
+
+list(
+fill_colour = 0,
+stroke_colour = 0,
+stroke_width = 0,
+elevation = 0,
+radius = 0
+)
 }
+
 \section{Raw Geojson}{
 
 
@@ -175,6 +195,7 @@ mapdeck(
  )
 
 ## putting elevation and width values onto raw GeoJSON
+library(geojsonsf)
 sf <- geojsonsf::geojson_sf( geojson )
 sf$width <- sample(1:100, size = nrow(sf), replace = TRUE)
 sf$elevation <- sample(100:1000, size = nrow(sf), replace = T)

@@ -1,6 +1,6 @@
 
 
-function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer) {
+function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
   const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
@@ -16,9 +16,7 @@ function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, hi
     highlightColor: hexToRGBA2( highlight_colour ),
     onClick: info => layer_click( map_id, "scatterplot", info ),
     onHover: updateTooltip,
-    //transitions: {
-    //    getRadius: 300
-    //}
+    transitions: js_transition || {}
   });
   update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
 
@@ -28,7 +26,7 @@ function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, hi
   layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
+function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
   const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
@@ -42,7 +40,8 @@ function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highligh
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour ),
     onClick: info => layer_click( map_id, "scatterplot", info ),
-    onHover: updateTooltip
+    onHover: updateTooltip,
+    transitions: js_transition || {}
   });
   update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
 

@@ -159,7 +159,7 @@ get_box <- function( data, l ) UseMethod("get_box")
 
 #' @export
 get_box.sfencoded <- function( data, l ) {
-	bbox <- attr( enc, "sfAttributes")[["bbox"]]
+	bbox <- attr( data, "sfAttributes")[["bbox"]]
 	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
 	return( jsonify::to_json( bbox ) )
 }

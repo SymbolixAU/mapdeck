@@ -24,6 +24,21 @@ mapdeckPathDependency <- function() {
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny).
+#' The time is in milliseconds
+#'
+#' Available transitions for path
+#'
+#' list(
+#' path = 0,
+#' stroke_colour = 0,
+#' stroke_width = 0
+#' )
+#'
+#'
 #' @examples
 #' \donttest{
 #'
@@ -68,18 +83,9 @@ add_path <- function(
 	legend = FALSE,
 	legend_options = NULL,
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
-
-	## TODO(sf and lon/lat coordinates)
-	#message("Using development version. Please check plots carefully")
-#
-# 	l <- as.list( match.call() )
-# 	l[[1]] <- NULL
-# 	l[["data"]] <- NULL
-# 	l[["map"]] <- NULL
-# 	l[["layer_id"]] <- NULL
-# 	l[["auto_highlight"]] <- NULL
 
 	l <- list()
 	l[["polyline"]] <- force( polyline )
@@ -89,10 +95,6 @@ add_path <- function(
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)
-
-	# l[["legend"]] <- force( legend )
-	# l[["legend_options"]] <- force( legend_options )
-	# l[["palette"]] <- force( palette )
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -132,9 +134,12 @@ add_path <- function(
 		shape <- rcpp_path_polyline( data, data_types, l, geometry_column )
 	}
 
+	js_transitions <- resolve_transitions( transitions, "path" )
+
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
-		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		js_transitions
 		)
 }
 

@@ -18,10 +18,26 @@ mapdeckLineDependency <- function() {
 #' @param stroke_opacity value between 1 and 255. Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes
-#' @param stroke_colour variable or hex colour to use as the ending stroke colour
+#' @param stroke_colour variable or hex colour to use as the ending stroke colour.
+#' transition enabled
 #'
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
+#'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny).
+#' The time is in milliseconds
+#'
+#' Available transitions for line
+#'
+#' list(
+#' origin = 0,
+#' destination = 0,
+#' stroke_colour = 0,
+#' stroke_width = 0
+#' )
 #'
 #' @examples
 #' \donttest{
@@ -95,15 +111,9 @@ add_line <- function(
 	legend = FALSE,
 	legend_options = NULL,
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
-
-	# l <- as.list( match.call() )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["layer_id"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
 
 	l <- list()
 	l[["origin"]] <- force( origin )
@@ -155,9 +165,12 @@ add_line <- function(
 	# 	shape <- rcpp_line_polyline( data, data_types, l, geometry_column )
 	# }
 
+	js_transitions <- resolve_transitions( transitions, "line" )
+
 	invoke_method(
 		map, "add_line_geo", shape[["data"]], layer_id, auto_highlight,
-		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		js_transitions
 		)
 }
 

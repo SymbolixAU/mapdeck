@@ -1,7 +1,7 @@
 
 
 function add_path_geo( map_id, path_data, layer_id, auto_highlight, highlight_colour,
-legend, bbox, update_view, focus_layer ) {
+legend, bbox, update_view, focus_layer, js_transition ) {
 
   const pathLayer = new PathLayer({
     map_id: map_id,
@@ -18,10 +18,7 @@ legend, bbox, update_view, focus_layer ) {
     onHover: updateTooltip,
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour ),
-    // transitions: {
-    //    getColor: 100,
-    //    getWidth: 300
-    //}
+    transitions: js_transition || {}
   });
   update_layer( map_id, 'path-'+layer_id, pathLayer );
 
@@ -33,7 +30,7 @@ legend, bbox, update_view, focus_layer ) {
 }
 
 function add_path_polyline( map_id, path_data, layer_id, auto_highlight, highlight_colour,
-legend, bbox, update_view, focus_layer ) {
+legend, bbox, update_view, focus_layer, js_transition ) {
 
   const pathLayer = new PathLayer({
     map_id: map_id,
@@ -50,6 +47,7 @@ legend, bbox, update_view, focus_layer ) {
     onHover: updateTooltip,
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour ),
+    transitions: js_transition || {}
   });
   update_layer( map_id, 'path-'+layer_id, pathLayer );
 

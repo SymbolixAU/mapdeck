@@ -1,7 +1,7 @@
 
-function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer ) {
+function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition ) {
 
-	const hexagonLayer = new deck.HexagonLayer({
+  const hexagonLayer = new deck.HexagonLayer({
         map_id: map_id,
         id: 'hexagon-'+layer_id,
         data: hexagon_data,
@@ -15,16 +15,18 @@ function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scal
         autoHighlight: auto_highlight,
         highlightColor: hexToRGBA2( highlight_colour ),
         onClick: info => layer_click( map_id, "hexagon", info ),
-        onHover: updateTooltip
-	});
+        onHover: updateTooltip,
+        transitions: js_transition || {}
+  });
 	update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
 	layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer ) {
+function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition ) {
 
-	const hexagonLayer = new deck.HexagonLayer({
-        map_id: map_id,
+
+  const hexagonLayer = new deck.HexagonLayer({
+  	map_id: map_id,
         id: 'hexagon-'+layer_id,
         data: hexagon_data,
         pickable: true,
@@ -37,8 +39,10 @@ function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation
         autoHighlight: auto_highlight,
         highlightColor: hexToRGBA2( highlight_colour ),
         onClick: info => layer_click( map_id, "hexagon", info ),
-        onHover: updateTooltip
-	});
-	update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
-	layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+        onHover: updateTooltip,
+        transitions: js_transition || {}
+  });
+
+  update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
+  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }

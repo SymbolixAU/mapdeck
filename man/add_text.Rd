@@ -10,7 +10,8 @@ add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
   alignment_baseline = NULL, tooltip = NULL, layer_id = NULL,
   id = NULL, auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, update_view = TRUE, focus_layer = FALSE)
+  legend_options = NULL, update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -25,7 +26,8 @@ add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
 
 \item{polyline}{column of \code{data} containing the polylines}
 
-\item{fill_colour}{column of \code{data} or hex colour for the fill colour}
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour.
+transition enabled}
 
 \item{fill_opacity}{value between 1 and 255. Either a string specifying the
 column of \code{data} containing the fill opacity of each shape, or a value
@@ -67,6 +69,8 @@ a named list indicating which colour attributes should be included in the legend
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
 The Text Layer takes in coordinate points and renders them as circles
@@ -75,6 +79,23 @@ with a certain radius.
 \details{
 \code{add_text} supports POINT and MULTIPOINT sf objects
 }
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny).
+The time is in milliseconds
+
+Available transitions for text
+
+list(
+position = 0,
+fill_colour = 0,
+angle = 0,
+size = 0
+)
+}
+
 \section{legend}{
 
 

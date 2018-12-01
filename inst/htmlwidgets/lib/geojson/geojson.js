@@ -1,6 +1,6 @@
 
 
-function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer ) {
+function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
   geojson = geojson.features;
 
@@ -27,7 +27,8 @@ function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlig
     onClick: info => layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour ),
-    onHover: updateTooltip
+    onHover: updateTooltip,
+    transitions: js_transition || {}
   });
 
   update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
@@ -39,7 +40,7 @@ function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlig
   layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour, bbox, update_view, focus_layer ) {
+function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition ) {
 
   const geojsonLayer = new deck.GeoJsonLayer({
     map_id: map_id,
@@ -64,7 +65,8 @@ function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight,
     onClick: info => layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
     highlightColor: hexToRGBA2( highlight_colour ),
-    onHover: updateTooltip
+    onHover: updateTooltip,
+    transitions: js_transition || {}
   });
 
   update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );

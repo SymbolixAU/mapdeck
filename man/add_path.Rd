@@ -9,7 +9,8 @@ add_path(map, data = get_map_data(map), polyline = NULL,
   tooltip = NULL, layer_id = NULL, id = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, update_view = TRUE, focus_layer = FALSE)
+  legend_options = NULL, update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -18,9 +19,10 @@ add_path(map, data = get_map_data(map), polyline = NULL,
 
 \item{polyline}{column of \code{data} containing the polylines}
 
-\item{stroke_colour}{variable of \code{data} or hex colour for the stroke}
+\item{stroke_colour}{variable of \code{data} or hex colour for the stroke.
+transition enabled}
 
-\item{stroke_width}{width of the stroke}
+\item{stroke_width}{width of the stroke. transition enabled}
 
 \item{stroke_opacity}{value between 1 and 255. Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
@@ -42,6 +44,8 @@ to conflict and not plot correctly}
 "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 between [0, 255], where the 4th column represents the alpha.}
 
+\item{na_colour}{hex string colour to use for NA values}
+
 \item{legend}{either a logical indiciating if the legend(s) should be displayed, or
 a named list indicating which colour attributes should be included in the legend.}
 
@@ -50,6 +54,8 @@ a named list indicating which colour attributes should be included in the legend
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
 The Path Layer takes in lists of coordinate points and renders them as
@@ -58,6 +64,22 @@ extruded lines with mitering.
 \details{
 \code{add_path} supports LINESTRING and MULTILINESTRING sf objects
 }
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny).
+The time is in milliseconds
+
+Available transitions for path
+
+list(
+path = 0,
+stroke_colour = 0,
+stroke_width = 0
+)
+}
+
 \section{legend}{
 
 

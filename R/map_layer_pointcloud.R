@@ -23,6 +23,19 @@ mapdeckPointcloudDependency <- function() {
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny).
+#' The time is in milliseconds
+#'
+#' Available transitions for pointcloud
+#'
+#' list(
+#' position = 0,
+#' fill_colour = 0
+#' )
+#'
 #' @examples
 #' \donttest{
 #' ## You need a valid access token from Mapbox
@@ -84,18 +97,9 @@ add_pointcloud <- function(
 	legend = FALSE,
 	legend_options = NULL,
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
-
-	# message("Using development version. Please check plots carefully")
-
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL    ## function call
-	# l[["map"]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
-	# l[["light_settings"]] <- NULL
-	# l[["layer_id"]] <- NULL
 
 	l <- list()
 	l[["lon"]] <- force( lon )
@@ -159,10 +163,12 @@ add_pointcloud <- function(
 	}
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
+	js_transitions <- resolve_transitions( transitions, "pointcloud" )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], radius, layer_id, light_settings,
-		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
+		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		js_transitions
 		)
 }
 

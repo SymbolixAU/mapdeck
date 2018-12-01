@@ -16,7 +16,7 @@
 #' @export
 mapdeck <- function(
 	data = NULL,
-	token = get_access_token(api = 'mapbox'),
+	token = get_access_token( api = 'mapbox' ),
 	width = NULL,
 	height = NULL,
 	padding = 0,
@@ -24,7 +24,7 @@ mapdeck <- function(
 	pitch = 0,
 	zoom = 0,
 	bearing = 0,
-	location = c(0, 0)
+	location = c( 0, 0 )
 	) {
 
   # forward options using x
@@ -146,7 +146,10 @@ mapdeck_view <- function(
 	) {
 
 	transition <- match.arg(transition)
-	invoke_method(map, 'change_location', as.numeric( location ), zoom, pitch, bearing, duration, transition)
+	invoke_method(
+		map, 'change_location', as.numeric( location ), zoom, pitch,
+		bearing, duration, transition
+		)
 }
 
 # Get Map Data

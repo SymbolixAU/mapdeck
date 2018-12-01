@@ -16,6 +16,8 @@ add_hexagon(map, data = get_map_data(map), polyline = NULL,
 
 \item{data}{data to be used in the layer}
 
+\item{polyline}{column of \code{data} containing the polylines}
+
 \item{lon}{column containing longitude values}
 
 \item{lat}{column containing latitude values}

@@ -28,6 +28,21 @@ mapdeckTextDependency <- function() {
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny).
+#' The time is in milliseconds
+#'
+#' Available transitions for text
+#'
+#' list(
+#' position = 0,
+#' fill_colour = 0,
+#' angle = 0,
+#' size = 0
+#' )
+#'
 #' @examples
 #'
 #' \donttest{
@@ -77,14 +92,9 @@ add_text <- function(
 	legend = FALSE,
 	legend_options = NULL,
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
-
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["layer_id"]] <- NULL
 
 	l <- list()
 	l[["lon"]] <- force( lon )
@@ -122,8 +132,8 @@ add_text <- function(
 
 	## parmater checks
 	#usePolyline <- isUsingPolyline(polyline)
-	checkNumeric(size)
-	checkNumeric(angle)
+	# checkNumeric(size)
+	# checkNumeric(angle)
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "text")
 
@@ -146,9 +156,11 @@ add_text <- function(
 		jsfunc <- "add_text_polyline"
 	}
 
+	js_transitions <- resolve_transitions( transitions, "text" )
+
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
-		shape[["legend"]], bbox, update_view, focus_layer
+		shape[["legend"]], bbox, update_view, focus_layer, js_transitions
 		)
 }
 

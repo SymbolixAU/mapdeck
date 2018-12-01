@@ -34,16 +34,16 @@ mapdeckArcDependency <- function() {
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
 #' @param highlight_colour hex string colour to use for highlighting. Must contain the alpha component.
-#' @param digits integer. Use this parameter to specify how many digits (decimal places)
-#' should be used for the latitude / longitude coordinates.
 #' @param palette string or matrix. String is either one of "viridis","inferno",
 #' "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 #' between [0, 255], where the 4th column represents the alpha.
+#' @param na_colour hex string colour to use for NA values
 #' @param legend either a logical indiciating if the legend(s) should be displayed, or
 #' a named list indicating which colour attributes should be included in the legend.
 #' @param legend_options A list of options for controlling the legend.
 #' @param update_view logical indicating if the map should update the bounds to include this layer
 #' @param focus_layer logical indicating if the map should update the bounds to only include this layer
+#' @param transitions list specifying the duration of transitions.
 #'
 #' @section id:
 #'
@@ -65,6 +65,22 @@ mapdeckArcDependency <- function() {
 #' }
 #'
 #' If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+#'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny).
+#' The time is in milliseconds
+#'
+#' Available transitions for arc
+#'
+#' list(
+#' origin = 0,
+#' destination = 0,
+#' stroke_from = 0,
+#' stroke_to = 0,
+#' stroke_width = 0
+#' )
 #'
 #' @examples
 #' \donttest{
@@ -149,16 +165,9 @@ add_arc <- function(
 	palette = "viridis",
 	na_colour = "#808080FF",
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
-
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
-	# l[["light_settings"]] <- NULL
-	# l[["layer_id"]] <- NULL
 
 	l <- list()
 	l[["origin"]] <- force(origin)
@@ -213,11 +222,15 @@ add_arc <- function(
   	jsfunc <- "add_arc_polyline"
   }
 
+	js_transition <- resolve_transitions( transitions, "arc" )
+
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
-		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition
 		)
 }
+
+
 
 #' Clear Arc
 #'
