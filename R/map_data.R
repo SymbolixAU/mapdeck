@@ -235,8 +235,7 @@ resolve_data.data.frame <- function( data, l, sf_geom ) {
 }
 
 #' @export
-resolve_data.default <- function( data ) stop("This type of data is not supported")
-
+resolve_data.default <- function( data, ... ) stop("This type of data is not supported")
 
 resolve_geojson_data <- function( data, l ) UseMethod("resolve_geojson_data")
 
@@ -263,6 +262,13 @@ resolve_geojson_data.geojson <- function( data, l ) {
 
 #' @export
 resolve_geojson_data.character <- function( data, l ) {
+	if ( is_url( data ) ) {
+		sf <- geojsonsf::geojson_sf( data )
+		l[["data"]] <- sf
+		return(
+			resolve_geojson_data( sf, l )
+		)
+	}
 	l[["data_type"]] <- "geojson"
 	return( l )
 }
@@ -290,3 +296,5 @@ resolve_legend_options <- function( l, legend_options ) {
 	l[["legend_options"]] <- legend_options
 	return( l )
 }
+
+is_url <- function(geojson) grepl("^https?://", geojson, useBytes=TRUE)

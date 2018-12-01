@@ -17,6 +17,7 @@ mapdeckGeojsonDependency <- function() {
 #' lines and points
 #'
 #' @inheritParams add_polygon
+#' @param data data to be used in the layer. Can be a url to GeoJSON
 #' @param stroke_colour column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for colour
 #' @param stroke_opacity column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for opacity
 #' @param stroke_width column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for width
@@ -231,7 +232,7 @@ add_geojson <- function(
 			!is.null( l[["radius"]] )
 		) ) {
 			if( inherits( data, "geojson" ) | inherits( data, "json" ) | inherits( data, "character" ) ) {
-				message("converting geojson to sf")
+				#message("converting geojson to sf")
 				data <- geojsonsf::geojson_sf( data )
 			}
 		}
