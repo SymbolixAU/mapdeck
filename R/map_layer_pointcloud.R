@@ -88,16 +88,6 @@ add_pointcloud <- function(
 	transitions = NULL
 ) {
 
-	# message("Using development version. Please check plots carefully")
-
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL    ## function call
-	# l[["map"]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
-	# l[["light_settings"]] <- NULL
-	# l[["layer_id"]] <- NULL
-
 	l <- list()
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
@@ -160,10 +150,12 @@ add_pointcloud <- function(
 	}
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
+	js_transitions <- resolve_transitions( transitions, "pointcloud" )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], radius, layer_id, light_settings,
-		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer
+		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		js_transitions
 		)
 }
 

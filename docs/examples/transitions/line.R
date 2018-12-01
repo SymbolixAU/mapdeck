@@ -30,7 +30,7 @@ server <- function( input, output ) {
 	df <- merge( df_orig, df_dest, by = "key" )
 	df$key <- NULL
 	df <- setNames( df, c("orig_country", "orig_capital", "orig_lat", "orig_lon",
-														"dest_country", "dest_capital", "dest_lat", "dest_lon"))
+												"dest_country", "dest_capital", "dest_lat", "dest_lon"))
 	df <- df[ df$orig_country != df$dest_country, ]
 	df$width <- sample(1:5, size = nrow(df), replace = T )
 
@@ -40,21 +40,19 @@ server <- function( input, output ) {
 
 	observeEvent({input$btn},{
 
-		r <- sample(1:nrow(df), size = 25, replace = FALSE)
-		arcs <- df[r, ]
+		r <- sample(1:nrow(df), size = 100, replace = FALSE)
+		lines <- df[r, ]
 		mapdeck_update(map_id = "map") %>%
-			add_arc(
-				data = arcs
+			add_line(
+				data = lines
 				, origin = c("orig_lon", "orig_lat")
 				, destination = c("dest_lon", "dest_lat")
-				, stroke_from = "orig_country"
-				, stroke_to = "dest_country"
+				, stroke_colour = "orig_country"
 				, stroke_width = "width"
 				, transitions = list(
 					origin = 2000
 					, destination = 1000
-					, stroke_from = 100
-					, stroke_to = 3000
+					, stroke_colour = 1000
 					, stroke_width = 600
 				)
 				, update_view = FALSE   ## stops the map upadting the viewport

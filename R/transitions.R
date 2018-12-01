@@ -108,12 +108,14 @@ transitions_line <- function( transitions ) {
 }
 
 transitions_path <- function( transitions ) {
-	transitions <- replace_name( transitions, "stroke_width", "getStrokeWidth" )
+	transitions <- replace_name( transitions, "path", "getPath" )
+	transitions <- replace_name( transitions, "stroke_width", "getWidth" )
 	transitions <- replace_name( transitions, "stroke_colour", "getColor" )
 	return( transitions )
 }
 
 transitions_pointcloud <- function( transitions ) {
+	transitions <- replace_name( transitions, "position", "getPosition" )
 	transitions <- replace_name( transitions, "fill_colour", "getColor" )
 	return( transitions )
 }
