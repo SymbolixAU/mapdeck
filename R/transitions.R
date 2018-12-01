@@ -11,6 +11,18 @@ arc_transitions <- function() {
 	)
 }
 
+geojson_transitions <- function() {
+	return(
+		list(
+			fill_colour = 0,
+			stroke_colour = 0,
+			stroke_width = 0,
+			elevation = 0,
+			radius = 0
+		)
+	)
+}
+
 line_transitions <- function() {
 	return(
 		list(
@@ -25,6 +37,7 @@ line_transitions <- function() {
 path_transitions <- function() {
 	return(
 		list(
+			path = 0,
 			stroke_colour = 0,
 			stroke_width = 0
 		)
@@ -34,6 +47,7 @@ path_transitions <- function() {
 pointcloud_transitions <- function() {
 	return(
 		list(
+			position = 0,
 			fill_colour = 0
 		)
 	)
@@ -42,6 +56,7 @@ pointcloud_transitions <- function() {
 polygon_transitions <- function() {
 	return(
 		list(
+			polygon = 0,
 			fill_colour = 0,
 			stroke_colour = 0,
 			stroke_width = 0,
@@ -53,6 +68,7 @@ polygon_transitions <- function() {
 scatterplot_transitions <- function() {
 	return(
 		list(
+			position = 0,
 			fill_colour = 0,
 			radius = 0
 		)
@@ -62,6 +78,7 @@ scatterplot_transitions <- function() {
 text_transitions <- function() {
 	return(
 		list(
+			position = 0,
 			fill_colour = 0,
 			angle = 0,
 			size = 0

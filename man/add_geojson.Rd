@@ -10,7 +10,8 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
   elevation = NULL, light_settings = list(), legend = F,
   legend_options = NULL, auto_highlight = FALSE, tooltip = NULL,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
-  na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE)
+  na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -56,6 +57,8 @@ between [0, 255], where the 4th column represents the alpha.}
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{transitions}{}
 }
 \description{
 The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,
