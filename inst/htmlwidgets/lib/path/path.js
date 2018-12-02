@@ -44,7 +44,7 @@ legend, bbox, update_view, focus_layer, js_transition ) {
     getColor: d => md_hexToRGBA( d.stroke_colour ),
     getWidth: d => d.stroke_width,
     onClick: info => md_layer_click( map_id, "path", info ),
-    onHover: updateTooltip,
+    onHover: md_update_tooltip,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {}

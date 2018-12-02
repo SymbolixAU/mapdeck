@@ -14,7 +14,7 @@ function add_pointcloud_geo( map_id, pointcloud_data, radius, layer_id, light_se
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "pointcloud", info ),
-    onHover: updateTooltip,
+    onHover: md_update_tooltip,
     transitions: js_transition || {}
   });
   md_update_layer( map_id, 'pointcloud-'+layer_id, pointcloudLayer );
