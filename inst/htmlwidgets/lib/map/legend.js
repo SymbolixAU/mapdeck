@@ -231,7 +231,7 @@ function md_try_remove_legend( map_id, layer_id, colour_type ) {
 	var objIndex = findById( window[map_id + 'legendPositions'], id, "index" );
 
 	if( objIndex !== undefined ) {
-		removeControl( map_id, id, window[map_id + 'legendPositions'][objIndex].position );
+		md_removeControl( map_id, id, window[map_id + 'legendPositions'][objIndex].position );
 		window[map_id + 'legendPositions'].splice(objIndex, 1);
 	  window[id] = null;
 	}
@@ -285,7 +285,7 @@ function placeControl( map_id, object, position ) {
 }
 
 
-function removeControl( map_id, legend_id, position ) {
+function md_removeControl( map_id, legend_id, position ) {
 
     var element = document.getElementById( legend_id );
     element.parentNode.removeChild( element );
@@ -312,11 +312,12 @@ function removeControl( map_id, legend_id, position ) {
 */
 }
 
+/*
 function clearControl(control, legend_id) {
 
-  if (control != null) {
+  if (control !== undefined ) {
     control.forEach(function (item, index) {
-      if (item != null) {
+      if (item !== undefined ) {
         if (item.getAttribute('id') === legend_id) {
           control.removeAt(index);
         }
@@ -324,3 +325,4 @@ function clearControl(control, legend_id) {
     });
   }
 }
+*/

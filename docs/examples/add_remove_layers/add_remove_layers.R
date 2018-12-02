@@ -12,16 +12,8 @@ ui <- dashboardPage(
 	dashboardHeader()
 	, dashboardSidebar(
 		actionButton(inputId = "arc", label = "arc")
-		, actionButton(inputId = "geojson", label = "geojson")
-		, actionButton(inputId = "grid", label = "grid")
-		, actionButton(inputId = "hexagon", label = "hexagon")
-		, actionButton(inputId = "line", label = "line")
 		, actionButton(inputId = "path", label = "path")
-		, actionButton(inputId = "pointcloud", label = "pointcloud")
-		, actionButton(inputId = "polygon", label = "polygon")
 		, actionButton(inputId = "scatterplot", label = "scatterplot")
-		, actionButton(inputId = "screengrid", label = "screengrid")
-		, actionButton(inputId = "text", label = "text")
 	)
 	, dashboardBody(
 		mapdeckOutput(
@@ -69,6 +61,23 @@ server <- function( input, output ) {
 		} else {
 			mapdeck_update(map_id = "map") %>%
 				clear_path()
+		}
+	})
+
+	observeEvent({input$scatterplot},{
+		res <- input$scatterplot %% 2
+		if( res == 1 ) {
+			mapdeck_update(map_id = "map") %>%
+				add_scatterplot(
+					data = capitals
+					, lon = "lon"
+					, lat = "lat"
+					, fill_colour = "country"
+					, legend = TRUE
+				)
+		} else {
+			mapdeck_update(map_id = "map") %>%
+				clear_scatterplot()
 		}
 	})
 
