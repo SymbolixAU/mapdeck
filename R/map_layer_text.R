@@ -168,6 +168,6 @@ add_text <- function(
 #' @export
 clear_text <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "text")
-	invoke_method(map, "layer_clear", layer_id, "text" )
+	invoke_method(map, "md_layer_clear", layer_id, "text" )
 }
 

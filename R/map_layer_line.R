@@ -180,6 +180,6 @@ add_line <- function(
 #' @export
 clear_line <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "line")
-	invoke_method(map, "layer_clear", layer_id, "line" )
+	invoke_method(map, "md_layer_clear", layer_id, "line" )
 }
 

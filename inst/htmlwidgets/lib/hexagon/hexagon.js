@@ -8,18 +8,18 @@ function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scal
         pickable: true,
         extruded: true,
         //elevationRange: [0, 100],
-        colorRange: to_rgba( colour_range ),
+        colorRange: md_to_rgba( colour_range ),
         elevationScale: elevation_scale,
         radius: radius,
-        getPosition: d => get_point_coordinates( d ),
+        getPosition: d => md_get_point_coordinates( d ),
         autoHighlight: auto_highlight,
-        highlightColor: hexToRGBA2( highlight_colour ),
-        onClick: info => layer_click( map_id, "hexagon", info ),
-        onHover: updateTooltip,
+        highlightColor: md_hexToRGBA( highlight_colour ),
+        onClick: info => md_layer_click( map_id, "hexagon", info ),
+        onHover: md_update_tooltip,
         transitions: js_transition || {}
   });
-	update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
-	layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	md_update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
+	md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition ) {
@@ -32,17 +32,17 @@ function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation
         pickable: true,
         extruded: true,
         //elevationRange: [0, 100],
-        colorRange: to_rgba( colour_range ),
+        colorRange: md_to_rgba( colour_range ),
         elevationScale: elevation_scale,
         radius: radius,
-        getPosition: d => decode_points( d.polyline ),
+        getPosition: d => md_decode_points( d.polyline ),
         autoHighlight: auto_highlight,
-        highlightColor: hexToRGBA2( highlight_colour ),
-        onClick: info => layer_click( map_id, "hexagon", info ),
-        onHover: updateTooltip,
+        highlightColor: md_hexToRGBA( highlight_colour ),
+        onClick: info => md_layer_click( map_id, "hexagon", info ),
+        onHover: md_update_tooltip,
         transitions: js_transition || {}
   });
 
-  update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
-  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  md_update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
+  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }

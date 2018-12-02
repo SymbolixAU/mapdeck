@@ -198,7 +198,7 @@ add_polygon <- function(
 #' @export
 clear_polygon <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "polygon")
-	invoke_method(map, "layer_clear", layer_id, "polygon" )
+	invoke_method(map, "md_layer_clear", layer_id, "polygon" )
 }
 
 

@@ -147,7 +147,7 @@ mapdeck_view <- function(
 
 	transition <- match.arg(transition)
 	invoke_method(
-		map, 'change_location', as.numeric( location ), zoom, pitch,
+		map, 'md_change_location', as.numeric( location ), zoom, pitch,
 		bearing, duration, transition
 		)
 }

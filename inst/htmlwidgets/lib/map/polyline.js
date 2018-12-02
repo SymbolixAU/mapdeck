@@ -42,7 +42,7 @@ function encode(current, previous, factor) {
  * @returns {Array}
  *
  * @see https://github.com/Project-OSRM/osrm-frontend/blob/master/WebContent/routing/OSRM.RoutingGeometry.js
- */
+
 function decode_polyline(str, precision) {
     var index = 0,
         lat = 0,
@@ -114,6 +114,7 @@ function flipped(coords) {
     }
     return flipped;
 }
+*/
 
 /**
  * Encodes a GeoJSON LineString feature/geometry.
@@ -146,7 +147,7 @@ polyline.toGeoJSON = function(str, precision) {
     };
 };
 
- */
 if (typeof module === 'object' && module.exports) {
     module.exports = polyline;
 }
+ */

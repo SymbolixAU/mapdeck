@@ -18,26 +18,26 @@ function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlig
     lineWidthScale: 1,
     lineWidthMinPixels: 1,
     lineJointRounded: true,
-    getFillColor: g => hexToRGBA2( g.properties.fill_colour ),
-    getLineColor: g => hexToRGBA2( g.properties.stroke_colour),
+    getFillColor: g => md_hexToRGBA( g.properties.fill_colour ),
+    getLineColor: g => md_hexToRGBA( g.properties.stroke_colour),
     getRadius: g => g.properties.radius,
     getLineWidth: g => g.properties.stroke_width,
     getElevation: g => g.properties.elevation,
     lightSettings: light_settings,
-    onClick: info => layer_click( map_id, "geojson", info ),
+    onClick: info => md_layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
-    highlightColor: hexToRGBA2( highlight_colour ),
-    onHover: updateTooltip,
+    highlightColor: md_hexToRGBA( highlight_colour ),
+    onHover: md_update_tooltip,
     transitions: js_transition || {}
   });
 
-  update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
+  md_update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
 
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
 
-  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition ) {
@@ -56,20 +56,20 @@ function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight,
     lineWidthScale: 1,
     lineWidthMinPixels: 1,
     lineJointRounded: true,
-    getFillColor: g => hexToRGBA2( geojson_fill_colour( g ) ),
-    getLineColor: g => hexToRGBA2( geojson_line_colour( g ) ),
+    getFillColor: g => md_hexToRGBA( geojson_fill_colour( g ) ),
+    getLineColor: g => md_hexToRGBA( geojson_line_colour( g ) ),
     getRadius: g => geojson_radius( g ),
     getLineWidth: g => geojson_line_width( g ),
     getElevation: g => geojson_elevation( g ),
     lightSettings: light_settings,
-    onClick: info => layer_click( map_id, "geojson", info ),
+    onClick: info => md_layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
-    highlightColor: hexToRGBA2( highlight_colour ),
-    onHover: updateTooltip,
+    highlightColor: md_hexToRGBA( highlight_colour ),
+    onHover: md_update_tooltip,
     transitions: js_transition || {}
   });
 
-  update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
+  md_update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
 }
 
 // TODO( update these accessors to find variations on // fillColor, fillColour, fill_colour, fill_color )
@@ -181,10 +181,4 @@ function geojson_line_width( g ) {
 		default:
 		  return 10;
 	}
-}
-
-
-function clear_geojson( map_id, layer_id ) {
-  clear_layer( map_id, 'geojson-'+layer_id );
-  clear_legend( map_id, layer_id );
 }

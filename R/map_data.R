@@ -16,7 +16,7 @@ resolve_od_data.sf <- function( data, l, origin, destination ) {
 		stop("origin and destination columns required")
 	}
 	l[["data_type"]] <- "sf"
-	l[["bbox"]] <- get_box( data, l )
+	l[["bbox"]] <- get_od_box( data, l )
 	return( l )
 }
 
@@ -60,6 +60,7 @@ resolve_od_data.data.frame <- function( data, l, origin, destination ) {
 		stop("origin and destination columns required")
 	}
 	l[["data_type"]] <- "df"
+	l[["bbox"]] <- get_od_box( data, l )
 
 	l[["start_lon"]] <- origin[1]
 	l[["start_lat"]] <- origin[2]
@@ -176,6 +177,21 @@ get_box.data.frame <- function( data, l ) {
 
 	lat <- data[, l[["lat"]] ]
 	lon <- data[, l[["lon"]] ]
+	xmin <- min(lon); xmax <- max(lon)
+	ymin <- min(lat); ymax <- max(lat)
+	bbox <- list( c(xmin, ymin), c(xmax, ymax) )
+	return( jsonify::to_json( bbox ) )
+}
+
+get_od_box <- function( data, l ) UseMethod("get_od_box")
+
+#' @export
+get_od_box.sf <- function( data, l ) get_box( data, l )
+
+#' @export
+get_od_box.data.frame <- function( data, l ) {
+	lon <- c( data[, l[["origin"]][1] ], data[, l[["destination"]][1]] )
+	lat <- c( data[, l[["origin"]][2] ], data[, l[["destination"]][2]] )
 	xmin <- min(lon); xmax <- max(lon)
 	ymin <- min(lat); ymax <- max(lat)
 	bbox <- list( c(xmin, ymin), c(xmax, ymax) )

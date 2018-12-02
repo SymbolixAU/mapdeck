@@ -177,6 +177,6 @@ add_pointcloud <- function(
 #' @export
 clear_pointcloud <- function( map, layer_id = NULL) {
 	layer_id <- layerId( layer_id, "pointcloud" )
-	invoke_method(map, "layer_clear", layer_id, "pointcloud" )
+	invoke_method(map, "md_layer_clear", layer_id, "pointcloud" )
 }
 

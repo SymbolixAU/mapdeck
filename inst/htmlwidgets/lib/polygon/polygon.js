@@ -11,25 +11,25 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     wireframe: false,
     extruded: true,
     lineWidthMinPixels: 1,
-    getPolygon: d => get_polygon_coordinates( d ),
-    getLineColor: d => hexToRGBA2( d.properties.stroke_colour ),
-    getFillColor: d => hexToRGBA2( d.properties.fill_colour ),
+    getPolygon: d => md_get_polygon_coordinates( d ),
+    getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
+    getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
     getLineWidth: d => d.properties.stroke_width,
     getElevation: d => d.properties.elevation,
     lightSettings: light_settings,
     autoHighlight: auto_highlight,
-    highlightColor: hexToRGBA2( highlight_colour ),
-    onHover: updateTooltip,
-    onClick: info => layer_click( map_id, "polygon", info ),
+    highlightColor: md_hexToRGBA( highlight_colour ),
+    onHover: md_update_tooltip,
+    onClick: info => md_layer_click( map_id, "polygon", info ),
     transitions: js_transition || {}
   });
-  update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
+  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
 
-  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 
@@ -47,25 +47,25 @@ function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, a
     extruded: true,
     lineWidthMinPixels: 1,
     getPolygon: d => decode_polygons( d.polyline ),
-    getLineColor: d => hexToRGBA2( d.stroke_colour ),
-    getFillColor: d => hexToRGBA2( d.fill_colour ),
+    getLineColor: d => md_hexToRGBA( d.stroke_colour ),
+    getFillColor: d => md_hexToRGBA( d.fill_colour ),
     getLineWidth: d => d.stroke_width,
     getElevation: d => d.elevation,
     lightSettings: light_settings,
     autoHighlight: auto_highlight,
-    highlightColor: hexToRGBA2( highlight_colour ),
-    onHover: updateTooltip,
-    onClick: info => layer_click( map_id, "polygon", info ),
+    highlightColor: md_hexToRGBA( highlight_colour ),
+    onHover: md_update_tooltip,
+    onClick: info => md_layer_click( map_id, "polygon", info ),
     transitions: js_transition || {}
   });
-  update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
+  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
     //console.log( polygonLayer );
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
 
-  layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 function decode_polygons( polylines ) {
@@ -74,7 +74,7 @@ function decode_polygons( polylines ) {
   for (i = 0; i < polylines.length; i++ ) {
     p = polylines[i];
     if ( p != "-") {
-      coordinates.push( decode_polyline( p ) );
+      coordinates.push( md_decode_polyline( p ) );
     }
   }
   return coordinates;

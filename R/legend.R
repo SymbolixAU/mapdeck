@@ -9,5 +9,5 @@
 #'
 #' @export
 clear_legend <- function( map_id, layer_id ) {
-	invoke_method( map_id, "clear_legend", layer_id );
+	invoke_method( map_id, "md_clear_legend", layer_id );
 }

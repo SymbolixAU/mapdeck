@@ -148,5 +148,5 @@ add_grid <- function(
 #' @export
 clear_grid <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "grid")
-	invoke_method(map, "layer_clear", layer_id, "grid" )
+	invoke_method(map, "md_layer_clear", layer_id, "grid" )
 }

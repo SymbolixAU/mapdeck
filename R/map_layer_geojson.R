@@ -308,5 +308,5 @@ add_geojson <- function(
 #' @export
 clear_geojson <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "geojson")
-	invoke_method(map, "clear_geojson", layer_id )
+	invoke_method(map, "md_layer_clear", layer_id, "geojson" )
 }

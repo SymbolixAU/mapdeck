@@ -199,5 +199,5 @@ scatterplot_data_args <- function() {
 #' @export
 clear_scatterplot <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "scatterplot")
-	invoke_method(map, "layer_clear", layer_id, "scatterplot" )
+	invoke_method(map, "md_layer_clear", layer_id, "scatterplot" )
 }

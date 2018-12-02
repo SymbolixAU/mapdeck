@@ -71,7 +71,7 @@ HTMLWidgets.widget({
 
 			    //console.log( window[el.id + 'map']);
 
-			    initialise_map(el, x);
+			    md_initialise_map(el, x);
       },
 
       resize: function(width, height) {
@@ -85,7 +85,7 @@ HTMLWidgets.widget({
 
 // following: https://codepen.io/vis-gl/pen/pLLQpN
 // and: https://beta.observablehq.com/@pessimistress/deck-gl-geojsonlayer-example
-function updateTooltip({x, y, object, layer, index}) {
+function md_update_tooltip({x, y, object, layer, index}) {
     // object is the data object sent to the layer function
 
   const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
@@ -146,7 +146,7 @@ if (HTMLWidgets.shinyMode) {
   });
 }
 
-function initialise_map(el, x) {
+function md_initialise_map(el, x) {
 
 	// call initial layers
   if (x.calls !== undefined) {
@@ -168,7 +168,7 @@ function initialise_map(el, x) {
 }
 
 
-function findObjectElementByKey(array, key, value ) {
+function md_findObjectElementByKey(array, key, value ) {
     for ( var i = 0; i < array.length; i++) {
         if (array[i][key] === value) {
             return i;
@@ -177,24 +177,8 @@ function findObjectElementByKey(array, key, value ) {
     return -1;
 }
 
-function change_location( map_id, location, zoom, pitch, bearing, duration, transition ) {
-
-  console.log( window[ map_id + 'map'] );
-  console.log( window[ map_id + 'map'].viewState );
-
-  console.log( "location: " + location );
-  console.log( "zoom: " + zoom );
-  console.log( "pitch: " + pitch + ", " + window[ map_id + 'map'].viewState.pitch );
-  console.log( "bearing: " + bearing + ", " + window[ map_id + 'map' ].viewState.bearing );
-  console.log( "duration: " + duration );
-
-/*
-  var currentLon = location === null ? window[ map_id + 'map'].viewState["default-view"].longitude : location[0];
-  var currentLat = location === null ? window[ map_id + 'map'].viewState["default-view"].latitude : location[1];
-  var currentPitch = pitch === null ? window[ map_id + 'map'].viewState["default-view"].pitch : pitch;
-  var currentBearing = bearing === null ? window[ map_id + 'map' ].viewState["default-view"].bearing : bearing;
-  var currentZoom = zoom === null ? window[ map_id + 'map'].viewState["default-view"].zoom : zoom;
-*/
+function md_change_location( map_id, location, zoom, pitch, bearing, duration, transition ) {
+	//console.log("md_change_location");
 
   var currentLon, currentLat, currentPitch, currentBearing, currentZoom;
 
@@ -211,13 +195,10 @@ function change_location( map_id, location, zoom, pitch, bearing, duration, tran
     currentBearing = bearing === null ? window[ map_id + 'map' ].viewState.bearing : bearing;
     currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
   }
-/*
-  console.log( currentLon );
-  console.log( currentLat );
-  console.log( currentPitch );
-  console.log( currentBearing );
-  console.log( currentZoom );
-*/
+
+  //console.log( currentLon );
+  //console.log( currentLat );
+
 	window[map_id + 'map'].setProps({
     viewState: {
       longitude: currentLon,
@@ -232,88 +213,94 @@ function change_location( map_id, location, zoom, pitch, bearing, duration, tran
 }
 
 
-function layer_view( map_id, layer_id, focus_layer, bbox, update_view ) {
+function md_layer_view( map_id, layer_id, focus_layer, bbox, update_view ) {
+	//console.log("md_layer_view");
 	if( focus_layer ) {
-  	clear_bounds( map_id );
+  	md_clear_bounds( map_id );
   	update_view = true;     // force this
   }
 
   if( bbox !== undefined && update_view) {
-	  add_to_bounds( map_id, bbox, layer_id );
-	  var loc = center_location( window[ map_id + 'globalBox'] );
-	  change_location( map_id, loc, window[ map_id + 'currentZoomLevel'], null, null, 0, "linear" );
+	  md_add_to_bounds( map_id, bbox, layer_id );
+	  var loc = md_center_location( window[ map_id + 'globalBox'] );
+	  md_change_location( map_id, loc, window[ map_id + 'currentZoomLevel'], null, null, 0, "linear" );
   }
 }
 
-function layer_clear( map_id, layer_id, layer ) {
-	clear_layer( map_id, layer+'-'+layer_id );
-  clear_legend( map_id, layer_id );
-  remove_from_bounds( map_id, layer_id );
-  update_location( map_id );
+function md_layer_clear( map_id, layer_id, layer ) {
+	//console.log("md_layer_clear");
+	md_clear_layer( map_id, layer+'-'+layer_id );
+  md_clear_legend( map_id, layer_id );
+  md_remove_from_bounds( map_id, layer_id );
+  md_update_location( map_id );
 }
 
-function center_location( bbox ) {
+function md_center_location( bbox ) {
+	//console.log("md_center_location");
+	//console.log( bbox );
+
 	cLon = (bbox[0][0] + bbox[1][0]) / 2;
 	cLat = (bbox[0][1] + bbox[1][1]) / 2;
 	var location = [cLon, cLat];
-	//console.log( "center location ");
-	//console.log( location  );
 	return location;
 }
 
 
-function add_to_bounds( map_id, bbox, layer_id ) {
+function md_add_to_bounds( map_id, bbox, layer_id ) {
+	//console.log("md_add_to_bounds");
   var thisBox = {
   	layer_id: layer_id,
   	bbox: bbox
   };
 
-  var elem = findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'layer_id', layer_id );
+  var elem = md_findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'layer_id', layer_id );
 	if ( elem != -1 ) {
 		window[ map_id + 'mapdeckBounds' ][elem] = thisBox;
 	} else {
 		window[ map_id + 'mapdeckBounds'].push( thisBox );
 	}
-	//console.log( window[ map_id + 'mapdeckBounds'] );
-	calculate_bounds( map_id, window[ map_id + 'mapdeckBounds'] );
 
-	//console.log( "add_to_bounds() global box: " ) ;
-	//console.log( window[ map_id + 'globalBox'] );
+	md_calculate_bounds( map_id, window[ map_id + 'mapdeckBounds'] );
 
-	window[ map_id + 'currentZoomLevel'] = get_zoom_level( window[ map_id + 'globalBox'] );
+	window[ map_id + 'currentZoomLevel'] = md_get_zoom_level( window[ map_id + 'globalBox'] );
 }
 
-function remove_from_bounds( map_id, layer_id ) {
-	var elem = findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'layer_id', layer_id );
+function md_remove_from_bounds( map_id, layer_id ) {
+	//console.log("md_remove_from_bounds");
+
+	var elem = md_findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'layer_id', layer_id );
 	if ( elem != -1 ) {
 		window[ map_id + 'mapdeckBounds'].splice( elem, 1 );
 	}
-	calculate_bounds( map_id, window[ map_id + 'mapdeckBounds'] );
-
-	//console.log( "remove_from_bounds() global box: ");
-	//console.log( window[ map_id + 'globalBox'] );
-
-	window[ map_id + 'currentZoomLevel'] = get_zoom_level( window[ map_id + 'globalBox'] );
+	md_calculate_bounds( map_id, window[ map_id + 'mapdeckBounds'] );
+	window[ map_id + 'currentZoomLevel'] = md_get_zoom_level( window[ map_id + 'globalBox'] );
 }
 
-function clear_bounds( map_id ) {
+function md_clear_bounds( map_id ) {
+	//console.log("md_clear_bounds");
+
 	window[ map_id + 'mapdeckBounds'] = [];
 	window[ map_id + 'globalBox'] = [];
 	window[ map_id + 'currentZoomLevel'] = 0;
 }
 
-function update_location( map_id ) {
-	var loc = center_location( window[ map_id + 'globalBox' ] );
-	var zoom =  window[ map_id + 'currentZoomLevel' ];
+function md_update_location( map_id ) {
+	//console.log("md_udpate_location");
 
-	console.log("updating location:");
-	console.log( loc );
-	console.log( zoom );
-  change_location( map_id, loc, zoom, null, null, 0, "linear" );
+	var loc = md_center_location( window[ map_id + 'globalBox' ] );
+	var zoom =  window[ map_id + 'currentZoomLevel' ];
+	//console.log( "Loc" );
+	//console.log( loc );
+	if ( Number.isNaN( loc[0] ) ) {
+		return;
+	}
+
+  md_change_location( map_id, loc, zoom, null, null, 0, "linear" );
 }
 
 
-function calculate_bounds( map_id, mapdeckBounds ) {
+function md_calculate_bounds( map_id, mapdeckBounds ) {
+	//console.log("md_caululate_bounds");
 
   var ymin, xmin, ymax, xmax, thisBox;
   for( var i = 0; i < mapdeckBounds.length; i++ ) {
@@ -334,19 +321,19 @@ function calculate_bounds( map_id, mapdeckBounds ) {
   window[ map_id + 'globalBox'] = [[xmin, ymin],[xmax,ymax]];
 }
 
-function lon_diff( globalBox ) {
+function md_lon_diff( globalBox ) {
+	//console.log("md_lon_diff");
+
   xmin = globalBox[0][0];
   xmax = globalBox[1][0];
   xdiff = Math.abs( xmax - xmin );
-  //console.log( "londiff: " + xdiff );
-  //return get_zoom_level( xdiff );
   return xdiff;
 }
 
-function get_zoom_level( globalBox ) {
+function md_get_zoom_level( globalBox ) {
+	//console.log("md_get_zoom_level");
 
-  var londiff = lon_diff( globalBox );
-  //console.log( "londiff: " + londiff );
+  var londiff = md_lon_diff( globalBox );
 
   var zoomLevel = [
     360, 180, 90, 45, 22.5, 11.25, 5.65,2.813, 1.406,
@@ -363,19 +350,18 @@ function get_zoom_level( globalBox ) {
   for ( i = 0; i < maxIndex; i++ ) {
     thisZoom = zoomLevel[i];
     nextZoom = zoomLevel[(i+1)];
-    //console.log( "thisZoom: " + thisZoom );
-    //console.log( "londiff: " + londiff );
     if ( thisZoom >= londiff && londiff > nextZoom ) {
       return i;
     }
   }
-  //console.log( "zoom level: " + i );
   return i;
 }
 
 
-function update_layer( map_id, layer_id, layer ) {
-  var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id );
+function md_update_layer( map_id, layer_id, layer ) {
+	//console.log("md_update_layer");
+
+  var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id );
   if ( elem != -1 ) {
   	window[ map_id + 'layers'][elem] = layer;
   } else {
@@ -384,40 +370,17 @@ function update_layer( map_id, layer_id, layer ) {
   window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
 }
 
-function clear_layer( map_id, layer_id ) {
-  var elem = findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
+function md_clear_layer( map_id, layer_id ) {
+	//console.log("md_clear_layer");
+
+  var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
   if ( elem != -1 ) {
   	window[ map_id + 'layers'].splice( elem, 1 );
   }
   window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
 }
 
-
-/**
- * hex to rgb
- *
- * Converts hex colours to rgb
- */
-const hexToRgb_simple = hex =>
-  hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
-             ,(m, r, g, b) => '#' + r + r + g + g + b + b)
-    .substring(1).match(/.{2}/g)
-    .map(x => parseInt(x, 16));
-
-const hexToRGBA = (hex, alpha = 255) => {
-    let parseString = hex;
-    if (hex.startsWith('#')) {parseString = hex.slice(1, 7);}
-    if (parseString.length !== 6) {return null;}
-    const r = parseInt(parseString.slice(0, 2), 16);
-    const g = parseInt(parseString.slice(2, 4), 16);
-    const b = parseInt(parseString.slice(4, 6), 16);
-    if (isNaN(r) || isNaN(g) || isNaN(b)) {return null;}
-    return [r, g, b, alpha];
-    //return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-};
-
-
-const hexToRGBA2 = ( hex ) => {
+const md_hexToRGBA = ( hex ) => {
     let parseString = hex;
     if (hex.startsWith('#')) { parseString = hex.slice(1, 9); }
     if (parseString.length !== 8) {return null;}
@@ -431,21 +394,10 @@ const hexToRGBA2 = ( hex ) => {
 };
 
 
-function to_rgb( colour_range ) {
-	var arr = [],
-	i,
-	n = colour_range.length;
-
-	for (i = 0; i < n; i++) {
-		arr.push( hexToRgb_simple( colour_range[i]) );
-	}
-  return arr;
-}
-
 /**
  * Converts a 'vector' of hex colours (with alpha) into an array
  */
-function to_rgba( colour_range ) {
+function md_to_rgba( colour_range ) {
 	var arr = [],
 	i,
 	n = colour_range.length;
@@ -456,13 +408,11 @@ function to_rgba( colour_range ) {
   return arr;
 }
 
-function layer_click( map_id, layer, info ) {
+function md_layer_click( map_id, layer, info ) {
 
   if ( !HTMLWidgets.shinyMode ) {
     return;
   }
-
-  //console.log( info );
 
   var eventInfo = {
   	index: info.index,
@@ -477,12 +427,12 @@ function layer_click( map_id, layer, info ) {
   Shiny.onInputChange(map_id + "_" + layer + "_click", eventInfo);
 }
 
-function decode_points( polyline ) {
-	var coordinates = decode_polyline( polyline ) ;
+function md_decode_points( polyline ) {
+	var coordinates = md_decode_polyline( polyline ) ;
 	return coordinates[0];
 }
 
-function decode_polyline(str, precision) {
+function md_decode_polyline(str, precision) {
   var index = 0,
       lat = 0,
       lng = 0,
@@ -530,21 +480,21 @@ function decode_polyline(str, precision) {
   return coordinates;
 }
 
-function get_point_coordinates ( obj ) {
+function md_get_point_coordinates ( obj ) {
 	if ( obj.geometry.geometry === null ) {
 		return [-179.999,-89.999];
 	}
 	return obj.geometry.geometry.coordinates;
 }
 
-function get_origin_coordinates ( obj ) {
+function md_get_origin_coordinates ( obj ) {
 	if ( obj.geometry.origin === null ) {
 		return [-179.999,-89.999];
 	}
 	return obj.geometry.origin.coordinates;
 }
 
-function get_destination_coordinates ( obj ) {
+function md_get_destination_coordinates ( obj ) {
 	if ( obj.geometry.destination === null ) {
 		return [-179.999,-89.999];
 	}
@@ -552,14 +502,14 @@ function get_destination_coordinates ( obj ) {
 }
 
 
-function get_line_coordinates ( obj ) {
+function md_get_line_coordinates ( obj ) {
 	if ( obj.geometry.geometry === null ) {
 		return [[-179.999,-89.999],[-179.999,-89.999]];
 	}
 	return obj.geometry.geometry.coordinates;
 }
 
-function get_polygon_coordinates ( obj ) {
+function md_get_polygon_coordinates ( obj ) {
 	if ( obj.geometry.geometry === null ) {
 		return [[-179.999,-89.999],[-179.999,-89.999],[-179.999,-89.999]];
 	}

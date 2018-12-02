@@ -241,5 +241,5 @@ add_arc <- function(
 #' @export
 clear_arc <- function( map, layer_id = NULL ) {
 	layer_id <- layerId(layer_id, "arc")
-	invoke_method(map, "layer_clear", layer_id, "arc" )
+	invoke_method(map, "md_layer_clear", layer_id, "arc" )
 }
