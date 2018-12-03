@@ -68,8 +68,8 @@ HTMLWidgets.widget({
 
 
 			    window[el.id + 'map'] = deckgl;
-
-			    //console.log( window[el.id + 'map']);
+                console.log(" initial map object");
+			    console.log( window[el.id + 'map']);
 
 			    md_initialise_map(el, x);
       },
@@ -178,26 +178,37 @@ function md_findObjectElementByKey(array, key, value ) {
 }
 
 function md_change_location( map_id, location, zoom, pitch, bearing, duration, transition ) {
-	//console.log("md_change_location");
-
+	
   var currentLon, currentLat, currentPitch, currentBearing, currentZoom;
+    
+    console.log(" md_change_location args ");
+    console.log( location );
+    console.log( zoom );
+    console.log( pitch );
+    console.log( bearing );
 
   if ( window[ map_id + 'map'].viewState["default-view"] !== undefined ) {
+      console.log( "default view ");
   	currentLon = location === null ? window[ map_id + 'map'].viewState["default-view"].longitude : location[0];
   	currentLat = location === null ? window[ map_id + 'map'].viewState["default-view"].latitude : location[1];
     currentPitch = pitch === null ? window[ map_id + 'map'].viewState["default-view"].pitch : pitch;
     currentBearing = bearing === null ? window[ map_id + 'map' ].viewState["default-view"].bearing : bearing;
     currentZoom = zoom === null ? window[ map_id + 'map'].viewState["default-view"].zoom : zoom;
   } else {
+      console.log("non-default view");
+      console.log( window[ map_id + 'map'].viewState );
   	currentLon = location === null ? window[ map_id + 'map'].viewState.longitude : location[0];
   	currentLat = location === null ? window[ map_id + 'map'].viewState.latitude : location[1];
     currentPitch = pitch === null ? window[ map_id + 'map'].viewState.pitch : pitch;
     currentBearing = bearing === null ? window[ map_id + 'map' ].viewState.bearing : bearing;
     currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
   }
-
-  //console.log( currentLon );
-  //console.log( currentLat );
+    
+    console.log( currentLon );
+    console.log( currentLat );
+    console.log( currentPitch );
+    console.log( currentBearing );
+    console.log( currentZoom );
 
 	window[map_id + 'map'].setProps({
     viewState: {
@@ -214,13 +225,15 @@ function md_change_location( map_id, location, zoom, pitch, bearing, duration, t
 
 
 function md_layer_view( map_id, layer_id, focus_layer, bbox, update_view ) {
-	//console.log("md_layer_view");
-	if( focus_layer ) {
+  console.log("md_layer_view");
+  if( focus_layer ) {
+    console.log("focusing layer");
   	md_clear_bounds( map_id );
   	update_view = true;     // force this
   }
 
   if( bbox !== undefined && update_view) {
+      console.log("update_view");
 	  md_add_to_bounds( map_id, bbox, layer_id );
 	  var loc = md_center_location( window[ map_id + 'globalBox'] );
 	  md_change_location( map_id, loc, window[ map_id + 'currentZoomLevel'], null, null, 0, "linear" );
@@ -228,7 +241,7 @@ function md_layer_view( map_id, layer_id, focus_layer, bbox, update_view ) {
 }
 
 function md_layer_clear( map_id, layer_id, layer ) {
-	//console.log("md_layer_clear");
+	console.log("md_layer_clear");
 	md_clear_layer( map_id, layer+'-'+layer_id );
   md_clear_legend( map_id, layer_id );
   md_remove_from_bounds( map_id, layer_id );
@@ -236,8 +249,8 @@ function md_layer_clear( map_id, layer_id, layer ) {
 }
 
 function md_center_location( bbox ) {
-	//console.log("md_center_location");
-	//console.log( bbox );
+	console.log("md_center_location");
+	console.log( bbox );
 
 	cLon = (bbox[0][0] + bbox[1][0]) / 2;
 	cLat = (bbox[0][1] + bbox[1][1]) / 2;
@@ -247,7 +260,7 @@ function md_center_location( bbox ) {
 
 
 function md_add_to_bounds( map_id, bbox, layer_id ) {
-	//console.log("md_add_to_bounds");
+  console.log("md_add_to_bounds");
   var thisBox = {
   	layer_id: layer_id,
   	bbox: bbox
@@ -266,7 +279,7 @@ function md_add_to_bounds( map_id, bbox, layer_id ) {
 }
 
 function md_remove_from_bounds( map_id, layer_id ) {
-	//console.log("md_remove_from_bounds");
+	console.log("md_remove_from_bounds");
 
 	var elem = md_findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'layer_id', layer_id );
 	if ( elem != -1 ) {
@@ -277,7 +290,7 @@ function md_remove_from_bounds( map_id, layer_id ) {
 }
 
 function md_clear_bounds( map_id ) {
-	//console.log("md_clear_bounds");
+	console.log("md_clear_bounds");
 
 	window[ map_id + 'mapdeckBounds'] = [];
 	window[ map_id + 'globalBox'] = [];
@@ -285,12 +298,13 @@ function md_clear_bounds( map_id ) {
 }
 
 function md_update_location( map_id ) {
-	//console.log("md_udpate_location");
+	console.log("md_udpate_location");
 
 	var loc = md_center_location( window[ map_id + 'globalBox' ] );
 	var zoom =  window[ map_id + 'currentZoomLevel' ];
-	//console.log( "Loc" );
-	//console.log( loc );
+	console.log( "Loc" );
+	console.log( loc );
+    
 	if ( Number.isNaN( loc[0] ) ) {
 		return;
 	}
@@ -300,7 +314,7 @@ function md_update_location( map_id ) {
 
 
 function md_calculate_bounds( map_id, mapdeckBounds ) {
-	//console.log("md_caululate_bounds");
+	console.log("md_caululate_bounds");
 
   var ymin, xmin, ymax, xmax, thisBox;
   for( var i = 0; i < mapdeckBounds.length; i++ ) {
@@ -322,7 +336,7 @@ function md_calculate_bounds( map_id, mapdeckBounds ) {
 }
 
 function md_lon_diff( globalBox ) {
-	//console.log("md_lon_diff");
+	console.log("md_lon_diff");
 
   xmin = globalBox[0][0];
   xmax = globalBox[1][0];
@@ -368,6 +382,7 @@ function md_update_layer( map_id, layer_id, layer ) {
   	window[map_id + 'layers'].push( layer );
   }
   window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
+    console.log( "updated layer" );
 }
 
 function md_clear_layer( map_id, layer_id ) {
