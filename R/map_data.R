@@ -167,7 +167,9 @@ get_box.sfencoded <- function( data, l ) {
 
 #' @export
 get_box.sf <- function( data, l ) {
-	bbox <- attr(data$geometry, "bbox")
+	#print("sf box")
+	bbox <- attr(data[[ l[["geometry"]] ]], "bbox")
+	#print( bbox )
 	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
 	return( jsonify::to_json( bbox ) )
 }
