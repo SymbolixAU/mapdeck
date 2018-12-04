@@ -45,33 +45,18 @@ HTMLWidgets.widget({
 
         const deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
-			      container: el.id,
-			      mapStyle: x.style,
-			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      layers: [],
-			      //onLayerHover: setTooltip
-			  });
+            container: el.id,
+			mapStyle: x.style,
+            viewState: window[ el.id + 'INITIAL_VIEW_STATE' ],
+			//initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			layers: []
+        });
 
-        // https://github.com/uber/deck.gl/issues/2114
-        /*
-			  const viewPort = WebMercartorViewport({
-			  	width: 800,
-				  height: 600,
-				  longitude: -122.45,
-				  latitude: 37.78,
-				  zoom: 12,
-				  pitch: 60,
-				  bearing: 30
-			  });
-			  console.log( viewPort );
-			  */
+        window[el.id + 'map'] = deckgl;
+        console.log(" initial map object");
+        console.log( window[el.id + 'map']);
 
-
-			    window[el.id + 'map'] = deckgl;
-                console.log(" initial map object");
-			    console.log( window[el.id + 'map']);
-
-			    md_initialise_map(el, x);
+        md_initialise_map(el, x);
       },
 
       resize: function(width, height) {
@@ -186,17 +171,18 @@ function md_change_location( map_id, location, zoom, pitch, bearing, duration, t
     console.log( zoom );
     console.log( pitch );
     console.log( bearing );
-
+    
   if ( window[ map_id + 'map'].viewState["default-view"] !== undefined ) {
-      console.log( "default view ");
+    console.log( "default view ");
   	currentLon = location === null ? window[ map_id + 'map'].viewState["default-view"].longitude : location[0];
   	currentLat = location === null ? window[ map_id + 'map'].viewState["default-view"].latitude : location[1];
     currentPitch = pitch === null ? window[ map_id + 'map'].viewState["default-view"].pitch : pitch;
     currentBearing = bearing === null ? window[ map_id + 'map' ].viewState["default-view"].bearing : bearing;
     currentZoom = zoom === null ? window[ map_id + 'map'].viewState["default-view"].zoom : zoom;
+      
   } else {
-      console.log("non-default view");
-      console.log( window[ map_id + 'map'].viewState );
+    console.log("non-default view");
+    console.log( window[ map_id + 'map'].viewState );
   	currentLon = location === null ? window[ map_id + 'map'].viewState.longitude : location[0];
   	currentLat = location === null ? window[ map_id + 'map'].viewState.latitude : location[1];
     currentPitch = pitch === null ? window[ map_id + 'map'].viewState.pitch : pitch;
@@ -209,18 +195,24 @@ function md_change_location( map_id, location, zoom, pitch, bearing, duration, t
     console.log( currentPitch );
     console.log( currentBearing );
     console.log( currentZoom );
-
-	window[map_id + 'map'].setProps({
-    viewState: {
+    
+    var state  = {
       longitude: currentLon,
       latitude: currentLat,
       zoom: currentZoom,
       pitch: currentPitch,
       bearing: currentBearing,
       transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
-      transitionDuration: duration
-    },
+      transitionDuration: duration  
+    }
+
+    window[map_id + 'map'].setProps({
+    //state: this.viewState,
+    viewState: state,
   });
+	
+    console.log( "updated map object ");
+    console.log( window[ map_id + 'map' ] );
 }
 
 
