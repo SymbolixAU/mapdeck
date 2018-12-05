@@ -35,7 +35,7 @@ HTMLWidgets.widget({
         mapDiv.appendChild(tooltipdiv);
 
         // INITIAL VIEW
-        window[el.id + 'INITIAL_VIEW_STATE'] = {
+        var state = {
         	longitude: x.location[0],
         	latitude: x.location[1],
         	zoom: x.zoom,
@@ -47,7 +47,7 @@ HTMLWidgets.widget({
           	mapboxApiAccessToken: x.access_token,
             container: el.id,
 			mapStyle: x.style,
-            viewState: window[ el.id + 'INITIAL_VIEW_STATE' ],
+            viewState: state,
 			//initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			layers: []
         });
@@ -205,6 +205,9 @@ function md_change_location( map_id, location, zoom, pitch, bearing, duration, t
       transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
       transitionDuration: duration  
     }
+    
+    console.log( "setting state" );
+    console.log( state );
 
     window[map_id + 'map'].setProps({
     //state: this.viewState,
