@@ -188,7 +188,19 @@ get_box.data.frame <- function( data, l ) {
 get_od_box <- function( data, l ) UseMethod("get_od_box")
 
 #' @export
-get_od_box.sf <- function( data, l ) get_box( data, l )
+get_od_box.sf <- function( data, l ) {
+
+	obbox <- attr( data[[ l[["origin"]] ]], "bbox" )
+	dbbox <- attr( data[[ l[["destination"]] ]], "bbox" )
+
+	#bbox <- list( c( obbox[1:2] ), c( obbox[3:4] ) )
+	xmin <- min( obbox[1], dbbox[1] )
+	ymin <- min( obbox[2], dbbox[2] )
+	xmax <- max( obbox[3], dbbox[3] )
+	ymax <- max( obbox[4], dbbox[4] )
+	bbox <- list( c(xmin, ymin), c(xmax, ymax) )
+	return( jsonify::to_json( bbox ) )
+}
 
 #' @export
 get_od_box.data.frame <- function( data, l ) {
