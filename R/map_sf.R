@@ -63,7 +63,7 @@ normalisesGeojsonData <- function(data) UseMethod("normalisesGeojsonData")
 
 #' @export
 normalisesGeojsonData.sf <- function(data) {
-	geo <- geojsonsf::sf_geojson(data)
+	geo <- geojsonsf::sf_geojson( data, simplify = FALSE)
 	attr(geo, 'class') <- 'json'
 	return(geo)
 }

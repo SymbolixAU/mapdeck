@@ -6,16 +6,12 @@
 namespace mapdeck {
 namespace defaults {
 
-  // const Rcpp::StringVector default_palette = "viridis";
-  // const std::string default_na_colour = "#808080FF";
-
-  // TODO( dont' necessarily need polyline anymore )
+  // dont' necessarily need polyline anymore
 	inline Rcpp::StringVector default_polyline( int n ) {
-		// created so it's pre-allocated - every data set will require a polylne vector
 		Rcpp::StringVector sv(n);
 		return sv;
 	}
-  // TODO( use lon & lat defauts in stead of polyline if using a data.frame of points!)
+
 	inline Rcpp::NumericVector default_lon( int n ) {
 		Rcpp::NumericVector nv(n, 0.0);
 		return nv;

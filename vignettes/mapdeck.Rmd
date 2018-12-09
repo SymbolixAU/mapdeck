@@ -422,4 +422,13 @@ server <- function(input, output) {
 shinyApp(ui, server)
 ```
 
-**Note:** `scatterplot` and `pointclouds` don't currently support click events
+
+### TODO
+
+- shiny design patterns for transitions and observing events
+- returning data to R session
+- benchmarks - when to chose and plot which type of object
+
+
+
+

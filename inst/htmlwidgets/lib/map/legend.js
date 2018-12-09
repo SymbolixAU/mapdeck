@@ -210,8 +210,8 @@ function add_legend_category(map_id, layer_id, legendValues) {
 
 }
 
-// TODO( move / rename )
-function findById( source, id, returnType ) {
+
+function md_find_by_id( source, id, returnType ) {
     var i = 0;
     for (i = 0; i < source.length; i++) {
         if (source[i].id === id) {
@@ -228,7 +228,7 @@ function findById( source, id, returnType ) {
 function md_try_remove_legend( map_id, layer_id, colour_type ) {
 	// find reference to this layer in the legends
 	var id = map_id + 'legend' + layer_id + colour_type;
-	var objIndex = findById( window[map_id + 'legendPositions'], id, "index" );
+	var objIndex = md_find_by_id( window[map_id + 'legendPositions'], id, "index" );
 
 	if( objIndex !== undefined ) {
 		md_removeControl( map_id, id, window[map_id + 'legendPositions'][objIndex].position );

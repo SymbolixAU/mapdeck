@@ -190,7 +190,6 @@ add_geojson <- function(
 	fill_opacity = NULL,
 	radius = NULL,
 	elevation = NULL,
-	#evaluate = FALSE,            ## TODO( if TRUE, make to SF and resolve all teh stuff)
 	light_settings = list(),
 	legend = F,
 	legend_options = NULL,
@@ -220,25 +219,20 @@ add_geojson <- function(
 	update_view <- force( update_view )
 	focus_layer <- force( focus_layer )
 
-	#evaluate <- force( evaluate )
-
-	## if the user supplied any of the 'get' accessors, AND they supplied geoJSON, conver to SF.
-	#if ( evaluate ) {
-		if ( any (
-			!is.null( l[["stroke_colour"]] ) |
-			!is.null( l[["stroke_opacity"]] ) |
-			!is.null( l[["stroke_width"]] ) |
-			!is.null( l[["fill_colour"]] ) |
-			!is.null( l[["fill_opacity"]] ) |
-			!is.null( l[["elevation"]] ) |
-			!is.null( l[["radius"]] )
-		) ) {
-			if( inherits( data, "geojson" ) | inherits( data, "json" ) | inherits( data, "character" ) ) {
-				#message("converting geojson to sf")
-				data <- geojsonsf::geojson_sf( data )
-			}
+	if ( any (
+		!is.null( l[["stroke_colour"]] ) |
+		!is.null( l[["stroke_opacity"]] ) |
+		!is.null( l[["stroke_width"]] ) |
+		!is.null( l[["fill_colour"]] ) |
+		!is.null( l[["fill_opacity"]] ) |
+		!is.null( l[["elevation"]] ) |
+		!is.null( l[["radius"]] )
+	) ) {
+		if( inherits( data, "geojson" ) | inherits( data, "json" ) | inherits( data, "character" ) ) {
+			#message("converting geojson to sf")
+			data <- geojsonsf::geojson_sf( data )
 		}
-	#}
+	}
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -255,23 +249,6 @@ add_geojson <- function(
 		l[["bbox"]] <- NULL
 	}
 
-	## TODO( fill_colour, stroke_colour can refer to a .property. value? )
-	## - it will have to be rendered as an sf object, though...
-
-	## if SF object, we can do all the colour stuff
-	## If the user supplies fill_colour / stroke_colour, convert to sf, then use as sf
-	## if none are supplied, the javascript function will look for `fillColor`, / `lineColor` etc.
-
-
-	# data <- normalisesGeojsonData( data )
-	## Parameter checks
-
-	# checkNumeric( radius )
-	# checkNumeric( stroke_width )
-	# checkNumeric( elevation )
-	# isHexColour( stroke_colour )
-	# isHexColour( fill_colour )
-	# checkHexAlpha( highlight_colour )
 	layer_id <- layerId( layer_id, "geojson" )
 	## TODO(light_settings - test options are accurate)
 
@@ -297,7 +274,6 @@ add_geojson <- function(
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
 
-	## TODO( invoke different methods for when using pure GeoJSON and when using sf)
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,

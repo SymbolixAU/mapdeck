@@ -18,8 +18,6 @@ Rcpp::List geojson_defaults(int n) {
 Rcpp::List rcpp_geojson_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
                                  Rcpp::List params, std::string geometry_column ) {
 
-	// TODO( if an SF object )
-
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = geojson_defaults( data_rows );  // initialise with defaults

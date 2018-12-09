@@ -33,7 +33,7 @@ resolve_od_data.sfencoded <- function( data, l, origin, destination ) {
 	# # l[["data"]] <- data
 	# l <- resolve_od_data.sfencodedLite( data, l, origin, destination )
 	# return( l )
-  stop("data type not supported")
+  stop("data type not yet for supported origin-destination plots")
 }
 
 #' @export
@@ -168,9 +168,7 @@ get_box.sfencoded <- function( data, l ) {
 
 #' @export
 get_box.sf <- function( data, l ) {
-	#print("sf box")
 	bbox <- attr(data[[ l[["geometry"]] ]], "bbox")
-	#print( bbox )
 	bbox <- list(c(bbox[1:2]), c(bbox[3:4]))
 	return( jsonify::to_json( bbox ) )
 }
@@ -194,7 +192,6 @@ get_od_box.sf <- function( data, l ) {
 	obbox <- attr( data[[ l[["origin"]] ]], "bbox" )
 	dbbox <- attr( data[[ l[["destination"]] ]], "bbox" )
 
-	#bbox <- list( c( obbox[1:2] ), c( obbox[3:4] ) )
 	xmin <- min( obbox[1], dbbox[1] )
 	ymin <- min( obbox[2], dbbox[2] )
 	xmax <- max( obbox[3], dbbox[3] )
@@ -213,11 +210,12 @@ get_od_box.data.frame <- function( data, l ) {
 	return( jsonify::to_json( bbox ) )
 }
 
-## TODO( needs to call the JS function which decodes the polyline )
 #' @export
 resolve_data.sfencoded <- function( data, l, sf_geom ) {
 
-	data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom[1], multi = TRUE), ]
+	if( !attr( data, "sfAttributes" )[["type"]] %in% sf_geom ) {
+	  data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom[1], multi = TRUE), ]
+	}
 
 	l[["bbox"]] <- get_box( data, l )
 	l[["data_type"]] <- "sfencoded"
@@ -228,13 +226,7 @@ resolve_data.sfencoded <- function( data, l, sf_geom ) {
 
 #' @export
 resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
-	## TODO( requries polyline parameter )
-	# polyline <- findEncodedColumn(data, l[["polyline"]])
 
-	## - if sf object, and geometry column has not been supplied, it needs to be
-	## added to objArgs after the match.call() function
-	# if( !is.null(polyline) && !polyline %in% names(l) ) {
-	#	l[['polyline']] <- polyline
 	polyline <- attr( data, "encoded_column")
 	if ( sf_geom[1] != "POLYGON" ) {   ## TODO( I don't like this)
   	data <- unlistMultiGeometry( data, polyline )  ## TODO( move this to C++)

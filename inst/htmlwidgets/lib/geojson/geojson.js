@@ -72,7 +72,6 @@ function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight,
   md_update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
 }
 
-// TODO( update these accessors to find variations on // fillColor, fillColour, fill_colour, fill_color )
 function geojson_radius( g ) {
   if (g.properties === undefined) {
     return 10;

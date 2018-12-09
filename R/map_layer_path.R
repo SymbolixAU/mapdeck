@@ -71,7 +71,6 @@ add_path <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,
-	#geometry = NULL,            ## TODO( geometry - user can specify if there are more than one )
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	stroke_opacity = NULL,
