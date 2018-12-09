@@ -450,7 +450,7 @@ function md_to_rgba( colour_range ) {
 	n = colour_range.length;
 
 	for (i = 0; i < n; i++) {
-		arr.push( hexToRGBA( colour_range[i]) );
+		arr.push( md_hexToRGBA( colour_range[i]) );
 	}
   return arr;
 }
