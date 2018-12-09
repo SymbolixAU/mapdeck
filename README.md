@@ -37,7 +37,7 @@ Deck.gl
 ## How do I use it?
 
 Everything you need to know to get you started is on the [home
-page](file:///Users/dave/Documents/github/mapdeck/docs/articles/mapdeck.html)
+page](https://symbolixau.github.io/mapdeck/)
 
 ## Installation
 
