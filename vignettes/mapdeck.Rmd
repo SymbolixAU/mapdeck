@@ -29,18 +29,18 @@ knitr::opts_chunk$set(
 library(mapdeck)
 ```
 
-### What is Mapdeck?
+# What is Mapdeck?
 
 Mapdeck is a combination of [Mabox](https://www.mapbox.com/help/define-mapbox-gl/) and [Deck.gl](http://deck.gl/#/)
 
 
-### Why did you build it?
+# Why did you build it?
 
 Because Deck.gl is one of the most user-friendly WebGL javascript libraries and can produce some beautiful maps. And it integrates nicely with Mapbox. 
 
 
 
-### The basics
+# The basics
 
 You need a [Mapbox Access Token](https://www.mapbox.com/help/how-access-tokens-work/) to load a map. Then call `mapdeck(token = token)` to give you a map
 
@@ -70,21 +70,23 @@ mapdeck_style(style = 'dark')
 ```
 
 
-### Layers
+# Layers
 
 Once you have a map you can start adding layers through the various `add_*()` functions (there is an example of each one in this vignette).
 
-### layer_id
+## layer_id
 
-Each layer requires you to set a `layer_id` value. This is important and required. It's this ID that `deck.gl` uses to 'shallow-compare' layers to see if they need updating. 
+Each layer requires a `layer_id` value. If you don't supply one, it will create it for you, but this may have some unintended consequences for you. 
 
-Which comes in handy when working in Shiny. If you update the data but use the same `layer_id`, `deck.gl` knows it should update the layer. There's nothing extra for you to do. There is a section on Shiny giving examples
+The `layer_id` is the ID that `deck.gl` uses to 'shallow-compare' layers to see if they need updating. Which comes in handy when working in Shiny. If you update data, for example when using a `reactive()` function, and use the same `layer_id`, `deck.gl` knows it should update the layer rather than re-draw it completely. 
 
-### Simple Features
+**However**, if two of your layers have the same `layer_id`, then `deck.gl` will get confused and start updating the wrong thing. So while I've made the `layer_id` argument optional, you should still set it manually when using it in Shiny apps. 
+
+## Simple Features
 
 All layers support simple feature [`sf`](https://github.com/r-spatial/sf) objects. In each layer section I specify which type of `sfc` object is supported
 
-### Arcs
+## Arcs
 
 ```{r}
 
@@ -105,10 +107,10 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
   )
 ```
 
-**sf** : supports `sf` objects with two POINT geometry columns.
+**sf** : supports `sf` objects with two POINT or MULTIPOINT geometry columns.
 
 
-### GeoJSON
+## GeoJSON
 
 ```{r}
 mapdeck(
@@ -126,7 +128,7 @@ mapdeck(
 
 **sf** : supports all `sf` geometry types. Converted to geojson using `geojsonsf::sf_geojson()`. Useful if your `sf` object contains different geometry types.
 
-### Grid
+## Grid
 
 ```{r}
 df <- read.csv(paste0(
@@ -145,9 +147,9 @@ add_grid(
 )
 ```
 
-**sf** : supports `sf` objects with POINT geometries
+**sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
-### Lines
+## Lines
 
 ```{r}
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
@@ -166,9 +168,9 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
   )
 ```
 
-**sf** : supports `sf` objects with two POINT geometry columns.
+**sf** : supports `sf` objects with two POINT and MULTIPOINT geometry columns.
 
-### Path
+## Path
 
 ```{r}
 mapdeck(
@@ -184,9 +186,9 @@ mapdeck(
 
 ```
 
-**sf** : supports `sf` objects with LINESTRING geometries
+**sf** : supports `sf` objects with LINESTRING and MULTILINESTRING geometries
 
-### Point cloud
+## Point cloud
 
 ```{r}
 df <- capitals
@@ -203,9 +205,9 @@ add_pointcloud(
 )
 ```
 
-**sf** : supports `sf` objects with POINT geometries
+**sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
-### Polygons
+## Polygons
 
 ```{r}
 library(sf)
@@ -221,9 +223,9 @@ mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
   )
 ```
 
-**sf** : supports `sf` objects with POLYGON geometries
+**sf** : supports `sf` objects with POLYGON and MULTIPOLYGON geometries
 
-### Scatter
+## Scatter
 
 ```{r}
 
@@ -239,9 +241,9 @@ add_scatterplot(
 
 ```
 
-**sf** : supports `sf` objects with POINT geometries
+**sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
-### Screen grid
+## Screen grid
 
 ```{r}
 df <- read.csv(paste0(
@@ -263,9 +265,9 @@ add_screengrid(
 )
 ```
 
-**sf** : supports `sf` objects with POINT geometries
+**sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
-### Text
+## Text
 
 ```{r}
 mapdeck(token = key, style = mapdeck_style('dark')) %>%
@@ -279,9 +281,9 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
   )
 ```
 
-**sf** : supports `sf` objects with POINT geometries
+**sf** : supports `sf` objects with POINT and MULTIPIONT geometries
 
-### Multiple layers
+## Multiple layers
 
 
 ```{r}
@@ -320,7 +322,7 @@ mapdeck(
 ```
 
 
-### Shiny
+# Shiny
 
 The three main functions to use are
 

@@ -52,14 +52,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/SymbolixAU/mapdeck">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -74,9 +67,9 @@
       <h1>mapdeck</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2018-12-09</h4>
+            <h4 class="date">2018-12-10</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/SymbolixAU/mapdeck/blob/master/vignettes/mapdeck.Rmd"><code>vignettes/mapdeck.Rmd</code></a></small>
+      
       <div class="hidden name"><code>mapdeck.Rmd</code></div>
 
     </div>
@@ -84,19 +77,19 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mapdeck)</a></code></pre></div>
-<div id="what-is-mapdeck" class="section level3">
-<h3 class="hasAnchor">
-<a href="#what-is-mapdeck" class="anchor"></a>What is Mapdeck?</h3>
+<div id="what-is-mapdeck" class="section level1">
+<h1 class="hasAnchor">
+<a href="#what-is-mapdeck" class="anchor"></a>What is Mapdeck?</h1>
 <p>Mapdeck is a combination of <a href="https://www.mapbox.com/help/define-mapbox-gl/">Mabox</a> and <a href="http://deck.gl/#/">Deck.gl</a></p>
 </div>
-<div id="why-did-you-build-it" class="section level3">
-<h3 class="hasAnchor">
-<a href="#why-did-you-build-it" class="anchor"></a>Why did you build it?</h3>
+<div id="why-did-you-build-it" class="section level1">
+<h1 class="hasAnchor">
+<a href="#why-did-you-build-it" class="anchor"></a>Why did you build it?</h1>
 <p>Because Deck.gl is one of the most user-friendly WebGL javascript libraries and can produce some beautiful maps. And it integrates nicely with Mapbox.</p>
 </div>
-<div id="the-basics" class="section level3">
-<h3 class="hasAnchor">
-<a href="#the-basics" class="anchor"></a>The basics</h3>
+<div id="the-basics" class="section level1">
+<h1 class="hasAnchor">
+<a href="#the-basics" class="anchor"></a>The basics</h1>
 <p>You need a <a href="https://www.mapbox.com/help/how-access-tokens-work/">Mapbox Access Token</a> to load a map. Then call <code><a href="../reference/mapdeck.html">mapdeck(token = token)</a></code> to give you a map</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">key &lt;-<span class="st"> 'abc'</span>    <span class="co">## put your own token here</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key)</a></code></pre></div>
@@ -110,25 +103,25 @@
 <p>I’ve provided a convenience function to select one of the mapbox defined styles</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="dt">style =</span> <span class="st">'dark'</span>)</a></code></pre></div>
 </div>
-<div id="layers" class="section level3">
-<h3 class="hasAnchor">
-<a href="#layers" class="anchor"></a>Layers</h3>
+<div id="layers" class="section level1">
+<h1 class="hasAnchor">
+<a href="#layers" class="anchor"></a>Layers</h1>
 <p>Once you have a map you can start adding layers through the various <code>add_*()</code> functions (there is an example of each one in this vignette).</p>
+<div id="layer_id" class="section level2">
+<h2 class="hasAnchor">
+<a href="#layer_id" class="anchor"></a>layer_id</h2>
+<p>Each layer requires a <code>layer_id</code> value. If you don’t supply one, it will create it for you, but this may have some unintended consequences for you.</p>
+<p>The <code>layer_id</code> is the ID that <code>deck.gl</code> uses to ‘shallow-compare’ layers to see if they need updating. Which comes in handy when working in Shiny. If you update data, for example when using a <code><a href="https://www.rdocumentation.org/packages/shiny/topics/reactive">reactive()</a></code> function, and use the same <code>layer_id</code>, <code>deck.gl</code> knows it should update the layer rather than re-draw it completely.</p>
+<p><strong>However</strong>, if two of your layers have the same <code>layer_id</code>, then <code>deck.gl</code> will get confused and start updating the wrong thing. So while I’ve made the <code>layer_id</code> argument optional, you should still set it manually when using it in Shiny apps.</p>
 </div>
-<div id="layer_id" class="section level3">
-<h3 class="hasAnchor">
-<a href="#layer_id" class="anchor"></a>layer_id</h3>
-<p>Each layer requires you to set a <code>layer_id</code> value. This is important and required. It’s this ID that <code>deck.gl</code> uses to ‘shallow-compare’ layers to see if they need updating.</p>
-<p>Which comes in handy when working in Shiny. If you update the data but use the same <code>layer_id</code>, <code>deck.gl</code> knows it should update the layer. There’s nothing extra for you to do. There is a section on Shiny giving examples</p>
-</div>
-<div id="simple-features" class="section level3">
-<h3 class="hasAnchor">
-<a href="#simple-features" class="anchor"></a>Simple Features</h3>
+<div id="simple-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#simple-features" class="anchor"></a>Simple Features</h2>
 <p>All layers support simple feature <a href="https://github.com/r-spatial/sf"><code>sf</code></a> objects. In each layer section I specify which type of <code>sfc</code> object is supported</p>
 </div>
-<div id="arcs" class="section level3">
-<h3 class="hasAnchor">
-<a href="#arcs" class="anchor"></a>Arcs</h3>
+<div id="arcs" class="section level2">
+<h2 class="hasAnchor">
+<a href="#arcs" class="anchor"></a>Arcs</h2>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">flights &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(url)</a>
@@ -145,11 +138,11 @@
 <a class="sourceLine" id="cb6-14" data-line-number="14">    , <span class="dt">stroke_to =</span> <span class="st">"airport2"</span></a>
 <a class="sourceLine" id="cb6-15" data-line-number="15">    , <span class="dt">stroke_width =</span> <span class="st">"stroke"</span></a>
 <a class="sourceLine" id="cb6-16" data-line-number="16">  )</a></code></pre></div>
-<p><strong>sf</strong> : supports <code>sf</code> objects with two POINT geometry columns.</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with two POINT or MULTIPOINT geometry columns.</p>
 </div>
-<div id="geojson" class="section level3">
-<h3 class="hasAnchor">
-<a href="#geojson" class="anchor"></a>GeoJSON</h3>
+<div id="geojson" class="section level2">
+<h2 class="hasAnchor">
+<a href="#geojson" class="anchor"></a>GeoJSON</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="dt">token =</span> key</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">  , <span class="dt">location =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">145</span>, <span class="fl">-37.9</span>)</a>
@@ -163,9 +156,9 @@
 <a class="sourceLine" id="cb7-11" data-line-number="11">  )</a></code></pre></div>
 <p><strong>sf</strong> : supports all <code>sf</code> geometry types. Converted to geojson using <code><a href="https://www.rdocumentation.org/packages/geojsonsf/topics/sf_geojson">geojsonsf::sf_geojson()</a></code>. Useful if your <code>sf</code> object contains different geometry types.</p>
 </div>
-<div id="grid" class="section level3">
-<h3 class="hasAnchor">
-<a href="#grid" class="anchor"></a>Grid</h3>
+<div id="grid" class="section level2">
+<h2 class="hasAnchor">
+<a href="#grid" class="anchor"></a>Grid</h2>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></a>
@@ -180,11 +173,11 @@
 <a class="sourceLine" id="cb8-12" data-line-number="12">  , <span class="dt">elevation_scale =</span> <span class="dv">50</span></a>
 <a class="sourceLine" id="cb8-13" data-line-number="13">  , <span class="dt">layer_id =</span> <span class="st">"grid_layer"</span></a>
 <a class="sourceLine" id="cb8-14" data-line-number="14">)</a></code></pre></div>
-<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
-<div id="lines" class="section level3">
-<h3 class="hasAnchor">
-<a href="#lines" class="anchor"></a>Lines</h3>
+<div id="lines" class="section level2">
+<h2 class="hasAnchor">
+<a href="#lines" class="anchor"></a>Lines</h2>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">flights &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(url)</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3">flights<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq_len</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(flights))</a>
@@ -199,11 +192,11 @@
 <a class="sourceLine" id="cb9-12" data-line-number="12">    , <span class="dt">stroke_colour =</span> <span class="st">"airport1"</span></a>
 <a class="sourceLine" id="cb9-13" data-line-number="13">    , <span class="dt">stroke_width =</span> <span class="st">"stroke"</span></a>
 <a class="sourceLine" id="cb9-14" data-line-number="14">  )</a></code></pre></div>
-<p><strong>sf</strong> : supports <code>sf</code> objects with two POINT geometry columns.</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with two POINT and MULTIPOINT geometry columns.</p>
 </div>
-<div id="path" class="section level3">
-<h3 class="hasAnchor">
-<a href="#path" class="anchor"></a>Path</h3>
+<div id="path" class="section level2">
+<h2 class="hasAnchor">
+<a href="#path" class="anchor"></a>Path</h2>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">  <span class="dt">token =</span> key</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">  , <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span></a>
@@ -214,11 +207,11 @@
 <a class="sourceLine" id="cb10-8" data-line-number="8">    , <span class="dt">stroke_colour =</span> <span class="st">"RIGHT_LOC"</span></a>
 <a class="sourceLine" id="cb10-9" data-line-number="9">    , <span class="dt">layer_id =</span> <span class="st">"path_layer"</span></a>
 <a class="sourceLine" id="cb10-10" data-line-number="10">  )</a></code></pre></div>
-<p><strong>sf</strong> : supports <code>sf</code> objects with LINESTRING geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with LINESTRING and MULTILINESTRING geometries</p>
 </div>
-<div id="point-cloud" class="section level3">
-<h3 class="hasAnchor">
-<a href="#point-cloud" class="anchor"></a>Point cloud</h3>
+<div id="point-cloud" class="section level2">
+<h2 class="hasAnchor">
+<a href="#point-cloud" class="anchor"></a>Point cloud</h2>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">df &lt;-<span class="st"> </span>capitals</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">df<span class="op">$</span>z &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">10000</span><span class="op">:</span><span class="dv">10000000</span>, <span class="dt">size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(df))</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3"></a>
@@ -231,11 +224,11 @@
 <a class="sourceLine" id="cb11-10" data-line-number="10">  , <span class="dt">layer_id =</span> <span class="st">'point'</span></a>
 <a class="sourceLine" id="cb11-11" data-line-number="11">  , <span class="dt">fill_colour =</span> <span class="st">"country"</span></a>
 <a class="sourceLine" id="cb11-12" data-line-number="12">)</a></code></pre></div>
-<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
-<div id="polygons" class="section level3">
-<h3 class="hasAnchor">
-<a href="#polygons" class="anchor"></a>Polygons</h3>
+<div id="polygons" class="section level2">
+<h2 class="hasAnchor">
+<a href="#polygons" class="anchor"></a>Polygons</h2>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(geojsonsf)</a>
 <a class="sourceLine" id="cb12-3" data-line-number="3"></a>
@@ -247,11 +240,11 @@
 <a class="sourceLine" id="cb12-9" data-line-number="9">    , <span class="dt">layer =</span> <span class="st">"polygon_layer"</span></a>
 <a class="sourceLine" id="cb12-10" data-line-number="10">    , <span class="dt">fill_colour =</span> <span class="st">"SA2_NAME16"</span></a>
 <a class="sourceLine" id="cb12-11" data-line-number="11">  )</a></code></pre></div>
-<p><strong>sf</strong> : supports <code>sf</code> objects with POLYGON geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POLYGON and MULTIPOLYGON geometries</p>
 </div>
-<div id="scatter" class="section level3">
-<h3 class="hasAnchor">
-<a href="#scatter" class="anchor"></a>Scatter</h3>
+<div id="scatter" class="section level2">
+<h2 class="hasAnchor">
+<a href="#scatter" class="anchor"></a>Scatter</h2>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</a>
@@ -262,11 +255,11 @@
 <a class="sourceLine" id="cb13-8" data-line-number="8">  , <span class="dt">fill_colour =</span> <span class="st">"country"</span></a>
 <a class="sourceLine" id="cb13-9" data-line-number="9">  , <span class="dt">layer_id =</span> <span class="st">"scatter_layer"</span></a>
 <a class="sourceLine" id="cb13-10" data-line-number="10">)</a></code></pre></div>
-<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
-<div id="screen-grid" class="section level3">
-<h3 class="hasAnchor">
-<a href="#screen-grid" class="anchor"></a>Screen grid</h3>
+<div id="screen-grid" class="section level2">
+<h2 class="hasAnchor">
+<a href="#screen-grid" class="anchor"></a>Screen grid</h2>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></a>
@@ -284,11 +277,11 @@
 <a class="sourceLine" id="cb14-15" data-line-number="15">  , <span class="dt">cell_size =</span> <span class="dv">10</span></a>
 <a class="sourceLine" id="cb14-16" data-line-number="16">  , <span class="dt">opacity =</span> <span class="fl">0.3</span></a>
 <a class="sourceLine" id="cb14-17" data-line-number="17">)</a></code></pre></div>
-<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
-<div id="text" class="section level3">
-<h3 class="hasAnchor">
-<a href="#text" class="anchor"></a>Text</h3>
+<div id="text" class="section level2">
+<h2 class="hasAnchor">
+<a href="#text" class="anchor"></a>Text</h2>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/add_text.html">add_text</a></span>(</a>
 <a class="sourceLine" id="cb15-3" data-line-number="3">    <span class="dt">data =</span> capitals</a>
@@ -298,11 +291,11 @@
 <a class="sourceLine" id="cb15-7" data-line-number="7">    , <span class="dt">text =</span> <span class="st">'capital'</span></a>
 <a class="sourceLine" id="cb15-8" data-line-number="8">    , <span class="dt">layer_id =</span> <span class="st">'text'</span></a>
 <a class="sourceLine" id="cb15-9" data-line-number="9">  )</a></code></pre></div>
-<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPIONT geometries</p>
 </div>
-<div id="multiple-layers" class="section level3">
-<h3 class="hasAnchor">
-<a href="#multiple-layers" class="anchor"></a>Multiple layers</h3>
+<div id="multiple-layers" class="section level2">
+<h2 class="hasAnchor">
+<a href="#multiple-layers" class="anchor"></a>Multiple layers</h2>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb16-2" data-line-number="2">df1 &lt;-<span class="st"> </span>capitals[ capitals<span class="op">$</span>country <span class="op">==</span><span class="st"> "Australia"</span>, ]</a>
 <a class="sourceLine" id="cb16-3" data-line-number="3">df2 &lt;-<span class="st"> </span>capitals[ capitals<span class="op">$</span>country <span class="op">!=</span><span class="st"> "Australia"</span>, ]</a>
@@ -334,9 +327,10 @@
 <a class="sourceLine" id="cb16-29" data-line-number="29">    , <span class="dt">layer_id =</span> <span class="st">"scatter"</span></a>
 <a class="sourceLine" id="cb16-30" data-line-number="30">  )</a></code></pre></div>
 </div>
-<div id="shiny" class="section level3">
-<h3 class="hasAnchor">
-<a href="#shiny" class="anchor"></a>Shiny</h3>
+</div>
+<div id="shiny" class="section level1">
+<h1 class="hasAnchor">
+<a href="#shiny" class="anchor"></a>Shiny</h1>
 <p>The three main functions to use are</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -439,11 +433,46 @@
 <a class="sourceLine" id="cb17-77" data-line-number="77">}</a>
 <a class="sourceLine" id="cb17-78" data-line-number="78"></a>
 <a class="sourceLine" id="cb17-79" data-line-number="79"><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/shinyApp">shinyApp</a></span>(ui, server)</a></code></pre></div>
-<p><strong>Note:</strong> <code>scatterplot</code> and <code>pointclouds</code> don’t currently support click events</p>
+<div id="todo" class="section level3">
+<h3 class="hasAnchor">
+<a href="#todo" class="anchor"></a>TODO</h3>
+<ul>
+<li>shiny design patterns for transitions and observing events</li>
+<li>returning data to R session</li>
+<li>benchmarks - when to chose and plot which type of object</li>
+</ul>
+</div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#what-is-mapdeck">What is Mapdeck?</a></li>
+      <li><a href="#why-did-you-build-it">Why did you build it?</a></li>
+      <li><a href="#the-basics">The basics</a></li>
+      <li>
+<a href="#layers">Layers</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#layer_id">layer_id</a></li>
+      <li><a href="#simple-features">Simple Features</a></li>
+      <li><a href="#arcs">Arcs</a></li>
+      <li><a href="#geojson">GeoJSON</a></li>
+      <li><a href="#grid">Grid</a></li>
+      <li><a href="#lines">Lines</a></li>
+      <li><a href="#path">Path</a></li>
+      <li><a href="#point-cloud">Point cloud</a></li>
+      <li><a href="#polygons">Polygons</a></li>
+      <li><a href="#scatter">Scatter</a></li>
+      <li><a href="#screen-grid">Screen grid</a></li>
+      <li><a href="#text">Text</a></li>
+      <li><a href="#multiple-layers">Multiple layers</a></li>
+      </ul>
+</li>
+      <li><a href="#shiny">Shiny</a></li>
+      </ul>
+</div>
       </div>
 
 </div>
