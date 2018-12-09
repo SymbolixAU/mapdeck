@@ -330,31 +330,78 @@ function md_lon_diff( globalBox ) {
   return xdiff;
 }
 
-function md_get_zoom_level( globalBox ) {
-	//console.log("md_get_zoom_level");
+function md_lat_diff( globalBox ) {
 
-  var londiff = md_lon_diff( globalBox );
+  ymin = globalBox[0][1];
+  ymax = globalBox[1][1];
+  ydiff = Math.abs( ymax - ymin );
+  return ydiff;
+}
 
-  var zoomLevel = [
+function md_lon_zoom( londiff ) {
+
+  var lonZoomLevel = [
     360, 180, 90, 45, 22.5, 11.25, 5.65,2.813, 1.406,
     0.703, 0.352, 0.176, 0.088, 0.044, 0.022, 0.011, 0.005
   ];
 
-  if ( londiff >= zoomLevel[0] ) {
+  if ( londiff >= lonZoomLevel[0] ) {
     return 0;
   }
-  var maxIndex = zoomLevel.length - 2;
-  var currentValue = zoomLevel[0];
+  var maxIndex = lonZoomLevel.length - 2;
+  var currentValue = lonZoomLevel[0];
   var i;
   var thisZoom, nextZoom;
+
   for ( i = 0; i < maxIndex; i++ ) {
-    thisZoom = zoomLevel[i];
-    nextZoom = zoomLevel[(i+1)];
+    thisZoom = lonZoomLevel[ i ];
+    nextZoom = lonZoomLevel[ (i+1) ];
+
     if ( thisZoom >= londiff && londiff > nextZoom ) {
       return i;
     }
   }
   return i;
+}
+
+function md_lat_zoom( latdiff ) {
+
+  var latZoomLevel = [
+    90, 45, 22.5, 11.25, 5.65,2.813, 1.406,
+    0.703, 0.352, 0.176, 0.088, 0.044, 0.022, 0.011, 0.005, 0.0025, 0.000175
+  ];
+
+  if ( latdiff >= latZoomLevel[0] ) {
+    return 0;
+  }
+  var maxIndex = latZoomLevel.length - 2;
+  var currentValue = latZoomLevel[0];
+  var i;
+  var thisZoom, nextZoom;
+
+  for ( i = 0; i < maxIndex; i++ ) {
+    thisZoom = latZoomLevel[ i ];
+    nextZoom = latZoomLevel[ (i+1) ];
+
+    if ( thisZoom >= latdiff && latdiff > nextZoom ) {
+      return i;
+    }
+  }
+  return i;
+}
+
+function md_get_zoom_level( globalBox ) {
+	//console.log("md_get_zoom_level");
+
+  var londiff = md_lon_diff( globalBox );
+  var latdiff = md_lat_diff( globalBox );
+
+  var lonZoom = md_lon_zoom( londiff );
+  var latZoom = md_lat_zoom( latdiff );
+
+  var diff = Math.min( lonZoom, latZoom );
+
+  return diff;
 }
 
 

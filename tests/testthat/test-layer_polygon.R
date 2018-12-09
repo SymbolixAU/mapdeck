@@ -10,7 +10,7 @@ test_that("add_polygon accepts multiple objects", {
 	set_token("abc")
 	m <- mapdeck()
 
-	sf <- spatialwidget::melbourne[ spatialwidget::melbourne$SA2_NAME == "South Yarra - West", ]
+	sf <- spatialwidget::widget_melbourne[ spatialwidget::widget_melbourne$SA2_NAME == "South Yarra - West", ]
 	p <- add_polygon(map = m, data = sf)
 	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), geo )
 

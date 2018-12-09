@@ -24,7 +24,7 @@ Rcpp::List rcpp_arc_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 	Rcpp::StringVector arc_legend = mapdeck::arc::arc_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
-	return spatialwidget::api::create_geojson(
+	return spatialwidget::api::create_geojson_downcast(
 		data,
 		data_types,
 		params,

@@ -15,6 +15,7 @@ resolve_od_data.sf <- function( data, l, origin, destination ) {
 	if ( is.null( l[["origin"]] ) || is.null( l[["destination"]] ) ) {
 		stop("origin and destination columns required")
 	}
+
 	l[["data_type"]] <- "sf"
 	l[["bbox"]] <- get_od_box( data, l )
 	return( l )
