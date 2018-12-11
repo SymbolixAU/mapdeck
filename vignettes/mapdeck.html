@@ -11,7 +11,7 @@
 
 <meta name="author" content="David Cooley" />
 
-<meta name="date" content="2018-12-11" />
+<meta name="date" content="2018-12-12" />
 
 <title>mapdeck</title>
 
@@ -1493,7 +1493,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">mapdeck</h1>
 <h4 class="author"><em>David Cooley</em></h4>
-<h4 class="date"><em>2018-12-11</em></h4>
+<h4 class="date"><em>2018-12-12</em></h4>
 
 </div>
 
@@ -1840,79 +1840,6 @@ shinyApp(ui, server)</code></pre>
 <li>benchmarks - when to chose and plot which type of object</li>
 </ul>
 </div>
-</div>
-<div id="benchmarks" class="section level1">
-<h1>Benchmarks</h1>
-<p>(some rules of thumb / recommendations) - quick visual, without caring about styling, use geojson (or where <code>properties : {}</code> contains styles) - if you have a mixture of geometries inside an <code>sf</code> / <code>sfencoded</code> object, and you only want to view one type, subsetting will be slow-ish.</p>
-<p>While all the layer functions use underlying C++ code to prepare the data, there are still differences in how quickly different types of objects can be plotted.</p>
-<p>The types of R objects supported in mapdeck are</p>
-<ul>
-<li><code>data.frame</code> (for POINTs only)</li>
-<li><code>sf</code></li>
-<li><code>sfencoded</code></li>
-<li><code>sfencodedLite</code></li>
-<li><code>geojson</code></li>
-</ul>
-<p>For example, say you want to plot 500,000 points on a map using <code>add_scatterplot()</code>. Well, if you use</p>
-<pre class="r"><code>
-library(microbenchmark)
-library(mapdeck)
-library(sf)
-library(geojsonsf)
-library(googlePolylines)
-
-key &lt;- read.dcf(&quot;~/Documents/.googleAPI&quot;, fields = &quot;MAPBOX&quot;)
-set_token( key )
-
-## scatterplot
-set.seed(20181209)
-n &lt;- 1e5
-lons &lt;- seq(-180,180, by = 0.001)
-lats &lt;- seq(-90,90, by = 0.001)
-df &lt;- data.frame(
-    lon = sample(lons, size = n, replace = T)
-    , lat = sample(lats, size = n, replace = T )
-)
-df$id &lt;- 1:nrow(df)
-df$val &lt;- rnorm(n=n)
-sf &lt;- sf::st_as_sf( df, coords = c(&quot;lon&quot;,&quot;lat&quot;))
-enc &lt;- googlePolylines::encode( sf )
-encLite &lt;- googlePolylines::encode( sf, strip = T )
-
-sf$fill_colour &lt;- colourvalues::colour_values(sf$val)
-geo &lt;- geojsonsf::sf_geojson( sf, simplify = FALSE )
-
-microbenchmark(
-    df = {
-        mapdeck() %&gt;% add_scatterplot( data = df, lon = &quot;lon&quot;, lat = &quot;lat&quot;, fill_colour = &quot;val&quot;)
-    },
-    sf = {
-        mapdeck() %&gt;% add_scatterplot( data = sf, fill_colour = &quot;val&quot; )
-    },
-    enc = {
-        mapdeck() %&gt;% add_scatterplot( data = enc, fill_colour = &quot;val&quot; )
-    },
-    enclite = {
-        mapdeck() %&gt;% add_scatterplot( data = encLite, fill_colour = &quot;val&quot; )
-    },
-    geo_sf = {
-        mapdeck() %&gt;% add_geojson( data = sf, fill_colour = &quot;val&quot; )
-    },
-    geojson = {
-        mapdeck() %&gt;% add_geojson( data = geo )
-    },
-    times = 5
-)
-
-# Unit: milliseconds
-#    expr        min         lq       mean     median          uq         max neval
-# df      456.205270 466.227301 505.972537 521.141831  535.952496  550.335787     5
-# sf      424.461500 426.184777 546.094275 433.743690  466.887704  979.193704     5
-# enc     783.477064 806.466145 933.792187 885.506362  903.656713 1289.854652     5
-# enclite 681.644942 730.634827 769.643424 740.264817  750.807022  944.865514     5
-# geo_sf  636.163284 781.685261 975.163050 885.819292 1022.844405 1549.303007     5
-# geojson   1.267405   1.348774   1.387614   1.401142    1.440508    1.480242     5
-</code></pre>
 </div>
 
 

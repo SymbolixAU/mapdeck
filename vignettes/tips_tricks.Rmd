@@ -120,6 +120,8 @@ shinyApp(ui, server)
 
 You will have noticed I've specified the `location` argument in the initial `mapdeck()` call...
 
+# returning data to R session
+
 # update_view
 
 # sf objects
