@@ -11,7 +11,7 @@
 
 <meta name="author" content="David Cooley" />
 
-<meta name="date" content="2018-12-09" />
+<meta name="date" content="2018-12-11" />
 
 <title>mapdeck</title>
 
@@ -1493,22 +1493,22 @@ div.tocify {
 
 <h1 class="title toc-ignore">mapdeck</h1>
 <h4 class="author"><em>David Cooley</em></h4>
-<h4 class="date"><em>2018-12-09</em></h4>
+<h4 class="date"><em>2018-12-11</em></h4>
 
 </div>
 
 
 <pre class="r"><code>library(mapdeck)</code></pre>
-<div id="what-is-mapdeck" class="section level3">
-<h3>What is Mapdeck?</h3>
+<div id="what-is-mapdeck" class="section level1">
+<h1>What is Mapdeck?</h1>
 <p>Mapdeck is a combination of <a href="https://www.mapbox.com/help/define-mapbox-gl/">Mabox</a> and <a href="http://deck.gl/#/">Deck.gl</a></p>
 </div>
-<div id="why-did-you-build-it" class="section level3">
-<h3>Why did you build it?</h3>
+<div id="why-did-you-build-it" class="section level1">
+<h1>Why did you build it?</h1>
 <p>Because Deck.gl is one of the most user-friendly WebGL javascript libraries and can produce some beautiful maps. And it integrates nicely with Mapbox.</p>
 </div>
-<div id="the-basics" class="section level3">
-<h3>The basics</h3>
+<div id="the-basics" class="section level1">
+<h1>The basics</h1>
 <p>You need a <a href="https://www.mapbox.com/help/how-access-tokens-work/">Mapbox Access Token</a> to load a map. Then call <code>mapdeck(token = token)</code> to give you a map</p>
 <pre class="r"><code>key &lt;- 'abc'    ## put your own token here
 mapdeck(token = key)</code></pre>
@@ -1522,21 +1522,21 @@ mapdeck_tokens()
 <p>I’ve provided a convenience function to select one of the mapbox defined styles</p>
 <pre class="r"><code>mapdeck_style(style = 'dark')</code></pre>
 </div>
-<div id="layers" class="section level3">
-<h3>Layers</h3>
+<div id="layers" class="section level1">
+<h1>Layers</h1>
 <p>Once you have a map you can start adding layers through the various <code>add_*()</code> functions (there is an example of each one in this vignette).</p>
+<div id="layer_id" class="section level2">
+<h2>layer_id</h2>
+<p>Each layer requires a <code>layer_id</code> value. If you don’t supply one, it will create it for you, but this may have some unintended consequences for you.</p>
+<p>The <code>layer_id</code> is the ID that <code>deck.gl</code> uses to ‘shallow-compare’ layers to see if they need updating. Which comes in handy when working in Shiny. If you update data, for example when using a <code>reactive()</code> function, and use the same <code>layer_id</code>, <code>deck.gl</code> knows it should update the layer rather than re-draw it completely.</p>
+<p><strong>However</strong>, if two of your layers have the same <code>layer_id</code>, then <code>deck.gl</code> will get confused and start updating the wrong thing. So while I’ve made the <code>layer_id</code> argument optional, you should still set it manually when using it in Shiny apps.</p>
 </div>
-<div id="layer_id" class="section level3">
-<h3>layer_id</h3>
-<p>Each layer requires you to set a <code>layer_id</code> value. This is important and required. It’s this ID that <code>deck.gl</code> uses to ‘shallow-compare’ layers to see if they need updating.</p>
-<p>Which comes in handy when working in Shiny. If you update the data but use the same <code>layer_id</code>, <code>deck.gl</code> knows it should update the layer. There’s nothing extra for you to do. There is a section on Shiny giving examples</p>
-</div>
-<div id="simple-features" class="section level3">
-<h3>Simple Features</h3>
+<div id="simple-features" class="section level2">
+<h2>Simple Features</h2>
 <p>All layers support simple feature <a href="https://github.com/r-spatial/sf"><code>sf</code></a> objects. In each layer section I specify which type of <code>sfc</code> object is supported</p>
 </div>
-<div id="arcs" class="section level3">
-<h3>Arcs</h3>
+<div id="arcs" class="section level2">
+<h2>Arcs</h2>
 <pre class="r"><code>
 url &lt;- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 flights &lt;- read.csv(url)
@@ -1553,10 +1553,10 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %&g
     , stroke_to = &quot;airport2&quot;
     , stroke_width = &quot;stroke&quot;
   )</code></pre>
-<p><strong>sf</strong> : supports <code>sf</code> objects with two POINT geometry columns.</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with two POINT or MULTIPOINT geometry columns.</p>
 </div>
-<div id="geojson" class="section level3">
-<h3>GeoJSON</h3>
+<div id="geojson" class="section level2">
+<h2>GeoJSON</h2>
 <pre class="r"><code>mapdeck(
   token = key
   , location = c(145, -37.9)
@@ -1570,8 +1570,8 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %&g
   )</code></pre>
 <p><strong>sf</strong> : supports all <code>sf</code> geometry types. Converted to geojson using <code>geojsonsf::sf_geojson()</code>. Useful if your <code>sf</code> object contains different geometry types.</p>
 </div>
-<div id="grid" class="section level3">
-<h3>Grid</h3>
+<div id="grid" class="section level2">
+<h2>Grid</h2>
 <pre class="r"><code>df &lt;- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
 'examples/3d-heatmap/heatmap-data.csv'
@@ -1586,10 +1586,10 @@ add_grid(
   , elevation_scale = 50
   , layer_id = &quot;grid_layer&quot;
 )</code></pre>
-<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
-<div id="lines" class="section level3">
-<h3>Lines</h3>
+<div id="lines" class="section level2">
+<h2>Lines</h2>
 <pre class="r"><code>url &lt;- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 flights &lt;- read.csv(url)
 flights$id &lt;- seq_len(nrow(flights))
@@ -1604,10 +1604,10 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %&g
     , stroke_colour = &quot;airport1&quot;
     , stroke_width = &quot;stroke&quot;
   )</code></pre>
-<p><strong>sf</strong> : supports <code>sf</code> objects with two POINT geometry columns.</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with two POINT and MULTIPOINT geometry columns.</p>
 </div>
-<div id="path" class="section level3">
-<h3>Path</h3>
+<div id="path" class="section level2">
+<h2>Path</h2>
 <pre class="r"><code>mapdeck(
   token = key
   , style = 'mapbox://styles/mapbox/dark-v9'
@@ -1619,10 +1619,10 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %&g
     , layer_id = &quot;path_layer&quot;
   )
 </code></pre>
-<p><strong>sf</strong> : supports <code>sf</code> objects with LINESTRING geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with LINESTRING and MULTILINESTRING geometries</p>
 </div>
-<div id="point-cloud" class="section level3">
-<h3>Point cloud</h3>
+<div id="point-cloud" class="section level2">
+<h2>Point cloud</h2>
 <pre class="r"><code>df &lt;- capitals
 df$z &lt;- sample(10000:10000000, size = nrow(df))
 
@@ -1635,10 +1635,10 @@ add_pointcloud(
   , layer_id = 'point'
   , fill_colour = &quot;country&quot;
 )</code></pre>
-<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
-<div id="polygons" class="section level3">
-<h3>Polygons</h3>
+<div id="polygons" class="section level2">
+<h2>Polygons</h2>
 <pre class="r"><code>library(sf)
 library(geojsonsf)
 
@@ -1650,10 +1650,10 @@ mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %&gt;%
     , layer = &quot;polygon_layer&quot;
     , fill_colour = &quot;SA2_NAME16&quot;
   )</code></pre>
-<p><strong>sf</strong> : supports <code>sf</code> objects with POLYGON geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POLYGON and MULTIPOLYGON geometries</p>
 </div>
-<div id="scatter" class="section level3">
-<h3>Scatter</h3>
+<div id="scatter" class="section level2">
+<h2>Scatter</h2>
 <pre class="r"><code>
 mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %&gt;%
 add_scatterplot(
@@ -1665,10 +1665,10 @@ add_scatterplot(
   , layer_id = &quot;scatter_layer&quot;
 )
 </code></pre>
-<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
-<div id="screen-grid" class="section level3">
-<h3>Screen grid</h3>
+<div id="screen-grid" class="section level2">
+<h2>Screen grid</h2>
 <pre class="r"><code>df &lt;- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
 'examples/3d-heatmap/heatmap-data.csv'
@@ -1686,10 +1686,10 @@ add_screengrid(
   , cell_size = 10
   , opacity = 0.3
 )</code></pre>
-<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
-<div id="text" class="section level3">
-<h3>Text</h3>
+<div id="text" class="section level2">
+<h2>Text</h2>
 <pre class="r"><code>mapdeck(token = key, style = mapdeck_style('dark')) %&gt;%
   add_text(
     data = capitals
@@ -1699,10 +1699,10 @@ add_screengrid(
     , text = 'capital'
     , layer_id = 'text'
   )</code></pre>
-<p><strong>sf</strong> : supports <code>sf</code> objects with POINT geometries</p>
+<p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPIONT geometries</p>
 </div>
-<div id="multiple-layers" class="section level3">
-<h3>Multiple layers</h3>
+<div id="multiple-layers" class="section level2">
+<h2>Multiple layers</h2>
 <pre class="r"><code>
 df1 &lt;- capitals[ capitals$country == &quot;Australia&quot;, ]
 df2 &lt;- capitals[ capitals$country != &quot;Australia&quot;, ]
@@ -1735,8 +1735,9 @@ mapdeck(
   )
 </code></pre>
 </div>
-<div id="shiny" class="section level3">
-<h3>Shiny</h3>
+</div>
+<div id="shiny" class="section level1">
+<h1>Shiny</h1>
 <p>The three main functions to use are</p>
 <ol style="list-style-type: decimal">
 <li><code>render_mapdeck()</code> in the <strong>Server</strong></li>
@@ -1831,7 +1832,6 @@ server &lt;- function(input, output) {
 }
 
 shinyApp(ui, server)</code></pre>
-</div>
 <div id="todo" class="section level3">
 <h3>TODO</h3>
 <ul>
@@ -1839,6 +1839,80 @@ shinyApp(ui, server)</code></pre>
 <li>returning data to R session</li>
 <li>benchmarks - when to chose and plot which type of object</li>
 </ul>
+</div>
+</div>
+<div id="benchmarks" class="section level1">
+<h1>Benchmarks</h1>
+<p>(some rules of thumb / recommendations) - quick visual, without caring about styling, use geojson (or where <code>properties : {}</code> contains styles) - if you have a mixture of geometries inside an <code>sf</code> / <code>sfencoded</code> object, and you only want to view one type, subsetting will be slow-ish.</p>
+<p>While all the layer functions use underlying C++ code to prepare the data, there are still differences in how quickly different types of objects can be plotted.</p>
+<p>The types of R objects supported in mapdeck are</p>
+<ul>
+<li><code>data.frame</code> (for POINTs only)</li>
+<li><code>sf</code></li>
+<li><code>sfencoded</code></li>
+<li><code>sfencodedLite</code></li>
+<li><code>geojson</code></li>
+</ul>
+<p>For example, say you want to plot 500,000 points on a map using <code>add_scatterplot()</code>. Well, if you use</p>
+<pre class="r"><code>
+library(microbenchmark)
+library(mapdeck)
+library(sf)
+library(geojsonsf)
+library(googlePolylines)
+
+key &lt;- read.dcf(&quot;~/Documents/.googleAPI&quot;, fields = &quot;MAPBOX&quot;)
+set_token( key )
+
+## scatterplot
+set.seed(20181209)
+n &lt;- 1e5
+lons &lt;- seq(-180,180, by = 0.001)
+lats &lt;- seq(-90,90, by = 0.001)
+df &lt;- data.frame(
+    lon = sample(lons, size = n, replace = T)
+    , lat = sample(lats, size = n, replace = T )
+)
+df$id &lt;- 1:nrow(df)
+df$val &lt;- rnorm(n=n)
+sf &lt;- sf::st_as_sf( df, coords = c(&quot;lon&quot;,&quot;lat&quot;))
+enc &lt;- googlePolylines::encode( sf )
+encLite &lt;- googlePolylines::encode( sf, strip = T )
+
+sf$fill_colour &lt;- colourvalues::colour_values(sf$val)
+geo &lt;- geojsonsf::sf_geojson( sf, simplify = FALSE )
+
+microbenchmark(
+    df = {
+        mapdeck() %&gt;% add_scatterplot( data = df, lon = &quot;lon&quot;, lat = &quot;lat&quot;, fill_colour = &quot;val&quot;)
+    },
+    sf = {
+        mapdeck() %&gt;% add_scatterplot( data = sf, fill_colour = &quot;val&quot; )
+    },
+    enc = {
+        mapdeck() %&gt;% add_scatterplot( data = enc, fill_colour = &quot;val&quot; )
+    },
+    enclite = {
+        mapdeck() %&gt;% add_scatterplot( data = encLite, fill_colour = &quot;val&quot; )
+    },
+    geo_sf = {
+        mapdeck() %&gt;% add_geojson( data = sf, fill_colour = &quot;val&quot; )
+    },
+    geojson = {
+        mapdeck() %&gt;% add_geojson( data = geo )
+    },
+    times = 5
+)
+
+# Unit: milliseconds
+#    expr        min         lq       mean     median          uq         max neval
+# df      456.205270 466.227301 505.972537 521.141831  535.952496  550.335787     5
+# sf      424.461500 426.184777 546.094275 433.743690  466.887704  979.193704     5
+# enc     783.477064 806.466145 933.792187 885.506362  903.656713 1289.854652     5
+# enclite 681.644942 730.634827 769.643424 740.264817  750.807022  944.865514     5
+# geo_sf  636.163284 781.685261 975.163050 885.819292 1022.844405 1549.303007     5
+# geojson   1.267405   1.348774   1.387614   1.401142    1.440508    1.480242     5
+</code></pre>
 </div>
 
 

@@ -7,3 +7,4 @@
 ^cran-comments\.md$
 ^javascript$
 ^docs/
+^vignettes/benchmarks.Rmd
