@@ -1,0 +1,164 @@
+---
+title: "Colours"
+author: "David Cooley"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: true
+        toc_float: true
+        number_sections: false
+        theme: flatly
+header-includes: 
+    - \usepackage{tikz}
+    - \usetikzlibrary{arrows}
+---
+
+# Colours
+
+The easiest way to colour your data is to pass the column of your `data` you want coloured to either the `stroke_colour` or `fill_colour` argument (depending on the layer you're using).
+
+
+For this demonstration I'm using a simple feature `sf` object of polygons denoting various regions in Melbourne (taken from the `spatialwidget` library)
+
+```{r}
+library(mapdeck)
+library(sf)
+
+sf <- spatialwidget::widget_melbourne
+sf
+```
+
+This first map is simply showing the regions coloured according to its name
+
+```r
+mapdeck() %>%
+  add_polygon(
+    data = sf
+    , fill_colour = "SA2_NAME"
+  )
+```
+![fill viridis](./img/articles/fill_colour_viridis.png)
+
+The colour scheme defaults to viridis. You can change it with the `palette` argument by using one of the other palettes available in `?colourvalues::colour_values`
+
+- "viridis"
+- "inferno"
+- "magma"
+- "plasma"
+- "cividis"
+
+or by using a matrix palette
+
+```r
+## using another viridis colour palette
+
+mapdeck() %>%
+  add_polygon(
+    data = sf
+    , fill_colour = "SA2_NAME"
+    , palette = "inferno"
+  )
+```
+![fill inferno](./img/articles/fill_colour_inferno.png)
+
+```r
+m <- grDevices::colorRamp(c("blue", "white", "yellow"))( (1:256)/256 )
+
+mapdeck() %>%
+  add_polygon(
+    data = sf
+    , fill_colour = "SA2_NAME"
+    , palette = m
+  )
+
+```
+![fill manual](./img/articles/fill_manual.png)
+
+## Opacity
+
+You can change the transparency of the colours by specifying a numeric column of data to either `fill_opacity` or `stroke_opacity`
+
+```r
+mapdeck() %>%
+  add_polygon(
+    data = sf
+    , fill_colour = "SA2_NAME"
+    , fill_opacity = "AREASQKM"
+  )
+```  
+![fill opacity](./img/articles/fill_opacity.png)
+
+Or by using a single value between 1 & 255 to apply to all the shapes
+
+```r
+mapdeck() %>%
+  add_polygon(
+    data = sf
+    , fill_colour = "SA2_NAME"
+    , fill_opacity = ( 255 / 2 )
+  )
+```  
+![fill opacity value](./img/articles/fill_opacity_value.png)
+
+
+## How it works
+
+The colouring is performed by the [`colourvalues`](https://github.com/symbolixau/colourvalues) library. Feel free to browse the documentation and code if you want a deeper understanding. 
+
+But broadly speaking, when you supply a vector to `colour_values()`, it returns a vector of colours scaled according to the data
+
+```{r}
+colourvalues::colour_values(1:10)
+```
+
+Here you should see the values `1:10` get coloured according to the palette you supply (the default is "viridis"). The colours are also automatically ordered against your data. So if we reverse the vector
+
+```{r}
+colourvalues::colour_values(10:1)
+```
+
+You can see the colour assigned to `1` is the same in both cases. 
+
+The same is true when using different palettes
+
+```{r}
+colourvalues::colour_values(c(1:10,10:1), palette = "inferno")
+
+m <- grDevices::colorRamp(c("blue", "white", "yellow"))( (1:256)/256 )
+colourvalues::colour_values(c(1:10,10:1), palette = m)
+```
+
+See how the colours are mirrored to reflect the data.
+
+The same ordering applies to characters, factors, dates, etc. In this example I'm colouring the letters "j" through to "a" (in the English alphabet). The colour assigned to "a" is the same as that applied to 1.
+
+```{r}
+colourvalues::colour_values(letters[10:1])
+```
+
+
+## Manual colours
+
+If you want finer control over the colours, you can add a column of colours to your data, specified as a hex string.
+
+Here's I'm setting all the polygons which begin with `A` as green, and the rest as red
+
+```r
+sf$my_colour <- ifelse( substr(sf$SA2_NAME, 1, 1) == "A", "#00FF00FF", "#FF0000FF")
+
+mapdeck( ) %>%
+  add_polygon(
+    data = sf
+    , fill_colour = "my_colour"
+  )
+
+```
+![fill manual](./img/articles/fill_my_colour.png)
+
+
+
+TODO
+
+- colour_range layers
+- geojson
+
