@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
       <h1>Colours</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2018-12-12</h4>
+            <h4 class="date">2018-12-13</h4>
       
       
       <div class="hidden name"><code>colours.Rmd</code></div>
@@ -98,10 +98,13 @@
 <h1 class="hasAnchor">
 <a href="#colours" class="anchor"></a>Colours</h1>
 <p>The easiest way to colour your data is to pass the column of your <code>data</code> you want coloured to either the <code>stroke_colour</code> or <code>fill_colour</code> argument (depending on the layer you’re using).</p>
+<div id="fill-and-stroke" class="section level2">
+<h2 class="hasAnchor">
+<a href="#fill-and-stroke" class="anchor"></a>fill and stroke</h2>
 <p>For this demonstration I’m using a simple feature <code>sf</code> object of polygons denoting various regions in Melbourne (taken from the <code>spatialwidget</code> library)</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mapdeck)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</a></code></pre></div>
-<pre><code>## Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3</code></pre>
+<pre><code>## Linking to GEOS 3.6.1, GDAL 2.1.3, proj.4 4.9.3</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">sf &lt;-<span class="st"> </span>spatialwidget<span class="op">::</span>widget_melbourne</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">sf</a></code></pre></div>
 <pre><code>## Simple feature collection with 41 features and 3 fields
@@ -173,6 +176,7 @@
 <div class="figure">
 <img src="img/articles/fill_manual.png" alt="fill manual"><p class="caption">fill manual</p>
 </div>
+</div>
 <div id="opacity" class="section level2">
 <h2 class="hasAnchor">
 <a href="#opacity" class="anchor"></a>Opacity</h2>
@@ -232,7 +236,7 @@
 <h2 class="hasAnchor">
 <a href="#manual-colours" class="anchor"></a>Manual colours</h2>
 <p>If you want finer control over the colours, you can add a column of colours to your data, specified as a hex string.</p>
-<p>Here’s I’m setting all the polygons which begin with <code>A</code> as green, and the rest as red</p>
+<p>Here I’m setting all the polygons which begin with <code>A</code> as green, and the rest as red</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">sf<span class="op">$</span>my_colour &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(sf<span class="op">$</span>SA2_NAME, <span class="dv">1</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> "A"</span>, <span class="st">"#00FF00FF"</span>, <span class="st">"#FF0000FF"</span>)</a>
 <a class="sourceLine" id="cb20-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb20-3" data-line-number="3"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( ) <span class="op">%&gt;%</span></a>
@@ -243,9 +247,26 @@
 <div class="figure">
 <img src="img/articles/fill_my_colour.png" alt="fill manual"><p class="caption">fill manual</p>
 </div>
+</div>
+<div id="colour_range" class="section level2">
+<h2 class="hasAnchor">
+<a href="#colour_range" class="anchor"></a>colour_range</h2>
+<p>Some layers use a <code>colour_range</code> argument instead of fill and stroke. For these layers you need to use a vector of 6 hex strings. These also default to the viridis palette.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">sf_outer &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/geos_unary">st_convex_hull</a></span>( sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/geos_combine">st_union</a></span>( sf ) )</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">sf_sample &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_sample">st_sample</a></span>( sf_outer, <span class="dt">size =</span> <span class="dv">10000</span> )</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">sf_sample &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/sf">st_sf</a></span>( <span class="dt">geometry =</span> sf_sample )</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="../reference/add_hexagon.html">add_hexagon</a></span>(</a>
+<a class="sourceLine" id="cb21-7" data-line-number="7">        <span class="dt">data =</span> sf_sample</a>
+<a class="sourceLine" id="cb21-8" data-line-number="8">        , <span class="dt">colour_range =</span> colourvalues<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/colourvalues/topics/colour_values">colour_values</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">palette =</span> <span class="st">"plasma"</span>)</a>
+<a class="sourceLine" id="cb21-9" data-line-number="9">        , <span class="dt">elevation_scale =</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb21-10" data-line-number="10">    )</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/colour_range_hexagons.png" alt="colour range"><p class="caption">colour range</p>
+</div>
 <p>TODO</p>
 <ul>
-<li>colour_range layers</li>
 <li>geojson</li>
 </ul>
 </div>
@@ -259,9 +280,11 @@
       <ul class="nav nav-pills nav-stacked">
 <li>
 <a href="#colours">Colours</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#opacity">Opacity</a></li>
+<li><a href="#fill-and-stroke">fill and stroke</a></li>
+      <li><a href="#opacity">Opacity</a></li>
       <li><a href="#how-it-works">How it works</a></li>
       <li><a href="#manual-colours">Manual colours</a></li>
+      <li><a href="#colour_range">colour_range</a></li>
       </ul>
 </li>
       </ul>

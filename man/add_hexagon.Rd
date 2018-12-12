@@ -7,8 +7,7 @@
 add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id = NULL, id = NULL,
   radius = 1000, elevation_scale = 1, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF",
-  colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
+  highlight_colour = "#AAFFFFFF", colour_range = NULL,
   update_view = TRUE, focus_layer = FALSE)
 }
 \arguments{
@@ -36,7 +35,7 @@ to conflict and not plot correctly}
 
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
-\item{colour_range}{palette of colours}
+\item{colour_range}{vector of 6 hex colours}
 
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 

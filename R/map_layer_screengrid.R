@@ -74,7 +74,7 @@ add_screengrid <- function(
 	lat = NULL,
 	polyline = NULL,
 	weight = NULL,
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
+	colour_range = NULL,
 	opacity = 0.8,
 	cell_size = 50,
 	layer_id = NULL,
@@ -82,18 +82,6 @@ add_screengrid <- function(
 	update_view = TRUE,
 	focus_layer = FALSE
 ) {
-
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["elevation_scale"]] <- NULL
-	# l[["cell_size"]] <- NULL
-	# l[["colour_range"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
-	# l[["layer_id"]] <- NULL
-	# l[["digits"]] <- NULL
-
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["weight"]] <- force( weight )
@@ -123,9 +111,15 @@ add_screengrid <- function(
 	checkNumeric(cell_size)
 	layer_id <- layerId(layer_id, "screengrid")
 
+	if( is.null( colour_range ) ) {
+		colour_range <- colourvalues::colour_values(1:6, palette = "viridis")
+	}
+
 	if(length(colour_range) != 6)
 		stop("colour_range must have 6 hex colours")
 	## end parameter checks
+
+	checkHex(colour_range)
 
 	map <- addDependency(map, mapdeckScreengridDependency())
 	data_types <- data_types( data )

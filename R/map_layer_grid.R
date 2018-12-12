@@ -76,7 +76,7 @@ add_grid <- function(
 	lon = NULL,
 	lat = NULL,
 	polyline = NULL,
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
+	colour_range = NULL,
 	cell_size = 1000,
 	extruded = TRUE,
 	elevation_scale = 1,
@@ -112,7 +112,16 @@ add_grid <- function(
 	## parmater checks
 	checkNumeric(elevation_scale)
 	checkNumeric(cell_size)
+
+	if( is.null( colour_range ) ) {
+		colour_range <- colourvalues::colour_values(1:6, palette = "viridis")
+	}
+
+	if(length(colour_range) != 6)
+		stop("colour_range must have 6 hex colours")
+
 	checkHex(colour_range)
+
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "grid")
 

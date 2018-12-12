@@ -22,7 +22,7 @@ mapdeckHexagonDependency <- function() {
 #' @param polyline column of \code{data} containing the polylines
 #' @param radius in metres
 #' @param elevation_scale value to sacle the elevations of the hexagons
-#' @param colour_range palette of colours
+#' @param colour_range vector of 6 hex colours
 #'
 #' @examples
 #' \dontrun{
@@ -75,7 +75,7 @@ add_hexagon <- function(
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
+	colour_range = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE
 ) {
@@ -101,6 +101,13 @@ add_hexagon <- function(
 		bbox <- l[["bbox"]]
 		l[["bbox"]] <- NULL
 	}
+
+	if( is.null( colour_range ) ) {
+		colour_range <- colourvalues::colour_values(1:6, palette = "viridis")
+	}
+
+	if(length(colour_range) != 6)
+		stop("colour_range must have 6 hex colours")
 
 	checkHex(colour_range)
 	checkHexAlpha(highlight_colour)

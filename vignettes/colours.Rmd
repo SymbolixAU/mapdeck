@@ -17,6 +17,7 @@ header-includes:
 
 The easiest way to colour your data is to pass the column of your `data` you want coloured to either the `stroke_colour` or `fill_colour` argument (depending on the layer you're using).
 
+## fill and stroke
 
 For this demonstration I'm using a simple feature `sf` object of polygons denoting various regions in Melbourne (taken from the `spatialwidget` library)
 
@@ -141,7 +142,7 @@ colourvalues::colour_values(letters[10:1])
 
 If you want finer control over the colours, you can add a column of colours to your data, specified as a hex string.
 
-Here's I'm setting all the polygons which begin with `A` as green, and the rest as red
+Here I'm setting all the polygons which begin with `A` as green, and the rest as red
 
 ```r
 sf$my_colour <- ifelse( substr(sf$SA2_NAME, 1, 1) == "A", "#00FF00FF", "#FF0000FF")
@@ -156,9 +157,27 @@ mapdeck( ) %>%
 ![fill manual](./img/articles/fill_my_colour.png)
 
 
+## colour_range
+
+Some layers use a `colour_range` argument instead of fill and stroke. For these layers you need to use a vector of 6 hex strings. These also default to the viridis palette.
+
+```r
+sf_outer <- sf::st_convex_hull( sf::st_union( sf ) )
+sf_sample <- sf::st_sample( sf_outer, size = 10000 )
+sf_sample <- sf::st_sf( geometry = sf_sample )
+
+mapdeck() %>%
+	add_hexagon(
+		data = sf_sample
+		, colour_range = colourvalues::colour_values(1:6, palette = "plasma")
+		, elevation_scale = 10
+	)
+
+```
+![colour range](./img/articles/colour_range_hexagons.png)
+
 
 TODO
 
-- colour_range layers
 - geojson
 

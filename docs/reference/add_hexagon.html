@@ -65,7 +65,7 @@ The color and height of the hexagon is scaled by number of points it contains." 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -136,8 +136,7 @@ The color and height of the hexagon is scaled by number of points it contains.</
     <pre class="usage"><span class='fu'>add_hexagon</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
-  <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw pkg'>colourvalues</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/colourvalues/topics/colour_values'>colour_values</a></span>(<span class='fl'>1</span>:<span class='fl'>6</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>),
+  <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -191,7 +190,7 @@ to conflict and not plot correctly</p></td>
     </tr>
     <tr>
       <th>colour_range</th>
-      <td><p>palette of colours</p></td>
+      <td><p>vector of 6 hex colours</p></td>
     </tr>
     <tr>
       <th>update_view</th>
