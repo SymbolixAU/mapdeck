@@ -48,7 +48,7 @@ mapdeck( style = mapdeck_style("dark") ) %>%
     )
   
 ```
-![white roads](./img/articles/roads_white_green.png)
+![white and green roads](./img/articles/roads_white_green.png)
 
 
 
@@ -57,17 +57,22 @@ mapdeck( style = mapdeck_style("dark") ) %>%
 
 ## Updating the map
 
-If you are dynamically adding and removing layers in a shiny app you should use `mapdeck_update()` inside an `observeEvent()` (or similar) function
+If you are dynamically adding and removing layers in a shiny app you should use 
+
+- `mapdeck()` to define the map, then
+- `mapdeck_update()` inside an `observeEvent()` (or similar) function to add & remove layers to the initial map. 
+
+If you only use `mapdeck()` inside a reactive / observe function the map gets re-draw every call. The `mapdeck_update()` will only udpate the data on the map, and not re-draw the map. 
 
 ```r
 library(shiny)
 library(shinydashboard)
+library(mapdeck)
 
 ui <- dashboardPage(
 	dashboardHeader()
 	, dashboardSidebar(
 		actionButton(inputId = "roads", label = "roads")
-		, actionButton(inputId = "polygons", label = "polygons")
 	)
 	, dashboardBody(
 		mapdeckOutput(outputId = "map")
@@ -78,7 +83,7 @@ server <- function(input, output) {
 	
 	## initialise a map
 	output$map <- renderMapdeck({
-		mapdeck( location = c(144.9, -37), zoom = 5)
+		mapdeck()
 	})
 	
 	## use an observer to add and remove layers
@@ -91,26 +96,11 @@ server <- function(input, output) {
 					data = roads
 					, layer_id = "myRoads"
 					, stroke_colour = "RIGHT_LOC"
+					, update_view = TRUE
 					)
 		} else {
 		  mapdeck_update(map_id = "map") %>%
 				clear_path(layer_id = "myRoads")
-		}
-	})
-	
-	observeEvent({input$polygons},{
-		
-		if ( input$polygons %% 2 == 1 ) {
-			
-			mapdeck_update(map_id = "map") %>%
-				add_polygon(
-					data = melbourne
-					, layer_id = "myPolygon"
-					, fill_colour = "SA2_NAME"
-					)
-		} else {
-		  mapdeck_update(map_id = "map") %>%
-				clear_polygon(layer_id = "myPolygon")
 		}
 	})
 }
@@ -118,16 +108,79 @@ server <- function(input, output) {
 shinyApp(ui, server)
 ```
 
-You will have noticed I've specified the `location` argument in the initial `mapdeck()` call...
+You will have noticed I'm using `update_view = TRUE` (the default) inside the layer methods. This will cause the map to re-focus on the layer being added.
 
-# returning data to R session
+## update_view
 
-# update_view
+Setting `update_view = TRUE` has a cumulative effect. Every layer which has `update_view = TRUE` will expand the map view to accomodate each layer. If you want to focus on a specific layer you can use `focus_layer = TRUE`
 
-# sf objects
+If you don't want the map to change focus when adding a new layer set `update_view = FALSE`. However, if you start with a map without any data you may want to use the `location` argument to set the default position of the map.
 
+```r
+library(shiny)
+library(shinydashboard)
+library(mapdeck)
+
+ui <- dashboardPage(
+	dashboardHeader()
+	, dashboardSidebar(
+		actionButton(inputId = "roads", label = "roads")
+	)
+	, dashboardBody(
+		mapdeckOutput(outputId = "map")
+	)
+)
+
+server <- function(input, output) {
+	
+	## initialise a map
+	output$map <- renderMapdeck({
+		mapdeck( location = c(144.9, -37), zoom = 5 )
+	})
+	
+	## use an observer to add and remove layers
+	observeEvent({input$roads},{
+		
+		if ( input$roads %% 2 == 1 ) {
+			
+			mapdeck_update(map_id = "map") %>%
+				add_path(
+					data = roads
+					, layer_id = "myRoads"
+					, stroke_colour = "RIGHT_LOC"
+					, update_view = FALSE
+					)
+		} else {
+		  mapdeck_update(map_id = "map") %>%
+				clear_path(layer_id = "myRoads")
+		}
+	})
+}
+
+shinyApp(ui, server)
+```
+
+## focus_layer
+
+In this example, even though the `scatterplot` data uses `update_view = TRUE`, the next layer has `focus_layer = TRUE`, so the map bounds will focus on this layer.
+
+```r
+mapdeck() %>%
+ add_scatterplot(
+   data = capitals
+   , lon = "lon", lat = "lat"
+   , fill_colour = "country"
+   , radius = 100000
+   , update_view = TRUE
+   ) %>%
+ add_path( roads, focus_layer = TRUE )
+```
+
+
+TODO 
+
+- returning data to R session
+- sf objects
 - subsetting requires `library(sf)` loaded
-
-# colours
-
+- colours
 - if using a hex string it requires an alpha "#000000FF"
