@@ -33,7 +33,7 @@
 <meta property="og:title" content="Pipe — %&gt;%" />
 
 <meta property="og:description" content="Uses the pipe operator (%&amp;gt;%) to chain statements. Useful for adding
-layers to a google_map" />
+layers to a mapdeck map" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,7 +124,7 @@ layers to a google_map" />
     <div class="ref-description">
     
     <p>Uses the pipe operator (<code>%&gt;%</code>) to chain statements. Useful for adding
-layers to a <code>google_map</code></p>
+layers to a <code>mapdeck</code> map</p>
     
     </div>
 
@@ -134,7 +134,7 @@ layers to a <code>google_map</code></p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>lhs, rhs</th>
-      <td><p>A google map and a layer to add to it</p></td>
+      <td><p>A mapdeck map and a layer to add to it</p></td>
     </tr>
     </table>
     
@@ -142,7 +142,7 @@ layers to a <code>google_map</code></p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='st'>"your_api_key"</span>
-<span class='fu'>mapdeck_map</span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>key</span>) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>key</span>) <span class='kw'>%&gt;%</span>
 <span class='fu'><a href='add_scatterplot.html'>add_scatterplot</a></span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>capitals</span>
   , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
@@ -150,7 +150,7 @@ layers to a <code>google_map</code></p>
   , <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>100000</span>
   , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"country"</span>
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"scatter_layer"</span>
-)</div><div class='output co'>#&gt; <span class='error'>Error in mapdeck_map(key = key): could not find function "mapdeck_map"</span></div></pre>
+)</div><div class='output co'>#&gt; <span class='error'>Error in mapdeck(key = key): unused argument (key = key)</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -156,7 +156,7 @@ mapdeck_view <- function(
 #
 # extracts the data attribute from the map
 #
-# @param map a mapdeck_map object
+# @param map a mapdeck map object
 #
 get_map_data = function( map ) {
 	attr( map$x, "mapdeck_data", exact = TRUE )

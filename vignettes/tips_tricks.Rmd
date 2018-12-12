@@ -177,10 +177,24 @@ mapdeck() %>%
 ```
 
 
+# Chaining
+
+Mapdeck plots can be included in a chain of commands
+
+```r
+roads %>%
+	dplyr::filter( ROAD_TYPE == "STREET" ) %>%
+	mapdeck() %>%
+	add_sf()
+
+```
+
 TODO 
 
 - returning data to R session
 - sf objects
 - subsetting requires `library(sf)` loaded
-- colours
+- colours; using palettes etc
 - if using a hex string it requires an alpha "#000000FF"
+- chaining
+

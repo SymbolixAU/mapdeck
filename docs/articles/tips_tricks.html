@@ -241,6 +241,16 @@
 <a class="sourceLine" id="cb5-7" data-line-number="7">   , <span class="dt">update_view =</span> <span class="ot">TRUE</span></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8">   ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="st"> </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>( roads, <span class="dt">focus_layer =</span> <span class="ot">TRUE</span> )</a></code></pre></div>
+</div>
+</div>
+<div id="chaining" class="section level1">
+<h1 class="hasAnchor">
+<a href="#chaining" class="anchor"></a>Chaining</h1>
+<p>Mapdeck plots can be included in a chain of commands</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">roads <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>( ROAD_TYPE <span class="op">==</span><span class="st"> "STREET"</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="../reference/add_sf.html">add_sf</a></span>()</a></code></pre></div>
 <p>TODO</p>
 <ul>
 <li>returning data to R session</li>
@@ -248,8 +258,8 @@
 <li>subsetting requires <code><a href="https://www.rdocumentation.org/packages/base/topics/library">library(sf)</a></code> loaded</li>
 <li>colours</li>
 <li>if using a hex string it requires an alpha “#000000FF”</li>
+<li>chaining</li>
 </ul>
-</div>
 </div>
   </div>
 
@@ -266,6 +276,7 @@
       <li><a href="#focus_layer">focus_layer</a></li>
       </ul>
 </li>
+      <li><a href="#chaining">Chaining</a></li>
       </ul>
 </div>
       </div>
