@@ -15,7 +15,7 @@ mapdeckTextDependency <- function() {
 #' The Text Layer renders text labels on the map
 #'
 #' @inheritParams add_scatterplot
-#' @param text column of \code{data} containing the text
+#' @param text column of \code{data} containing the text. The data must be a character.
 #' @param size column of \code{data} containing the size of the text
 #' @param angle column of \code{data} containging the angle of the text
 #' @param anchor column of \code{data} containing the anchor of the text. One of
