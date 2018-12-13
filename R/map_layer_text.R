@@ -12,8 +12,7 @@ mapdeckTextDependency <- function() {
 
 #' Add Text
 #'
-#' The Text Layer takes in coordinate points and renders them as circles
-#' with a certain radius.
+#' The Text Layer renders text labels on the map
 #'
 #' @inheritParams add_scatterplot
 #' @param text column of \code{data} containing the text

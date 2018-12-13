@@ -73,8 +73,7 @@ a named list indicating which colour attributes should be included in the legend
 \item{transitions}{list specifying the duration of transitions.}
 }
 \description{
-The Text Layer takes in coordinate points and renders them as circles
-with a certain radius.
+The Text Layer renders text labels on the map
 }
 \details{
 \code{add_text} supports POINT and MULTIPOINT sf objects
