@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>benchmarks • mapdeck</title>
+<title>Bsenchmarks • mapdeck</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="benchmarks">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Bsenchmarks">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -56,7 +56,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/benchmarks.html">benchmarks</a>
+      <a href="../articles/benchmarks.html">Bsenchmarks</a>
     </li>
     <li>
       <a href="../articles/colours.html">Colours</a>
@@ -85,7 +85,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>benchmarks</h1>
+      <h1>Bsenchmarks</h1>
                         <h4 class="author">David Cooley</h4>
             
             <h4 class="date">2018-12-15</h4>
@@ -97,6 +97,7 @@
 
     
     
+<p>These benchmarks only account for the time spent in R (i.e., processing data), and not in javascript (i.e., plotting the map).</p>
 <p>Mapdeck supports</p>
 <ul>
 <li><code>data.frame</code></li>
@@ -106,6 +107,10 @@
 <li>
 <code>geojson</code> / <code>json</code> / <code>character</code> (as GeoJSON)</li>
 </ul>
+<p>In all cases, plotting raw geojson is the quickets way to get your data to javascript as it doesn’t go through any pre-processing.</p>
+<p>However, if you specify one of the <code>properties</code> as one of the colour variables, it then has to get converted to <code>sf</code>, processed, and back again to GeoJSON. This incurs a fairly big penalty.</p>
+<p>The <code>sfencoded</code> objects were created before I created the <code>spatialwidget</code> library, and getting the coordinates and data from <code>sf</code> objects was slow. Therefore, I wrote the library <code>googlePolylines</code> to quickly convert <code>sf</code> objects into encoded polylines. The benefit of this library is the speed in getting the coordinates, and the size of the object gets reduced.</p>
+<p>However, since <code>spatialwidget</code>, the processing time of <code>sf</code> objects has reduced significantly. So now the benefit is less-so the speed, and more-so the reduced size.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(microbenchmark)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mapdeck)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</a>

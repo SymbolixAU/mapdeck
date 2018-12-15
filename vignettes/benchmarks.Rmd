@@ -1,5 +1,5 @@
 ---
-title: "benchmarks"
+title: "Bsenchmarks"
 author: "David Cooley"
 date: "`r Sys.Date()`"
 output: 
@@ -17,6 +17,8 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+These benchmarks only account for the time spent in R (i.e., processing data), and not in javascript (i.e., plotting the map).
+
 Mapdeck supports
 
 - `data.frame`
@@ -24,6 +26,14 @@ Mapdeck supports
 - `sfencoded`
 - `sfencodedLite`
 - `geojson` / `json` / `character` (as GeoJSON)
+
+In all cases, plotting raw geojson is the quickets way to get your data to javascript as it doesn't go through any pre-processing. 
+
+However, if you specify one of the `properties` as one of the colour variables, it then has to get converted to `sf`, processed, and back again to GeoJSON. This incurs a fairly big penalty. 
+
+The `sfencoded` objects were created before I created the `spatialwidget` library, and getting the coordinates and data from `sf` objects was slow. Therefore, I wrote the library `googlePolylines` to quickly convert `sf` objects into encoded polylines. The benefit of this library is the speed in getting the coordinates, and the size of the object gets reduced. 
+
+However, since `spatialwidget`, the processing time of `sf` objects has reduced significantly. So now the benefit is less-so the speed, and more-so the reduced size. 
 
 ```r
 library(microbenchmark)
