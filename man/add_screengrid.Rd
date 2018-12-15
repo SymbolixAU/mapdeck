@@ -12,7 +12,8 @@ add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer.}
+\item{data}{data to be used in the layer. All coordinates are expected to be in
+Web Mercator Projection}
 
 \item{lon}{column containing longitude values}
 

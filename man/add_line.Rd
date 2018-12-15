@@ -14,7 +14,8 @@ add_line(map, data = get_map_data(map), layer_id = NULL, origin,
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer.}
+\item{data}{data to be used in the layer. All coordinates are expected to be in
+Web Mercator Projection}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely

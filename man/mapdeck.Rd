@@ -10,7 +10,8 @@ mapdeck(data = NULL, token = get_access_token(api = "mapbox"),
   bearing = 0, location = c(0, 0))
 }
 \arguments{
-\item{data}{data to be used on the map}
+\item{data}{data to be used on the map. All coordinates are expected to be in
+Web Mercator Projection}
 
 \item{token}{Mapbox Acess token. Use \code{set_token()} to set a global token}
 

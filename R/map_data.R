@@ -60,6 +60,11 @@ resolve_od_data.data.frame <- function( data, l, origin, destination ) {
 	if ( is.null( l[["origin"]] ) || is.null( l[["destination"]] ) ) {
 		stop("origin and destination columns required")
 	}
+
+	if( length(origin) != 2 | length(destination) != 2 ) {
+		stop("origin and destination columns should both contain lon & lat values")
+	}
+
 	l[["data_type"]] <- "df"
 	l[["bbox"]] <- get_od_box( data, l )
 
@@ -228,12 +233,11 @@ resolve_data.sfencoded <- function( data, l, sf_geom ) {
 resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
 
 	polyline <- attr( data, "encoded_column")
-	if ( sf_geom[1] != "POLYGON" ) {   ## TODO( I don't like this)
+	if ( sf_geom[1] != "POLYGON" ) {   ## TODO( POLYGONs must be a list column I don't like this)
   	data <- unlistMultiGeometry( data, polyline )  ## TODO( move this to C++)
 	}
 
 	l[["polyline"]] <- polyline
-
 	l[["data_type"]] <- "sfencoded"
 	l[["data"]] <- data ## attach the data becaue it gets modified and it needs to be returend
 	return( l )

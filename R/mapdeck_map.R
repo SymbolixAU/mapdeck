@@ -3,7 +3,8 @@
 #' @import htmlwidgets
 #'
 #' @param token Mapbox Acess token. Use \code{set_token()} to set a global token
-#' @param data data to be used on the map
+#' @param data data to be used on the map. All coordinates are expected to be in
+#' Web Mercator Projection
 #' @param width the width of the map
 #' @param height the height of the map
 #' @param padding the padding of the map
@@ -94,7 +95,8 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param map_id string containing the output ID of the map in a shiny application.
 #' @param session the Shiny session object to which the map belongs; usually the
 #' default value will suffice.
-#' @param data data to be used in the map. See the details section for \code{\link{mapdeck}}.
+#' @param data data to be used in the map. All coordinates are expected to be in
+#' Web Mercator Projection
 #' @param deferUntilFlush indicates whether actions performed against this
 #' instance should be carried out right away, or whether they should be held until
 #' after the next time all of the outputs are updated; defaults to TRUE.

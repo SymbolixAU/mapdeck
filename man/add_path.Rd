@@ -15,7 +15,8 @@ add_path(map, data = get_map_data(map), polyline = NULL,
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer.}
+\item{data}{data to be used in the layer. All coordinates are expected to be in
+Web Mercator Projection}
 
 \item{polyline}{column of \code{data} containing the polylines}
 
