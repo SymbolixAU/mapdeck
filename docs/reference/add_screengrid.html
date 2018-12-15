@@ -90,7 +90,7 @@ aggregates them into histogram bins and renders as a grid" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/benchmarks.html">benchmarks</a>
+      <a href="../articles/benchmarks.html">Benchmarks</a>
     </li>
     <li>
       <a href="../articles/colours.html">Colours</a>
@@ -148,7 +148,8 @@ aggregates them into histogram bins and renders as a grid</p>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>data to be used in the layer.</p></td>
+      <td><p>data to be used in the layer. All coordinates are expected to be in
+Web Mercator Projection</p></td>
     </tr>
     <tr>
       <th>lon</th>
@@ -229,7 +230,8 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"screengrid_layer"</span>
   , <span class='kw'>cell_size</span> <span class='kw'>=</span> <span class='fl'>10</span>
   , <span class='kw'>opacity</span> <span class='kw'>=</span> <span class='fl'>0.3</span>
-)</div><div class='output co'>#&gt; <span class='error'>Error in force(id): object 'id' not found</span></div><div class='input'>
+)
+
 <span class='co'>## as an sf object</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sf</span>)
 <span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>( <span class='no'>df</span>, <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"lng"</span>, <span class='st'>"lat"</span>))
@@ -240,8 +242,7 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"screengrid_layer"</span>
   , <span class='kw'>cell_size</span> <span class='kw'>=</span> <span class='fl'>10</span>
   , <span class='kw'>opacity</span> <span class='kw'>=</span> <span class='fl'>0.3</span>
-)</div><div class='output co'>#&gt; <span class='error'>Error in force(id): object 'id' not found</span></div><div class='input'>
-</div><div class='input'>
+)</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
