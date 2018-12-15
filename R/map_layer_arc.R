@@ -45,6 +45,10 @@ mapdeckArcDependency <- function() {
 #' @param focus_layer logical indicating if the map should update the bounds to only include this layer
 #' @param transitions list specifying the duration of transitions.
 #'
+#' @section data:
+#'
+#' If \code{data} is a simple feature object, you need to supply the origin and destination
+#' columns, they aren't automatically detected.
 #'
 #' @section id:
 #'

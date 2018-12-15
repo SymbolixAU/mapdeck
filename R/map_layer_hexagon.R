@@ -73,7 +73,6 @@ add_hexagon <- function(
 	lon = NULL,
 	lat = NULL,
 	layer_id = NULL,
-	id = NULL,
 	radius = 1000,
 	elevation_scale = 1,
 	auto_highlight = FALSE,

@@ -66,11 +66,7 @@ HTMLWidgets.widget({
 			  console.log( viewPort );
 			  */
 
-
 			    window[el.id + 'map'] = deckgl;
-
-			    //console.log( window[el.id + 'map']);
-
 			    md_initialise_map(el, x);
       },
 
@@ -178,7 +174,6 @@ function md_findObjectElementByKey(array, key, value ) {
 }
 
 function md_change_location( map_id, location, zoom, pitch, bearing, duration, transition ) {
-	//console.log("md_change_location");
 
   var currentLon, currentLat, currentPitch, currentBearing, currentZoom;
 
@@ -196,9 +191,6 @@ function md_change_location( map_id, location, zoom, pitch, bearing, duration, t
     currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
   }
 
-  //console.log( currentLon );
-  //console.log( currentLat );
-
 	window[map_id + 'map'].setProps({
     viewState: {
       longitude: currentLon,
@@ -214,7 +206,7 @@ function md_change_location( map_id, location, zoom, pitch, bearing, duration, t
 
 
 function md_layer_view( map_id, layer_id, focus_layer, bbox, update_view ) {
-	//console.log("md_layer_view");
+
 	if( focus_layer ) {
   	md_clear_bounds( map_id );
   	update_view = true;     // force this
@@ -228,7 +220,7 @@ function md_layer_view( map_id, layer_id, focus_layer, bbox, update_view ) {
 }
 
 function md_layer_clear( map_id, layer_id, layer ) {
-	//console.log("md_layer_clear");
+
 	md_clear_layer( map_id, layer+'-'+layer_id );
   md_clear_legend( map_id, layer_id );
   md_remove_from_bounds( map_id, layer_id );
@@ -236,8 +228,6 @@ function md_layer_clear( map_id, layer_id, layer ) {
 }
 
 function md_center_location( bbox ) {
-	//console.log("md_center_location");
-	//console.log( bbox );
 
 	cLon = (bbox[0][0] + bbox[1][0]) / 2;
 	cLat = (bbox[0][1] + bbox[1][1]) / 2;
@@ -247,7 +237,7 @@ function md_center_location( bbox ) {
 
 
 function md_add_to_bounds( map_id, bbox, layer_id ) {
-	//console.log("md_add_to_bounds");
+
   var thisBox = {
   	layer_id: layer_id,
   	bbox: bbox
@@ -266,7 +256,6 @@ function md_add_to_bounds( map_id, bbox, layer_id ) {
 }
 
 function md_remove_from_bounds( map_id, layer_id ) {
-	//console.log("md_remove_from_bounds");
 
 	var elem = md_findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'layer_id', layer_id );
 	if ( elem != -1 ) {
@@ -277,7 +266,6 @@ function md_remove_from_bounds( map_id, layer_id ) {
 }
 
 function md_clear_bounds( map_id ) {
-	//console.log("md_clear_bounds");
 
 	window[ map_id + 'mapdeckBounds'] = [];
 	window[ map_id + 'globalBox'] = [];
@@ -285,12 +273,10 @@ function md_clear_bounds( map_id ) {
 }
 
 function md_update_location( map_id ) {
-	//console.log("md_udpate_location");
 
 	var loc = md_center_location( window[ map_id + 'globalBox' ] );
 	var zoom =  window[ map_id + 'currentZoomLevel' ];
-	//console.log( "Loc" );
-	//console.log( loc );
+
 	if ( Number.isNaN( loc[0] ) ) {
 		return;
 	}
@@ -300,7 +286,6 @@ function md_update_location( map_id ) {
 
 
 function md_calculate_bounds( map_id, mapdeckBounds ) {
-	//console.log("md_caululate_bounds");
 
   var ymin, xmin, ymax, xmax, thisBox;
   for( var i = 0; i < mapdeckBounds.length; i++ ) {
@@ -322,7 +307,6 @@ function md_calculate_bounds( map_id, mapdeckBounds ) {
 }
 
 function md_lon_diff( globalBox ) {
-	//console.log("md_lon_diff");
 
   xmin = globalBox[0][0];
   xmax = globalBox[1][0];
@@ -391,7 +375,6 @@ function md_lat_zoom( latdiff ) {
 }
 
 function md_get_zoom_level( globalBox ) {
-	//console.log("md_get_zoom_level");
 
   var londiff = md_lon_diff( globalBox );
   var latdiff = md_lat_diff( globalBox );
@@ -406,7 +389,6 @@ function md_get_zoom_level( globalBox ) {
 
 
 function md_update_layer( map_id, layer_id, layer ) {
-	//console.log("md_update_layer");
 
   var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id );
   if ( elem != -1 ) {
@@ -418,7 +400,6 @@ function md_update_layer( map_id, layer_id, layer ) {
 }
 
 function md_clear_layer( map_id, layer_id ) {
-	//console.log("md_clear_layer");
 
   var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
   if ( elem != -1 ) {

@@ -77,6 +77,13 @@ be expanded to two rows of single POINTs.
 Therefore, if the origin is a MULTIPOINT of two points, and the destination is
 a single POINT, the code will error as there will be an uneven number of rows
 }
+\section{data}{
+
+
+If \code{data} is a simple feature object, you need to supply the origin and destination
+columns, they aren't automatically detected.
+}
+
 \section{id}{
 
 

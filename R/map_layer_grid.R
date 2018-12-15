@@ -85,7 +85,6 @@ add_grid <- function(
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	layer_id = NULL,
-	id = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE
 ) {

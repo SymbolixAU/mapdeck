@@ -251,8 +251,6 @@ add_geojson <- function(
 	}
 
 	layer_id <- layerId( layer_id, "geojson" )
-	## TODO(light_settings - test options are accurate)
-
 	### end parameter checks
 
 	data_types <- data_types( data )

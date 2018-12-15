@@ -60,7 +60,6 @@ function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, a
   });
   md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
-    //console.log( polygonLayer );
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }

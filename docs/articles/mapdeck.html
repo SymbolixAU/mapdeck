@@ -62,6 +62,9 @@
       <a href="../articles/colours.html">Colours</a>
     </li>
     <li>
+      <a href="../articles/issues.html">Why isn't it working?</a>
+    </li>
+    <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
     </li>
   </ul>
@@ -85,7 +88,7 @@
       <h1>mapdeck</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2018-12-13</h4>
+            <h4 class="date">2018-12-15</h4>
       
       
       <div class="hidden name"><code>mapdeck.Rmd</code></div>
@@ -163,15 +166,13 @@
 <a href="#geojson" class="anchor"></a>GeoJSON</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="dt">token =</span> key</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">  , <span class="dt">location =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">145</span>, <span class="fl">-37.9</span>)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">  , <span class="dt">zoom =</span> <span class="dv">8</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">  , <span class="dt">style =</span> <span class="st">"mapbox://styles/mapbox/dark-v9"</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">  , <span class="dt">pitch =</span> <span class="dv">35</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="../reference/add_geojson.html">add_geojson</a></span>(</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">    <span class="dt">data =</span> geojson</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">    , <span class="dt">layer_id =</span> <span class="st">"geojson"</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">  )</a></code></pre></div>
+<a class="sourceLine" id="cb7-3" data-line-number="3">  , <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">  , <span class="dt">pitch =</span> <span class="dv">35</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="../reference/add_geojson.html">add_geojson</a></span>(</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">    <span class="dt">data =</span> geojson</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">    , <span class="dt">layer_id =</span> <span class="st">"geojson"</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">  )</a></code></pre></div>
 <p><strong>sf</strong> : supports all <code>sf</code> geometry types. Converted to geojson using <code><a href="https://www.rdocumentation.org/packages/geojsonsf/topics/sf_geojson">geojsonsf::sf_geojson()</a></code>. Useful if your <code>sf</code> object contains different geometry types.</p>
 </div>
 <div id="grid" class="section level2">
@@ -182,7 +183,7 @@
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4">))</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="kw"><a href="../reference/add_grid.html">add_grid</a></span>(</a>
 <a class="sourceLine" id="cb8-8" data-line-number="8">  <span class="dt">data =</span> df</a>
 <a class="sourceLine" id="cb8-9" data-line-number="9">  , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
@@ -201,7 +202,7 @@
 <a class="sourceLine" id="cb9-3" data-line-number="3">flights<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq_len</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(flights))</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">flights<span class="op">$</span>stroke &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(flights), <span class="dt">replace =</span> T)</a>
 <a class="sourceLine" id="cb9-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="../reference/add_line.html">add_line</a></span>(</a>
 <a class="sourceLine" id="cb9-8" data-line-number="8">    <span class="dt">data =</span> flights</a>
 <a class="sourceLine" id="cb9-9" data-line-number="9">    , <span class="dt">layer_id =</span> <span class="st">"line_layer"</span></a>
@@ -217,14 +218,13 @@
 <a href="#path" class="anchor"></a>Path</h2>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">  <span class="dt">token =</span> key</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">  , <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">  , <span class="dt">location =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">145</span>, <span class="fl">-37.8</span>)</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">  , <span class="dt">zoom =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>(</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">    <span class="dt">data =</span> roads</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">    , <span class="dt">stroke_colour =</span> <span class="st">"RIGHT_LOC"</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">    , <span class="dt">layer_id =</span> <span class="st">"path_layer"</span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">  )</a></code></pre></div>
+<a class="sourceLine" id="cb10-3" data-line-number="3">  , <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">  , <span class="dt">zoom =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>(</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">    <span class="dt">data =</span> roads</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">    , <span class="dt">stroke_colour =</span> <span class="st">"RIGHT_LOC"</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">    , <span class="dt">layer_id =</span> <span class="st">"path_layer"</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">  )</a></code></pre></div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with LINESTRING and MULTILINESTRING geometries</p>
 </div>
 <div id="point-cloud" class="section level2">
@@ -233,7 +233,7 @@
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">df &lt;-<span class="st"> </span>capitals</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">df<span class="op">$</span>z &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">10000</span><span class="op">:</span><span class="dv">10000000</span>, <span class="dt">size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(df))</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-5" data-line-number="5"><span class="kw"><a href="../reference/add_pointcloud.html">add_pointcloud</a></span>(</a>
 <a class="sourceLine" id="cb11-6" data-line-number="6">  <span class="dt">data =</span> df</a>
 <a class="sourceLine" id="cb11-7" data-line-number="7">  , <span class="dt">lon =</span> <span class="st">'lon'</span></a>
@@ -252,7 +252,7 @@
 <a class="sourceLine" id="cb12-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb12-4" data-line-number="4">sf &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/geojsonsf/topics/geojson_sf">geojson_sf</a></span>(<span class="st">"https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json"</span>)</a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="../reference/add_polygon.html">add_polygon</a></span>(</a>
 <a class="sourceLine" id="cb12-8" data-line-number="8">    <span class="dt">data =</span> sf</a>
 <a class="sourceLine" id="cb12-9" data-line-number="9">    , <span class="dt">layer =</span> <span class="st">"polygon_layer"</span></a>
@@ -264,7 +264,7 @@
 <h2 class="hasAnchor">
 <a href="#scatter" class="anchor"></a>Scatter</h2>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</a>
 <a class="sourceLine" id="cb13-4" data-line-number="4">  <span class="dt">data =</span> capitals</a>
 <a class="sourceLine" id="cb13-5" data-line-number="5">  , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
@@ -324,7 +324,7 @@
 <a class="sourceLine" id="cb16-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb16-9" data-line-number="9"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(</a>
 <a class="sourceLine" id="cb16-10" data-line-number="10">  <span class="dt">token =</span> key</a>
-<a class="sourceLine" id="cb16-11" data-line-number="11">  , <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span></a>
+<a class="sourceLine" id="cb16-11" data-line-number="11">  , <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)</a>
 <a class="sourceLine" id="cb16-12" data-line-number="12">  , <span class="dt">pitch =</span> <span class="dv">35</span></a>
 <a class="sourceLine" id="cb16-13" data-line-number="13">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="../reference/add_arc.html">add_arc</a></span>(</a>

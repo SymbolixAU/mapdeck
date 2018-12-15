@@ -96,6 +96,9 @@ lines and points" />
       <a href="../articles/colours.html">Colours</a>
     </li>
     <li>
+      <a href="../articles/issues.html">Why isn't it working?</a>
+    </li>
+    <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
     </li>
   </ul>
@@ -292,6 +295,14 @@ you want to use specific fields in the geojson for colouring. However, if you on
 <code>fill_colour</code> value, the function will not automatically detect the <code>stroke_colour</code>
 (and vice versa)</p>
     
+    <h2 class="hasAnchor" id="data"><a class="anchor" href="#data"></a>data</h2>
+
+    
+    <p>If the <code>data</code> is a simple feature object, the geometry column is automatically
+detected. If the sf object contains more than one geometry column and you want to use a specific one,
+you'll need to set the active geometry using <code>sf::st_geometry( x ) &lt;- "your_column" </code>,
+where <code>"your_column"</code> is the name of the column you're activating. See <code><a href='https://www.rdocumentation.org/packages/sf/topics/st_geometry'>?sf::st_geometry</a></code></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -379,6 +390,8 @@ you want to use specific fields in the geojson for colouring. However, if you on
       <li><a href="#transitions">transitions</a></li>
 
       <li><a href="#raw-geojson">Raw Geojson</a></li>
+
+      <li><a href="#data">data</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

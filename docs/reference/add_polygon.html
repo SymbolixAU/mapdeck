@@ -96,6 +96,9 @@ only POLYGONs are supported, MULTIPOLYGONs are ignored." />
       <a href="../articles/colours.html">Colours</a>
     </li>
     <li>
+      <a href="../articles/issues.html">Why isn't it working?</a>
+    </li>
+    <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
     </li>
   </ul>
@@ -149,7 +152,7 @@ only POLYGONs are supported, MULTIPOLYGONs are ignored.</p>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>data to be used in the layer</p></td>
+      <td><p>data to be used in the layer.</p></td>
     </tr>
     <tr>
       <th>polyline</th>
@@ -242,6 +245,14 @@ a named list indicating which colour attributes should be included in the legend
 
     <p><code>add_polygon</code> supports POLYGON and MULTIPOLYGON sf objects</p>
     
+    <h2 class="hasAnchor" id="data"><a class="anchor" href="#data"></a>data</h2>
+
+    
+    <p>If the <code>data</code> is a simple feature object, the geometry column is automatically
+detected. If the sf object contains more than one geometry column and you want to use a specific one,
+you'll need to set the active geometry using <code>sf::st_geometry( x ) &lt;- "your_column" </code>,
+where <code>"your_column"</code> is the name of the column you're activating. See <code><a href='https://www.rdocumentation.org/packages/sf/topics/st_geometry'>?sf::st_geometry</a></code></p>
+    
     <h2 class="hasAnchor" id="transitions"><a class="anchor" href="#transitions"></a>transitions</h2>
 
     
@@ -327,6 +338,8 @@ you are clicking on</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#data">data</a></li>
 
       <li><a href="#transitions">transitions</a></li>
 

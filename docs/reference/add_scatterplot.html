@@ -96,6 +96,9 @@ with a certain radius." />
       <a href="../articles/colours.html">Colours</a>
     </li>
     <li>
+      <a href="../articles/issues.html">Why isn't it working?</a>
+    </li>
+    <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
     </li>
   </ul>
@@ -148,7 +151,7 @@ with a certain radius.</p>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>data to be used in the layer</p></td>
+      <td><p>data to be used in the layer.</p></td>
     </tr>
     <tr>
       <th>lon</th>
@@ -250,6 +253,14 @@ fill_colour = 0,
 radius = 0
 )</p>
     
+    <h2 class="hasAnchor" id="data"><a class="anchor" href="#data"></a>data</h2>
+
+    
+    <p>If the <code>data</code> is a simple feature object, the geometry column is automatically
+detected. If the sf object contains more than one geometry column and you want to use a specific one,
+you'll need to set the active geometry using <code>sf::st_geometry( x ) &lt;- "your_column" </code>,
+where <code>"your_column"</code> is the name of the column you're activating. See <code><a href='https://www.rdocumentation.org/packages/sf/topics/st_geometry'>?sf::st_geometry</a></code></p>
+    
     <h2 class="hasAnchor" id="legend"><a class="anchor" href="#legend"></a>legend</h2>
 
     
@@ -324,6 +335,8 @@ you are clicking on</p>
       <li><a href="#details">Details</a></li>
 
       <li><a href="#transitions">transitions</a></li>
+
+      <li><a href="#data">data</a></li>
 
       <li><a href="#legend">legend</a></li>
 

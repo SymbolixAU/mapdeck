@@ -6,7 +6,7 @@
 \usage{
 add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, weight = NULL, colour_range = NULL,
-  opacity = 0.8, cell_size = 50, layer_id = NULL, id = NULL,
+  opacity = 0.8, cell_size = 50, layer_id = NULL,
   update_view = TRUE, focus_layer = FALSE)
 }
 \arguments{
@@ -31,8 +31,6 @@ add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
-
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 

@@ -62,6 +62,9 @@
       <a href="../articles/colours.html">Colours</a>
     </li>
     <li>
+      <a href="../articles/issues.html">Why isn't it working?</a>
+    </li>
+    <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
     </li>
   </ul>
@@ -85,7 +88,7 @@
       <h1>Tips &amp; Tricks</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2018-12-13</h4>
+            <h4 class="date">2018-12-15</h4>
       
       
       <div class="hidden name"><code>tips_tricks.Rmd</code></div>
@@ -246,23 +249,89 @@
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="st"> </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>( roads, <span class="dt">focus_layer =</span> <span class="ot">TRUE</span> )</a></code></pre></div>
 </div>
 </div>
+<div id="returning-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#returning-data" class="anchor"></a>Returning data</h1>
+<p>Most layers let you specify an <code>id</code> value</p>
+<blockquote>
+<p>an id value in data to identify layers when interacting in Shiny apps</p>
+</blockquote>
+<p>If this value refers to a column of your data, this value is returned to your shiny session when you click on the layer in a shiny app. This way you know which row of data refers to the object you clicked on.</p>
+<p>You can observe click events using the syntax <code>input$&lt;map_id&gt;&lt;layer&gt;click</code></p>
+<p>So to observe clicks on the path layer on a map you’ve called ‘map’, you would use</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/observeEvent">observeEvent</a></span>({input<span class="op">$</span>map_path_click})</a></code></pre></div>
+<p>To see this in action, here’s an example shiny for you</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(shiny)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(shinydashboard)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mapdeck)</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">ui &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardPage">dashboardPage</a></span>(</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardHeader">dashboardHeader</a></span>()</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">    , <span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardSidebar">dashboardSidebar</a></span>(</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">        <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/actionButton">actionButton</a></span>(<span class="dt">inputId =</span> <span class="st">"roads"</span>, <span class="dt">label =</span> <span class="st">"roads"</span>)</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">    )</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">    , <span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardBody">dashboardBody</a></span>(</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">        <span class="kw"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(<span class="dt">outputId =</span> <span class="st">"map"</span>)</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">    )</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">)</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</a>
+<a class="sourceLine" id="cb7-16" data-line-number="16">    </a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">    <span class="co">## initialise a map</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18">    output<span class="op">$</span>map &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mapdeck-shiny.html">renderMapdeck</a></span>({</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">        <span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="st">                </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>(</a>
+<a class="sourceLine" id="cb7-21" data-line-number="21">                    <span class="dt">data =</span> roads[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, ]</a>
+<a class="sourceLine" id="cb7-22" data-line-number="22">                    , <span class="dt">stroke_width =</span> <span class="dv">5</span></a>
+<a class="sourceLine" id="cb7-23" data-line-number="23">                    , <span class="dt">id =</span> <span class="st">"FQID"</span></a>
+<a class="sourceLine" id="cb7-24" data-line-number="24">                    )</a>
+<a class="sourceLine" id="cb7-25" data-line-number="25">    })</a>
+<a class="sourceLine" id="cb7-26" data-line-number="26">    </a>
+<a class="sourceLine" id="cb7-27" data-line-number="27">    <span class="co">## use an observer to respond to the click event.</span></a>
+<a class="sourceLine" id="cb7-28" data-line-number="28">    <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/observeEvent">observeEvent</a></span>({input<span class="op">$</span>map_path_click},{</a>
+<a class="sourceLine" id="cb7-29" data-line-number="29">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>( input<span class="op">$</span>map_path_click )</a>
+<a class="sourceLine" id="cb7-30" data-line-number="30">        </a>
+<a class="sourceLine" id="cb7-31" data-line-number="31">        js &lt;-<span class="st"> </span>input<span class="op">$</span>map_path_click</a>
+<a class="sourceLine" id="cb7-32" data-line-number="32">        lst &lt;-<span class="st"> </span>jsonlite<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON">fromJSON</a></span>( js )</a>
+<a class="sourceLine" id="cb7-33" data-line-number="33">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>( lst )</a>
+<a class="sourceLine" id="cb7-34" data-line-number="34">    })</a>
+<a class="sourceLine" id="cb7-35" data-line-number="35">}</a>
+<a class="sourceLine" id="cb7-36" data-line-number="36"></a>
+<a class="sourceLine" id="cb7-37" data-line-number="37"><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/shinyApp">shinyApp</a></span>(ui, server)</a></code></pre></div>
+<p>This doesn’t work for geojson, or layers where the data is aggregated</p>
+<ul>
+<li>add_geojson()</li>
+<li>add_screengrid()</li>
+<li>add_grid()</li>
+<li>add_hexagon()</li>
+</ul>
+<p>Instead, you get all the aggregated data points</p>
+</div>
 <div id="chaining" class="section level1">
 <h1 class="hasAnchor">
 <a href="#chaining" class="anchor"></a>Chaining</h1>
-<p>Mapdeck plots can be included in a chain of commands</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">roads <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>( ROAD_TYPE <span class="op">==</span><span class="st"> "STREET"</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="../reference/add_sf.html">add_sf</a></span>()</a></code></pre></div>
-<p>TODO</p>
-<ul>
-<li>returning data to R session</li>
-<li>sf objects</li>
-<li>subsetting requires <code><a href="https://www.rdocumentation.org/packages/base/topics/library">library(sf)</a></code> loaded</li>
-<li>colours; using palettes etc</li>
-<li>if using a hex string it requires an alpha “#000000FF”</li>
-<li>chaining</li>
-</ul>
+<p>Mapdeck plots can be included in a chain of commands, if that’s your thing</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">roads <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>( ROAD_TYPE <span class="op">==</span><span class="st"> "STREET"</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="../reference/add_sf.html">add_sf</a></span>()</a></code></pre></div>
+</div>
+<div id="sf" class="section level1">
+<h1 class="hasAnchor">
+<a href="#sf" class="anchor"></a>sf</h1>
+<p>If you have issues plotting a subset of rows of an <code>sf</code> object, it may be because you haven’t loaded <code><a href="https://www.rdocumentation.org/packages/base/topics/library">library(sf)</a></code>.</p>
+<p>To see what I mean, restart your R session, then run these commands.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mapdeck)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="../reference/set_token.html">set_token</a></span>( <span class="st">"MAPBOX_TOKEN"</span> )</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/add_sf.html">add_sf</a></span>( <span class="dt">data =</span> roads[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ] )</a></code></pre></div>
+<p>You should see the map fully zoomed out. This is because it can’t find the bounding box of the subset object.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/attr">attr</a></span>( roads[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ][[<span class="st">"geometry"</span>]], <span class="st">"bbox"</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co"># NULL</span></a></code></pre></div>
+<p>Whereas if you load the <code>sf</code> library, you use its subsetting method, which gives you the bounding box</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/attr">attr</a></span>( roads[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ][[<span class="st">"geometry"</span>]], <span class="st">"bbox"</span>)</a></code></pre></div>
 </div>
   </div>
 
@@ -279,7 +348,9 @@
       <li><a href="#focus_layer">focus_layer</a></li>
       </ul>
 </li>
+      <li><a href="#returning-data">Returning data</a></li>
       <li><a href="#chaining">Chaining</a></li>
+      <li><a href="#sf">sf</a></li>
       </ul>
 </div>
       </div>

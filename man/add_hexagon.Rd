@@ -5,8 +5,8 @@
 \title{Add hexagon}
 \usage{
 add_hexagon(map, data = get_map_data(map), polyline = NULL,
-  lon = NULL, lat = NULL, layer_id = NULL, id = NULL,
-  radius = 1000, elevation_scale = 1, auto_highlight = FALSE,
+  lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
+  elevation_scale = 1, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", colour_range = NULL,
   update_view = TRUE, focus_layer = FALSE)
 }
@@ -24,8 +24,6 @@ add_hexagon(map, data = get_map_data(map), polyline = NULL,
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
-
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
 \item{radius}{in metres}
 

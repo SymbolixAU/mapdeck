@@ -148,8 +148,8 @@ add_pointcloud <- function(
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
 		shape <- rcpp_pointcloud_geojson( data, data_types, l, geometry_column )
-	} else if ( tp == "df" ) {
 
+	} else if ( tp == "df" ) {
 		## TODO( here or in rcpp? )
 		if( is.null(elevation) ){
 			l[["elevation"]] <- 0
