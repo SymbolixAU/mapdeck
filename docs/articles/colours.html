@@ -268,10 +268,49 @@
 <div class="figure">
 <img src="img/articles/colour_range_hexagons.png" alt="colour range"><p class="caption">colour range</p>
 </div>
-<p>TODO</p>
+</div>
+<div id="geojson" class="section level2">
+<h2 class="hasAnchor">
+<a href="#geojson" class="anchor"></a>GeoJSON</h2>
+<p>Colouring geojson is a bit different to other layers.</p>
+<p>If your geojson has a <code>properties</code> field, and within that field you have one of</p>
 <ul>
-<li>geojson</li>
+<li>
+<code>fill_colour</code> / <code>stroke_colour</code>
+</li>
+<li>
+<code>fillColour</code> / <code>strokeColour</code>
+</li>
+<li>
+<code>fill_color</code> / <code>stroke_color</code>
+</li>
+<li>
+<code>fillColor</code> / <code>strokeColor</code>
+</li>
 </ul>
+<p>these will be automatically used and plotted</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>( mapdeck<span class="op">::</span>geojson, <span class="dv">1</span>, <span class="dv">200</span>) </a></code></pre></div>
+<pre><code>## [1] "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"id\":1.0,\"fillColor\":\"#21908CFF\",\"line_colour\":\"#F89441FF\",\"random\":-0.6576371210491236},\"geometry\":{\"type\":\"LineString\",\"coordi"
+## attr(,"class")
+## [1] "geojson" "json"</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">location =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">145</span>, <span class="fl">-37.8</span>), <span class="dt">zoom =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="../reference/add_geojson.html">add_geojson</a></span>(</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3">        <span class="dt">data =</span> mapdeck<span class="op">::</span>geojson</a>
+<a class="sourceLine" id="cb24-4" data-line-number="4">    )</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/geojson.png" alt="geojson"><p class="caption">geojson</p>
+</div>
+<p>This is the quickest way of getting your data <a href="https://symbolixau.github.io/mapdeck/articles/benchmarks.html">from R to javascript</a></p>
+<p>If your GeoJSON doesn’t contain those colour fields, or if you want to use a different property for colours, you can do so, but it will be a bit slower as it has to convert the geojson to an <code>sf</code> object first, sort out the colours, then back to GeoJSON</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">location =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">145</span>, <span class="fl">-37.8</span>), <span class="dt">zoom =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="../reference/add_geojson.html">add_geojson</a></span>(</a>
+<a class="sourceLine" id="cb25-3" data-line-number="3">        <span class="dt">data =</span> mapdeck<span class="op">::</span>geojson</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4">        , <span class="dt">fill_colour =</span> <span class="st">"id"</span></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5">        , <span class="dt">radius =</span> <span class="dv">300</span></a>
+<a class="sourceLine" id="cb25-6" data-line-number="6">    )</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/geojson_colour.png" alt="geojson colour"><p class="caption">geojson colour</p>
+</div>
 </div>
 </div>
   </div>
@@ -288,6 +327,7 @@
       <li><a href="#how-it-works">How it works</a></li>
       <li><a href="#manual-colours">Manual colours</a></li>
       <li><a href="#colour_range">colour_range</a></li>
+      <li><a href="#geojson">GeoJSON</a></li>
       </ul>
 </li>
       </ul>

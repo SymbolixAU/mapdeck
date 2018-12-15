@@ -177,7 +177,46 @@ mapdeck() %>%
 ![colour range](./img/articles/colour_range_hexagons.png)
 
 
-TODO
+## GeoJSON
 
-- geojson
+Colouring geojson is a bit different to other layers. 
 
+If your geojson has a `properties` field, and within that field you have one of 
+
+- `fill_colour` / `stroke_colour`
+- `fillColour` / `strokeColour`
+- `fill_color` / `stroke_color`
+- `fillColor` / `strokeColor`
+
+these will be automatically used and plotted
+
+
+```{r}
+substr( mapdeck::geojson, 1, 200) 
+```
+
+```r
+mapdeck( location = c(145, -37.8), zoom = 10) %>%
+	add_geojson(
+		data = mapdeck::geojson
+	)
+
+```
+![geojson](./img/articles/geojson.png)
+
+
+This is the quickest way of getting your data [from R to javascript](https://symbolixau.github.io/mapdeck/articles/benchmarks.html)
+
+
+If your GeoJSON doesn't contain those colour fields, or if you want to use a different property for colours, you can do so, but it will be a bit slower as it has to convert the geojson to an `sf` object first, sort out the colours, then back to GeoJSON
+
+```r
+mapdeck( location = c(145, -37.8), zoom = 10) %>%
+	add_geojson(
+		data = mapdeck::geojson
+		, fill_colour = "id"
+		, radius = 300
+	)
+```
+
+![geojson colour](./img/articles/geojson_colour.png)
