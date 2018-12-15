@@ -24,6 +24,9 @@ mapdeckHexagonDependency <- function() {
 #' @param elevation_scale value to sacle the elevations of the hexagons
 #' @param colour_range vector of 6 hex colours
 #'
+#'
+#' @inheritSection add_polygon data
+#'
 #' @examples
 #' \dontrun{
 #'

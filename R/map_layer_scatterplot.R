@@ -23,6 +23,7 @@ mapdeckScatterplotDependency <- function() {
 #' "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
 #' between [0, 255], where the 4th column represents the alpha.
 #'
+#' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'

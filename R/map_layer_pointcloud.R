@@ -20,6 +20,7 @@ mapdeckPointcloudDependency <- function() {
 #' @param radius value in pixels of each point
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #'
+#' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'

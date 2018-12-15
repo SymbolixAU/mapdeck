@@ -15,7 +15,7 @@ mapdeckArcDependency <- function() {
 #' The Arc Layer renders raised arcs joining pairs of source and target coordinates
 #'
 #' @param map a mapdeck map object
-#' @param data data to be used in the layer
+#' @param data data to be used in the layer.
 #' @param layer_id single value specifying an id for the layer. Use this value to
 #' distinguish between shape layers of the same type. Layers with the same id are likely
 #' to conflict and not plot correctly
@@ -44,6 +44,7 @@ mapdeckArcDependency <- function() {
 #' @param update_view logical indicating if the map should update the bounds to include this layer
 #' @param focus_layer logical indicating if the map should update the bounds to only include this layer
 #' @param transitions list specifying the duration of transitions.
+#'
 #'
 #' @section id:
 #'
@@ -83,6 +84,7 @@ mapdeckArcDependency <- function() {
 #' stroke_to = 0,
 #' stroke_width = 0
 #' )
+#'
 #'
 #' @examples
 #' \donttest{

@@ -9,7 +9,7 @@ add_sf(map, data = get_map_data(map), ...)
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer}
+\item{data}{data to be used in the layer.}
 
 \item{...}{other argumetns passed to one of the plotting layers. See details}
 }

@@ -137,6 +137,15 @@ you want to use specific fields in the geojson for colouring. However, if you on
 (and vice versa)
 }
 
+\section{data}{
+
+
+If the \code{data} is a simple feature object, the geometry column is automatically
+detected. If the sf object contains more than one geometry column and you want to use a specific one,
+you'll need to set the active geometry using \code{sf::st_geometry( x ) <- "your_column" },
+where \code{"your_column"} is the name of the column you're activating. See \code{?sf::st_geometry}
+}
+
 \examples{
 \donttest{
 

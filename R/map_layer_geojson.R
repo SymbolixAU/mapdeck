@@ -29,6 +29,7 @@ mapdeckGeojsonDependency <- function() {
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip.
 #' Only works on \code{sf} objects.
 #'
+#' @inheritSection add_polygon data
 #'
 #' @section transitions:
 #'

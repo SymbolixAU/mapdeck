@@ -16,7 +16,7 @@ add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer}
+\item{data}{data to be used in the layer.}
 
 \item{lon}{column containing longitude values}
 
@@ -88,6 +88,15 @@ list(
 position = 0,
 fill_colour = 0
 )
+}
+
+\section{data}{
+
+
+If the \code{data} is a simple feature object, the geometry column is automatically
+detected. If the sf object contains more than one geometry column and you want to use a specific one,
+you'll need to set the active geometry using \code{sf::st_geometry( x ) <- "your_column" },
+where \code{"your_column"} is the name of the column you're activating. See \code{?sf::st_geometry}
 }
 
 \section{legend}{

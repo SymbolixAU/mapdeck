@@ -24,6 +24,8 @@ mapdeckGridDependency <- function() {
 #' @param extruded logical indicating if cells are elevated or not
 #' @param elevation_scale cell elevation multiplier
 #'
+#' @inheritSection add_polygon data
+#'
 #' @examples
 #' \donttest{
 #' ## You need a valid access token from Mapbox

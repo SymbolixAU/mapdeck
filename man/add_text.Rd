@@ -16,7 +16,7 @@ add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer}
+\item{data}{data to be used in the layer.}
 
 \item{text}{column of \code{data} containing the text. The data must be a character.}
 

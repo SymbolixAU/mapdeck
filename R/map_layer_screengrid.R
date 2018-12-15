@@ -23,6 +23,8 @@ mapdeckScreengridDependency <- function() {
 #' @param opacity opacity of cells. Value between 0 and 1
 #' @param cell_size size of grid squares in pixels
 #'
+#' @inheritSection add_polygon data
+#'
 #' @examples
 #' \donttest{
 #'
