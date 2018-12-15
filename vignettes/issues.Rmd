@@ -1,0 +1,29 @@
+---
+title: "Why isn't it working?"
+author: "David Cooley"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: true
+        toc_float: true
+        number_sections: false
+        theme: flatly
+header-includes: 
+    - \usepackage{tikz}
+    - \usetikzlibrary{arrows}
+---
+
+From time to time you may find something not working.
+
+## Blank map
+
+### RStudio viewer is blank 
+
+Try opening in a browser. [Issue 18](https://github.com/SymbolixAU/mapdeck/issues/18)
+
+### Browser is blank
+
+Look at the javascript console for any errors. [Issue 95](https://github.com/SymbolixAU/mapdeck/issues/95)
+
+
+

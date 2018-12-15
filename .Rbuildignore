@@ -10,4 +10,5 @@
 ^vignettes/benchmarks.Rmd
 ^vignettes/tips_tricks.Rmd
 ^vignettes/colours.Rmd
+^vignettes/issues.Rmd
 ^vignettes/img/articles/*
