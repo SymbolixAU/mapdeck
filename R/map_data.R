@@ -218,6 +218,10 @@ get_od_box.data.frame <- function( data, l ) {
 #' @export
 resolve_data.sfencoded <- function( data, l, sf_geom ) {
 
+	if ( "POLYGON" %in% sf_geom & !("list" %in% attr( data[[ attr( data, "encoded_column") ]], "class" )) ) {
+		stop("sfencoded POLYGON must be a list column")
+	}
+
 	if( !attr( data, "sfAttributes" )[["type"]] %in% sf_geom ) {
 	  data <- data[ googlePolylines::geometryRow(data, geometry = sf_geom[1], multi = TRUE), ]
 	}

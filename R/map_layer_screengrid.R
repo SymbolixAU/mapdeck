@@ -87,8 +87,7 @@ add_screengrid <- function(
 	l[["polyline"]] <- force( polyline )
 	l[["weight"]] <- force( weight )
 	l[["lon"]] <- force( lon )
-	l[["lat"]] <- force( lat)
-	l[["id"]] <- force(id)
+	l[["lat"]] <- force( lat )
 
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 

@@ -86,7 +86,6 @@ add_hexagon <- function(
 	l[["polyline"]] <- force(polyline)
 	l[["lon"]] <- force(lon)
 	l[["lat"]] <- force(lat)
-	l[["id"]] <- force(id)
 
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 
