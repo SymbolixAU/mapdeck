@@ -27,9 +27,9 @@ Mapdeck supports
 - `sfencodedLite`
 - `geojson` / `json` / `character` (as GeoJSON)
 
-In all cases, plotting raw geojson is the quickest way to get your data to javascript as it doesn't go through any pre-processing. 
+In all cases, plotting raw geojson is the quickest way to get your data to javascript as it doesn't go through any pre-processing. See the [geojson section](https://symbolixau.github.io/mapdeck/articles/colours.html#geojson) for how you can use colorus on the raw GeoJSON
 
-However, if you specify one of the `properties` as one of the colour variables, it then has to get converted to `sf`, processed, and back again to GeoJSON. This incurs a fairly big penalty. 
+However, if you specify one of the `properties` as one of the colour variables, it then has to get converted to `sf`, processed, and back again to GeoJSON. This incurs a relatively big penalty. 
 
 The `sfencoded` objects were created before I created the `spatialwidget` library, and getting the coordinates and data from `sf` objects was slow. Therefore, I wrote the library `googlePolylines` to quickly convert `sf` objects into encoded polylines. The benefit of this library is the speed in getting the coordinates, and the size of the object gets reduced. 
 

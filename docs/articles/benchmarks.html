@@ -88,7 +88,7 @@
       <h1>Benchmarks</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2018-12-15</h4>
+            <h4 class="date">2018-12-16</h4>
       
       
       <div class="hidden name"><code>benchmarks.Rmd</code></div>
@@ -107,8 +107,8 @@
 <li>
 <code>geojson</code> / <code>json</code> / <code>character</code> (as GeoJSON)</li>
 </ul>
-<p>In all cases, plotting raw geojson is the quickest way to get your data to javascript as it doesn’t go through any pre-processing.</p>
-<p>However, if you specify one of the <code>properties</code> as one of the colour variables, it then has to get converted to <code>sf</code>, processed, and back again to GeoJSON. This incurs a fairly big penalty.</p>
+<p>In all cases, plotting raw geojson is the quickest way to get your data to javascript as it doesn’t go through any pre-processing. See the <a href="https://symbolixau.github.io/mapdeck/articles/colours.html#geojson">geojson section</a> for how you can use colorus on the raw GeoJSON</p>
+<p>However, if you specify one of the <code>properties</code> as one of the colour variables, it then has to get converted to <code>sf</code>, processed, and back again to GeoJSON. This incurs a relatively big penalty.</p>
 <p>The <code>sfencoded</code> objects were created before I created the <code>spatialwidget</code> library, and getting the coordinates and data from <code>sf</code> objects was slow. Therefore, I wrote the library <code>googlePolylines</code> to quickly convert <code>sf</code> objects into encoded polylines. The benefit of this library is the speed in getting the coordinates, and the size of the object gets reduced.</p>
 <p>However, since <code>spatialwidget</code>, the processing time of <code>sf</code> objects has reduced significantly. So now the benefit is less-so the speed, and more-so the reduced size.</p>
 <hr>
