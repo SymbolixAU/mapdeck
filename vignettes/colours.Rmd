@@ -40,15 +40,19 @@ mapdeck() %>%
 ```
 ![fill viridis](./img/articles/fill_colour_viridis.png)
 
-The colour scheme defaults to viridis. You can change it with the `palette` argument by using one of the other palettes available in `?colourvalues::colour_values`
+The colour scheme defaults to viridis. You can change it with the `palette` argument by using one of the other palettes available in `library(colourvalues)`
 
-- "viridis"
-- "inferno"
-- "magma"
-- "plasma"
-- "cividis"
+```{r}
+## to see a list of colours
+## colourvalues::colour_palettes()
 
-or by using a matrix palette
+## plot of colours
+colourvalues::show_colours()
+```
+
+
+
+or by using a matrix palette.
 
 ```r
 ## using another viridis colour palette

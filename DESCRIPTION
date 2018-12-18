@@ -17,7 +17,7 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
 Imports:
-    colourvalues,
+    colourvalues (>= 0.2.1),
     geojsonsf,
     googlePolylines (>= 0.7.2),
     htmlwidgets,
