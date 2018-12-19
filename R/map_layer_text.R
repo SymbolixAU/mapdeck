@@ -1,6 +1,6 @@
 mapdeckTextDependency <- function() {
 	list(
-		htmltools::htmlDependency(
+		createHtmlDependency(
 			"text",
 			"1.0.0",
 			system.file("htmlwidgets/lib/text", package = "mapdeck"),

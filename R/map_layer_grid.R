@@ -1,6 +1,6 @@
 mapdeckGridDependency <- function() {
 	list(
-		htmltools::htmlDependency(
+		createHtmlDependency(
 			"grid",
 			"1.0.0",
 			system.file("htmlwidgets/lib/grid", package = "mapdeck"),

@@ -111,6 +111,25 @@ doResolveFormula.data.frame = function(data, f) {
 }
 
 
+createHtmlDependency <- function(name, version, src, script) {
+	structure(
+		list(
+			name = name
+			, version = version
+			, src = list(file = src )
+			, meta = NULL
+			, script = script
+			, stylesheet = NULL
+			, head = NULL
+			, attachment = NULL
+			, package = NULL
+			, all_files = TRUE
+		)
+		, class = "html_dependency"
+	)
+}
+
+
 addDependency <- function(map, dependencyFunction) {
 
 	existingDeps <- sapply(map$dependencies, function(x) x[['name']])

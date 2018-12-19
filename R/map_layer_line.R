@@ -1,13 +1,14 @@
 mapdeckLineDependency <- function() {
 	list(
-		htmltools::htmlDependency(
-			"line",
-			"1.0.0",
-			system.file("htmlwidgets/lib/line", package = "mapdeck"),
+		createHtmlDependency(
+			name = "line",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/line", package = "mapdeck"),
 			script = c("line.js")
 		)
 	)
 }
+
 
 
 #' Add line

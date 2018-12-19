@@ -1,6 +1,6 @@
 mapdeckHexagonDependency <- function() {
 	list(
-		htmltools::htmlDependency(
+		createHtmlDependency(
 			"hexagon",
 			"1.0.0",
 			system.file("htmlwidgets/lib/hexagon", package = "mapdeck"),

@@ -1,6 +1,6 @@
 mapdeckPointcloudDependency <- function() {
 	list(
-		htmltools::htmlDependency(
+		createHtmlDependency(
 			"pointcloud",
 			"1.0.0",
 			system.file("htmlwidgets/lib/pointcloud", package = "mapdeck"),

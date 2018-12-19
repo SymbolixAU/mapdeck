@@ -1,6 +1,6 @@
 mapdeckArcDependency <- function() {
 	list(
-		htmltools::htmlDependency(
+		createHtmlDependency(
 			"arc",
 			"1.0.0",
 			system.file("htmlwidgets/lib/arc", package = "mapdeck"),

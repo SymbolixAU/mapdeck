@@ -1,6 +1,6 @@
 mapdeckPolygonDependency <- function() {
 	list(
-		htmltools::htmlDependency(
+		createHtmlDependency(
 			"polygon",
 			"1.0.0",
 			system.file("htmlwidgets/lib/polygon", package = "mapdeck"),
