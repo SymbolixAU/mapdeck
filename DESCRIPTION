@@ -21,7 +21,6 @@ Imports:
     geojsonsf,
     googlePolylines (>= 0.7.2),
     htmlwidgets,
-    htmltools,
     jsonify (>= 0.1.2),
     magrittr,
     Rcpp,

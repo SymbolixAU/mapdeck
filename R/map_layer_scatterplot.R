@@ -1,9 +1,9 @@
 mapdeckScatterplotDependency <- function() {
 	list(
-		htmltools::htmlDependency(
-			"scatterplot",
-			"1.0.0",
-			system.file("htmlwidgets/lib/scatterplot", package = "mapdeck"),
+		createHtmlDependency(
+			name = "scatterplot",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/scatterplot", package = "mapdeck"),
 			script = c("scatterplot.js")
 		)
 	)
