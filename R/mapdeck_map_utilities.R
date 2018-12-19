@@ -116,7 +116,7 @@ createHtmlDependency <- function(name, version, src, script) {
 		list(
 			name = name
 			, version = version
-			, src = list(file = src )
+			, src = list( file = src )
 			, meta = NULL
 			, script = script
 			, stylesheet = NULL

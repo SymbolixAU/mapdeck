@@ -1,9 +1,9 @@
 mapdeckPointcloudDependency <- function() {
 	list(
 		createHtmlDependency(
-			"pointcloud",
-			"1.0.0",
-			system.file("htmlwidgets/lib/pointcloud", package = "mapdeck"),
+			name = "pointcloud",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/pointcloud", package = "mapdeck"),
 			script = c("pointcloud.js")
 		)
 	)

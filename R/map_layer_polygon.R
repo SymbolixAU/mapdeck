@@ -1,9 +1,9 @@
 mapdeckPolygonDependency <- function() {
 	list(
 		createHtmlDependency(
-			"polygon",
-			"1.0.0",
-			system.file("htmlwidgets/lib/polygon", package = "mapdeck"),
+			name = "polygon",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/polygon", package = "mapdeck"),
 			script = c("polygon.js")
 		)
 	)

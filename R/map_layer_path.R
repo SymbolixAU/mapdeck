@@ -1,9 +1,9 @@
 mapdeckPathDependency <- function() {
 	list(
 		createHtmlDependency(
-			"path",
-			"1.0.0",
-			system.file("htmlwidgets/lib/path", package = "mapdeck"),
+			name = "path",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/path", package = "mapdeck"),
 			script = c("path.js")
 		)
 	)

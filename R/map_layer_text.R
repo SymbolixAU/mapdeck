@@ -1,9 +1,9 @@
 mapdeckTextDependency <- function() {
 	list(
 		createHtmlDependency(
-			"text",
-			"1.0.0",
-			system.file("htmlwidgets/lib/text", package = "mapdeck"),
+			name = "text",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/text", package = "mapdeck"),
 			script = c("text.js")
 		)
 	)

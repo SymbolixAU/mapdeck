@@ -2,9 +2,9 @@
 mapdeckGeojsonDependency <- function() {
 	list(
 		createHtmlDependency(
-			"geojson",
-			"1.0.0",
-			system.file("htmlwidgets/lib/geojson", package = "mapdeck"),
+			name = "geojson",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/geojson", package = "mapdeck"),
 			script = c("geojson.js")
 		)
 	)
