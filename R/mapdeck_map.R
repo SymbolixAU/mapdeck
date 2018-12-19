@@ -39,7 +39,7 @@ mapdeck <- function(
   )
 
   # create widget
-  mapdeckmap <- htmlwidgets::createWidget(
+  mapdeckmap <- localCreateWidget(
     name = 'mapdeck',
     x = structure(
     	x,
@@ -48,7 +48,7 @@ mapdeck <- function(
     width = width,
     height = height,
     package = 'mapdeck',
-    sizingPolicy = htmlwidgets::sizingPolicy(
+    sizingPolicy = localSizingPolicy(
     	defaultWidth = '100%',
     	defaultHeight = 800,
     	padding = padding,
