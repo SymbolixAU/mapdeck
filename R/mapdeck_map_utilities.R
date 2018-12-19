@@ -110,7 +110,7 @@ doResolveFormula.data.frame = function(data, f) {
 	eval(f[[2]], data, environment(f))
 }
 
-
+## from htmltools::htmlDependency()
 createHtmlDependency <- function(name, version, src, script) {
 	structure(
 		list(
