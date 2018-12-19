@@ -110,7 +110,7 @@ doResolveFormula.data.frame = function(data, f) {
 	eval(f[[2]], data, environment(f))
 }
 
-
+## from htmltools::htmlDependency()
 createHtmlDependency <- function(name, version, src, script) {
 	structure(
 		list(
@@ -129,35 +129,6 @@ createHtmlDependency <- function(name, version, src, script) {
 	)
 }
 
-## from htmlwidgets::createWidget
-localCreateWidget <- function (name, x, width = NULL, height = NULL, sizingPolicy = localSizingPolicy(),
-					package = name, dependencies = NULL, elementId = NULL, preRenderHook = NULL)
-{
-	if (inherits(dependencies, "html_dependency"))
-		dependencies <- list(dependencies)
-	structure(list(x = x, width = width, height = height, sizingPolicy = sizingPolicy,
-								 dependencies = dependencies, elementId = elementId, preRenderHook = preRenderHook,
-								 jsHooks = list()), class = c(name, if (sizingPolicy$viewer$suppress) "suppress_viewer",
-								 														 "htmlwidget"), package = package)
-}
-
-## from htmlwidgets::sizingPolicy
-localSizingPolicy <- function (defaultWidth = NULL, defaultHeight = NULL, padding = NULL,
-															 viewer.defaultWidth = NULL, viewer.defaultHeight = NULL,
-															 viewer.padding = NULL, viewer.fill = TRUE, viewer.suppress = FALSE,
-															 viewer.paneHeight = NULL, browser.defaultWidth = NULL, browser.defaultHeight = NULL,
-															 browser.padding = NULL, browser.fill = FALSE, browser.external = FALSE,
-															 knitr.defaultWidth = NULL, knitr.defaultHeight = NULL, knitr.figure = TRUE)
-{
-	list(defaultWidth = defaultWidth, defaultHeight = defaultHeight,
-			 padding = padding, viewer = list(defaultWidth = viewer.defaultWidth,
-			 																 defaultHeight = viewer.defaultHeight, padding = viewer.padding,
-			 																 fill = viewer.fill, suppress = viewer.suppress, paneHeight = viewer.paneHeight),
-			 browser = list(defaultWidth = browser.defaultWidth, defaultHeight = browser.defaultHeight,
-			 							 padding = browser.padding, fill = browser.fill, external = browser.external),
-			 knitr = list(defaultWidth = knitr.defaultWidth, defaultHeight = knitr.defaultHeight,
-			 						 figure = knitr.figure))
-}
 
 addDependency <- function(map, dependencyFunction) {
 
