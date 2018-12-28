@@ -2,7 +2,8 @@
 #'
 #' @import htmlwidgets
 #'
-#' @param token Mapbox Acess token. Use \code{set_token()} to set a global token
+#' @param token Mapbox Acess token. Use \code{set_token()} to set a global token.
+#' If left empty layers will still be plotted, but without a Mapbox map.
 #' @param data data to be used on the map. All coordinates are expected to be in
 #' Web Mercator Projection
 #' @param width the width of the map
