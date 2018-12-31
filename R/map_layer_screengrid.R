@@ -122,7 +122,6 @@ add_screengrid <- function(
 	checkHex(colour_range)
 
 	map <- addDependency(map, mapdeckScreengridDependency())
-	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
@@ -130,13 +129,13 @@ add_screengrid <- function(
 	jsfunc <- "add_screengrid_geo"
 	if( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_screengrid_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_screengrid_geojson( data, l, geometry_column )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_screengrid_geojson_df( data, data_types, l, geometry_column )
+		shape <- rcpp_screengrid_geojson_df( data, l, geometry_column )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_screengrid_polyline( data, data_types, l, geometry_column )
+		shape <- rcpp_screengrid_polyline( data, l, geometry_column )
 		jsfunc <- "add_screengrid_polyline"
 	}
 

@@ -9,7 +9,7 @@ add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
   stroke_from_opacity = NULL, stroke_to = NULL,
   stroke_to_opacity = NULL, stroke_width = NULL, tooltip = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF", legend = F,
-  legend_options = NULL, palette = "viridis",
+  legend_options = NULL, legend_format = NULL, palette = "viridis",
   na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
   transitions = NULL)
 }
@@ -108,6 +108,17 @@ This should be a named list, where the names are one of
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+
+The \code{legend_format} can be used to control the format of the values in the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{fill_colour}
+  \item{stroke_colour}
+}
+
+depending on which type of colouring the layer supports.
+
+The list elements must be functions to apply to the values in the legend.
 }
 
 \section{transitions}{

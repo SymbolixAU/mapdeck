@@ -109,6 +109,17 @@ This should be a named list, where the names are one of
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+
+The \code{legend_format} can be used to control the format of the values in the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{fill_colour}
+  \item{stroke_colour}
+}
+
+depending on which type of colouring the layer supports.
+
+The list elements must be functions to apply to the values in the legend.
 }
 
 \section{id}{

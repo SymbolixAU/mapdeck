@@ -113,6 +113,7 @@ add_scatterplot <- function(
 	na_colour = "#808080FF",
 	legend = FALSE,
 	legend_options = NULL,
+	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL
@@ -152,7 +153,6 @@ add_scatterplot <- function(
 	checkHexAlpha(highlight_colour)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
-	data_types <- data_types( data )
 
 
 	tp <- l[["data_type"]]
@@ -161,17 +161,18 @@ add_scatterplot <- function(
 	jsfunc <- "add_scatterplot_geo"
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_scatterplot_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_scatterplot_geojson( data, l, geometry_column )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_scatterplot_geojson_df( data, data_types, l, geometry_column )
+		shape <- rcpp_scatterplot_geojson_df( data, l, geometry_column )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- c( "polyline" )
-		shape <- rcpp_scatterplot_polyline( data, data_types, l, geometry_column )
+		shape <- rcpp_scatterplot_polyline( data, l, geometry_column )
 		jsfunc <- "add_scatterplot_polyline"
 	}
 
 	js_transitions <- resolve_transitions( transitions, "scatterplot" )
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,

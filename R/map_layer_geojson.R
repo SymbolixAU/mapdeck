@@ -194,6 +194,7 @@ add_geojson <- function(
 	light_settings = list(),
 	legend = F,
 	legend_options = NULL,
+	legend_format = NULL,
 	auto_highlight = FALSE,
 	tooltip = NULL,
 	highlight_colour = "#AAFFFFFF",
@@ -253,13 +254,11 @@ add_geojson <- function(
 	layer_id <- layerId( layer_id, "geojson" )
 	### end parameter checks
 
-	data_types <- data_types( data )
-
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
 	if( tp == "sf" ) {
-	  shape <- rcpp_geojson_geojson( data, data_types, l, "geometry" )
+	  shape <- rcpp_geojson_geojson( data, l, "geometry" )
 	  jsfunc <- "add_geojson_sf"
 	} else if ( tp == "geojson" ) {
 		## leave as is?
@@ -272,6 +271,7 @@ add_geojson <- function(
 	js_transitions <- resolve_transitions( transitions, "geojson" )
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight,

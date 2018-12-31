@@ -16,7 +16,7 @@ Rcpp::List text_defaults(int n) {
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_text_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
+Rcpp::List rcpp_text_geojson( Rcpp::DataFrame data,
                       Rcpp::List params, std::string geometry_columns ) {
 
 	int data_rows = data.nrows();
@@ -29,7 +29,6 @@ Rcpp::List rcpp_text_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	return spatialwidget::api::create_geojson_downcast(
 		data,
-		data_types,
 		params,
 		lst_defaults,
 		text_colours,
@@ -42,7 +41,7 @@ Rcpp::List rcpp_text_geojson( Rcpp::DataFrame data, Rcpp::List data_types,
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_text_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
+Rcpp::List rcpp_text_geojson_df( Rcpp::DataFrame data,
                               Rcpp::List params, Rcpp::List geometry_columns ) {
 
 	int data_rows = data.nrows();
@@ -55,7 +54,6 @@ Rcpp::List rcpp_text_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	return spatialwidget::api::create_geojson(
 		data,
-		data_types,
 		params,
 		lst_defaults,
 		text_colours,
@@ -68,7 +66,7 @@ Rcpp::List rcpp_text_geojson_df( Rcpp::DataFrame data, Rcpp::List data_types,
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_text_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
+Rcpp::List rcpp_text_polyline( Rcpp::DataFrame data,
                               Rcpp::List params, Rcpp::StringVector geometry_columns ) {
 
 	int data_rows = data.nrows();
@@ -81,7 +79,6 @@ Rcpp::List rcpp_text_polyline( Rcpp::DataFrame data, Rcpp::List data_types,
 
 	return spatialwidget::api::create_polyline(
 		data,
-		data_types,
 		params,
 		lst_defaults,
 		text_colours,

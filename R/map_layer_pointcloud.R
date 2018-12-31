@@ -99,6 +99,7 @@ add_pointcloud <- function(
 	na_colour = "#808080FF",
 	legend = FALSE,
 	legend_options = NULL,
+	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL
@@ -139,7 +140,6 @@ add_pointcloud <- function(
 	checkNumeric( radius )
 
 	map <- addDependency( map, mapdeckPointcloudDependency() )
-	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
@@ -147,7 +147,7 @@ add_pointcloud <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_pointcloud_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_pointcloud_geojson( data, l, geometry_column )
 
 	} else if ( tp == "df" ) {
 		## TODO( here or in rcpp? )
@@ -156,17 +156,18 @@ add_pointcloud <- function(
 		}
 
 		geometry_column <- list( geometry = c("lon","lat","elevation") )
-	  shape <- rcpp_pointcloud_geojson_df( data, data_types, l, geometry_column )
+	  shape <- rcpp_pointcloud_geojson_df( data, l, geometry_column )
 
 	} else if ( tp == "sfencoded" ) {
 
 		geometry_column <- "polyline"
-		shape <- rcpp_pointcloud_polyline( data, data_types, l, geometry_column )
+		shape <- rcpp_pointcloud_polyline( data, l, geometry_column )
 		jsfunc <- "add_pointcloud_polyline"
 	}
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 	js_transitions <- resolve_transitions( transitions, "pointcloud" )
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], radius, layer_id, light_settings,

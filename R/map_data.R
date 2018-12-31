@@ -1,8 +1,6 @@
 
 init_bbox <- function() return(  list(c(-180,-90),c(180,90)) )
 
-data_types <- function( data ) vapply(data, function(x) class(x)[[1]], "")
-
 sfrow <- function( sf , sfc_type ) {
 	geom_column <- attr(sf, "sf_column")
 	return( which(vapply(sf[[geom_column]], function(x) attr(x, "class")[[2]], "") %in% sfc_type ) )
@@ -325,6 +323,20 @@ resolve_legend <- function( l, legend ) {
 
 resolve_legend_options <- function( l, legend_options ) {
 	l[["legend_options"]] <- legend_options
+	return( l )
+}
+
+resolve_legend_format <- function( l, legend_format ) {
+	if( is.null( legend_format ) ) return( l )
+
+	l <- jsonlite::fromJSON( l )
+
+	for( i in names( legend_format ) ) {
+
+		var <- l[[ i ]][[ "variable" ]]
+		l[[ i ]][[ "variable" ]] <- legend_format[[ i ]]( var )
+	}
+	l <- jsonify::to_json( l, numeric_dates = FALSE )
 	return( l )
 }
 

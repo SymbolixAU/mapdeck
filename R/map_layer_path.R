@@ -84,6 +84,7 @@ add_path <- function(
 	na_colour = "#808080FF",
 	legend = FALSE,
 	legend_options = NULL,
+	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL
@@ -121,22 +122,22 @@ add_path <- function(
 	checkHexAlpha( highlight_colour )
 
 	map <- addDependency(map, mapdeckPathDependency())
-	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		shape <- rcpp_path_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_path_geojson( data, l, geometry_column )
 		jsfunc <- "add_path_geo"
 	} else if ( tp == "sfencoded" ) {
 		jsfunc <- "add_path_polyline"
 		geometry_column <- "polyline"
-		shape <- rcpp_path_polyline( data, data_types, l, geometry_column )
+		shape <- rcpp_path_polyline( data, l, geometry_column )
 	}
 
 	js_transitions <- resolve_transitions( transitions, "path" )
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
