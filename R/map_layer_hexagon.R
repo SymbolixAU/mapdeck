@@ -115,7 +115,6 @@ add_hexagon <- function(
 
 	layer_id <- layerId(layer_id, "hexagon")
 	map <- addDependency(map, mapdeckHexagonDependency())
-	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
@@ -123,13 +122,13 @@ add_hexagon <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_hexagon_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_hexagon_geojson( data, l, geometry_column )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_hexagon_geojson_df( data, data_types, l, geometry_column )
+		shape <- rcpp_hexagon_geojson_df( data, l, geometry_column )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_hexagon_polyline( data, data_types, l, geometry_column )
+		shape <- rcpp_hexagon_polyline( data, l, geometry_column )
 		jsfunc <- "add_hexagon_polyline"
 	}
 

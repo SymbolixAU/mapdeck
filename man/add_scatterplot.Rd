@@ -9,8 +9,8 @@ add_scatterplot(map, data = get_map_data(map), lon = NULL,
   fill_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL)
+  legend_options = NULL, legend_format = NULL, update_view = TRUE,
+  focus_layer = FALSE, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -107,6 +107,17 @@ This should be a named list, where the names are one of
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+
+The \code{legend_format} can be used to control the format of the values in the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{fill_colour}
+  \item{stroke_colour}
+}
+
+depending on which type of colouring the layer supports.
+
+The list elements must be functions to apply to the values in the legend.
 }
 
 \section{id}{

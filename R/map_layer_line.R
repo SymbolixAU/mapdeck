@@ -113,6 +113,7 @@ add_line <- function(
 	na_colour = "#808080FF",
 	legend = FALSE,
 	legend_options = NULL,
+	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL
@@ -154,21 +155,21 @@ add_line <- function(
 	checkHexAlpha(highlight_colour)
 
 	map <- addDependency(map, mapdeckLineDependency())
-	data_types <- data_types( data )
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
-		shape <- rcpp_line_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_line_geojson( data, l, geometry_column )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
-		shape <- rcpp_line_geojson_df( data, data_types, l, geometry_column )
+		shape <- rcpp_line_geojson_df( data, l, geometry_column )
 	}
 	# } else if ( tp == "sfencoded" ) {
 	# 	geometry_column <- "geometry"
-	# 	shape <- rcpp_line_polyline( data, data_types, l, geometry_column )
+	# 	shape <- rcpp_line_polyline( data, l, geometry_column )
 	# }
 
 	js_transitions <- resolve_transitions( transitions, "line" )
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
 		map, "add_line_geo", shape[["data"]], layer_id, auto_highlight,

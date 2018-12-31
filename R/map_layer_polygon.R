@@ -126,6 +126,7 @@ add_polygon <- function(
 	na_colour = "#808080FF",
 	legend = FALSE,
 	legend_options = NULL,
+	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL
@@ -175,7 +176,6 @@ add_polygon <- function(
 	layer_id <- layerId(layer_id, "polygon")
 
 	map <- addDependency(map, mapdeckPolygonDependency())
-	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
@@ -184,15 +184,17 @@ add_polygon <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		shape <- rcpp_polygon_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_polygon_geojson( data, l, geometry_column )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_polygon_polyline( data, data_types, l, geometry_column )
+		shape <- rcpp_polygon_polyline( data, l, geometry_column )
 		jsfunc <- "add_polygon_polyline"
 	}
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 	js_transitions <- resolve_transitions( transitions, "polygon" )
+
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings,

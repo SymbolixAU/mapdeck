@@ -72,6 +72,17 @@ mapdeckArcDependency <- function() {
 #'
 #' If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
 #'
+#' The \code{legend_format} can be used to control the format of the values in the legend.
+#' This should be a named list, where the names are one of
+#' \itemize{
+#'   \item{fill_colour}
+#'   \item{stroke_colour}
+#' }
+#'
+#' depending on which type of colouring the layer supports.
+#'
+#' The list elements must be functions to apply to the values in the legend.
+#'
 #' @section transitions:
 #'
 #' The transitions argument lets you specify the time it will take for the shapes to transition
@@ -171,6 +182,7 @@ add_arc <- function(
 	highlight_colour = "#AAFFFFFF",
 	legend = F,
 	legend_options = NULL,
+	legend_format = NULL,
 	palette = "viridis",
 	na_colour = "#808080FF",
 	update_view = TRUE,
@@ -217,21 +229,21 @@ add_arc <- function(
 	jsfunc <- "add_arc_geo"
 
 	map <- addDependency(map, mapdeckArcDependency())
-	data_types <- data_types( data )
 
   if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
-		shape <- rcpp_arc_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_arc_geojson( data, l, geometry_column )
   } else if ( tp == "df" ) {
   	geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
-  	shape <- rcpp_arc_geojson_df( data, data_types, l, geometry_column )
+  	shape <- rcpp_arc_geojson_df( data, l, geometry_column )
   } else if ( tp == "sfencoded" ) {
   	geometry_column <- c("origin", "destination")
-  	shape <- rcpp_arc_polyline( data, data_types, l, geometry_column )
+  	shape <- rcpp_arc_polyline( data, l, geometry_column )
   	jsfunc <- "add_arc_polyline"
   }
 
 	js_transition <- resolve_transitions( transitions, "arc" )
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
