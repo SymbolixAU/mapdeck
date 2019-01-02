@@ -57,8 +57,10 @@ libraries
 
 ``` r
 ## install dependent libraries first
-devtools::install_github("SymbolixAU/spatialwidget", force = T)
 devtools::install_github("SymbolixAU/colourvalues", force = T)
+devtools::install_github("SymbolixAU/jsonify", force = T)
+devtools::install_github("SymbolixAU/geojsonsf", force = T)
+devtools::install_github("SymbolixAU/spatialwidget", force = T)
 
 ## then mapdeck
 devtools::install_github("SymbolixAU/mapdeck")
