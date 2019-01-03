@@ -1,20 +1,3 @@
-.mapdecktooltip:empty {
-  display: none;
-}
-.mapdecktooltip {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  position: absolute;
-  padding: 4px;
-  margin: 8px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  max-width: 300px;
-  font-size: 10px;
-  z-index: 9;
-  pointer-events: none;
-}
-
 .mapboxgl-map {
     font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     overflow: hidden;
@@ -81,11 +64,14 @@
 
 .mapboxgl-ctrl-group {
     border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.mapboxgl-ctrl-group:not(:empty) {
     -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
     -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    background: #fff;
 }
 
 .mapboxgl-ctrl-group > button {
@@ -231,33 +217,61 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 
 @media screen {
     .mapboxgl-ctrl-attrib.mapboxgl-compact {
-        padding-top: 2px;
-        padding-bottom: 2px;
-        margin: 0 10px 10px;
+        margin: 10px;
         position: relative;
-        padding-right: 24px;
         background-color: #fff;
         border-radius: 3px 12px 12px 3px;
-        visibility: hidden;
     }
 
     .mapboxgl-ctrl-attrib.mapboxgl-compact:hover {
+        padding: 2px 24px 2px 4px;
         visibility: visible;
+    }
+
+    .mapboxgl-ctrl-top-left > .mapboxgl-ctrl-attrib.mapboxgl-compact:hover,
+    .mapboxgl-ctrl-bottom-left > .mapboxgl-ctrl-attrib.mapboxgl-compact:hover {
+        padding: 2px 4px 2px 24px;
+        border-radius: 12px 3px 3px 12px;
+    }
+
+    .mapboxgl-ctrl-attrib.mapboxgl-compact .mapboxgl-ctrl-attrib-inner {
+        display: none;
+    }
+
+    .mapboxgl-ctrl-attrib.mapboxgl-compact:hover .mapboxgl-ctrl-attrib-inner {
+        display: block;
     }
 
     .mapboxgl-ctrl-attrib.mapboxgl-compact::after {
         content: '';
         cursor: pointer;
         position: absolute;
-        bottom: 0;
-        right: 0;
         background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath fill='%23333333' fill-rule='evenodd' d='M4,10a6,6 0 1,0 12,0a6,6 0 1,0 -12,0 M9,7a1,1 0 1,0 2,0a1,1 0 1,0 -2,0 M9,10a1,1 0 1,1 2,0l0,3a1,1 0 1,1 -2,0'/%3E %3C/svg%3E");
         background-color: rgba(255, 255, 255, 0.5);
         width: 24px;
         height: 24px;
         box-sizing: border-box;
-        visibility: visible;
         border-radius: 12px;
+    }
+
+    .mapboxgl-ctrl-bottom-right > .mapboxgl-ctrl-attrib.mapboxgl-compact::after {
+        bottom: 0;
+        right: 0;
+    }
+
+    .mapboxgl-ctrl-top-right > .mapboxgl-ctrl-attrib.mapboxgl-compact::after {
+        top: 0;
+        right: 0;
+    }
+
+    .mapboxgl-ctrl-top-left > .mapboxgl-ctrl-attrib.mapboxgl-compact::after {
+        top: 0;
+        left: 0;
+    }
+
+    .mapboxgl-ctrl-bottom-left > .mapboxgl-ctrl-attrib.mapboxgl-compact::after {
+        bottom: 0;
+        left: 0;
     }
 }
 
