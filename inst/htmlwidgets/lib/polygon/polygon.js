@@ -1,5 +1,5 @@
 
-function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
 
   const polygonLayer = new PolygonLayer({
   	map_id: map_id,
@@ -9,7 +9,7 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     stroked: true,
     filled: true,
     wireframe: false,
-    extruded: true,
+    extruded: is_extruded,
     lineWidthMinPixels: 1,
     getPolygon: d => md_get_polygon_coordinates( d ),
     getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
@@ -33,7 +33,7 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
 }
 
 
-function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
 
 
   const polygonLayer = new PolygonLayer({
@@ -44,7 +44,7 @@ function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, a
     stroked: true,
     filled: true,
     wireframe: false,
-    extruded: true,
+    extruded: is_extruded,
     lineWidthMinPixels: 1,
     getPolygon: d => decode_polygons( d.polyline ),
     getLineColor: d => md_hexToRGBA( d.stroke_colour ),

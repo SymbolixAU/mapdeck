@@ -23,11 +23,13 @@ mapdeckPolygonDependency <- function() {
 #' @param fill_opacity value between 1 and 255. Either a string specifying the
 #' column of \code{data} containing the fill opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes
-#' @param stroke_colour variable of \code{data} or hex colour for the stroke.
+#' @param stroke_colour variable of \code{data} or hex colour for the stroke. If used,
+#' \code{elevation} is ignored.
 #' transition enabled
-#' @param stroke_width width of the stroke. transition enabled
+#' @param stroke_width width of the stroke. If used, \code{elevation} is ignored. transition enabled
 #' @param light_settings list of light setting parameters. See \link{light_settings}
-#' @param elevation the height the polygon extrudes from the map. transition enabled
+#' @param elevation the height the polygon extrudes from the map. Only available if neither
+#' \code{stroke_colour} or \code{stroke_width} are supplied. transition enabled
 #'
 #' @section data:
 #'
@@ -152,6 +154,17 @@ add_polygon <- function(
 	update_view <- force( update_view )
 	focus_layer <- force( focus_layer )
 
+	is_extruded <- TRUE
+	if( !is.null( l[["stroke_width"]] ) | !is.null( l[["stroke_colour"]] ) ) {
+		is_extruded <- FALSE
+		if( !is.null( elevation ) ) {
+			message("stroke provided, ignoring elevation")
+		}
+		if( is.null( l[["stroke_width"]] ) ) {
+			l[["stroke_width"]] <- 1L
+		}
+	}
+
 	# data <- normaliseSfData(data, "POLYGON", multi = FALSE)
 	# polyline <- findEncodedColumn(data, polyline)
 	#
@@ -199,7 +212,7 @@ add_polygon <- function(
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions
+		js_transitions, is_extruded
 		)
 }
 

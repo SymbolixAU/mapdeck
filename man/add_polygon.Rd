@@ -21,10 +21,11 @@ Web Mercator Projection}
 
 \item{polyline}{column of \code{data} containing the polylines}
 
-\item{stroke_colour}{variable of \code{data} or hex colour for the stroke.
+\item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
+\code{elevation} is ignored.
 transition enabled}
 
-\item{stroke_width}{width of the stroke. transition enabled}
+\item{stroke_width}{width of the stroke. If used, \code{elevation} is ignored. transition enabled}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.
 transition enabled}
@@ -33,7 +34,8 @@ transition enabled}
 column of \code{data} containing the fill opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
-\item{elevation}{the height the polygon extrudes from the map. transition enabled}
+\item{elevation}{the height the polygon extrudes from the map. Only available if neither
+\code{stroke_colour} or \code{stroke_width} are supplied. transition enabled}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
