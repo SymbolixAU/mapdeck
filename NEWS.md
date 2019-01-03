@@ -1,5 +1,6 @@
 # mapdeck 0.2
 
+* `stroke_colour` fix for polygons
 * `transitions` argument for most layers
 * `mapdeck()` argument order changed so `data` is first ( to work better with pipes ) 
 * `update_view` and `focus_layer` added to focus layers on data
