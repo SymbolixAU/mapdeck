@@ -87,6 +87,10 @@ function md_update_tooltip({x, y, object, layer, index}) {
   const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
   var tt;
 
+  //console.log( tooltip );
+  //console.log( object );
+  //console.log( x, ", ", y );
+
   if (object) {
   	//if(object.tooltip === undefined && object.properties.tooltip === undefined ) {
   	//	return;
@@ -99,10 +103,12 @@ function md_update_tooltip({x, y, object, layer, index}) {
 	  	return;
 	  }
 
+    tooltip.style.display = 'block';
     tooltip.style.top = `${y}px`;
     tooltip.style.left = `${x}px`;
     tooltip.innerHTML = `<div>${tt}</div>`;
   } else {
+  	tooltip.style.display = 'none';
     tooltip.innerHTML = '';
   }
 }
