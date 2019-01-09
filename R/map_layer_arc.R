@@ -242,6 +242,8 @@ add_arc <- function(
   	jsfunc <- "add_arc_polyline"
   }
 
+	print( shape )
+
 	js_transition <- resolve_transitions( transitions, "arc" )
 	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
