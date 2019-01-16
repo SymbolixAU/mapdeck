@@ -16,9 +16,9 @@ mapdeckLineDependency <- function() {
 #' The Line Layer renders raised lines joining pairs of source and target coordinates
 #'
 #' @inheritParams add_arc
-#' @param stroke_opacity value between 1 and 255. Either a string specifying the
+#' @param stroke_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
-#' between 1 and 255 to be applied to all the shapes
+#' between 0 and 255 to be applied to all the shapes
 #' @param stroke_colour variable or hex colour to use as the ending stroke colour.
 #' transition enabled
 #'
