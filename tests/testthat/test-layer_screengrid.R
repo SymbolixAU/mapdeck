@@ -4,6 +4,7 @@ context("screengrid")
 test_that("add_screengrid accepts multiple objects", {
 
 	testthat::skip_on_cran()
+	testthat::skip_on_travis()
 
 	geo <- '[{"type":"Feature","properties":{"weight":1.0},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
 	poly <- '[{"weight":1.0,"polyline":"_ifpEo`ydL"}]'

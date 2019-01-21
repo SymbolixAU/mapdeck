@@ -4,6 +4,7 @@ context("hexagon")
 test_that("add_hexagon accepts multiple objects", {
 
 	testthat::skip_on_cran()
+	testthat::skip_on_travis()
 
 	geo <- '[{"type":"Feature","properties":{},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
 	poly <- '[{"polyline":"_ifpEo`ydL"}]'

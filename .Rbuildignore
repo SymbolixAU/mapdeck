@@ -12,5 +12,4 @@
 ^vignettes/issues.Rmd
 ^vignettes/legends.Rmd
 ^vignettes/tips_tricks.Rmd
-^vignettes/img/*
 ^vignettes/img/articles/*

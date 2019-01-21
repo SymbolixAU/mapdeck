@@ -3,6 +3,7 @@ context("scatterplot")
 test_that("add_scatterplot accepts multiple objects", {
 
 	testthat::skip_on_cran()
+	testthat::skip_on_travis()
 
 	geo <- '[{"type":"Feature","properties":{"fill_colour":"#440154FF"},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
 	poly <- '[{"fill_colour":"#440154FF","polyline":"_ifpEo`ydL"}]'
