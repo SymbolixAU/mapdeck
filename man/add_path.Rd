@@ -26,9 +26,9 @@ transition enabled}
 
 \item{stroke_width}{width of the stroke. If used, \code{elevation} is ignored. transition enabled}
 
-\item{stroke_opacity}{Either a string specifying the
-column of \code{data} containing the stroke opacity of each shape, or a value
-between 0 and 255 to be applied to all the shapes}
+\item{stroke_opacity}{value between 0 and 255. Either a string specifying the
+column of \code{data} containing the stroke opacity of each shape, or a single value
+to be applied to all the shapes}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 

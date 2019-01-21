@@ -5,13 +5,14 @@
 \title{Add Polygon}
 \usage{
 add_polygon(map, data = get_map_data(map), polyline = NULL,
-  stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL,
-  fill_opacity = NULL, elevation = NULL, tooltip = NULL,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  light_settings = list(), layer_id = NULL, id = NULL,
-  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, transitions = NULL)
+  stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
+  fill_colour = NULL, fill_opacity = NULL, elevation = NULL,
+  tooltip = NULL, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF", light_settings = list(),
+  layer_id = NULL, id = NULL, palette = "viridis",
+  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
+  legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -26,6 +27,10 @@ Web Mercator Projection}
 transition enabled}
 
 \item{stroke_width}{width of the stroke. If used, \code{elevation} is ignored. transition enabled}
+
+\item{stroke_opacity}{value between 0 and 255. Either a string specifying the
+column of \code{data} containing the stroke opacity of each shape, or a single value
+to be applied to all the shapes}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.
 transition enabled}
@@ -177,9 +182,9 @@ mapdeck(
     data = df
     , polyline = "geometry"
     , layer = "polygon_layer"
-    , fill_colour = "SA2_NAME",
+    , fill_colour = "SA2_NAME"
     , elevation = "elevation"
-    , stroke_width = 0
+    , stroke_width = 200
     , tooltip = 'info'
     , legend = T
   )

@@ -17,10 +17,6 @@ mapdeckPathDependency <- function() {
 #'
 #' @inheritParams add_polygon
 #'
-#' @param stroke_opacity Either a string specifying the
-#' column of \code{data} containing the stroke opacity of each shape, or a value
-#' between 0 and 255 to be applied to all the shapes
-#'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id

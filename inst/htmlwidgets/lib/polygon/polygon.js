@@ -10,7 +10,7 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     filled: true,
     wireframe: false,
     extruded: is_extruded,
-    lineWidthMinPixels: 1,
+    lineWidthMinPixels: 0,
     getPolygon: d => md_get_polygon_coordinates( d ),
     getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
     getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
@@ -45,7 +45,7 @@ function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, a
     filled: true,
     wireframe: false,
     extruded: is_extruded,
-    lineWidthMinPixels: 1,
+    lineWidthMinPixels: 0,
     getPolygon: d => decode_polygons( d.polyline ),
     getLineColor: d => md_hexToRGBA( d.stroke_colour ),
     getFillColor: d => md_hexToRGBA( d.fill_colour ),
@@ -71,11 +71,6 @@ function decode_polygons( polylines ) {
   var i, j, p;
   var coordinates = [];
   var lines = [];
-
-  console.log("polylines");
-  console.log( polylines );
-
-  console.log( polylines.length );
 
   for (i = 0; i < polylines.length; i++ ) {
     //p = polylines[i];

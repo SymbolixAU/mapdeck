@@ -26,6 +26,9 @@ mapdeckPolygonDependency <- function() {
 #' @param stroke_colour variable of \code{data} or hex colour for the stroke. If used,
 #' \code{elevation} is ignored.
 #' transition enabled
+#' @param stroke_opacity value between 0 and 255. Either a string specifying the
+#' column of \code{data} containing the stroke opacity of each shape, or a single value
+#' to be applied to all the shapes
 #' @param stroke_width width of the stroke. If used, \code{elevation} is ignored. transition enabled
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param elevation the height the polygon extrudes from the map. Only available if neither
@@ -95,9 +98,9 @@ mapdeckPolygonDependency <- function() {
 #'     data = df
 #'     , polyline = "geometry"
 #'     , layer = "polygon_layer"
-#'     , fill_colour = "SA2_NAME",
+#'     , fill_colour = "SA2_NAME"
 #'     , elevation = "elevation"
-#'     , stroke_width = 0
+#'     , stroke_width = 200
 #'     , tooltip = 'info'
 #'     , legend = T
 #'   )
@@ -115,6 +118,7 @@ add_polygon <- function(
 	polyline = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
+	stroke_opacity = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	elevation = NULL,
@@ -136,14 +140,15 @@ add_polygon <- function(
 
 	l <- list()
 	l[["polyline"]] <- force( polyline )
-	l[["stroke_colour"]] <- force( stroke_colour)
+	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_width"]] <- force( stroke_width )
-	l[["fill_colour"]] <- force( fill_colour)
+	l[["stroke_opacity"]] <- force( stroke_opacity )
+	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- force( fill_opacity )
 	l[["elevation"]] <- force( elevation )
-	l[["tooltip"]] <- force(tooltip)
-	l[["id"]] <- force(id)
-	l[["na_colour"]] <- force(na_colour)
+	l[["tooltip"]] <- force( tooltip )
+	l[["id"]] <- force( id )
+	l[["na_colour"]] <- force( na_colour )
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -199,6 +204,8 @@ add_polygon <- function(
 	js_transitions <- resolve_transitions( transitions, "polygon" )
 
 	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+
+	#print( shape )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings,

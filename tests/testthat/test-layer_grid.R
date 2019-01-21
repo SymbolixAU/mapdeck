@@ -3,6 +3,8 @@ context("grid")
 
 test_that("add_grid accepts multiple objects", {
 
+	testthat::skip_on_cran()
+
 	geo <- '[{"type":"Feature","properties":{},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
 	poly <- '[{"polyline":"_ifpEo`ydL"}]'
 
