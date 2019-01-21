@@ -8,7 +8,9 @@
 ^javascript$
 ^docs/
 ^vignettes/benchmarks.Rmd
-^vignettes/tips_tricks.Rmd
 ^vignettes/colours.Rmd
 ^vignettes/issues.Rmd
+^vignettes/legends.Rmd
+^vignettes/tips_tricks.Rmd
+^vignettes/img/*
 ^vignettes/img/articles/*
