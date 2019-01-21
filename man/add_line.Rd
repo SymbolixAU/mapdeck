@@ -54,6 +54,8 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{legend_options}{A list of options for controlling the legend.}
 
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
+
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}

@@ -20,7 +20,7 @@ Web Mercator Projection}
 
 \item{lat}{column containing latitude values}
 
-\item{polyline}{column of \code{data} containing the polylines}
+\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{colour_range}{vector of 6 hex colours}
 

@@ -44,6 +44,8 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{legend_options}{A list of options for controlling the legend.}
 
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
+
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip.
@@ -145,6 +147,30 @@ If the \code{data} is a simple feature object, the geometry column is automatica
 detected. If the sf object contains more than one geometry column and you want to use a specific one,
 you'll need to set the active geometry using \code{sf::st_geometry( x ) <- "your_column" },
 where \code{"your_column"} is the name of the column you're activating. See \code{?sf::st_geometry}
+}
+
+\section{legend}{
+
+
+The \code{legend_options} can be used to control the appearance of the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{css - a string of valid \code{css} for controlling the appearance of the legend}
+  \item{title - a string to use for the title of the legend}
+}
+
+If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+
+The \code{legend_format} can be used to control the format of the values in the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{fill_colour}
+  \item{stroke_colour}
+}
+
+depending on which type of colouring the layer supports.
+
+The list elements must be functions to apply to the values in the legend.
 }
 
 \examples{

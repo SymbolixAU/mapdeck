@@ -54,6 +54,8 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{legend_options}{A list of options for controlling the legend.}
 
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
+
 \item{palette}{string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
 A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
 where the 4th column represents the alpha.}

@@ -25,14 +25,14 @@ Web Mercator Projection}
 
 \item{lat}{column containing latitude values}
 
-\item{polyline}{column of \code{data} containing the polylines}
+\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.
 transition enabled}
 
-\item{fill_opacity}{value between 1 and 255. Either a string specifying the
-column of \code{data} containing the fill opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{fill_opacity}{value between 0 and 255. Either a string specifying the
+column of \code{data} containing the fill opacity of each shape, or a single value
+to be applied to all the shapes}
 
 \item{size}{column of \code{data} containing the size of the text}
 

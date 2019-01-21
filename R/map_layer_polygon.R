@@ -17,12 +17,12 @@ mapdeckPolygonDependency <- function() {
 #'
 #' @inheritParams add_arc
 #'
-#' @param polyline column of \code{data} containing the polylines
+#' @param polyline optional column of \code{data} containing the polylines, if using encoded polylines
 #' @param fill_colour column of \code{data} or hex colour for the fill colour.
 #' transition enabled
-#' @param fill_opacity value between 1 and 255. Either a string specifying the
-#' column of \code{data} containing the fill opacity of each shape, or a value
-#' between 1 and 255 to be applied to all the shapes
+#' @param fill_opacity value between 0 and 255. Either a string specifying the
+#' column of \code{data} containing the fill opacity of each shape, or a single value
+#' to be applied to all the shapes
 #' @param stroke_colour variable of \code{data} or hex colour for the stroke. If used,
 #' \code{elevation} is ignored.
 #' transition enabled
@@ -66,7 +66,22 @@ mapdeckPolygonDependency <- function() {
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
 #'
-#' df <- melbourne
+#' library(sf)
+#' library(geojsonsf)
+#'
+#' sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+#'
+#' mapdeck(
+#'   token = key
+#'   , style = mapdeck_style('dark')
+#' ) %>%
+#'   add_polygon(
+#'     data = sf
+#'     , layer = "polygon_layer"
+#'     , fill_colour = "SA2_NAME16"
+#' )
+#'
+#' df <- melbourne  ## data.frame with encoded polylnies
 #' df$elevation <- sample(100:5000, size = nrow(df))
 #' df$info <- paste0("<b>SA2 - </b><br>",df$SA2_NAME)
 #'
@@ -85,21 +100,6 @@ mapdeckPolygonDependency <- function() {
 #'     , stroke_width = 0
 #'     , tooltip = 'info'
 #'     , legend = T
-#'   )
-#'
-#' library(sf)
-#' library(geojsonsf)
-#'
-#' sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
-#'
-#' mapdeck(
-#'   token = key
-#'   , style = mapdeck_style('dark')
-#' ) %>%
-#'   add_polygon(
-#'     data = sf
-#'     , layer = "polygon_layer"
-#'     , fill_colour = "SA2_NAME16"
 #'   )
 #'
 #' }
@@ -164,15 +164,6 @@ add_polygon <- function(
 			l[["stroke_width"]] <- 1L
 		}
 	}
-
-	# data <- normaliseSfData(data, "POLYGON", multi = FALSE)
-	# polyline <- findEncodedColumn(data, polyline)
-	#
-	# ## - if sf object, and geometry column has not been supplied, it needs to be
-	# ## added to objArgs after the match.call() function
-	# if( !is.null(polyline) && !polyline %in% names(l) ) {
-	# 	l[['polyline']] <- polyline
-	# }
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]

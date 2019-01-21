@@ -25,16 +25,16 @@ Web Mercator Projection}
 
 \item{elevation}{column containing the elevation values}
 
-\item{polyline}{column of \code{data} containing the polylines}
+\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{radius}{value in pixels of each point}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.
 transition enabled}
 
-\item{fill_opacity}{value between 1 and 255. Either a string specifying the
-column of \code{data} containing the fill opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{fill_opacity}{value between 0 and 255. Either a string specifying the
+column of \code{data} containing the fill opacity of each shape, or a single value
+to be applied to all the shapes}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -60,6 +60,8 @@ where the 4th column represents the alpha.}
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
+
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
 
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 

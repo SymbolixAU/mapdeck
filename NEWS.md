@@ -1,6 +1,6 @@
 # mapdeck 0.2
 
-* list palette for both stroke & fill options
+* different palettes for both stroke & fill options
 * `stroke_colour` fix for polygons
 * `transitions` argument for most layers
 * `mapdeck()` argument order changed so `data` is first ( to work better with pipes ) 

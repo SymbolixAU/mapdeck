@@ -30,6 +30,7 @@ mapdeckGeojsonDependency <- function() {
 #' Only works on \code{sf} objects.
 #'
 #' @inheritSection add_polygon data
+#' @inheritSection add_arc legend
 #'
 #' @section transitions:
 #'

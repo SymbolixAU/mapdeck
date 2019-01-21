@@ -19,7 +19,7 @@ add_polygon(map, data = get_map_data(map), polyline = NULL,
 \item{data}{data to be used in the layer. All coordinates are expected to be in
 Web Mercator Projection}
 
-\item{polyline}{column of \code{data} containing the polylines}
+\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
 \code{elevation} is ignored.
@@ -30,9 +30,9 @@ transition enabled}
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.
 transition enabled}
 
-\item{fill_opacity}{value between 1 and 255. Either a string specifying the
-column of \code{data} containing the fill opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{fill_opacity}{value between 0 and 255. Either a string specifying the
+column of \code{data} containing the fill opacity of each shape, or a single value
+to be applied to all the shapes}
 
 \item{elevation}{the height the polygon extrudes from the map. Only available if neither
 \code{stroke_colour} or \code{stroke_width} are supplied. transition enabled}
@@ -61,6 +61,8 @@ where the 4th column represents the alpha.}
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
+
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
 
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
@@ -146,7 +148,22 @@ you are clicking on
 ## You need a valid access token from Mapbox
 key <- 'abc'
 
-df <- melbourne
+library(sf)
+library(geojsonsf)
+
+sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+
+mapdeck(
+  token = key
+  , style = mapdeck_style('dark')
+) \%>\%
+  add_polygon(
+    data = sf
+    , layer = "polygon_layer"
+    , fill_colour = "SA2_NAME16"
+)
+
+df <- melbourne  ## data.frame with encoded polylnies
 df$elevation <- sample(100:5000, size = nrow(df))
 df$info <- paste0("<b>SA2 - </b><br>",df$SA2_NAME)
 
@@ -165,21 +182,6 @@ mapdeck(
     , stroke_width = 0
     , tooltip = 'info'
     , legend = T
-  )
-
-library(sf)
-library(geojsonsf)
-
-sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
-
-mapdeck(
-  token = key
-  , style = mapdeck_style('dark')
-) \%>\%
-  add_polygon(
-    data = sf
-    , layer = "polygon_layer"
-    , fill_colour = "SA2_NAME16"
   )
 
 }

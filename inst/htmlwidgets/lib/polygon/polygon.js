@@ -68,12 +68,26 @@ function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, a
 }
 
 function decode_polygons( polylines ) {
-  var i, p, coordinates = [];
+  var i, j, p;
+  var coordinates = [];
+  var lines = [];
+
+  console.log("polylines");
+  console.log( polylines );
+
+  console.log( polylines.length );
 
   for (i = 0; i < polylines.length; i++ ) {
-    p = polylines[i];
-    if ( p != "-") {
-      coordinates.push( md_decode_polyline( p ) );
+    //p = polylines[i];
+    lines = polylines[i];
+    //console.log( "p");
+    //console.log( p );
+
+    for (j = 0; j < lines.length; j++ ) {
+    	p = lines[j];
+	    if ( p != "-") {
+	      coordinates.push( md_decode_polyline( p ) );
+	    }
     }
   }
   return coordinates;

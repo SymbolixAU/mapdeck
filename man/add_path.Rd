@@ -18,7 +18,7 @@ add_path(map, data = get_map_data(map), polyline = NULL,
 \item{data}{data to be used in the layer. All coordinates are expected to be in
 Web Mercator Projection}
 
-\item{polyline}{column of \code{data} containing the polylines}
+\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
 \code{elevation} is ignored.
@@ -52,6 +52,8 @@ where the 4th column represents the alpha.}
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
+
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
 
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
