@@ -1,6 +1,7 @@
 ## Comments
 
-* Updates v0.1 to v0.2
+* Updates v0.1 to v0.2.1
+* skipping over v0.2 I uploaded earlier today
 * package size is > 5.0Mb, partly due to source C++ files, all of which are required
 * All CRAN CHECK notes from v0.1 have been fixed
 
