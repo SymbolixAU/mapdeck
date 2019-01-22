@@ -1,13 +1,8 @@
 ## Comments
 
 * Updates v0.1 to v0.2
-
-
-
-## Test environments
-* local OS X install, R 3.5.1
-* ubuntu 14.04 (on travis-ci), R 3.5.0
-* win-builder (devel and release)
+* package size is > 5.0Mb, partly due to source C++ files, all of which are required
+* All CRAN CHECK notes from v0.1 have been fixed
 
 ## R CMD check results
 

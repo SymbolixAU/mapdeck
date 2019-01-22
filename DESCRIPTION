@@ -2,7 +2,7 @@ Package: mapdeck
 Type: Package
 Title: Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'
 Version: 0.2.0
-Date: 2019-01-21
+Date: 2019-01-22
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
@@ -33,6 +33,7 @@ Suggests:
     knitr,
     rmarkdown,
     sf,
+    spatialwidget,
     testthat
 VignetteBuilder: knitr
 LinkingTo: 

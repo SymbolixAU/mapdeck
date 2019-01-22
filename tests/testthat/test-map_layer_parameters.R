@@ -18,8 +18,6 @@ test_that("check numeric works", {
 
 test_that("check palette works", {
 	expect_error(mapdeck:::checkPalette('a'))
-	# expect_silent(mapdeck:::checkPalette(viridisLite::plasma))
-	# expect_error(mapdeck:::checkPalette(list(viridisLite::plasma)))
 })
 
 

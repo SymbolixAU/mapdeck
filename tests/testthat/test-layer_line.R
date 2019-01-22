@@ -2,6 +2,9 @@ context("line")
 
 test_that("add_line accepts multiple objects", {
 
+	testthat::skip_on_travis()
+	testthat::skip_on_cran()
+
 	geo <- '[{"type":"Feature","properties":{"stroke_colour":"#440154FF","stroke_width":1.0},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15]},"destination":{"type":"Point","coordinates":[-0.05,51.36]}}}]'
 	# poly <- '[{"radius":1000,"fill_colour":"#440154FF","polyline":"_ifpEo`ydL"}]'
 
