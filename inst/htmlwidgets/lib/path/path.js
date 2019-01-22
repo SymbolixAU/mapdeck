@@ -9,7 +9,7 @@ legend, bbox, update_view, focus_layer, js_transition ) {
     data: path_data,
     pickable: true,
     widthScale: 1,
-    widthMinPixels: 0,
+    widthMinPixels: 1,
     rounded: true,
     getPath: d => md_get_line_coordinates( d ),
     getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
@@ -38,7 +38,7 @@ legend, bbox, update_view, focus_layer, js_transition ) {
     data: path_data,
     pickable: true,
     widthScale: 1,
-    widthMinPixels: 0,
+    widthMinPixels: 1,
     rounded: true,
     getPath: d => md_decode_polyline( d.polyline ),  // needs to be one row per polyline
     getColor: d => md_hexToRGBA( d.stroke_colour ),
