@@ -41,7 +41,7 @@ between 1 and 255 to be applied to all the shapes}
 column of \code{data} containing the stroke opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
-\item{stroke_width}{width of the stroke}
+\item{stroke_width}{width of the stroke in pixels}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 

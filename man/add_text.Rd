@@ -27,8 +27,7 @@ Web Mercator Projection}
 
 \item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
-\item{fill_colour}{column of \code{data} or hex colour for the fill colour.
-transition enabled}
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
 
 \item{fill_opacity}{value between 0 and 255. Either a string specifying the
 column of \code{data} containing the fill opacity of each shape, or a single value

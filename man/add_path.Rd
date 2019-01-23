@@ -21,10 +21,9 @@ Web Mercator Projection}
 \item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
-\code{elevation} is ignored.
-transition enabled}
+\code{elevation} is ignored.}
 
-\item{stroke_width}{width of the stroke. If used, \code{elevation} is ignored. transition enabled}
+\item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored.}
 
 \item{stroke_opacity}{value between 0 and 255. Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a single value

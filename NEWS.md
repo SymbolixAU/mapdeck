@@ -1,3 +1,7 @@
+# mapdeck 0.3
+
+* `stroke_width` units defined in help files
+
 # mapdeck 0.2
 
 * different palettes for both stroke & fill options

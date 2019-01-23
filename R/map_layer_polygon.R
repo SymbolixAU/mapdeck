@@ -19,20 +19,18 @@ mapdeckPolygonDependency <- function() {
 #'
 #' @param polyline optional column of \code{data} containing the polylines, if using encoded polylines
 #' @param fill_colour column of \code{data} or hex colour for the fill colour.
-#' transition enabled
 #' @param fill_opacity value between 0 and 255. Either a string specifying the
 #' column of \code{data} containing the fill opacity of each shape, or a single value
 #' to be applied to all the shapes
 #' @param stroke_colour variable of \code{data} or hex colour for the stroke. If used,
 #' \code{elevation} is ignored.
-#' transition enabled
 #' @param stroke_opacity value between 0 and 255. Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a single value
 #' to be applied to all the shapes
-#' @param stroke_width width of the stroke. If used, \code{elevation} is ignored. transition enabled
+#' @param stroke_width width of the stroke in meters. If used, \code{elevation} is ignored.
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param elevation the height the polygon extrudes from the map. Only available if neither
-#' \code{stroke_colour} or \code{stroke_width} are supplied. transition enabled
+#' \code{stroke_colour} or \code{stroke_width} are supplied.
 #'
 #' @section data:
 #'

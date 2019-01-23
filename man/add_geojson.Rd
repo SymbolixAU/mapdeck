@@ -27,7 +27,7 @@ to conflict and not plot correctly}
 
 \item{stroke_opacity}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for opacity}
 
-\item{stroke_width}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for width}
+\item{stroke_width}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for width (in meters)}
 
 \item{fill_colour}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for colour}
 

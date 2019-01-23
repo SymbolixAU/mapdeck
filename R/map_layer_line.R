@@ -20,7 +20,6 @@ mapdeckLineDependency <- function() {
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 0 and 255 to be applied to all the shapes
 #' @param stroke_colour variable or hex colour to use as the ending stroke colour.
-#' transition enabled
 #'
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id

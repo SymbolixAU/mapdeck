@@ -20,7 +20,7 @@ mapdeckGeojsonDependency <- function() {
 #' @param data data to be used in the layer. Can be a url to GeoJSON
 #' @param stroke_colour column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for colour
 #' @param stroke_opacity column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for opacity
-#' @param stroke_width column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for width
+#' @param stroke_width column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for width (in meters)
 #' @param fill_colour column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for colour
 #' @param fill_opacity column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for opacity
 #' @param radius radius of points in meters. See details

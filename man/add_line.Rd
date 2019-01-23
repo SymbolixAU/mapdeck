@@ -28,10 +28,9 @@ to conflict and not plot correctly}
 
 \item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
-\item{stroke_colour}{variable or hex colour to use as the ending stroke colour.
-transition enabled}
+\item{stroke_colour}{variable or hex colour to use as the ending stroke colour.}
 
-\item{stroke_width}{width of the stroke}
+\item{stroke_width}{width of the stroke in pixels}
 
 \item{stroke_opacity}{Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
