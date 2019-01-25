@@ -57,3 +57,87 @@ renderViewDeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 }
 
 
+#' viewdeck dispatch
+#'
+#' Extension points for plugins
+#'
+#' @param map a map object, as returned from \code{\link{viewdeck}}
+#' @param funcName the name of the function that the user called that caused
+#'   this \code{mapdeck_dispatch} call; for error message purposes
+#' @param viewdeck an action to be performed if the map is from
+#'   \code{\link{viewdeck}}
+#' @param mapdeck_update an action to be performed if the map is from
+#'   \code{\link{mapdeck_update}}
+#'
+#' @return \code{mapdeck_dispatch} returns the value of \code{viewdeck} or
+#' or an error. \code{invokeMethod} returns the
+#' \code{map} object that was passed in, possibly modified.
+#'
+#' @export
+viewdeck_dispatch = function(
+	map,
+	funcName,
+	viewdeck = stop(paste(funcName, "requires a map update object")),
+	viewdeck_update = stop(paste(funcName, "does not support map update objects"))
+) {
+	if (inherits(map, "viewdeck"))
+		return(viewdeck)
+	else if (inherits(map, "mapdeck_update"))
+		return(viewdeck_update)
+	else
+		stop("Invalid viewdeck parameter")
+}
+
+
+#' @param method the name of the JavaScript method to invoke
+#' @param ... unnamed arguments to be passed to the JavaScript method
+#' @rdname mapdeck_dispatch
+#' @export
+invoke_viewdeck_method = function(view, method, ...) {
+	args = evalFormula(list(...))
+	mapdeck_dispatch(
+		view,
+		method,
+		viewdeck = {
+			x = view$x$calls
+			if (is.null(x)) x = list()
+			n = length(x)
+			x[[n + 1]] = list(functions = method, args = args)
+			view$x$calls = x
+			view
+		},
+		viewdeck_update = {
+			invoke_remote(view, method, args)
+		}
+	)
+}
+
+
+invoke_viewdeck_remote = function(view, method, args = list()) {
+	if (!inherits(view, "mapdeck_update"))
+		stop("Invalid view parameter; mapdeck_update object was expected")
+
+	msg <- list(
+		id = view$id,
+		calls = list(
+			list(
+				dependencies = lapply(view$dependencies, shiny::createWebDependency),
+				method = method,
+				args = args
+			)
+		)
+	)
+
+	sess <- view$session
+	if (view$deferUntilFlush) {
+
+		sess$onFlushed(function() {
+			sess$sendCustomMessage("viewdeckview-calls", msg)
+		}, once = TRUE)
+
+	} else {
+		sess$sendCustomMessage("viewdeckview-calls", msg)
+	}
+	view
+}
+
