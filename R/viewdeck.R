@@ -61,13 +61,13 @@ renderViewDeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #'
 #' Extension points for plugins
 #'
-#' @param map a map object, as returned from \code{\link{viewdeck}}
+#' @param view a viewdeck object, as returned from \code{\link{viewdeck}}
 #' @param funcName the name of the function that the user called that caused
-#'   this \code{mapdeck_dispatch} call; for error message purposes
+#'   this \code{viewdeck_dispatch} call; for error message purposes
 #' @param viewdeck an action to be performed if the map is from
 #'   \code{\link{viewdeck}}
 #' @param mapdeck_update an action to be performed if the map is from
-#'   \code{\link{mapdeck_update}}
+#'   \code{\link{viewdeck_update}}
 #'
 #' @return \code{mapdeck_dispatch} returns the value of \code{viewdeck} or
 #' or an error. \code{invokeMethod} returns the
@@ -75,14 +75,14 @@ renderViewDeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #'
 #' @export
 viewdeck_dispatch = function(
-	map,
+	view,
 	funcName,
-	viewdeck = stop(paste(funcName, "requires a map update object")),
-	viewdeck_update = stop(paste(funcName, "does not support map update objects"))
+	viewdeck = stop(paste(funcName, "requires a view update object")),
+	viewdeck_update = stop(paste(funcName, "does not support view update objects"))
 ) {
-	if (inherits(map, "viewdeck"))
+	if (inherits(view, "viewdeck"))
 		return(viewdeck)
-	else if (inherits(map, "mapdeck_update"))
+	else if (inherits(view, "mapdeck_update"))
 		return(viewdeck_update)
 	else
 		stop("Invalid viewdeck parameter")
@@ -91,11 +91,11 @@ viewdeck_dispatch = function(
 
 #' @param method the name of the JavaScript method to invoke
 #' @param ... unnamed arguments to be passed to the JavaScript method
-#' @rdname mapdeck_dispatch
+#' @rdname viewdeck_dispatch
 #' @export
 invoke_viewdeck_method = function(view, method, ...) {
 	args = evalFormula(list(...))
-	mapdeck_dispatch(
+	viewdeck_dispatch(
 		view,
 		method,
 		viewdeck = {

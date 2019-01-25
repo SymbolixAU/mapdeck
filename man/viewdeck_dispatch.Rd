@@ -2,24 +2,31 @@
 % Please edit documentation in R/viewdeck.R
 \name{viewdeck_dispatch}
 \alias{viewdeck_dispatch}
+\alias{invoke_viewdeck_method}
 \title{viewdeck dispatch}
 \usage{
-viewdeck_dispatch(map, funcName, viewdeck = stop(paste(funcName,
-  "requires a map update object")),
+viewdeck_dispatch(view, funcName, viewdeck = stop(paste(funcName,
+  "requires a view update object")),
   viewdeck_update = stop(paste(funcName,
-  "does not support map update objects")))
+  "does not support view update objects")))
+
+invoke_viewdeck_method(view, method, ...)
 }
 \arguments{
-\item{map}{a map object, as returned from \code{\link{viewdeck}}}
+\item{view}{a viewdeck object, as returned from \code{\link{viewdeck}}}
 
 \item{funcName}{the name of the function that the user called that caused
-this \code{mapdeck_dispatch} call; for error message purposes}
+this \code{viewdeck_dispatch} call; for error message purposes}
 
 \item{viewdeck}{an action to be performed if the map is from
 \code{\link{viewdeck}}}
 
+\item{method}{the name of the JavaScript method to invoke}
+
+\item{...}{unnamed arguments to be passed to the JavaScript method}
+
 \item{mapdeck_update}{an action to be performed if the map is from
-\code{\link{mapdeck_update}}}
+\code{\link{viewdeck_update}}}
 }
 \value{
 \code{mapdeck_dispatch} returns the value of \code{viewdeck} or
