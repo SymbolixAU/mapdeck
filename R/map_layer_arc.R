@@ -46,6 +46,8 @@ mapdeckArcDependency <- function() {
 #' @param update_view logical indicating if the map should update the bounds to include this layer
 #' @param focus_layer logical indicating if the map should update the bounds to only include this layer
 #' @param transitions list specifying the duration of transitions.
+#' @param digits The number of digits to round GeoJSON lon & lat coordinates. Useful for
+#' reducing file sizes. Defaults to 6
 #'
 #' @section data:
 #'
@@ -188,7 +190,8 @@ add_arc <- function(
 	na_colour = "#808080FF",
 	update_view = TRUE,
 	focus_layer = FALSE,
-	transitions = NULL
+	transitions = NULL,
+	digits = 6
 ) {
 
 	l <- list()
@@ -233,10 +236,10 @@ add_arc <- function(
 
   if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
-		shape <- rcpp_arc_geojson( data, l, geometry_column )
+		shape <- rcpp_arc_geojson( data, l, geometry_column, digits )
   } else if ( tp == "df" ) {
   	geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
-  	shape <- rcpp_arc_geojson_df( data, l, geometry_column )
+  	shape <- rcpp_arc_geojson_df( data, l, geometry_column, digits )
   } else if ( tp == "sfencoded" ) {
   	geometry_column <- c("origin", "destination")
   	shape <- rcpp_arc_polyline( data, l, geometry_column )
