@@ -86,7 +86,8 @@ add_grid <- function(
 	highlight_colour = "#AAFFFFFF",
 	layer_id = NULL,
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	digits = 6
 ) {
 
 	l <- list()
@@ -135,10 +136,10 @@ add_grid <- function(
 
 	if ( tp == "sf" ) {
 	  geometry_column <- c( "geometry" )
-	  shape <- rcpp_grid_geojson( data, l, geometry_column )
+	  shape <- rcpp_grid_geojson( data, l, geometry_column, digits )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_grid_geojson_df( data, l, geometry_column )
+		shape <- rcpp_grid_geojson_df( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
 		shape <- rcpp_grid_polyline( data, l, geometry_column )

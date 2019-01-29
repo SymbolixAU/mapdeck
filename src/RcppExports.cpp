@@ -60,28 +60,30 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_grid_geojson
-Rcpp::List rcpp_grid_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_column);
-RcppExport SEXP _mapdeck_rcpp_grid_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnSEXP) {
+Rcpp::List rcpp_grid_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_column, int digits);
+RcppExport SEXP _mapdeck_rcpp_grid_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnSEXP, SEXP digitsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
     Rcpp::traits::input_parameter< std::string >::type geometry_column(geometry_columnSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_grid_geojson(data, params, geometry_column));
+    Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_grid_geojson(data, params, geometry_column, digits));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_grid_geojson_df
-Rcpp::List rcpp_grid_geojson_df(Rcpp::DataFrame data, Rcpp::List params, Rcpp::List geometry_columns);
-RcppExport SEXP _mapdeck_rcpp_grid_geojson_df(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP) {
+Rcpp::List rcpp_grid_geojson_df(Rcpp::DataFrame data, Rcpp::List params, Rcpp::List geometry_columns, int digits);
+RcppExport SEXP _mapdeck_rcpp_grid_geojson_df(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_grid_geojson_df(data, params, geometry_columns));
+    Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_grid_geojson_df(data, params, geometry_columns, digits));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -377,8 +379,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_arc_geojson_df", (DL_FUNC) &_mapdeck_rcpp_arc_geojson_df, 4},
     {"_mapdeck_rcpp_arc_polyline", (DL_FUNC) &_mapdeck_rcpp_arc_polyline, 3},
     {"_mapdeck_rcpp_geojson_geojson", (DL_FUNC) &_mapdeck_rcpp_geojson_geojson, 3},
-    {"_mapdeck_rcpp_grid_geojson", (DL_FUNC) &_mapdeck_rcpp_grid_geojson, 3},
-    {"_mapdeck_rcpp_grid_geojson_df", (DL_FUNC) &_mapdeck_rcpp_grid_geojson_df, 3},
+    {"_mapdeck_rcpp_grid_geojson", (DL_FUNC) &_mapdeck_rcpp_grid_geojson, 4},
+    {"_mapdeck_rcpp_grid_geojson_df", (DL_FUNC) &_mapdeck_rcpp_grid_geojson_df, 4},
     {"_mapdeck_rcpp_grid_polyline", (DL_FUNC) &_mapdeck_rcpp_grid_polyline, 3},
     {"_mapdeck_rcpp_hexagon_geojson", (DL_FUNC) &_mapdeck_rcpp_hexagon_geojson, 3},
     {"_mapdeck_rcpp_hexagon_geojson_df", (DL_FUNC) &_mapdeck_rcpp_hexagon_geojson_df, 3},

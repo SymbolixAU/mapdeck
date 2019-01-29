@@ -17,12 +17,12 @@ rcpp_geojson_geojson <- function(data, params, geometry_column) {
     .Call(`_mapdeck_rcpp_geojson_geojson`, data, params, geometry_column)
 }
 
-rcpp_grid_geojson <- function(data, params, geometry_column) {
-    .Call(`_mapdeck_rcpp_grid_geojson`, data, params, geometry_column)
+rcpp_grid_geojson <- function(data, params, geometry_column, digits) {
+    .Call(`_mapdeck_rcpp_grid_geojson`, data, params, geometry_column, digits)
 }
 
-rcpp_grid_geojson_df <- function(data, params, geometry_columns) {
-    .Call(`_mapdeck_rcpp_grid_geojson_df`, data, params, geometry_columns)
+rcpp_grid_geojson_df <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_grid_geojson_df`, data, params, geometry_columns, digits)
 }
 
 rcpp_grid_polyline <- function(data, params, geometry_columns) {
