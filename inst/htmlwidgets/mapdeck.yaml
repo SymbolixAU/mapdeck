@@ -19,3 +19,4 @@ dependencies:
     version: 0.0.1
     script:
       - legend.js
+      - title.js

@@ -15,6 +15,7 @@ HTMLWidgets.widget({
 
       	window[el.id + 'layers'] = []; // keep track of layers for overlaying multiple
         window[el.id + 'legendPositions'] = [];     // array for keeping a referene to legend positions
+        window[el.id + 'mapTitlePositions'] = [];
         window[el.id + 'mapdeckBounds'] = [];       // store the bounding box of each layer
         window[el.id + 'globalBox'] = [];
         window[el.id + 'currentZoomLevel'] = 0;

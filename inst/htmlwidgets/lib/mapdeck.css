@@ -3,7 +3,6 @@
     top: 0;
     left: 0;
     z-index: 99;
-    /*padding-bottom: 14px; */
 }
 
 .mapTitle {
@@ -11,9 +10,9 @@
     font-size: 14px;
     height: auto;
     background: #fff;
-    padding: 8px;
+/*    padding: 8px; */
     margin: 8px;
-    border: 1px solid #b8b8b8;
+/*    border: 1px solid #b8b8b8; */
     border-radius: 4px;
     display:inline-block;
     max-height: 200px;

@@ -1,6 +1,8 @@
-function add_title(map_id, layer_id, title) {
+function add_title(map_id, layer_id, title_data) {
 
     'use strict';
+
+    console.log( title_data );
     var title,
         style = '',
         isUpdating = false;
@@ -21,19 +23,20 @@ function add_title(map_id, layer_id, title) {
 
     title = document.createElement("div");
     title.setAttribute('class', 'mapTitle');
-    title.innerHTML = title.title;
+    title.innerHTML = title_data.title;
 
     window[map_id + 'mapTitle' + layer_id].appendChild( title );
 
-    if (title.css !== null) {
-        window[map_id + 'mapTitle' + layer_id].setAttribute('style', title.css);
+    if (title_data.css !== null) {
+        window[map_id + 'mapTitle' + layer_id].setAttribute('style', title_data.css);
     }
 
     if (isUpdating === false) {
-        placeControl(map_id, window[map_id + 'mapTitle' + layer_id], title.position);
+        placeTitle(map_id, window[map_id + 'mapTitle' + layer_id], title_data.position);
     }
 }
 
+/*
 function md_find_by_id( source, id, returnType ) {
     var i = 0;
     for (i = 0; i < source.length; i++) {
@@ -47,6 +50,7 @@ function md_find_by_id( source, id, returnType ) {
     }
     return;
 }
+*/
 
 function md_clear_title( map_id, layer_id ) {
 	// find reference to this layer in the legends
@@ -61,83 +65,23 @@ function md_clear_title( map_id, layer_id ) {
 }
 
 
-function placeControl( map_id, object, position ) {
+function placeTitle( map_id, object, position ) {
 
     //var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
     //var mapbox_ctrl = document.getElementsByClassName("legendContainer"+map_id);
-    var mapbox_ctrl = document.getElementById( "legendContainer"+map_id);
+    var mapbox_ctrl = document.getElementById( "mapTitleContainer"+map_id);
 
     //mapbox_ctrl[0].appendChild( object );
     mapbox_ctrl.appendChild( object );
     var ledge = {};
-    var position = "BOTTOM_RIGHT";
-/*
-    switch (position) {
-    case 'TOP_LEFT':
-        window[map_id + 'map'].controls["TOP_LEFT"].push( object );
-        break;
-    case 'TOP_RIGHT':
-        window[map_id + 'map'].controls["TOP_RIGHT"].push( object );
-        break;
-    case 'BOTTOM_LEFT':
-        window[map_id + 'map'].controls["BOTTOM_LEFT"].push( object );
-        break;
-    case 'BOTTOM_RIGHT':
-        window[map_id + 'map'].controls["BOTTOM_RIGHT"].push( object );
-        break;
-    default:
-        position = "BOTTOM_LEFT"
-        window[map_id + 'map'].controls["BOTTOM_LEFT"].push( object );
-        break;
-    }
-*/
+    var position = "TOP_LEFT";
+
     ledge = {
         id: object.getAttribute('id'),
         position: position
     };
 
-    window[map_id + 'legendPositions'].push( ledge );
+    window[map_id + 'mapTitlePositions'].push( ledge );
 }
 
 
-function md_removeControl( map_id, legend_id, position ) {
-
-    var element = document.getElementById( legend_id );
-    element.parentNode.removeChild( element );
-
-/*
-    switch (position) {
-    case 'TOP_LEFT':
-        clearControl(window[map_id + 'map'].controls["TOP_LEFT"], legend_id);
-        break;
-    case 'TOP_RIGHT':
-        clearControl(window[map_id + 'map'].controls["TOP_RIGHT"], legend_id);
-        break;
-    case 'BOTTOM_LEFT':
-        clearControl(window[map_id + 'map'].controls["BOTTOM_LEFT"], legend_id);
-        break;
-    case 'BOTTOM_RIGHT':
-        clearControl(window[map_id + 'map'].controls["BOTTOM_RIGHT"], legend_id);
-        break;
-    default:
-        position = "BOTTOM_LEFT";
-        clearControl(window[map_id + 'map'].controls["LEFT_BOTTOM"], legend_id);
-        break;
-    }
-*/
-}
-
-/*
-function clearControl(control, legend_id) {
-
-  if (control !== undefined ) {
-    control.forEach(function (item, index) {
-      if (item !== undefined ) {
-        if (item.getAttribute('id') === legend_id) {
-          control.removeAt(index);
-        }
-      }
-    });
-  }
-}
-*/
