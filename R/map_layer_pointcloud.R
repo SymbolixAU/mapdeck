@@ -169,7 +169,7 @@ add_pointcloud <- function(
 	js_transitions <- resolve_transitions( transitions, "pointcloud" )
 	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
-	invoke_method(
+	invoke_viewdeck_method(
 		map, jsfunc, shape[["data"]], radius, layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
 		js_transitions

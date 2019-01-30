@@ -5,3 +5,8 @@ dependencies:
     src: "htmlwidgets/lib/"
     script:
     - deckgl.min.js
+  - name: map
+    src: "htmlwidgets/lib/map"
+    version: 0.0.1
+    script:
+      - legend.js
