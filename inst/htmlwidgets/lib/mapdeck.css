@@ -1,3 +1,35 @@
+.mapTitleContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    /*padding-bottom: 14px; */
+}
+
+.mapTitle {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    height: auto;
+    background: #fff;
+    padding: 8px;
+    margin: 8px;
+    border: 1px solid #b8b8b8;
+    border-radius: 4px;
+    display:inline-block;
+    max-height: 200px;
+    max-width: 200px;
+    overflow: auto;
+    position: relative;
+    bottom: 0;
+    right: 0;
+}
+
+.mapTitleContent{
+    display: inline-flex;
+    white-space: nowrap;
+}
+
+
 .legendContainer {
     position: absolute;
     bottom: 0;
