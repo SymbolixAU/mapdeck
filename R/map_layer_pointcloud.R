@@ -1,9 +1,9 @@
 mapdeckPointcloudDependency <- function() {
 	list(
-		htmltools::htmlDependency(
-			"pointcloud",
-			"1.0.0",
-			system.file("htmlwidgets/lib/pointcloud", package = "mapdeck"),
+		createHtmlDependency(
+			name = "pointcloud",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/pointcloud", package = "mapdeck"),
 			script = c("pointcloud.js")
 		)
 	)
@@ -15,12 +15,29 @@ mapdeckPointcloudDependency <- function() {
 #' The Pointcloud Layer takes in coordinate points and renders them as circles
 #' with a certain radius.
 #'
-#' @inheritParams add_polygon
-#' @param lon column containing longitude values
-#' @param lat column containing latitude values
+#' @inheritParams add_scatterplot
 #' @param elevation column containing the elevation values
-#' @param radius in metres
+#' @param radius value in pixels of each point
 #' @param light_settings list of light setting parameters. See \link{light_settings}
+#'
+#' @inheritSection add_polygon data
+#' @inheritSection add_arc legend
+#' @inheritSection add_arc id
+#'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny)
+#' and on WebGL-2 supported browsers and hardware.
+#'
+#' The time is in milliseconds
+#'
+#' Available transitions for pointcloud
+#'
+#' list(
+#' position = 0,
+#' fill_colour = 0
+#' )
 #'
 #' @examples
 #' \donttest{
@@ -30,7 +47,7 @@ mapdeckPointcloudDependency <- function() {
 #' df <- capitals
 #' df$z <- sample(10000:10000000, size = nrow(df))
 #'
-#' mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9') %>%
+#' mapdeck(token = key, style = mapdeck_style("dark")) %>%
 #' add_pointcloud(
 #'   data = df
 #'   , lon = 'lon'
@@ -38,8 +55,28 @@ mapdeckPointcloudDependency <- function() {
 #'   , elevation = 'z'
 #'   , layer_id = 'point'
 #'   , fill_colour = "country"
+#'   , tooltip = "country"
+#'   , update_view = FALSE
 #' )
+#'
+#' ## as an sf object wtih a Z attribute
+#' library(sf)
+#' sf <- sf::st_as_sf( df , coords = c("lon","lat","z"))
+#'
+#' mapdeck(token = key, style = mapdeck_style("dark")) %>%
+#' add_pointcloud(
+#'   data = sf
+#'   , layer_id = 'point'
+#'   , fill_colour = "country"
+#'   , tooltip = "country"
+#'   , update_view = FALSE
+#' )
+#'
 #' }
+#'
+#' @details
+#'
+#' \code{add_pointcloud} supports POINT and MULTIPOINT sf objects
 #'
 #' @export
 add_pointcloud <- function(
@@ -47,105 +84,103 @@ add_pointcloud <- function(
 	data = get_map_data(map),
 	lon = NULL,
 	lat = NULL,
-	elevation,
+	elevation = NULL,
 	polyline = NULL,
-	radius = NULL,
+	radius = 10,
 	fill_colour = NULL,
 	fill_opacity = NULL,
-	stroke_width = NULL,
+	tooltip = NULL,
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
 	light_settings = list(),
-	layer_id,
-	digits = 6,
-	palette = viridisLite::viridis
+	layer_id = NULL,
+	id = NULL,
+	palette = "viridis",
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL,
+	legend_format = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
 
-	objArgs <- match.call(expand.dots = F)
+	l <- list()
+	l[["lon"]] <- force( lon )
+	l[["lat"]] <- force( lat )
+	l[["polyline"]] <- force( polyline )
+	l[["elevation"]] <- force( elevation )
+	l[["fill_colour"]] <- force( fill_colour)
+	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["tooltip"]] <- force( tooltip )
+	l[["id"]] <- force( id )
+	l[["na_colour"]] <- force( na_colour )
 
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
+	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_elevation_data( data, l, elevation, c("POINT","MULTIPOINT") )
 
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-		objArgs[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
-	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
-
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		objArgs[['lon']] <- NULL
-		objArgs[['lat']] <- NULL
-		objArgs[['polyline']] <- polyline
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
-	checkNumeric(digits)
-	checkPalette(palette)
-	## TODO(light_settings)
+	checkHexAlpha( highlight_colour )
+	layer_id <- layerId( layer_id, "pointcloud" )
+	checkNumeric( radius )
 
-	## end parameter checks
+	map <- addDependency( map, mapdeckPointcloudDependency() )
 
-	allCols <- pointcloudColumns()
-	requiredCols <- requiredPointcloudColumns()
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+	jsfunc <- "add_pointcloud_geo"
 
-	colourColumns <- shapeAttributes(
-		fill_colour = fill_colour
-		, stroke_colour = NULL
-		, stroke_from = NULL
-		, stroke_to = NULL
-	)
+	if ( tp == "sf" ) {
+		geometry_column <- c( "geometry" )
+		shape <- rcpp_pointcloud_geojson( data, l, geometry_column )
 
-	shape <- createMapObject(data, allCols, objArgs)
+	} else if ( tp == "df" ) {
+		## TODO( here or in rcpp? )
+		if( is.null(elevation) ){
+			l[["elevation"]] <- 0
+		}
 
-	pal <- createPalettes(shape, colourColumns)
+		geometry_column <- list( geometry = c("lon","lat","elevation") )
+	  shape <- rcpp_pointcloud_geojson_df( data, l, geometry_column )
 
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
+	} else if ( tp == "sfencoded" ) {
 
-	if(length(colours) > 0){
-		shape <- replaceVariableColours(shape, colours)
+		geometry_column <- "polyline"
+		shape <- rcpp_pointcloud_polyline( data, l, geometry_column )
+		jsfunc <- "add_pointcloud_polyline"
 	}
 
-	requiredDefaults <- setdiff(requiredCols, names(shape))
+	light_settings <- jsonify::to_json(light_settings, unbox = T)
+	js_transitions <- resolve_transitions( transitions, "pointcloud" )
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "pointcloud")
-	}
-
-	shape <- jsonlite::toJSON(shape, digits = digits)
-
-	light_settings <- jsonlite::toJSON(light_settings, auto_unbox = T)
-
-	map <- addDependency(map, mapdeckPointcloudDependency())
-	invoke_method(map, "add_pointcloud", shape, layer_id, light_settings)
+	invoke_method(
+		map, jsfunc, shape[["data"]], radius, layer_id, light_settings,
+		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		js_transitions
+		)
 }
 
 
-
-
-requiredPointcloudColumns <- function() {
-	c("stroke_width", "radius",
-		"fill_colour", "fill_opacity")
+#' @rdname clear
+#' @export
+clear_pointcloud <- function( map, layer_id = NULL) {
+	layer_id <- layerId( layer_id, "pointcloud" )
+	invoke_method(map, "md_layer_clear", layer_id, "pointcloud" )
 }
 
-
-pointcloudColumns <- function() {
-	c('polyline', "elevation", "radius",
-		'fill_colour', 'fill_opacity',
-		'stroke_width')
-}
-
-pointcloudDefaults <- function(n) {
-	data.frame(
-		"elevation" = rep(0, n),
-		"radius" = rep(1, n),
-		"fill_colour" = rep("#0000FF", n),
-		"fill_opacity" = rep(255, n),
-		"stroke_width" = rep(1, n),
-		stringsAsFactors = F
-	)
-}

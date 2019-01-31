@@ -1,9 +1,9 @@
 mapdeckScreengridDependency <- function() {
 	list(
-		htmltools::htmlDependency(
-			"screengrid",
-			"1.0.0",
-			system.file("htmlwidgets/lib/screengrid", package = "mapdeck"),
+		createHtmlDependency(
+			name = "screengrid",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/screengrid", package = "mapdeck"),
 			script = c("screengrid.js")
 		)
 	)
@@ -23,6 +23,8 @@ mapdeckScreengridDependency <- function() {
 #' @param opacity opacity of cells. Value between 0 and 1
 #' @param cell_size size of grid squares in pixels
 #'
+#' @inheritSection add_polygon data
+#'
 #' @examples
 #' \donttest{
 #'
@@ -34,6 +36,7 @@ mapdeckScreengridDependency <- function() {
 #' 'examples/3d-heatmap/heatmap-data.csv'
 #' ))
 #'
+#' df <- df[ !is.na(df$lng), ]
 #' df$weight <- sample(1:10, size = nrow(df), replace = T)
 #'
 #' mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%
@@ -46,7 +49,24 @@ mapdeckScreengridDependency <- function() {
 #'   , cell_size = 10
 #'   , opacity = 0.3
 #' )
+#'
+#' ## as an sf object
+#' library(sf)
+#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#' mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%
+#' add_screengrid(
+#'   data = sf
+#'   , weight = "weight",
+#'   , layer_id = "screengrid_layer"
+#'   , cell_size = 10
+#'   , opacity = 0.3
+#' )
+#'
 #' }
+#'
+#' @details
+#'
+#' \code{add_screengrid} supports POINT and MULTIPOINT sf objects
 #'
 #' @export
 add_screengrid <- function(
@@ -56,92 +76,80 @@ add_screengrid <- function(
 	lat = NULL,
 	polyline = NULL,
 	weight = NULL,
-	colour_range = viridisLite::viridis(6),
+	colour_range = NULL,
 	opacity = 0.8,
 	cell_size = 50,
-	layer_id,
-	digits = 6
+	layer_id = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
+	l <- list()
+	l[["polyline"]] <- force( polyline )
+	l[["weight"]] <- force( weight )
+	l[["lon"]] <- force( lon )
+	l[["lat"]] <- force( lat )
 
-	objArgs <- match.call(expand.dots = F)
+	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
 
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-		objArgs[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
+	}
+
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
 	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
+	#usePolyline <- isUsingPolyline(polyline)
 	checkNumeric(opacity)
 	checkNumeric(cell_size)
-	checkNumeric(digits)
+	layer_id <- layerId(layer_id, "screengrid")
+
+	if( is.null( colour_range ) ) {
+		colour_range <- colourvalues::colour_values(1:6, palette = "viridis")
+	}
+
 	if(length(colour_range) != 6)
 		stop("colour_range must have 6 hex colours")
-
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		objArgs[['lon']] <- NULL
-		objArgs[['lat']] <- NULL
-		objArgs[['polyline']] <- polyline
-	}
-
 	## end parameter checks
 
-	allCols <- screengridColumns()
-	requiredCols <- requiredScreengridColumns()
-
-	# colourColumns <- shapeAttributes(
-	# 	fill_colour = NULL
-	# 	, stroke_colour = NULL
-	# 	, stroke_from = NULL
-	# 	, stroke_to = NULL
-	# )
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	# pal <- createPalettes(shape, colourColumns)
-	#
-	# colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	# colours <- createColours(shape, colour_palettes)
-#
-# 	if(length(colours) > 0){
-# 		shape <- replaceVariableColours(shape, colours)
-# 	}
-
-	requiredDefaults <- setdiff(requiredCols, names(shape))
-
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "screengrid")
-	}
-
-	shape <- jsonlite::toJSON(shape, digits = digits)
+	checkHex(colour_range)
 
 	map <- addDependency(map, mapdeckScreengridDependency())
-	invoke_method(map, "add_screengrid", shape, layer_id, opacity, cell_size, colour_range )
+
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+
+	jsfunc <- "add_screengrid_geo"
+	if( tp == "sf" ) {
+		geometry_column <- c( "geometry" )
+		shape <- rcpp_screengrid_geojson( data, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( geometry = c("lon", "lat") )
+		shape <- rcpp_screengrid_geojson_df( data, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_screengrid_polyline( data, l, geometry_column )
+		jsfunc <- "add_screengrid_polyline"
+	}
+
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, opacity, cell_size, colour_range,
+		bbox, update_view, focus_layer
+		)
 }
 
 
-
-
-requiredScreengridColumns <- function() {
-	c('weight')
+#' @rdname clear
+#' @export
+clear_screengrid <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "screengrid")
+	invoke_method(map, "md_layer_clear", layer_id, "screengrid" )
 }
 
-
-screengridColumns <- function() {
-	c('polyline', 'weight')
-}
-
-screengridDefaults <- function(n) {
-	data.frame(
-		weight = rep(1, n),
-		stringsAsFactors = F
-	)
-}

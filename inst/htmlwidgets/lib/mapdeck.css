@@ -1,0 +1,88 @@
+.legendContainer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 99;
+    padding-bottom: 14px;
+}
+
+.legend {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    padding: 8px;
+    margin: 8px;
+    border: 1px solid #b8b8b8;
+    border-radius: 4px;
+    display:inline-block;
+    max-height: 200px;
+    max-width: 200px;
+    overflow: auto;
+    position: relative;
+    bottom: 0;
+    right: 0;
+}
+
+.legendTitle {
+/*  border: 1px solid #FF00FF; */
+    font-size: 14px;
+    padding-bottom: 4px;
+    height: auto;
+    left: float;
+}
+
+.legendContent{
+/*  border: 1px solid #000000; */
+    display: inline-flex;
+    white-space: nowrap;
+}
+
+.tickContainer{
+    padding-left: 2px;
+    height: auto;
+    display: inline-block;
+}
+
+.labelContainer{
+/*  border: 1px solid #00FF00; */
+  padding-left: 6px;
+  height: auto;
+  display: inline-block;
+}
+
+#legend h3 {
+    margin-top: 0;
+}
+#legend img {
+    vertical-align: middle;
+}
+
+/* https://github.com/uber/deck.gl/blob/master/docs/developer-guide/tips-and-tricks.md#browser-blending-modes */
+.overlays canvas {
+  mix-blend-mode: multiply;
+}
+
+.deckgl-parent-class {
+  isolation: 'isolate';
+}
+
+/* https://github.com/uber/deck.gl/blob/master/examples/gallery/src/geojson-layer.html#L18 */
+.mapdecktooltip:empty {
+	display: none;
+}
+
+.mapdecktooltip {
+/*	position: absolute; */
+/*	z-index: 1; */
+/*	pointer-events: none; */
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  position: absolute;
+  padding: 4px;
+  margin: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  max-width: 300px;
+  font-size: 10px;
+  z-index: 9;
+  pointer-events: none;
+}

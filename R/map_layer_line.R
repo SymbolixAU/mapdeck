@@ -1,13 +1,14 @@
 mapdeckLineDependency <- function() {
 	list(
-		htmltools::htmlDependency(
-			"line",
-			"1.0.0",
-			system.file("htmlwidgets/lib/line", package = "mapdeck"),
+		createHtmlDependency(
+			name = "line",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/line", package = "mapdeck"),
 			script = c("line.js")
 		)
 	)
 }
+
 
 
 #' Add line
@@ -15,10 +16,30 @@ mapdeckLineDependency <- function() {
 #' The Line Layer renders raised lines joining pairs of source and target coordinates
 #'
 #' @inheritParams add_arc
-#' @param stroke_opacity value between 1 and 255. Either a string specifying the
+#' @param stroke_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
-#' between 1 and 255 to be applied to all the shapes
-#' @param stroke_colour variable or hex colour to use as the ending stroke colour
+#' between 0 and 255 to be applied to all the shapes
+#' @param stroke_colour variable or hex colour to use as the ending stroke colour.
+#'
+#' @inheritSection add_arc legend
+#' @inheritSection add_arc id
+#'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny)
+#' and on WebGL-2 supported browsers and hardware.
+#'
+#' The time is in milliseconds
+#'
+#' Available transitions for line
+#'
+#' list(
+#' origin = 0,
+#' destination = 0,
+#' stroke_colour = 0,
+#' stroke_width = 0
+#' )
 #'
 #' @examples
 #' \donttest{
@@ -31,7 +52,7 @@ mapdeckLineDependency <- function() {
 #' flights$id <- seq_len(nrow(flights))
 #' flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 #'
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
 #'   add_line(
 #'     data = flights
 #'     , layer_id = "line_layer"
@@ -39,12 +60,35 @@ mapdeckLineDependency <- function() {
 #'     , destination = c("end_lon", "end_lat")
 #'     , stroke_colour = "airport1"
 #'     , stroke_width = "stroke"
+#'     , auto_highlight = TRUE
 #'  )
+#'
+#' ## Using a 2-sfc-column sf object
+#' library(sf)
+#'
+#' sf_flights <- cbind(
+#'   sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
+#'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
+#' )
+#'
+#' mapdeck(
+#'   token = key
+#' ) %>%
+#'  add_line(
+#'    data = sf_flights
+#'    , origin = 'geometry'
+#'    , destination = 'geometry.1'
+#'    , layer_id = 'arcs'
+#'    , stroke_colour = "airport1"
+#' )
 #' }
 #'
 #' @details
 #'
-#' MULTIPOINT objects will be treated as single points. That is, if an sf objet
+#' \code{add_line} supports POINT sf objects
+#'
+#'
+#' MULTIPOINT objects will be treated as single points. That is, if an sf object
 #' has one row with a MULTIPOINT object consisting of two points, this will
 #' be expanded to two rows of single POINTs.
 #' Therefore, if the origin is a MULTIPOINT of two points, and the destination is
@@ -54,7 +98,7 @@ mapdeckLineDependency <- function() {
 add_line <- function(
 	map,
 	data = get_map_data(map),
-	layer_id,
+	layer_id = NULL,
 	origin,
 	destination,
 	id = NULL,
@@ -62,101 +106,83 @@ add_line <- function(
 	stroke_width = NULL,
 	stroke_opacity = NULL,
 	tooltip = NULL,
-	digits = 6,
-	palette = viridisLite::viridis
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
+	palette = "viridis",
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL,
+	legend_format = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
 
-	objArgs <- match.call(expand.dots = F)
+	l <- list()
+	l[["origin"]] <- force( origin )
+	l[["destination"]] <- force( destination)
+	l[["stroke_colour"]] <- force( stroke_colour )
+	l[["stroke_width"]] <- force( stroke_width )
+	l[["stroke_opacity"]] <- force( stroke_opacity )
+	l[["tooltip"]] <- force( tooltip )
+	l[["id"]] <- force( id )
+	l[["na_colour"]] <- force(na_colour)
 
-	## if origin && destination == one column each, it's an sf_encoded
-	## else, it's two column, which need to be encoded!
-	if ( length(origin) == 2 && length(destination) == 2) {
-		## lon / lat columns
-		data[[ origin[1] ]] <- googlePolylines::encode(
-			data[, origin, drop = F ]
-			, lon = origin[1]
-			, lat = origin[2]
-			, byrow = T
-		)
-		data[[ destination[1] ]] <- googlePolylines::encode(
-			data[, destination, drop = F ]
-			, lon = destination[1]
-			, lat = destination[2]
-			, byrow = T
-		)
+	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_od_data( data, l, origin, destination )
 
-		objArgs[['origin']] <- origin[1]
-		objArgs[['destination']] <- destination[1]
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
 
-	} else if (length(origin) == 1 && length(destination) == 1) {
-		## encoded
-		data <- normaliseMultiSfData(data, origin, destination)
-		o <- unlist(data[[origin]])
-		d <- unlist(data[[destination]])
-		if(length(o) != length(d)) {
-			stop("There are a different number of origin and destination POINTs, possibly due to MULTIPOINT geometries?")
-		}
-		data[[origin]] <- o
-		data[[destination]] <- d
-
-	} else {
-		stop("expecting lon/lat origin destinations or sfc columns")
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
-	## parameter checks
-	checkNumeric(digits)
-	checkPalette(palette)
-
-	## end parameter checks
-
-	allCols <- lineColumns()
-	requiredCols <- requiredLineColumns()
-
-	colourColumns <- shapeAttributes(
-		fill_colour = NULL
-		, stroke_colour = stroke_colour
-		, stroke_from = NULL
-		, stroke_to = NULL
-	)
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	pal <- createPalettes(shape, colourColumns)
-
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
-
-	if(length(colours) > 0) {
-		shape <- replaceVariableColours(shape, colours)
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
-	requiredDefaults <- setdiff(requiredCols, names(shape))
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
 
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "line")
-	}
-
-	shape <- jsonlite::toJSON(shape, digits = digits)
+	layer_id <- layerId(layer_id, "line")
+	checkHexAlpha(highlight_colour)
 
 	map <- addDependency(map, mapdeckLineDependency())
-	invoke_method(map, "add_line", shape, layer_id )
+
+	if ( tp == "sf" ) {
+		geometry_column <- c( "origin", "destination" )
+		shape <- rcpp_line_geojson( data, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
+		shape <- rcpp_line_geojson_df( data, l, geometry_column )
+	}
+	# } else if ( tp == "sfencoded" ) {
+	# 	geometry_column <- "geometry"
+	# 	shape <- rcpp_line_polyline( data, l, geometry_column )
+	# }
+
+	js_transitions <- resolve_transitions( transitions, "line" )
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+
+	invoke_method(
+		map, "add_line_geo", shape[["data"]], layer_id, auto_highlight,
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		js_transitions
+		)
 }
 
 
-requiredLineColumns <- function() {
-	c("stroke_colour", "stroke_width", "stroke_opacity")
+
+#' @rdname clear
+#' @export
+clear_line <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "line")
+	invoke_method(map, "md_layer_clear", layer_id, "line" )
 }
 
-lineColumns <- function() {
-	c("origin", "destination",
-		"stroke_width", "stroke_colour", "stroke_opacity")
-}
-
-lineDefaults <- function(n) {
-	data.frame(
-		"stroke_colour" = rep("#440154", n),
-		"stroke_width" = rep(1, n),
-		"stroke_opacity" = rep(255, n),
-		stringsAsFactors = F
-	)
-}

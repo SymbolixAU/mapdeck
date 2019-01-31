@@ -5,19 +5,21 @@
 \title{Add Screengrid}
 \usage{
 add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, weight = NULL, colour_range = viridisLite::viridis(6),
-  opacity = 0.8, cell_size = 50, layer_id, digits = 6)
+  polyline = NULL, weight = NULL, colour_range = NULL,
+  opacity = 0.8, cell_size = 50, layer_id = NULL,
+  update_view = TRUE, focus_layer = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer}
+\item{data}{data to be used in the layer. All coordinates are expected to be in
+Web Mercator Projection}
 
 \item{lon}{column containing longitude values}
 
 \item{lat}{column containing latitude values}
 
-\item{polyline}{column of \code{data} containing the polylines}
+\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{weight}{the weight of each value}
 
@@ -28,15 +30,29 @@ add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 \item{cell_size}{size of grid squares in pixels}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
-distinguish between shape layers of the same type}
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
 
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
 The Screen Grid Layer takes in an array of latitude and longitude coordinated points,
 aggregates them into histogram bins and renders as a grid
 }
+\details{
+\code{add_screengrid} supports POINT and MULTIPOINT sf objects
+}
+\section{data}{
+
+
+If the \code{data} is a simple feature object, the geometry column is automatically
+detected. If the sf object contains more than one geometry column and you want to use a specific one,
+you'll need to set the active geometry using \code{sf::st_geometry( x ) <- "your_column" },
+where \code{"your_column"} is the name of the column you're activating. See \code{?sf::st_geometry}
+}
+
 \examples{
 \donttest{
 
@@ -48,6 +64,7 @@ df <- read.csv(paste0(
 'examples/3d-heatmap/heatmap-data.csv'
 ))
 
+df <- df[ !is.na(df$lng), ]
 df$weight <- sample(1:10, size = nrow(df), replace = T)
 
 mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) \%>\%
@@ -60,6 +77,19 @@ add_screengrid(
   , cell_size = 10
   , opacity = 0.3
 )
+
+## as an sf object
+library(sf)
+sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) \%>\%
+add_screengrid(
+  data = sf
+  , weight = "weight",
+  , layer_id = "screengrid_layer"
+  , cell_size = 10
+  , opacity = 0.3
+)
+
 }
 
 }

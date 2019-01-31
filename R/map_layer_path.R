@@ -1,9 +1,9 @@
 mapdeckPathDependency <- function() {
 	list(
-		htmltools::htmlDependency(
-			"path",
-			"1.0.0",
-			system.file("htmlwidgets/lib/path", package = "mapdeck"),
+		createHtmlDependency(
+			name = "path",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/path", package = "mapdeck"),
 			script = c("path.js")
 		)
 	)
@@ -16,10 +16,28 @@ mapdeckPathDependency <- function() {
 #' extruded lines with mitering.
 #'
 #' @inheritParams add_polygon
+#' @param stroke_width width of the stroke in meters
 #'
-#' @param stroke_opacity value between 1 and 255. Either a string specifying the
-#' column of \code{data} containing the stroke opacity of each shape, or a value
-#' between 1 and 255 to be applied to all the shapes
+#' @inheritSection add_polygon data
+#' @inheritSection add_arc legend
+#' @inheritSection add_arc id
+#'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny)
+#' and on WebGL-2 supported browsers and hardware.
+#'
+#' The time is in milliseconds
+#'
+#' Available transitions for path
+#'
+#' list(
+#' path = 0,
+#' stroke_colour = 0,
+#' stroke_width = 0
+#' )
+#'
 #'
 #' @examples
 #' \donttest{
@@ -37,9 +55,14 @@ mapdeckPathDependency <- function() {
 #'     , stroke_colour = "RIGHT_LOC"
 #'     , layer_id = "path_layer"
 #'     , tooltip = "ROAD_NAME"
+#'     , auto_highlight = TRUE
+#'     , legend = T
 #'   )
-#'
 #' }
+#'
+#' @details
+#'
+#' \code{add_path} supports LINESTRING and MULTILINESTRING sf objects
 #'
 #' @export
 add_path <- function(
@@ -50,80 +73,82 @@ add_path <- function(
 	stroke_width = NULL,
 	stroke_opacity = NULL,
 	tooltip = NULL,
-	layer_id,
-	digits = 6,
-	palette = viridisLite::viridis
+	layer_id = NULL,
+	id = NULL,
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
+	palette = "viridis",
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL,
+	legend_format = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
 
-	## TODO(sf and lon/lat coordinates)
+	l <- list()
+	l[["polyline"]] <- force( polyline )
+	l[["stroke_colour"]] <- force( stroke_colour)
+	l[["stroke_width"]] <- force( stroke_width )
+	l[["stroke_opacity"]] <- force( stroke_opacity )
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
+	l[["na_colour"]] <- force(na_colour)
 
-	objArgs <- match.call(expand.dots = F)
+	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_data( data, l, c("LINESTRING","MULTILINESTRING") )
 
-	data <- normaliseSfData(data, "LINESTRING")
-	polyline <- findEncodedColumn(data, polyline)
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
 
-	## - if sf object, and geometry column has not been supplied, it needs to be
-	## added to objArgs after the match.call() function
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-		objArgs[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
 	}
 
-	## parameter checks
-	checkNumeric(digits)
-	checkPalette(palette)
-
-	## end parameter checks
-
-	allCols <- pathColumns()
-	requiredCols <- requiredPathColumns()
-
-	colourColumns <- shapeAttributes(
-		fill_colour = NULL
-		, stroke_colour = stroke_colour
-		, stroke_from = NULL
-		, stroke_to = NULL
-	)
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	pal <- createPalettes(shape, colourColumns)
-
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
-
-	if(length(colours) > 0) {
-		shape <- replaceVariableColours(shape, colours)
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
-	requiredDefaults <- setdiff(requiredCols, names(shape))
-
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "path")
-	}
-
-	shape <- jsonlite::toJSON(shape, digits = digits)
+	layer_id <- layerId(layer_id, "path")
+	checkHexAlpha( highlight_colour )
 
 	map <- addDependency(map, mapdeckPathDependency())
-	invoke_method(map, "add_path", shape, layer_id)
+
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+
+	if ( tp == "sf" ) {
+		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
+		shape <- rcpp_path_geojson( data, l, geometry_column )
+		jsfunc <- "add_path_geo"
+	} else if ( tp == "sfencoded" ) {
+		jsfunc <- "add_path_polyline"
+		geometry_column <- "polyline"
+		shape <- rcpp_path_polyline( data, l, geometry_column )
+	}
+
+	js_transitions <- resolve_transitions( transitions, "path" )
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		js_transitions
+		)
 }
 
 
-requiredPathColumns <- function() {
-	c("stroke_width", "stroke_colour","stroke_opacity")
-}
-
-pathColumns <- function() {
-	c("polyline", "stroke_width", "stroke_colour", "stroke_opacity")
-}
-
-pathDefaults <- function(n) {
-	data.frame(
-		"stroke_colour" = rep("#440154", n),
-		"stroke_width" = rep(1, n),
-		"stroke_opacity" = rep(255, n),
-		stringsAsFactors = F
-	)
+#' @rdname clear
+#' @export
+clear_path <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "path")
+	invoke_method(map, "md_layer_clear", layer_id, "path" )
 }
 
 

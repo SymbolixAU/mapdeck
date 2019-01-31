@@ -51,3 +51,10 @@ roads <- geojson_sf( res )
 roads <- roads[, c("EZI_RDNAME", "FQID", "FROM_UFI", "FTYPE_CODE", "LEFT_LOC", "PFI", "RD_NAME1", "RD_NAME2","RD_TYPE1","RD_TYPE2","RIGHT_LOC","ROAD_NAME","ROAD_TYPE","TO_UFI","UFI")]
 
 usethis::use_data(roads, overwrite = T)
+
+# roads <- mapdeck::roads
+#
+# roads[ !sf::st_is_empty( roads ), ]
+
+
+
