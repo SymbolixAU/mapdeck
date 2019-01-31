@@ -1,3 +1,5 @@
+^CRAN-RELEASE$
+^README\.Rmd$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^data-raw$
@@ -5,3 +7,10 @@
 ^codecov\.yml$
 ^cran-comments\.md$
 ^javascript$
+^docs/
+^vignettes/benchmarks.Rmd
+^vignettes/colours.Rmd
+^vignettes/issues.Rmd
+^vignettes/legends.Rmd
+^vignettes/tips_tricks.Rmd
+^vignettes/img/articles/*

@@ -1,9 +1,9 @@
 mapdeckTextDependency <- function() {
 	list(
-		htmltools::htmlDependency(
-			"text",
-			"1.0.0",
-			system.file("htmlwidgets/lib/text", package = "mapdeck"),
+		createHtmlDependency(
+			name = "text",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/text", package = "mapdeck"),
 			script = c("text.js")
 		)
 	)
@@ -12,11 +12,10 @@ mapdeckTextDependency <- function() {
 
 #' Add Text
 #'
-#' The Text Layer takes in coordinate points and renders them as circles
-#' with a certain radius.
+#' The Text Layer renders text labels on the map
 #'
 #' @inheritParams add_scatterplot
-#' @param text column of \code{data} containing the text
+#' @param text column of \code{data} containing the text. The data must be a character.
 #' @param size column of \code{data} containing the size of the text
 #' @param angle column of \code{data} containging the angle of the text
 #' @param anchor column of \code{data} containing the anchor of the text. One of
@@ -24,6 +23,26 @@ mapdeckTextDependency <- function() {
 #' @param alignment_baseline column of \code{data} containing the alignment. One of
 #' 'top', 'center' or 'bottom'
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
+#'
+#' @inheritSection add_arc legend
+#' @inheritSection add_arc id
+#'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny)
+#' and on WebGL-2 supported browsers and hardware.
+#'
+#' The time is in milliseconds
+#'
+#' Available transitions for text
+#'
+#' list(
+#' position = 0,
+#' fill_colour = 0,
+#' angle = 0,
+#' size = 0
+#' )
 #'
 #' @examples
 #'
@@ -46,6 +65,10 @@ mapdeckTextDependency <- function() {
 #'   )
 #' }
 #'
+#' @details
+#'
+#' \code{add_text} supports POINT and MULTIPOINT sf objects
+#'
 #' @export
 add_text <- function(
 	map,
@@ -61,88 +84,90 @@ add_text <- function(
 	anchor = NULL,
 	alignment_baseline = NULL,
 	tooltip = NULL,
-	layer_id,
-	digits = 6,
-	palette = viridisLite::viridis
+	layer_id = NULL,
+	id = NULL,
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
+	palette = "viridis",
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
 
-	objArgs <- match.call(expand.dots = F)
+	l <- list()
+	l[["lon"]] <- force( lon )
+	l[["lat"]] <- force( lat )
+	l[["fill_colour"]] <- force( fill_colour )
+	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["size"]] <- force( size )
+	l[["text"]] <- force( text )
+	l[["polyline"]] <- force( polyline )
+	l[["angle"]] <- force( angle )
+	l[["anchor"]] <- force( anchor )
+	l[["alignment_baseline"]] <- force( alignment_baseline )
+	l[["tooltip"]] <- force(tooltip)
+	l[["id"]] <- force(id)
+	l[["na_colour"]] <- force(na_colour)
 
-	data <- normaliseSfData(data, "POINT")
-	polyline <- findEncodedColumn(data, polyline)
+	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_data( data, l, c("POINT","MULTIPOINT"))
 
-	if( !is.null(polyline) && !polyline %in% names(objArgs) ) {
-		objArgs[['polyline']] <- polyline
-		data <- unlistMultiGeometry( data, polyline )
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
+	}
+
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
 	## parmater checks
-	usePolyline <- isUsingPolyline(polyline)
-	checkNumeric(digits)
-	checkPalette(palette)
-	checkNumeric(size)
-	checkNumeric(angle)
-
-	## end parameter checks
-	if ( !usePolyline ) {
-		## TODO(check only a data.frame)
-		data[['polyline']] <- googlePolylines::encode(data, lon = lon, lat = lat, byrow = TRUE)
-		polyline <- 'polyline'
-		## TODO(check lon & lat exist / passed in as arguments )
-		objArgs[['lon']] <- NULL
-		objArgs[['lat']] <- NULL
-		objArgs[['polyline']] <- polyline
-	}
-
-	allCols <- textColumns()
-	requiredCols <- requiredTextColumns()
-
-	colourColumns <- shapeAttributes(
-		fill_colour = fill_colour
-		, stroke_colour = NULL
-		, stroke_from = NULL
-		, stroke_to = NULL
-	)
-
-	shape <- createMapObject(data, allCols, objArgs)
-
-	pal <- createPalettes(shape, colourColumns)
-
-	colour_palettes <- createColourPalettes(data, pal, colourColumns, palette)
-	colours <- createColours(shape, colour_palettes)
-
-	if(length(colours) > 0){
-		shape <- replaceVariableColours(shape, colours)
-	}
-
-	requiredDefaults <- setdiff(requiredCols, names(shape))
-
-	if(length(requiredDefaults) > 0){
-		shape <- addDefaults(shape, requiredDefaults, "text")
-	}
-	shape <- jsonlite::toJSON(shape, digits = digits)
+	#usePolyline <- isUsingPolyline(polyline)
+	# checkNumeric(size)
+	# checkNumeric(angle)
+	checkHexAlpha(highlight_colour)
+	layer_id <- layerId(layer_id, "text")
 
 	map <- addDependency(map, mapdeckTextDependency())
-	invoke_method(map, "add_text", shape, layer_id)
+
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+	jsfunc <- "add_text_geo"
+
+	if( tp == "sf" ) {
+		geometry_column <- c( "geometry" )
+		shape <- rcpp_text_geojson( data, l, geometry_column )
+	} else if ( tp == "df" ) {
+		geometry_column <- list( geometry = c("lon", "lat") )
+		shape <- rcpp_text_geojson_df( data, l, geometry_column )
+	} else if ( tp == "sfencoded" ) {
+		geometry_column <- "polyline"
+		shape <- rcpp_text_polyline( data, l, geometry_column )
+		jsfunc <- "add_text_polyline"
+	}
+
+	js_transitions <- resolve_transitions( transitions, "text" )
+
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
+		shape[["legend"]], bbox, update_view, focus_layer, js_transitions
+		)
 }
 
-
-requiredTextColumns <- function() {
-	c('fill_colour', 'size','angle','anchor','alignment_baseline')
+#' @rdname clear
+#' @export
+clear_text <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "text")
+	invoke_method(map, "md_layer_clear", layer_id, "text" )
 }
 
-
-textColumns <- function() {
-	c('polyline', 'fill_colour', 'size','angle','anchor','alignment_baseline')
-}
-
-textDefaults <- function(n) {
-	data.frame(
-		"size" = rep(32, n),
-		"angle" = rep(0, n),
-		"fill_colour" = rep("#440154", n),
-		"anchor" = rep('middle', n),
-		"alignment_baseline" = rep('center', n),
-		stringsAsFactors = F
-	)
-}

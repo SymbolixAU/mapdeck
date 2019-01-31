@@ -36,7 +36,6 @@ mapdeck_dispatch = function(
 #' @export
 invoke_method = function(map, method, ...) {
 	args = evalFormula(list(...))
-
 	mapdeck_dispatch(
 		map,
 		method,
@@ -111,6 +110,25 @@ doResolveFormula.data.frame = function(data, f) {
 	eval(f[[2]], data, environment(f))
 }
 
+## from htmltools::htmlDependency()
+createHtmlDependency <- function(name, version, src, script) {
+	structure(
+		list(
+			name = name
+			, version = version
+			, src = list( file = src )
+			, meta = NULL
+			, script = script
+			, stylesheet = NULL
+			, head = NULL
+			, attachment = NULL
+			, package = NULL
+			, all_files = TRUE
+		)
+		, class = "html_dependency"
+	)
+}
+
 
 addDependency <- function(map, dependencyFunction) {
 
@@ -121,5 +139,22 @@ addDependency <- function(map, dependencyFunction) {
 		map$dependencies <- c(map$dependencies, dependencyFunction)
 
 	return(map)
+}
+
+# Layer Id
+#
+# Checks the layer_id parameter, and provides a default one if NULL
+# @param layer_id
+layerId <- function(layer_id, layer = c("arc", "geojson","grid","hexagon","line","path","pointcloud",
+																				"polygon","scatterplot", "screengrid","text")){
+	layer <- match.arg( layer )
+	if (!is.null(layer_id) & length(layer_id) != 1)
+		stop("please provide a single value for 'layer_id'")
+
+	if (is.null(layer_id)) {
+		return(paste0(layer, "-defaultLayerId"))
+	} else {
+		return(layer_id)
+	}
 }
 

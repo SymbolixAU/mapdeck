@@ -6,37 +6,130 @@
 \usage{
 add_path(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
-  tooltip = NULL, layer_id, digits = 6, palette = viridisLite::viridis)
+  tooltip = NULL, layer_id = NULL, id = NULL,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
+  legend_options = NULL, legend_format = NULL, update_view = TRUE,
+  focus_layer = FALSE, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer}
+\item{data}{data to be used in the layer. All coordinates are expected to be in
+Web Mercator Projection}
 
-\item{polyline}{column of \code{data} containing the polylines}
+\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
-\item{stroke_colour}{variable of \code{data} or hex colour for the stroke}
+\item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
+\code{elevation} is ignored.}
 
-\item{stroke_width}{width of the stroke}
+\item{stroke_width}{width of the stroke in meters}
 
-\item{stroke_opacity}{value between 1 and 255. Either a string specifying the
-column of \code{data} containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{stroke_opacity}{value between 0 and 255. Either a string specifying the
+column of \code{data} containing the stroke opacity of each shape, or a single value
+to be applied to all the shapes}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
-distinguish between shape layers of the same type}
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
 
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
-\item{palette}{a function which generates hex colours}
+\item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
+
+\item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
+
+\item{palette}{string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
+A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
+where the 4th column represents the alpha.}
+
+\item{na_colour}{hex string colour to use for NA values}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
+
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
 The Path Layer takes in lists of coordinate points and renders them as
 extruded lines with mitering.
 }
+\details{
+\code{add_path} supports LINESTRING and MULTILINESTRING sf objects
+}
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny)
+and on WebGL-2 supported browsers and hardware.
+
+The time is in milliseconds
+
+Available transitions for path
+
+list(
+path = 0,
+stroke_colour = 0,
+stroke_width = 0
+)
+}
+
+\section{data}{
+
+
+If the \code{data} is a simple feature object, the geometry column is automatically
+detected. If the sf object contains more than one geometry column and you want to use a specific one,
+you'll need to set the active geometry using \code{sf::st_geometry( x ) <- "your_column" },
+where \code{"your_column"} is the name of the column you're activating. See \code{?sf::st_geometry}
+}
+
+\section{legend}{
+
+
+The \code{legend_options} can be used to control the appearance of the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{css - a string of valid \code{css} for controlling the appearance of the legend}
+  \item{title - a string to use for the title of the legend}
+}
+
+If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+
+The \code{legend_format} can be used to control the format of the values in the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{fill_colour}
+  \item{stroke_colour}
+}
+
+depending on which type of colouring the layer supports.
+
+The list elements must be functions to apply to the values in the legend.
+}
+
+\section{id}{
+
+
+The \code{id} is returned to your R session from an interactive shiny environment
+by observing layer clicks. This is useful for returning the data.frame row relating to the
+cliked shape.
+
+From within a shiny server you would typically use \code{ observeEvent({input$map_arc_click})},
+where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the layer
+you are clicking on
+}
+
 \examples{
 \donttest{
 
@@ -53,8 +146,9 @@ mapdeck(
     , stroke_colour = "RIGHT_LOC"
     , layer_id = "path_layer"
     , tooltip = "ROAD_NAME"
+    , auto_highlight = TRUE
+    , legend = T
   )
-
 }
 
 }
