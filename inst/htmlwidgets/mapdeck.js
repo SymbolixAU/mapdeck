@@ -30,10 +30,10 @@ HTMLWidgets.widget({
         legendContainer.id = "legendContainer"+el.id;
         mapDiv.appendChild( legendContainer );
 
-        var titleContainer = document.createElement('div');
-        titleContainer.className = "mapTitleContainer";
-        titleContainer.id = "mapTitleContainer"+el.id;
-        mapDiv.appendChild( titleContainer );
+        var mapTitle = document.createElement('div');
+        mapTitle.className = "mapTitleContainer";
+        mapTitle.id = "mapTitleContainer"+el.id;
+        mapDiv.appendChild( mapTitle );
 
         var tooltipdiv = document.createElement('div');
         tooltipdiv.setAttribute("class", "mapdecktooltip");

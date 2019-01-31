@@ -11,6 +11,7 @@ function add_title(map_id, layer_id, title_data) {
         window[map_id + 'mapTitle' + layer_id] = document.createElement("div");
         window[map_id + 'mapTitle' + layer_id].setAttribute('id', map_id + 'mapTitle' + layer_id);
         window[map_id + 'mapTitle' + layer_id].setAttribute('class', 'mapTitle');
+        window[map_id + 'mapTitle' + layer_id].innerHTML = title_data.title;
     }  else {
         isUpdating = true;
 
@@ -21,13 +22,16 @@ function add_title(map_id, layer_id, title_data) {
         }
     }
 
+/*
     title = document.createElement("div");
     title.setAttribute('class', 'mapTitle');
     title.innerHTML = title_data.title;
 
     window[map_id + 'mapTitle' + layer_id].appendChild( title );
+*/
 
     if (title_data.css !== null) {
+    	  console.log( window[map_id + 'mapTitle' + layer_id] );
         window[map_id + 'mapTitle' + layer_id].setAttribute('style', title_data.css);
     }
 
@@ -67,21 +71,18 @@ function md_clear_title( map_id, layer_id ) {
 
 function placeTitle( map_id, object, position ) {
 
-    //var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
-    //var mapbox_ctrl = document.getElementsByClassName("legendContainer"+map_id);
     var mapbox_ctrl = document.getElementById( "mapTitleContainer"+map_id);
-
-    //mapbox_ctrl[0].appendChild( object );
     mapbox_ctrl.appendChild( object );
-    var ledge = {};
+
+    var title = {};
     var position = "TOP_LEFT";
 
-    ledge = {
+    title = {
         id: object.getAttribute('id'),
         position: position
     };
 
-    window[map_id + 'mapTitlePositions'].push( ledge );
+    window[map_id + 'mapTitlePositions'].push( title );
 }
 
 
