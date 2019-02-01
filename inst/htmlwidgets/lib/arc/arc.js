@@ -100,7 +100,7 @@ void main(void) {
   vColor = vec4(color.rgb, color.a * opacity);
 }
 `;
-/*
+
   const defaultProps = {
     ...ArcLayer.defaultProps,
     // show arc if source is in brush
@@ -113,18 +113,46 @@ void main(void) {
     brushRadius: 100000,
     mousePosition: [0, 0]
   };
-*/
+
+  class ArcBrushingLayer extends ArcLayer {
+  	getShaders() {
+  		return Object.assign({}, super.getShaders(), {
+  			vs: arcVertex,
+  			fs: arcFragment
+  		})
+  	}
+
+    draw(opts) {
+	    // add uniforms
+	    const uniforms = Object.assign({}, opts.uniforms, {
+	      brushSource: this.props.brushSource,
+	      brushTarget: this.props.brushTarget,
+	      brushRadius: this.props.brushRadius,
+	      mousePos: this.props.mousePosition
+	        ? new Float32Array(this.unproject(this.props.mousePosition))
+	        : defaultProps.mousePosition,
+	      enableBrushing: this.props.enableBrushing
+	    });
+	    const newOpts = Object.assign({}, opts, {uniforms});
+	    super.draw(newOpts);
+	  }
+  }
+
+  ArcBrushingLayer.defaultProps = defaultProps;
+  ArcBrushingLayer.layerName = 'ArcBrushingLayer';
+
+  console.log( ArcBrushingLayer.defaultProps );
 
  // TODO: should I extend 'Layer' ??
- console.log( Layer );
+ //console.log( Layer );
 
-  var mousePosition;
+  var mousePosition = null; //[0, 0];
   var enableBrushing = true;
 
   const isMouseover = mousePosition !== null;
   const startBrushing = Boolean(isMouseover && enableBrushing);
 
-  const arcLayer = new ArcLayer({
+  const arcLayer = new ArcBrushingLayer({
   	map_id: map_id,
     id: 'arc-'+layer_id,
     data: arc_data,
@@ -139,28 +167,37 @@ void main(void) {
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {},
-    brushSource: true,
+    enableBrushing: true,
+    mousePosition: [0,0],
+    brushRadius: 5000000
+    /*
+    //brushSource: true,
     // show arc if target is in brush
     brushTarget: true,
     enableBrushing: true,  // startBrushing
     //getStrokeWidth: d => d.strokeWidth,
     // brush radius in meters
     brushRadius: 5000000,
-    mousePosition: [0, 0]
+    mousePosition,
+    */
   });
 
-  console.log(arcLayer);
+  //console.log(arcLayer);
   //arcLayer.setState( {mousePosition: [0,0]});
 
   var myListener = function(evt) {
 
+    //console.log( evt );
     //TODO(can't call setState without having set the state in the constructor
     // So I need to find a way to access the laeyr's state constructor so I can set
     // mousePosition: null)
-  	//arcLayer.setState( {mousePosition: [evt.clientX, evt.clientY] } )
+
+  	// arcLayer.setState( {mousePosition: [evt.clientX, evt.clientY] } )
+  	arcLayer.setState( {mousePosition: [evt.offsetX, evt.offsetY] });
+
   	// Perhaps this is where/why I need to extedn ArcLayer, and define it with a new state?
 
-    console.log( arcLayer );
+    //console.log( arcLayer );
   	//arcLayer.forceUpdate();  // not a function
 
   	// state gets set on the React.Component, not the layer...
@@ -169,14 +206,21 @@ void main(void) {
   	// will this be slow?
 
   }
-  document.addEventListener('mousemove', myListener, false);
 
-   var av = arcLayer.getShaders().vs;
-   var af = arcLayer.getShaders().fs;
+  var myLeaveListener = function(evt) {
+  	arcLayer.setState( {mousePosition: null });
+  }
+
+  document.addEventListener('mousemove', myListener, false);
+  document.addEventListener('mouseleave', myLeaveListener, false);
+
+   //var av = arcLayer.getShaders().vs;
+   //var af = arcLayer.getShaders().fs;
    var m = arcLayer.getShaders().modules;
 
-  ArcLayer.prototype.getShaders = function() {
-
+   //console.log( arcLayer.getShaders() );
+/*
+  arcLayer.getShaders = function() {
     return {
     	modules: m,
     	vs: arcVertex,
@@ -184,7 +228,7 @@ void main(void) {
     }
   }
 
-  ArcLayer.prototype.draw = function( opts ) {
+  arcLayer.draw = function( opts ) {
 
   	const uniforms = Object.assign({}, opts.uniforms, {
       brushSource: this.props.brushSource,
@@ -198,9 +242,11 @@ void main(void) {
 
     const newOpts = Object.assign({}, opts, {uniforms});
 
+    //console.log( newOpts );
+
   	for(const e of this.getModels()) e.draw( newOpts );
   }
-
+*/
 
   md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
 
