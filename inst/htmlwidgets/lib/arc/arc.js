@@ -152,7 +152,7 @@ void main(void) {
   const isMouseover = mousePosition !== null;
   const startBrushing = Boolean(isMouseover && enableBrushing);
 
-  const arcLayer = new ArcBrushingLayer({
+  var arcLayer = new ArcBrushingLayer({
   	map_id: map_id,
     id: 'arc-'+layer_id,
     data: arc_data,
@@ -167,27 +167,25 @@ void main(void) {
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {},
-    enableBrushing: true,
-    mousePosition: [0,0],
-    brushRadius: 5000000
-    /*
+
     //brushSource: true,
     // show arc if target is in brush
-    brushTarget: true,
+    //brushTarget: true,
     enableBrushing: true,  // startBrushing
     //getStrokeWidth: d => d.strokeWidth,
     // brush radius in meters
     brushRadius: 5000000,
-    mousePosition,
-    */
+    mousePosition: [0,0]
   });
+
+  //arcLayer.setState( {mousePosition: [0,0]});
 
   //console.log(arcLayer);
   //arcLayer.setState( {mousePosition: [0,0]});
 
   var myListener = function(evt) {
 
-    //console.log( evt );
+    console.log( evt );
     //TODO(can't call setState without having set the state in the constructor
     // So I need to find a way to access the laeyr's state constructor so I can set
     // mousePosition: null)
@@ -197,7 +195,7 @@ void main(void) {
 
   	// Perhaps this is where/why I need to extedn ArcLayer, and define it with a new state?
 
-    //console.log( arcLayer );
+    console.log( arcLayer );
   	//arcLayer.forceUpdate();  // not a function
 
   	// state gets set on the React.Component, not the layer...
@@ -212,11 +210,11 @@ void main(void) {
   }
 
   document.addEventListener('mousemove', myListener, false);
-  document.addEventListener('mouseleave', myLeaveListener, false);
+  //document.addEventListener('mouseleave', myLeaveListener, false);
 
    //var av = arcLayer.getShaders().vs;
    //var af = arcLayer.getShaders().fs;
-   var m = arcLayer.getShaders().modules;
+   //var m = arcLayer.getShaders().modules;
 
    //console.log( arcLayer.getShaders() );
 /*
