@@ -115,10 +115,10 @@ void main(void) {
   };
 
   class ArcBrushingLayer extends ArcLayer {
-  	constructor(props) {
-  		super(props);
-  		this.state = {mousePosition:null, temp:null}
-  	}
+  	//constructor(props) {
+  	//	super(props);
+  		//this.state = {mousePosition:null}
+  	//}
   	getShaders() {
   		return Object.assign({}, super.getShaders(), {
   			vs: arcVertex,
@@ -159,8 +159,8 @@ void main(void) {
   const isMouseover = mousePosition !== null;
   const startBrushing = Boolean(isMouseover && enableBrushing);
 
-  var temp = new ArcBrushingLayer();
-  console.log( temp );
+//  var temp = new ArcBrushingLayer();
+//  console.log( temp );
 
   var arcLayer = new ArcBrushingLayer({
   	map_id: map_id,
@@ -183,7 +183,8 @@ void main(void) {
     enableBrushing: true,  // startBrushing
     //getStrokeWidth: d => d.strokeWidth,
     // brush radius in meters
-    brushRadius: 5000000,
+    brushRadius: 350000,
+    mousePosition: null
     //state: {
     //	mousePosition: null
     //}
@@ -192,19 +193,53 @@ void main(void) {
   });
 
   //arcLayer.setState( {mousePosition: [0,0]});
-
-  console.log(arcLayer);
+  //var s = arcLayer.state;
+  //arcLayer.setState({mousePosition: null});
+  //console.log(arcLayer);
+  //console.log( "state" );
+  //console.log( s );
   //arcLayer.setState( {mousePosition: [0,0]});
 
   var myListener = function(evt) {
 
-    console.log( evt );
+    //console.log( evt );
     //TODO(can't call setState without having set the state in the constructor
     // So I need to find a way to access the laeyr's state constructor so I can set
     // mousePosition: null)
 
-  	// arcLayer.setState( {mousePosition: [evt.clientX, evt.clientY] } )
   	//arcLayer.setState( {mousePosition: [evt.offsetX, evt.offsetY] });
+
+  var arcLayer = new ArcBrushingLayer({
+  	map_id: map_id,
+    id: 'arc-'+layer_id,
+    data: arc_data,
+    pickable: true,
+    getStrokeWidth: d => d.properties.stroke_width,
+    getSourcePosition: d => md_get_origin_coordinates( d ),
+    getTargetPosition: d => md_get_destination_coordinates( d ),
+    getSourceColor: d => md_hexToRGBA( d.properties.stroke_from ),
+    getTargetColor: d => md_hexToRGBA( d.properties.stroke_to ),
+    onClick: info => md_layer_click( map_id, "arc", info ),
+    onHover: md_update_tooltip,
+    autoHighlight: auto_highlight,
+    highlightColor: md_hexToRGBA( highlight_colour ),
+    transitions: js_transition || {},
+    //brushSource: true,
+    // show arc if target is in brush
+    //brushTarget: true,
+    enableBrushing: true,  // startBrushing
+    //getStrokeWidth: d => d.strokeWidth,
+    // brush radius in meters
+    brushRadius: 350000,
+    mousePosition: [evt.offsetX, evt.offsetY]
+    //state: {
+    //	mousePosition: null
+    //}
+    // using mousePosition: null doen'st show anything, even when mouse or map is moved
+    // using mousePosition: [0,0] shows things when map is moved to [0,0]
+  });
+  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
+  update_view = false;
 
   	//arcLayer.updateState({changeFlags: {stateChanged:true}})
   	//arcLayer.shouldUpdateState();
@@ -219,7 +254,7 @@ void main(void) {
 
   	// Perhaps this is where/why I need to extedn ArcLayer, and define it with a new state?
 
-    console.log( arcLayer );
+    //console.log( arcLayer );
   	//arcLayer.forceUpdate();  // not a function
 
   	// state gets set on the React.Component, not the layer...
@@ -239,6 +274,8 @@ void main(void) {
    //var av = arcLayer.getShaders().vs;
    //var af = arcLayer.getShaders().fs;
    //var m = arcLayer.getShaders().modules;
+
+  console.log( arcLayer );
 
    //console.log( arcLayer.getShaders() );
 /*
@@ -275,7 +312,7 @@ void main(void) {
   if (legend !== false) {
     add_legend( map_id, layer_id, legend );
   }
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  //md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 

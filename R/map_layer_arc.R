@@ -132,6 +132,17 @@ mapdeckArcDependency <- function() {
 #'     css = "max-height: 100px;")
 #'  )
 #'
+#' mapdeck( token = key, style = mapdeck_style("dark")) %>%
+#'   add_arc(
+#'   data = flights
+#'   , layer_id = "arc_layer"
+#'   , origin = c("start_lon", "start_lat")
+#'   , destination = c("end_lon", "end_lat")
+#'   , stroke_from = "airport1"
+#'   , stroke_to = "airport2"
+#'   , stroke_width = "stroke"
+#'   )
+#'
 #' ## Using a 2-sfc-column sf object
 #' library(sf)
 #'
