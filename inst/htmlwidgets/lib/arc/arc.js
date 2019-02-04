@@ -117,6 +117,7 @@ void main(void) {
   class ArcBrushingLayer extends ArcLayer {
   	constructor(props) {
   		super(props);
+  		this.state = {mousePosition:null, temp:null}
   	}
   	getShaders() {
   		return Object.assign({}, super.getShaders(), {
@@ -124,9 +125,6 @@ void main(void) {
   			fs: arcFragment
   		})
   	}
-  	state() {
-	      mousePosition: null
-	  	}
     draw(opts) {
 	    // add uniforms
 	    const uniforms = Object.assign({}, opts.uniforms, {
@@ -148,9 +146,9 @@ void main(void) {
 
 // --- this all works ^^^^ ------------
 
-	//ArcBrushingLayer.state = {mousePosition: null}
+	// ArcBrushingLayer.state = {mousePosition: null}
 
-  console.log( ArcBrushingLayer.defaultProps );
+  //console.log( ArcBrushingLayer.defaultProps );
 
  // TODO: should I extend 'Layer' ??
  //console.log( Layer );
@@ -160,6 +158,9 @@ void main(void) {
 
   const isMouseover = mousePosition !== null;
   const startBrushing = Boolean(isMouseover && enableBrushing);
+
+  var temp = new ArcBrushingLayer();
+  console.log( temp );
 
   var arcLayer = new ArcBrushingLayer({
   	map_id: map_id,
@@ -183,14 +184,16 @@ void main(void) {
     //getStrokeWidth: d => d.strokeWidth,
     // brush radius in meters
     brushRadius: 5000000,
-    mousePosition
+    //state: {
+    //	mousePosition: null
+    //}
     // using mousePosition: null doen'st show anything, even when mouse or map is moved
     // using mousePosition: [0,0] shows things when map is moved to [0,0]
   });
 
   //arcLayer.setState( {mousePosition: [0,0]});
 
-  console.log(arcLayer.state);
+  console.log(arcLayer);
   //arcLayer.setState( {mousePosition: [0,0]});
 
   var myListener = function(evt) {
@@ -201,7 +204,8 @@ void main(void) {
     // mousePosition: null)
 
   	// arcLayer.setState( {mousePosition: [evt.clientX, evt.clientY] } )
-  	arcLayer.setState( {mousePosition: [evt.offsetX, evt.offsetY] });
+  	//arcLayer.setState( {mousePosition: [evt.offsetX, evt.offsetY] });
+
   	//arcLayer.updateState({changeFlags: {stateChanged:true}})
   	//arcLayer.shouldUpdateState();
 
