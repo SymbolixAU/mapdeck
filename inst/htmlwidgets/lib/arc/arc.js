@@ -115,13 +115,18 @@ void main(void) {
   };
 
   class ArcBrushingLayer extends ArcLayer {
+  	constructor(props) {
+  		super(props);
+  	}
   	getShaders() {
   		return Object.assign({}, super.getShaders(), {
   			vs: arcVertex,
   			fs: arcFragment
   		})
   	}
-
+  	state() {
+	      mousePosition: null
+	  	}
     draw(opts) {
 	    // add uniforms
 	    const uniforms = Object.assign({}, opts.uniforms, {
@@ -140,6 +145,10 @@ void main(void) {
 
   ArcBrushingLayer.defaultProps = defaultProps;
   ArcBrushingLayer.layerName = 'ArcBrushingLayer';
+
+// --- this all works ^^^^ ------------
+
+	//ArcBrushingLayer.state = {mousePosition: null}
 
   console.log( ArcBrushingLayer.defaultProps );
 
@@ -167,7 +176,6 @@ void main(void) {
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {},
-
     //brushSource: true,
     // show arc if target is in brush
     //brushTarget: true,
@@ -175,12 +183,14 @@ void main(void) {
     //getStrokeWidth: d => d.strokeWidth,
     // brush radius in meters
     brushRadius: 5000000,
-    mousePosition: [0,0]
+    mousePosition
+    // using mousePosition: null doen'st show anything, even when mouse or map is moved
+    // using mousePosition: [0,0] shows things when map is moved to [0,0]
   });
 
   //arcLayer.setState( {mousePosition: [0,0]});
 
-  //console.log(arcLayer);
+  console.log(arcLayer.state);
   //arcLayer.setState( {mousePosition: [0,0]});
 
   var myListener = function(evt) {
@@ -192,6 +202,16 @@ void main(void) {
 
   	// arcLayer.setState( {mousePosition: [evt.clientX, evt.clientY] } )
   	arcLayer.setState( {mousePosition: [evt.offsetX, evt.offsetY] });
+  	//arcLayer.updateState({changeFlags: {stateChanged:true}})
+  	//arcLayer.shouldUpdateState();
+
+//  	arcLayer.updateState({
+//  		props: arcLayer.props,
+//  		oldProps: arcLayer.oldProps,
+//  		context: arcLayer.context,
+//  		oldContext: arcLayer.oldContext,
+//  		changeFlags: arcLayer.changeFlags
+//  	});
 
   	// Perhaps this is where/why I need to extedn ArcLayer, and define it with a new state?
 
