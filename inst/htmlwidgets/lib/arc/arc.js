@@ -230,7 +230,7 @@ void main(void) {
 	    enableBrushing: true,  // startBrushing
 	    //getStrokeWidth: d => d.strokeWidth,
 	    // brush radius in meters
-	    brushRadius: 100000,
+	    brushRadius: 300000,
 	    mousePosition: [evt.offsetX, evt.offsetY]
 	    //state: {
 	    //	mousePosition: null
@@ -238,6 +238,7 @@ void main(void) {
 	    // using mousePosition: null doen'st show anything, even when mouse or map is moved
 	    // using mousePosition: [0,0] shows things when map is moved to [0,0]
 	  });
+
 	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
   //update_view = false;
 
