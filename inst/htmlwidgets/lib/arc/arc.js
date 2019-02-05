@@ -180,11 +180,11 @@ void main(void) {
     //brushSource: true,
     // show arc if target is in brush
     //brushTarget: true,
-    enableBrushing: true,  // startBrushing
+    enableBrushing: false,
     //getStrokeWidth: d => d.strokeWidth,
     // brush radius in meters
-    brushRadius: 350000,
-    mousePosition: null
+    brushRadius: 100000,
+    mousePosition
     //state: {
     //	mousePosition: null
     //}
@@ -209,37 +209,37 @@ void main(void) {
 
   	//arcLayer.setState( {mousePosition: [evt.offsetX, evt.offsetY] });
 
-  var arcLayer = new ArcBrushingLayer({
-  	map_id: map_id,
-    id: 'arc-'+layer_id,
-    data: arc_data,
-    pickable: true,
-    getStrokeWidth: d => d.properties.stroke_width,
-    getSourcePosition: d => md_get_origin_coordinates( d ),
-    getTargetPosition: d => md_get_destination_coordinates( d ),
-    getSourceColor: d => md_hexToRGBA( d.properties.stroke_from ),
-    getTargetColor: d => md_hexToRGBA( d.properties.stroke_to ),
-    onClick: info => md_layer_click( map_id, "arc", info ),
-    onHover: md_update_tooltip,
-    autoHighlight: auto_highlight,
-    highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {},
-    //brushSource: true,
-    // show arc if target is in brush
-    //brushTarget: true,
-    enableBrushing: true,  // startBrushing
-    //getStrokeWidth: d => d.strokeWidth,
-    // brush radius in meters
-    brushRadius: 350000,
-    mousePosition: [evt.offsetX, evt.offsetY]
-    //state: {
-    //	mousePosition: null
-    //}
-    // using mousePosition: null doen'st show anything, even when mouse or map is moved
-    // using mousePosition: [0,0] shows things when map is moved to [0,0]
-  });
-  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
-  update_view = false;
+	  var arcLayer = new ArcBrushingLayer({
+	  	map_id: map_id,
+	    id: 'arc-'+layer_id,
+	    data: arc_data,
+	    pickable: true,
+	    getStrokeWidth: d => d.properties.stroke_width,
+	    getSourcePosition: d => md_get_origin_coordinates( d ),
+	    getTargetPosition: d => md_get_destination_coordinates( d ),
+	    getSourceColor: d => md_hexToRGBA( d.properties.stroke_from ),
+	    getTargetColor: d => md_hexToRGBA( d.properties.stroke_to ),
+	    onClick: info => md_layer_click( map_id, "arc", info ),
+	    onHover: md_update_tooltip,
+	    autoHighlight: auto_highlight,
+	    highlightColor: md_hexToRGBA( highlight_colour ),
+	    transitions: js_transition || {},
+	    //brushSource: true,
+	    // show arc if target is in brush
+	    //brushTarget: true,
+	    enableBrushing: true,  // startBrushing
+	    //getStrokeWidth: d => d.strokeWidth,
+	    // brush radius in meters
+	    brushRadius: 100000,
+	    mousePosition: [evt.offsetX, evt.offsetY]
+	    //state: {
+	    //	mousePosition: null
+	    //}
+	    // using mousePosition: null doen'st show anything, even when mouse or map is moved
+	    // using mousePosition: [0,0] shows things when map is moved to [0,0]
+	  });
+	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
+  //update_view = false;
 
   	//arcLayer.updateState({changeFlags: {stateChanged:true}})
   	//arcLayer.shouldUpdateState();
@@ -265,17 +265,47 @@ void main(void) {
   }
 
   var myLeaveListener = function(evt) {
-  	arcLayer.setState( {mousePosition: null });
+  	//arcLayer.setState( {mousePosition: null });
+    var arcLayer = new ArcBrushingLayer({
+	  	map_id: map_id,
+	    id: 'arc-'+layer_id,
+	    data: arc_data,
+	    pickable: true,
+	    getStrokeWidth: d => d.properties.stroke_width,
+	    getSourcePosition: d => md_get_origin_coordinates( d ),
+	    getTargetPosition: d => md_get_destination_coordinates( d ),
+	    getSourceColor: d => md_hexToRGBA( d.properties.stroke_from ),
+	    getTargetColor: d => md_hexToRGBA( d.properties.stroke_to ),
+	    onClick: info => md_layer_click( map_id, "arc", info ),
+	    onHover: md_update_tooltip,
+	    autoHighlight: auto_highlight,
+	    highlightColor: md_hexToRGBA( highlight_colour ),
+	    transitions: js_transition || {},
+	    //brushSource: true,
+	    // show arc if target is in brush
+	    //brushTarget: true,
+	    enableBrushing: false,  // startBrushing
+	    //getStrokeWidth: d => d.strokeWidth,
+	    // brush radius in meters
+	    brushRadius: 100000,
+	    mousePosition: null
+	    //state: {
+	    //	mousePosition: null
+	    //}
+	    // using mousePosition: null doen'st show anything, even when mouse or map is moved
+	    // using mousePosition: [0,0] shows things when map is moved to [0,0]
+	  });
+	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
   }
 
   document.addEventListener('mousemove', myListener, false);
-  //document.addEventListener('mouseleave', myLeaveListener, false);
+  document.addEventListener('mouseleave', myLeaveListener, false);
 
    //var av = arcLayer.getShaders().vs;
    //var af = arcLayer.getShaders().fs;
    //var m = arcLayer.getShaders().modules;
 
-  console.log( arcLayer );
+  //console.log( arcLayer );
 
    //console.log( arcLayer.getShaders() );
 /*
