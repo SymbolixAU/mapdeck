@@ -16,6 +16,7 @@ function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scal
         highlightColor: md_hexToRGBA( highlight_colour ),
         onClick: info => md_layer_click( map_id, "hexagon", info ),
         onHover: md_update_tooltip,
+        getElevationValue: d => d.length,
         transitions: js_transition || {}
   });
 	md_update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );

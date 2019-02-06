@@ -79,7 +79,8 @@ add_hexagon <- function(
 	highlight_colour = "#AAFFFFFF",
 	colour_range = NULL,
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
 
 	l <- list()
@@ -132,9 +133,12 @@ add_hexagon <- function(
 		jsfunc <- "add_hexagon_polyline"
 	}
 
+	js_transitions <- resolve_transitions( transitions, "hexagon" )
+
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, radius, elevation_scale,
-		auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer
+		auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer,
+		js_transitions
 		)
 }
 
