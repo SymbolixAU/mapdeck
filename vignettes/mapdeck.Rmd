@@ -77,5 +77,6 @@ All details about layers, colours, tips & triks, etc, are here
 - [layers](https://symbolixau.github.io/mapdeck/articles/layers.html)
 - [colours](https://symbolixau.github.io/mapdeck/articles/colours.html)
 - [legends](https://symbolixau.github.io/mapdeck/articles/legends.html)
+- [tips & tricks](https://symbolixau.github.io/mapdeck/articles/tips_tricks.html)
 - [benchmarks](https://symbolixau.github.io/mapdeck/articles/benchmarks.html)
 - [issues](https://symbolixau.github.io/mapdeck/articles/issues.html)

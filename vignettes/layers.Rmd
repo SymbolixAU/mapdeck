@@ -143,6 +143,8 @@ mapdeck(
 
 ```
 
+![Path](./img/articles/path.gif)
+
 **sf** : supports `sf` objects with LINESTRING and MULTILINESTRING geometries
 
 ## Point cloud
@@ -162,6 +164,8 @@ add_pointcloud(
 )
 ```
 
+![Pointcloud](./img/articles/pointcloud.gif)
+
 **sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
 ## Polygons
@@ -171,14 +175,18 @@ library(sf)
 library(geojsonsf)
 
 sf <- geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
+sf$e <- sf$AREASQKM16 * 10
 
 mapdeck(token = key, style = mapdeck_style("dark")) %>%
   add_polygon(
-    data = sf
+    data = sf[ data.table::`%like%`(sf$SA4_NAME16, "Melbourne"), ]
     , layer = "polygon_layer"
     , fill_colour = "SA2_NAME16"
+    , elevation = "e"
   )
 ```
+
+![Polygons](./img/articles/polygons.gif)
 
 **sf** : supports `sf` objects with POLYGON and MULTIPOLYGON geometries
 

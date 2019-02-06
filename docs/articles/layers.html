@@ -211,6 +211,9 @@
 <a class="sourceLine" id="cb6-7" data-line-number="7">    , <span class="dt">stroke_colour =</span> <span class="st">"RIGHT_LOC"</span></a>
 <a class="sourceLine" id="cb6-8" data-line-number="8">    , <span class="dt">layer_id =</span> <span class="st">"path_layer"</span></a>
 <a class="sourceLine" id="cb6-9" data-line-number="9">  )</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/path.gif" alt="Path"><p class="caption">Path</p>
+</div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with LINESTRING and MULTILINESTRING geometries</p>
 </div>
 <div id="point-cloud" class="section level2">
@@ -228,6 +231,9 @@
 <a class="sourceLine" id="cb7-10" data-line-number="10">  , <span class="dt">layer_id =</span> <span class="st">'point'</span></a>
 <a class="sourceLine" id="cb7-11" data-line-number="11">  , <span class="dt">fill_colour =</span> <span class="st">"country"</span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">)</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/pointcloud.gif" alt="Pointcloud"><p class="caption">Pointcloud</p>
+</div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
 <div id="polygons" class="section level2">
@@ -237,13 +243,18 @@
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(geojsonsf)</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4">sf &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/geojsonsf/topics/geojson_sf">geojson_sf</a></span>(<span class="st">"https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json"</span>)</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="../reference/add_polygon.html">add_polygon</a></span>(</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">    <span class="dt">data =</span> sf</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">    , <span class="dt">layer =</span> <span class="st">"polygon_layer"</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">    , <span class="dt">fill_colour =</span> <span class="st">"SA2_NAME16"</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">  )</a></code></pre></div>
+<a class="sourceLine" id="cb8-5" data-line-number="5">sf<span class="op">$</span>e &lt;-<span class="st"> </span>sf<span class="op">$</span>AREASQKM16 <span class="op">*</span><span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/add_polygon.html">add_polygon</a></span>(</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">    <span class="dt">data =</span> sf[ data.table<span class="op">::</span><span class="st">`</span><span class="dt">%like%</span><span class="st">`</span>(sf<span class="op">$</span>SA4_NAME16, <span class="st">"Melbourne"</span>), ]</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">    , <span class="dt">layer =</span> <span class="st">"polygon_layer"</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">    , <span class="dt">fill_colour =</span> <span class="st">"SA2_NAME16"</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">    , <span class="dt">elevation =</span> <span class="st">"e"</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">  )</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/polygons.gif" alt="Polygons"><p class="caption">Polygons</p>
+</div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with POLYGON and MULTIPOLYGON geometries</p>
 </div>
 <div id="scatter" class="section level2">
