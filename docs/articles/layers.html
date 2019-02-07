@@ -94,7 +94,7 @@
       <h1>Layers</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-02-07</h4>
+            <h4 class="date">2019-02-08</h4>
       
       
       <div class="hidden name"><code>layers.Rmd</code></div>
@@ -261,15 +261,19 @@
 <h2 class="hasAnchor">
 <a href="#scatter" class="anchor"></a>Scatter</h2>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">  <span class="dt">data =</span> capitals</a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">  , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
 <a class="sourceLine" id="cb9-6" data-line-number="6">  , <span class="dt">lon =</span> <span class="st">"lon"</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">  , <span class="dt">radius =</span> <span class="dv">100000</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">  , <span class="dt">radius =</span> <span class="dv">500000</span></a>
 <a class="sourceLine" id="cb9-8" data-line-number="8">  , <span class="dt">fill_colour =</span> <span class="st">"country"</span></a>
 <a class="sourceLine" id="cb9-9" data-line-number="9">  , <span class="dt">layer_id =</span> <span class="st">"scatter_layer"</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">)</a></code></pre></div>
+<a class="sourceLine" id="cb9-10" data-line-number="10">  , <span class="dt">palette =</span> <span class="st">"plasma"</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">)</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/scatter.png" alt="Scatter"><p class="caption">Scatter</p>
+</div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
 <div id="screen-grid" class="section level2">
@@ -280,18 +284,24 @@
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4">))</a>
 <a class="sourceLine" id="cb10-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">df<span class="op">$</span>weight &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(df), <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">df &lt;-<span class="st"> </span>df[ <span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(df<span class="op">$</span>lng), ]</a>
 <a class="sourceLine" id="cb10-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="kw"><a href="../reference/add_screengrid.html">add_screengrid</a></span>(</a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">  <span class="dt">data =</span> df</a>
-<a class="sourceLine" id="cb10-11" data-line-number="11">  , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
-<a class="sourceLine" id="cb10-12" data-line-number="12">  , <span class="dt">lon =</span> <span class="st">"lng"</span></a>
-<a class="sourceLine" id="cb10-13" data-line-number="13">  , <span class="dt">weight =</span> <span class="st">"weight"</span></a>
-<a class="sourceLine" id="cb10-14" data-line-number="14">  , <span class="dt">layer_id =</span> <span class="st">"screengrid_layer"</span></a>
-<a class="sourceLine" id="cb10-15" data-line-number="15">  , <span class="dt">cell_size =</span> <span class="dv">10</span></a>
-<a class="sourceLine" id="cb10-16" data-line-number="16">  , <span class="dt">opacity =</span> <span class="fl">0.3</span></a>
-<a class="sourceLine" id="cb10-17" data-line-number="17">)</a></code></pre></div>
+<a class="sourceLine" id="cb10-8" data-line-number="8">df<span class="op">$</span>weight &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(df), <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="kw"><a href="../reference/add_screengrid.html">add_screengrid</a></span>(</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">  <span class="dt">data =</span> df</a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">  , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
+<a class="sourceLine" id="cb10-14" data-line-number="14">  , <span class="dt">lon =</span> <span class="st">"lng"</span></a>
+<a class="sourceLine" id="cb10-15" data-line-number="15">  , <span class="dt">weight =</span> <span class="st">"weight"</span></a>
+<a class="sourceLine" id="cb10-16" data-line-number="16">  , <span class="dt">layer_id =</span> <span class="st">"screengrid_layer"</span></a>
+<a class="sourceLine" id="cb10-17" data-line-number="17">  , <span class="dt">cell_size =</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb10-18" data-line-number="18">  , <span class="dt">opacity =</span> <span class="fl">0.3</span></a>
+<a class="sourceLine" id="cb10-19" data-line-number="19">  , <span class="dt">colour_range =</span> colourvalues<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/colourvalues/topics/colour_values">colour_values</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">palette =</span> <span class="st">"plasma"</span>)</a>
+<a class="sourceLine" id="cb10-20" data-line-number="20">)</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/screengrid_small.gif" alt="Screengrid"><p class="caption">Screengrid</p>
+</div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
 <div id="text" class="section level2">
@@ -305,7 +315,11 @@
 <a class="sourceLine" id="cb11-6" data-line-number="6">    , <span class="dt">fill_colour =</span> <span class="st">'country'</span></a>
 <a class="sourceLine" id="cb11-7" data-line-number="7">    , <span class="dt">text =</span> <span class="st">'capital'</span></a>
 <a class="sourceLine" id="cb11-8" data-line-number="8">    , <span class="dt">layer_id =</span> <span class="st">'text'</span></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">  )</a></code></pre></div>
+<a class="sourceLine" id="cb11-9" data-line-number="9">    , <span class="dt">size =</span> <span class="dv">16</span></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">  )</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/text.png" alt="Text"><p class="caption">Text</p>
+</div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPIONT geometries</p>
 </div>
 <div id="multiple-layers" class="section level2">
@@ -341,6 +355,9 @@
 <a class="sourceLine" id="cb12-28" data-line-number="28">    , <span class="dt">fill_colour =</span> <span class="st">"country"</span></a>
 <a class="sourceLine" id="cb12-29" data-line-number="29">    , <span class="dt">layer_id =</span> <span class="st">"scatter"</span></a>
 <a class="sourceLine" id="cb12-30" data-line-number="30">  )</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/multiplelayers.gif" alt="Multiple Layers"><p class="caption">Multiple Layers</p>
+</div>
 </div>
 </div>
 <div id="shiny" class="section level1">
@@ -384,7 +401,7 @@
 <a class="sourceLine" id="cb13-13" data-line-number="13">            , <span class="dt">label =</span> <span class="st">"Longitudes"</span></a>
 <a class="sourceLine" id="cb13-14" data-line-number="14">            , <span class="dt">min =</span> <span class="dv">-180</span></a>
 <a class="sourceLine" id="cb13-15" data-line-number="15">            , <span class="dt">max =</span> <span class="dv">180</span></a>
-<a class="sourceLine" id="cb13-16" data-line-number="16">            , <span class="dt">value =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">90</span>)</a>
+<a class="sourceLine" id="cb13-16" data-line-number="16">            , <span class="dt">value =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">180</span>,<span class="op">-</span><span class="dv">90</span>)</a>
 <a class="sourceLine" id="cb13-17" data-line-number="17">        )</a>
 <a class="sourceLine" id="cb13-18" data-line-number="18">        , <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/verbatimTextOutput">verbatimTextOutput</a></span>(</a>
 <a class="sourceLine" id="cb13-19" data-line-number="19">            <span class="dt">outputId =</span> <span class="st">"observed_click"</span></a>
@@ -426,28 +443,35 @@
 <a class="sourceLine" id="cb13-55" data-line-number="55">                , <span class="dt">fill_colour =</span> <span class="st">"country.y"</span></a>
 <a class="sourceLine" id="cb13-56" data-line-number="56">                , <span class="dt">radius =</span> <span class="dv">100000</span></a>
 <a class="sourceLine" id="cb13-57" data-line-number="57">                , <span class="dt">layer_id =</span> <span class="st">"myScatterLayer"</span></a>
-<a class="sourceLine" id="cb13-58" data-line-number="58">            ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-59" data-line-number="59"><span class="st">            </span><span class="kw"><a href="../reference/add_arc.html">add_arc</a></span>(</a>
-<a class="sourceLine" id="cb13-60" data-line-number="60">                <span class="dt">data =</span> <span class="kw">df_reactive</span>()</a>
-<a class="sourceLine" id="cb13-61" data-line-number="61">                , <span class="dt">origin =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon.x"</span>, <span class="st">"lat.x"</span>)</a>
-<a class="sourceLine" id="cb13-62" data-line-number="62">                , <span class="dt">destination =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon.y"</span>, <span class="st">"lat.y"</span>)</a>
-<a class="sourceLine" id="cb13-63" data-line-number="63">                , <span class="dt">layer_id =</span> <span class="st">"myArcLayer"</span></a>
-<a class="sourceLine" id="cb13-64" data-line-number="64">                , <span class="dt">id =</span> <span class="st">"country.x"</span></a>
-<a class="sourceLine" id="cb13-65" data-line-number="65">                , <span class="dt">stroke_width =</span> <span class="dv">4</span></a>
-<a class="sourceLine" id="cb13-66" data-line-number="66">            )</a>
-<a class="sourceLine" id="cb13-67" data-line-number="67">    })</a>
-<a class="sourceLine" id="cb13-68" data-line-number="68">    </a>
-<a class="sourceLine" id="cb13-69" data-line-number="69">    <span class="co">## observe clicking on a line and return the text</span></a>
-<a class="sourceLine" id="cb13-70" data-line-number="70">    <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/observeEvent">observeEvent</a></span>(input<span class="op">$</span>myMap_arc_click, {</a>
-<a class="sourceLine" id="cb13-71" data-line-number="71">        </a>
-<a class="sourceLine" id="cb13-72" data-line-number="72">        event &lt;-<span class="st"> </span>input<span class="op">$</span>myMap_arc_click</a>
-<a class="sourceLine" id="cb13-73" data-line-number="73">        output<span class="op">$</span>observed_click &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/renderText">renderText</a></span>({</a>
-<a class="sourceLine" id="cb13-74" data-line-number="74">            jsonlite<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonlite/topics/prettify">prettify</a></span>( event )</a>
-<a class="sourceLine" id="cb13-75" data-line-number="75">        })</a>
-<a class="sourceLine" id="cb13-76" data-line-number="76">    })</a>
-<a class="sourceLine" id="cb13-77" data-line-number="77">}</a>
-<a class="sourceLine" id="cb13-78" data-line-number="78"></a>
-<a class="sourceLine" id="cb13-79" data-line-number="79"><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/shinyApp">shinyApp</a></span>(ui, server)</a></code></pre></div>
+<a class="sourceLine" id="cb13-58" data-line-number="58">                , <span class="dt">update_view =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb13-59" data-line-number="59">            ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-60" data-line-number="60"><span class="st">            </span><span class="kw"><a href="../reference/add_arc.html">add_arc</a></span>(</a>
+<a class="sourceLine" id="cb13-61" data-line-number="61">                <span class="dt">data =</span> <span class="kw">df_reactive</span>()</a>
+<a class="sourceLine" id="cb13-62" data-line-number="62">                , <span class="dt">origin =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon.x"</span>, <span class="st">"lat.x"</span>)</a>
+<a class="sourceLine" id="cb13-63" data-line-number="63">                , <span class="dt">destination =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon.y"</span>, <span class="st">"lat.y"</span>)</a>
+<a class="sourceLine" id="cb13-64" data-line-number="64">                , <span class="dt">stroke_from =</span> <span class="st">"country.x"</span></a>
+<a class="sourceLine" id="cb13-65" data-line-number="65">                , <span class="dt">stroke_to =</span> <span class="st">"country.y"</span></a>
+<a class="sourceLine" id="cb13-66" data-line-number="66">                , <span class="dt">layer_id =</span> <span class="st">"myArcLayer"</span></a>
+<a class="sourceLine" id="cb13-67" data-line-number="67">                , <span class="dt">id =</span> <span class="st">"country.x"</span></a>
+<a class="sourceLine" id="cb13-68" data-line-number="68">                , <span class="dt">stroke_width =</span> <span class="dv">4</span></a>
+<a class="sourceLine" id="cb13-69" data-line-number="69">                , <span class="dt">update_view =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb13-70" data-line-number="70">            )</a>
+<a class="sourceLine" id="cb13-71" data-line-number="71">    })</a>
+<a class="sourceLine" id="cb13-72" data-line-number="72">    </a>
+<a class="sourceLine" id="cb13-73" data-line-number="73">    <span class="co">## observe clicking on a line and return the text</span></a>
+<a class="sourceLine" id="cb13-74" data-line-number="74">    <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/observeEvent">observeEvent</a></span>(input<span class="op">$</span>myMap_arc_click, {</a>
+<a class="sourceLine" id="cb13-75" data-line-number="75">        </a>
+<a class="sourceLine" id="cb13-76" data-line-number="76">        event &lt;-<span class="st"> </span>input<span class="op">$</span>myMap_arc_click</a>
+<a class="sourceLine" id="cb13-77" data-line-number="77">        output<span class="op">$</span>observed_click &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/renderText">renderText</a></span>({</a>
+<a class="sourceLine" id="cb13-78" data-line-number="78">            jsonlite<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonlite/topics/prettify">prettify</a></span>( event )</a>
+<a class="sourceLine" id="cb13-79" data-line-number="79">        })</a>
+<a class="sourceLine" id="cb13-80" data-line-number="80">    })</a>
+<a class="sourceLine" id="cb13-81" data-line-number="81">}</a>
+<a class="sourceLine" id="cb13-82" data-line-number="82"></a>
+<a class="sourceLine" id="cb13-83" data-line-number="83"><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/shinyApp">shinyApp</a></span>(ui, server)</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/shiny.gif" alt="Shiny"><p class="caption">Shiny</p>
+</div>
 </div>
   </div>
 

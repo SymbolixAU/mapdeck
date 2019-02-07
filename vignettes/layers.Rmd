@@ -194,17 +194,20 @@ mapdeck(token = key, style = mapdeck_style("dark")) %>%
 
 ```{r}
 
-mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+mapdeck( token = key ) %>%
 add_scatterplot(
   data = capitals
   , lat = "lat"
   , lon = "lon"
-  , radius = 100000
+  , radius = 500000
   , fill_colour = "country"
   , layer_id = "scatter_layer"
+  , palette = "plasma"
 )
 
 ```
+
+![Scatter](./img/articles/scatter.png)
 
 **sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
@@ -215,6 +218,8 @@ df <- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
 'examples/3d-heatmap/heatmap-data.csv'
 ))
+
+df <- df[ !is.na(df$lng), ]
 
 df$weight <- sample(1:10, size = nrow(df), replace = T)
 
@@ -227,8 +232,11 @@ add_screengrid(
   , layer_id = "screengrid_layer"
   , cell_size = 10
   , opacity = 0.3
+  , colour_range = colourvalues::colour_values(1:6, palette = "plasma")
 )
 ```
+
+![Screengrid](./img/articles/screengrid_small.gif)
 
 **sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
@@ -243,8 +251,11 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
     , fill_colour = 'country'
     , text = 'capital'
     , layer_id = 'text'
+    , size = 16
   )
 ```
+
+![Text](./img/articles/text.png)
 
 **sf** : supports `sf` objects with POINT and MULTIPIONT geometries
 
@@ -286,6 +297,7 @@ mapdeck(
 
 ```
 
+![Multiple Layers](./img/articles/multiplelayers.gif)
 
 # Shiny
 
@@ -323,7 +335,7 @@ ui <- dashboardPage(
 			, label = "Longitudes"
 			, min = -180
 			, max = 180
-			, value = c(-90, 90)
+			, value = c(-180,-90)
 		)
 		, verbatimTextOutput(
 			outputId = "observed_click"
@@ -365,14 +377,18 @@ server <- function(input, output) {
 				, fill_colour = "country.y"
 				, radius = 100000
 				, layer_id = "myScatterLayer"
+				, update_view = FALSE
 			) %>%
 			add_arc(
 				data = df_reactive()
 				, origin = c("lon.x", "lat.x")
 				, destination = c("lon.y", "lat.y")
+				, stroke_from = "country.x"
+				, stroke_to = "country.y"
 				, layer_id = "myArcLayer"
 				, id = "country.x"
 				, stroke_width = 4
+				, update_view = FALSE
 			)
 	})
 	
@@ -388,3 +404,5 @@ server <- function(input, output) {
 
 shinyApp(ui, server)
 ```
+
+![Shiny](./img/articles/shiny.gif)
