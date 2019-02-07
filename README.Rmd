@@ -85,3 +85,6 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
 ```
 
 ![Arcs](./vignettes/img/readme_arcs_small.gif)
+
+
+See the [Layers](https://symbolixau.github.io/mapdeck/articles/layers.html) page for more examples
