@@ -94,6 +94,21 @@ add_hexagon(
   , elevation_scale = 100
 )
 
+## Using weights
+df$weight <- 1
+df[10, ]$weight <- 100000
+
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45) \%>\%
+add_hexagon(
+  data = df
+  , lat = "lat"
+  , lon = "lng"
+  , layer_id = "hex_layer"
+  , elevation_scale = 100
+  , weight = "weight"
+)
+
+
 }
 
 }
