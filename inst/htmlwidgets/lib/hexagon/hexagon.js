@@ -15,7 +15,7 @@ function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scal
         autoHighlight: auto_highlight,
         highlightColor: md_hexToRGBA( highlight_colour ),
         onClick: info => md_layer_click( map_id, "hexagon", info ),
-        onHover: md_update_tooltip,
+        //onHover: md_update_tooltip,
         getElevationValue: d => md_hexagon_elevation( d, use_weight ),
         getColorValue: d => md_hexagon_elevation( d, use_weight ),
         transitions: js_transition || {}
@@ -41,7 +41,7 @@ function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation
         autoHighlight: auto_highlight,
         highlightColor: md_hexToRGBA( highlight_colour ),
         onClick: info => md_layer_click( map_id, "hexagon", info ),
-        onHover: md_update_tooltip,
+        //onHover: md_update_tooltip,
         getElevationValue: d => md_hexagon_elevation( d, use_weight ),
         getColorValue: d => md_hexagon_elevation( d, use_weight ),
         transitions: js_transition || {}
