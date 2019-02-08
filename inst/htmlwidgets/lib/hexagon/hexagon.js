@@ -1,5 +1,5 @@
 
-function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition ) {
+function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight ) {
 
   const hexagonLayer = new deck.HexagonLayer({
         map_id: map_id,
@@ -16,14 +16,14 @@ function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scal
         highlightColor: md_hexToRGBA( highlight_colour ),
         onClick: info => md_layer_click( map_id, "hexagon", info ),
         onHover: md_update_tooltip,
-        getElevationValue: d => d.length,
+        getElevationValue: d => md_hexagon_elevation( d, use_weight ),
         transitions: js_transition || {}
   });
 	md_update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
 	md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition ) {
+function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight) {
 
 
   const hexagonLayer = new deck.HexagonLayer({
@@ -41,9 +41,23 @@ function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation
         highlightColor: md_hexToRGBA( highlight_colour ),
         onClick: info => md_layer_click( map_id, "hexagon", info ),
         onHover: md_update_tooltip,
+        getElevationValue: d => md_hexagon_elevation( d, use_weight ),
         transitions: js_transition || {}
   });
 
   md_update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
   md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+}
+
+function md_hexagon_elevation(d, use_weight) {
+
+	if( !use_weight ) {
+		return d.length;
+	}
+
+	var i, total = 0;
+	for( i = 0; i < d.length; i++ ) {
+		total = total + d[i].properties.weight;
+	}
+	return total;
 }

@@ -6,7 +6,7 @@
 \usage{
 add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
-  elevation_scale = 1, auto_highlight = FALSE,
+  weight = NULL, elevation_scale = 1, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", colour_range = NULL,
   update_view = TRUE, focus_layer = FALSE, transitions = NULL)
 }
@@ -27,6 +27,10 @@ distinguish between shape layers of the same type. Layers with the same id are l
 to conflict and not plot correctly}
 
 \item{radius}{in metres}
+
+\item{weight}{column containing the weight of the value. This is used to calculate the
+height of the hexagons. The height is calculated by the sum of weights of all the coordinates
+within the \code{radius}. If NULL, the number of coordinates is used.}
 
 \item{elevation_scale}{value to sacle the elevations of the hexagons}
 

@@ -23,7 +23,9 @@ mapdeckHexagonDependency <- function() {
 #' @param radius in metres
 #' @param elevation_scale value to sacle the elevations of the hexagons
 #' @param colour_range vector of 6 hex colours
-#'
+#' @param weight column containing the weight of the value. This is used to calculate the
+#' height of the hexagons. The height is calculated by the sum of weights of all the coordinates
+#' within the \code{radius}. If NULL, the number of coordinates is used.
 #'
 #' @inheritSection add_polygon data
 #'
@@ -74,6 +76,7 @@ add_hexagon <- function(
 	lat = NULL,
 	layer_id = NULL,
 	radius = 1000,
+	weight = NULL,
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -84,9 +87,13 @@ add_hexagon <- function(
 ) {
 
 	l <- list()
-	l[["polyline"]] <- force(polyline)
-	l[["lon"]] <- force(lon)
-	l[["lat"]] <- force(lat)
+	l[["polyline"]] <- force( polyline )
+	l[["lon"]] <- force( lon )
+	l[["lat"]] <- force( lat )
+	l[["weight"]] <- force( weight )
+
+	use_weight <- FALSE
+	if(!is.null(weight)) use_weight <- TRUE
 
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 
@@ -138,7 +145,7 @@ add_hexagon <- function(
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, radius, elevation_scale,
 		auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer,
-		js_transitions
+		js_transitions, use_weight
 		)
 }
 
