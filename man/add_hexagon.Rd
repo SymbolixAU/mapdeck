@@ -6,9 +6,10 @@
 \usage{
 add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
-  weight = NULL, elevation_scale = 1, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", colour_range = NULL,
-  update_view = TRUE, focus_layer = FALSE, transitions = NULL)
+  weight = NULL, colour_value = NULL, elevation_scale = 1,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -31,6 +32,10 @@ to conflict and not plot correctly}
 \item{weight}{column containing the weight of the value. This is used to calculate the
 height of the hexagons. The height is calculated by the sum of weights of all the coordinates
 within the \code{radius}. If NULL, the number of coordinates is used.}
+
+\item{colour_value}{column containing numeric values to colour by.
+The colour is calculated by the sum of values within the \code{radius}.
+If NULL, the number of coordinates is used}
 
 \item{elevation_scale}{value to sacle the elevations of the hexagons}
 
