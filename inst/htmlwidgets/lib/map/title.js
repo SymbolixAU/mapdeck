@@ -9,33 +9,12 @@ function add_title(map_id, layer_id, title_data) {
         isUpdating = false;
 
     if (window[map_id + 'mapTitle' + layer_id] == null) {
-    //	console.log(" new title ");
         window[map_id + 'mapTitle' + layer_id] = document.createElement("div");
-
-    //}  else {
-
-
-
-    //	console.log(" updating title" );
-    //    isUpdating = true;
-
-    //    while ( window[map_id + 'mapTitle' + layer_id].hasChildNodes() ) {
-    //        window[map_id + 'mapTitle' + layer_id].removeChild(
-    //        	window[map_id + 'mapTitle' + layer_id].lastChild
-    //        	);
-    //    }
     }
     window[map_id + 'mapTitle' + layer_id].setAttribute('id', map_id + 'mapTitle' + layer_id);
     window[map_id + 'mapTitle' + layer_id].setAttribute('class', 'mapTitle');
     window[map_id + 'mapTitle' + layer_id].innerHTML = title_data.title;
 
-/*
-    title = document.createElement("div");
-    title.setAttribute('class', 'mapTitle');
-    title.innerHTML = title_data.title;
-
-    window[map_id + 'mapTitle' + layer_id].appendChild( title );
-*/
 
     if (title_data.css !== null) {
     	  console.log( window[map_id + 'mapTitle' + layer_id] );
@@ -47,32 +26,22 @@ function add_title(map_id, layer_id, title_data) {
     }
 }
 
-/*
-function md_find_by_id( source, id, returnType ) {
-    var i = 0;
-    for (i = 0; i < source.length; i++) {
-        if (source[i].id === id) {
-            if (returnType === "object") {
-                return source[i];
-            } else {
-                return i;
-            }
-        }
-    }
-    return;
-}
-*/
 
-function md_clear_title( map_id, layer_id ) {
+function clear_title( map_id, layer_id ) {
+	/*
 	// find reference to this layer in the legends
 	var id = map_id + 'mapTitle' + layer_id;
 	var objIndex = md_find_by_id( window[map_id + 'mapTitle'], id, "index" );
 
 	if( objIndex !== undefined ) {
-		md_removeControl( map_id, id, window[map_id + 'mapTitle'][objIndex].position );
-		window[map_id + 'mapTitle'].splice(objIndex, 1);
+		md_removeControl( map_id, id, window[map_id + 'mapTitle' + layer_id][objIndex].position );
+		window[map_id + 'mapTitle' + layer_id].splice(objIndex, 1);
 	  window[id] = null;
 	}
+	*/
+
+	var element = document.getElementById( map_id + 'mapTitle' + layer_id );
+	element.parentNode.removeChild( element );
 }
 
 
@@ -81,6 +50,7 @@ function placeTitle( map_id, object, position ) {
     var mapbox_ctrl = document.getElementById( "mapTitleContainer"+map_id);
     mapbox_ctrl.appendChild( object );
 
+/*
     var title = {};
     var position = "TOP_LEFT";
 
@@ -90,6 +60,7 @@ function placeTitle( map_id, object, position ) {
     };
 
     window[map_id + 'mapTitlePositions'].push( title );
+*/
 }
 
 

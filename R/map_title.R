@@ -14,4 +14,10 @@ add_title <- function(map, title, layer_id = NULL) {
 	invoke_method(map, "add_title", layer_id, jsonify::to_json( title, unbox = TRUE ) )
 }
 
-## TODO( update title )
+
+#' @rdname clear
+#' @export
+clear_title <- function(map, layer_id = NULL ) {
+	layer_id <- layerId( layer_id, layer = "title")
+	invoke_method(map, "clear_title", layer_id)
+}
