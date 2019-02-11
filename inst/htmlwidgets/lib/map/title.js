@@ -3,24 +3,31 @@ function add_title(map_id, layer_id, title_data) {
     'use strict';
 
     console.log( title_data );
+
     var title,
         style = '',
         isUpdating = false;
 
     if (window[map_id + 'mapTitle' + layer_id] == null) {
+    //	console.log(" new title ");
         window[map_id + 'mapTitle' + layer_id] = document.createElement("div");
-        window[map_id + 'mapTitle' + layer_id].setAttribute('id', map_id + 'mapTitle' + layer_id);
-        window[map_id + 'mapTitle' + layer_id].setAttribute('class', 'mapTitle');
-        window[map_id + 'mapTitle' + layer_id].innerHTML = title_data.title;
-    }  else {
-        isUpdating = true;
 
-        while ( window[map_id + 'mapTitle' + layer_id].hasChildNodes() ) {
-            window[map_id + 'mapTitle' + layer_id].removeChild(
-            	window[map_id + 'mapTitle' + layer_id].lastChild
-            	);
-        }
+    //}  else {
+
+
+
+    //	console.log(" updating title" );
+    //    isUpdating = true;
+
+    //    while ( window[map_id + 'mapTitle' + layer_id].hasChildNodes() ) {
+    //        window[map_id + 'mapTitle' + layer_id].removeChild(
+    //        	window[map_id + 'mapTitle' + layer_id].lastChild
+    //        	);
+    //    }
     }
+    window[map_id + 'mapTitle' + layer_id].setAttribute('id', map_id + 'mapTitle' + layer_id);
+    window[map_id + 'mapTitle' + layer_id].setAttribute('class', 'mapTitle');
+    window[map_id + 'mapTitle' + layer_id].innerHTML = title_data.title;
 
 /*
     title = document.createElement("div");
