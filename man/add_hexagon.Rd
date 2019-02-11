@@ -29,13 +29,13 @@ to conflict and not plot correctly}
 
 \item{radius}{in metres}
 
-\item{elevation}{column containing the weight of the value. This is used to calculate the
-height of the hexagons. The height is calculated by the sum of weights of all the coordinates
+\item{elevation}{column containing the elevation of the value. This is used to calculate the
+height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
 within the \code{radius}. If NULL, the number of coordinates is used.}
 
 \item{colour}{column containing numeric values to colour by.
 The colour is calculated by the sum of values within the \code{radius}.
-If NULL, the number of coordinates is used}
+If NULL, the number of coordinates is used.}
 
 \item{elevation_scale}{value to sacle the elevations of the hexagons}
 
@@ -99,9 +99,11 @@ add_hexagon(
   , elevation_scale = 100
 )
 
-## Using weights
+## Using elevation and colour
 df$weight <- 1
+df$colour <- 1
 df[10, ]$weight <- 100000
+df[1000, ]$colour <- 100000
 
 mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_hexagon(
@@ -111,6 +113,7 @@ add_hexagon(
   , layer_id = "hex_layer"
   , elevation_scale = 100
   , elevation = "weight"
+  , colour = "colour"
 )
 
 

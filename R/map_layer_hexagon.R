@@ -23,12 +23,12 @@ mapdeckHexagonDependency <- function() {
 #' @param radius in metres
 #' @param elevation_scale value to sacle the elevations of the hexagons
 #' @param colour_range vector of 6 hex colours
-#' @param elevation column containing the weight of the value. This is used to calculate the
-#' height of the hexagons. The height is calculated by the sum of weights of all the coordinates
+#' @param elevation column containing the elevation of the value. This is used to calculate the
+#' height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
 #' within the \code{radius}. If NULL, the number of coordinates is used.
 #' @param colour column containing numeric values to colour by.
 #' The colour is calculated by the sum of values within the \code{radius}.
-#' If NULL, the number of coordinates is used
+#' If NULL, the number of coordinates is used.
 #'
 #' @inheritSection add_polygon data
 #'
@@ -63,9 +63,11 @@ mapdeckHexagonDependency <- function() {
 #'   , elevation_scale = 100
 #' )
 #'
-#' ## Using weights
+#' ## Using elevation and colour
 #' df$weight <- 1
+#' df$colour <- 1
 #' df[10, ]$weight <- 100000
+#' df[1000, ]$colour <- 100000
 #'
 #' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45) %>%
 #' add_hexagon(
@@ -75,6 +77,7 @@ mapdeckHexagonDependency <- function() {
 #'   , layer_id = "hex_layer"
 #'   , elevation_scale = 100
 #'   , elevation = "weight"
+#'   , colour = "colour"
 #' )
 #'
 #'
