@@ -15,6 +15,7 @@ HTMLWidgets.widget({
 
       	window[el.id + 'layers'] = []; // keep track of layers for overlaying multiple
         window[el.id + 'legendPositions'] = [];     // array for keeping a referene to legend positions
+        window[el.id + 'mapTitlePositions'] = [];
         window[el.id + 'mapdeckBounds'] = [];       // store the bounding box of each layer
         window[el.id + 'globalBox'] = [];
         window[el.id + 'currentZoomLevel'] = 0;
@@ -28,6 +29,11 @@ HTMLWidgets.widget({
         legendContainer.className = "legendContainer";
         legendContainer.id = "legendContainer"+el.id;
         mapDiv.appendChild( legendContainer );
+
+        var mapTitle = document.createElement('div');
+        mapTitle.className = "mapTitleContainer";
+        mapTitle.id = "mapTitleContainer"+el.id;
+        mapDiv.appendChild( mapTitle );
 
         var tooltipdiv = document.createElement('div');
         tooltipdiv.setAttribute("class", "mapdecktooltip");

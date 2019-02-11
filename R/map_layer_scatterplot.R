@@ -186,25 +186,6 @@ add_scatterplot <- function(
 		)
 }
 
-resolve_args <- function( l, layer_args ) {
-
-	## This implementation will allow variables passed in as column names
-	## but NOT un-quoted column variables
-	x <- vapply(names(l), function(x) { x %in% layer_args }, T)
-	x <- x[x]    ## x is the set of arguments we need to evaluate
-	l <- l[names(x)]
-	lapply( l, eval )
-}
-
-
-## args used which can be columns of 'data'
-scatterplot_data_args <- function() {
-	return(
-		c("lon", "lat", "polyline", "radius", "fill_colour", "fill_opacity", "tooltip")
-	)
-}
-
-
 #' @rdname clear
 #' @export
 clear_scatterplot <- function( map, layer_id = NULL) {
