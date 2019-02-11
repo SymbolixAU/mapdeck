@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -65,6 +65,12 @@
       <a href="../articles/issues.html">Why isn't it working?</a>
     </li>
     <li>
+      <a href="../articles/layers.html">Layers</a>
+    </li>
+    <li>
+      <a href="../articles/legends.html">Legends</a>
+    </li>
+    <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
     </li>
   </ul>
@@ -88,7 +94,7 @@
       <h1>Tips &amp; Tricks</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2018-12-18</h4>
+            <h4 class="date">2019-02-08</h4>
       
       
       <div class="hidden name"><code>tips_tricks.Rmd</code></div>
@@ -312,7 +318,7 @@
 <a href="#chaining" class="anchor"></a>Chaining</h1>
 <p>Mapdeck plots can be included in a chain of commands, if that’s your thing</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">roads <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>( ROAD_TYPE <span class="op">==</span><span class="st"> "STREET"</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>( ROAD_TYPE <span class="op">==</span><span class="st"> "STREET"</span> ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="../reference/add_sf.html">add_sf</a></span>()</a></code></pre></div>
 </div>

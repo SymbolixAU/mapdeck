@@ -2,15 +2,21 @@
 
 function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
+  console.log( scatter_data );
+
   const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
     radiusScale: 1,
     radiusMinPixels: 1,
+    stroked: true,  // TODO( make conditional IFF stroke provided?)
+    filled: true,
     getRadius: d => d.properties.radius,
     getPosition: d => md_get_point_coordinates( d ),
-    getColor: d => md_hexToRGBA( d.properties.fill_colour ),
+    getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
+    getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
+    getLineWidth: d => d.properties.stroke_width,
     pickable: true,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
@@ -33,9 +39,13 @@ function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highligh
     data: scatter_data,
     radiusScale: 1,
     radiusMinPixels: 1,
+    stroked: true,
+    filled: true,
     getRadius: d => d.radius,
     getPosition: d => md_decode_points( d.polyline ),
-    getColor: d => md_hexToRGBA( d.fill_colour ),
+    getFillColor: d => md_hexToRGBA( d.fill_colour ),
+    getLineColor: d => md_hexToRGBA( d.stroke_colour ),
+    getLineWidth: d => d.stroke_width,
     pickable: true,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),

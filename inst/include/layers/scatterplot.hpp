@@ -7,11 +7,12 @@ namespace mapdeck {
 namespace scatterplot {
 
   const std::unordered_map< std::string, std::string > scatterplot_colours = {
-  	{ "fill_colour", "fill_opacity" }
+  	{ "fill_colour", "fill_opacity" },
+  	{ "stroke_colour", "stroke_opacity"}
   };
 
   const Rcpp::StringVector scatterplot_legend = Rcpp::StringVector::create(
-  	"fill_colour"
+  	"fill_colour", "stroke_colour"
   );
 
 } // namespace scatterplot
