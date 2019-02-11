@@ -105,6 +105,7 @@ add_scatterplot <- function(
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	stroke_colour = NULL,
+	stroke_width = NULL,
 	stroke_opacity = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
@@ -130,6 +131,7 @@ add_scatterplot <- function(
 	l[["fill_opacity"]] <- force(fill_opacity)
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_opacity"]] <- force( stroke_opacity )
+	l[["stroke_width"]] <- force( stroke_width )
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)

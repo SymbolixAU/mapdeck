@@ -6,8 +6,8 @@
 \usage{
 add_scatterplot(map, data = get_map_data(map), lon = NULL,
   lat = NULL, polyline = NULL, radius = NULL, fill_colour = NULL,
-  fill_opacity = NULL, stroke_colour = NULL, stroke_opacity = NULL,
-  tooltip = NULL, auto_highlight = FALSE,
+  fill_opacity = NULL, stroke_colour = NULL, stroke_width = NULL,
+  stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, legend_format = NULL, update_view = TRUE,
@@ -34,8 +34,9 @@ column of \code{data} containing the fill opacity of each shape, or a single val
 to be applied to all the shapes}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
-\code{elevation} is ignored.
-transition enabled}
+\code{elevation} is ignored.}
+
+\item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored.}
 
 \item{stroke_opacity}{value between 0 and 255. Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a single value
