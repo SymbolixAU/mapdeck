@@ -132,9 +132,9 @@ transitions_geojson <- function( transitions ) {
 }
 
 transitions_hexagon <- function( transitions ) {
-	transitions <- replace_name( transitions, "elevation_value", "getElevationValue" )
-	transitions <- replace_name( transitions, "colour_value", "getColorValue" )
-	return(transitions)
+	transitions <- replace_name( transitions, "elevation", "getElevationValue" )
+	transitions <- replace_name( transitions, "colour", "getColorValue" )
+	return( transitions )
 }
 
 transitions_line <- function( transitions ) {

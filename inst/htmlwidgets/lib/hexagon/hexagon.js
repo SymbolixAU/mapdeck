@@ -59,21 +59,21 @@ function md_hexagon_elevation(d, use_weight) {
 
 	var i, total = 0;
 	for( i = 0; i < d.length; i++ ) {
-		total = total + d[i].properties.weight;
+		total = total + d[i].properties.elevation;
 	}
 	return total;
 }
 
 function md_hexagon_colour(d, use_colour) {
 
-	console.log( d );
+	//console.log( d );
 	if( !use_colour ) {
 		return d.length;
 	}
 
 	var i, total = 0;
 	for( i = 0; i < d.length; i++ ) {
-		total = total + d[i].properties.colour_value;
+		total = total + d[i].properties.colour;
 	}
 	return total;
 }

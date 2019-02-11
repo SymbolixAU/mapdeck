@@ -6,7 +6,7 @@
 \usage{
 add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
-  weight = NULL, colour_value = NULL, elevation_scale = 1,
+  elevation = NULL, colour = NULL, elevation_scale = 1,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
   transitions = NULL)
@@ -29,11 +29,11 @@ to conflict and not plot correctly}
 
 \item{radius}{in metres}
 
-\item{weight}{column containing the weight of the value. This is used to calculate the
+\item{elevation}{column containing the weight of the value. This is used to calculate the
 height of the hexagons. The height is calculated by the sum of weights of all the coordinates
 within the \code{radius}. If NULL, the number of coordinates is used.}
 
-\item{colour_value}{column containing numeric values to colour by.
+\item{colour}{column containing numeric values to colour by.
 The colour is calculated by the sum of values within the \code{radius}.
 If NULL, the number of coordinates is used}
 
@@ -110,7 +110,7 @@ add_hexagon(
   , lon = "lng"
   , layer_id = "hex_layer"
   , elevation_scale = 100
-  , weight = "weight"
+  , elevation = "weight"
 )
 
 

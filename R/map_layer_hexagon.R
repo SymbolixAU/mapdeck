@@ -23,10 +23,10 @@ mapdeckHexagonDependency <- function() {
 #' @param radius in metres
 #' @param elevation_scale value to sacle the elevations of the hexagons
 #' @param colour_range vector of 6 hex colours
-#' @param weight column containing the weight of the value. This is used to calculate the
+#' @param elevation column containing the weight of the value. This is used to calculate the
 #' height of the hexagons. The height is calculated by the sum of weights of all the coordinates
 #' within the \code{radius}. If NULL, the number of coordinates is used.
-#' @param colour_value column containing numeric values to colour by.
+#' @param colour column containing numeric values to colour by.
 #' The colour is calculated by the sum of values within the \code{radius}.
 #' If NULL, the number of coordinates is used
 #'
@@ -74,7 +74,7 @@ mapdeckHexagonDependency <- function() {
 #'   , lon = "lng"
 #'   , layer_id = "hex_layer"
 #'   , elevation_scale = 100
-#'   , weight = "weight"
+#'   , elevation = "weight"
 #' )
 #'
 #'
@@ -94,8 +94,8 @@ add_hexagon <- function(
 	lat = NULL,
 	layer_id = NULL,
 	radius = 1000,
-	weight = NULL,
-	colour_value = NULL,
+	elevation = NULL,
+	colour = NULL,
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -109,14 +109,14 @@ add_hexagon <- function(
 	l[["polyline"]] <- force( polyline )
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
-	l[["weight"]] <- force( weight )
-	l[["colour_value"]] <- force( colour_value )
+	l[["elevation"]] <- force( elevation )
+	l[["colour"]] <- force( colour )
 
 	use_weight <- FALSE
-	if(!is.null(weight)) use_weight <- TRUE
+	if(!is.null(elevation)) use_weight <- TRUE
 
 	use_colour <- FALSE
-	if(!is.null(colour_value)) use_colour <- TRUE
+	if(!is.null(colour)) use_colour <- TRUE
 
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 
