@@ -25,8 +25,8 @@ Web Mercator Projection}
 
 \item{stroke_width}{width of the stroke in meters}
 
-\item{stroke_opacity}{value between 0 and 255. Either a string specifying the
-column of \code{data} containing the stroke opacity of each shape, or a single value
+\item{stroke_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
 to be applied to all the shapes}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}

@@ -31,15 +31,15 @@ to conflict and not plot correctly}
 
 \item{stroke_from}{variable or hex colour to use as the staring stroke colour}
 
-\item{stroke_from_opacity}{Either a string specifying the
-column of \code{data} containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{stroke_from_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes}
 
 \item{stroke_to}{variable or hex colour to use as the ending stroke colour}
 
-\item{stroke_to_opacity}{Either a string specifying the
-column of \code{data} containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{stroke_to_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes}
 
 \item{stroke_width}{width of the stroke in pixels}
 

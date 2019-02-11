@@ -111,7 +111,7 @@ add_pointcloud <- function(
 	l[["polyline"]] <- force( polyline )
 	l[["elevation"]] <- force( elevation )
 	l[["fill_colour"]] <- force( fill_colour)
-	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["tooltip"]] <- force( tooltip )
 	l[["id"]] <- force( id )
 	l[["na_colour"]] <- force( na_colour )

@@ -101,7 +101,7 @@ add_text <- function(
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
 	l[["fill_colour"]] <- force( fill_colour )
-	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["size"]] <- force( size )
 	l[["text"]] <- force( text )
 	l[["polyline"]] <- force( polyline )
