@@ -1,5 +1,6 @@
 # mapdeck 0.3
 
+* `add_title()` for adding titles to map
 * `add_scatterplot` gets `stroke_colour` and `stroke_width` arguments
 * `add_hexagon` gets transitions
 * `add_hexagon` gets `weight` and `colour_value` arguments for defining height and colour

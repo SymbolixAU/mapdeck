@@ -5,6 +5,22 @@
 #' @inheritParams add_arc
 #' @param title
 #'
+#' @examples
+#' \donttest{
+#'
+#' mapdeck() %>%
+#'   add_title(title = "first title", layer_id = "first") %>%
+#'   add_title(title = list(
+#'       title = "second title",
+#'       css = "background-color: red;"),
+#'     layer_id = "second") %>%
+#'   add_title(title = list(
+#'       title = "Another title",
+#'       css = "background-color: transparent;"),
+#'     layer_id = "third")
+#'
+#' }
+#'
 #' @export
 add_title <- function(map, title, layer_id = NULL) {
 

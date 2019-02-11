@@ -18,3 +18,20 @@ to conflict and not plot correctly}
 \description{
 Adds a title to a map
 }
+\examples{
+\donttest{
+
+mapdeck() \%>\%
+  add_title(title = "first title", layer_id = "first") \%>\%
+  add_title(title = list(
+      title = "second title",
+      css = "background-color: red;"),
+    layer_id = "second") \%>\%
+  add_title(title = list(
+      title = "Another title",
+      css = "background-color: transparent;"),
+    layer_id = "third")
+
+}
+
+}
