@@ -49,6 +49,16 @@ HTMLWidgets.widget({
         	bearing: x.bearing
         };
 
+       if( x.access_token === null ) {
+       	 const deckgl = new deck.DeckGL({
+       	 	  map: false,
+			      container: el.id,
+			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      layers: [],
+			      //onLayerHover: setTooltip
+			   });
+			   window[el.id + 'map'] = deckgl;
+       } else {
         const deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
@@ -57,7 +67,8 @@ HTMLWidgets.widget({
 			      layers: [],
 			      //onLayerHover: setTooltip
 			  });
-
+			  window[el.id + 'map'] = deckgl;
+       }
         // https://github.com/uber/deck.gl/issues/2114
         /*
 			  const viewPort = WebMercartorViewport({
@@ -72,7 +83,7 @@ HTMLWidgets.widget({
 			  console.log( viewPort );
 			  */
 
-			    window[el.id + 'map'] = deckgl;
+
 			    md_initialise_map(el, x);
       },
 
