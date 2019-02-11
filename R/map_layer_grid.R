@@ -23,6 +23,12 @@ mapdeckGridDependency <- function() {
 #' @param cell_size size of each cell in meters
 #' @param extruded logical indicating if cells are elevated or not
 #' @param elevation_scale cell elevation multiplier
+#' @param elevation column containing the elevation of the value. This is used to calculate the
+#' height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
+#' within the \code{radius}. If NULL, the number of coordinates is used.
+#' @param colour column containing numeric values to colour by.
+#' The colour is calculated by the sum of values within the \code{radius}.
+#' If NULL, the number of coordinates is used.
 #'
 #' @inheritSection add_polygon data
 #'
@@ -78,22 +84,33 @@ add_grid <- function(
 	lon = NULL,
 	lat = NULL,
 	polyline = NULL,
-	colour_range = NULL,
 	cell_size = 1000,
 	extruded = TRUE,
+	elevation = NULL,
 	elevation_scale = 1,
+	colour = NULL,
+	colour_range = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	layer_id = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
-	digits = 6
+	digits = 6,
+	transitions = NULL
 ) {
 
 	l <- list()
-	l[["lon"]] <- force(lon)
-	l[["lat"]] <- force(lat)
-	l[["polyline"]] <- force(polyline)
+	l[["lon"]] <- force( lon )
+	l[["lat"]] <- force( lat )
+	l[["polyline"]] <- force( polyline )
+	l[["elevation"]] <- force( elevation )
+	l[["colour"]] <- force( colour )
+
+	use_weight <- FALSE
+	if(!is.null(elevation)) use_weight <- TRUE
+
+	use_colour <- FALSE
+	if(!is.null(colour)) use_colour <- TRUE
 
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
 
@@ -146,10 +163,13 @@ add_grid <- function(
 		jsfunc <- "add_grid_polyline"
 	}
 
+	js_transitions <- resolve_transitions( transitions, "grid" )
+
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, cell_size,
 		jsonify::to_json(extruded, unbox = TRUE), elevation_scale,
-		colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer
+		colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer,
+		js_transitions, use_weight, use_colour
 		)
 }
 
