@@ -114,6 +114,7 @@ void main(void) {
     mousePosition: [0, 0]
   };
 
+
   class ArcBrushingLayer extends ArcLayer {
   	getShaders() {
   		return Object.assign({}, super.getShaders(), {
@@ -127,8 +128,8 @@ void main(void) {
 	      brushSource: this.props.brushSource,
 	      brushTarget: this.props.brushTarget,
 	      brushRadius: this.props.brushRadius,
-	      mousePos: this.props.mousePosition
-	        ? new Float32Array(this.unproject(this.props.mousePosition))
+	      mousePos: this.state.mousePosition
+	        ? new Float32Array(this.unproject(this.state.mousePosition))
 	        : defaultProps.mousePosition,
 	      enableBrushing: this.props.enableBrushing
 	    });
@@ -136,6 +137,7 @@ void main(void) {
 	    super.draw(newOpts);
 	  }
   }
+
 
   ArcBrushingLayer.defaultProps = defaultProps;
   ArcBrushingLayer.layerName = 'ArcBrushingLayer';
@@ -178,6 +180,7 @@ void main(void) {
     //TODO(can't call setState without having set the state in the constructor
     // So I need to find a way to access the laeyr's state constructor so I can set
     // mousePosition: null)
+    /*
 	  var arcLayer = new ArcBrushingLayer({
 	  	map_id: map_id,
 	    id: 'arc-'+layer_id,
@@ -199,6 +202,14 @@ void main(void) {
 	  });
 
 	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
+	  */
+
+    console.log("arcLayer.state.mousePosition");
+    console.log( arcLayer.state.mousePosition );
+	  arcLayer.setState({mousePosition: [evt.offsetX, evt.offsetY] });
+
+//	  console.log( "ArcBrushingLayer.draw");
+//	  ArcBrushingLayer.draw;
 
   	// Perhaps this is where/why I need to extedn ArcLayer, and define it with a new state?
   	// state gets set on the React.Component, not the layer...
@@ -206,6 +217,7 @@ void main(void) {
 
   }
 
+  /*
   var myLeaveListener = function(evt) {
     var arcLayer = new ArcBrushingLayer({
 	  	map_id: map_id,
@@ -228,9 +240,10 @@ void main(void) {
 	  });
 	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
   }
+  */
 
   document.addEventListener('mousemove', myListener, false);
-  document.addEventListener('mouseleave', myLeaveListener, false);
+  //document.addEventListener('mouseleave', myLeaveListener, false);
 
    //var av = arcLayer.getShaders().vs;
    //var af = arcLayer.getShaders().fs;
@@ -254,8 +267,8 @@ void main(void) {
       brushSource: this.props.brushSource,
       brushTarget: this.props.brushTarget,
       brushRadius: this.props.brushRadius,
-      mousePos: this.props.mousePosition
-        ? new Float32Array(this.unproject(this.props.mousePosition))
+      mousePos: this.state.mousePosition
+        ? new Float32Array(this.unproject(this.state.mousePosition))
         : defaultProps.mousePosition,
       enableBrushing: this.props.enableBrushing
     });
