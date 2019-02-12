@@ -1,13 +1,14 @@
 mapdeckLineDependency <- function() {
 	list(
-		htmltools::htmlDependency(
-			"line",
-			"1.0.0",
-			system.file("htmlwidgets/lib/line", package = "mapdeck"),
+		createHtmlDependency(
+			name = "line",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/line", package = "mapdeck"),
 			script = c("line.js")
 		)
 	)
 }
+
 
 
 #' Add line
@@ -15,13 +16,30 @@ mapdeckLineDependency <- function() {
 #' The Line Layer renders raised lines joining pairs of source and target coordinates
 #'
 #' @inheritParams add_arc
-#' @param stroke_opacity value between 1 and 255. Either a string specifying the
-#' column of \code{data} containing the stroke opacity of each shape, or a value
-#' between 1 and 255 to be applied to all the shapes
-#' @param stroke_colour variable or hex colour to use as the ending stroke colour
+#' @param stroke_opacity Either a string specifying the column of \code{data}
+#' containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+#' to be applied to all the shapes
+#' @param stroke_colour variable or hex colour to use as the ending stroke colour.
 #'
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
+#'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny)
+#' and on WebGL-2 supported browsers and hardware.
+#'
+#' The time is in milliseconds
+#'
+#' Available transitions for line
+#'
+#' list(
+#' origin = 0,
+#' destination = 0,
+#' stroke_colour = 0,
+#' stroke_width = 0
+#' )
 #'
 #' @examples
 #' \donttest{
@@ -34,7 +52,7 @@ mapdeckLineDependency <- function() {
 #' flights$id <- seq_len(nrow(flights))
 #' flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 #'
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
 #'   add_line(
 #'     data = flights
 #'     , layer_id = "line_layer"
@@ -93,22 +111,19 @@ add_line <- function(
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
-	legend_options = NULL
+	legend_options = NULL,
+	legend_format = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
-
-	# l <- as.list( match.call() )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["layer_id"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
 
 	l <- list()
 	l[["origin"]] <- force( origin )
 	l[["destination"]] <- force( destination)
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_width"]] <- force( stroke_width )
-	l[["stroke_opacity"]] <- force( stroke_opacity )
+	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
 	l[["tooltip"]] <- force( tooltip )
 	l[["id"]] <- force( id )
 	l[["na_colour"]] <- force(na_colour)
@@ -118,9 +133,18 @@ add_line <- function(
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_od_data( data, l, origin, destination )
 
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
+	}
+
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
 	tp <- l[["data_type"]]
@@ -130,21 +154,27 @@ add_line <- function(
 	checkHexAlpha(highlight_colour)
 
 	map <- addDependency(map, mapdeckLineDependency())
-	data_types <- data_types( data )
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
-		shape <- rcpp_line_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_line_geojson( data, l, geometry_column )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
-		shape <- rcpp_line_geojson_df( data, data_types, l, geometry_column )
+		shape <- rcpp_line_geojson_df( data, l, geometry_column )
 	}
 	# } else if ( tp == "sfencoded" ) {
 	# 	geometry_column <- "geometry"
-	# 	shape <- rcpp_line_polyline( data, data_types, l, geometry_column )
+	# 	shape <- rcpp_line_polyline( data, l, geometry_column )
 	# }
 
-	invoke_method(map, "add_line_geo", shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	js_transitions <- resolve_transitions( transitions, "line" )
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+
+	invoke_method(
+		map, "add_line_geo", shape[["data"]], layer_id, auto_highlight,
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		js_transitions
+		)
 }
 
 
@@ -153,6 +183,6 @@ add_line <- function(
 #' @export
 clear_line <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "line")
-	invoke_method(map, "clear_line", layer_id )
+	invoke_method(map, "md_layer_clear", layer_id, "line" )
 }
 

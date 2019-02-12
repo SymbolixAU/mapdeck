@@ -4,15 +4,19 @@
 \alias{mapdeck_view}
 \title{Mapdeck view}
 \usage{
-mapdeck_view(map, location, zoom = 6, duration = 0,
-  transition = c("linear", "fly"))
+mapdeck_view(map, location = NULL, zoom = NULL, pitch = NULL,
+  bearing = NULL, duration = NULL, transition = c("linear", "fly"))
 }
 \arguments{
 \item{map}{a \code{mapdeck} map object}
 
-\item{location}{vector of lon and lat coordinates (in that order)}
+\item{location}{unnamed vector of lon and lat coordinates (in that order)}
 
 \item{zoom}{zoom level of the map}
+
+\item{pitch}{the pitch angle of the map}
+
+\item{bearing}{bearing of the map between 0 and 360}
 
 \item{duration}{time in milliseconds of the transition}
 

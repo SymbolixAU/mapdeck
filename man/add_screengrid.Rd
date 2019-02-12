@@ -5,20 +5,21 @@
 \title{Add Screengrid}
 \usage{
 add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, weight = NULL,
-  colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
-  opacity = 0.8, cell_size = 50, layer_id = NULL, id = NULL)
+  polyline = NULL, weight = NULL, colour_range = NULL,
+  opacity = 0.8, cell_size = 50, layer_id = NULL,
+  update_view = TRUE, focus_layer = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer}
+\item{data}{data to be used in the layer. All coordinates are expected to be in
+Web Mercator Projection}
 
 \item{lon}{column containing longitude values}
 
 \item{lat}{column containing latitude values}
 
-\item{polyline}{column of \code{data} containing the polylines}
+\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{weight}{the weight of each value}
 
@@ -32,7 +33,9 @@ add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
 The Screen Grid Layer takes in an array of latitude and longitude coordinated points,
@@ -41,6 +44,15 @@ aggregates them into histogram bins and renders as a grid
 \details{
 \code{add_screengrid} supports POINT and MULTIPOINT sf objects
 }
+\section{data}{
+
+
+If the \code{data} is a simple feature object, the geometry column is automatically
+detected. If the sf object contains more than one geometry column and you want to use a specific one,
+you'll need to set the active geometry using \code{sf::st_geometry( x ) <- "your_column" },
+where \code{"your_column"} is the name of the column you're activating. See \code{?sf::st_geometry}
+}
+
 \examples{
 \donttest{
 

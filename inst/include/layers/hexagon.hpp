@@ -6,7 +6,7 @@
 namespace mapdeck {
 namespace hexagon {
 
-	const std::unordered_map< std::string, std::string > hexagon_colours = {};
+	const std::unordered_map< std::string, std::string > hexagon_colours;
 
 	const Rcpp::StringVector hexagon_legend = Rcpp::StringVector::create();
 

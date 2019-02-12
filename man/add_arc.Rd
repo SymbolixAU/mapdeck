@@ -9,12 +9,15 @@ add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
   stroke_from_opacity = NULL, stroke_to = NULL,
   stroke_to_opacity = NULL, stroke_width = NULL, tooltip = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF", legend = F,
-  legend_options = NULL, palette = "viridis")
+  legend_options = NULL, legend_format = NULL, palette = "viridis",
+  na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL, digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer}
+\item{data}{data to be used in the layer. All coordinates are expected to be in
+Web Mercator Projection}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
@@ -28,17 +31,17 @@ to conflict and not plot correctly}
 
 \item{stroke_from}{variable or hex colour to use as the staring stroke colour}
 
-\item{stroke_from_opacity}{Either a string specifying the
-column of \code{data} containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{stroke_from_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes}
 
 \item{stroke_to}{variable or hex colour to use as the ending stroke colour}
 
-\item{stroke_to_opacity}{Either a string specifying the
-column of \code{data} containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{stroke_to_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes}
 
-\item{stroke_width}{width of the stroke}
+\item{stroke_width}{width of the stroke in pixels}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -51,12 +54,22 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{legend_options}{A list of options for controlling the legend.}
 
-\item{palette}{string or matrix. String is either one of "viridis","inferno",
-"magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
-between [0, 255], where the 4th column represents the alpha.}
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
 
-\item{digits}{integer. Use this parameter to specify how many digits (decimal places)
-should be used for the latitude / longitude coordinates.}
+\item{palette}{string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
+A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
+where the 4th column represents the alpha.}
+
+\item{na_colour}{hex string colour to use for NA values}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{transitions}{list specifying the duration of transitions.}
+
+\item{digits}{The number of digits to round GeoJSON lon & lat coordinates. Useful for
+reducing file sizes. Defaults to 6}
 }
 \description{
 The Arc Layer renders raised arcs joining pairs of source and target coordinates
@@ -70,6 +83,13 @@ be expanded to two rows of single POINTs.
 Therefore, if the origin is a MULTIPOINT of two points, and the destination is
 a single POINT, the code will error as there will be an uneven number of rows
 }
+\section{data}{
+
+
+If \code{data} is a simple feature object, you need to supply the origin and destination
+columns, they aren't automatically detected.
+}
+
 \section{id}{
 
 
@@ -93,6 +113,37 @@ This should be a named list, where the names are one of
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+
+The \code{legend_format} can be used to control the format of the values in the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{fill_colour}
+  \item{stroke_colour}
+}
+
+depending on which type of colouring the layer supports.
+
+The list elements must be functions to apply to the values in the legend.
+}
+
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny)
+and on WebGL-2 supported browsers and hardware.
+
+The time is in milliseconds
+
+Available transitions for arc
+
+list(
+origin = 0,
+destination = 0,
+stroke_from = 0,
+stroke_to = 0,
+stroke_width = 0
+)
 }
 
 \examples{
@@ -107,7 +158,7 @@ flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
   add_arc(
   data = flights
   , layer_id = "arc_layer"

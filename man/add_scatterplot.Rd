@@ -6,29 +6,41 @@
 \usage{
 add_scatterplot(map, data = get_map_data(map), lon = NULL,
   lat = NULL, polyline = NULL, radius = NULL, fill_colour = NULL,
-  fill_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
+  fill_opacity = NULL, stroke_colour = NULL, stroke_width = NULL,
+  stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL)
+  legend_options = NULL, legend_format = NULL, update_view = TRUE,
+  focus_layer = FALSE, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer}
+\item{data}{data to be used in the layer. All coordinates are expected to be in
+Web Mercator Projection}
 
 \item{lon}{column containing longitude values}
 
 \item{lat}{column containing latitude values}
 
-\item{polyline}{column of \code{data} containing the polylines}
+\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{radius}{in metres}
 
-\item{fill_colour}{column of \code{data} or hex colour for the fill colour}
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
 
-\item{fill_opacity}{value between 1 and 255. Either a string specifying the
-column of \code{data} containing the fill opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{fill_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes}
+
+\item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
+\code{elevation} is ignored.}
+
+\item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored.}
+
+\item{stroke_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -42,9 +54,9 @@ to conflict and not plot correctly}
 
 \item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
-\item{palette}{string or matrix. String is either one of "viridis","inferno",
-"magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
-between [0, 255], where the 4th column represents the alpha.}
+\item{palette}{string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
+A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
+where the 4th column represents the alpha.}
 
 \item{na_colour}{hex string colour to use for NA values}
 
@@ -52,6 +64,14 @@ between [0, 255], where the 4th column represents the alpha.}
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
+
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
 The Scatterplot Layer takes in coordinate points and renders them as circles
@@ -60,6 +80,33 @@ with a certain radius.
 \details{
 \code{add_scatterplot} supports POINT and MULTIPOINT sf objects
 }
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny)
+and on WebGL-2 supported browsers and hardware.
+
+The time is in milliseconds
+
+Available transitions for scatterplot
+
+list(
+position = 0,
+fill_colour = 0,
+radius = 0
+)
+}
+
+\section{data}{
+
+
+If the \code{data} is a simple feature object, the geometry column is automatically
+detected. If the sf object contains more than one geometry column and you want to use a specific one,
+you'll need to set the active geometry using \code{sf::st_geometry( x ) <- "your_column" },
+where \code{"your_column"} is the name of the column you're activating. See \code{?sf::st_geometry}
+}
+
 \section{legend}{
 
 
@@ -71,6 +118,17 @@ This should be a named list, where the names are one of
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+
+The \code{legend_format} can be used to control the format of the values in the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{fill_colour}
+  \item{stroke_colour}
+}
+
+depending on which type of colouring the layer supports.
+
+The list elements must be functions to apply to the values in the legend.
 }
 
 \section{id}{
@@ -91,7 +149,7 @@ you are clicking on
 ## You need a valid access token from Mapbox
 key <- 'abc'
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_scatterplot(
   data = capitals
   , lat = "lat"
@@ -109,7 +167,7 @@ df <- read.csv(paste0(
 
 df <- df[ !is.na(df$lng), ]
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_scatterplot(
   data = df
   , lat = "lat"
@@ -121,7 +179,7 @@ add_scatterplot(
 library(sf)
 sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_scatterplot(
   data = sf
   , radius = 100000

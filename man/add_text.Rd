@@ -10,26 +10,28 @@ add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
   alignment_baseline = NULL, tooltip = NULL, layer_id = NULL,
   id = NULL, auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL)
+  legend_options = NULL, update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer}
+\item{data}{data to be used in the layer. All coordinates are expected to be in
+Web Mercator Projection}
 
-\item{text}{column of \code{data} containing the text}
+\item{text}{column of \code{data} containing the text. The data must be a character.}
 
 \item{lon}{column containing longitude values}
 
 \item{lat}{column containing latitude values}
 
-\item{polyline}{column of \code{data} containing the polylines}
+\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
-\item{fill_colour}{column of \code{data} or hex colour for the fill colour}
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
 
-\item{fill_opacity}{value between 1 and 255. Either a string specifying the
-column of \code{data} containing the fill opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{fill_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes}
 
 \item{size}{column of \code{data} containing the size of the text}
 
@@ -53,9 +55,9 @@ to conflict and not plot correctly}
 
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
-\item{palette}{string or matrix. String is either one of "viridis","inferno",
-"magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
-between [0, 255], where the 4th column represents the alpha.}
+\item{palette}{string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
+A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
+where the 4th column represents the alpha.}
 
 \item{na_colour}{hex string colour to use for NA values}
 
@@ -63,14 +65,38 @@ between [0, 255], where the 4th column represents the alpha.}
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
-The Text Layer takes in coordinate points and renders them as circles
-with a certain radius.
+The Text Layer renders text labels on the map
 }
 \details{
 \code{add_text} supports POINT and MULTIPOINT sf objects
 }
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny)
+and on WebGL-2 supported browsers and hardware.
+
+The time is in milliseconds
+
+Available transitions for text
+
+list(
+position = 0,
+fill_colour = 0,
+angle = 0,
+size = 0
+)
+}
+
 \section{legend}{
 
 
@@ -82,6 +108,17 @@ This should be a named list, where the names are one of
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+
+The \code{legend_format} can be used to control the format of the values in the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{fill_colour}
+  \item{stroke_colour}
+}
+
+depending on which type of colouring the layer supports.
+
+The list elements must be functions to apply to the values in the legend.
 }
 
 \section{id}{

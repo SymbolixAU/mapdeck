@@ -6,6 +6,7 @@ test_that("dependencies are loaded", {
 		mapdeck:::mapdeckArcDependency()
 		, mapdeck:::mapdeckGeojsonDependency()
 		, mapdeck:::mapdeckGridDependency()
+		, mapdeck:::mapdeckHexagonDependency()
 		, mapdeck:::mapdeckLineDependency()
 		, mapdeck:::mapdeckPathDependency()
 		, mapdeck:::mapdeckPointcloudDependency()
@@ -18,7 +19,7 @@ test_that("dependencies are loaded", {
 	n <- sapply(lst, function(x) x[[1]]$name)
 	cl <- sapply(lst, function(x) attr(x[[1]], 'class') )
 
-	expect_true(all(c("arc", "geojson", "grid","line","path","pointcloud","polygon","scatterplot", "screengrid","text") %in% n))
+	expect_true(all(c("arc","geojson", "grid","hexagon","line","path","pointcloud","polygon","scatterplot", "screengrid","text") %in% n))
 	expect_true(unique(cl) == "html_dependency")
 
 })

@@ -6,7 +6,7 @@
 namespace mapdeck {
 namespace screengrid {
 
-  const std::unordered_map< std::string, std::string > screengrid_colours = {};
+  const std::unordered_map< std::string, std::string > screengrid_colours;
 
   const Rcpp::StringVector screengrid_legend = Rcpp::StringVector::create();
 

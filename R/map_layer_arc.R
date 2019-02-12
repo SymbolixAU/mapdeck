@@ -1,9 +1,9 @@
 mapdeckArcDependency <- function() {
 	list(
-		htmltools::htmlDependency(
-			"arc",
-			"1.0.0",
-			system.file("htmlwidgets/lib/arc", package = "mapdeck"),
+		createHtmlDependency(
+			name = "arc",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/arc", package = "mapdeck"),
 			script = c("arc.js")
 		)
 	)
@@ -15,7 +15,8 @@ mapdeckArcDependency <- function() {
 #' The Arc Layer renders raised arcs joining pairs of source and target coordinates
 #'
 #' @param map a mapdeck map object
-#' @param data data to be used in the layer
+#' @param data data to be used in the layer. All coordinates are expected to be in
+#' Web Mercator Projection
 #' @param layer_id single value specifying an id for the layer. Use this value to
 #' distinguish between shape layers of the same type. Layers with the same id are likely
 #' to conflict and not plot correctly
@@ -23,25 +24,35 @@ mapdeckArcDependency <- function() {
 #' @param destination vector of longitude and latitude columns, or an \code{sfc} column
 #' @param id an id value in \code{data} to identify layers when interacting in Shiny apps.
 #' @param stroke_from variable or hex colour to use as the staring stroke colour
-#' @param stroke_from_opacity Either a string specifying the
-#' column of \code{data} containing the stroke opacity of each shape, or a value
-#' between 1 and 255 to be applied to all the shapes
+#' @param stroke_from_opacity Either a string specifying the column of \code{data}
+#' containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+#' to be applied to all the shapes
 #' @param stroke_to variable or hex colour to use as the ending stroke colour
-#' @param stroke_to_opacity Either a string specifying the
-#' column of \code{data} containing the stroke opacity of each shape, or a value
-#' between 1 and 255 to be applied to all the shapes
-#' @param stroke_width width of the stroke
+#' @param stroke_to_opacity Either a string specifying the column of \code{data}
+#' containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+#' to be applied to all the shapes
+#' @param stroke_width width of the stroke in pixels
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
 #' @param highlight_colour hex string colour to use for highlighting. Must contain the alpha component.
-#' @param digits integer. Use this parameter to specify how many digits (decimal places)
-#' should be used for the latitude / longitude coordinates.
-#' @param palette string or matrix. String is either one of "viridis","inferno",
-#' "magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
-#' between [0, 255], where the 4th column represents the alpha.
+#' @param palette string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
+#' A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
+#' where the 4th column represents the alpha.
+#' @param na_colour hex string colour to use for NA values
 #' @param legend either a logical indiciating if the legend(s) should be displayed, or
 #' a named list indicating which colour attributes should be included in the legend.
 #' @param legend_options A list of options for controlling the legend.
+#' @param legend_format A list containing functions to apply to legend values. See section legend
+#' @param update_view logical indicating if the map should update the bounds to include this layer
+#' @param focus_layer logical indicating if the map should update the bounds to only include this layer
+#' @param transitions list specifying the duration of transitions.
+#' @param digits The number of digits to round GeoJSON lon & lat coordinates. Useful for
+#' reducing file sizes. Defaults to 6
+#'
+#' @section data:
+#'
+#' If \code{data} is a simple feature object, you need to supply the origin and destination
+#' columns, they aren't automatically detected.
 #'
 #' @section id:
 #'
@@ -64,6 +75,36 @@ mapdeckArcDependency <- function() {
 #'
 #' If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
 #'
+#' The \code{legend_format} can be used to control the format of the values in the legend.
+#' This should be a named list, where the names are one of
+#' \itemize{
+#'   \item{fill_colour}
+#'   \item{stroke_colour}
+#' }
+#'
+#' depending on which type of colouring the layer supports.
+#'
+#' The list elements must be functions to apply to the values in the legend.
+#'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny)
+#' and on WebGL-2 supported browsers and hardware.
+#'
+#' The time is in milliseconds
+#'
+#' Available transitions for arc
+#'
+#' list(
+#' origin = 0,
+#' destination = 0,
+#' stroke_from = 0,
+#' stroke_to = 0,
+#' stroke_width = 0
+#' )
+#'
+#'
 #' @examples
 #' \donttest{
 #'
@@ -76,7 +117,7 @@ mapdeckArcDependency <- function() {
 #' flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 #' flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 #'
-#' mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
 #'   add_arc(
 #'   data = flights
 #'   , layer_id = "arc_layer"
@@ -144,24 +185,22 @@ add_arc <- function(
 	highlight_colour = "#AAFFFFFF",
 	legend = F,
 	legend_options = NULL,
-	palette = "viridis"
+	legend_format = NULL,
+	palette = "viridis",
+	na_colour = "#808080FF",
+	update_view = TRUE,
+	focus_layer = FALSE,
+	transitions = NULL,
+	digits = 6
 ) {
-
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
-	# l[["light_settings"]] <- NULL
-	# l[["layer_id"]] <- NULL
 
 	l <- list()
 	l[["origin"]] <- force(origin)
 	l[["destination"]] <- force(destination)
 	l[["stroke_from"]] <- force(stroke_from)
 	l[["stroke_to"]] <- force(stroke_to)
-	l[["stroke_from_opacity"]] <- force(stroke_from_opacity)
-	l[["stroke_to_opacity"]] <- force(stroke_to_opacity)
+	l[["stroke_from_opacity"]] <- resolve_opacity(stroke_from_opacity)
+	l[["stroke_to_opacity"]] <- resolve_opacity(stroke_to_opacity)
 	l[["stroke_width"]] <- force(stroke_width)
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
@@ -172,6 +211,10 @@ add_arc <- function(
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_od_data( data, l, origin, destination )
 
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
 	layer_id <- layerId(layer_id, "arc")
 	checkHexAlpha(highlight_colour)
 
@@ -180,27 +223,39 @@ add_arc <- function(
 		l[["data"]] <- NULL
 	}
 
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
+	}
+
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 	jsfunc <- "add_arc_geo"
 
 	map <- addDependency(map, mapdeckArcDependency())
-	data_types <- data_types( data )
 
   if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
-		shape <- rcpp_arc_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_arc_geojson( data, l, geometry_column, digits )
   } else if ( tp == "df" ) {
   	geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
-  	shape <- rcpp_arc_geojson_df( data, data_types, l, geometry_column )
+  	shape <- rcpp_arc_geojson_df( data, l, geometry_column, digits )
   } else if ( tp == "sfencoded" ) {
   	geometry_column <- c("origin", "destination")
-  	shape <- rcpp_arc_polyline( data, data_types, l, geometry_column )
+  	shape <- rcpp_arc_polyline( data, l, geometry_column )
   	jsfunc <- "add_arc_polyline"
   }
 
-	invoke_method(map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour, shape[["legend"]] )
+	js_transition <- resolve_transitions( transitions, "arc" )
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition
+		)
 }
+
+
 
 #' Clear Arc
 #'
@@ -211,5 +266,5 @@ add_arc <- function(
 #' @export
 clear_arc <- function( map, layer_id = NULL ) {
 	layer_id <- layerId(layer_id, "arc")
-	invoke_method(map, "clear_arc", layer_id )
+	invoke_method(map, "md_layer_clear", layer_id, "arc" )
 }

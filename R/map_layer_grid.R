@@ -1,9 +1,9 @@
 mapdeckGridDependency <- function() {
 	list(
-		htmltools::htmlDependency(
-			"grid",
-			"1.0.0",
-			system.file("htmlwidgets/lib/grid", package = "mapdeck"),
+		createHtmlDependency(
+			name = "grid",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/grid", package = "mapdeck"),
 			script = c("grid.js")
 		)
 	)
@@ -23,6 +23,14 @@ mapdeckGridDependency <- function() {
 #' @param cell_size size of each cell in meters
 #' @param extruded logical indicating if cells are elevated or not
 #' @param elevation_scale cell elevation multiplier
+#' @param elevation column containing the elevation of the value. This is used to calculate the
+#' height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
+#' within the \code{radius}. If NULL, the number of coordinates is used.
+#' @param colour column containing numeric values to colour by.
+#' The colour is calculated by the sum of values within the \code{radius}.
+#' If NULL, the number of coordinates is used.
+#'
+#' @inheritSection add_polygon data
 #'
 #' @examples
 #' \donttest{
@@ -76,46 +84,67 @@ add_grid <- function(
 	lon = NULL,
 	lat = NULL,
 	polyline = NULL,
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
 	cell_size = 1000,
 	extruded = TRUE,
+	elevation = NULL,
 	elevation_scale = 1,
+	colour = NULL,
+	colour_range = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	layer_id = NULL,
-	id = NULL
+	update_view = TRUE,
+	focus_layer = FALSE,
+	digits = 6,
+	transitions = NULL
 ) {
 
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["elevation_scale"]] <- NULL
-	# l[["cell_size"]] <- NULL
-	# l[["colour_range"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
-	# l[["layer_id"]] <- NULL
 	l <- list()
-	l[["lon"]] <- force(lon)
-	l[["lat"]] <- force(lat)
-	l[["polyline"]] <- force(polyline)
+	l[["lon"]] <- force( lon )
+	l[["lat"]] <- force( lat )
+	l[["polyline"]] <- force( polyline )
+	l[["elevation"]] <- force( elevation )
+	l[["colour"]] <- force( colour )
+
+	use_weight <- FALSE
+	if(!is.null(elevation)) use_weight <- TRUE
+
+	use_colour <- FALSE
+	if(!is.null(colour)) use_colour <- TRUE
 
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
 
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
+	}
+
 	## parmater checks
 	checkNumeric(elevation_scale)
 	checkNumeric(cell_size)
+
+	if( is.null( colour_range ) ) {
+		colour_range <- colourvalues::colour_values(1:6, palette = "viridis")
+	}
+
+	if(length(colour_range) != 6)
+		stop("colour_range must have 6 hex colours")
+
 	checkHex(colour_range)
+
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "grid")
 
 	map <- addDependency(map, mapdeckGridDependency())
-	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
@@ -124,22 +153,23 @@ add_grid <- function(
 
 	if ( tp == "sf" ) {
 	  geometry_column <- c( "geometry" )
-	  shape <- rcpp_grid_geojson( data, data_types, l, geometry_column )
+	  shape <- rcpp_grid_geojson( data, l, geometry_column, digits )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_grid_geojson_df( data, data_types, l, geometry_column )
+		shape <- rcpp_grid_geojson_df( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_grid_polyline( data, data_types, l, geometry_column )
+		shape <- rcpp_grid_polyline( data, l, geometry_column )
 		jsfunc <- "add_grid_polyline"
 	}
 
-	# print( shape )
+	js_transitions <- resolve_transitions( transitions, "grid" )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, cell_size,
-		jsonlite::toJSON(extruded, auto_unbox = T), elevation_scale,
-		colour_range, auto_highlight, highlight_colour
+		jsonify::to_json(extruded, unbox = TRUE), elevation_scale,
+		colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer,
+		js_transitions, use_weight, use_colour
 		)
 }
 
@@ -148,5 +178,5 @@ add_grid <- function(
 #' @export
 clear_grid <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "grid")
-	invoke_method(map, "clear_grid", layer_id )
+	invoke_method(map, "md_layer_clear", layer_id, "grid" )
 }

@@ -1,9 +1,9 @@
 mapdeckScreengridDependency <- function() {
 	list(
-		htmltools::htmlDependency(
-			"screengrid",
-			"1.0.0",
-			system.file("htmlwidgets/lib/screengrid", package = "mapdeck"),
+		createHtmlDependency(
+			name = "screengrid",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/screengrid", package = "mapdeck"),
 			script = c("screengrid.js")
 		)
 	)
@@ -22,6 +22,8 @@ mapdeckScreengridDependency <- function() {
 #' @param colour_range vector of 6 hex colours
 #' @param opacity opacity of cells. Value between 0 and 1
 #' @param cell_size size of grid squares in pixels
+#'
+#' @inheritSection add_polygon data
 #'
 #' @examples
 #' \donttest{
@@ -74,36 +76,33 @@ add_screengrid <- function(
 	lat = NULL,
 	polyline = NULL,
 	weight = NULL,
-	colour_range = colourvalues::colour_values(1:6, palette = "viridis"),
+	colour_range = NULL,
 	opacity = 0.8,
 	cell_size = 50,
 	layer_id = NULL,
-	id = NULL
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
-
-	# l <- as.list( match.call( expand.dots = F) )
-	# l[[1]] <- NULL
-	# l[["data"]] <- NULL
-	# l[["map"]] <- NULL
-	# l[["elevation_scale"]] <- NULL
-	# l[["cell_size"]] <- NULL
-	# l[["colour_range"]] <- NULL
-	# l[["auto_highlight"]] <- NULL
-	# l[["layer_id"]] <- NULL
-	# l[["digits"]] <- NULL
-
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["weight"]] <- force( weight )
 	l[["lon"]] <- force( lon )
-	l[["lat"]] <- force( lat)
-	l[["id"]] <- force(id)
+	l[["lat"]] <- force( lat )
 
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
+	}
+
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
 	}
 
 	## parmater checks
@@ -112,12 +111,17 @@ add_screengrid <- function(
 	checkNumeric(cell_size)
 	layer_id <- layerId(layer_id, "screengrid")
 
+	if( is.null( colour_range ) ) {
+		colour_range <- colourvalues::colour_values(1:6, palette = "viridis")
+	}
+
 	if(length(colour_range) != 6)
 		stop("colour_range must have 6 hex colours")
 	## end parameter checks
 
+	checkHex(colour_range)
+
 	map <- addDependency(map, mapdeckScreengridDependency())
-	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
@@ -125,17 +129,20 @@ add_screengrid <- function(
 	jsfunc <- "add_screengrid_geo"
 	if( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_screengrid_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_screengrid_geojson( data, l, geometry_column )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_screengrid_geojson_df( data, data_types, l, geometry_column )
+		shape <- rcpp_screengrid_geojson_df( data, l, geometry_column )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_screengrid_polyline( data, data_types, l, geometry_column )
+		shape <- rcpp_screengrid_polyline( data, l, geometry_column )
 		jsfunc <- "add_screengrid_polyline"
 	}
 
-	invoke_method(map, jsfunc, shape[["data"]], layer_id, opacity, cell_size, colour_range )
+	invoke_method(
+		map, jsfunc, shape[["data"]], layer_id, opacity, cell_size, colour_range,
+		bbox, update_view, focus_layer
+		)
 }
 
 
@@ -143,6 +150,6 @@ add_screengrid <- function(
 #' @export
 clear_screengrid <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "screengrid")
-	invoke_method(map, "clear_screengrid", layer_id )
+	invoke_method(map, "md_layer_clear", layer_id, "screengrid" )
 }
 

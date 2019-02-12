@@ -6,6 +6,8 @@
 namespace mapdeck {
 namespace polygon {
 
+  //int x;
+
 	const std::unordered_map< std::string, std::string > polygon_colours({
 		{ "fill_colour", "fill_opacity" },
 		{ "stroke_colour", "stroke_opacity" }

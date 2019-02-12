@@ -2,6 +2,11 @@ context("sf")
 
 test_that("sf objects are subset correctly", {
 
+	testthat::skip_on_cran()
+	testthat::skip_on_travis()
+	library(sf)
+
+
 	f <- function(sf) {
 		c( mapdeck:::sf_needs_subsetting( sf, "geometry", "POINT")
 			 , mapdeck:::sf_needs_subsetting( sf, "geometry", "MULTIPOINT")

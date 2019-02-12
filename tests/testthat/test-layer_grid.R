@@ -3,6 +3,9 @@ context("grid")
 
 test_that("add_grid accepts multiple objects", {
 
+	testthat::skip_on_cran()
+	testthat::skip_on_travis()
+
 	geo <- '[{"type":"Feature","properties":{},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
 	poly <- '[{"polyline":"_ifpEo`ydL"}]'
 
@@ -36,3 +39,4 @@ test_that("add_grid accepts multiple objects", {
 	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), geo )
 
 })
+

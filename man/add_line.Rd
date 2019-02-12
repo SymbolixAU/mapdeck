@@ -8,12 +8,15 @@ add_line(map, data = get_map_data(map), layer_id = NULL, origin,
   destination, id = NULL, stroke_colour = NULL, stroke_width = NULL,
   stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL)
+  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
+  legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer}
+\item{data}{data to be used in the layer. All coordinates are expected to be in
+Web Mercator Projection}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
@@ -25,13 +28,13 @@ to conflict and not plot correctly}
 
 \item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
-\item{stroke_colour}{variable or hex colour to use as the ending stroke colour}
+\item{stroke_colour}{variable or hex colour to use as the ending stroke colour.}
 
-\item{stroke_width}{width of the stroke}
+\item{stroke_width}{width of the stroke in pixels}
 
-\item{stroke_opacity}{value between 1 and 255. Either a string specifying the
-column of \code{data} containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{stroke_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -39,14 +42,24 @@ between 1 and 255 to be applied to all the shapes}
 
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
-\item{palette}{string or matrix. String is either one of "viridis","inferno",
-"magma","plasma" or "cividis". A matrix is a 3 or 4 column numeric matrix of values
-between [0, 255], where the 4th column represents the alpha.}
+\item{palette}{string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
+A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
+where the 4th column represents the alpha.}
+
+\item{na_colour}{hex string colour to use for NA values}
 
 \item{legend}{either a logical indiciating if the legend(s) should be displayed, or
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
+
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
 The Line Layer renders raised lines joining pairs of source and target coordinates
@@ -61,6 +74,25 @@ be expanded to two rows of single POINTs.
 Therefore, if the origin is a MULTIPOINT of two points, and the destination is
 a single POINT, the code will error as there will be an uneven number of rows
 }
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny)
+and on WebGL-2 supported browsers and hardware.
+
+The time is in milliseconds
+
+Available transitions for line
+
+list(
+origin = 0,
+destination = 0,
+stroke_colour = 0,
+stroke_width = 0
+)
+}
+
 \section{legend}{
 
 
@@ -72,6 +104,17 @@ This should be a named list, where the names are one of
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+
+The \code{legend_format} can be used to control the format of the values in the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{fill_colour}
+  \item{stroke_colour}
+}
+
+depending on which type of colouring the layer supports.
+
+The list elements must be functions to apply to the values in the legend.
 }
 
 \section{id}{
@@ -97,7 +140,7 @@ flights <- read.csv(url)
 flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) \%>\%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
   add_line(
     data = flights
     , layer_id = "line_layer"

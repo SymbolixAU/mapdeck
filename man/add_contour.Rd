@@ -5,18 +5,19 @@
 \title{Add Contour}
 \usage{
 add_contour(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, cell_size = 1000, layer_id = NULL)
+  polyline = NULL, cell_size = 1000, layer_id = NULL, digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer}
+\item{data}{data to be used in the layer. All coordinates are expected to be in
+Web Mercator Projection}
 
 \item{lon}{column containing longitude values}
 
 \item{lat}{column containing latitude values}
 
-\item{polyline}{column of \code{data} containing the polylines}
+\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{cell_size}{size of each cell in meters}
 
@@ -55,7 +56,7 @@ library(sf)
 sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
 
 mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
-add_grid(
+add_contour(
   data = sf
   , cell_size = 5000
 )

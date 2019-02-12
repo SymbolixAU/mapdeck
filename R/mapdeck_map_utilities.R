@@ -110,6 +110,25 @@ doResolveFormula.data.frame = function(data, f) {
 	eval(f[[2]], data, environment(f))
 }
 
+## from htmltools::htmlDependency()
+createHtmlDependency <- function(name, version, src, script) {
+	structure(
+		list(
+			name = name
+			, version = version
+			, src = list( file = src )
+			, meta = NULL
+			, script = script
+			, stylesheet = NULL
+			, head = NULL
+			, attachment = NULL
+			, package = NULL
+			, all_files = TRUE
+		)
+		, class = "html_dependency"
+	)
+}
+
 
 addDependency <- function(map, dependencyFunction) {
 
@@ -127,7 +146,8 @@ addDependency <- function(map, dependencyFunction) {
 # Checks the layer_id parameter, and provides a default one if NULL
 # @param layer_id
 layerId <- function(layer_id, layer = c("arc", "contour", "geojson","grid","hexagon","line","path","pointcloud",
-																				"polygon","scatterplot", "screengrid","text")){
+																				"polygon","scatterplot", "screengrid","text", "title")){
+
 	layer <- match.arg( layer )
 	if (!is.null(layer_id) & length(layer_id) != 1)
 		stop("please provide a single value for 'layer_id'")

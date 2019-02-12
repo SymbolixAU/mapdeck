@@ -43,7 +43,7 @@ mapdeckContourDependency <- function() {
 #' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
 #'
 #' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
-#' add_grid(
+#' add_contour(
 #'   data = sf
 #'   , cell_size = 5000
 #' )
@@ -65,7 +65,8 @@ add_contour <- function(
 	lat = NULL,
 	polyline = NULL,
 	cell_size = 1000,
-	layer_id = NULL
+	layer_id = NULL,
+	digits = 6
 ) {
 
 	l <- list()
@@ -94,13 +95,13 @@ add_contour <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_contour_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_contour_geojson( data, l, geometry_column, digits )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_contour_geojson_df( data, data_types, l, geometry_column )
+		shape <- rcpp_contour_geojson_df( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_contour_polyline( data, data_types, l, geometry_column )
+		shape <- rcpp_contour_polyline( data, l, geometry_column )
 		jsfunc <- "add_contour_polyline"
 	}
 

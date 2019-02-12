@@ -6,7 +6,7 @@
 namespace mapdeck {
 namespace grid {
 
-	const std::unordered_map< std::string, std::string > grid_colours = {};
+	const std::unordered_map< std::string, std::string > grid_colours;
 
 	const Rcpp::StringVector grid_legend = Rcpp::StringVector::create();
 

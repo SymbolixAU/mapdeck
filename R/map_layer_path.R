@@ -1,9 +1,9 @@
 mapdeckPathDependency <- function() {
 	list(
-		htmltools::htmlDependency(
-			"path",
-			"1.0.0",
-			system.file("htmlwidgets/lib/path", package = "mapdeck"),
+		createHtmlDependency(
+			name = "path",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/path", package = "mapdeck"),
 			script = c("path.js")
 		)
 	)
@@ -16,13 +16,28 @@ mapdeckPathDependency <- function() {
 #' extruded lines with mitering.
 #'
 #' @inheritParams add_polygon
+#' @param stroke_width width of the stroke in meters
 #'
-#' @param stroke_opacity value between 1 and 255. Either a string specifying the
-#' column of \code{data} containing the stroke opacity of each shape, or a value
-#' between 1 and 255 to be applied to all the shapes
-#'
+#' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
+#'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny)
+#' and on WebGL-2 supported browsers and hardware.
+#'
+#' The time is in milliseconds
+#'
+#' Available transitions for path
+#'
+#' list(
+#' path = 0,
+#' stroke_colour = 0,
+#' stroke_width = 0
+#' )
+#'
 #'
 #' @examples
 #' \donttest{
@@ -54,7 +69,6 @@ add_path <- function(
 	map,
 	data = get_map_data(map),
 	polyline = NULL,
-	#geometry = NULL,            ## TODO( geometry - user can specify if there are more than one )
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	stroke_opacity = NULL,
@@ -66,69 +80,66 @@ add_path <- function(
 	palette = "viridis",
 	na_colour = "#808080FF",
 	legend = FALSE,
-	legend_options = NULL
+	legend_options = NULL,
+	legend_format = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE,
+	transitions = NULL
 ) {
-
-	## TODO(sf and lon/lat coordinates)
-	#message("Using development version. Please check plots carefully")
-#
-# 	l <- as.list( match.call() )
-# 	l[[1]] <- NULL
-# 	l[["data"]] <- NULL
-# 	l[["map"]] <- NULL
-# 	l[["layer_id"]] <- NULL
-# 	l[["auto_highlight"]] <- NULL
 
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["stroke_colour"]] <- force( stroke_colour)
 	l[["stroke_width"]] <- force( stroke_width )
-	l[["stroke_opacity"]] <- force( stroke_opacity )
+	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)
-
-	# l[["legend"]] <- force( legend )
-	# l[["legend_options"]] <- force( legend_options )
-	# l[["palette"]] <- force( palette )
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_data( data, l, c("LINESTRING","MULTILINESTRING") )
 
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
 
-	# print(l)
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
+	}
 
 	layer_id <- layerId(layer_id, "path")
 	checkHexAlpha( highlight_colour )
 
 	map <- addDependency(map, mapdeckPathDependency())
-	data_types <- data_types( data )
 
-	#print( l )
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		shape <- rcpp_path_geojson( data, data_types, l, geometry_column )
+		shape <- rcpp_path_geojson( data, l, geometry_column )
 		jsfunc <- "add_path_geo"
 	} else if ( tp == "sfencoded" ) {
 		jsfunc <- "add_path_polyline"
 		geometry_column <- "polyline"
-		shape <- rcpp_path_polyline( data, data_types, l, geometry_column )
+		shape <- rcpp_path_polyline( data, l, geometry_column )
 	}
 
-	# print(shape[["legend"]])
+	js_transitions <- resolve_transitions( transitions, "path" )
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
-		highlight_colour, shape[["legend"]]
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		js_transitions
 		)
 }
 
@@ -137,7 +148,7 @@ add_path <- function(
 #' @export
 clear_path <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "path")
-	invoke_method(map, "clear_path", layer_id )
+	invoke_method(map, "md_layer_clear", layer_id, "path" )
 }
 
 

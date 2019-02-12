@@ -74,7 +74,7 @@ test_that("layers are plotted", {
   layer <- add_arc(m, data = df, origin = c('lon_from', 'lat_from'), destination = c('lon_to', 'lat_to'), layer_id = layer_id)
   expect_true(all(attr(layer, 'class') == c("mapdeck","htmlwidget")))
 
-	layer <- add_geojson(m, data = df, layer_id = layer_id)
+	layer <- add_geojson(m, data = geojson, layer_id = layer_id)
 	expect_true(all(attr(layer, 'class') == c("mapdeck","htmlwidget")))
 
 	layer <- add_grid(m, data = df, lon = 'lon_from', lat = 'lat_from', layer_id = layer_id)

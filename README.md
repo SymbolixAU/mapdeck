@@ -14,7 +14,30 @@ Status](https://travis-ci.org/SymbolixAU/mapdeck.svg?branch=master)](https://tra
 [![Coverage
 Status](https://codecov.io/github/SymbolixAU/mapdeck/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/mapdeck?branch=master)
 
-Interactive maps using Mapbox GL and Deck.gl
+## What is mapdeck?
+
+An R library which lets you plot interactive maps using Mapbox GL and
+Deck.gl
+
+## What is mapbox?
+
+> Mapbox is the location data platform for mobile and web applications.
+> We provide building blocks to add location features like maps, search,
+> and navigation into any experience you create.
+
+  - <https://www.mapbox.com/about/>
+
+## What is deck.gl?
+
+> deck.gl is a WebGL-powered framework for visual exploratory data
+> analysis of large datasets.
+
+  - <http://deck.gl/#/>
+
+## How do I use it?
+
+Everything you need to know to get you started is on the [home
+page](https://symbolixau.github.io/mapdeck/articles/mapdeck.html)
 
 ## Installation
 
@@ -33,12 +56,6 @@ To use the development version you need some other development dependant
 libraries
 
 ``` r
-## install dependent libraries first
-devtools::install_github("SymbolixAU/geojsonsf", force = T)
-devtools::install_github("SymbolixAU/spatialwidget", force = T)
-devtools::install_github("SymbolixAU/googlePolylines", force = T)
-
-## then mapdeck
 devtools::install_github("SymbolixAU/mapdeck")
 ```
 
@@ -73,23 +90,6 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
 
 ![Arcs](./vignettes/img/readme_arcs_small.gif)
 
-## Available Layers
-
-  - arc
-  - geojson
-  - grid
-  - hexagon
-  - line
-  - path
-  - pointcloud
-  - polygon
-  - scatterplot
-  - screengrid
-  - text
-
-## Shiny
-
-Mapdeck is also an `htmlwidget`, so will work in a shiny application.
-
-Examples of all plots and shiny can be found in the
-[vignette](https://github.com/SymbolixAU/mapdeck/blob/master/vignettes/mapdeck.Rmd)
+See the
+[Layers](https://symbolixau.github.io/mapdeck/articles/layers.html) page
+for more examples

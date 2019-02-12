@@ -1,56 +1,62 @@
-function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend ) {
+
+
+function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+
+  console.log( scatter_data );
+
   const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
     radiusScale: 1,
     radiusMinPixels: 1,
-    getRadius: d => d.radius,
-    getPosition: d => decode_points( d.polyline ),
-    getColor: d => hexToRGBA2( d.fill_colour ),
-    pickable: true,
-    autoHighlight: auto_highlight,
-    highlightColor: hexToRGBA2( highlight_colour ),
-    onClick: info => layer_click( map_id, "scatterplot", info ),
-    onHover: updateTooltip
-  });
-  update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
-    
-  if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
-  }
-}
-
-
-function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend ) {
-    
-  const scatterLayer = new deck.ScatterplotLayer({
-    map_id: map_id,
-    id: 'scatterplot-'+layer_id,
-    data: scatter_data,
-    radiusScale: 1,
-    radiusMinPixels: 1,
+    stroked: true,  // TODO( make conditional IFF stroke provided?)
+    filled: true,
     getRadius: d => d.properties.radius,
-    getPosition: d => d.geometry.geometry.coordinates,
-    getColor: d => hexToRGBA2( d.properties.fill_colour ),
+    getPosition: d => md_get_point_coordinates( d ),
+    getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
+    getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
+    getLineWidth: d => d.properties.stroke_width,
     pickable: true,
     autoHighlight: auto_highlight,
-    highlightColor: hexToRGBA2( highlight_colour ),
-    onClick: info => layer_click( map_id, "scatterplot", info ),
-    onHover: updateTooltip,
-    //transitions: {
-    //    getRadius: 300
-    //}
+    highlightColor: md_hexToRGBA( highlight_colour ),
+    onClick: info => md_layer_click( map_id, "scatterplot", info ),
+    onHover: md_update_tooltip,
+    transitions: js_transition || {}
   });
-  update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
-    
+  md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
+
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
+  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
+function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+  const scatterLayer = new deck.ScatterplotLayer({
+    map_id: map_id,
+    id: 'scatterplot-'+layer_id,
+    data: scatter_data,
+    radiusScale: 1,
+    radiusMinPixels: 1,
+    stroked: true,
+    filled: true,
+    getRadius: d => d.radius,
+    getPosition: d => md_decode_points( d.polyline ),
+    getFillColor: d => md_hexToRGBA( d.fill_colour ),
+    getLineColor: d => md_hexToRGBA( d.stroke_colour ),
+    getLineWidth: d => d.stroke_width,
+    pickable: true,
+    autoHighlight: auto_highlight,
+    highlightColor: md_hexToRGBA( highlight_colour ),
+    onClick: info => md_layer_click( map_id, "scatterplot", info ),
+    onHover: md_update_tooltip,
+    transitions: js_transition || {}
+  });
+  md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
 
-function clear_scatterplot( map_id, layer_id ) {
-  clear_layer( map_id, 'scatterplot-'+layer_id );
-  clear_legend( map_id, layer_id );
+  if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
+  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }

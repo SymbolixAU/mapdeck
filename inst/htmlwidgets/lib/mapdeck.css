@@ -1,3 +1,33 @@
+.mapTitleContainer {
+/*	  background: #fff; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+
+
+.mapTitle {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    height: auto;
+    background-color: #fff;
+    padding: 8px;
+    margin: 8px;
+/*    border: 1px solid #b8b8b8; */
+    border-radius: 4px;
+    display:inline-block;
+    overflow: auto;
+    position: relative;
+}
+
+/*
+.mapTitleContent{
+    display: inline-flex;
+    white-space: nowrap;
+}
+*/
+
 .legendContainer {
     position: absolute;
     bottom: 0;
@@ -63,4 +93,26 @@
 
 .deckgl-parent-class {
   isolation: 'isolate';
+}
+
+/* https://github.com/uber/deck.gl/blob/master/examples/gallery/src/geojson-layer.html#L18 */
+.mapdecktooltip:empty {
+	display: none;
+}
+
+.mapdecktooltip {
+/*	position: absolute; */
+/*	z-index: 1; */
+/*	pointer-events: none; */
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  position: absolute;
+  padding: 4px;
+  margin: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  max-width: 300px;
+  font-size: 10px;
+  z-index: 9;
+  pointer-events: none;
 }
