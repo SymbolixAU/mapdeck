@@ -115,10 +115,6 @@ void main(void) {
   };
 
   class ArcBrushingLayer extends ArcLayer {
-  	//constructor(props) {
-  	//	super(props);
-  		//this.state = {mousePosition:null}
-  	//}
   	getShaders() {
   		return Object.assign({}, super.getShaders(), {
   			vs: arcVertex,
@@ -144,23 +140,11 @@ void main(void) {
   ArcBrushingLayer.defaultProps = defaultProps;
   ArcBrushingLayer.layerName = 'ArcBrushingLayer';
 
-// --- this all works ^^^^ ------------
-
-	// ArcBrushingLayer.state = {mousePosition: null}
-
-  //console.log( ArcBrushingLayer.defaultProps );
-
- // TODO: should I extend 'Layer' ??
- //console.log( Layer );
-
   var mousePosition = null; //[0, 0];
   var enableBrushing = true;
 
   const isMouseover = mousePosition !== null;
   const startBrushing = Boolean(isMouseover && enableBrushing);
-
-//  var temp = new ArcBrushingLayer();
-//  console.log( temp );
 
   var arcLayer = new ArcBrushingLayer({
   	map_id: map_id,
@@ -181,24 +165,12 @@ void main(void) {
     // show arc if target is in brush
     //brushTarget: true,
     enableBrushing: false,
-    //getStrokeWidth: d => d.strokeWidth,
     // brush radius in meters
     brushRadius: 100000,
     mousePosition
-    //state: {
-    //	mousePosition: null
-    //}
     // using mousePosition: null doen'st show anything, even when mouse or map is moved
     // using mousePosition: [0,0] shows things when map is moved to [0,0]
   });
-
-  //arcLayer.setState( {mousePosition: [0,0]});
-  //var s = arcLayer.state;
-  //arcLayer.setState({mousePosition: null});
-  //console.log(arcLayer);
-  //console.log( "state" );
-  //console.log( s );
-  //arcLayer.setState( {mousePosition: [0,0]});
 
   var myListener = function(evt) {
 
@@ -206,9 +178,6 @@ void main(void) {
     //TODO(can't call setState without having set the state in the constructor
     // So I need to find a way to access the laeyr's state constructor so I can set
     // mousePosition: null)
-
-  	//arcLayer.setState( {mousePosition: [evt.offsetX, evt.offsetY] });
-
 	  var arcLayer = new ArcBrushingLayer({
 	  	map_id: map_id,
 	    id: 'arc-'+layer_id,
@@ -224,49 +193,20 @@ void main(void) {
 	    autoHighlight: auto_highlight,
 	    highlightColor: md_hexToRGBA( highlight_colour ),
 	    transitions: js_transition || {},
-	    //brushSource: true,
-	    // show arc if target is in brush
-	    //brushTarget: true,
 	    enableBrushing: true,  // startBrushing
-	    //getStrokeWidth: d => d.strokeWidth,
-	    // brush radius in meters
 	    brushRadius: 300000,
 	    mousePosition: [evt.offsetX, evt.offsetY]
-	    //state: {
-	    //	mousePosition: null
-	    //}
-	    // using mousePosition: null doen'st show anything, even when mouse or map is moved
-	    // using mousePosition: [0,0] shows things when map is moved to [0,0]
 	  });
 
 	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
-  //update_view = false;
-
-  	//arcLayer.updateState({changeFlags: {stateChanged:true}})
-  	//arcLayer.shouldUpdateState();
-
-//  	arcLayer.updateState({
-//  		props: arcLayer.props,
-//  		oldProps: arcLayer.oldProps,
-//  		context: arcLayer.context,
-//  		oldContext: arcLayer.oldContext,
-//  		changeFlags: arcLayer.changeFlags
-//  	});
 
   	// Perhaps this is where/why I need to extedn ArcLayer, and define it with a new state?
-
-    //console.log( arcLayer );
-  	//arcLayer.forceUpdate();  // not a function
-
   	// state gets set on the React.Component, not the layer...
 
-  	// can I do this using 'update_layer' by changing which arcs are visible according to brush?
-  	// will this be slow?
 
   }
 
   var myLeaveListener = function(evt) {
-  	//arcLayer.setState( {mousePosition: null });
     var arcLayer = new ArcBrushingLayer({
 	  	map_id: map_id,
 	    id: 'arc-'+layer_id,
@@ -282,19 +222,9 @@ void main(void) {
 	    autoHighlight: auto_highlight,
 	    highlightColor: md_hexToRGBA( highlight_colour ),
 	    transitions: js_transition || {},
-	    //brushSource: true,
-	    // show arc if target is in brush
-	    //brushTarget: true,
 	    enableBrushing: false,  // startBrushing
-	    //getStrokeWidth: d => d.strokeWidth,
-	    // brush radius in meters
 	    brushRadius: 100000,
 	    mousePosition: null
-	    //state: {
-	    //	mousePosition: null
-	    //}
-	    // using mousePosition: null doen'st show anything, even when mouse or map is moved
-	    // using mousePosition: [0,0] shows things when map is moved to [0,0]
 	  });
 	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
   }
