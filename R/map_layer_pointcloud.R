@@ -16,8 +16,8 @@ mapdeckPointcloudDependency <- function() {
 #' with a certain radius.
 #'
 #' @inheritParams add_scatterplot
-#' @param elevation column containing the elevation values
-#' @param radius value in pixels of each point
+#' @param elevation column containing the elevation values. Default 0
+#' @param radius value in pixels of each point. Default 10.
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #'
 #' @inheritSection add_polygon data

@@ -26,12 +26,12 @@ mapdeckArcDependency <- function() {
 #' @param stroke_from variable or hex colour to use as the staring stroke colour
 #' @param stroke_from_opacity Either a string specifying the column of \code{data}
 #' containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-#' to be applied to all the shapes
+#' to be applied to all the shapes. Default 255.
 #' @param stroke_to variable or hex colour to use as the ending stroke colour
 #' @param stroke_to_opacity Either a string specifying the column of \code{data}
 #' containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-#' to be applied to all the shapes
-#' @param stroke_width width of the stroke in pixels
+#' to be applied to all the shapes. Default 255.
+#' @param stroke_width width of the stroke in pixels. Default 1.
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
 #' @param highlight_colour hex string colour to use for highlighting. Must contain the alpha component.

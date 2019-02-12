@@ -23,17 +23,17 @@ Web Mercator Projection}
 
 \item{lat}{column containing latitude values}
 
-\item{elevation}{column containing the elevation values}
+\item{elevation}{column containing the elevation values. Default 0}
 
 \item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
-\item{radius}{value in pixels of each point}
+\item{radius}{value in pixels of each point. Default 10.}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
 
 \item{fill_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-to be applied to all the shapes}
+to be applied to all the shapes. Default 255.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 

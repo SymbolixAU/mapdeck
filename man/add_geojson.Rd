@@ -33,9 +33,9 @@ to conflict and not plot correctly}
 
 \item{fill_opacity}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for opacity}
 
-\item{radius}{radius of points in meters. See details}
+\item{radius}{radius of points in meters. Default 1. See details}
 
-\item{elevation}{elevation of polygons. See details}
+\item{elevation}{elevation of polygons. Default 0. See details}
 
 \item{light_settings}{list of light setting parameters. See \link{light_settings}}
 

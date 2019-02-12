@@ -24,15 +24,15 @@ Web Mercator Projection}
 
 \item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
-\item{cell_size}{size of each cell in meters}
+\item{cell_size}{size of each cell in meters. Default 1000}
 
-\item{extruded}{logical indicating if cells are elevated or not}
+\item{extruded}{logical indicating if cells are elevated or not. Default TRUE}
 
 \item{elevation}{column containing the elevation of the value. This is used to calculate the
 height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
 within the \code{radius}. If NULL, the number of coordinates is used.}
 
-\item{elevation_scale}{cell elevation multiplier}
+\item{elevation_scale}{cell elevation multiplier. Default 1}
 
 \item{colour}{column containing numeric values to colour by.
 The colour is calculated by the sum of values within the \code{radius}.

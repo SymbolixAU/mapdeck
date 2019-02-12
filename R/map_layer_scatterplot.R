@@ -18,7 +18,7 @@ mapdeckScatterplotDependency <- function() {
 #' @inheritParams add_polygon
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
-#' @param radius in metres
+#' @param radius in metres. Default 1
 #' @param palette string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
 #' A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
 #' where the 4th column represents the alpha.

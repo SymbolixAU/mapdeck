@@ -20,9 +20,9 @@ mapdeckGridDependency <- function() {
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param colour_range vector of 6 hex colours
-#' @param cell_size size of each cell in meters
-#' @param extruded logical indicating if cells are elevated or not
-#' @param elevation_scale cell elevation multiplier
+#' @param cell_size size of each cell in meters. Default 1000
+#' @param extruded logical indicating if cells are elevated or not. Default TRUE
+#' @param elevation_scale cell elevation multiplier. Default 1
 #' @param elevation column containing the elevation of the value. This is used to calculate the
 #' height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
 #' within the \code{radius}. If NULL, the number of coordinates is used.

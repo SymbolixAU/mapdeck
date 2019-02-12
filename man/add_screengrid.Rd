@@ -21,13 +21,13 @@ Web Mercator Projection}
 
 \item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
-\item{weight}{the weight of each value}
+\item{weight}{the weight of each value. Default 1}
 
 \item{colour_range}{vector of 6 hex colours}
 
-\item{opacity}{opacity of cells. Value between 0 and 1}
+\item{opacity}{opacity of cells. Value between 0 and 1. Default 0.8}
 
-\item{cell_size}{size of grid squares in pixels}
+\item{cell_size}{size of grid squares in pixels. Default 50}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely

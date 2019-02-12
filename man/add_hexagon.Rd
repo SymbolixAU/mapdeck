@@ -27,7 +27,7 @@ Web Mercator Projection}
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{radius}{in metres}
+\item{radius}{in metres. Default 1000}
 
 \item{elevation}{column containing the elevation of the value. This is used to calculate the
 height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
@@ -37,7 +37,7 @@ within the \code{radius}. If NULL, the number of coordinates is used.}
 The colour is calculated by the sum of values within the \code{radius}.
 If NULL, the number of coordinates is used.}
 
-\item{elevation_scale}{value to sacle the elevations of the hexagons}
+\item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 

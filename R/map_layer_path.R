@@ -16,7 +16,7 @@ mapdeckPathDependency <- function() {
 #' extruded lines with mitering.
 #'
 #' @inheritParams add_polygon
-#' @param stroke_width width of the stroke in meters
+#' @param stroke_width width of the stroke in meters. Default 1.
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
