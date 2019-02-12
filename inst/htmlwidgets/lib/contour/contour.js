@@ -6,7 +6,8 @@ function add_contour_geo( map_id, contour_data, layer_id, cell_size ) {
     cellSize: cell_size,
     getPosition: d => d.geometry.geometry.coordinates
   });
-  update_layer( map_id, 'contour-'+layer_id, contourLayer );
+  md_update_layer( map_id, 'contour-'+layer_id, contourLayer );
+  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 function add_contour_polyline( map_id, contour_data, layer_id, cell_size ) {
@@ -18,10 +19,7 @@ function add_contour_polyline( map_id, contour_data, layer_id, cell_size ) {
     cellSize: cell_size,
     getPosition: d => decode_polyline( d.polyline )[0]
   });
-  update_layer( map_id, 'contour-'+layer_id, contourLayer );
+  md_update_layer( map_id, 'contour-'+layer_id, contourLayer );
+  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function clear_contour( map_id, layer_id ) {
-  clear_layer( map_id, 'contour-'+layer_id );
-  clear_legend( map_id, layer_id );
-}

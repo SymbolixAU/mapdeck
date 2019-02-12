@@ -86,7 +86,6 @@ add_contour <- function(
 	layer_id <- layerId(layer_id, "contour")
 
 	map <- addDependency(map, mapdeckContourDependency())
-	data_types <- data_types( data )
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
