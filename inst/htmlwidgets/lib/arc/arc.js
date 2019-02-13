@@ -1,4 +1,3 @@
-
 function add_arc_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
   const arcLayer = new ArcLayer({

@@ -11,7 +11,7 @@ add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF", legend = F,
   legend_options = NULL, legend_format = NULL, palette = "viridis",
   na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL, digits = 6)
+  transitions = NULL, digits = 6, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -70,6 +70,11 @@ where the 4th column represents the alpha.}
 
 \item{digits}{The number of digits to round GeoJSON lon & lat coordinates. Useful for
 reducing file sizes. Defaults to 6}
+
+\item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed}
+                                                                        
 }
 \description{
 The Arc Layer renders raised arcs joining pairs of source and target coordinates
@@ -174,6 +179,17 @@ mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
     stroke_from = list( title = "Origin airport" ),
     css = "max-height: 100px;")
  )
+
+mapdeck( token = key, style = mapdeck_style("dark")) \%>\%
+  add_arc(
+  data = flights
+  , layer_id = "arc_layer"
+  , origin = c("start_lon", "start_lat")
+  , destination = c("end_lon", "end_lat")
+  , stroke_from = "airport1"
+  , stroke_to = "airport2"
+  , stroke_width = "stroke"
+  )
 
 ## Using a 2-sfc-column sf object
 library(sf)
