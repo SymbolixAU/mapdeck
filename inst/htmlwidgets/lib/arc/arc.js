@@ -123,10 +123,6 @@ void main(void) {
   		})
   	}
     draw(opts) {
-
-      console.log("arcLayer.state.mousePosition");
-      console.log( arcLayer.state.mousePosition );
-
 	    // add uniforms
 	    const uniforms = Object.assign({}, opts.uniforms, {
 	      brushSource: this.props.brushSource,
@@ -142,17 +138,20 @@ void main(void) {
 	  }
   }
 
-
-  console.log( ArcBrushingLayer );
-
   ArcBrushingLayer.defaultProps = defaultProps;
   ArcBrushingLayer.layerName = 'ArcBrushingLayer';
 
+  /*
   var mousePosition = null; //[0, 0];
   var enableBrushing = true;
 
   const isMouseover = mousePosition !== null;
   const startBrushing = Boolean(isMouseover && enableBrushing);
+
+  console.log( "mousePosition -" + mousePosition );
+  console.log( "mouseOver - " + isMouseover );
+  console.log( "startBrushing - " + startBrushing );
+  */
 
   var arcLayer = new ArcBrushingLayer({
   	map_id: map_id,
@@ -175,115 +174,32 @@ void main(void) {
     enableBrushing: true,
     // brush radius in meters
     brushRadius: 100000,
-    mousePosition
+    mousePosition: null
     // using mousePosition: null doen'st show anything, even when mouse or map is moved
     // using mousePosition: [0,0] shows things when map is moved to [0,0]
   });
 
+  var myEnterListener = function() {
+  	arcLayer.setState({enableBrushing: true });
+  }
+
   var myListener = function(evt) {
-
-    //console.log( evt );
-    //TODO(can't call setState without having set the state in the constructor
-    // So I need to find a way to access the laeyr's state constructor so I can set
-    // mousePosition: null)
-    /*
-	  var arcLayer = new ArcBrushingLayer({
-	  	map_id: map_id,
-	    id: 'arc-'+layer_id,
-	    data: arc_data,
-	    pickable: true,
-	    getStrokeWidth: d => d.properties.stroke_width,
-	    getSourcePosition: d => md_get_origin_coordinates( d ),
-	    getTargetPosition: d => md_get_destination_coordinates( d ),
-	    getSourceColor: d => md_hexToRGBA( d.properties.stroke_from ),
-	    getTargetColor: d => md_hexToRGBA( d.properties.stroke_to ),
-	    onClick: info => md_layer_click( map_id, "arc", info ),
-	    onHover: md_update_tooltip,
-	    autoHighlight: auto_highlight,
-	    highlightColor: md_hexToRGBA( highlight_colour ),
-	    transitions: js_transition || {},
-	    enableBrushing: true,  // startBrushing
-	    brushRadius: 300000,
-	    mousePosition: [evt.offsetX, evt.offsetY]
-	  });
-
-	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
-	  */
-
-    //console.log("arcLayer.state.mousePosition");
-    //console.log( arcLayer.state.mousePosition );
 	  arcLayer.setState({mousePosition: [evt.offsetX, evt.offsetY] });
-
-  	// Perhaps this is where/why I need to extedn ArcLayer, and define it with a new state?
-  	// state gets set on the React.Component, not the layer...
-
-
   }
 
-  /*
   var myLeaveListener = function(evt) {
-    var arcLayer = new ArcBrushingLayer({
-	  	map_id: map_id,
-	    id: 'arc-'+layer_id,
-	    data: arc_data,
-	    pickable: true,
-	    getStrokeWidth: d => d.properties.stroke_width,
-	    getSourcePosition: d => md_get_origin_coordinates( d ),
-	    getTargetPosition: d => md_get_destination_coordinates( d ),
-	    getSourceColor: d => md_hexToRGBA( d.properties.stroke_from ),
-	    getTargetColor: d => md_hexToRGBA( d.properties.stroke_to ),
-	    onClick: info => md_layer_click( map_id, "arc", info ),
-	    onHover: md_update_tooltip,
-	    autoHighlight: auto_highlight,
-	    highlightColor: md_hexToRGBA( highlight_colour ),
-	    transitions: js_transition || {},
-	    enableBrushing: false,  // startBrushing
-	    brushRadius: 100000,
-	    mousePosition: null
-	  });
-	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
+    arcLayer.setState({mousePosition: null});
   }
-  */
 
+  document.addEventListener('mouseenter', myEnterListener, false);
   document.addEventListener('mousemove', myListener, false);
-  //document.addEventListener('mouseleave', myLeaveListener, false);
-
-   //var av = arcLayer.getShaders().vs;
-   //var af = arcLayer.getShaders().fs;
-   //var m = arcLayer.getShaders().modules;
-
-/*
-  arcLayer.getShaders = function() {
-    return {
-    	modules: m,
-    	vs: arcVertex,
-    	fs: arcFragment
-    }
-  }
-
-  arcLayer.draw = function( opts ) {
-
-  	const uniforms = Object.assign({}, opts.uniforms, {
-      brushSource: this.props.brushSource,
-      brushTarget: this.props.brushTarget,
-      brushRadius: this.props.brushRadius,
-      mousePos: this.state.mousePosition
-        ? new Float32Array(this.unproject(this.state.mousePosition))
-        : defaultProps.mousePosition,
-      enableBrushing: this.props.enableBrushing
-    });
-
-    const newOpts = Object.assign({}, opts, {uniforms});
-  	for(const e of this.getModels()) e.draw( newOpts );
-  }
-*/
+  document.addEventListener('mouseleave', myLeaveListener, false);
 
   md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
 
   if (legend !== false) {
     add_legend( map_id, layer_id, legend );
   }
-  //md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 
