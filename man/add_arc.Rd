@@ -11,7 +11,7 @@ add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF", legend = F,
   legend_options = NULL, legend_format = NULL, palette = "viridis",
   na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL)
+  transitions = NULL, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -67,6 +67,10 @@ where the 4th column represents the alpha.}
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed}
 }
 \description{
 The Arc Layer renders raised arcs joining pairs of source and target coordinates

@@ -9,6 +9,16 @@ mapdeckArcDependency <- function() {
 	)
 }
 
+mapdeckArcBrushDependency <- function() {
+	list(
+		createHtmlDependency(
+			name = "arc",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/arc_brush", package = "mapdeck"),
+			script = c("arc_brush.js")
+		)
+	)
+}
 
 #' Add arc
 #'
@@ -46,6 +56,9 @@ mapdeckArcDependency <- function() {
 #' @param update_view logical indicating if the map should update the bounds to include this layer
 #' @param focus_layer logical indicating if the map should update the bounds to only include this layer
 #' @param transitions list specifying the duration of transitions.
+#' @param brush_radius radius of the brush in metres. Default NULL. If supplied,
+#' the arcs will only show if the origin or destination are within the radius of the mouse.
+#' If NULL, all arcs are displayed
 #'
 #' @section data:
 #'
@@ -199,7 +212,8 @@ add_arc <- function(
 	na_colour = "#808080FF",
 	update_view = TRUE,
 	focus_layer = FALSE,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -238,9 +252,14 @@ add_arc <- function(
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
-	jsfunc <- "add_arc_geo"
 
-	map <- addDependency(map, mapdeckArcDependency())
+	if(!is.null(brush_radius)) {
+		jsfunc <- "add_arc_brush_geo"
+		map <- addDependency(map, mapdeckArcBrushDependency())
+	} else {
+		jsfunc <- "add_arc_geo"
+		map <- addDependency(map, mapdeckArcDependency())
+	}
 
   if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
@@ -251,7 +270,11 @@ add_arc <- function(
   } else if ( tp == "sfencoded" ) {
   	geometry_column <- c("origin", "destination")
   	shape <- rcpp_arc_polyline( data, l, geometry_column )
-  	jsfunc <- "add_arc_polyline"
+  	if(!is.null(brush_radius)) {
+  		jsfunc <- "add_arc_brush_polyline"
+  	} else {
+  	  jsfunc <- "add_arc_polyline"
+  	}
   }
 
 	js_transition <- resolve_transitions( transitions, "arc" )
@@ -259,7 +282,8 @@ add_arc <- function(
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
-		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition,
+		brush_radius
 		)
 }
 
