@@ -25,20 +25,20 @@ Web Mercator Projection}
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
 \code{elevation} is ignored.}
 
-\item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored.}
+\item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
 
-\item{stroke_opacity}{value between 0 and 255. Either a string specifying the
-column of \code{data} containing the stroke opacity of each shape, or a single value
-to be applied to all the shapes}
+\item{stroke_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255.}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
 
-\item{fill_opacity}{value between 0 and 255. Either a string specifying the
-column of \code{data} containing the fill opacity of each shape, or a single value
-to be applied to all the shapes}
+\item{fill_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255.}
 
 \item{elevation}{the height the polygon extrudes from the map. Only available if neither
-\code{stroke_colour} or \code{stroke_width} are supplied.}
+\code{stroke_colour} or \code{stroke_width} are supplied. Default 0}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 

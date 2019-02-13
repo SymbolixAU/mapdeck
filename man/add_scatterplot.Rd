@@ -6,7 +6,8 @@
 \usage{
 add_scatterplot(map, data = get_map_data(map), lon = NULL,
   lat = NULL, polyline = NULL, radius = NULL, fill_colour = NULL,
-  fill_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
+  fill_opacity = NULL, stroke_colour = NULL, stroke_width = NULL,
+  stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, legend_format = NULL, update_view = TRUE,
@@ -24,13 +25,22 @@ Web Mercator Projection}
 
 \item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
-\item{radius}{in metres}
+\item{radius}{in metres. Default 1}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
 
-\item{fill_opacity}{value between 0 and 255. Either a string specifying the
-column of \code{data} containing the fill opacity of each shape, or a single value
-to be applied to all the shapes}
+\item{fill_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255.}
+
+\item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
+\code{elevation} is ignored.}
+
+\item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
+
+\item{stroke_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 

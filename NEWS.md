@@ -1,5 +1,11 @@
 # mapdeck 0.3
 
+* opacity values can be in [0,1) OR [0,255]
+* layeres work without an access token
+* `add_title()` for adding titles to map
+* `add_scatterplot` gets `stroke_colour` and `stroke_width` arguments
+* `add_hexagon` gets transitions
+* `add_hexagon` gets `weight` and `colour_value` arguments for defining height and colour
 * `stroke_width` units defined in help files
 
 # mapdeck 0.2

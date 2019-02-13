@@ -16,7 +16,7 @@ mapdeckPathDependency <- function() {
 #' extruded lines with mitering.
 #'
 #' @inheritParams add_polygon
-#' @param stroke_width width of the stroke in meters
+#' @param stroke_width width of the stroke in meters. Default 1.
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
@@ -91,7 +91,7 @@ add_path <- function(
 	l[["polyline"]] <- force( polyline )
 	l[["stroke_colour"]] <- force( stroke_colour)
 	l[["stroke_width"]] <- force( stroke_width )
-	l[["stroke_opacity"]] <- force( stroke_opacity )
+	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)

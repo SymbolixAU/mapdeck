@@ -23,8 +23,8 @@ mapdeckGeojsonDependency <- function() {
 #' @param stroke_width column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for width (in meters)
 #' @param fill_colour column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for colour
 #' @param fill_opacity column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for opacity
-#' @param radius radius of points in meters. See details
-#' @param elevation elevation of polygons. See details
+#' @param radius radius of points in meters. Default 1. See details
+#' @param elevation elevation of polygons. Default 0. See details
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip.
 #' Only works on \code{sf} objects.

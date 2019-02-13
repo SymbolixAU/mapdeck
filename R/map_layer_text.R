@@ -16,8 +16,8 @@ mapdeckTextDependency <- function() {
 #'
 #' @inheritParams add_scatterplot
 #' @param text column of \code{data} containing the text. The data must be a character.
-#' @param size column of \code{data} containing the size of the text
-#' @param angle column of \code{data} containging the angle of the text
+#' @param size column of \code{data} containing the size of the text. Default 32
+#' @param angle column of \code{data} containging the angle of the text. Default 0
 #' @param anchor column of \code{data} containing the anchor of the text. One of
 #' 'start', 'middle' or 'end'
 #' @param alignment_baseline column of \code{data} containing the alignment. One of
@@ -101,7 +101,7 @@ add_text <- function(
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
 	l[["fill_colour"]] <- force( fill_colour )
-	l[["fill_opacity"]] <- force( fill_opacity )
+	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["size"]] <- force( size )
 	l[["text"]] <- force( text )
 	l[["polyline"]] <- force( polyline )

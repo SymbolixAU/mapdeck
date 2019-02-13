@@ -341,3 +341,15 @@ resolve_legend_format <- function( l, legend_format ) {
 }
 
 is_url <- function(geojson) grepl("^https?://", geojson, useBytes=TRUE)
+
+
+# resolve opacity
+#
+resolve_opacity <- function( opacity ) {
+	if( !is.null( opacity ) ) {
+		if( is.numeric( opacity ) ) {
+	    if( opacity < 1 & opacity >= 0 ) opacity <- opacity * 255
+		}
+	}
+	return( opacity )
+}

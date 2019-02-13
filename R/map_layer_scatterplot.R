@@ -18,7 +18,7 @@ mapdeckScatterplotDependency <- function() {
 #' @inheritParams add_polygon
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
-#' @param radius in metres
+#' @param radius in metres. Default 1
 #' @param palette string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
 #' A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
 #' where the 4th column represents the alpha.
@@ -104,6 +104,9 @@ add_scatterplot <- function(
 	radius = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
+	stroke_colour = NULL,
+	stroke_width = NULL,
+	stroke_opacity = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -125,7 +128,10 @@ add_scatterplot <- function(
 	l[["polyline"]] <- force(polyline)
 	l[["radius"]] <- force(radius)
 	l[["fill_colour"]] <- force(fill_colour)
-	l[["fill_opacity"]] <- force(fill_opacity)
+	l[["fill_opacity"]] <- resolve_opacity(fill_opacity)
+	l[["stroke_colour"]] <- force( stroke_colour )
+	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
+	l[["stroke_width"]] <- force( stroke_width )
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)
@@ -179,25 +185,6 @@ add_scatterplot <- function(
 		shape[["legend"]], bbox, update_view, focus_layer, js_transitions
 		)
 }
-
-resolve_args <- function( l, layer_args ) {
-
-	## This implementation will allow variables passed in as column names
-	## but NOT un-quoted column variables
-	x <- vapply(names(l), function(x) { x %in% layer_args }, T)
-	x <- x[x]    ## x is the set of arguments we need to evaluate
-	l <- l[names(x)]
-	lapply( l, eval )
-}
-
-
-## args used which can be columns of 'data'
-scatterplot_data_args <- function() {
-	return(
-		c("lon", "lat", "polyline", "radius", "fill_colour", "fill_opacity", "tooltip")
-	)
-}
-
 
 #' @rdname clear
 #' @export

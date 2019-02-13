@@ -14,3 +14,4 @@
 ^vignettes/legends.Rmd
 ^vignettes/tips_tricks.Rmd
 ^vignettes/img/articles/*
+^vignettes/layers.Rmd

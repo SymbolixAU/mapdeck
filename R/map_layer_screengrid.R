@@ -18,10 +18,10 @@ mapdeckScreengridDependency <- function() {
 #' @inheritParams add_polygon
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
-#' @param weight the weight of each value
+#' @param weight the weight of each value. Default 1
 #' @param colour_range vector of 6 hex colours
-#' @param opacity opacity of cells. Value between 0 and 1
-#' @param cell_size size of grid squares in pixels
+#' @param opacity opacity of cells. Value between 0 and 1. Default 0.8
+#' @param cell_size size of grid squares in pixels. Default 50
 #'
 #' @inheritSection add_polygon data
 #'

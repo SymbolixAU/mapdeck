@@ -15,6 +15,7 @@ HTMLWidgets.widget({
 
       	window[el.id + 'layers'] = []; // keep track of layers for overlaying multiple
         window[el.id + 'legendPositions'] = [];     // array for keeping a referene to legend positions
+        window[el.id + 'mapTitlePositions'] = [];
         window[el.id + 'mapdeckBounds'] = [];       // store the bounding box of each layer
         window[el.id + 'globalBox'] = [];
         window[el.id + 'currentZoomLevel'] = 0;
@@ -28,6 +29,11 @@ HTMLWidgets.widget({
         legendContainer.className = "legendContainer";
         legendContainer.id = "legendContainer"+el.id;
         mapDiv.appendChild( legendContainer );
+
+        var mapTitle = document.createElement('div');
+        mapTitle.className = "mapTitleContainer";
+        mapTitle.id = "mapTitleContainer"+el.id;
+        mapDiv.appendChild( mapTitle );
 
         var tooltipdiv = document.createElement('div');
         tooltipdiv.setAttribute("class", "mapdecktooltip");
@@ -43,6 +49,16 @@ HTMLWidgets.widget({
         	bearing: x.bearing
         };
 
+       if( x.access_token === null ) {
+       	 const deckgl = new deck.DeckGL({
+       	 	  map: false,
+			      container: el.id,
+			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      layers: [],
+			      //onLayerHover: setTooltip
+			   });
+			   window[el.id + 'map'] = deckgl;
+       } else {
         const deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
@@ -51,7 +67,8 @@ HTMLWidgets.widget({
 			      layers: [],
 			      //onLayerHover: setTooltip
 			  });
-
+			  window[el.id + 'map'] = deckgl;
+       }
         // https://github.com/uber/deck.gl/issues/2114
         /*
 			  const viewPort = WebMercartorViewport({
@@ -66,7 +83,7 @@ HTMLWidgets.widget({
 			  console.log( viewPort );
 			  */
 
-			    window[el.id + 'map'] = deckgl;
+
 			    md_initialise_map(el, x);
       },
 

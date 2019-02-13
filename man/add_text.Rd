@@ -29,13 +29,13 @@ Web Mercator Projection}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
 
-\item{fill_opacity}{value between 0 and 255. Either a string specifying the
-column of \code{data} containing the fill opacity of each shape, or a single value
-to be applied to all the shapes}
+\item{fill_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255.}
 
-\item{size}{column of \code{data} containing the size of the text}
+\item{size}{column of \code{data} containing the size of the text. Default 32}
 
-\item{angle}{column of \code{data} containging the angle of the text}
+\item{angle}{column of \code{data} containging the angle of the text. Default 0}
 
 \item{anchor}{column of \code{data} containing the anchor of the text. One of
 'start', 'middle' or 'end'}

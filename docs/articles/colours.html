@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -65,6 +65,12 @@
       <a href="../articles/issues.html">Why isn't it working?</a>
     </li>
     <li>
+      <a href="../articles/layers.html">Layers</a>
+    </li>
+    <li>
+      <a href="../articles/legends.html">Legends</a>
+    </li>
+    <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
     </li>
   </ul>
@@ -88,7 +94,7 @@
       <h1>Colours</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2018-12-18</h4>
+            <h4 class="date">2019-02-08</h4>
       
       
       <div class="hidden name"><code>colours.Rmd</code></div>
@@ -107,7 +113,7 @@
 <p>For this demonstration I’m using a simple feature <code>sf</code> object of polygons denoting various regions in Melbourne (taken from the <code>spatialwidget</code> library)</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mapdeck)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</a></code></pre></div>
-<pre><code>## Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3</code></pre>
+<pre><code>## Linking to GEOS 3.6.1, GDAL 2.1.3, proj.4 4.9.3</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">sf &lt;-<span class="st"> </span>spatialwidget<span class="op">::</span>widget_melbourne</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">sf</a></code></pre></div>
 <pre><code>## Simple feature collection with 41 features and 3 fields

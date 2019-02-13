@@ -2,7 +2,8 @@
 % Please edit documentation in R/map_layer_arc.R, R/map_layer_geojson.R,
 %   R/map_layer_grid.R, R/map_layer_hexagon.R, R/map_layer_line.R,
 %   R/map_layer_path.R, R/map_layer_pointcloud.R, R/map_layer_polygon.R,
-%   R/map_layer_scatterplot.R, R/map_layer_screengrid.R, R/map_layer_text.R
+%   R/map_layer_scatterplot.R, R/map_layer_screengrid.R, R/map_layer_text.R,
+%   R/map_title.R
 \name{clear_arc}
 \alias{clear_arc}
 \alias{clear_geojson}
@@ -15,6 +16,7 @@
 \alias{clear_scatterplot}
 \alias{clear_screengrid}
 \alias{clear_text}
+\alias{clear_title}
 \title{Clear Arc}
 \usage{
 clear_arc(map, layer_id = NULL)
@@ -38,6 +40,8 @@ clear_scatterplot(map, layer_id = NULL)
 clear_screengrid(map, layer_id = NULL)
 
 clear_text(map, layer_id = NULL)
+
+clear_title(map, layer_id = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}

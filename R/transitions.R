@@ -23,6 +23,10 @@ geojson_transitions <- function() {
 	)
 }
 
+hexaton_transitions <- function() {
+
+}
+
 line_transitions <- function() {
 	return(
 		list(
@@ -98,6 +102,8 @@ resolve_transitions <- function( transitions, layer ) {
 		layer,
 		"arc" = transitions_arc( transitions ),
 		"geojson" = transitions_geojson( transitions ),
+		"grid" = transitions_grid( transitions ),
+		"hexagon" = transitions_hexagon( transitions ),
 		"line" = transitions_line( transitions ),
 		"path" = transitions_path( transitions ),
 		"pointcloud" = transitions_pointcloud( transitions ),
@@ -123,6 +129,18 @@ transitions_geojson <- function( transitions ) {
 	transitions <- replace_name( transitions, "radius", "getRadius" )
 	transitions <- replace_name( transitions, "stroke_width", "getLineWidth" )
 	transitions <- replace_name( transitions, "elevation", "getElevation" )
+	return( transitions )
+}
+
+transitions_grid <- function( transitions ) {
+	transitions <- replace_name( transitions, "elevation", "getElevationValue" )
+	transitions <- replace_name( transitions, "colour", "getColorValue" )
+	return( transitions )
+}
+
+transitions_hexagon <- function( transitions ) {
+	transitions <- replace_name( transitions, "elevation", "getElevationValue" )
+	transitions <- replace_name( transitions, "colour", "getColorValue" )
 	return( transitions )
 }
 

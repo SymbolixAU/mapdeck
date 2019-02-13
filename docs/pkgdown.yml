@@ -5,6 +5,8 @@ articles:
   benchmarks: benchmarks.html
   colours: colours.html
   issues: issues.html
+  layers: layers.html
+  legends: legends.html
   mapdeck: mapdeck.html
   tips_tricks: tips_tricks.html
 

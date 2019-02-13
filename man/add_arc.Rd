@@ -11,7 +11,7 @@ add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF", legend = F,
   legend_options = NULL, legend_format = NULL, palette = "viridis",
   na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL, brush_radius = NULL)
+  transitions = NULL, digits = 6, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -31,17 +31,17 @@ to conflict and not plot correctly}
 
 \item{stroke_from}{variable or hex colour to use as the staring stroke colour}
 
-\item{stroke_from_opacity}{Either a string specifying the
-column of \code{data} containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{stroke_from_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255.}
 
 \item{stroke_to}{variable or hex colour to use as the ending stroke colour}
 
-\item{stroke_to_opacity}{Either a string specifying the
-column of \code{data} containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+\item{stroke_to_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255.}
 
-\item{stroke_width}{width of the stroke in pixels}
+\item{stroke_width}{width of the stroke in pixels. Default 1.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -68,9 +68,13 @@ where the 4th column represents the alpha.}
 
 \item{transitions}{list specifying the duration of transitions.}
 
+\item{digits}{The number of digits to round GeoJSON lon & lat coordinates. Useful for
+reducing file sizes. Defaults to 6}
+
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
+                                                                        
 }
 \description{
 The Arc Layer renders raised arcs joining pairs of source and target coordinates

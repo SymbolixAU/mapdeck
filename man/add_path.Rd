@@ -23,11 +23,11 @@ Web Mercator Projection}
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
 \code{elevation} is ignored.}
 
-\item{stroke_width}{width of the stroke in meters}
+\item{stroke_width}{width of the stroke in meters. Default 1.}
 
-\item{stroke_opacity}{value between 0 and 255. Either a string specifying the
-column of \code{data} containing the stroke opacity of each shape, or a single value
-to be applied to all the shapes}
+\item{stroke_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
