@@ -123,6 +123,10 @@ void main(void) {
   		})
   	}
     draw(opts) {
+
+      console.log("arcLayer.state.mousePosition");
+      console.log( arcLayer.state.mousePosition );
+
 	    // add uniforms
 	    const uniforms = Object.assign({}, opts.uniforms, {
 	      brushSource: this.props.brushSource,
@@ -138,6 +142,8 @@ void main(void) {
 	  }
   }
 
+
+  console.log( ArcBrushingLayer );
 
   ArcBrushingLayer.defaultProps = defaultProps;
   ArcBrushingLayer.layerName = 'ArcBrushingLayer';
@@ -166,7 +172,7 @@ void main(void) {
     //brushSource: true,
     // show arc if target is in brush
     //brushTarget: true,
-    enableBrushing: false,
+    enableBrushing: true,
     // brush radius in meters
     brushRadius: 100000,
     mousePosition
@@ -204,12 +210,9 @@ void main(void) {
 	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
 	  */
 
-    console.log("arcLayer.state.mousePosition");
-    console.log( arcLayer.state.mousePosition );
+    //console.log("arcLayer.state.mousePosition");
+    //console.log( arcLayer.state.mousePosition );
 	  arcLayer.setState({mousePosition: [evt.offsetX, evt.offsetY] });
-
-//	  console.log( "ArcBrushingLayer.draw");
-//	  ArcBrushingLayer.draw;
 
   	// Perhaps this is where/why I need to extedn ArcLayer, and define it with a new state?
   	// state gets set on the React.Component, not the layer...
@@ -249,9 +252,6 @@ void main(void) {
    //var af = arcLayer.getShaders().fs;
    //var m = arcLayer.getShaders().modules;
 
-  //console.log( arcLayer );
-
-   //console.log( arcLayer.getShaders() );
 /*
   arcLayer.getShaders = function() {
     return {
@@ -274,9 +274,6 @@ void main(void) {
     });
 
     const newOpts = Object.assign({}, opts, {uniforms});
-
-    //console.log( newOpts );
-
   	for(const e of this.getModels()) e.draw( newOpts );
   }
 */
