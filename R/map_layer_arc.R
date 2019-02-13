@@ -34,14 +34,14 @@ mapdeckArcBrushDependency <- function() {
 #' @param destination vector of longitude and latitude columns, or an \code{sfc} column
 #' @param id an id value in \code{data} to identify layers when interacting in Shiny apps.
 #' @param stroke_from variable or hex colour to use as the staring stroke colour
-#' @param stroke_from_opacity Either a string specifying the column of \code{data}
-#' containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-#' to be applied to all the shapes. Default 255.
+#' @param stroke_from_opacity Either a string specifying the
+#' column of \code{data} containing the stroke opacity of each shape, or a value
+#' between 1 and 255 to be applied to all the shapes
 #' @param stroke_to variable or hex colour to use as the ending stroke colour
-#' @param stroke_to_opacity Either a string specifying the column of \code{data}
-#' containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-#' to be applied to all the shapes. Default 255.
-#' @param stroke_width width of the stroke in pixels. Default 1.
+#' @param stroke_to_opacity Either a string specifying the
+#' column of \code{data} containing the stroke opacity of each shape, or a value
+#' between 1 and 255 to be applied to all the shapes
+#' @param stroke_width width of the stroke in pixels
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
 #' @param highlight_colour hex string colour to use for highlighting. Must contain the alpha component.
@@ -56,8 +56,6 @@ mapdeckArcBrushDependency <- function() {
 #' @param update_view logical indicating if the map should update the bounds to include this layer
 #' @param focus_layer logical indicating if the map should update the bounds to only include this layer
 #' @param transitions list specifying the duration of transitions.
-#' @param digits The number of digits to round GeoJSON lon & lat coordinates. Useful for
-#' reducing file sizes. Defaults to 6
 #' @param brush_radius radius of the brush in metres. Default NULL. If supplied,
 #' the arcs will only show if the origin or destination are within the radius of the mouse.
 #' If NULL, all arcs are displayed
@@ -178,6 +176,24 @@ mapdeckArcBrushDependency <- function() {
 #'    , stroke_to = "airport2"
 #' )
 #'
+#' ## using a brush
+#'
+#' mapdeck(
+#'   token = key
+#'   , style = mapdeck_style("light")
+#' ) %>%
+#'  add_arc(
+#'    data = sf_flights
+#'    , origin = 'geometry'
+#'    , destination = 'geometry.1'
+#'    , layer_id = 'arcs'
+#'    , stroke_from = "airport1"
+#'    , stroke_to = "airport2"
+#'    , stroke_width = 4
+#'    , brush_radius = 500000
+#' )
+#'
+#'
 #'
 #' }
 #'
@@ -215,7 +231,7 @@ add_arc <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL,
-  digits = 6,
+	digits = 6,
 	brush_radius = NULL
 ) {
 
@@ -224,8 +240,8 @@ add_arc <- function(
 	l[["destination"]] <- force(destination)
 	l[["stroke_from"]] <- force(stroke_from)
 	l[["stroke_to"]] <- force(stroke_to)
-	l[["stroke_from_opacity"]] <- resolve_opacity(stroke_from_opacity)
-	l[["stroke_to_opacity"]] <- resolve_opacity(stroke_to_opacity)
+	l[["stroke_from_opacity"]] <- force(stroke_from_opacity)
+	l[["stroke_to_opacity"]] <- force(stroke_to_opacity)
 	l[["stroke_width"]] <- force(stroke_width)
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
