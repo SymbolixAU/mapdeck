@@ -7,6 +7,13 @@ assignees: ''
 
 ---
 
+<!--Try and complete all sections, but delete those which don't apply-->
+<!--use markdown to format code chunks
+```r
+x <- c(1,2,3)
+```
+--->
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
