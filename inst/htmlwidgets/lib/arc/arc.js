@@ -110,7 +110,7 @@ void main(void) {
     enableBrushing: true,
     getStrokeWidth: d => d.strokeWidth,
     // brush radius in meters
-    brushRadius: 100000,
+    brushRadius: 500000,
     mousePosition: [0, 0]
   };
 
@@ -131,7 +131,7 @@ void main(void) {
 	      mousePos: this.state.mousePosition
 	        ? new Float32Array(this.unproject(this.state.mousePosition))
 	        : defaultProps.mousePosition,
-	      enableBrushing: this.props.enableBrushing
+	      enableBrushing: this.state.enableBrushing
 	    });
 	    const newOpts = Object.assign({}, opts, {uniforms});
 	    super.draw(newOpts);
@@ -171,24 +171,25 @@ void main(void) {
     //brushSource: true,
     // show arc if target is in brush
     //brushTarget: true,
-    enableBrushing: true,
+    enableBrushing: false,
     // brush radius in meters
-    brushRadius: 100000,
+    brushRadius: 500000,
     mousePosition: null
     // using mousePosition: null doen'st show anything, even when mouse or map is moved
     // using mousePosition: [0,0] shows things when map is moved to [0,0]
   });
 
   var myEnterListener = function() {
-  	arcLayer.setState({enableBrushing: true });
+  	arcLayer.setState({ enableBrushing: true });
   }
 
   var myListener = function(evt) {
-	  arcLayer.setState({mousePosition: [evt.offsetX, evt.offsetY] });
+	  arcLayer.setState({ mousePosition: [evt.offsetX, evt.offsetY] });
   }
 
   var myLeaveListener = function(evt) {
-    arcLayer.setState({mousePosition: null});
+    arcLayer.setState({ mousePosition: null });
+    arcLayer.setState({ enableBrushing: false });
   }
 
   document.addEventListener('mouseenter', myEnterListener, false);
