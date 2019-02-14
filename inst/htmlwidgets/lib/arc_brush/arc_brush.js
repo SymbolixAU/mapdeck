@@ -202,13 +202,32 @@ function add_arc_polyline( map_id, arc_data, layer_id, auto_highlight, highlight
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onHover: md_update_tooltip,
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    enableBrushing: false,
+    brushRadius: brush_radius,
+    mousePosition: null
   });
 
+  var myEnterListener = function() {
+  	arcLayer.setState({ enableBrushing: true });
+  }
+
+  var myListener = function(evt) {
+	  arcLayer.setState({ mousePosition: [evt.offsetX, evt.offsetY] });
+  }
+
+  var myLeaveListener = function(evt) {
+    arcLayer.setState({ mousePosition: null });
+    arcLayer.setState({ enableBrushing: false });
+  }
+
+  document.addEventListener('mouseenter', myEnterListener, false);
+  document.addEventListener('mousemove', myListener, false);
+  document.addEventListener('mouseleave', myLeaveListener, false);
+
   md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
+
   if (legend !== false) {
     add_legend( map_id, layer_id, legend );
   }
-
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
