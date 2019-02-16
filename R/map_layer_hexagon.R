@@ -26,9 +26,11 @@ mapdeckHexagonDependency <- function() {
 #' @param elevation column containing the elevation of the value. This is used to calculate the
 #' height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
 #' within the \code{radius}. If NULL, the number of coordinates is used.
+#' @param elevation_function either "total" or "average"
 #' @param colour column containing numeric values to colour by.
 #' The colour is calculated by the sum of values within the \code{radius}.
 #' If NULL, the number of coordinates is used.
+#' @param colour_function either "total" or "average"
 #'
 #' @inheritSection add_polygon data
 #'
@@ -98,7 +100,9 @@ add_hexagon <- function(
 	layer_id = NULL,
 	radius = 1000,
 	elevation = NULL,
+	elevation_function = c("total", "average"),
 	colour = NULL,
+	colour_function = c("total", "average"),
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -114,6 +118,9 @@ add_hexagon <- function(
 	l[["lat"]] <- force( lat )
 	l[["elevation"]] <- force( elevation )
 	l[["colour"]] <- force( colour )
+
+	colour_function <- match.arg( colour_function )
+	elevation_function <- match.arg( elevation_function )
 
 	use_weight <- FALSE
 	if(!is.null(elevation)) use_weight <- TRUE
@@ -171,7 +178,7 @@ add_hexagon <- function(
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, radius, elevation_scale,
 		auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer,
-		js_transitions, use_weight, use_colour
+		js_transitions, use_weight, use_colour, elevation_function, colour_function
 		)
 }
 

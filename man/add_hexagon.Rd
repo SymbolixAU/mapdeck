@@ -6,10 +6,11 @@
 \usage{
 add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
-  elevation = NULL, colour = NULL, elevation_scale = 1,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL)
+  elevation = NULL, elevation_function = c("total", "average"),
+  colour = NULL, colour_function = c("total", "average"),
+  elevation_scale = 1, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF", colour_range = NULL,
+  update_view = TRUE, focus_layer = FALSE, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -33,9 +34,13 @@ to conflict and not plot correctly}
 height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
 within the \code{radius}. If NULL, the number of coordinates is used.}
 
+\item{elevation_function}{either "total" or "average"}
+
 \item{colour}{column containing numeric values to colour by.
 The colour is calculated by the sum of values within the \code{radius}.
 If NULL, the number of coordinates is used.}
+
+\item{colour_function}{either "total" or "average"}
 
 \item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
 
