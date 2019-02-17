@@ -1,5 +1,6 @@
 # mapdeck 0.3
 
+* `add_arc` gets `brush_radius` argument for brushing
 * opacity values can be in [0,1) OR [0,255]
 * layeres work without an access token
 * `add_title()` for adding titles to map
