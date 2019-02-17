@@ -22,12 +22,12 @@ namespace defaults {
 		return nv;
 	}
 
-	inline Rcpp::IntegerVector default_elevation(int n) {
+	inline Rcpp::IntegerVector default_elevation( int n ) {
 		Rcpp::IntegerVector iv(n, 0.0);
 		return iv;
 	}
 
-	inline Rcpp::IntegerVector default_radius(int n) {
+	inline Rcpp::IntegerVector default_radius( int n ) {
 		Rcpp::IntegerVector iv(n, 1000);
 		return iv;
 	}
