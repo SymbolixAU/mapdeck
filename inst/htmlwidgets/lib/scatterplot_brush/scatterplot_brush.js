@@ -118,7 +118,7 @@ function add_scatterplot_brush_geo( map_id, scatter_data, layer_id, auto_highlig
 	  // show point only if source is in brush
 	  brushTarget: false,
 	  // brush radius in meters
-	  brushRadius: 100000,
+	  brushRadius: brush_radius,
 	  mousePosition: [0, 0],
 	  getTargetPosition: d => d.target,
 	  radiusMinPixels: 0
@@ -147,6 +147,7 @@ function add_scatterplot_brush_geo( map_id, scatter_data, layer_id, auto_highlig
 	      }
 	    });
 	  }
+
 
 	  draw(opts) {
 	    // add uniforms
@@ -185,7 +186,7 @@ function add_scatterplot_brush_geo( map_id, scatter_data, layer_id, auto_highlig
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
     radiusScale: 1,
-    radiusMinPixels: 1,
+    //radiusMinPixels: 1,
     stroked: true,  // TODO( make conditional IFF stroke provided?)
     filled: true,
     getRadius: d => d.properties.radius,
@@ -202,8 +203,9 @@ function add_scatterplot_brush_geo( map_id, scatter_data, layer_id, auto_highlig
     enableBrushing: false,
     brushRadius: brush_radius,
     mousePosition: null
-
   });
+
+  console.log( scatterLayer );
 
   var myEnterListener = function() {
   	scatterLayer.setState({ enableBrushing: true });

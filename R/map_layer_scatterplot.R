@@ -12,7 +12,7 @@ mapdeckScatterplotDependency <- function() {
 mapdeckScatterplotBrushDependency <- function() {
 	list(
 		createHtmlDependency(
-			name = "scatterplot",
+			name = "scatterplot_brush",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/scatterplot_brush", package = "mapdeck"),
 			script = c("scatterplot_brush.js")

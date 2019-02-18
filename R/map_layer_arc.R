@@ -12,7 +12,7 @@ mapdeckArcDependency <- function() {
 mapdeckArcBrushDependency <- function() {
 	list(
 		createHtmlDependency(
-			name = "arc",
+			name = "arc_brush",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/arc_brush", package = "mapdeck"),
 			script = c("arc_brush.js")
