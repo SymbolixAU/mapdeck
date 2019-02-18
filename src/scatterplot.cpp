@@ -6,7 +6,9 @@
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List scatterplot_defaults(int n) {
-	Rcpp::NumericVector nv(0.0, n);
+
+	Rcpp::NumericVector nv = Rcpp::NumericVector(n);  // initalised to 0
+
 	return Rcpp::List::create(
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n),
 		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour(n),

@@ -5,8 +5,8 @@ test_that("add_scatterplot accepts multiple objects", {
 	testthat::skip_on_cran()
 	testthat::skip_on_travis()
 
-	geo <- '[{"type":"Feature","properties":{"fill_colour":"#440154FF"},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
-	poly <- '[{"fill_colour":"#440154FF","polyline":"_ifpEo`ydL"}]'
+	geo <- '[{"type":"Feature","properties":{"fill_colour":"#440154FF","stroke_colour":"#440154FF","stroke_width":0.0},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
+	poly <- '[{"fill_colour":"#440154FF","stroke_colour":"#440154FF","stroke_width":0.0,"polyline":"_ifpEo`ydL"}]'
 
 	## sf
 	set_token("abc")
