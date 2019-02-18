@@ -178,7 +178,7 @@ function add_arc_brush_geo( map_id, arc_data, layer_id, auto_highlight, highligh
   document.addEventListener('mousemove', myListener, false);
   document.addEventListener('mouseleave', myLeaveListener, false);
 
-  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
+  md_update_layer( map_id, 'arc_brush-'+layer_id, arcLayer );
 
   if (legend !== false) {
     add_legend( map_id, layer_id, legend );
@@ -225,7 +225,7 @@ function add_arc_polyline( map_id, arc_data, layer_id, auto_highlight, highlight
   document.addEventListener('mousemove', myListener, false);
   document.addEventListener('mouseleave', myLeaveListener, false);
 
-  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
+  md_update_layer( map_id, 'arc_brush-'+layer_id, arcLayer );
 
   if (legend !== false) {
     add_legend( map_id, layer_id, legend );

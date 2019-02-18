@@ -9,6 +9,16 @@ mapdeckScatterplotDependency <- function() {
 	)
 }
 
+mapdeckScatterplotBrushDependency <- function() {
+	list(
+		createHtmlDependency(
+			name = "scatterplot_brush",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/scatterplot_brush", package = "mapdeck"),
+			script = c("scatterplot_brush.js")
+		)
+	)
+}
 
 #' Add Scatterplot
 #'
@@ -119,7 +129,8 @@ add_scatterplot <- function(
 	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -160,11 +171,17 @@ add_scatterplot <- function(
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
 
-
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
-	jsfunc <- "add_scatterplot_geo"
+	if(!is.null(brush_radius)) {
+		jsfunc <- "add_scatterplot_brush_geo"
+		map <- addDependency(map, mapdeckScatterplotBrushDependency())
+	} else {
+		jsfunc <- "add_scatterplot_geo"
+		map <- addDependency(map, mapdeckScatterplotDependency())
+	}
+
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
 		shape <- rcpp_scatterplot_geojson( data, l, geometry_column )
@@ -174,7 +191,11 @@ add_scatterplot <- function(
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- c( "polyline" )
 		shape <- rcpp_scatterplot_polyline( data, l, geometry_column )
-		jsfunc <- "add_scatterplot_polyline"
+		if(!is.null(brush_radius)) {
+			jsfunc <- "add_scatterplot_brush_polyline"
+		} else {
+			jsfunc <- "add_scatterplot_polyline"
+		}
 	}
 
 	js_transitions <- resolve_transitions( transitions, "scatterplot" )
@@ -182,7 +203,8 @@ add_scatterplot <- function(
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
-		shape[["legend"]], bbox, update_view, focus_layer, js_transitions
+		shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
+		brush_radius
 		)
 }
 
