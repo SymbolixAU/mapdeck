@@ -205,24 +205,35 @@ function add_scatterplot_brush_geo( map_id, scatter_data, layer_id, auto_highlig
     mousePosition: null
   });
 
-  console.log( scatterLayer );
-
-  var myEnterListener = function() {
+  var scatterbrushEnterListener = function() {
   	scatterLayer.setState({ enableBrushing: true });
   }
 
-  var myListener = function(evt) {
+  var scatterbrushMoveListener = function(evt) {
 	  scatterLayer.setState({ mousePosition: [evt.offsetX, evt.offsetY] });
+	  // TODO
+	  // capture coordinates, and number of points, and some data about the points
+	  // and return to shiny
+	  //console.log( scatterLayer.state );
+	  //console.log( scatterLayer.state.attributeManager.attributes.instanceTargetPositions.gl );
+	  //console.log( isPointInRange );
+	  //console.log( scatterLayer.isPointInRange );
+
+	  //var eventInfo = {
+	  //	mousePosition: [ evt.offsetX, evt.offsetY ]
+	  //}
+	  //Shiny.onInputChange(map_id + "_" + layer_id + "_brush", eventInfo);
+
   }
 
-  var myLeaveListener = function(evt) {
+  var scatterbrushLeaveListener = function(evt) {
     scatterLayer.setState({ mousePosition: null });
     scatterLayer.setState({ enableBrushing: false });
   }
 
-  document.addEventListener('mouseenter', myEnterListener, false);
-  document.addEventListener('mousemove', myListener, false);
-  document.addEventListener('mouseleave', myLeaveListener, false);
+  document.addEventListener('mouseenter', scatterbrushEnterListener, false);
+  document.addEventListener('mousemove', scatterbrushMoveListener, false);
+  document.addEventListener('mouseleave', scatterbrushLeaveListener, false);
 
   md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
 
