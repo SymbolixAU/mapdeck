@@ -5,6 +5,11 @@ dependencies:
     src: "htmlwidgets/lib/"
     script:
     - deckgl.min.js
+  - name: luma.gl
+    version: 6.4.1
+    src: "htmlwidgets/lib/"
+    script:
+    - lumagl.min.js
   - name: mapbox-gl
     version: 0.52.0
     src: "htmlwidgets/lib"
