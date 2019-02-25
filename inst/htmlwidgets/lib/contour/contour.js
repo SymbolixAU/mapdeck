@@ -5,9 +5,9 @@ function add_contour_geo( map_id, contour_data, layer_id, cell_size ) {
     data: contour_data,
     cellSize: cell_size,
     contours: [
-    	{threshold: [1,4], color: [255, 0, 0, 255] },
-    	{threshold: [4,6], color: [0, 255, 0, 255] },
-    	{threshold: [6, 10], color: [0, 0, 255, 128] }
+    	{threshold: [1], color: [255, 0, 0, 255] }
+      //{threshold: [10], color: [0, 255, 0, 255] }
+    	//{threshold: [6], color: [0, 0, 255, 128] }
     ],
     getPosition: d => d.geometry.geometry.coordinates
   });
