@@ -55,22 +55,21 @@ mapbox <- function(
 			padding = padding,
 			browser.fill = FALSE
 		),
-		dependencies = mapbox_dependencies()
+		dependencies = mapboxDependency()
 	)
-	print(str(mapboxmap))
 	return(mapboxmap)
 }
 
-mapbox_dependencies <- function( offline = TRUE ) {
-  src <- c(file = system.file("htmlwidgets/lib/", package = "mapdeck"))
-  htmltools::htmlDependency(
-  	name = "mapbox-gl"
-  	, package = "mapdeck"
-  	, version = "0.52.0"
-  	, src = src
-  	, script = "mapbox-gl.js"
-  	, stylesheet = "mapbox-gl.css"
-  )
+mapboxDependency <- function() {
+	list(
+		createHtmlDependency(
+			name = "mapboxgl",
+			version = "0.52.0",
+			src = system.file("htmlwidgets/lib", package = "mapdeck"),
+			script = c("mapbox-gl.js"),
+			stylesheet = "mapbox-gl.css"
+		)
+	)
 }
 
 

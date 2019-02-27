@@ -49,17 +49,39 @@ HTMLWidgets.widget({
         	bearing: x.bearing
         };
 
+        mapboxgl.accessToken = x.access_token;
 
 			  var map = new mapboxgl.Map({
-			  	container: el.id,
-			  	style: 'mapbox://styles/mapbox/dark-v10?optimize=true',
-			    center: [-1.4157, 52.2324],
-			    zoom: 6,
-			    pitch: 40.5
-			  });
+					container: el.id,
+					style: 'mapbox://styles/mapbox/streets-v9',
+					zoom: 15,
+					center: [-71.97722138410576, -13.517379300798098]
+				});
+
+				map.on('load', function () {
+					map.addSource('contours', {
+					type: 'vector',
+					url: 'mapbox://mapbox.mapbox-terrain-v2'
+					});
+					map.addLayer({
+					'id': 'contours',
+					'type': 'line',
+					'source': 'contours',
+					'source-layer': 'contour',
+					'layout': {
+					'visibility': 'visible',
+					'line-join': 'round',
+					'line-cap': 'round'
+					},
+					'paint': {
+					'line-color': '#877b59',
+					'line-width': 1
+					}
+					});
+			});
 
 			  window[el.id + 'map'] = map;
-		    md_initialise_map(el, x);
+		    md_initialise_mapbox(el, x);
       },
 
       resize: function(width, height) {
@@ -105,4 +127,25 @@ if (HTMLWidgets.shinyMode) {
       }
     }
   });
+}
+
+function md_initialise_mapbox(el, x) {
+
+	// call initial layers
+  if (x.calls !== undefined) {
+
+    for (layerCalls = 0; layerCalls < x.calls.length; layerCalls++) {
+
+      //push the map_id into the call.args
+      x.calls[layerCalls].args.unshift(el.id);
+
+      if (window[x.calls[layerCalls].functions]) {
+
+        window[x.calls[layerCalls].functions].apply(window[el.id + 'map'], x.calls[layerCalls].args);
+
+      } else {
+        //console.log("Unknown function " + x.calls[layerCalls]);
+      }
+    }
+  }
 }
