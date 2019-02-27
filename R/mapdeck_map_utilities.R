@@ -34,7 +34,7 @@ mapdeck_dispatch = function(
 #' @param ... unnamed arguments to be passed to the JavaScript method
 #' @rdname mapdeck_dispatch
 #' @export
-invoke_method = function(map, method, ...) {
+invoke_method <- function(map, method, ...) {
 	args = evalFormula(list(...))
 	mapdeck_dispatch(
 		map,

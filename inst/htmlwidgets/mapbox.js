@@ -58,28 +58,6 @@ HTMLWidgets.widget({
 					center: [-71.97722138410576, -13.517379300798098]
 				});
 
-				map.on('load', function () {
-					map.addSource('contours', {
-					type: 'vector',
-					url: 'mapbox://mapbox.mapbox-terrain-v2'
-					});
-					map.addLayer({
-					'id': 'contours',
-					'type': 'line',
-					'source': 'contours',
-					'source-layer': 'contour',
-					'layout': {
-					'visibility': 'visible',
-					'line-join': 'round',
-					'line-cap': 'round'
-					},
-					'paint': {
-					'line-color': '#877b59',
-					'line-width': 1
-					}
-					});
-			});
-
 			  window[el.id + 'map'] = map;
 		    md_initialise_mapbox(el, x);
       },
@@ -92,6 +70,32 @@ HTMLWidgets.widget({
     };
   }
 });
+
+
+function add_mapbox_layer( map_id ) {
+
+  var map = window[ map_id + 'map'];
+	map.addSource('contours', {
+		type: 'vector',
+		url: 'mapbox://mapbox.mapbox-terrain-v2'
+	});
+	map.addLayer({
+		'id': 'contours',
+		'type': 'line',
+		'source': 'contours',
+		'source-layer': 'contour',
+		'layout': {
+		  'visibility': 'visible',
+		  'line-join': 'round',
+	    'line-cap': 'round'
+	   },
+		'paint': {
+		'line-color': '#877b59',
+	  'line-width': 1
+	  }
+  });
+
+}
 
 
 if (HTMLWidgets.shinyMode) {
