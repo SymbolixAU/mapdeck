@@ -189,7 +189,7 @@ function add_trips_geo( map_id, trips_data, layer_id ) {
     currentTime: 0
     //trailLength,
     //currentTime: this.state.time
-  }),
+  });
 
    md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 

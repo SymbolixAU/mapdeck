@@ -1,12 +1,12 @@
 
 dependencies:
   - name: deck.gl
-    version: 6.4.3
+    version: 7.0.0
     src: "htmlwidgets/lib/"
     script:
     - deckgl.min.js
   - name: luma.gl
-    version: 6.1
+    version: 7.0.0
     src: "htmlwidgets/lib/"
     script:
     - lumagl.min.js
