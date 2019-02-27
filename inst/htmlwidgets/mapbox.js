@@ -55,9 +55,9 @@
 					container: el.id,
 					style: x.style,
 					zoom: x.zoom,
-					center: [x.location[0], x.location[1]]
-					//zoom: 15,
-					//center: [-71.97722138410576, -13.517379300798098]
+					center: [x.location[0], x.location[1]],
+					pitch: x.pitch,
+        	bearing: x.bearing
 				});
 
 			  window[el.id + 'map'] = map;
