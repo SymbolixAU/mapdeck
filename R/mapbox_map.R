@@ -23,9 +23,9 @@ mapbox <- function(
 	height = NULL,
 	padding = 0,
 	style = 'mapbox://styles/mapbox/streets-v9',
-	pitch = 0,
+	# pitch = 0,
 	zoom = 0,
-	bearing = 0,
+	# bearing = 0,
 	location = c( 0, 0 )
 ) {
 
@@ -33,10 +33,10 @@ mapbox <- function(
 	x = list(
 		access_token = force( token )
 		, style = force( style )
-		, pitch = force( pitch )
+		#, pitch = force( pitch )
 		, zoom = force( zoom )
 		, location = force( as.numeric( location ) )
-		, bearing = force( bearing )
+		#, bearing = force( bearing )
 	)
 
 	# create widget

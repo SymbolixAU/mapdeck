@@ -6,8 +6,8 @@
 \usage{
 mapbox(data = NULL, token = get_access_token(api = "mapbox"),
   width = NULL, height = NULL, padding = 0,
-  style = "mapbox://styles/mapbox/streets-v9", pitch = 0, zoom = 0,
-  bearing = 0, location = c(0, 0))
+  style = "mapbox://styles/mapbox/streets-v9", zoom = 0,
+  location = c(0, 0))
 }
 \arguments{
 \item{data}{data to be used on the map. All coordinates are expected to be in
@@ -24,13 +24,13 @@ If left empty layers will still be plotted, but without a Mapbox map.}
 
 \item{style}{the style of the map}
 
-\item{pitch}{the pitch angle of the map}
-
 \item{zoom}{zoom level of the map}
 
-\item{bearing}{bearing of the map between 0 and 360}
-
 \item{location}{unnamed vector of lon and lat coordinates (in that order)}
+
+\item{pitch}{the pitch angle of the map}
+
+\item{bearing}{bearing of the map between 0 and 360}
 }
 \description{
 mapbox

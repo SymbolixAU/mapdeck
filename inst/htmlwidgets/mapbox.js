@@ -53,9 +53,11 @@
 
 			  var map = new mapboxgl.Map({
 					container: el.id,
-					style: 'mapbox://styles/mapbox/streets-v9',
-					zoom: 15,
-					center: [-71.97722138410576, -13.517379300798098]
+					style: x.style,
+					zoom: x.zoom,
+					center: [x.location[0], x.location[1]]
+					//zoom: 15,
+					//center: [-71.97722138410576, -13.517379300798098]
 				});
 
 			  window[el.id + 'map'] = map;
@@ -72,12 +74,16 @@
 });
 
 
-function add_mapbox_layer( map_id ) {
+function add_mapbox_layer( map_id, layer_json ) {
 
   var map = window[ map_id + 'map'];
+  var js = JSON.parse( layer_json );
+
+  console.log( js );
 
   map.on('styledata', function() {
-  		map.addSource('contours', {
+/*
+  	map.addSource('contours', {
 			type: 'vector',
 			url: 'mapbox://mapbox.mapbox-terrain-v2'
 		});
@@ -96,6 +102,10 @@ function add_mapbox_layer( map_id ) {
 		  'line-width': 1
 		  }
 	  });
+  */
+    map.addLayer(
+	  	js
+    );
   });
 }
 
