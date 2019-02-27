@@ -1,4 +1,4 @@
-HTMLWidgets.widget({
+ HTMLWidgets.widget({
 
   name: 'mapbox',
   type: 'output',
@@ -75,26 +75,28 @@ HTMLWidgets.widget({
 function add_mapbox_layer( map_id ) {
 
   var map = window[ map_id + 'map'];
-	map.addSource('contours', {
-		type: 'vector',
-		url: 'mapbox://mapbox.mapbox-terrain-v2'
-	});
-	map.addLayer({
-		'id': 'contours',
-		'type': 'line',
-		'source': 'contours',
-		'source-layer': 'contour',
-		'layout': {
-		  'visibility': 'visible',
-		  'line-join': 'round',
-	    'line-cap': 'round'
-	   },
-		'paint': {
-		'line-color': '#877b59',
-	  'line-width': 1
-	  }
-  });
 
+  map.on('styledata', function() {
+  		map.addSource('contours', {
+			type: 'vector',
+			url: 'mapbox://mapbox.mapbox-terrain-v2'
+		});
+		map.addLayer({
+			'id': 'contours',
+			'type': 'line',
+			'source': 'contours',
+			'source-layer': 'contour',
+			'layout': {
+			  'visibility': 'visible',
+			  'line-join': 'round',
+		    'line-cap': 'round'
+		   },
+			'paint': {
+			'line-color': '#877b59',
+		  'line-width': 1
+		  }
+	  });
+  });
 }
 
 
