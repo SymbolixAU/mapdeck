@@ -77,33 +77,10 @@
   }
 });
 
-
 function add_mapbox_layer( map_id, layer_json ) {
-
   var map = window[ map_id + 'map'];
   var js = JSON.parse( layer_json );
   map.on('styledata', function() {
-/*
-  	map.addSource('contours', {
-			type: 'vector',
-			url: 'mapbox://mapbox.mapbox-terrain-v2'
-		});
-		map.addLayer({
-			'id': 'contours',
-			'type': 'line',
-			'source': 'contours',
-			'source-layer': 'contour',
-			'layout': {
-			  'visibility': 'visible',
-			  'line-join': 'round',
-		    'line-cap': 'round'
-		   },
-			'paint': {
-			'line-color': '#877b59',
-		  'line-width': 1
-		  }
-	  });
-  */
     map.addLayer( js );
   });
 }
@@ -112,18 +89,10 @@ function add_mapbox_source( map_id, id, source_json ) {
 	var map = window[ map_id + 'map'];
   var js = JSON.parse( source_json );
   map.on('styledata', function() {
-/*
-  	map.addSource('contours', {
-			type: 'vector',
-			url: 'mapbox://mapbox.mapbox-terrain-v2'
-		});
-  */
-
-  var mapLayer = map.getLayer(id);
-  console.log( mapLayer );
-  if( typeof mapLayer === 'undefined' ) {
-    map.addSource( id,  js );
-  }
+	  var mapLayer = map.getLayer( id );
+	  if( typeof mapLayer === 'undefined' ) {
+	    map.addSource( id,  js );
+	  }
   });
 }
 

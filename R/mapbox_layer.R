@@ -22,28 +22,7 @@
 # 	) %>%
 # 	add_vector_source( js )
 
-source <- '{
-	"type": "vector",
-	"url": "mapbox://mapbox.mapbox-terrain-v2"
-}'
 
-id <- 'contours'
-
-contours <- '{
-	"id": "contours",
-	"type": "line",
-	"source": "contours",
-	"source-layer": "contour",
-	"layout": {
-		"visibility": "visible",
-		"line-join": "round",
-		"line-cap": "round"
-	},
-	"paint": {
-		"line-color": "#877b59",
-		"line-width": 1
-	}
-}'
 
 #' Add mapbox source
 #'
@@ -64,6 +43,11 @@ contours <- '{
 #'
 #' @export
 add_mapbox_source <- function(map, id, js) {
+
+	if( !inherits(map, "mapbox") ) {
+		stop("expecting a mapbox map, perhaps you meant to use `mapbox()`?")
+	}
+
 	invoke_mapbox_method(
 		map, "add_mapbox_source", id, js
 	)
@@ -73,6 +57,11 @@ add_mapbox_source <- function(map, id, js) {
 #'
 #' @export
 add_mapbox_layer <- function(map, js) {
+
+	if( !inherits(map, "mapbox") ) {
+		stop("expecting a mapbox map, perhaps you meant to use `mapbox()`?")
+	}
+
 	invoke_mapbox_method(
 		map, "add_mapbox_layer", js
 	)
