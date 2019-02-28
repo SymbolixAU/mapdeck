@@ -60,6 +60,10 @@
         	bearing: x.bearing
 				});
 
+        // TODO make this optional
+				//map.addControl(new mapboxgl.NavigationControl());
+
+
 			  window[el.id + 'map'] = map;
 		    md_initialise_mapbox(el, x);
       },
@@ -78,9 +82,6 @@ function add_mapbox_layer( map_id, layer_json ) {
 
   var map = window[ map_id + 'map'];
   var js = JSON.parse( layer_json );
-
-  console.log( js );
-
   map.on('styledata', function() {
 /*
   	map.addSource('contours', {
@@ -103,12 +104,28 @@ function add_mapbox_layer( map_id, layer_json ) {
 		  }
 	  });
   */
-    map.addLayer(
-	  	js
-    );
+    map.addLayer( js );
   });
 }
 
+function add_mapbox_source( map_id, id, source_json ) {
+	var map = window[ map_id + 'map'];
+  var js = JSON.parse( source_json );
+  map.on('styledata', function() {
+/*
+  	map.addSource('contours', {
+			type: 'vector',
+			url: 'mapbox://mapbox.mapbox-terrain-v2'
+		});
+  */
+
+  var mapLayer = map.getLayer(id);
+  console.log( mapLayer );
+  if( typeof mapLayer === 'undefined' ) {
+    map.addSource( id,  js );
+  }
+  });
+}
 
 if (HTMLWidgets.shinyMode) {
 

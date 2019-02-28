@@ -21,3 +21,59 @@
 # 	, zoom = 10
 # 	) %>%
 # 	add_vector_source( js )
+
+source <- '{
+	"type": "vector",
+	"url": "mapbox://mapbox.mapbox-terrain-v2"
+}'
+
+id <- 'contours'
+
+contours <- '{
+	"id": "contours",
+	"type": "line",
+	"source": "contours",
+	"source-layer": "contour",
+	"layout": {
+		"visibility": "visible",
+		"line-join": "round",
+		"line-cap": "round"
+	},
+	"paint": {
+		"line-color": "#877b59",
+		"line-width": 1
+	}
+}'
+
+#' Add mapbox source
+#'
+#' @details
+#'
+#' Mapbox sources supply data to be shown on the map. The type of source is specified
+#' by the "type" property, adn must be one of
+#' \itemize{
+#'   \item{vector}
+#'   \item{raster}
+#'   \item{raster-dem}
+#'   \item{geojson}
+#'   \item{image}
+#'   \item{video}
+#' }
+#'
+#' See the Mapbox Sources definition at \url{https://docs.mapbox.com/mapbox-gl-js/style-spec/#sources}
+#'
+#' @export
+add_mapbox_source <- function(map, id, js) {
+	invoke_mapbox_method(
+		map, "add_mapbox_source", id, js
+	)
+}
+
+#' Add mapbox layer
+#'
+#' @export
+add_mapbox_layer <- function(map, js) {
+	invoke_mapbox_method(
+		map, "add_mapbox_layer", js
+	)
+}
