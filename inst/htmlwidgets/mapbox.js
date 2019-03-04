@@ -40,6 +40,7 @@
         tooltipdiv.setAttribute("id", "mapdecktooltip"+el.id);
         mapDiv.appendChild(tooltipdiv);
 
+        /*
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
         	longitude: x.location[0],
@@ -48,24 +49,30 @@
         	pitch: x.pitch,
         	bearing: x.bearing
         };
+        */
 
         mapboxgl.accessToken = x.access_token;
 
-			  var map = new mapboxgl.Map({
-					container: el.id,
-					style: x.style,
-					zoom: x.zoom,
-					center: [x.location[0], x.location[1]],
-					pitch: x.pitch,
+        var map = new mapboxgl.Map({
+        	container: el.id,
+        	style: x.style,
+        	zoom: x.zoom,
+        	center: [x.location[0], x.location[1]],
+        	pitch: x.pitch,
         	bearing: x.bearing
-				});
+        });
 
         // TODO make this optional
-				//map.addControl(new mapboxgl.NavigationControl());
+        //map.addControl(new mapboxgl.NavigationControl());
 
+        var checkExists = setInterval(function () {
+        	map.on('styledata', function() {
+        		clearInterval(checkExists);
+        		window[el.id + 'map'] = map;
+        		md_initialise_mapbox(el, x);
+        	});
+        }, 100);
 
-			  window[el.id + 'map'] = map;
-		    md_initialise_mapbox(el, x);
       },
 
       resize: function(width, height) {
@@ -77,17 +84,30 @@
   }
 });
 
+function add_mapbox_layer( map_id, layer_json ) {
+  var map = window[ map_id + 'map'];
+  var js = JSON.parse( layer_json );
+  //map.on('styledata', function() {
+    map.addLayer( js );
+  //});
+}
+
 function add_mapbox_source( map_id, id, source_json ) {
 	var map = window[ map_id + 'map'];
   var js = JSON.parse( source_json );
-  map.on('styledata', function() {
-	  var mapLayer = map.getLayer( id );
-	  if( typeof mapLayer === 'undefined' ) {
+
+  console.log( js );
+
+  //map.on('styledata', function() {
+
+	  //var mapLayer = map.getLayer( id );
+	  //if( typeof mapLayer === undefined ) {
 	    map.addSource( id,  js );
-	  }
-  });
+	  //}
+  //});
 }
 
+/*
 function add_mapbox_layer( map_id, layer_json ) {
   var map = window[ map_id + 'map'];
   var js = JSON.parse( layer_json );
@@ -95,9 +115,8 @@ function add_mapbox_layer( map_id, layer_json ) {
     map.addLayer( js );
     console.log( map.getLayer( 'contours' ) );
   });
-
 }
-
+*/
 
 if (HTMLWidgets.shinyMode) {
 
