@@ -77,14 +77,6 @@
   }
 });
 
-function add_mapbox_layer( map_id, layer_json ) {
-  var map = window[ map_id + 'map'];
-  var js = JSON.parse( layer_json );
-  map.on('styledata', function() {
-    map.addLayer( js );
-  });
-}
-
 function add_mapbox_source( map_id, id, source_json ) {
 	var map = window[ map_id + 'map'];
   var js = JSON.parse( source_json );
@@ -95,6 +87,17 @@ function add_mapbox_source( map_id, id, source_json ) {
 	  }
   });
 }
+
+function add_mapbox_layer( map_id, layer_json ) {
+  var map = window[ map_id + 'map'];
+  var js = JSON.parse( layer_json );
+  map.on('styledata', function() {
+    map.addLayer( js );
+    console.log( map.getLayer( 'contours' ) );
+  });
+
+}
+
 
 if (HTMLWidgets.shinyMode) {
 
