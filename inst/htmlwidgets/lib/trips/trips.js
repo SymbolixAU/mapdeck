@@ -193,7 +193,7 @@ function add_trips_geo( map_id, trips_data, layer_id ) {
 
    md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 
-   //animate_trips(map_id, trips_data, layer_id );
+   animate_trips( map_id, trips_data, layer_id );
 }
 
 
@@ -205,6 +205,8 @@ function animate_trips( map_id, trips_data, layer_id ) {
     const loopTime = loopLength / animationSpeed;
 
     var time = Math.round(((timestamp % loopTime) / loopTime) * loopLength);
+
+    console.log( time );
 
 		var tripsLayer = new TripsLayer({
 		    id: 'trips-'+layer_id,
@@ -221,6 +223,8 @@ function animate_trips( map_id, trips_data, layer_id ) {
 
    md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 
-    // WHAT SHOULD I DO NOW???
-    window.requestAnimationFrame( this.animate_trips.bind(this) );
+   window.requestAnimationFrame( function() {
+   	  animate_trips( map_id, trips_data, layer_id );
+   })
+
   }
