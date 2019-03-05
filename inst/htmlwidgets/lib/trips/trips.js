@@ -31,9 +31,7 @@ void main(void) {
 }
 `;
 
-function add_trips_geo( map_id, trips_data, layer_id ) {
-
-	const defaultProps = {
+const defaultProps = {
 	  trailLength: {type: 'number', value: 120, min: 0},
 	  currentTime: {type: 'number', value: 0, min: 0},
 	  getPath: {type: 'accessor', value: d => d.path},
@@ -65,11 +63,11 @@ function add_trips_geo( map_id, trips_data, layer_id ) {
 	  }
 
 	  getModel(gl) {
-	    return new Model(gl, {
+	    return new luma.Model(gl, {
 	      id: this.props.id,
 	      vs: tripsVertex,
 	      fs: tripsFragment,
-	      geometry: new Geometry({
+	      geometry: new luma.Geometry({
 	        id: this.props.id,
 	        drawMode: 'LINES'
 	      }),
@@ -178,11 +176,13 @@ function add_trips_geo( map_id, trips_data, layer_id ) {
 	TripsLayer.layerName = 'TripsLayer';
 	TripsLayer.defaultProps = defaultProps;
 
+function add_trips_geo( map_id, trips_data, layer_id ) {
+
   var tripsLayer = new TripsLayer({
     id: 'trips-'+layer_id,
-    data: trips,
+    data: trips_data,
     getPath: d => d.geometry.geometry.coordinates,
-    //getColor: d => (d.vendor === 0 ? [253, 128, 93] : [23, 184, 190]),
+    getColor: d => [253, 128, 93],
     opacity: 0.3,
     strokeWidth: 2,
     trailLength: 5,
@@ -193,4 +193,34 @@ function add_trips_geo( map_id, trips_data, layer_id ) {
 
    md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 
+   //animate_trips(map_id, trips_data, layer_id );
 }
+
+
+function animate_trips( map_id, trips_data, layer_id ) {
+  	var loopLength = 18000; // unit corresponds to the timestamp in source data
+    var animationSpeed = 30; // unit time per second
+
+    const timestamp = Date.now() / 1000;
+    const loopTime = loopLength / animationSpeed;
+
+    var time = Math.round(((timestamp % loopTime) / loopTime) * loopLength);
+
+		var tripsLayer = new TripsLayer({
+		    id: 'trips-'+layer_id,
+		    data: trips_data,
+		    getPath: d => d.geometry.geometry.coordinates,
+		    getColor: d => [253, 128, 93],
+		    opacity: 0.3,
+		    strokeWidth: 2,
+		    trailLength: 5,
+		    currentTime: time
+		    //trailLength,
+		    //currentTime: this.state.time
+		  });
+
+   md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
+
+    // WHAT SHOULD I DO NOW???
+    window.requestAnimationFrame( this.animate_trips.bind(this) );
+  }
