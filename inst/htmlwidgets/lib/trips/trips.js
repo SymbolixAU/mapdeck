@@ -34,7 +34,8 @@ void main(void) {
 const defaultProps = {
 	  trailLength: {type: 'number', value: 120, min: 0},
 	  currentTime: {type: 'number', value: 0, min: 0},
-	  getPath: {type: 'accessor', value: d => d.path},
+	  //getPath: {type: 'accessor', value: d => d.path},
+	  getPath: {type: 'accessor', value: d => d.geometry.geometry.coordinates},
 	  getColor: {type: 'accessor', value: d => d.color}
 	};
 
@@ -105,6 +106,10 @@ const defaultProps = {
 	  }
 
 	  draw({uniforms}) {
+
+	  	//console.log("draw");
+	  	// yes, this is called
+
 	    const {trailLength, currentTime} = this.props;
 	    this.state.model.render(
 	      Object.assign({}, uniforms, {
@@ -183,29 +188,36 @@ function add_trips_geo( map_id, trips_data, layer_id ) {
     data: trips_data,
     getPath: d => d.geometry.geometry.coordinates,
     getColor: d => [253, 128, 93],
-    opacity: 0.3,
-    strokeWidth: 2,
-    trailLength: 5,
-    currentTime: 0
-    //trailLength,
-    //currentTime: this.state.time
+    opacity: 0.8,
+    strokeWidth: 50,
+    trailLength: 180,
+    time: 1178.6,
+    currentTime: 1178.6
   });
 
    md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 
-   animate_trips( map_id, trips_data, layer_id );
+   //animate_trips( tripsLayer );
+  animate_trips( map_id, trips_data, layer_id);
 }
 
 
+//function animate_trips( tripsLayer ) {
 function animate_trips( map_id, trips_data, layer_id ) {
-  	var loopLength = 18000; // unit corresponds to the timestamp in source data
+  	var loopLength = 1800; // unit corresponds to the timestamp in source data
     var animationSpeed = 30; // unit time per second
 
     const timestamp = Date.now() / 1000;
     const loopTime = loopLength / animationSpeed;
 
-    var time = Math.round(((timestamp % loopTime) / loopTime) * loopLength);
+    var time = ((timestamp % loopTime) / loopTime) * loopLength;
+    //console.log( tripsLayer );
 
+/*
+    tripsLayer.setState({
+    	time: ((timestamp % loopTime ) / loopTime ) * loopLength
+    });
+*/
     console.log( time );
 
 		var tripsLayer = new TripsLayer({
@@ -213,12 +225,10 @@ function animate_trips( map_id, trips_data, layer_id ) {
 		    data: trips_data,
 		    getPath: d => d.geometry.geometry.coordinates,
 		    getColor: d => [253, 128, 93],
-		    opacity: 0.3,
-		    strokeWidth: 2,
-		    trailLength: 5,
+		    opacity: 0.8,
+		    strokeWidth: 50,
+		    trailLength: 180,
 		    currentTime: time
-		    //trailLength,
-		    //currentTime: this.state.time
 		  });
 
    md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
