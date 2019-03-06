@@ -22,10 +22,10 @@ uniform float trailLength;
 varying float vTime;
 varying vec4 vColor;
 void main(void) {
-  vec2 p = project_position(positions.xy);
+  vec3 p = project_position(positions);
   // the magic de-flickering factor
   vec4 shift = vec4(0., 0., mod(positions.z, trailLength) * 1e-4, 0.);
-  gl_Position = project_to_clipspace(vec4(p, 1., 1.)) + shift;
+  gl_Position = project_to_clipspace(vec4(p, 1.)) + shift;
   vColor = vec4(colors / 255.0, opacity);
   vTime = 1.0 - (currentTime - positions.z) / trailLength;
 }
@@ -48,9 +48,11 @@ const defaultProps = {
 
 	    attributeManager.add({
 	      indices: {size: 1, update: this.calculateIndices, isIndexed: true},
-	      positions: {size: 3, update: this.calculatePositions},
+	      positions: {size: 4, update: this.calculatePositions},
 	      colors: {size: 3, accessor: 'getColor', update: this.calculateColors}
 	    });
+
+	    console.log( attributeManager );
 
 	    gl.getExtension('OES_element_index_uint');
 	    this.setState({model});
@@ -70,7 +72,7 @@ const defaultProps = {
 	      fs: tripsFragment,
 	      geometry: new luma.Geometry({
 	        id: this.props.id,
-	        drawMode: 'LINES'
+	        drawMode: gl.LINES
 	      }),
 	      vertexCount: 0,
 	      isIndexed: true,
@@ -106,10 +108,6 @@ const defaultProps = {
 	  }
 
 	  draw({uniforms}) {
-
-	  	//console.log("draw");
-	  	// yes, this is called
-
 	    const {trailLength, currentTime} = this.props;
 	    this.state.model.render(
 	      Object.assign({}, uniforms, {
@@ -144,16 +142,18 @@ const defaultProps = {
 	  calculatePositions(attribute) {
 	    const {data, getPath} = this.props;
 	    const {vertexCount} = this.state;
-	    const positions = new Float32Array(vertexCount * 3);
+	    const positions = new Float32Array(vertexCount * 4);
 
 	    let index = 0;
 	    for (let i = 0; i < data.length; i++) {
 	      const path = getPath(data[i]);
+
 	      for (let j = 0; j < path.length; j++) {
 	        const pt = path[j];
 	        positions[index++] = pt[0];
 	        positions[index++] = pt[1];
 	        positions[index++] = pt[2];
+	        positions[index++] = pt[3];
 	      }
 	    }
 	    attribute.value = positions;
@@ -183,6 +183,8 @@ const defaultProps = {
 
 function add_trips_geo( map_id, trips_data, layer_id ) {
 
+  console.log( trips_data) ;
+
   var tripsLayer = new TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
@@ -204,21 +206,13 @@ function add_trips_geo( map_id, trips_data, layer_id ) {
 
 //function animate_trips( tripsLayer ) {
 function animate_trips( map_id, trips_data, layer_id ) {
-  	var loopLength = 1800; // unit corresponds to the timestamp in source data
+  	var loopLength = 2000; // unit corresponds to the timestamp in source data
     var animationSpeed = 30; // unit time per second
 
     const timestamp = Date.now() / 1000;
     const loopTime = loopLength / animationSpeed;
 
     var time = ((timestamp % loopTime) / loopTime) * loopLength;
-    //console.log( tripsLayer );
-
-/*
-    tripsLayer.setState({
-    	time: ((timestamp % loopTime ) / loopTime ) * loopLength
-    });
-*/
-    console.log( time );
 
 		var tripsLayer = new TripsLayer({
 		    id: 'trips-'+layer_id,
