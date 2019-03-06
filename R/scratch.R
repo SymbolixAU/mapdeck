@@ -11,7 +11,7 @@
 #
 # sf <- dt[
 # 	, {
-# 		geometry = sf::st_linestring(x = matrix(c(V1, V2, V3, V3), ncol = 4))
+# 		geometry = sf::st_linestring(x = matrix(c(V1, V2, V3), ncol = 3))
 # 		geometry = sf::st_sf( geometry = sf::st_sfc( geometry ) )
 # 	}
 # 	, by = .id
@@ -29,7 +29,8 @@
 # ) %>%
 # 	add_trips(
 # 		data = sf
-# 	) %>%
+# 	)
+# %>%
 # 	add_path(
 # 		data = sf
 # 		, update_view = FALSE

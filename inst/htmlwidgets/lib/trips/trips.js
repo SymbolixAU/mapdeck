@@ -148,12 +148,15 @@ const defaultProps = {
 	    for (let i = 0; i < data.length; i++) {
 	      const path = getPath(data[i]);
 
+
 	      for (let j = 0; j < path.length; j++) {
 	        const pt = path[j];
+	        const has_elevation = pt.length === 4;
+
 	        positions[index++] = pt[0];
 	        positions[index++] = pt[1];
-	        positions[index++] = pt[2];
-	        positions[index++] = pt[3];
+	        positions[index++] = has_elevation ? pt[2] : 0;
+	        positions[index++] = has_elevation ? pt[3] : pt[2];;
 	      }
 	    }
 	    attribute.value = positions;
