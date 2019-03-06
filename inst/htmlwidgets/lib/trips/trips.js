@@ -22,21 +22,22 @@ uniform float trailLength;
 varying float vTime;
 varying vec4 vColor;
 void main(void) {
-  vec3 p = project_position(positions);
+  vec2 p = project_position(positions.xy);
   // the magic de-flickering factor
   vec4 shift = vec4(0., 0., mod(positions.z, trailLength) * 1e-4, 0.);
-  gl_Position = project_to_clipspace(vec4(p, 1.)) + shift;
+  gl_Position = project_to_clipspace(vec4(p, 1., 1.)) + shift;
   vColor = vec4(colors / 255.0, opacity);
   vTime = 1.0 - (currentTime - positions.z) / trailLength;
 }
 `;
 
-const defaultProps = {
-	  trailLength: {type: 'number', value: 120, min: 0},
+function add_trips_geo( map_id, trips_data, layer_id, trail_length, legend ) {
+
+  const defaultProps = {
+	  trailLength: {type: 'number', value: trail_length, min: 0},
 	  currentTime: {type: 'number', value: 0, min: 0},
-	  //getPath: {type: 'accessor', value: d => d.path},
 	  getPath: {type: 'accessor', value: d => d.geometry.geometry.coordinates},
-	  getColor: {type: 'accessor', value: d => d.color}
+	  getColor: {type: 'accessor', value: d => md_hexToRGBA( d.properties.stroke_colour )}
 	};
 
 	class TripsLayer extends Layer {
@@ -48,11 +49,11 @@ const defaultProps = {
 
 	    attributeManager.add({
 	      indices: {size: 1, update: this.calculateIndices, isIndexed: true},
-	      positions: {size: 4, update: this.calculatePositions},
+	      positions: {size: 3, update: this.calculatePositions},
 	      colors: {size: 3, accessor: 'getColor', update: this.calculateColors}
 	    });
 
-	    console.log( attributeManager );
+	    //console.log( attributeManager );
 
 	    gl.getExtension('OES_element_index_uint');
 	    this.setState({model});
@@ -142,21 +143,16 @@ const defaultProps = {
 	  calculatePositions(attribute) {
 	    const {data, getPath} = this.props;
 	    const {vertexCount} = this.state;
-	    const positions = new Float32Array(vertexCount * 4);
+	    const positions = new Float32Array(vertexCount * 3);
 
 	    let index = 0;
 	    for (let i = 0; i < data.length; i++) {
 	      const path = getPath(data[i]);
-
-
 	      for (let j = 0; j < path.length; j++) {
 	        const pt = path[j];
-	        const has_elevation = pt.length === 4;
-
 	        positions[index++] = pt[0];
 	        positions[index++] = pt[1];
-	        positions[index++] = has_elevation ? pt[2] : 0;
-	        positions[index++] = has_elevation ? pt[3] : pt[2];;
+	        positions[index++] = pt[2];
 	      }
 	    }
 	    attribute.value = positions;
@@ -184,32 +180,29 @@ const defaultProps = {
 	TripsLayer.layerName = 'TripsLayer';
 	TripsLayer.defaultProps = defaultProps;
 
-function add_trips_geo( map_id, trips_data, layer_id ) {
-
-  console.log( trips_data) ;
-
   var tripsLayer = new TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
     getPath: d => d.geometry.geometry.coordinates,
-    getColor: d => [253, 128, 93],
-    opacity: 0.8,
-    strokeWidth: 50,
-    trailLength: 180,
-    time: 1178.6,
-    currentTime: 1178.6
+    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
+    //opacity: 0.8,
+    //strokeWidth: 50,
+    //trailLength: trail_length,
+    time: 100,
+    currentTime: 100
   });
 
-   md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
+  md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 
-   //animate_trips( tripsLayer );
-  animate_trips( map_id, trips_data, layer_id);
-}
+  if (legend !== false) {
+    add_legend( map_id, layer_id, legend );
+  }
 
+  animate_trips( map_id, trips_data, layer_id );
 
-//function animate_trips( tripsLayer ) {
+  //function animate_trips( tripsLayer ) {
 function animate_trips( map_id, trips_data, layer_id ) {
-  	var loopLength = 2000; // unit corresponds to the timestamp in source data
+  	var loopLength = 2500; // unit corresponds to the timestamp in source data
     var animationSpeed = 30; // unit time per second
 
     const timestamp = Date.now() / 1000;
@@ -221,10 +214,7 @@ function animate_trips( map_id, trips_data, layer_id ) {
 		    id: 'trips-'+layer_id,
 		    data: trips_data,
 		    getPath: d => d.geometry.geometry.coordinates,
-		    getColor: d => [253, 128, 93],
-		    opacity: 0.8,
-		    strokeWidth: 50,
-		    trailLength: 180,
+		    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
 		    currentTime: time
 		  });
 
@@ -235,3 +225,7 @@ function animate_trips( map_id, trips_data, layer_id ) {
    })
 
   }
+}
+
+
+

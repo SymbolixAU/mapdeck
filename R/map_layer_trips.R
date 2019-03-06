@@ -16,7 +16,8 @@ mapdeckTripsDependency <- function() {
 #' extruded lines with mitering.
 #'
 #' @inheritParams add_polygon
-#' @param stroke_width width of the stroke in meters. Default 1.
+#' @param stroke_width
+#' @param trail_length
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
@@ -30,17 +31,23 @@ add_trips <- function(
 	map,
 	data = get_map_data(map),
 	stroke_colour = NULL,
-	stroke_width = NULL,
-	stroke_opacity = NULL,
-	update_view = TRUE,
-	layer_id = NULL
+	palette = "viridis",
+	trail_length = 180,
+	layer_id = NULL,
+	legend = FALSE,
+	legend_options = NULL,
+	legend_format = NULL,
+	update_view = TRUE
 ) {
+
+	experimental_layer("trips")
 
 	l <- list()
 	l[["stroke_colour"]] <- force( stroke_colour)
-	l[["stroke_width"]] <- force( stroke_width )
-	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
 
+	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_data( data, l, c("LINESTRING","MULTILINESTRING") )
 
 	bbox <- init_bbox()
@@ -76,10 +83,10 @@ add_trips <- function(
 	# }
 
 	# js_transitions <- resolve_transitions( transitions, "path" )
-	# shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id
+		map, jsfunc, shape[["data"]], layer_id, trail_length, shape[["legend"]]
 	)
 }
 

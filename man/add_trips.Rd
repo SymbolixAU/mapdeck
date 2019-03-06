@@ -5,8 +5,9 @@
 \title{Add Trips}
 \usage{
 add_trips(map, data = get_map_data(map), stroke_colour = NULL,
-  stroke_width = NULL, stroke_opacity = NULL, update_view = TRUE,
-  layer_id = NULL)
+  palette = "viridis", trail_length = 180, layer_id = NULL,
+  legend = FALSE, legend_options = NULL, legend_format = NULL,
+  update_view = TRUE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -17,17 +18,24 @@ Web Mercator Projection}
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
 \code{elevation} is ignored.}
 
-\item{stroke_width}{width of the stroke in meters. Default 1.}
+\item{palette}{string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
+A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
+where the 4th column represents the alpha.}
 
-\item{stroke_opacity}{Either a string specifying the column of \code{data}
-containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-to be applied to all the shapes. Default 255.}
-
-\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+\item{trail_length}{}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
+
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
 }
 \description{
 The Trips Layer takes in lists of coordinate points and renders them as
