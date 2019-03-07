@@ -188,8 +188,8 @@ function add_trips_geo( map_id, trips_data, layer_id, trail_length, legend ) {
     //opacity: 0.8,
     //strokeWidth: 50,
     //trailLength: trail_length,
-    time: 100,
-    currentTime: 100
+    time: 0,
+    currentTime: 0
   });
 
   md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
@@ -202,7 +202,7 @@ function add_trips_geo( map_id, trips_data, layer_id, trail_length, legend ) {
 
   //function animate_trips( tripsLayer ) {
 function animate_trips( map_id, trips_data, layer_id ) {
-  	var loopLength = 2500; // unit corresponds to the timestamp in source data
+  	var loopLength = 8873; // unit corresponds to the timestamp in source data
     var animationSpeed = 30; // unit time per second
 
     const timestamp = Date.now() / 1000;
