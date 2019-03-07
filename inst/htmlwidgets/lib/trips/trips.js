@@ -203,7 +203,7 @@ function add_trips_geo( map_id, trips_data, layer_id, trail_length, legend ) {
   //function animate_trips( tripsLayer ) {
 function animate_trips( map_id, trips_data, layer_id ) {
   	var loopLength = 8873; // unit corresponds to the timestamp in source data
-    var animationSpeed = 30; // unit time per second
+    var animationSpeed = 300; // unit time per second
 
     const timestamp = Date.now() / 1000;
     const loopTime = loopLength / animationSpeed;

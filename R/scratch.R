@@ -127,36 +127,89 @@
 # df$time <- anytime::anytime( df$time, tz = "Australia/Melbourne" )
 #
 #
+# f <- fitdc::read_fit( paste0(fp, l[1] ) )
+#
+# devtools::install_github("grimbough/fitFileR")
+# library(fitFileR)
+#
+# f <- fitFileR::readFitFile( paste0(fp, l[1] ) )
 #
 #
-# devtools::install_github('fawda123/rStrava')
-# library(rStrava)
+# fp <- "~/Documents/Data/Garmin/Activities/"
+# l <- list.files(fp)
 #
+# # devtools::install_github('kuperov/fit')
+# library(fit)
 #
-# me <- '3088903'
+# data <- read.fit(paste0(fp, l[1]))
 #
-# app_name <- 'mapdeck' # chosen by user
-# app_client_id  <- ''  # an integer, assigned by Strava
-# app_secret <- '' # an alphanumeric secret, assigned by Strava
+# f <- path.expand( "~/Documents/Data/Garmin/Activities/2016-02-23-18-38-27.fit" )
+# # data <- read.fit( f )
 #
-# stoken <- httr::config(token = strava_oauth(app_name, app_client_id, app_secret, cache = TRUE))
+# library(data.table)
 #
-# myinfo <- get_athlete(stoken, id = me)
-#
-# head( myinfo )
-#
-# my_acts <- get_activity_list( stoken )
-#
-# str( my_acts )
-#
-# lapply( my_acts, function(x) {
-# 	if( x[["type"]] == "Ride" ) {
-# 		data.table(
-# 			polyline = x[["map"]][["summary_polyline"]]
-#
-# 		)
-# 	}
+# ll <- c(1:57)
+# lst <- lapply( 1:length(l), function( x ) {
+# 	print(x)
+# 	f <- l[x]
+# 	f <- paste0(fp, f)
+# 	f <- path.expand( f )
+# 	data <- read.fit( f )
+# 	data[["record"]]
 # })
 #
+# dt <- rbindlist(lst, use.names = T, fill = T, idcol = T)
 #
+# dt <- dt[!is.na( position_lat ) ]
+#
+# dt[, seq := 1:.N, by = .id]
+#
+# # dt[, time := anytime::anytime( time, asUTC = TRUE ) ]
+#
+# dt[, timestamp := as.POSIXct( timestamp, origin = "1990-01-01")]
+# dt[, diff_time := timestamp - shift(timestamp, type = "lag"), by = .(.id) ]
+# dt <- dt[!is.na(diff_time)]
+#
+# dt[, diff_time := as.numeric( diff_time ) ]
+#
+# ## Remove stops greater than 1 minutes
+# # dt <- dt[ diff_time < 60 ]
+#
+#
+# #dt[, diff_time := as.numeric( diff( timestamp ) ),by = .(.id) ]
+# dt[, t := cumsum( diff_time ), by = .(.id) ]
+#
+# library(sf)
+#
+# dt[
+# 	dt[speed > 0, .(avg_speed = mean( speed ) * 1.609), by = .(.id)]
+# 	, on = ".id"
+# 	, avg_speed := i.avg_speed
+# 	]
+#
+# sf <- dt[
+# 	, {
+# 		geometry = sf::st_linestring(x = matrix(c(position_long, position_lat, t), ncol = 3))
+# 		geometry = sf::st_sf( geometry = sf::st_sfc( geometry ) )
+# 	}
+# 	, by= .(.id, avg_speed)
+# ] %>% sf::st_as_sf()
+#
+# # garmin <- sf
+# #
+# # usethis::use_data( garmin )
+#
+# mapdeck(
+# 	style = mapdeck_style("dark")
+# 	, location = c(145., -37.8)
+# 	, zoom = 10
+# ) %>%
+# 	add_trips(
+# 		data = sf
+# 		, stroke_colour = "avg_speed"
+# 		, trail_length = 1500
+# 		, legend = T
+# 	)
+
+
 
