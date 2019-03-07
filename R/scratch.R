@@ -205,10 +205,12 @@
 # 	, zoom = 10
 # ) %>%
 # 	add_trips(
-# 		data = sf
+# 		data = garmin
 # 		, stroke_colour = "avg_speed"
+# 		, loop_length = 20000
+# 		, animation_speed = 500
 # 		, trail_length = 1500
-# 		, legend = T
+# 		, legend = F
 # 	)
 
 

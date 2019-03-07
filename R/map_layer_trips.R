@@ -33,6 +33,8 @@ add_trips <- function(
 	stroke_colour = NULL,
 	palette = "viridis",
 	trail_length = 180,
+	loop_length = 1000,
+	animation_speed = 30,
 	layer_id = NULL,
 	legend = FALSE,
 	legend_options = NULL,
@@ -86,7 +88,8 @@ add_trips <- function(
 	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, trail_length, shape[["legend"]]
+		map, jsfunc, shape[["data"]], layer_id, trail_length, loop_length, animation_speed,
+		shape[["legend"]]
 	)
 }
 

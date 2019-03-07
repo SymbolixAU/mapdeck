@@ -5,9 +5,9 @@
 \title{Add Trips}
 \usage{
 add_trips(map, data = get_map_data(map), stroke_colour = NULL,
-  palette = "viridis", trail_length = 180, layer_id = NULL,
-  legend = FALSE, legend_options = NULL, legend_format = NULL,
-  update_view = TRUE)
+  palette = "viridis", trail_length = 180, loop_length = 1000,
+  animation_speed = 30, layer_id = NULL, legend = FALSE,
+  legend_options = NULL, legend_format = NULL, update_view = TRUE)
 }
 \arguments{
 \item{map}{a mapdeck map object}

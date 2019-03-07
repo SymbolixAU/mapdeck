@@ -31,7 +31,7 @@ void main(void) {
 }
 `;
 
-function add_trips_geo( map_id, trips_data, layer_id, trail_length, legend ) {
+function add_trips_geo( map_id, trips_data, layer_id, trail_length, loop_length, animation_speed, legend ) {
 
   const defaultProps = {
 	  trailLength: {type: 'number', value: trail_length, min: 0},
@@ -198,12 +198,16 @@ function add_trips_geo( map_id, trips_data, layer_id, trail_length, legend ) {
     add_legend( map_id, layer_id, legend );
   }
 
-  animate_trips( map_id, trips_data, layer_id );
+  animate_trips( map_id, trips_data, layer_id, loop_length, animation_speed );
 
   //function animate_trips( tripsLayer ) {
-function animate_trips( map_id, trips_data, layer_id ) {
-  	var loopLength = 8873; // unit corresponds to the timestamp in source data
-    var animationSpeed = 300; // unit time per second
+function animate_trips( map_id, trips_data, layer_id, loop_length, animation_speed ) {
+
+	 console.log( loop_length );
+	 console.log( animation_speed );
+
+  	var loopLength = loop_length; // unit corresponds to the timestamp in source data
+    var animationSpeed = animation_speed; // unit time per second
 
     const timestamp = Date.now() / 1000;
     const loopTime = loopLength / animationSpeed;
@@ -221,7 +225,7 @@ function animate_trips( map_id, trips_data, layer_id ) {
    md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 
    window.requestAnimationFrame( function() {
-   	  animate_trips( map_id, trips_data, layer_id );
+   	  animate_trips( map_id, trips_data, layer_id, loop_length, animation_speed );
    })
 
   }
