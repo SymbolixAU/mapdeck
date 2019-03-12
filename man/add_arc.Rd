@@ -7,11 +7,12 @@
 add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
   destination, id = NULL, stroke_from = NULL,
   stroke_from_opacity = NULL, stroke_to = NULL,
-  stroke_to_opacity = NULL, stroke_width = NULL, tooltip = NULL,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF", legend = F,
-  legend_options = NULL, legend_format = NULL, palette = "viridis",
-  na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL, digits = 6, brush_radius = NULL)
+  stroke_to_opacity = NULL, stroke_width = NULL, tilt = NULL,
+  height = NULL, tooltip = NULL, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF", legend = F, legend_options = NULL,
+  legend_format = NULL, palette = "viridis", na_colour = "#808080FF",
+  update_view = TRUE, focus_layer = FALSE, transitions = NULL,
+  digits = 6, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -42,6 +43,10 @@ column of \code{data} containing the stroke opacity of each shape, or a value
 between 1 and 255 to be applied to all the shapes}
 
 \item{stroke_width}{width of the stroke in pixels}
+
+\item{tilt}{value to tilt the arcs to the side, in degrees [-90, 90]}
+
+\item{height}{value to multiply the height.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
