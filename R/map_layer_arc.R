@@ -47,7 +47,9 @@ mapdeckArcBrushDependency <- function() {
 #' @param highlight_colour hex string colour to use for highlighting. Must contain the alpha component.
 #' @param palette string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
 #' A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
-#' where the 4th column represents the alpha.
+#' where the 4th column represents the alpha. You can use a named list to specify a different
+#' palette for different colour options (where available),
+#'  e.g. list(fill_colour = "viridis", stroke_colour = "inferno")
 #' @param na_colour hex string colour to use for NA values
 #' @param legend either a logical indiciating if the legend(s) should be displayed, or
 #' a named list indicating which colour attributes should be included in the legend.
