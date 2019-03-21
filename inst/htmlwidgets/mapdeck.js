@@ -53,7 +53,8 @@ HTMLWidgets.widget({
        	 const deckgl = new deck.DeckGL({
        	 	  map: false,
 			      container: el.id,
-			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
 			      //onLayerHover: setTooltip
 			   });
@@ -63,10 +64,12 @@ HTMLWidgets.widget({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
-			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
 			      //onLayerHover: setTooltip
 			  });
+			  //deckgl.setProps({viewState: window[el.id + 'INITIAL_VIEW_STATE']});
 			  window[el.id + 'map'] = deckgl;
        }
         // https://github.com/uber/deck.gl/issues/2114
@@ -82,7 +85,6 @@ HTMLWidgets.widget({
 			  });
 			  console.log( viewPort );
 			  */
-
 
 			    md_initialise_map(el, x);
       },
@@ -200,19 +202,37 @@ function md_change_location( map_id, location, zoom, pitch, bearing, duration, t
 
   var currentLon, currentLat, currentPitch, currentBearing, currentZoom;
 
+  var thisViewState = window[ map_id + 'map' ].viewState;
+  console.log( "thisViewState" );
+  console.log( thisViewState );
+
+/*
   if ( window[ map_id + 'map'].viewState["default-view"] !== undefined ) {
+
+  	console.log( "setting default view ");
   	currentLon = location === null ? window[ map_id + 'map'].viewState["default-view"].longitude : location[0];
   	currentLat = location === null ? window[ map_id + 'map'].viewState["default-view"].latitude : location[1];
     currentPitch = pitch === null ? window[ map_id + 'map'].viewState["default-view"].pitch : pitch;
     currentBearing = bearing === null ? window[ map_id + 'map' ].viewState["default-view"].bearing : bearing;
     currentZoom = zoom === null ? window[ map_id + 'map'].viewState["default-view"].zoom : zoom;
   } else {
+*/
+  	console.log( "not setting default view" );
+
   	currentLon = location === null ? window[ map_id + 'map'].viewState.longitude : location[0];
   	currentLat = location === null ? window[ map_id + 'map'].viewState.latitude : location[1];
     currentPitch = pitch === null ? window[ map_id + 'map'].viewState.pitch : pitch;
     currentBearing = bearing === null ? window[ map_id + 'map' ].viewState.bearing : bearing;
     currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
-  }
+  //}
+
+/*
+  window[map_id + 'map'].setState({
+  	viewState: {
+  		...this.state.viewState
+  	}
+  });
+*/
 
 	window[map_id + 'map'].setProps({
     viewState: {
@@ -225,6 +245,24 @@ function md_change_location( map_id, location, zoom, pitch, bearing, duration, t
       transitionDuration: duration
     },
   });
+
+/*
+		var vs = {
+      longitude: currentLon,
+      latitude: currentLat,
+      zoom: currentZoom,
+      pitch: currentPitch,
+      bearing: currentBearing,
+      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
+      transitionDuration: duration
+    };
+
+  window[ map_id + 'map' ].viewState = vs;
+  */
+
+  console.log(" md_change_location ");
+  console.log( window[map_id + 'map'].viewState );
+
 }
 
 
@@ -249,6 +287,158 @@ function md_layer_clear( map_id, layer_id, layer ) {
   md_remove_from_bounds( map_id, layer_id );
   md_update_location( map_id );
 }
+
+
+function md_update_layer( map_id, layer_id, layer ) {
+
+  var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id );
+  if ( elem != -1 ) {
+  	window[ map_id + 'layers'][elem] = layer;
+  } else {
+  	window[map_id + 'layers'].push( layer );
+  }
+
+  var preViewState = window[map_id + 'map'].viewState;
+  console.log(" md_update_layer preViewState");
+  console.log( preViewState );
+
+  window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
+
+  console.log(" md_update_layer postViewState");
+  var postViewState = window[map_id + 'map'].viewState;
+  console.log(  postViewState );
+}
+
+function md_clear_layer( map_id, layer_id ) {
+
+  var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
+  if ( elem != -1 ) {
+  	window[ map_id + 'layers'].splice( elem, 1 );
+  }
+  window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
+}
+
+function md_layer_click( map_id, layer, info ) {
+
+  if ( !HTMLWidgets.shinyMode ) {
+    return;
+  }
+
+  var eventInfo = {
+  	index: info.index,
+  	color: info.color,
+  	object: info.object,
+  	layerId: info.layer_id,
+  	lat: info.lngLat[1],
+  	lon: info.lngLat[0]
+  };
+
+  eventInfo = JSON.stringify( eventInfo );
+  Shiny.onInputChange(map_id + "_" + layer + "_click", eventInfo);
+}
+
+
+/*
+*
+* COORDINATES
+*
+*/
+function md_decode_points( polyline ) {
+	var coordinates = md_decode_polyline( polyline ) ;
+	return coordinates[0];
+}
+
+function md_decode_polyline(str, precision) {
+  var index = 0,
+      lat = 0,
+      lng = 0,
+      coordinates = [],
+      shift = 0,
+      result = 0,
+      byte = null,
+      latitude_change,
+      longitude_change,
+      factor = Math.pow(10, precision || 5);
+
+  // Coordinates have variable length when encoded, so just keep
+  // track of whether we've hit the end of the string. In each
+  // loop iteration, a single coordinate is decoded.
+  while (index < str.length) {
+
+    // Reset shift, result, and byte
+    byte = null;
+    shift = 0;
+    result = 0;
+
+    do {
+      byte = str.charCodeAt(index++) - 63;
+      result |= (byte & 0x1f) << shift;
+      shift += 5;
+    } while (byte >= 0x20);
+
+    latitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+
+    shift = result = 0;
+
+    do {
+      byte = str.charCodeAt(index++) - 63;
+      result |= (byte & 0x1f) << shift;
+      shift += 5;
+    } while (byte >= 0x20);
+
+    longitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+
+    lat += latitude_change;
+    lng += longitude_change;
+
+    coordinates.push([lng / factor, lat / factor]);
+  }
+  return coordinates;
+}
+
+function md_get_point_coordinates ( obj ) {
+	if ( obj.geometry.geometry === null ) {
+		return [-179.999,-89.999];
+	}
+	return obj.geometry.geometry.coordinates;
+}
+
+function md_get_origin_coordinates ( obj ) {
+	if ( obj.geometry.origin === null ) {
+		return [-179.999,-89.999];
+	}
+	return obj.geometry.origin.coordinates;
+}
+
+function md_get_destination_coordinates ( obj ) {
+	if ( obj.geometry.destination === null ) {
+		return [-179.999,-89.999];
+	}
+	return obj.geometry.destination.coordinates;
+}
+
+
+function md_get_line_coordinates ( obj ) {
+	if ( obj.geometry.geometry === null ) {
+		return [[-179.999,-89.999],[-179.999,-89.999]];
+	}
+	return obj.geometry.geometry.coordinates;
+}
+
+function md_get_polygon_coordinates ( obj ) {
+	if ( obj.geometry.geometry === null ) {
+		return [[-179.999,-89.999],[-179.999,-89.999],[-179.999,-89.999]];
+	}
+	return obj.geometry.geometry.coordinates;
+}
+
+
+/*
+*
+* LOCATIONS
+*
+*/
+
 
 function md_center_location( bbox ) {
 
@@ -411,25 +601,11 @@ function md_get_zoom_level( globalBox ) {
 }
 
 
-function md_update_layer( map_id, layer_id, layer ) {
-
-  var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id );
-  if ( elem != -1 ) {
-  	window[ map_id + 'layers'][elem] = layer;
-  } else {
-  	window[map_id + 'layers'].push( layer );
-  }
-  window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
-}
-
-function md_clear_layer( map_id, layer_id ) {
-
-  var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
-  if ( elem != -1 ) {
-  	window[ map_id + 'layers'].splice( elem, 1 );
-  }
-  window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
-}
+/*
+*
+* COLOURS
+*
+*/
 
 const md_hexToRGBA = ( hex ) => {
     let parseString = hex;
@@ -466,113 +642,7 @@ function md_to_rgba( colour_range ) {
   return arr;
 }
 
-function md_layer_click( map_id, layer, info ) {
 
-  if ( !HTMLWidgets.shinyMode ) {
-    return;
-  }
-
-  var eventInfo = {
-  	index: info.index,
-  	color: info.color,
-  	object: info.object,
-  	layerId: info.layer_id,
-  	lat: info.lngLat[1],
-  	lon: info.lngLat[0]
-  };
-
-  eventInfo = JSON.stringify( eventInfo );
-  Shiny.onInputChange(map_id + "_" + layer + "_click", eventInfo);
-}
-
-function md_decode_points( polyline ) {
-	var coordinates = md_decode_polyline( polyline ) ;
-	return coordinates[0];
-}
-
-function md_decode_polyline(str, precision) {
-  var index = 0,
-      lat = 0,
-      lng = 0,
-      coordinates = [],
-      shift = 0,
-      result = 0,
-      byte = null,
-      latitude_change,
-      longitude_change,
-      factor = Math.pow(10, precision || 5);
-
-  // Coordinates have variable length when encoded, so just keep
-  // track of whether we've hit the end of the string. In each
-  // loop iteration, a single coordinate is decoded.
-  while (index < str.length) {
-
-    // Reset shift, result, and byte
-    byte = null;
-    shift = 0;
-    result = 0;
-
-    do {
-      byte = str.charCodeAt(index++) - 63;
-      result |= (byte & 0x1f) << shift;
-      shift += 5;
-    } while (byte >= 0x20);
-
-    latitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
-
-    shift = result = 0;
-
-    do {
-      byte = str.charCodeAt(index++) - 63;
-      result |= (byte & 0x1f) << shift;
-      shift += 5;
-    } while (byte >= 0x20);
-
-    longitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
-
-    lat += latitude_change;
-    lng += longitude_change;
-
-    coordinates.push([lng / factor, lat / factor]);
-  }
-  return coordinates;
-}
-
-function md_get_point_coordinates ( obj ) {
-	if ( obj.geometry.geometry === null ) {
-		return [-179.999,-89.999];
-	}
-	return obj.geometry.geometry.coordinates;
-}
-
-function md_get_origin_coordinates ( obj ) {
-	if ( obj.geometry.origin === null ) {
-		return [-179.999,-89.999];
-	}
-	return obj.geometry.origin.coordinates;
-}
-
-function md_get_destination_coordinates ( obj ) {
-	if ( obj.geometry.destination === null ) {
-		return [-179.999,-89.999];
-	}
-	return obj.geometry.destination.coordinates;
-}
-
-
-function md_get_line_coordinates ( obj ) {
-	if ( obj.geometry.geometry === null ) {
-		return [[-179.999,-89.999],[-179.999,-89.999]];
-	}
-	return obj.geometry.geometry.coordinates;
-}
-
-function md_get_polygon_coordinates ( obj ) {
-	if ( obj.geometry.geometry === null ) {
-		return [[-179.999,-89.999],[-179.999,-89.999],[-179.999,-89.999]];
-	}
-	return obj.geometry.geometry.coordinates;
-}
 
 
 

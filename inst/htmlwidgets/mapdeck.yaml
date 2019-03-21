@@ -1,7 +1,7 @@
 
 dependencies:
   - name: deck.gl
-    version: 6.4.3
+    version: 6.4.7
     src: "htmlwidgets/lib/"
     script:
     - deckgl.min.js
@@ -18,5 +18,5 @@ dependencies:
     src: "htmlwidgets/lib/map"
     version: 0.0.1
     script:
-      - legend.js
-      - title.js
+    - legend.js
+    - title.js

@@ -39,6 +39,15 @@ mapdeck <- function(
     , bearing = force( bearing )
   )
 
+  # deps <- list(
+  # 	createHtmlDependency(
+  # 		name = "map",
+  # 		version = "1.0.0",
+  # 		src = system.file("htmlwidgets/lib/map", package = "mapdeck"),
+  # 		script = c("legend.js", "title.js", "location.js", "coordinates.js", "colours.js")
+  # 	)
+  # )
+
   # create widget
   mapdeckmap <- htmlwidgets::createWidget(
     name = 'mapdeck',
@@ -49,6 +58,7 @@ mapdeck <- function(
     width = width,
     height = height,
     package = 'mapdeck',
+    #dependencies = deps,
     sizingPolicy = htmlwidgets::sizingPolicy(
     	defaultWidth = '100%',
     	defaultHeight = 800,

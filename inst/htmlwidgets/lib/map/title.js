@@ -1,5 +1,6 @@
 function add_title(map_id, layer_id, title_data) {
 
+    // test
     'use strict';
 
     console.log( title_data );
@@ -63,4 +64,4 @@ function placeTitle( map_id, object, position ) {
 */
 }
 
-
+function test() {}
