@@ -4,7 +4,7 @@
 # # library(data.table)
 # # library(sf)
 # # library(mapdeck)
-# # set_token( read.dcf("~/.googleAPI", fields = "MAPBOX"))
+# # set_token( read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
 # #
 # # l <- lapply(trips[[2]], as.data.table)
 # # dt <- rbindlist(l, idcol = T)
@@ -140,15 +140,8 @@
 #
 # # devtools::install_github('kuperov/fit')
 # library(fit)
-#
-# data <- read.fit(paste0(fp, l[1]))
-#
-# f <- path.expand( "~/Documents/Data/Garmin/Activities/2016-02-23-18-38-27.fit" )
-# # data <- read.fit( f )
-#
 # library(data.table)
 #
-# ll <- c(1:57)
 # lst <- lapply( 1:length(l), function( x ) {
 # 	print(x)
 # 	f <- l[x]
@@ -167,6 +160,14 @@
 # # dt[, time := anytime::anytime( time, asUTC = TRUE ) ]
 #
 # dt[, timestamp := as.POSIXct( timestamp, origin = "1990-01-01")]
+# dt[, m := data.table::minute( timestamp )]
+# dt[, s := data.table::second( timestamp )]
+# dt[, h := data.table::hour( timestamp )]
+#
+# dt[, seconds := ( h * 60 * 60 ) + ( m * 60 ) + s  ]
+#
+#
+#
 # dt[, diff_time := timestamp - shift(timestamp, type = "lag"), by = .(.id) ]
 # dt <- dt[!is.na(diff_time)]
 #
@@ -189,7 +190,7 @@
 #
 # sf <- dt[
 # 	, {
-# 		geometry = sf::st_linestring(x = matrix(c(position_long, position_lat, t), ncol = 3))
+# 		geometry = sf::st_linestring(x = matrix(c(position_long, position_lat, seconds), ncol = 3))
 # 		geometry = sf::st_sf( geometry = sf::st_sfc( geometry ) )
 # 	}
 # 	, by= .(.id, avg_speed)
@@ -205,13 +206,68 @@
 # 	, zoom = 10
 # ) %>%
 # 	add_trips(
-# 		data = garmin
+# 		data = sf
 # 		, stroke_colour = "avg_speed"
-# 		, loop_length = 20000
-# 		, animation_speed = 500
+# 		, loop_length = 65000
+# 		, animation_speed = 2500
 # 		, trail_length = 1500
 # 		, legend = F
 # 	)
-
-
+#
+#
+#
+# fp <- "~/Documents/Data/Strava/Bethan/activities/"
+# gpx <- plotKML::readGPX( gpx.file = paste0(, fp, "1007343724.gpx" ) )
+#
+#
+# l <- list.files(path = fp, pattern = ".gpx$", recursive = T)
+# l <- paste0(fp, l)
+# lst <- lapply(l, function(x) {
+# 	gpx <- plotKML::readGPX(x)
+# 	data <- gpx$tracks[[1]][[1]]
+# 	data
+# })
+#
+# library(data.table)
+#
+# dt <- rbindlist(lst, idcol = T, use.names = T, fill = T)
+#
+# dt[, t := anytime::anytime(time, asUTC = TRUE )]
+#
+# dt[, m := data.table::minute( t )]
+# dt[, s := data.table::second( t )]
+# dt[, h := data.table::hour( t )]
+#
+# dt[, seconds := ( h * 60 * 60 ) + ( m * 60 ) + s  ]
+#
+# dt[, ele := as.numeric( ele )]
+# dt[, avg_ele := mean( ele, na.rm = T), by = .id]
+#
+#
+# # dt[, diff_time := as.numeric( diff( time ) ),by = .(.id) ]
+# # dt[, t := cumsum( diff_time ), by = .(.id) ]
+#
+# library(sf)
+# sf <- dt[
+# 	, {
+# 		geometry = sf::st_linestring(x = matrix(c(lon, lat, ele), ncol = 3))
+# 		geometry = sf::st_sf( geometry = sf::st_sfc( geometry ) )
+# 	}
+# 	, by= .(.id, avg_ele)
+# ] %>% sf::st_as_sf()
+#
+#
+# mapdeck(
+# 	style = mapdeck_style("dark")
+# 	, location = c(145., -37.8)
+# 	, zoom = 10
+# ) %>%
+# 	add_path(
+# 		data = sf[1:20, ]
+# 		, stroke_colour = "avg_ele"
+# 		# , loop_length = 87000
+# 		# , animation_speed = 2500
+# 		# , trail_length = 1500
+# 		, legend = T
+# 	)
 
