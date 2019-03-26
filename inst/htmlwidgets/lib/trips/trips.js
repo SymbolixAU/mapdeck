@@ -1,4 +1,5 @@
 
+/*
 var tripsFragment =  `\
 #define SHADER_NAME trips-layer-fragment-shader
 precision highp float;
@@ -179,18 +180,82 @@ function add_trips_geo( map_id, trips_data, layer_id, trail_length, loop_length,
 
 	TripsLayer.layerName = 'TripsLayer';
 	TripsLayer.defaultProps = defaultProps;
+*/
+
+function add_trips_geo( map_id, trips_data, layer_id, trail_length, loop_length, animation_speed, legend ) {
+
+	const defaultProps = {
+		//...PathLayer.defaultProps,
+	  trailLength: {type: 'number', value: 120, min: 0},
+	  currentTime: {type: 'number', value: 0, min: 0}
+	};
+
+	class TripsLayer extends PathLayer {
+	  getShaders() {
+	    const shaders = super.getShaders();
+	    shaders.inject = {
+	      // Timestamp of the vertex
+	      'vs:#decl': `\
+				uniform float trailLength;
+				varying float vTime;
+				`,
+	      // Remove the z component (timestamp) from position
+	      'vec3 pos = lineJoin(prevPosition, currPosition, nextPosition);': 'pos.z = 0.0;',
+	      // Apply a small shift to battle z-fighting
+	      'vs:#main-end': `\
+				float shiftZ = mod(instanceEndPositions.z, trailLength) * 1e-4;
+				gl_Position.z += shiftZ;
+				vTime = instanceStartPositions.z + (instanceEndPositions.z - instanceStartPositions.z) * vPathPosition.y / vPathLength;
+				`,
+	      'fs:#decl': `\
+				uniform float trailLength;
+				uniform float currentTime;
+				varying float vTime;
+				`,
+	      // Drop the segments outside of the time window
+	      'fs:#main-start': `\
+				if(vTime > currentTime || vTime < currentTime - trailLength) {
+				  discard;
+				}
+				`,
+	      // Fade the color (currentTime - 100%, end of trail - 0%)
+	      'gl_FragColor = vColor;': 'gl_FragColor.a *= 1.0 - (currentTime - vTime) / trailLength					;'
+	    };
+	    return shaders;
+	  }
+
+	  draw(params) {
+	  	//console.log( "drawing" );
+	    const {trailLength, currentTime} = this.props;
+
+	    params.uniforms = Object.assign({}, params.uniforms, {
+	      trailLength,
+	      currentTime
+	    });
+
+	    super.draw(params);
+	  }
+
+	}
+
+	TripsLayer.layerName = 'TripsLayer';
+	TripsLayer.defaultProps = defaultProps;
+
 
   var tripsLayer = new TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
     getPath: d => d.geometry.geometry.coordinates,
     getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
-    //opacity: 0.8,
-    //strokeWidth: 50,
+    opacity: 0.3,
+    widthMinPixels: 2,
+    rounded: true,
     //trailLength: trail_length,
     time: 0,
     currentTime: 0
   });
+
+  console.log( tripsLayer );
 
   md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 
@@ -203,8 +268,8 @@ function add_trips_geo( map_id, trips_data, layer_id, trail_length, loop_length,
   //function animate_trips( tripsLayer ) {
 function animate_trips( map_id, trips_data, layer_id, loop_length, animation_speed ) {
 
-	 console.log( loop_length );
-	 console.log( animation_speed );
+	 //console.log( loop_length );
+	 //console.log( animation_speed );
 
   	var loopLength = loop_length; // unit corresponds to the timestamp in source data
     var animationSpeed = animation_speed; // unit time per second
@@ -219,6 +284,9 @@ function animate_trips( map_id, trips_data, layer_id, loop_length, animation_spe
 		    data: trips_data,
 		    getPath: d => d.geometry.geometry.coordinates,
 		    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
+		    opacity: 0.3,
+		    widthMinPixels: 2,
+		    rounded: true,
 		    currentTime: time
 		  });
 
@@ -226,7 +294,7 @@ function animate_trips( map_id, trips_data, layer_id, loop_length, animation_spe
 
    window.requestAnimationFrame( function() {
    	  animate_trips( map_id, trips_data, layer_id, loop_length, animation_speed );
-   })
+   });
 
   }
 }
