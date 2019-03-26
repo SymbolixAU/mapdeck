@@ -22,7 +22,7 @@ If left empty layers will still be plotted, but without a Mapbox map.}
 
 \item{padding}{the padding of the map}
 
-\item{style}{the style of the map}
+\item{style}{the style of the map (see \link{mapdeck_style})}
 
 \item{pitch}{the pitch angle of the map}
 

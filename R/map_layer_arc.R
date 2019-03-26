@@ -42,12 +42,16 @@ mapdeckArcBrushDependency <- function() {
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes
 #' @param stroke_width width of the stroke in pixels
+#' @param height value to multiply the height.
+#' @param tilt value to tilt the arcs to the side, in degrees [-90, 90]
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
 #' @param highlight_colour hex string colour to use for highlighting. Must contain the alpha component.
 #' @param palette string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
-#' A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
-#' where the 4th column represents the alpha.
+#' A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255],
+#' where the 4th column represents the alpha. You can use a named list to specify a different
+#' palette for different colour options (where available),
+#'  e.g. list(fill_colour = "viridis", stroke_colour = "inferno")
 #' @param na_colour hex string colour to use for NA values
 #' @param legend either a logical indiciating if the legend(s) should be displayed, or
 #' a named list indicating which colour attributes should be included in the legend.
@@ -220,6 +224,8 @@ add_arc <- function(
 	stroke_to = NULL,
 	stroke_to_opacity = NULL,
 	stroke_width = NULL,
+	tilt = NULL,
+	height = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -243,6 +249,8 @@ add_arc <- function(
 	l[["stroke_from_opacity"]] <- force(stroke_from_opacity)
 	l[["stroke_to_opacity"]] <- force(stroke_to_opacity)
 	l[["stroke_width"]] <- force(stroke_width)
+	l[["tilt"]] <- force(tilt)
+	l[["height"]] <- force(height)
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)

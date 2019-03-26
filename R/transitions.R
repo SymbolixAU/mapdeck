@@ -120,6 +120,8 @@ transitions_arc <- function( transitions ) {
 	transitions <- replace_name( transitions, "stroke_from", "getSourceColor" )
 	transitions <- replace_name( transitions, "stroke_to", "getTargetColor" )
 	transitions <- replace_name( transitions, "stroke_width", "getStrokeWidth" )
+	transitions <- replace_name( transitions, "height", "getHeight")
+	transitions <- replace_name( transitions, "tilt", "getTilt")
 	return( transitions )
 }
 

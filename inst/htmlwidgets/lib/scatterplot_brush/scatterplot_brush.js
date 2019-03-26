@@ -112,6 +112,14 @@ void main(void) {
 
 function add_scatterplot_brush_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
 
+
+  //var all_points = scatter_data.geometry.geometry.coordinates;
+  var all_points = new Array( scatter_data.length );
+  for( i = 0; i < scatter_data.length; i++ ) {
+  	all_points[i] = scatter_data[i].geometry.geometry.coordinates;
+  }
+  //console.log( all_points );
+
 	const defaultProps = {
 	  ...ScatterplotLayer.defaultProps,
 	  enableBrushing: true,
@@ -223,6 +231,9 @@ function add_scatterplot_brush_geo( map_id, scatter_data, layer_id, auto_highlig
 	  //	mousePosition: [ evt.offsetX, evt.offsetY ]
 	  //}
 	  //Shiny.onInputChange(map_id + "_" + layer_id + "_brush", eventInfo);
+	  //for( i = 0; i < all_points.length; i++ ) {
+	  //	console.log( is_point_in_range( all_points[1], all_points[0], evt.offsetX, evt.offsetY, 10 ) );
+	  //}
 
   }
 
@@ -244,8 +255,21 @@ function add_scatterplot_brush_geo( map_id, scatter_data, layer_id, auto_highlig
 
 }
 
+//https://stackoverflow.com/a/21623206/5977215
+function distance_between_coordinates(lat1, lon1, lat2, lon2) {
+  var p = 0.017453292519943295;    // Math.PI / 180
+  var c = Math.cos;
+  var a = 0.5 - c((lat2 - lat1) * p)/2 +
+          c(lat1 * p) * c(lat2 * p) *
+          (1 - c((lon2 - lon1) * p))/2;
 
+  return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+}
 
+// range is km
+function is_point_in_range(point_lat, point_lon, mouse_lat, mouse_lon, range) {
+  return (distance_between_coordinates(point_lat, point_lon, mouse_lat, mouse_lon) <= range);
+}
 
 
 
