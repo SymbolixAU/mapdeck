@@ -38,6 +38,8 @@ get_zoom.default <- function(obj) stop("can not calculate zoom level")
 #' @export
 get_location <- function(obj) UseMethod("get_location")
 
+## TODO - location across the date line
+
 #' @export
 get_location.sf <- function(obj) {
 	l <- list(geometry = attr(obj, "sf_column") )
