@@ -42,6 +42,8 @@ mapdeckArcBrushDependency <- function() {
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes
 #' @param stroke_width width of the stroke in pixels
+#' @param height value to multiply the height.
+#' @param tilt value to tilt the arcs to the side, in degrees [-90, 90]
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
 #' @param highlight_colour hex string colour to use for highlighting. Must contain the alpha component.
@@ -222,6 +224,8 @@ add_arc <- function(
 	stroke_to = NULL,
 	stroke_to_opacity = NULL,
 	stroke_width = NULL,
+	tilt = NULL,
+	height = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -245,6 +249,8 @@ add_arc <- function(
 	l[["stroke_from_opacity"]] <- force(stroke_from_opacity)
 	l[["stroke_to_opacity"]] <- force(stroke_to_opacity)
 	l[["stroke_width"]] <- force(stroke_width)
+	l[["tilt"]] <- force(tilt)
+	l[["height"]] <- force(height)
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)

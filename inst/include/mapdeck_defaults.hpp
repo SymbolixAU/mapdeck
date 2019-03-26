@@ -6,6 +6,16 @@
 namespace mapdeck {
 namespace defaults {
 
+	inline Rcpp::NumericVector default_arc_height( int n ) {
+		Rcpp::NumericVector nv(n, 1.0);
+		return nv;
+	}
+
+	inline Rcpp::NumericVector default_arc_tilt( int n ) {
+		Rcpp::NumericVector nv(n, 0.0);
+		return nv;
+	}
+
   // dont' necessarily need polyline anymore
 	inline Rcpp::StringVector default_polyline( int n ) {
 		Rcpp::StringVector sv(n);
