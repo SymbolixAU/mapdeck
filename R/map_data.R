@@ -179,8 +179,8 @@ get_box.sf <- function( data, l ) {
 #' @export
 get_box.data.frame <- function( data, l ) {
 
-	lat <- data[, l[["lat"]] ]
-	lon <- data[, l[["lon"]] ]
+	lat <- data[, l[["lat"]], drop = TRUE ]
+	lon <- data[, l[["lon"]], drop = TRUE ]
 	xmin <- min(lon); xmax <- max(lon)
 	ymin <- min(lat); ymax <- max(lat)
 	bbox <- list( c(xmin, ymin), c(xmax, ymax) )
@@ -205,8 +205,10 @@ get_od_box.sf <- function( data, l ) {
 
 #' @export
 get_od_box.data.frame <- function( data, l ) {
-	lon <- c( data[, l[["origin"]][1] ], data[, l[["destination"]][1]] )
-	lat <- c( data[, l[["origin"]][2] ], data[, l[["destination"]][2]] )
+
+	lon <- c( data[, l[["origin"]][1], drop = TRUE ], data[, l[["destination"]][1], drop = TRUE ] )
+	lat <- c( data[, l[["origin"]][2], drop = TRUE ], data[, l[["destination"]][2], drop = TRUE ] )
+
 	xmin <- min(lon); xmax <- max(lon)
 	ymin <- min(lat); ymax <- max(lat)
 	bbox <- list( c(xmin, ymin), c(xmax, ymax) )
