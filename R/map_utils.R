@@ -8,6 +8,11 @@ latZoomLevel <- function() {
 	c(90, 45, 22.5, 11.25, 5.65,2.813, 1.406, 0.703, 0.352, 0.176, 0.088, 0.044, 0.022, 0.011, 0.005, 0.0025, 0.000175)
 }
 
+#' Get Zoom
+#'
+#' @param obj
+#'
+#' @export
 get_zoom <- function(obj) UseMethod("get_zoom")
 
 #' @export
@@ -26,7 +31,11 @@ get_zoom.sf <- function(obj) {
 #' @export
 get_zoom.default <- function(obj) stop("can not calculate zoom level")
 
-
+#' Get Location
+#'
+#' @param obj
+#'
+#' @export
 get_location <- function(obj) UseMethod("get_location")
 
 #' @export
