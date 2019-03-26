@@ -24,7 +24,7 @@ get_zoom.sf <- function(obj) {
 }
 
 #' @export
-get_zoom.default <- function() stop("can not calculate zoom level")
+get_zoom.default <- function(obj) stop("can not calculate zoom level")
 
 
 get_location <- function(obj) UseMethod("get_location")
@@ -35,6 +35,6 @@ get_location.sf <- function(obj) {
 	bbox <- get_box( obj, l )
 	c(
 		mean(bbox[[1]][1], bbox[[2]][1])
-		, mean(bbox[[2]][2], bbox[[2]][2])
+		, mean(bbox[[1]][2], bbox[[2]][2])
 	)
 }
