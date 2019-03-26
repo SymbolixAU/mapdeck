@@ -30,7 +30,7 @@ to conflict and not plot correctly}
 
 \item{stroke_colour}{variable or hex colour to use as the ending stroke colour.}
 
-\item{stroke_width}{width of the stroke in pixels}
+\item{stroke_width}{width of the line in metres}
 
 \item{stroke_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
@@ -43,8 +43,10 @@ to be applied to all the shapes. Default 255.}
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
 \item{palette}{string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
-A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
-where the 4th column represents the alpha.}
+A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255],
+where the 4th column represents the alpha. You can use a named list to specify a different
+palette for different colour options (where available),
+ e.g. list(fill_colour = "viridis", stroke_colour = "inferno")}
 
 \item{na_colour}{hex string colour to use for NA values}
 

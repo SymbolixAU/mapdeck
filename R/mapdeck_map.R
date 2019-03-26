@@ -9,7 +9,7 @@
 #' @param width the width of the map
 #' @param height the height of the map
 #' @param padding the padding of the map
-#' @param style the style of the map
+#' @param style the style of the map (see \link{mapdeck_style})
 #' @param pitch the pitch angle of the map
 #' @param zoom zoom level of the map
 #' @param bearing bearing of the map between 0 and 360
