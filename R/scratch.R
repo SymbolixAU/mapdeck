@@ -9,16 +9,18 @@
 # l <- lapply(trips[[2]], as.data.table)
 # dt <- rbindlist(l, idcol = T)
 #
+# dt[, ele := 100L]
+#
 # sf <- dt[
 # 	, {
-# 		geometry = sf::st_linestring(x = matrix(c(V1, V2, V3), ncol = 3))
+# 		geometry = sf::st_linestring(x = matrix(c(V1, V2, ele, V3), ncol = 4))
 # 		geometry = sf::st_sf( geometry = sf::st_sfc( geometry ) )
 # 	}
 # 	, by = .id
 # ]
 #
-# dt[, summary(V3)]
-# dt[, .N, by = V3][order(N)]
+# # dt[, summary(V3)]
+# # dt[, .N, by = V3][order(N)]
 #
 # sf <- sf::st_as_sf( sf )
 #
@@ -31,6 +33,11 @@
 # 		data = sf
 # 		, stroke_colour = ".id"
 # 	)
+#
+# mapdeck() %>%
+# 	add_path( data = sf )
+
+
 #
 #
 # library(data.table)
