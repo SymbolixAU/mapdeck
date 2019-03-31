@@ -1,6 +1,6 @@
 # mapdeck 0.3
 
-* `add_greatcircles()` 
+* `add_greatcircles()` to draw flat great circles
 * `add_line` width docs updated to say 'metres'
 * `add_arc` gets `tilt` and `height` arguments
 * `add_arc` gets `brush_radius` argument for brushing

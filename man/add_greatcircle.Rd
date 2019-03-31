@@ -75,8 +75,8 @@ palette for different colour options (where available),
 \item{transitions}{list specifying the duration of transitions.}
 }
 \description{
-The greatcircle Layer renders flat arcs along the great circle joining pairs
-of source and target points, specified as latitude/longitude coordinates.
+Renders flat arcs along the great circle joining pairs
+of source and target points, specified as longitude/latitude coordinates.
 }
 \details{
 \code{add_greatcircle} supports POINT sf objects
