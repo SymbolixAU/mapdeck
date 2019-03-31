@@ -7,8 +7,8 @@
 add_greatcircle(map, data = get_map_data(map), layer_id = NULL, origin,
   destination, id = NULL, stroke_from = NULL,
   stroke_from_opacity = NULL, stroke_to = NULL,
-  stroke_to_opacity = NULL, stroke_width = NULL, tilt = NULL,
-  height = NULL, tooltip = NULL, auto_highlight = FALSE,
+  stroke_to_opacity = NULL, stroke_width = NULL,
+  wrap_longitude = FALSE, tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", legend = F, legend_options = NULL,
   legend_format = NULL, palette = "viridis", na_colour = "#808080FF",
   update_view = TRUE, focus_layer = FALSE, transitions = NULL,
@@ -44,9 +44,8 @@ between 1 and 255 to be applied to all the shapes}
 
 \item{stroke_width}{width of the stroke in pixels}
 
-\item{tilt}{value to tilt the greatcircles to the side, in degrees [-90, 90]}
-
-\item{height}{value to multiply the height.}
+\item{wrap_longitude}{logical, whether to automatically wrap longitudes over the
+180th antimeridian.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -76,7 +75,8 @@ palette for different colour options (where available),
 \item{transitions}{list specifying the duration of transitions.}
 }
 \description{
-The greatcircle Layer renders raised greatcircles joining pairs of source and target coordinates
+The greatcircle Layer renders flat arcs along the great circle joining pairs
+of source and target points, specified as latitude/longitude coordinates.
 }
 \details{
 \code{add_greatcircle} supports POINT sf objects
@@ -87,25 +87,6 @@ be expanded to two rows of single POINTs.
 Therefore, if the origin is a MULTIPOINT of two points, and the destination is
 a single POINT, the code will error as there will be an uneven number of rows
 }
-\section{data}{
-
-
-If \code{data} is a simple feature object, you need to supply the origin and destination
-columns, they aren't automatically detected.
-}
-
-\section{id}{
-
-
-The \code{id} is returned to your R session from an interactive shiny environment
-by observing layer clicks. This is useful for returning the data.frame row relating to the
-cliked shape.
-
-From within a shiny server you would typically use \code{ observeEvent({input$map_greatcircle_click})},
-where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'greatcircle' is the layer
-you are clicking on
-}
-
 \section{legend}{
 
 
@@ -116,7 +97,7 @@ This should be a named list, where the names are one of
   \item{title - a string to use for the title of the legend}
 }
 
-If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_greatcircle}.
+If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
 
 The \code{legend_format} can be used to control the format of the values in the legend.
 This should be a named list, where the names are one of
@@ -130,31 +111,23 @@ depending on which type of colouring the layer supports.
 The list elements must be functions to apply to the values in the legend.
 }
 
-\section{transitions}{
+\section{id}{
 
 
-The transitions argument lets you specify the time it will take for the shapes to transition
-from one state to the next. Only works in an interactive environment (Shiny)
-and on WebGL-2 supported browsers and hardware.
+The \code{id} is returned to your R session from an interactive shiny environment
+by observing layer clicks. This is useful for returning the data.frame row relating to the
+cliked shape.
 
-The time is in milliseconds
-
-Available transitions for greatcircle
-
-list(
-origin = 0,
-destination = 0,
-stroke_from = 0,
-stroke_to = 0,
-stroke_width = 0
-)
+From within a shiny server you would typically use \code{ observeEvent({input$map_arc_click})},
+where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the layer
+you are clicking on
 }
 
 \examples{
 \donttest{
 
 ## You need a valid access token from Mapbox
-key <- 'abc'
+set_token("MAPBOX_TOKEN")
 
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 flights <- read.csv(url)
@@ -162,7 +135,7 @@ flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 
-mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
   add_greatcircle(
   data = flights
   , layer_id = "greatcircle_layer"
@@ -179,7 +152,7 @@ mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
     css = "max-height: 100px;")
  )
 
-mapdeck( token = key, style = mapdeck_style("dark")) \%>\%
+mapdeck( style = mapdeck_style("dark")) \%>\%
   add_greatcircle(
   data = flights
   , layer_id = "greatcircle_layer"
@@ -198,9 +171,7 @@ sf_flights <- cbind(
   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
 )
 
-mapdeck(
-  token = key
-) \%>\%
+mapdeck() \%>\%
  add_greatcircle(
    data = sf_flights
    , origin = 'geometry'
@@ -209,10 +180,6 @@ mapdeck(
    , stroke_from = "airport1"
    , stroke_to = "airport2"
 )
-
-
-
-
 }
 
 }

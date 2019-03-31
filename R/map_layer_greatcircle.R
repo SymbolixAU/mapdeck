@@ -11,50 +11,21 @@ mapdeckGreatCircleDependency <- function() {
 
 #' Add greatcircle
 #'
-#' The greatcircle Layer renders flat arcs along the great circle joining pairs
-#' of source and target points, specified as latitude/longitude coordinates.
+#' Renders flat arcs along the great circle joining pairs
+#' of source and target points, specified as longitude/latitude coordinates.
 #'
-#' @param map a mapdeck map object
-#' @param data data to be used in the layer. All coordinates are expected to be in
-#' Web Mercator Projection
-#' @param layer_id single value specifying an id for the layer. Use this value to
-#' distinguish between shape layers of the same type. Layers with the same id are likely
-#' to conflict and not plot correctly
-#' @param origin vector of longitude and latitude columns, or an \code{sfc} column
-#' @param destination vector of longitude and latitude columns, or an \code{sfc} column
-#' @param id an id value in \code{data} to identify layers when interacting in Shiny apps.
-#' @param stroke_from variable or hex colour to use as the staring stroke colour
-#' @param stroke_from_opacity Either a string specifying the
-#' column of \code{data} containing the stroke opacity of each shape, or a value
-#' between 1 and 255 to be applied to all the shapes
-#' @param stroke_to variable or hex colour to use as the ending stroke colour
-#' @param stroke_to_opacity Either a string specifying the
-#' column of \code{data} containing the stroke opacity of each shape, or a value
-#' between 1 and 255 to be applied to all the shapes
-#' @param stroke_width width of the stroke in pixels
-#' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
-#' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
-#' @param highlight_colour hex string colour to use for highlighting. Must contain the alpha component.
-#' @param palette string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
-#' A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255],
-#' where the 4th column represents the alpha. You can use a named list to specify a different
-#' palette for different colour options (where available),
-#'  e.g. list(fill_colour = "viridis", stroke_colour = "inferno")
-#' @param na_colour hex string colour to use for NA values
-#' @param legend either a logical indiciating if the legend(s) should be displayed, or
-#' a named list indicating which colour attributes should be included in the legend.
-#' @param legend_options A list of options for controlling the legend.
-#' @param legend_format A list containing functions to apply to legend values. See section legend
-#' @param update_view logical indicating if the map should update the bounds to include this layer
-#' @param focus_layer logical indicating if the map should update the bounds to only include this layer
-#' @param transitions list specifying the duration of transitions.
-#'
+#' @inheritParams add_arc
+#' @param wrap_longitude logical, whether to automatically wrap longitudes over the
+#' 180th antimeridian.
+
+#' @inheritSection add_arc legend
+#' @inheritSection add_arc id
 #'
 #' @examples
 #' \donttest{
 #'
 #' ## You need a valid access token from Mapbox
-#' key <- 'abc'
+#' set_token("MAPBOX_TOKEN")
 #'
 #' url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 #' flights <- read.csv(url)
@@ -62,7 +33,7 @@ mapdeckGreatCircleDependency <- function() {
 #' flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 #' flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #'   add_greatcircle(
 #'   data = flights
 #'   , layer_id = "greatcircle_layer"
@@ -79,7 +50,7 @@ mapdeckGreatCircleDependency <- function() {
 #'     css = "max-height: 100px;")
 #'  )
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark")) %>%
+#' mapdeck( style = mapdeck_style("dark")) %>%
 #'   add_greatcircle(
 #'   data = flights
 #'   , layer_id = "greatcircle_layer"
@@ -98,9 +69,7 @@ mapdeckGreatCircleDependency <- function() {
 #'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
 #' )
 #'
-#' mapdeck(
-#'   token = key
-#' ) %>%
+#' mapdeck() %>%
 #'  add_greatcircle(
 #'    data = sf_flights
 #'    , origin = 'geometry'
@@ -109,10 +78,6 @@ mapdeckGreatCircleDependency <- function() {
 #'    , stroke_from = "airport1"
 #'    , stroke_to = "airport2"
 #' )
-#'
-#'
-#'
-#'
 #' }
 #'
 #' @details
@@ -138,8 +103,7 @@ add_greatcircle <- function(
 	stroke_to = NULL,
 	stroke_to_opacity = NULL,
 	stroke_width = NULL,
-	tilt = NULL,
-	height = NULL,
+	wrap_longitude = FALSE,
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -162,8 +126,6 @@ add_greatcircle <- function(
 	l[["stroke_from_opacity"]] <- force(stroke_from_opacity)
 	l[["stroke_to_opacity"]] <- force(stroke_to_opacity)
 	l[["stroke_width"]] <- force(stroke_width)
-	l[["tilt"]] <- force(tilt)
-	l[["height"]] <- force(height)
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)
@@ -176,6 +138,7 @@ add_greatcircle <- function(
 	bbox <- init_bbox()
 	update_view <- force( update_view )
 	focus_layer <- force( focus_layer )
+	wrap_longitude <- force( wrap_longitude )
 
 	layer_id <- layerId(layer_id, "greatcircle")
 	checkHexAlpha(highlight_colour)
@@ -214,7 +177,8 @@ add_greatcircle <- function(
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
-		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition
+		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition,
+		wrap_longitude
 	)
 }
 
