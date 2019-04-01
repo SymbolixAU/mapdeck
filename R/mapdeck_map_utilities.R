@@ -145,7 +145,7 @@ addDependency <- function(map, dependencyFunction) {
 #
 # Checks the layer_id parameter, and provides a default one if NULL
 # @param layer_id
-layerId <- function(layer_id, layer = c("arc", "geojson","grid","greatcircle",
+layerId <- function(layer_id, layer = c("arc", "column", "geojson","grid","greatcircle",
 																				"hexagon","line","path","pointcloud",
 																				"polygon","scatterplot", "screengrid","text", "title")){
 	layer <- match.arg( layer )

@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1002</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@
       <h1>mapdeck</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-02-08</h4>
+            <h4 class="date">2019-04-01</h4>
       
       
       <div class="hidden name"><code>mapdeck.Rmd</code></div>
@@ -103,7 +103,7 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mapdeck)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mapdeck)</a></code></pre></div>
 <div id="what-is-mapdeck" class="section level1">
 <h1 class="hasAnchor">
 <a href="#what-is-mapdeck" class="anchor"></a>What is Mapdeck?</h1>
@@ -118,17 +118,17 @@
 <h1 class="hasAnchor">
 <a href="#the-basics" class="anchor"></a>The basics</h1>
 <p>You need a <a href="https://www.mapbox.com/help/how-access-tokens-work/">Mapbox Access Token</a> to load a map. Then call <code><a href="../reference/mapdeck.html">mapdeck(token = token)</a></code> to give you a map</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">key &lt;-<span class="st"> 'abc'</span>    <span class="co">## put your own token here</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">key &lt;-<span class="st"> 'abc'</span>    <span class="co">## put your own token here</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key)</a></code></pre></div>
 <p>You can use <code><a href="../reference/set_token.html">set_token()</a></code> to make your token available ‘globally’ to all future calls to <code><a href="../reference/mapdeck.html">mapdeck()</a></code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/set_token.html">set_token</a></span>(<span class="st">'abc'</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="../reference/mapdeck_tokens.html">mapdeck_tokens</a></span>()</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#  Mapdeck tokens</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#   -  mapbox : abc</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/set_token.html">set_token</a></span>(<span class="st">'abc'</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="../reference/mapdeck_tokens.html">mapdeck_tokens</a></span>()</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#  Mapdeck tokens</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#   -  mapbox : abc</span></a></code></pre></div>
 <p>You can style the map using any <a href="https://www.mapbox.com/api-documentation/#styles">mapbox style</a> template styles, or you can <a href="https://www.mapbox.com/help/studio-manual-styles/">create one of your own</a></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>)</a></code></pre></div>
 <p>I’ve provided a convenience function to select one of the mapbox defined styles</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="dt">style =</span> <span class="st">'dark'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="dt">style =</span> <span class="st">'dark'</span>)</a></code></pre></div>
 <p>Once you have a map you can start adding layers through the various <code>add_*()</code> functions (there is an example of each one in this vignette).</p>
 <p>All details about layers, colours, tips &amp; triks, etc, are here</p>
 <ul>
