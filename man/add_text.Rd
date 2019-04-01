@@ -7,8 +7,10 @@
 add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
   polyline = NULL, fill_colour = NULL, fill_opacity = NULL,
   size = NULL, angle = NULL, anchor = NULL,
-  alignment_baseline = NULL, tooltip = NULL, layer_id = NULL,
-  id = NULL, auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  alignment_baseline = NULL, billboard = TRUE,
+  font_family = "Monaco, monospace", font_weight = "normal",
+  tooltip = NULL, layer_id = NULL, id = NULL,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, update_view = TRUE, focus_layer = FALSE,
   transitions = NULL)
@@ -42,6 +44,16 @@ to be applied to all the shapes. Default 255.}
 
 \item{alignment_baseline}{column of \code{data} containing the alignment. One of
 'top', 'center' or 'bottom'}
+
+\item{billboard}{logical indicating if the text always faces the camera (TRUE) or
+if it always faces up (FALSE)}
+
+\item{font_family}{specifies a prioritised list of one or more font family names and/or
+generic family names. Follow the specifics for CSS font-family
+\url{https://developer.mozilla.org/en-US/docs/Web/CSS/font-family}}
+
+\item{font_weight}{specifies the font weight. Follow the specifics for CSS font-weight
+\url{https://htmldog.com/references/css/properties/font-weight/}}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -141,9 +153,9 @@ you are clicking on
 
 ## You need a valid access token from Mapbox
 key <- 'abc'
+set_token( key )
 
 mapdeck(
-  token = key,
   style = mapdeck_style('dark')
 ) \%>\%
   add_text(
