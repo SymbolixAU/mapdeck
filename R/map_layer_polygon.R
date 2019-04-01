@@ -66,6 +66,7 @@ mapdeckPolygonDependency <- function() {
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
 #' library(sf)
 #' library(geojsonsf)
@@ -73,8 +74,7 @@ mapdeckPolygonDependency <- function() {
 #' sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
 #'
 #' mapdeck(
-#'   token = key
-#'   , style = mapdeck_style('dark')
+#'   style = mapdeck_style('dark')
 #' ) %>%
 #'   add_polygon(
 #'     data = sf
@@ -87,8 +87,7 @@ mapdeckPolygonDependency <- function() {
 #' df$info <- paste0("<b>SA2 - </b><br>",df$SA2_NAME)
 #'
 #' mapdeck(
-#'   token = key
-#'   , style = mapdeck_style('dark')
+#'   style = mapdeck_style('dark')
 #'   , location = c(145, -38)
 #'   , zoom = 8
 #'   ) %>%
@@ -98,7 +97,6 @@ mapdeckPolygonDependency <- function() {
 #'     , layer = "polygon_layer"
 #'     , fill_colour = "SA2_NAME"
 #'     , elevation = "elevation"
-#'     , stroke_width = 200
 #'     , tooltip = 'info'
 #'     , legend = T
 #'   )
