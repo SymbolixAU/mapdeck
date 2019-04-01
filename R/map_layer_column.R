@@ -19,9 +19,9 @@ mapdeckColumnDependency <- function() {
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param polyline column of \code{data} containing the polylines
-#' @param disk_radius The number of sides to render the disk as.
+#' @param disk_resolution The number of sides to render the disk as.
 #' The disk is a regular polygon that fits inside the given radius.
-#' A higher resolution will yield a smoother look close-up, but also need more resources to render.
+#' A higher resolution will yield a smoother look close-up, but also requires more resources to render.
 #' @param radius in metres. Default 1000
 #' @param coverage radius multiplier, in range [0,1]. The radius of the disk is calcualted
 #' by coverage * radius
@@ -51,17 +51,22 @@ mapdeckColumnDependency <- function() {
 #'   , lon = "lng"
 #'   , elevation = "elev"
 #'   , fill_colour = "elev"
+#'   , disk_resolution = 3
 #'   , radius = 100
 #'   , layer_id = "col_layer"
+#'   , legend = TRUE
+#'   , tooltip = "elev"
 #' )
 #'
 #' library( sf )
 #' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#' sf$elev <- df$elev
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_column(
-#'   data = sf
+#'   data = sf[1:500, ]
 #'   , layer_id = "col_layer"
-#'   , elevation_scale = 100
+#'   , elevation = "elev"
+#'   , radius = 10
 #' )
 #'
 #' ## Using elevation and colour
@@ -102,7 +107,7 @@ add_column <- function(
 	elevation_scale = 1,
 	coverage = 1,
 	angle = 0,
-	disk_radius = 20,
+	disk_resolution = 20,
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -173,7 +178,7 @@ add_column <- function(
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
-		radius, elevation_scale, disk_radius, angle, coverage, legend, bbox, update_view,
+		radius, elevation_scale, disk_resolution, angle, coverage, shape[["legend"]], bbox, update_view,
 		focus_layer, js_transitions
 	)
 }

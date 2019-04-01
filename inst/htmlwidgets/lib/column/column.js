@@ -1,5 +1,5 @@
 
-function add_column_geo( map_id, column_data, layer_id, auto_highlight, highlight_colour, radius, elevation_scale, disk_radius, angle, coverage, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_column_geo( map_id, column_data, layer_id, auto_highlight, highlight_colour, radius, elevation_scale, disk_resolution, angle, coverage, legend, bbox, update_view, focus_layer, js_transition ) {
 
   const columnLayer = new deck.ColumnLayer({
         map_id: map_id,
@@ -12,12 +12,13 @@ function add_column_geo( map_id, column_data, layer_id, auto_highlight, highligh
         getPosition: d => md_get_point_coordinates( d ),
         elevationScale: elevation_scale,
         radius: radius,
-        diskRadius: disk_radius,
+        diskResolution: disk_resolution,
         angle: angle,
         coverage: coverage,
         autoHighlight: auto_highlight,
         highlightColor: md_hexToRGBA( highlight_colour ),
         onClick: info => md_layer_click( map_id, "column", info ),
+        onHover: md_update_tooltip,
         transitions: js_transition || {}
   });
 	md_update_layer( map_id, 'column-'+layer_id, columnLayer );
@@ -29,6 +30,37 @@ function add_column_geo( map_id, column_data, layer_id, auto_highlight, highligh
 	md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
+
+function add_column_polyline( map_id, column_data, layer_id, auto_highlight, highlight_colour, radius, elevation_scale, disk_resolution, angle, coverage, legend, bbox, update_view, focus_layer, js_transition ) {
+
+  const columnLayer = new deck.ColumnLayer({
+        map_id: map_id,
+        id: 'column-'+layer_id,
+        data: column_data,
+        pickable: true,
+        extruded: true,
+        getColor: d => md_hexToRGBA( d.fill_colour ),
+        getElevation: d => d.elevation,
+        getPosition: d => md_get_point_coordinates( d ),
+        elevationScale: elevation_scale,
+        radius: radius,
+        diskResolution: disk_resolution,
+        angle: angle,
+        coverage: coverage,
+        autoHighlight: auto_highlight,
+        highlightColor: md_hexToRGBA( highlight_colour ),
+        onClick: info => md_layer_click( map_id, "column", info ),
+        onHover: md_update_tooltip,
+        transitions: js_transition || {}
+  });
+	md_update_layer( map_id, 'column-'+layer_id, columnLayer );
+
+	if (legend !== false) {
+    add_legend(map_id, layer_id, legend);
+  }
+
+	md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+}
 
 function md_column_elevation(d, use_weight, use_polyline, elevation_function ) {
 

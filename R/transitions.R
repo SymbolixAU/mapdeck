@@ -9,6 +9,7 @@ resolve_transitions <- function( transitions, layer ) {
 	transitions <- switch(
 		layer,
 		"arc" = transitions_arc( transitions ),
+		"column" = transitions_column( transitions ),
 		"geojson" = transitions_geojson( transitions ),
 		"greatcircle" = transitions_greatcircle( transitions ),
 		"grid" = transitions_grid( transitions ),
@@ -32,6 +33,12 @@ transitions_arc <- function( transitions ) {
 	transitions <- replace_name( transitions, "height", "getHeight")
 	transitions <- replace_name( transitions, "tilt", "getTilt")
 	return( transitions )
+}
+
+transitions_column <- function( transitions ) {
+	transitions <- replace_name( transitions, "fill_colour", "getColor" )
+	transitions <- replace_name( transitions, "elevation", "getElevation" )
+	transitions <- replace_name( transitions, "position", "getPosition" )
 }
 
 transitions_geojson <- function( transitions ) {

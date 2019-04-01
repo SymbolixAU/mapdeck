@@ -7,7 +7,7 @@
 add_column(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, fill_colour = NULL, radius = 1000,
   elevation = NULL, elevation_scale = 1, coverage = 1, angle = 0,
-  disk_radius = 20, tooltip = NULL, auto_highlight = FALSE,
+  disk_resolution = 20, tooltip = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, legend_format = NULL, update_view = TRUE,
@@ -32,9 +32,9 @@ Web Mercator Projection}
 \item{coverage}{radius multiplier, in range [0,1]. The radius of the disk is calcualted
 by coverage * radius}
 
-\item{disk_radius}{The number of sides to render the disk as.
+\item{disk_resolution}{The number of sides to render the disk as.
 The disk is a regular polygon that fits inside the given radius.
-A higher resolution will yield a smoother look close-up, but also need more resources to render.}
+A higher resolution will yield a smoother look close-up, but also requires more resources to render.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -107,17 +107,22 @@ add_column(
   , lon = "lng"
   , elevation = "elev"
   , fill_colour = "elev"
+  , disk_resolution = 3
   , radius = 100
   , layer_id = "col_layer"
+  , legend = TRUE
+  , tooltip = "elev"
 )
 
 library( sf )
 sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+sf$elev <- df$elev
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_column(
-  data = sf
+  data = sf[1:500, ]
   , layer_id = "col_layer"
-  , elevation_scale = 100
+  , elevation = "elev"
+  , radius = 10
 )
 
 ## Using elevation and colour
