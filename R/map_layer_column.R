@@ -19,17 +19,13 @@ mapdeckColumnDependency <- function() {
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param polyline column of \code{data} containing the polylines
+#' @param disk_radius The number of sides to render the disk as.
+#' The disk is a regular polygon that fits inside the given radius.
+#' A higher resolution will yield a smoother look close-up, but also need more resources to render.
 #' @param radius in metres. Default 1000
-#' @param elevation_scale value to sacle the elevations of the columns. Default 1
-#' @param colour_range vector of 6 hex colours
-#' @param elevation column containing the elevation of the value. This is used to calculate the
-#' height of the columns. The height is calculated by the sum of elevations of all the coordinates
-#' within the \code{radius}. If NULL, the number of coordinates is used.
-#' @param elevation_function either "total" or "average"
-#' @param colour column containing numeric values to colour by.
-#' The colour is calculated by the sum of values within the \code{radius}.
-#' If NULL, the number of coordinates is used.
-#' @param colour_function either "total" or "average"
+#' @param coverage radius multiplier, in range [0,1]. The radius of the disk is calcualted
+#' by coverage * radius
+#' @param elevation_scale value to sacle the elevations of the hexagons. Default 1
 #'
 #' @inheritSection add_polygon data
 #'
@@ -46,14 +42,17 @@ mapdeckColumnDependency <- function() {
 #' ))
 #'
 #' df <- df[!is.na(df$lng), ]
+#' df$elev <- sample(500:5000, size = nrow(df), replace = T)
 #'
 #' mapdeck(style = mapdeck_style("dark"), pitch = 45) %>%
 #' add_column(
-#'   data = df
+#'   data = df[1:5000, ]
 #'   , lat = "lat"
 #'   , lon = "lng"
+#'   , elevation = "elev"
+#'   , fill_colour = "elev"
+#'   , radius = 100
 #'   , layer_id = "col_layer"
-#'   , elevation_scale = 100
 #' )
 #'
 #' library( sf )
@@ -97,16 +96,23 @@ add_column <- function(
 	polyline = NULL,
 	lon = NULL,
 	lat = NULL,
-	layer_id = NULL,
+	fill_colour = NULL,
 	radius = 1000,
 	elevation = NULL,
-	elevation_function = c("total", "average"),
-	colour = NULL,
-	colour_function = c("total", "average"),
 	elevation_scale = 1,
+	coverage = 1,
+	angle = 0,
+	disk_radius = 20,
+	tooltip = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
-	colour_range = NULL,
+	layer_id = NULL,
+	id = NULL,
+	palette = "viridis",
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL,
+	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL
@@ -116,19 +122,17 @@ add_column <- function(
 	l[["polyline"]] <- force( polyline )
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
+	l[["fill_colour"]] <- force( fill_colour )
 	l[["elevation"]] <- force( elevation )
-	l[["colour"]] <- force( colour )
+	l[["tooltip"]] <- force( tooltip )
+	l[["id"]] <- force( id )
+	l[["na_colour"]] <- force( na_colour )
 
-	colour_function <- match.arg( colour_function )
-	elevation_function <- match.arg( elevation_function )
 
-	use_weight <- FALSE
-	if(!is.null(elevation)) use_weight <- TRUE
-
-	use_colour <- FALSE
-	if(!is.null(colour)) use_colour <- TRUE
-
-	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_elevation_data( data, l, elevation, c("POINT","MULTIPOINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -144,14 +148,6 @@ add_column <- function(
 		l[["bbox"]] <- NULL
 	}
 
-	if( is.null( colour_range ) ) {
-		colour_range <- colourvalues::colour_values(1:6, palette = "viridis")
-	}
-
-	if(length(colour_range) != 6)
-		stop("colour_range must have 6 hex colours")
-
-	checkHex(colour_range)
 	checkHexAlpha(highlight_colour)
 
 	layer_id <- layerId(layer_id, "column")
@@ -176,9 +172,9 @@ add_column <- function(
 	js_transitions <- resolve_transitions( transitions, "column" )
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, radius, elevation_scale,
-		auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer,
-		js_transitions, use_weight, use_colour, elevation_function, colour_function
+		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
+		radius, elevation_scale, disk_radius, angle, coverage, legend, bbox, update_view,
+		focus_layer, js_transitions
 	)
 }
 

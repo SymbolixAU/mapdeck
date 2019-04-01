@@ -6,9 +6,14 @@
 namespace mapdeck {
 namespace column {
 
-const std::unordered_map< std::string, std::string > column_colours;
+const std::unordered_map< std::string, std::string > column_colours({
+	{ "fill_colour", "fill_opacity" }
+});
 
-const Rcpp::StringVector column_legend = Rcpp::StringVector::create();
+const Rcpp::StringVector column_legend = Rcpp::StringVector::create(
+	"fill_colour"
+);
+
 
 } // namespace column
 } // namespace mapdeck

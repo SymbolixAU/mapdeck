@@ -5,12 +5,13 @@
 \title{Add column}
 \usage{
 add_column(map, data = get_map_data(map), polyline = NULL,
-  lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
-  elevation = NULL, elevation_function = c("total", "average"),
-  colour = NULL, colour_function = c("total", "average"),
-  elevation_scale = 1, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", colour_range = NULL,
-  update_view = TRUE, focus_layer = FALSE, transitions = NULL)
+  lon = NULL, lat = NULL, fill_colour = NULL, radius = 1000,
+  elevation = NULL, elevation_scale = 1, coverage = 1, angle = 0,
+  disk_radius = 20, tooltip = NULL, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL,
+  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
+  legend_options = NULL, legend_format = NULL, update_view = TRUE,
+  focus_layer = FALSE, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -24,31 +25,43 @@ Web Mercator Projection}
 
 \item{lat}{column containing latitude values}
 
-\item{layer_id}{single value specifying an id for the layer. Use this value to
-distinguish between shape layers of the same type. Layers with the same id are likely
-to conflict and not plot correctly}
-
 \item{radius}{in metres. Default 1000}
 
-\item{elevation}{column containing the elevation of the value. This is used to calculate the
-height of the columns. The height is calculated by the sum of elevations of all the coordinates
-within the \code{radius}. If NULL, the number of coordinates is used.}
+\item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
 
-\item{elevation_function}{either "total" or "average"}
+\item{coverage}{radius multiplier, in range [0,1]. The radius of the disk is calcualted
+by coverage * radius}
 
-\item{colour}{column containing numeric values to colour by.
-The colour is calculated by the sum of values within the \code{radius}.
-If NULL, the number of coordinates is used.}
+\item{disk_radius}{The number of sides to render the disk as.
+The disk is a regular polygon that fits inside the given radius.
+A higher resolution will yield a smoother look close-up, but also need more resources to render.}
 
-\item{colour_function}{either "total" or "average"}
-
-\item{elevation_scale}{value to sacle the elevations of the columns. Default 1}
+\item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
-\item{colour_range}{vector of 6 hex colours}
+\item{layer_id}{single value specifying an id for the layer. Use this value to
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
+
+\item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
+
+\item{palette}{string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
+A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255],
+where the 4th column represents the alpha. You can use a named list to specify a different
+palette for different colour options (where available),
+ e.g. list(fill_colour = "viridis", stroke_colour = "inferno")}
+
+\item{na_colour}{hex string colour to use for NA values}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
+
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
 
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
@@ -77,6 +90,7 @@ where \code{"your_column"} is the name of the column you're activating. See \cod
 
 ## You need a valid access token from Mapbox
 key <- 'abc'
+set_token( key )
 
 df <- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/'
@@ -84,14 +98,17 @@ df <- read.csv(paste0(
 ))
 
 df <- df[!is.na(df$lng), ]
+df$elev <- sample(500:5000, size = nrow(df), replace = T)
 
 mapdeck(style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_column(
-  data = df
+  data = df[1:5000, ]
   , lat = "lat"
   , lon = "lng"
+  , elevation = "elev"
+  , fill_colour = "elev"
+  , radius = 100
   , layer_id = "col_layer"
-  , elevation_scale = 100
 )
 
 library( sf )
