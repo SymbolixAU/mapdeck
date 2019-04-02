@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1002</span>
       </span>
     </div>
 
@@ -181,17 +181,17 @@ Web Mercator Projection</p></td>
     </tr>
     <tr>
       <th>fill_opacity</th>
-      <td><p>value between 0 and 255. Either a string specifying the
-column of <code>data</code> containing the fill opacity of each shape, or a single value
-to be applied to all the shapes</p></td>
+      <td><p>Either a string specifying the column of <code>data</code>
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255.</p></td>
     </tr>
     <tr>
       <th>size</th>
-      <td><p>column of <code>data</code> containing the size of the text</p></td>
+      <td><p>column of <code>data</code> containing the size of the text. Default 32</p></td>
     </tr>
     <tr>
       <th>angle</th>
-      <td><p>column of <code>data</code> containging the angle of the text</p></td>
+      <td><p>column of <code>data</code> containging the angle of the text. Default 0</p></td>
     </tr>
     <tr>
       <th>anchor</th>
@@ -228,8 +228,10 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>palette</th>
       <td><p>string or matrix. String will be one of <code><a href='https://www.rdocumentation.org/packages/colourvalues/topics/colour_palettes'>colourvalues::colour_palettes()</a></code>.
-A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
-where the 4th column represents the alpha.</p></td>
+A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255],
+where the 4th column represents the alpha. You can use a named list to specify a different
+palette for different colour options (where available),
+ e.g. list(fill_colour = "viridis", stroke_colour = "inferno")</p></td>
     </tr>
     <tr>
       <th>na_colour</th>
