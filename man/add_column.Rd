@@ -27,7 +27,7 @@ Web Mercator Projection}
 
 \item{radius}{in metres. Default 1000}
 
-\item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
+\item{elevation_scale}{value to scale the elevations of the columns Default 1}
 
 \item{coverage}{radius multiplier, in range [0,1]. The radius of the disk is calcualted
 by coverage * radius}
@@ -92,54 +92,32 @@ where \code{"your_column"} is the name of the column you're activating. See \cod
 key <- 'abc'
 set_token( key )
 
-df <- read.csv(paste0(
-'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/'
-, '3d-heatmap/heatmap-data.csv'
-))
 
-df <- df[!is.na(df$lng), ]
-df$elev <- sample(500:5000, size = nrow(df), replace = T)
+df <- capitals
+df$elev <- sample(50000:500000, size = nrow(df), replace = T)
 
 mapdeck(style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_column(
-  data = df[1:5000, ]
+  data = df
   , lat = "lat"
-  , lon = "lng"
+  , lon = "lon"
   , elevation = "elev"
-  , fill_colour = "elev"
-  , disk_resolution = 3
-  , radius = 100
-  , layer_id = "col_layer"
-  , legend = TRUE
-  , tooltip = "elev"
+  , fill_colour = "lon"
+  , disk_resolution = 20
+  , radius = 100000
+  , tooltip = "capital"
 )
 
 library( sf )
-sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+sf <- sf::st_as_sf( df, coords = c("lon", "lat"))
 sf$elev <- df$elev
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_column(
-  data = sf[1:500, ]
+  data = sf
   , layer_id = "col_layer"
   , elevation = "elev"
-  , radius = 10
-)
-
-## Using elevation and colour
-df$weight <- 1
-df$colour <- 1
-df[10, ]$weight <- 100000
-df[1000, ]$colour <- 100000
-
-mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45) \%>\%
-add_column(
-  data = df
-  , lat = "lat"
-  , lon = "lng"
-  , layer_id = "col_layer"
-  , elevation_scale = 100
-  , elevation = "weight"
-  , colour = "colour"
+  , radius = 100000
+  , fill_colour = "country"
 )
 
 

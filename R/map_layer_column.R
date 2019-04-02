@@ -25,7 +25,7 @@ mapdeckColumnDependency <- function() {
 #' @param radius in metres. Default 1000
 #' @param coverage radius multiplier, in range [0,1]. The radius of the disk is calcualted
 #' by coverage * radius
-#' @param elevation_scale value to sacle the elevations of the hexagons. Default 1
+#' @param elevation_scale value to scale the elevations of the columns Default 1
 #'
 #' @inheritSection add_polygon data
 #'
