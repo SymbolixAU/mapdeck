@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add Text — add_text • mapdeck</title>
+<title>Add column — add_column • mapdeck</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Add Text — add_text" />
+<meta property="og:title" content="Add column — add_column" />
 
-<meta property="og:description" content="The Text Layer renders text labels on the map" />
+<meta property="og:description" content="The ColumnLayer can be used to render a heatmap of vertical cylinders. It renders
+a tesselated regular polygon centered at each given position (a &quot;disk&quot;), and extrude it in 3d." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,27 +128,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add Text</h1>
+    <h1>Add column</h1>
     
-    <div class="hidden name"><code>add_text.Rd</code></div>
+    <div class="hidden name"><code>add_column.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The Text Layer renders text labels on the map</p>
+    <p>The ColumnLayer can be used to render a heatmap of vertical cylinders. It renders
+a tesselated regular polygon centered at each given position (a "disk"), and extrude it in 3d.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>add_text</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='no'>text</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>angle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>anchor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>alignment_baseline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>billboard</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>font_family</span> <span class='kw'>=</span> <span class='st'>"Monaco, monospace"</span>, <span class='kw'>font_weight</span> <span class='kw'>=</span> <span class='st'>"normal"</span>,
-  <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
+    <pre class="usage"><span class='fu'>add_column</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>coverage</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>angle</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>disk_resolution</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>, <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,8 +162,8 @@
 Web Mercator Projection</p></td>
     </tr>
     <tr>
-      <th>text</th>
-      <td><p>column of <code>data</code> containing the text. The data must be a character.</p></td>
+      <th>polyline</th>
+      <td><p>column of <code>data</code> containing the polylines</p></td>
     </tr>
     <tr>
       <th>lon</th>
@@ -174,56 +174,35 @@ Web Mercator Projection</p></td>
       <td><p>column containing latitude values</p></td>
     </tr>
     <tr>
-      <th>polyline</th>
-      <td><p>optional column of <code>data</code> containing the polylines, if using encoded polylines</p></td>
+      <th>radius</th>
+      <td><p>in metres. Default 1000</p></td>
     </tr>
     <tr>
-      <th>fill_colour</th>
-      <td><p>column of <code>data</code> or hex colour for the fill colour.</p></td>
+      <th>elevation_scale</th>
+      <td><p>value to scale the elevations of the columns Default 1</p></td>
     </tr>
     <tr>
-      <th>fill_opacity</th>
-      <td><p>Either a string specifying the column of <code>data</code>
-containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-to be applied to all the shapes. Default 255.</p></td>
+      <th>coverage</th>
+      <td><p>radius multiplier, in range [0,1]. The radius of the disk is calcualted
+by coverage * radius</p></td>
     </tr>
     <tr>
-      <th>size</th>
-      <td><p>column of <code>data</code> containing the size of the text. Default 32</p></td>
-    </tr>
-    <tr>
-      <th>angle</th>
-      <td><p>column of <code>data</code> containging the angle of the text. Default 0</p></td>
-    </tr>
-    <tr>
-      <th>anchor</th>
-      <td><p>column of <code>data</code> containing the anchor of the text. One of
-'start', 'middle' or 'end'</p></td>
-    </tr>
-    <tr>
-      <th>alignment_baseline</th>
-      <td><p>column of <code>data</code> containing the alignment. One of
-'top', 'center' or 'bottom'</p></td>
-    </tr>
-    <tr>
-      <th>billboard</th>
-      <td><p>logical indicating if the text always faces the camera (TRUE) or
-if it always faces up (FALSE)</p></td>
-    </tr>
-    <tr>
-      <th>font_family</th>
-      <td><p>specifies a prioritised list of one or more font family names and/or
-generic family names. Follow the specifics for CSS font-family
-<a href='https://developer.mozilla.org/en-US/docs/Web/CSS/font-family'>https://developer.mozilla.org/en-US/docs/Web/CSS/font-family</a></p></td>
-    </tr>
-    <tr>
-      <th>font_weight</th>
-      <td><p>specifies the font weight. Follow the specifics for CSS font-weight
-<a href='https://htmldog.com/references/css/properties/font-weight/'>https://htmldog.com/references/css/properties/font-weight/</a></p></td>
+      <th>disk_resolution</th>
+      <td><p>The number of sides to render the disk as.
+The disk is a regular polygon that fits inside the given radius.
+A higher resolution will yield a smoother look close-up, but also requires more resources to render.</p></td>
     </tr>
     <tr>
       <th>tooltip</th>
       <td><p>variable of <code>data</code> containing text or HTML to render as a tooltip</p></td>
+    </tr>
+    <tr>
+      <th>auto_highlight</th>
+      <td><p>logical indicating if the shape under the mouse should auto-highlight</p></td>
+    </tr>
+    <tr>
+      <th>highlight_colour</th>
+      <td><p>hex string colour to use for highlighting. Must contain the alpha component.</p></td>
     </tr>
     <tr>
       <th>layer_id</th>
@@ -234,14 +213,6 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>id</th>
       <td><p>an id value in <code>data</code> to identify layers when interacting in Shiny apps.</p></td>
-    </tr>
-    <tr>
-      <th>auto_highlight</th>
-      <td><p>logical indicating if the shape under the mouse should auto-highlight</p></td>
-    </tr>
-    <tr>
-      <th>highlight_colour</th>
-      <td><p>hex string colour to use for highlighting. Must contain the alpha component.</p></td>
     </tr>
     <tr>
       <th>palette</th>
@@ -265,6 +236,10 @@ a named list indicating which colour attributes should be included in the legend
       <td><p>A list of options for controlling the legend.</p></td>
     </tr>
     <tr>
+      <th>legend_format</th>
+      <td><p>A list containing functions to apply to legend values. See section legend</p></td>
+    </tr>
+    <tr>
       <th>update_view</th>
       <td><p>logical indicating if the map should update the bounds to include this layer</p></td>
     </tr>
@@ -280,69 +255,53 @@ a named list indicating which colour attributes should be included in the legend
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>add_text</code> supports POINT and MULTIPOINT sf objects</p>
+    <p><code>add_column</code> supports POINT and MULTIPOINT sf objects</p>
     
-    <h2 class="hasAnchor" id="transitions"><a class="anchor" href="#transitions"></a>transitions</h2>
+    <h2 class="hasAnchor" id="data"><a class="anchor" href="#data"></a>data</h2>
 
     
-    <p>The transitions argument lets you specify the time it will take for the shapes to transition
-from one state to the next. Only works in an interactive environment (Shiny)
-and on WebGL-2 supported browsers and hardware.</p>
-<p>The time is in milliseconds</p>
-<p>Available transitions for text</p>
-<p>list(
-position = 0,
-fill_colour = 0,
-angle = 0,
-size = 0
-)</p>
-    
-    <h2 class="hasAnchor" id="legend"><a class="anchor" href="#legend"></a>legend</h2>
-
-    
-    <p>The <code>legend_options</code> can be used to control the appearance of the legend.
-This should be a named list, where the names are one of</p><ul>
-<li><p>css - a string of valid <code>css</code> for controlling the appearance of the legend</p></li>
-<li><p>title - a string to use for the title of the legend</p></li>
-</ul>
-    <p>If the layer allows different fill and stroke colours, you can use different options for each. See examples in <a href='add_arc.html'>add_arc</a>.</p>
-<p>The <code>legend_format</code> can be used to control the format of the values in the legend.
-This should be a named list, where the names are one of</p><ul>
-<li><p>fill_colour</p></li>
-<li><p>stroke_colour</p></li>
-</ul>
-    <p>depending on which type of colouring the layer supports.</p>
-<p>The list elements must be functions to apply to the values in the legend.</p>
-    
-    <h2 class="hasAnchor" id="id"><a class="anchor" href="#id"></a>id</h2>
-
-    
-    <p>The <code>id</code> is returned to your R session from an interactive shiny environment
-by observing layer clicks. This is useful for returning the data.frame row relating to the
-cliked shape.</p>
-<p>From within a shiny server you would typically use <code> observeEvent({input$map_arc_click})</code>,
-where 'map' is the map_id supplied to <code><a href='mapdeck-shiny.html'>mapdeckOutput()</a></code>, and 'arc' is the layer
-you are clicking on</p>
+    <p>If the <code>data</code> is a simple feature object, the geometry column is automatically
+detected. If the sf object contains more than one geometry column and you want to use a specific one,
+you'll need to set the active geometry using <code>sf::st_geometry( x ) &lt;- "your_column" </code>,
+where <code>"your_column"</code> is the name of the column you're activating. See <code><a href='https://www.rdocumentation.org/packages/sf/topics/st_geometry'>?sf::st_geometry</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-</div><div class='input'>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'>## You need a valid access token from Mapbox</span>
 <span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='st'>'abc'</span>
 <span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='no'>key</span> )
 
-<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
-  <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>)
-) <span class='kw'>%&gt;%</span>
-  <span class='fu'>add_text</span>(
-    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>capitals</span>
-    , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>'lon'</span>
-    , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>'lat'</span>
-    , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>'country'</span>
-    , <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>'capital'</span>
-    , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>'text'</span>
-  )</div><div class='input'>
+
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>capitals</span>
+<span class='no'>df</span>$<span class='no'>elev</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>50000</span>:<span class='fl'>500000</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>df</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='no'>T</span>)
+
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(<span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span>) <span class='kw'>%&gt;%</span>
+<span class='fu'>add_column</span>(
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>
+  , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
+  , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"lon"</span>
+  , <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='st'>"elev"</span>
+  , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"lon"</span>
+  , <span class='kw'>disk_resolution</span> <span class='kw'>=</span> <span class='fl'>20</span>
+  , <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>100000</span>
+  , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"capital"</span>
+)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>( <span class='no'>sf</span> )
+<span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>( <span class='no'>df</span>, <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"lon"</span>, <span class='st'>"lat"</span>))
+<span class='no'>sf</span>$<span class='no'>elev</span> <span class='kw'>&lt;-</span> <span class='no'>df</span>$<span class='no'>elev</span>
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
+<span class='fu'>add_column</span>(
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sf</span>
+  , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"col_layer"</span>
+  , <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='st'>"elev"</span>
+  , <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>100000</span>
+  , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"country"</span>
+)
+
+
+<span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -352,11 +311,7 @@ you are clicking on</p>
       
       <li><a href="#details">Details</a></li>
 
-      <li><a href="#transitions">transitions</a></li>
-
-      <li><a href="#legend">legend</a></li>
-
-      <li><a href="#id">id</a></li>
+      <li><a href="#data">data</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

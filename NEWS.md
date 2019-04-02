@@ -1,6 +1,10 @@
 # mapdeck 0.3
 
+<<<<<<< HEAD
 * `add_column()` to draw columns (as any polygon shape)
+=======
+* `add_text()` gets `billbaord`, `font_family`, `font_weight`
+>>>>>>> issue139
 * `add_greatcircles()` to draw flat great circles
 * `add_line` width docs updated to say 'metres'
 * `add_arc` gets `tilt` and `height` arguments

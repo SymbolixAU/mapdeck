@@ -94,7 +94,7 @@
       <h1>Layers</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-04-01</h4>
+            <h4 class="date">2019-04-03</h4>
       
       
       <div class="hidden name"><code>layers.Rmd</code></div>
@@ -390,10 +390,10 @@
 <p>The three main functions to use are</p>
 <ol style="list-style-type: decimal">
 <li>
-<code>render_mapdeck()</code> in the <strong>Server</strong>
+<code><a href="../reference/mapdeck-shiny.html">renderMapdeck()</a></code> in the <strong>Server</strong>
 </li>
 <li>
-<code>mapdeck_output()</code> in the <strong>UI</strong>
+<code><a href="../reference/mapdeck-shiny.html">mapdeckOutput()</a></code> in the <strong>UI</strong>
 </li>
 <li>
 <code><a href="../reference/mapdeck_update.html">mapdeck_update()</a></code> to update an existing map</li>
@@ -412,87 +412,88 @@
 <p>There’s an example of this in the shiny.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(shiny)</a>
 <a class="sourceLine" id="cb14-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(shinydashboard)</a>
-<a class="sourceLine" id="cb14-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(jsonlite)</a>
-<a class="sourceLine" id="cb14-4" title="4">ui &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardPage">dashboardPage</a></span>(</a>
-<a class="sourceLine" id="cb14-5" title="5">    <span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardHeader">dashboardHeader</a></span>()</a>
-<a class="sourceLine" id="cb14-6" title="6">    , <span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardSidebar">dashboardSidebar</a></span>()</a>
-<a class="sourceLine" id="cb14-7" title="7">    , <span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardBody">dashboardBody</a></span>(</a>
-<a class="sourceLine" id="cb14-8" title="8">        <span class="kw"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(</a>
-<a class="sourceLine" id="cb14-9" title="9">            <span class="dt">outputId =</span> <span class="st">'myMap'</span></a>
-<a class="sourceLine" id="cb14-10" title="10">            ),</a>
-<a class="sourceLine" id="cb14-11" title="11">        <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/sliderInput">sliderInput</a></span>(</a>
-<a class="sourceLine" id="cb14-12" title="12">            <span class="dt">inputId =</span> <span class="st">"longitudes"</span></a>
-<a class="sourceLine" id="cb14-13" title="13">            , <span class="dt">label =</span> <span class="st">"Longitudes"</span></a>
-<a class="sourceLine" id="cb14-14" title="14">            , <span class="dt">min =</span> <span class="dv">-180</span></a>
-<a class="sourceLine" id="cb14-15" title="15">            , <span class="dt">max =</span> <span class="dv">180</span></a>
-<a class="sourceLine" id="cb14-16" title="16">            , <span class="dt">value =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">180</span>,<span class="op">-</span><span class="dv">90</span>)</a>
-<a class="sourceLine" id="cb14-17" title="17">        )</a>
-<a class="sourceLine" id="cb14-18" title="18">        , <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/verbatimTextOutput">verbatimTextOutput</a></span>(</a>
-<a class="sourceLine" id="cb14-19" title="19">            <span class="dt">outputId =</span> <span class="st">"observed_click"</span></a>
-<a class="sourceLine" id="cb14-20" title="20">        )</a>
-<a class="sourceLine" id="cb14-21" title="21">    )</a>
-<a class="sourceLine" id="cb14-22" title="22">)</a>
-<a class="sourceLine" id="cb14-23" title="23">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</a>
-<a class="sourceLine" id="cb14-24" title="24">    </a>
-<a class="sourceLine" id="cb14-25" title="25">    <span class="co">#set_token('abc') ## set your access token</span></a>
-<a class="sourceLine" id="cb14-26" title="26">    </a>
-<a class="sourceLine" id="cb14-27" title="27">    origin &lt;-<span class="st"> </span>capitals[capitals<span class="op">$</span>country <span class="op">==</span><span class="st"> "Australia"</span>, ]</a>
-<a class="sourceLine" id="cb14-28" title="28">    destination &lt;-<span class="st"> </span>capitals[capitals<span class="op">$</span>country <span class="op">!=</span><span class="st"> "Australia"</span>, ]</a>
-<a class="sourceLine" id="cb14-29" title="29">    origin<span class="op">$</span>key &lt;-<span class="st"> </span>1L</a>
-<a class="sourceLine" id="cb14-30" title="30">    destination<span class="op">$</span>key &lt;-<span class="st"> </span>1L</a>
-<a class="sourceLine" id="cb14-31" title="31">    </a>
-<a class="sourceLine" id="cb14-32" title="32">    df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/merge">merge</a></span>(origin, destination, <span class="dt">by =</span> <span class="st">'key'</span>, <span class="dt">all =</span> T)</a>
-<a class="sourceLine" id="cb14-33" title="33">    </a>
-<a class="sourceLine" id="cb14-34" title="34">    output<span class="op">$</span>myMap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mapdeck-shiny.html">renderMapdeck</a></span>({</a>
-<a class="sourceLine" id="cb14-35" title="35">        <span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) </a>
-<a class="sourceLine" id="cb14-36" title="36">    })</a>
-<a class="sourceLine" id="cb14-37" title="37">    </a>
-<a class="sourceLine" id="cb14-38" title="38">    <span class="co">## plot points &amp; lines according to the selected longitudes</span></a>
-<a class="sourceLine" id="cb14-39" title="39">    df_reactive &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/reactive">reactive</a></span>({</a>
-<a class="sourceLine" id="cb14-40" title="40">        <span class="cf">if</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NULL">is.null</a></span>(input<span class="op">$</span>longitudes)) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(<span class="ot">NULL</span>)</a>
-<a class="sourceLine" id="cb14-41" title="41">        lons &lt;-<span class="st"> </span>input<span class="op">$</span>longitudes</a>
-<a class="sourceLine" id="cb14-42" title="42">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(</a>
-<a class="sourceLine" id="cb14-43" title="43">            df[df<span class="op">$</span>lon.y <span class="op">&gt;=</span><span class="st"> </span>lons[<span class="dv">1</span>] <span class="op">&amp;</span><span class="st"> </span>df<span class="op">$</span>lon.y <span class="op">&lt;=</span><span class="st"> </span>lons[<span class="dv">2</span>], ]</a>
-<a class="sourceLine" id="cb14-44" title="44">        )</a>
-<a class="sourceLine" id="cb14-45" title="45">    })</a>
-<a class="sourceLine" id="cb14-46" title="46">    </a>
-<a class="sourceLine" id="cb14-47" title="47">    <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/observeEvent">observeEvent</a></span>({input<span class="op">$</span>longitudes}, {</a>
-<a class="sourceLine" id="cb14-48" title="48">        <span class="cf">if</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NULL">is.null</a></span>(input<span class="op">$</span>longitudes)) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>()</a>
-<a class="sourceLine" id="cb14-49" title="49">        </a>
-<a class="sourceLine" id="cb14-50" title="50">        <span class="kw"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="dt">map_id =</span> <span class="st">'myMap'</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-51" title="51"><span class="st">            </span><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</a>
-<a class="sourceLine" id="cb14-52" title="52">                <span class="dt">data =</span> <span class="kw">df_reactive</span>()</a>
-<a class="sourceLine" id="cb14-53" title="53">                , <span class="dt">lon =</span> <span class="st">"lon.y"</span></a>
-<a class="sourceLine" id="cb14-54" title="54">                , <span class="dt">lat =</span> <span class="st">"lat.y"</span></a>
-<a class="sourceLine" id="cb14-55" title="55">                , <span class="dt">fill_colour =</span> <span class="st">"country.y"</span></a>
-<a class="sourceLine" id="cb14-56" title="56">                , <span class="dt">radius =</span> <span class="dv">100000</span></a>
-<a class="sourceLine" id="cb14-57" title="57">                , <span class="dt">layer_id =</span> <span class="st">"myScatterLayer"</span></a>
-<a class="sourceLine" id="cb14-58" title="58">                , <span class="dt">update_view =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb14-59" title="59">            ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-60" title="60"><span class="st">            </span><span class="kw"><a href="../reference/add_arc.html">add_arc</a></span>(</a>
-<a class="sourceLine" id="cb14-61" title="61">                <span class="dt">data =</span> <span class="kw">df_reactive</span>()</a>
-<a class="sourceLine" id="cb14-62" title="62">                , <span class="dt">origin =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon.x"</span>, <span class="st">"lat.x"</span>)</a>
-<a class="sourceLine" id="cb14-63" title="63">                , <span class="dt">destination =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon.y"</span>, <span class="st">"lat.y"</span>)</a>
-<a class="sourceLine" id="cb14-64" title="64">                , <span class="dt">stroke_from =</span> <span class="st">"country.x"</span></a>
-<a class="sourceLine" id="cb14-65" title="65">                , <span class="dt">stroke_to =</span> <span class="st">"country.y"</span></a>
-<a class="sourceLine" id="cb14-66" title="66">                , <span class="dt">layer_id =</span> <span class="st">"myArcLayer"</span></a>
-<a class="sourceLine" id="cb14-67" title="67">                , <span class="dt">id =</span> <span class="st">"country.x"</span></a>
-<a class="sourceLine" id="cb14-68" title="68">                , <span class="dt">stroke_width =</span> <span class="dv">4</span></a>
-<a class="sourceLine" id="cb14-69" title="69">                , <span class="dt">update_view =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb14-70" title="70">            )</a>
-<a class="sourceLine" id="cb14-71" title="71">    })</a>
-<a class="sourceLine" id="cb14-72" title="72">    </a>
-<a class="sourceLine" id="cb14-73" title="73">    <span class="co">## observe clicking on a line and return the text</span></a>
-<a class="sourceLine" id="cb14-74" title="74">    <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/observeEvent">observeEvent</a></span>(input<span class="op">$</span>myMap_arc_click, {</a>
-<a class="sourceLine" id="cb14-75" title="75">        </a>
-<a class="sourceLine" id="cb14-76" title="76">        event &lt;-<span class="st"> </span>input<span class="op">$</span>myMap_arc_click</a>
-<a class="sourceLine" id="cb14-77" title="77">        output<span class="op">$</span>observed_click &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/renderText">renderText</a></span>({</a>
-<a class="sourceLine" id="cb14-78" title="78">            jsonlite<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonlite/topics/prettify">prettify</a></span>( event )</a>
-<a class="sourceLine" id="cb14-79" title="79">        })</a>
-<a class="sourceLine" id="cb14-80" title="80">    })</a>
-<a class="sourceLine" id="cb14-81" title="81">}</a>
-<a class="sourceLine" id="cb14-82" title="82"></a>
-<a class="sourceLine" id="cb14-83" title="83"><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/shinyApp">shinyApp</a></span>(ui, server)</a></code></pre></div>
+<a class="sourceLine" id="cb14-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(jsonify)</a>
+<a class="sourceLine" id="cb14-4" title="4"></a>
+<a class="sourceLine" id="cb14-5" title="5">ui &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardPage">dashboardPage</a></span>(</a>
+<a class="sourceLine" id="cb14-6" title="6">    <span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardHeader">dashboardHeader</a></span>()</a>
+<a class="sourceLine" id="cb14-7" title="7">    , <span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardSidebar">dashboardSidebar</a></span>()</a>
+<a class="sourceLine" id="cb14-8" title="8">    , <span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardBody">dashboardBody</a></span>(</a>
+<a class="sourceLine" id="cb14-9" title="9">        <span class="kw"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(</a>
+<a class="sourceLine" id="cb14-10" title="10">            <span class="dt">outputId =</span> <span class="st">'myMap'</span></a>
+<a class="sourceLine" id="cb14-11" title="11">            ),</a>
+<a class="sourceLine" id="cb14-12" title="12">        <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/sliderInput">sliderInput</a></span>(</a>
+<a class="sourceLine" id="cb14-13" title="13">            <span class="dt">inputId =</span> <span class="st">"longitudes"</span></a>
+<a class="sourceLine" id="cb14-14" title="14">            , <span class="dt">label =</span> <span class="st">"Longitudes"</span></a>
+<a class="sourceLine" id="cb14-15" title="15">            , <span class="dt">min =</span> <span class="dv">-180</span></a>
+<a class="sourceLine" id="cb14-16" title="16">            , <span class="dt">max =</span> <span class="dv">180</span></a>
+<a class="sourceLine" id="cb14-17" title="17">            , <span class="dt">value =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">180</span>,<span class="op">-</span><span class="dv">90</span>)</a>
+<a class="sourceLine" id="cb14-18" title="18">        )</a>
+<a class="sourceLine" id="cb14-19" title="19">        , <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/verbatimTextOutput">verbatimTextOutput</a></span>(</a>
+<a class="sourceLine" id="cb14-20" title="20">            <span class="dt">outputId =</span> <span class="st">"observed_click"</span></a>
+<a class="sourceLine" id="cb14-21" title="21">        )</a>
+<a class="sourceLine" id="cb14-22" title="22">    )</a>
+<a class="sourceLine" id="cb14-23" title="23">)</a>
+<a class="sourceLine" id="cb14-24" title="24">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</a>
+<a class="sourceLine" id="cb14-25" title="25">    </a>
+<a class="sourceLine" id="cb14-26" title="26">    <span class="co">#set_token('abc') ## set your access token</span></a>
+<a class="sourceLine" id="cb14-27" title="27">    </a>
+<a class="sourceLine" id="cb14-28" title="28">    origin &lt;-<span class="st"> </span>capitals[capitals<span class="op">$</span>country <span class="op">==</span><span class="st"> "Australia"</span>, ]</a>
+<a class="sourceLine" id="cb14-29" title="29">    destination &lt;-<span class="st"> </span>capitals[capitals<span class="op">$</span>country <span class="op">!=</span><span class="st"> "Australia"</span>, ]</a>
+<a class="sourceLine" id="cb14-30" title="30">    origin<span class="op">$</span>key &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb14-31" title="31">    destination<span class="op">$</span>key &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb14-32" title="32">    </a>
+<a class="sourceLine" id="cb14-33" title="33">    df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/merge">merge</a></span>(origin, destination, <span class="dt">by =</span> <span class="st">'key'</span>, <span class="dt">all =</span> T)</a>
+<a class="sourceLine" id="cb14-34" title="34">    </a>
+<a class="sourceLine" id="cb14-35" title="35">    output<span class="op">$</span>myMap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mapdeck-shiny.html">renderMapdeck</a></span>({</a>
+<a class="sourceLine" id="cb14-36" title="36">        <span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) </a>
+<a class="sourceLine" id="cb14-37" title="37">    })</a>
+<a class="sourceLine" id="cb14-38" title="38">    </a>
+<a class="sourceLine" id="cb14-39" title="39">    <span class="co">## plot points &amp; lines according to the selected longitudes</span></a>
+<a class="sourceLine" id="cb14-40" title="40">    df_reactive &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/reactive">reactive</a></span>({</a>
+<a class="sourceLine" id="cb14-41" title="41">        <span class="cf">if</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NULL">is.null</a></span>(input<span class="op">$</span>longitudes)) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(<span class="ot">NULL</span>)</a>
+<a class="sourceLine" id="cb14-42" title="42">        lons &lt;-<span class="st"> </span>input<span class="op">$</span>longitudes</a>
+<a class="sourceLine" id="cb14-43" title="43">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(</a>
+<a class="sourceLine" id="cb14-44" title="44">            df[df<span class="op">$</span>lon.y <span class="op">&gt;=</span><span class="st"> </span>lons[<span class="dv">1</span>] <span class="op">&amp;</span><span class="st"> </span>df<span class="op">$</span>lon.y <span class="op">&lt;=</span><span class="st"> </span>lons[<span class="dv">2</span>], ]</a>
+<a class="sourceLine" id="cb14-45" title="45">        )</a>
+<a class="sourceLine" id="cb14-46" title="46">    })</a>
+<a class="sourceLine" id="cb14-47" title="47">    </a>
+<a class="sourceLine" id="cb14-48" title="48">    <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/observeEvent">observeEvent</a></span>({input<span class="op">$</span>longitudes}, {</a>
+<a class="sourceLine" id="cb14-49" title="49">        <span class="cf">if</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NULL">is.null</a></span>(input<span class="op">$</span>longitudes)) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>()</a>
+<a class="sourceLine" id="cb14-50" title="50">        </a>
+<a class="sourceLine" id="cb14-51" title="51">        <span class="kw"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="dt">map_id =</span> <span class="st">'myMap'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-52" title="52"><span class="st">            </span><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</a>
+<a class="sourceLine" id="cb14-53" title="53">                <span class="dt">data =</span> <span class="kw">df_reactive</span>()</a>
+<a class="sourceLine" id="cb14-54" title="54">                , <span class="dt">lon =</span> <span class="st">"lon.y"</span></a>
+<a class="sourceLine" id="cb14-55" title="55">                , <span class="dt">lat =</span> <span class="st">"lat.y"</span></a>
+<a class="sourceLine" id="cb14-56" title="56">                , <span class="dt">fill_colour =</span> <span class="st">"country.y"</span></a>
+<a class="sourceLine" id="cb14-57" title="57">                , <span class="dt">radius =</span> <span class="dv">100000</span></a>
+<a class="sourceLine" id="cb14-58" title="58">                , <span class="dt">layer_id =</span> <span class="st">"myScatterLayer"</span></a>
+<a class="sourceLine" id="cb14-59" title="59">                , <span class="dt">update_view =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb14-60" title="60">            ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-61" title="61"><span class="st">            </span><span class="kw"><a href="../reference/add_arc.html">add_arc</a></span>(</a>
+<a class="sourceLine" id="cb14-62" title="62">                <span class="dt">data =</span> <span class="kw">df_reactive</span>()</a>
+<a class="sourceLine" id="cb14-63" title="63">                , <span class="dt">origin =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon.x"</span>, <span class="st">"lat.x"</span>)</a>
+<a class="sourceLine" id="cb14-64" title="64">                , <span class="dt">destination =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon.y"</span>, <span class="st">"lat.y"</span>)</a>
+<a class="sourceLine" id="cb14-65" title="65">                , <span class="dt">stroke_from =</span> <span class="st">"country.x"</span></a>
+<a class="sourceLine" id="cb14-66" title="66">                , <span class="dt">stroke_to =</span> <span class="st">"country.y"</span></a>
+<a class="sourceLine" id="cb14-67" title="67">                , <span class="dt">layer_id =</span> <span class="st">"myArcLayer"</span></a>
+<a class="sourceLine" id="cb14-68" title="68">                , <span class="dt">id =</span> <span class="st">"country.x"</span></a>
+<a class="sourceLine" id="cb14-69" title="69">                , <span class="dt">stroke_width =</span> <span class="dv">4</span></a>
+<a class="sourceLine" id="cb14-70" title="70">                , <span class="dt">update_view =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb14-71" title="71">            )</a>
+<a class="sourceLine" id="cb14-72" title="72">    })</a>
+<a class="sourceLine" id="cb14-73" title="73">    </a>
+<a class="sourceLine" id="cb14-74" title="74">    <span class="co">## observe clicking on a line and return the text</span></a>
+<a class="sourceLine" id="cb14-75" title="75">    <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/observeEvent">observeEvent</a></span>(input<span class="op">$</span>myMap_arc_click, {</a>
+<a class="sourceLine" id="cb14-76" title="76">        </a>
+<a class="sourceLine" id="cb14-77" title="77">        event &lt;-<span class="st"> </span>input<span class="op">$</span>myMap_arc_click</a>
+<a class="sourceLine" id="cb14-78" title="78">        output<span class="op">$</span>observed_click &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/renderText">renderText</a></span>({</a>
+<a class="sourceLine" id="cb14-79" title="79">            jsonify<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonify/topics/pretty_json">pretty_json</a></span>( event )</a>
+<a class="sourceLine" id="cb14-80" title="80">        })</a>
+<a class="sourceLine" id="cb14-81" title="81">    })</a>
+<a class="sourceLine" id="cb14-82" title="82">}</a>
+<a class="sourceLine" id="cb14-83" title="83"></a>
+<a class="sourceLine" id="cb14-84" title="84"><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/shinyApp">shinyApp</a></span>(ui, server)</a></code></pre></div>
 <div class="figure">
 <img src="img/articles/shiny.gif" alt="Shiny"><p class="caption">Shiny</p>
 </div>

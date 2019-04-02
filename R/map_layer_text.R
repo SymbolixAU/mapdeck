@@ -22,6 +22,13 @@ mapdeckTextDependency <- function() {
 #' 'start', 'middle' or 'end'
 #' @param alignment_baseline column of \code{data} containing the alignment. One of
 #' 'top', 'center' or 'bottom'
+#' @param billboard logical indicating if the text always faces the camera (TRUE) or
+#' if it always faces up (FALSE)
+#' @param font_family specifies a prioritised list of one or more font family names and/or
+#' generic family names. Follow the specifics for CSS font-family
+#' \url{https://developer.mozilla.org/en-US/docs/Web/CSS/font-family}
+#' @param font_weight specifies the font weight. Follow the specifics for CSS font-weight
+#' \url{https://htmldog.com/references/css/properties/font-weight/}
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #'
 #' @inheritSection add_arc legend
@@ -50,9 +57,9 @@ mapdeckTextDependency <- function() {
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
 #' mapdeck(
-#'   token = key,
 #'   style = mapdeck_style('dark')
 #' ) %>%
 #'   add_text(
@@ -83,6 +90,9 @@ add_text <- function(
 	angle = NULL,
 	anchor = NULL,
 	alignment_baseline = NULL,
+	billboard = TRUE,
+	font_family = 'Monaco, monospace',
+	font_weight = "normal",
 	tooltip = NULL,
 	layer_id = NULL,
 	id = NULL,
@@ -160,7 +170,8 @@ add_text <- function(
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
-		shape[["legend"]], bbox, update_view, focus_layer, js_transitions
+		shape[["legend"]], bbox, update_view, focus_layer, js_transitions, billboard,
+		font_family, font_weight
 		)
 }
 
