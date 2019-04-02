@@ -303,8 +303,8 @@ mapdeck(
 
 The three main functions to use are
 
-1. `render_mapdeck()` in the **Server**
-2. `mapdeck_output()` in the **UI**
+1. `renderMapdeck()` in the **Server**
+2. `mapdeckOutput()` in the **UI**
 3. `mapdeck_update()` to update an existing map
 
 You can observe interactions with the layers by using `observeEvent()`. The event you observe is formed by combining
@@ -322,7 +322,8 @@ There's an example of this in the shiny.
 ```{r}
 library(shiny)
 library(shinydashboard)
-library(jsonlite)
+library(jsonify)
+
 ui <- dashboardPage(
 	dashboardHeader()
 	, dashboardSidebar()
@@ -397,7 +398,7 @@ server <- function(input, output) {
 		
 		event <- input$myMap_arc_click
 		output$observed_click <- renderText({
-			jsonlite::prettify( event )
+			jsonify::pretty_json( event )
 		})
 	})
 }

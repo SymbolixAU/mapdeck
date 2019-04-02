@@ -64,7 +64,7 @@ only POLYGONs are supported, MULTIPOLYGONs are ignored." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1002</span>
       </span>
     </div>
 
@@ -173,13 +173,13 @@ Web Mercator Projection</p></td>
     </tr>
     <tr>
       <th>stroke_width</th>
-      <td><p>width of the stroke in meters. If used, <code>elevation</code> is ignored.</p></td>
+      <td><p>width of the stroke in meters. If used, <code>elevation</code> is ignored. Default 1.</p></td>
     </tr>
     <tr>
       <th>stroke_opacity</th>
-      <td><p>value between 0 and 255. Either a string specifying the
-column of <code>data</code> containing the stroke opacity of each shape, or a single value
-to be applied to all the shapes</p></td>
+      <td><p>Either a string specifying the column of <code>data</code>
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255.</p></td>
     </tr>
     <tr>
       <th>fill_colour</th>
@@ -187,14 +187,14 @@ to be applied to all the shapes</p></td>
     </tr>
     <tr>
       <th>fill_opacity</th>
-      <td><p>value between 0 and 255. Either a string specifying the
-column of <code>data</code> containing the fill opacity of each shape, or a single value
-to be applied to all the shapes</p></td>
+      <td><p>Either a string specifying the column of <code>data</code>
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255.</p></td>
     </tr>
     <tr>
       <th>elevation</th>
       <td><p>the height the polygon extrudes from the map. Only available if neither
-<code>stroke_colour</code> or <code>stroke_width</code> are supplied.</p></td>
+<code>stroke_colour</code> or <code>stroke_width</code> are supplied. Default 0</p></td>
     </tr>
     <tr>
       <th>tooltip</th>
@@ -225,8 +225,10 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>palette</th>
       <td><p>string or matrix. String will be one of <code><a href='https://www.rdocumentation.org/packages/colourvalues/topics/colour_palettes'>colourvalues::colour_palettes()</a></code>.
-A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
-where the 4th column represents the alpha.</p></td>
+A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255],
+where the 4th column represents the alpha. You can use a named list to specify a different
+palette for different colour options (where available),
+ e.g. list(fill_colour = "viridis", stroke_colour = "inferno")</p></td>
     </tr>
     <tr>
       <th>na_colour</th>
@@ -319,6 +321,7 @@ you are clicking on</p>
     <pre class="examples"><div class='input'>
 <span class='co'>## You need a valid access token from Mapbox</span>
 <span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='st'>'abc'</span>
+<span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='no'>key</span> )
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sf</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>geojsonsf</span>)
@@ -326,8 +329,7 @@ you are clicking on</p>
 <span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/geojsonsf/topics/geojson_sf'>geojson_sf</a></span>(<span class='st'>"https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json"</span>)
 
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
-  <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>
-  , <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>)
+  <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>)
 ) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_polygon</span>(
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sf</span>
@@ -340,8 +342,7 @@ you are clicking on</p>
 <span class='no'>df</span>$<span class='no'>info</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"&lt;b&gt;SA2 - &lt;/b&gt;&lt;br&gt;"</span>,<span class='no'>df</span>$<span class='no'>SA2_NAME</span>)
 
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
-  <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>
-  , <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>)
+  <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>)
   , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>38</span>)
   , <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>8</span>
   ) <span class='kw'>%&gt;%</span>
@@ -351,11 +352,9 @@ you are clicking on</p>
     , <span class='kw'>layer</span> <span class='kw'>=</span> <span class='st'>"polygon_layer"</span>
     , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"SA2_NAME"</span>
     , <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='st'>"elevation"</span>
-    , <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='fl'>200</span>
     , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>'info'</span>
     , <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>T</span>
-  )</div><div class='output co'>#&gt; <span class='message'>stroke provided, ignoring elevation</span></div><div class='input'>
-</div><div class='input'>
+  )</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
