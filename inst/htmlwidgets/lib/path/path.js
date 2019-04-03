@@ -3,6 +3,8 @@
 function add_path_geo( map_id, path_data, layer_id, auto_highlight, highlight_colour,
 legend, bbox, update_view, focus_layer, js_transition ) {
 
+  console.log( "add_path" );
+
   const pathLayer = new PathLayer({
     map_id: map_id,
     id: 'path-'+layer_id,
