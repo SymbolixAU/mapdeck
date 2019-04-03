@@ -4,19 +4,10 @@
 \alias{mapdeck_legend}
 \title{Mapdeck Legend}
 \usage{
-mapdeck_legend(colours, variables, colour_type = c("fill", "stroke"),
-  variable_type = c("category", "gradient"), title = "", css = "")
+mapdeck_legend(legend_elements)
 }
 \arguments{
-\item{colours}{vector of hex colours}
-
-\item{colour_type}{one of "fill" or "stroke"}
-
-\item{variable_type}{one of category (discrete) or gradient (continuous)}
-
-\item{title}{string used as the legend title}
-
-\item{css}{}
+\item{legend_elements}{vector of legend elements (made from \link{legend_element})}
 }
 \description{
 Mapdeck Legend
