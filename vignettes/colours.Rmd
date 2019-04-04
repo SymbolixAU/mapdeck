@@ -161,6 +161,9 @@ mapdeck( ) %>%
 ![fill manual](./img/articles/fill_my_colour.png)
 
 
+Setting `legend = TRUE` in this example will just show the legend with the hex-strings, which probably isn't what you're after. In this case you can also create a manual legend, which I've described over on the [legends article](https://symbolixau.github.io/mapdeck/articles/legends.html#manual-legends)
+
+
 ## colour_range
 
 Some layers use a `colour_range` argument instead of fill and stroke. For these layers you need to use a vector of 6 hex strings. These also default to the viridis palette.
