@@ -64,7 +64,7 @@ of source and target points, specified as longitude/latitude coordinates." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1003</span>
       </span>
     </div>
 
@@ -323,8 +323,8 @@ you are clicking on</p>
   , <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
     <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>( <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Origin airport"</span> ),
     <span class='kw'>css</span> <span class='kw'>=</span> <span class='st'>"max-height: 100px;"</span>)
- )</div><div class='output co'>#&gt; is_factor: 0
-#&gt; is_factor: 0</div><div class='input'>
+ )
+
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_greatcircle</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>flights</span>
@@ -334,8 +334,8 @@ you are clicking on</p>
   , <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='st'>"airport1"</span>
   , <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='st'>"airport2"</span>
   , <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='st'>"stroke"</span>
-  )</div><div class='output co'>#&gt; is_factor: 0
-#&gt; is_factor: 0</div><div class='input'>
+  )
+
 <span class='co'>## Using a 2-sfc-column sf object</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sf</span>)
 
@@ -352,8 +352,7 @@ you are clicking on</p>
    , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>'greatcircles'</span>
    , <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='st'>"airport1"</span>
    , <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='st'>"airport2"</span>
-)</div><div class='output co'>#&gt; is_factor: 0
-#&gt; is_factor: 0</div><div class='input'>
+)</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

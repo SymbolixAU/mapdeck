@@ -1,5 +1,6 @@
 # mapdeck 0.3
 
+* `mapdeck_legend` and `legend_element` for manually creating legends
 * `add_column()` to draw columns (as any polygon shape)
 * `add_text()` gets `billbaord`, `font_family`, `font_weight`
 * `add_greatcircles()` to draw flat great circles

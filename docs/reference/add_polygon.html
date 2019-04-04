@@ -64,7 +64,7 @@ only POLYGONs are supported, MULTIPOLYGONs are ignored." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1003</span>
       </span>
     </div>
 
@@ -335,7 +335,8 @@ you are clicking on</p>
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sf</span>
     , <span class='kw'>layer</span> <span class='kw'>=</span> <span class='st'>"polygon_layer"</span>
     , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"SA2_NAME16"</span>
-)</div><div class='output co'>#&gt; is_factor: 0</div><div class='input'>
+)
+
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>melbourne</span>  <span class='co'>## data.frame with encoded polylnies</span>
 <span class='no'>df</span>$<span class='no'>elevation</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>100</span>:<span class='fl'>5000</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>df</span>))
 <span class='no'>df</span>$<span class='no'>info</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"&lt;b&gt;SA2 - &lt;/b&gt;&lt;br&gt;"</span>,<span class='no'>df</span>$<span class='no'>SA2_NAME</span>)
@@ -353,8 +354,7 @@ you are clicking on</p>
     , <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='st'>"elevation"</span>
     , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>'info'</span>
     , <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>T</span>
-  )</div><div class='output co'>#&gt; is_factor: 0</div><div class='input'>
-</div><div class='input'>
+  )</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

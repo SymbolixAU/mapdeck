@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1003</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@
       <h1>Legends</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-04-03</h4>
+            <h4 class="date">2019-04-05</h4>
       
       
       <div class="hidden name"><code>legends.Rmd</code></div>
@@ -244,6 +244,31 @@
 <p>Note, also, the final <code><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character()</a></code> call in the formatting function. This is because the legend is converted to JSON using <code><a href="https://www.rdocumentation.org/packages/jsonify/topics/to_json">jsonify::to_json()</a></code>, which uses the same C++ code as mapdeck (in fact, it IS the c++ code mapdeck uses). So if the legend contains a POSIXct object after formatting, it will again be converted to UTC.</p>
 </div>
 </div>
+<div id="manual-legends" class="section level2">
+<h2 class="hasAnchor">
+<a href="#manual-legends" class="anchor"></a>Manual Legends</h2>
+<p>If you want to create your own legend you can do so using <code><a href="../reference/mapdeck_legend.html">mapdeck_legend()</a></code>, which accepts <code>legend_elements</code> as its argument, creates the required JSON, which you can then use in the <code>legend</code> argument of any of the layers</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">sf &lt;-<span class="st"> </span>spatialwidget<span class="op">::</span>widget_melbourne</a>
+<a class="sourceLine" id="cb7-2" title="2">sf<span class="op">$</span>my_colour &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(sf<span class="op">$</span>SA2_NAME, <span class="dv">1</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> "A"</span>, <span class="st">"#00FF00FF"</span>, <span class="st">"#FF0000FF"</span>)</a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4">l1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/legend_element.html">legend_element</a></span>(</a>
+<a class="sourceLine" id="cb7-5" title="5">    <span class="dt">variables =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Begins with A"</span>, <span class="st">"Doesn't begin with A"</span>)</a>
+<a class="sourceLine" id="cb7-6" title="6">    , <span class="dt">colours =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"#00FF00FF"</span>, <span class="st">"#FF0000FF"</span>)</a>
+<a class="sourceLine" id="cb7-7" title="7">    , <span class="dt">colour_type =</span> <span class="st">"fill"</span></a>
+<a class="sourceLine" id="cb7-8" title="8">    , <span class="dt">variable_type =</span> <span class="st">"category"</span></a>
+<a class="sourceLine" id="cb7-9" title="9">)</a>
+<a class="sourceLine" id="cb7-10" title="10">js &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mapdeck_legend.html">mapdeck_legend</a></span>(l1)</a>
+<a class="sourceLine" id="cb7-11" title="11"></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="st">    </span><span class="kw"><a href="../reference/add_polygon.html">add_polygon</a></span>(</a>
+<a class="sourceLine" id="cb7-14" title="14">        <span class="dt">data =</span> sf</a>
+<a class="sourceLine" id="cb7-15" title="15">        , <span class="dt">fill_colour =</span> <span class="st">"my_colour"</span></a>
+<a class="sourceLine" id="cb7-16" title="16">        , <span class="dt">legend =</span> js</a>
+<a class="sourceLine" id="cb7-17" title="17">    )</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/manual_legend.png" alt="manual legend"><p class="caption">manual legend</p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -253,6 +278,7 @@
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#basic">Basic</a></li>
       <li><a href="#formatting">Formatting</a></li>
+      <li><a href="#manual-legends">Manual Legends</a></li>
       </ul>
 </div>
       </div>

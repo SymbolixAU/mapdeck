@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add sf — add_sf • mapdeck</title>
+<title>Legend Element — legend_element • mapdeck</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Add sf — add_sf" />
+<meta property="og:title" content="Legend Element — legend_element" />
 
-<meta property="og:description" content="Adds an sf object to the map." />
+<meta property="og:description" content="Creates a mapdeck legend element for when you want to manually specify a legend (using mapdeck_legend)" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,56 +127,73 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add sf</h1>
+    <h1>Legend Element</h1>
     
-    <div class="hidden name"><code>add_sf.Rd</code></div>
+    <div class="hidden name"><code>legend_element.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Adds an sf object to the map.</p>
+    <p>Creates a mapdeck legend element for when you want to manually specify a legend (using <a href='mapdeck_legend.html'>mapdeck_legend</a>)</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>add_sf</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>legend_element</span>(<span class='no'>variables</span>, <span class='no'>colours</span>, <span class='kw'>colour_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fill"</span>, <span class='st'>"stroke"</span>),
+  <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"category"</span>, <span class='st'>"gradient"</span>), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>css</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>map</th>
-      <td><p>a mapdeck map object</p></td>
+      <th>variables</th>
+      <td><p>variables assigned to colours</p></td>
     </tr>
     <tr>
-      <th>data</th>
-      <td><p>data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection</p></td>
+      <th>colours</th>
+      <td><p>vector of hex colours assigned to variables</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>other argumetns passed to one of the plotting layers. See details</p></td>
+      <th>colour_type</th>
+      <td><p>one of "fill" or "stroke"</p></td>
+    </tr>
+    <tr>
+      <th>variable_type</th>
+      <td><p>one of category (discrete) or gradient (continuous)</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>string used as the legend title</p></td>
+    </tr>
+    <tr>
+      <th>css</th>
+      <td><p>string of css to control appearance.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>The plotting layer is determined by the type of sf geometries.</p>
-<ul>
-<li><p>POINT and MULTIPOINT objects will call <a href='add_scatterplot.html'>add_scatterplot</a></p></li>
-<li><p>LINESTRING and MULTILINESTRING objects will call <a href='add_path.html'>add_path</a></p></li>
-<li><p>POLYGON and MULTIPOLYGON objects will call <a href='add_polygon.html'>add_polygon</a></p></li>
-<li><p>GEOMETRY objects will call <a href='add_geojson.html'>add_geojson</a></p></li>
-</ul>
+    <div class='dont-index'><p><a href='mapdeck_legend.html'>mapdeck_legend</a></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='no'>l1</span> <span class='kw'>&lt;-</span> <span class='fu'>legend_element</span>(
+        <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>,<span class='st'>"b"</span>)
+        , <span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"#00FF00"</span>,<span class='st'>"#FF0000"</span>)
+        , <span class='kw'>colour_type</span> <span class='kw'>=</span> <span class='st'>"fill"</span>
+        , <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"category"</span>
+        , <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"my title"</span>
+)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#details">Details</a></li>
-          </ul>
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
