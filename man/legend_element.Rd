@@ -21,5 +21,19 @@ legend_element(variables, colours, colour_type = c("fill", "stroke"),
 \item{css}{string of css to control appearance.}
 }
 \description{
-Creates a mapdeck legend element for when you want to manually specify a legend
+Creates a mapdeck legend element for when you want to manually specify a legend (using \link{mapdeck_legend})
+}
+\examples{
+
+l1 <- legend_element(
+	variables = c("a","b")
+	, colours = c("#00FF00","#FF0000")
+	, colour_type = "fill"
+	, variable_type = "category"
+	, title = "my title"
+)
+
+}
+\seealso{
+\link{mapdeck_legend}
 }

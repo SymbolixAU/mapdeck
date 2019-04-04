@@ -10,5 +10,20 @@ mapdeck_legend(legend_elements)
 \item{legend_elements}{vector of legend elements (made from \link{legend_element})}
 }
 \description{
-Mapdeck Legend
+Constructs legend elements into the correct JSON format for plotting on the map
+}
+\examples{
+l1 <- legend_element(
+	variables = c("a","b")
+	, colours = c("#00FF00","#FF0000")
+	, colour_type = "fill"
+	, variable_type = "category"
+	, title = "my title"
+)
+
+mapdeck_legend(l1)
+
+}
+\seealso{
+\link{legend_element}
 }

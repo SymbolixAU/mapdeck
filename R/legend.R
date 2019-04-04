@@ -15,22 +15,37 @@ clear_legend <- function( map_id, layer_id ) {
 
 #' Mapdeck Legend
 #'
+#' Constructs legend elements into the correct JSON format for plotting on the map
+#'
 #' @param legend_elements vector of legend elements (made from \link{legend_element})
+#'
+#' @examples
+#' l1 <- legend_element(
+#' 	variables = c("a","b")
+#' 	, colours = c("#00FF00","#FF0000")
+#' 	, colour_type = "fill"
+#' 	, variable_type = "category"
+#' 	, title = "my title"
+#' )
+#'
+#' mapdeck_legend(l1)
+#'
+#' @seealso \link{legend_element}
 #'
 #' @export
 mapdeck_legend <- function(legend_elements) UseMethod("mapdeck_legend")
 
 #' @export
-mapdeck_legend <- function( legend_elements ) jsonify::to_json(legend_elements)
+mapdeck_legend.mapdeck_legend <- function( legend_elements ) jsonify::to_json(legend_elements)
 
 #' @export
 mapdeck_legend.default <- function( legend_elements ) {
-	stop("mapdeck_legend() will only work on objects created with legend_element()")
+	stop("mapdeck_legend will only work on objects created with legend_element")
 }
 
 #' Legend Element
 #'
-#' Creates a mapdeck legend element for when you want to manually specify a legend
+#' Creates a mapdeck legend element for when you want to manually specify a legend (using \link{mapdeck_legend})
 #'
 #' @param variables variables assigned to colours
 #' @param colours vector of hex colours assigned to variables
@@ -38,6 +53,18 @@ mapdeck_legend.default <- function( legend_elements ) {
 #' @param variable_type one of category (discrete) or gradient (continuous)
 #' @param title string used as the legend title
 #' @param css string of css to control appearance.
+#'
+#' @seealso \link{mapdeck_legend}
+#'
+#' @examples
+#'
+#' l1 <- legend_element(
+#' 	variables = c("a","b")
+#' 	, colours = c("#00FF00","#FF0000")
+#' 	, colour_type = "fill"
+#' 	, variable_type = "category"
+#' 	, title = "my title"
+#' )
 #'
 #' @export
 legend_element <- function(
