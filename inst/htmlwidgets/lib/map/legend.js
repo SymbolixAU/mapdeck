@@ -43,7 +43,7 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
         while ( window[map_id + 'legend' + layer_id + legendValues.colourType].hasChildNodes() ) {
             window[map_id + 'legend' + layer_id + legendValues.colourType].removeChild(
             	window[map_id + 'legend' + layer_id + legendValues.colourType].lastChild
-            	);
+            );
         }
     }
 
@@ -67,7 +67,7 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
     }
 
     for (i = 0; i < legendValues.colour.length; i++) {
-        jsColours.push( legendValues.colour[i] );
+      jsColours.push( legendValues.colour[i] );
     }
 
     colours = '(' + jsColours.join() + ')';
@@ -176,6 +176,8 @@ function add_legend_category(map_id, layer_id, legendValues) {
     if (legendValues.css !== null) {
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('style', legendValues.css);
     }
+
+    console.log( legendValues );
 
     for (i = 0; i < legendValues.colour.length; i++) {
 
