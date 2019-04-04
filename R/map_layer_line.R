@@ -168,7 +168,11 @@ add_line <- function(
 	# }
 
 	js_transitions <- resolve_transitions( transitions, "line" )
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
 		map, "add_line_geo", shape[["data"]], layer_id, auto_highlight,

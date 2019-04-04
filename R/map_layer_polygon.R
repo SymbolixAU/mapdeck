@@ -199,9 +199,11 @@ add_polygon <- function(
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 	js_transitions <- resolve_transitions( transitions, "polygon" )
 
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
-
-	#print( shape )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings,

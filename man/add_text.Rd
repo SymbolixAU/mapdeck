@@ -12,8 +12,8 @@ add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
   tooltip = NULL, layer_id = NULL, id = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL)
+  legend_options = NULL, legend_format = NULL, update_view = TRUE,
+  focus_layer = FALSE, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -79,6 +79,8 @@ palette for different colour options (where available),
 a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
+
+\item{legend_format}{A list containing functions to apply to legend values. See section legend}
 
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 

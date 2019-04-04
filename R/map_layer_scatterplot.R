@@ -196,7 +196,11 @@ add_scatterplot <- function(
 	}
 
 	js_transitions <- resolve_transitions( transitions, "scatterplot" )
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,

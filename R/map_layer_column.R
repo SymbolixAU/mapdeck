@@ -153,6 +153,11 @@ add_column <- function(
 	}
 
 	js_transitions <- resolve_transitions( transitions, "column" )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,

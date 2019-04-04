@@ -102,6 +102,7 @@ add_text <- function(
 	na_colour = "#808080FF",
 	legend = FALSE,
 	legend_options = NULL,
+	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL
@@ -167,6 +168,11 @@ add_text <- function(
 	}
 
 	js_transitions <- resolve_transitions( transitions, "text" )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
