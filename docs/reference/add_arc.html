@@ -186,7 +186,8 @@ to conflict and not plot correctly</p></td>
       <th>stroke_from_opacity</th>
       <td><p>Either a string specifying the
 column of <code>data</code> containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes</p></td>
+between 1 and 255 to be applied to all the shapes. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string</p></td>
     </tr>
     <tr>
       <th>stroke_to</th>
@@ -196,7 +197,8 @@ between 1 and 255 to be applied to all the shapes</p></td>
       <th>stroke_to_opacity</th>
       <td><p>Either a string specifying the
 column of <code>data</code> containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes</p></td>
+between 1 and 255 to be applied to all the shapes. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string</p></td>
     </tr>
     <tr>
       <th>stroke_width</th>
@@ -353,8 +355,8 @@ stroke_width = 0
   , <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
     <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>( <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Origin airport"</span> ),
     <span class='kw'>css</span> <span class='kw'>=</span> <span class='st'>"max-height: 100px;"</span>)
- )
-
+ )</div><div class='output co'>#&gt; is_factor: 0
+#&gt; is_factor: 0</div><div class='input'>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_arc</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>flights</span>
@@ -364,8 +366,8 @@ stroke_width = 0
   , <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='st'>"airport1"</span>
   , <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='st'>"airport2"</span>
   , <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='st'>"stroke"</span>
-  )
-
+  )</div><div class='output co'>#&gt; is_factor: 0
+#&gt; is_factor: 0</div><div class='input'>
 <span class='co'>## Using a 2-sfc-column sf object</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sf</span>)</div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3</span></div><div class='input'>
 <span class='no'>sf_flights</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>cbind</a></span>(
@@ -383,8 +385,8 @@ stroke_width = 0
    , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>'arcs'</span>
    , <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='st'>"airport1"</span>
    , <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='st'>"airport2"</span>
-)
-
+)</div><div class='output co'>#&gt; is_factor: 0
+#&gt; is_factor: 0</div><div class='input'>
 <span class='co'>## using a brush</span>
 
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
@@ -400,7 +402,11 @@ stroke_width = 0
    , <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='st'>"airport2"</span>
    , <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='fl'>4</span>
    , <span class='kw'>brush_radius</span> <span class='kw'>=</span> <span class='fl'>500000</span>
-)</div><div class='input'>
+)</div><div class='output co'>#&gt; is_factor: 0
+#&gt; is_factor: 0</div><div class='input'>
+
+
+</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

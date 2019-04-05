@@ -25,10 +25,6 @@ mapdeckPolygonDependency <- function() {
 #' colour, this argument is ignored and you should include the alpha on the hex string
 #' @param stroke_colour variable of \code{data} or hex colour for the stroke. If used,
 #' \code{elevation} is ignored.
-#' @param stroke_opacity Either a string specifying the column of \code{data}
-#' containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-#' to be applied to all the shapes. Default 255. If a hex-string is used as the
-#' colour, this argument is ignored and you should include the alpha on the hex string
 #' @param stroke_width width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param elevation the height the polygon extrudes from the map. Only available if neither
@@ -116,7 +112,7 @@ add_polygon <- function(
 	polyline = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
-	stroke_opacity = NULL,
+	#stroke_opacity = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	elevation = NULL,
@@ -140,7 +136,7 @@ add_polygon <- function(
 	l[["polyline"]] <- force( polyline )
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_width"]] <- force( stroke_width )
-	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
+	#l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
 	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["elevation"]] <- force( elevation )
@@ -206,6 +202,9 @@ add_polygon <- function(
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
+
+	# lst <- jsonlite::fromJSON( shape[["data"]] )
+	# print( lst$properties )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings,

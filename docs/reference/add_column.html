@@ -141,13 +141,14 @@ a tesselated regular polygon centered at each given position (a "disk"), and ext
     </div>
 
     <pre class="usage"><span class='fu'>add_column</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>coverage</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>angle</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>disk_resolution</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>, <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>coverage</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>angle</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>disk_resolution</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>,
+  <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -265,6 +266,33 @@ detected. If the sf object contains more than one geometry column and you want t
 you'll need to set the active geometry using <code>sf::st_geometry( x ) &lt;- "your_column" </code>,
 where <code>"your_column"</code> is the name of the column you're activating. See <code><a href='https://www.rdocumentation.org/packages/sf/topics/st_geometry'>?sf::st_geometry</a></code></p>
     
+    <h2 class="hasAnchor" id="legend"><a class="anchor" href="#legend"></a>legend</h2>
+
+    
+    <p>The <code>legend_options</code> can be used to control the appearance of the legend.
+This should be a named list, where the names are one of</p><ul>
+<li><p>css - a string of valid <code>css</code> for controlling the appearance of the legend</p></li>
+<li><p>title - a string to use for the title of the legend</p></li>
+</ul>
+    <p>If the layer allows different fill and stroke colours, you can use different options for each. See examples in <a href='add_arc.html'>add_arc</a>.</p>
+<p>The <code>legend_format</code> can be used to control the format of the values in the legend.
+This should be a named list, where the names are one of</p><ul>
+<li><p>fill_colour</p></li>
+<li><p>stroke_colour</p></li>
+</ul>
+    <p>depending on which type of colouring the layer supports.</p>
+<p>The list elements must be functions to apply to the values in the legend.</p>
+    
+    <h2 class="hasAnchor" id="id"><a class="anchor" href="#id"></a>id</h2>
+
+    
+    <p>The <code>id</code> is returned to your R session from an interactive shiny environment
+by observing layer clicks. This is useful for returning the data.frame row relating to the
+cliked shape.</p>
+<p>From within a shiny server you would typically use <code> observeEvent({input$map_arc_click})</code>,
+where 'map' is the map_id supplied to <code><a href='mapdeck-shiny.html'>mapdeckOutput()</a></code>, and 'arc' is the layer
+you are clicking on</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
@@ -312,6 +340,10 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
       <li><a href="#details">Details</a></li>
 
       <li><a href="#data">data</a></li>
+
+      <li><a href="#legend">legend</a></li>
+
+      <li><a href="#id">id</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

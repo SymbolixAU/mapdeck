@@ -241,21 +241,64 @@
 <p>See how the colours are mirrored to reflect the data.</p>
 <p>The same ordering applies to characters, factors, dates, etc. In this example I’m colouring the letters “j” through to “a” (in the English alphabet). The colour assigned to “a” is the same as that applied to 1.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">colourvalues<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/colourvalues/topics/colour_values">colour_values</a></span>(letters[<span class="dv">10</span><span class="op">:</span><span class="dv">1</span>])</a></code></pre></div>
+<pre><code>## is_factor: 0</code></pre>
 <pre><code>##  [1] "#FDE725FF" "#B4DD2CFF" "#6CCE59FF" "#35B779FF" "#1F9D89FF"
 ##  [6] "#26838EFF" "#31688EFF" "#3E4A89FF" "#482878FF" "#440154FF"</code></pre>
+<div id="vectors-vs-scalar-opacity" class="section level3">
+<h3 class="hasAnchor">
+<a href="#vectors-vs-scalar-opacity" class="anchor"></a>Vectors vs scalar opacity</h3>
+<p>There is a difference in behaviour when you supply a vector for the opacity values compared to when you use a single value.</p>
+<p>See how these two lines produce different results</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">colourvalues<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/colourvalues/topics/colour_values">colour_values</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span>,<span class="dv">5</span>), <span class="dt">alpha =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">255</span>,<span class="dv">5</span>))</a></code></pre></div>
+<pre><code>## [1] "#44015400" "#44015400" "#44015400" "#44015400" "#44015400"</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">colourvalues<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/colourvalues/topics/colour_values">colour_values</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span>,<span class="dv">5</span>), <span class="dt">alpha =</span> <span class="dv">255</span>)</a></code></pre></div>
+<pre><code>## [1] "#440154FF" "#440154FF" "#440154FF" "#440154FF" "#440154FF"</code></pre>
+<p>This is because one uses a vector for the opacity, where all the values are 255, and the other is because a single value of 255 is used as the opacity.</p>
+<p>Lke with colours, when you supply a vector for the opacity, <code>colourvalues</code> treats each element relative to the other elements and maps the opacity accordingly.</p>
+<p>It does this by rescaling the values in the vector to be in [0,1] (source code is <a href="https://github.com/SymbolixAU/colourvalues/blob/master/inst/include/colourvalues/scale/scale.hpp#L37">here</a> if you want to look), then multiplies by 255.</p>
+<p>The [0,255] values are then the actual opacities.</p>
+<p>So in this example, since every value of the vector is the same, they all get scaled to zero, which is the most transparent opacity.</p>
+<p>Here are the result in action.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</a>
+<a class="sourceLine" id="cb28-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(spatialwidget)</a>
+<a class="sourceLine" id="cb28-3" title="3">sf &lt;-<span class="st"> </span>spatialwidget<span class="op">::</span>widget_melbourne</a>
+<a class="sourceLine" id="cb28-4" title="4">sf<span class="op">$</span>opacity &lt;-<span class="st"> </span><span class="dv">150</span></a>
+<a class="sourceLine" id="cb28-5" title="5"></a>
+<a class="sourceLine" id="cb28-6" title="6"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb28-7" title="7"><span class="st">  </span><span class="kw"><a href="../reference/add_polygon.html">add_polygon</a></span>(</a>
+<a class="sourceLine" id="cb28-8" title="8">    <span class="dt">data =</span> sf</a>
+<a class="sourceLine" id="cb28-9" title="9">    , <span class="dt">fill_colour =</span> <span class="st">"SA2_NAME"</span></a>
+<a class="sourceLine" id="cb28-10" title="10">    , <span class="dt">fill_opacity =</span> <span class="st">"opacity"</span></a>
+<a class="sourceLine" id="cb28-11" title="11">  )</a></code></pre></div>
+<p><img src="img/articles/opacity1.png"></p>
+<p>The polygons are completely tranparent. Now if I use a single value of 150, rather than a vector, we get the desired opacity.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(spatialwidget)</a>
+<a class="sourceLine" id="cb29-3" title="3">sf &lt;-<span class="st"> </span>spatialwidget<span class="op">::</span>widget_melbourne</a>
+<a class="sourceLine" id="cb29-4" title="4">sf<span class="op">$</span>opacity &lt;-<span class="st"> </span><span class="dv">150</span></a>
+<a class="sourceLine" id="cb29-5" title="5"></a>
+<a class="sourceLine" id="cb29-6" title="6"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb29-7" title="7"><span class="st">  </span><span class="kw"><a href="../reference/add_polygon.html">add_polygon</a></span>(</a>
+<a class="sourceLine" id="cb29-8" title="8">    <span class="dt">data =</span> sf</a>
+<a class="sourceLine" id="cb29-9" title="9">    , <span class="dt">fill_colour =</span> <span class="st">"SA2_NAME"</span></a>
+<a class="sourceLine" id="cb29-10" title="10">    , <span class="dt">fill_opacity =</span> <span class="dv">150</span></a>
+<a class="sourceLine" id="cb29-11" title="11">    , <span class="dt">stroke_colour =</span> <span class="st">"SA2_NAME"</span></a>
+<a class="sourceLine" id="cb29-12" title="12">  )</a></code></pre></div>
+<p><img src="img/articles/opacity2.png"></p>
+</div>
 </div>
 <div id="manual-colours" class="section level2">
 <h2 class="hasAnchor">
 <a href="#manual-colours" class="anchor"></a>Manual colours</h2>
 <p>If you want finer control over the colours, you can add a column of colours to your data, specified as a hex string.</p>
 <p>Here I’m setting all the polygons which begin with <code>A</code> as green, and the rest as red</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">sf<span class="op">$</span>my_colour &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(sf<span class="op">$</span>SA2_NAME, <span class="dv">1</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> "A"</span>, <span class="st">"#00FF00FF"</span>, <span class="st">"#FF0000FF"</span>)</a>
-<a class="sourceLine" id="cb23-2" title="2"></a>
-<a class="sourceLine" id="cb23-3" title="3"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/add_polygon.html">add_polygon</a></span>(</a>
-<a class="sourceLine" id="cb23-5" title="5">    <span class="dt">data =</span> sf</a>
-<a class="sourceLine" id="cb23-6" title="6">    , <span class="dt">fill_colour =</span> <span class="st">"my_colour"</span></a>
-<a class="sourceLine" id="cb23-7" title="7">  )</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">sf<span class="op">$</span>my_colour &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(sf<span class="op">$</span>SA2_NAME, <span class="dv">1</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> "A"</span>, <span class="st">"#00FF00FF"</span>, <span class="st">"#FF0000FF"</span>)</a>
+<a class="sourceLine" id="cb30-2" title="2"></a>
+<a class="sourceLine" id="cb30-3" title="3"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/add_polygon.html">add_polygon</a></span>(</a>
+<a class="sourceLine" id="cb30-5" title="5">    <span class="dt">data =</span> sf</a>
+<a class="sourceLine" id="cb30-6" title="6">    , <span class="dt">fill_colour =</span> <span class="st">"my_colour"</span></a>
+<a class="sourceLine" id="cb30-7" title="7">  )</a></code></pre></div>
 <div class="figure">
 <img src="img/articles/fill_my_colour.png" alt="fill manual"><p class="caption">fill manual</p>
 </div>
@@ -265,16 +308,16 @@
 <h2 class="hasAnchor">
 <a href="#colour_range" class="anchor"></a>colour_range</h2>
 <p>Some layers use a <code>colour_range</code> argument instead of fill and stroke. For these layers you need to use a vector of 6 hex strings. These also default to the viridis palette.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">sf_outer &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/geos_unary">st_convex_hull</a></span>( sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/geos_combine">st_union</a></span>( sf ) )</a>
-<a class="sourceLine" id="cb24-2" title="2">sf_sample &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_sample">st_sample</a></span>( sf_outer, <span class="dt">size =</span> <span class="dv">10000</span> )</a>
-<a class="sourceLine" id="cb24-3" title="3">sf_sample &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/sf">st_sf</a></span>( <span class="dt">geometry =</span> sf_sample )</a>
-<a class="sourceLine" id="cb24-4" title="4"></a>
-<a class="sourceLine" id="cb24-5" title="5"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-6" title="6"><span class="st">    </span><span class="kw"><a href="../reference/add_hexagon.html">add_hexagon</a></span>(</a>
-<a class="sourceLine" id="cb24-7" title="7">        <span class="dt">data =</span> sf_sample</a>
-<a class="sourceLine" id="cb24-8" title="8">        , <span class="dt">colour_range =</span> colourvalues<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/colourvalues/topics/colour_values">colour_values</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">palette =</span> <span class="st">"plasma"</span>)</a>
-<a class="sourceLine" id="cb24-9" title="9">        , <span class="dt">elevation_scale =</span> <span class="dv">10</span></a>
-<a class="sourceLine" id="cb24-10" title="10">    )</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">sf_outer &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/geos_unary">st_convex_hull</a></span>( sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/geos_combine">st_union</a></span>( sf ) )</a>
+<a class="sourceLine" id="cb31-2" title="2">sf_sample &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_sample">st_sample</a></span>( sf_outer, <span class="dt">size =</span> <span class="dv">10000</span> )</a>
+<a class="sourceLine" id="cb31-3" title="3">sf_sample &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/sf">st_sf</a></span>( <span class="dt">geometry =</span> sf_sample )</a>
+<a class="sourceLine" id="cb31-4" title="4"></a>
+<a class="sourceLine" id="cb31-5" title="5"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-6" title="6"><span class="st">    </span><span class="kw"><a href="../reference/add_hexagon.html">add_hexagon</a></span>(</a>
+<a class="sourceLine" id="cb31-7" title="7">        <span class="dt">data =</span> sf_sample</a>
+<a class="sourceLine" id="cb31-8" title="8">        , <span class="dt">colour_range =</span> colourvalues<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/colourvalues/topics/colour_values">colour_values</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">palette =</span> <span class="st">"plasma"</span>)</a>
+<a class="sourceLine" id="cb31-9" title="9">        , <span class="dt">elevation_scale =</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb31-10" title="10">    )</a></code></pre></div>
 <div class="figure">
 <img src="img/articles/colour_range_hexagons.png" alt="colour range"><p class="caption">colour range</p>
 </div>
@@ -299,25 +342,25 @@
 </li>
 </ul>
 <p>these will be automatically used and plotted</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>( mapdeck<span class="op">::</span>geojson, <span class="dv">1</span>, <span class="dv">200</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>( mapdeck<span class="op">::</span>geojson, <span class="dv">1</span>, <span class="dv">200</span>) </a></code></pre></div>
 <pre><code>## [1] "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"id\":1.0,\"fillColor\":\"#21908CFF\",\"line_colour\":\"#F89441FF\",\"random\":-0.6576371210491236},\"geometry\":{\"type\":\"LineString\",\"coordi"
 ## attr(,"class")
 ## [1] "geojson" "json"</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">location =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">145</span>, <span class="fl">-37.8</span>), <span class="dt">zoom =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb27-2" title="2"><span class="st">    </span><span class="kw"><a href="../reference/add_geojson.html">add_geojson</a></span>(</a>
-<a class="sourceLine" id="cb27-3" title="3">        <span class="dt">data =</span> mapdeck<span class="op">::</span>geojson</a>
-<a class="sourceLine" id="cb27-4" title="4">    )</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">location =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">145</span>, <span class="fl">-37.8</span>), <span class="dt">zoom =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-2" title="2"><span class="st">    </span><span class="kw"><a href="../reference/add_geojson.html">add_geojson</a></span>(</a>
+<a class="sourceLine" id="cb34-3" title="3">        <span class="dt">data =</span> mapdeck<span class="op">::</span>geojson</a>
+<a class="sourceLine" id="cb34-4" title="4">    )</a></code></pre></div>
 <div class="figure">
 <img src="img/articles/geojson.png" alt="geojson"><p class="caption">geojson</p>
 </div>
 <p>This is the quickest way of getting your data <a href="https://symbolixau.github.io/mapdeck/articles/benchmarks.html">from R to javascript</a></p>
 <p>If your GeoJSON doesn’t contain those colour fields, or if you want to use a different property for colours, you can do so, but it will be a bit slower as it has to convert the geojson to an <code>sf</code> object first, sort out the colours, then back to GeoJSON</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">location =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">145</span>, <span class="fl">-37.8</span>), <span class="dt">zoom =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb28-2" title="2"><span class="st">    </span><span class="kw"><a href="../reference/add_geojson.html">add_geojson</a></span>(</a>
-<a class="sourceLine" id="cb28-3" title="3">        <span class="dt">data =</span> mapdeck<span class="op">::</span>geojson</a>
-<a class="sourceLine" id="cb28-4" title="4">        , <span class="dt">fill_colour =</span> <span class="st">"id"</span></a>
-<a class="sourceLine" id="cb28-5" title="5">        , <span class="dt">radius =</span> <span class="dv">300</span></a>
-<a class="sourceLine" id="cb28-6" title="6">    )</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">location =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">145</span>, <span class="fl">-37.8</span>), <span class="dt">zoom =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb35-2" title="2"><span class="st">    </span><span class="kw"><a href="../reference/add_geojson.html">add_geojson</a></span>(</a>
+<a class="sourceLine" id="cb35-3" title="3">        <span class="dt">data =</span> mapdeck<span class="op">::</span>geojson</a>
+<a class="sourceLine" id="cb35-4" title="4">        , <span class="dt">fill_colour =</span> <span class="st">"id"</span></a>
+<a class="sourceLine" id="cb35-5" title="5">        , <span class="dt">radius =</span> <span class="dv">300</span></a>
+<a class="sourceLine" id="cb35-6" title="6">    )</a></code></pre></div>
 <div class="figure">
 <img src="img/articles/geojson_colour.png" alt="geojson colour"><p class="caption">geojson colour</p>
 </div>

@@ -185,7 +185,8 @@ Web Mercator Projection</p></td>
       <th>fill_opacity</th>
       <td><p>Either a string specifying the column of <code>data</code>
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-to be applied to all the shapes. Default 255.</p></td>
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string</p></td>
     </tr>
     <tr>
       <th>stroke_colour</th>
@@ -195,12 +196,6 @@ to be applied to all the shapes. Default 255.</p></td>
     <tr>
       <th>stroke_width</th>
       <td><p>width of the stroke in meters. If used, <code>elevation</code> is ignored. Default 1.</p></td>
-    </tr>
-    <tr>
-      <th>stroke_opacity</th>
-      <td><p>Either a string specifying the column of <code>data</code>
-containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-to be applied to all the shapes. Default 255.</p></td>
     </tr>
     <tr>
       <th>tooltip</th>
@@ -321,8 +316,9 @@ you are clicking on</p>
     <pre class="examples"><div class='input'>
 </div><div class='input'><span class='co'>## You need a valid access token from Mapbox</span>
 <span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='st'>'abc'</span>
+<span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='no'>key</span> )
 
-<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
 <span class='fu'>add_scatterplot</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>capitals</span>
   , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
@@ -331,8 +327,7 @@ you are clicking on</p>
   , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"country"</span>
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"scatter_layer"</span>
   , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"capital"</span>
-)
-
+)</div><div class='output co'>#&gt; is_factor: 0</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/read.table'>read.csv</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(
 <span class='st'>'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,
 <span class='st'>'examples/3d-heatmap/heatmap-data.csv'</span>
@@ -359,7 +354,8 @@ you are clicking on</p>
   , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"country"</span>
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"scatter_layer"</span>
   , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"capital"</span>
-)</div><div class='input'>
+)</div><div class='output co'>#&gt; is_factor: 0</div><div class='input'>
+</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

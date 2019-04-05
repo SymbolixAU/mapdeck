@@ -185,7 +185,8 @@ Web Mercator Projection</p></td>
       <th>fill_opacity</th>
       <td><p>Either a string specifying the column of <code>data</code>
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-to be applied to all the shapes. Default 255.</p></td>
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string</p></td>
     </tr>
     <tr>
       <th>size</th>
@@ -346,7 +347,7 @@ you are clicking on</p>
     , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>'country'</span>
     , <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>'capital'</span>
     , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>'text'</span>
-  )</div><div class='input'>
+  )</div><div class='output co'>#&gt; is_factor: 0</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
