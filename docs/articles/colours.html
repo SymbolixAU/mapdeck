@@ -94,7 +94,7 @@
       <h1>Colours</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-04-05</h4>
+            <h4 class="date">2019-04-06</h4>
       
       
       <div class="hidden name"><code>colours.Rmd</code></div>
@@ -244,16 +244,16 @@
 <pre><code>## is_factor: 0</code></pre>
 <pre><code>##  [1] "#FDE725FF" "#B4DD2CFF" "#6CCE59FF" "#35B779FF" "#1F9D89FF"
 ##  [6] "#26838EFF" "#31688EFF" "#3E4A89FF" "#482878FF" "#440154FF"</code></pre>
-<div id="vectors-vs-scalar-opacity" class="section level3">
+<div id="vectors-vs-scalar" class="section level3">
 <h3 class="hasAnchor">
-<a href="#vectors-vs-scalar-opacity" class="anchor"></a>Vectors vs scalar opacity</h3>
-<p>There is a difference in behaviour when you supply a vector for the opacity values compared to when you use a single value.</p>
+<a href="#vectors-vs-scalar" class="anchor"></a>Vectors vs scalar</h3>
+<p>There is a difference in behaviour when you supply a vector for the opacity compared to when you use a single value.</p>
 <p>See how these two lines produce different results</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">colourvalues<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/colourvalues/topics/colour_values">colour_values</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span>,<span class="dv">5</span>), <span class="dt">alpha =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">255</span>,<span class="dv">5</span>))</a></code></pre></div>
 <pre><code>## [1] "#44015400" "#44015400" "#44015400" "#44015400" "#44015400"</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">colourvalues<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/colourvalues/topics/colour_values">colour_values</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span>,<span class="dv">5</span>), <span class="dt">alpha =</span> <span class="dv">255</span>)</a></code></pre></div>
 <pre><code>## [1] "#440154FF" "#440154FF" "#440154FF" "#440154FF" "#440154FF"</code></pre>
-<p>This is because one uses a vector for the opacity, where all the values are 255, and the other is because a single value of 255 is used as the opacity.</p>
+<p>This is because one uses a vector, where all the values are 255, and the other uses a single value of 255.</p>
 <p>Lke with colours, when you supply a vector for the opacity, <code>colourvalues</code> treats each element relative to the other elements and maps the opacity accordingly.</p>
 <p>It does this by rescaling the values in the vector to be in [0,1] (source code is <a href="https://github.com/SymbolixAU/colourvalues/blob/master/inst/include/colourvalues/scale/scale.hpp#L37">here</a> if you want to look), then multiplies by 255.</p>
 <p>The [0,255] values are then the actual opacities.</p>

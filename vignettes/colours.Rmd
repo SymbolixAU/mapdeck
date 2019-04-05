@@ -141,9 +141,9 @@ The same ordering applies to characters, factors, dates, etc. In this example I'
 colourvalues::colour_values(letters[10:1])
 ```
 
-### Vectors vs scalar opacity
+### Vectors vs scalar
 
-There is a difference in behaviour when you supply a vector for the opacity values compared to when you use a single value.
+There is a difference in behaviour when you supply a vector for the opacity compared to when you use a single value.
 
 See how these two lines produce different results
 
@@ -153,7 +153,7 @@ colourvalues::colour_values(x = rep(1,5), alpha = rep(255,5))
 colourvalues::colour_values(x = rep(1,5), alpha = 255)
 ```
 
-This is because one uses a vector for the opacity, where all the values are 255, and the other is because a single value of 255 is used as the opacity.
+This is because one uses a vector, where all the values are 255, and the other uses a single value of 255.
 
 Lke with colours, when you supply a vector for the opacity, `colourvalues` treats each element relative to the other elements and maps the opacity accordingly. 
 
