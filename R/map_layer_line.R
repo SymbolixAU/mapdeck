@@ -18,7 +18,8 @@ mapdeckLineDependency <- function() {
 #' @inheritParams add_arc
 #' @param stroke_opacity Either a string specifying the column of \code{data}
 #' containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-#' to be applied to all the shapes. Default 255.
+#' to be applied to all the shapes. Default 255. If a hex-string is used as the
+#' colour, this argument is ignored and you should include the alpha on the hex string
 #' @param stroke_colour variable or hex colour to use as the ending stroke colour.
 #' @param stroke_width width of the line in metres
 #' @inheritSection add_arc legend

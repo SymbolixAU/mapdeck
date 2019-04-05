@@ -29,13 +29,15 @@ Web Mercator Projection}
 
 \item{stroke_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-to be applied to all the shapes. Default 255.}
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
 
 \item{fill_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-to be applied to all the shapes. Default 255.}
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
 
 \item{elevation}{the height the polygon extrudes from the map. Only available if neither
 \code{stroke_colour} or \code{stroke_width} are supplied. Default 0}

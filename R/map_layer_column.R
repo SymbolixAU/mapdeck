@@ -80,6 +80,7 @@ add_column <- function(
 	lon = NULL,
 	lat = NULL,
 	fill_colour = NULL,
+	fill_opacity = NULL,
 	radius = 1000,
 	elevation = NULL,
 	elevation_scale = 1,
@@ -106,6 +107,7 @@ add_column <- function(
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
 	l[["fill_colour"]] <- force( fill_colour )
+	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["elevation"]] <- force( elevation )
 	l[["tooltip"]] <- force( tooltip )
 	l[["id"]] <- force( id )
