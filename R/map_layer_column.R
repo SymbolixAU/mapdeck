@@ -28,6 +28,8 @@ mapdeckColumnDependency <- function() {
 #' @param elevation_scale value to scale the elevations of the columns Default 1
 #'
 #' @inheritSection add_polygon data
+#' @inheritSection add_arc legend
+#' @inheritSection add_arc id
 #'
 #' @examples
 #' \dontrun{

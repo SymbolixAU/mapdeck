@@ -86,6 +86,42 @@ you'll need to set the active geometry using \code{sf::st_geometry( x ) <- "your
 where \code{"your_column"} is the name of the column you're activating. See \code{?sf::st_geometry}
 }
 
+\section{legend}{
+
+
+The \code{legend_options} can be used to control the appearance of the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{css - a string of valid \code{css} for controlling the appearance of the legend}
+  \item{title - a string to use for the title of the legend}
+}
+
+If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
+
+The \code{legend_format} can be used to control the format of the values in the legend.
+This should be a named list, where the names are one of
+\itemize{
+  \item{fill_colour}
+  \item{stroke_colour}
+}
+
+depending on which type of colouring the layer supports.
+
+The list elements must be functions to apply to the values in the legend.
+}
+
+\section{id}{
+
+
+The \code{id} is returned to your R session from an interactive shiny environment
+by observing layer clicks. This is useful for returning the data.frame row relating to the
+cliked shape.
+
+From within a shiny server you would typically use \code{ observeEvent({input$map_arc_click})},
+where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the layer
+you are clicking on
+}
+
 \examples{
 \dontrun{
 
