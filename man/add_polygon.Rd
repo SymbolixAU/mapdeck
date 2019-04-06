@@ -5,7 +5,7 @@
 \title{Add Polygon}
 \usage{
 add_polygon(map, data = get_map_data(map), polyline = NULL,
-  stroke_colour = NULL, stroke_width = NULL, fill_colour = NULL,
+  stroke_colour = NULL, stroke_width = 0.1, fill_colour = NULL,
   fill_opacity = NULL, elevation = NULL, tooltip = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   light_settings = list(), layer_id = NULL, id = NULL,

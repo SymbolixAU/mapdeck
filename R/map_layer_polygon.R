@@ -111,7 +111,7 @@ add_polygon <- function(
 	data = get_map_data(map),
 	polyline = NULL,
 	stroke_colour = NULL,
-	stroke_width = NULL,
+	stroke_width = 0.1,
 	#stroke_opacity = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
@@ -131,6 +131,8 @@ add_polygon <- function(
 	focus_layer = FALSE,
 	transitions = NULL
 ) {
+
+	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
 
 	l <- list()
 	l[["polyline"]] <- force( polyline )
