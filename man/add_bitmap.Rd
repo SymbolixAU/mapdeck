@@ -4,18 +4,21 @@
 \alias{add_bitmap}
 \title{Add bitmap}
 \usage{
-add_bitmap(map, url, bounds, desaturate = 0, transparent_colour = c(0,
-  0, 0, 0), tint_colour = c(255, 255, 255), layer_id = NULL)
+add_bitmap(map, image, bounds, desaturate = 0,
+  transparent_colour = "#000000", tint_colour = "#FFFFFF",
+  layer_id = NULL)
 }
 \arguments{
-\item{bounds}{coordinates of the bounding box of the bitmap [left, bottom, right, top]}
+\item{image}{url to an image to use on the map}
+
+\item{bounds}{coordinates of the bounding box of the image [left, bottom, right, top]}
 
 \item{desaturate}{the desatruation of the bitmap, in range [0,1], 0 being the original colour
 and 1 being greyscale}
 
-\item{transparent_colour}{the colour to use for transparent pixels}
+\item{transparent_colour}{the colour to use for transparent pixels as a hex string}
 
-\item{tint_colour}{}
+\item{tint_colour}{the colour to tint the bipmap by, as a hex string}
 }
 \description{
 Add bitmap
@@ -23,13 +26,35 @@ Add bitmap
 \examples{
 \donttest{
 
+set_token( "MAPBOX_TOKEN" )
+
 mapdeck(
-  location = c(-71.516, 37.936), zoom = 12
+  location = c(-122.519, 37.7045), zoom = 10
 ) \%>\%
  add_bitmap(
-   url = "https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif"
-   , bounds = list(c(-71.516, 37.936), c(-80.425, 37.936), c(-80.425, 46.437), c(-71.516, 46.437))
+   image = 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/website/sf-districts.png'
+   , bounds = c(-122.519, 37.7045, -122.355, 37.829)
  )
+
+mapdeck() \%>\%
+  add_bitmap(
+    image = 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'
+    , bounds = c(-80.425, 37.936, -71.516, 46.437)
+  )
+
+mapdeck() \%>\%
+  add_bitmap(
+    image = 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'
+    , bounds = c(-80.425, 37.936, -71.516, 46.437)
+    , tint_colour = "#FF0000"
+  )
+
+mapdeck() \%>\%
+  add_bitmap(
+    image = 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'
+    , bounds = c(-80.425, 37.936, -71.516, 46.437)
+    , desaturate = 1
+  )
 
 }
 
