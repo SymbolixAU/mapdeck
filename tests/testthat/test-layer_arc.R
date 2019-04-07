@@ -5,7 +5,7 @@ test_that("add_arc accepts multiple objects", {
 	testthat::skip_on_cran()
 	testthat::skip_on_travis()
 
-	geo <- '[{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF"},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15]},"destination":{"type":"Point","coordinates":[-0.05,51.36]}}}]'
+	geo <- '[{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15]},"destination":{"type":"Point","coordinates":[-0.05,51.36]}}}]'
 	# poly <- '[{"radius":1000,"fill_colour":"#440154FF","polyline":"_ifpEo`ydL"}]'
 
 	## sf

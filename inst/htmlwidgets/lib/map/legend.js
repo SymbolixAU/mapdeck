@@ -43,7 +43,7 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
         while ( window[map_id + 'legend' + layer_id + legendValues.colourType].hasChildNodes() ) {
             window[map_id + 'legend' + layer_id + legendValues.colourType].removeChild(
             	window[map_id + 'legend' + layer_id + legendValues.colourType].lastChild
-            	);
+            );
         }
     }
 
@@ -67,7 +67,8 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
     }
 
     for (i = 0; i < legendValues.colour.length; i++) {
-        jsColours.push( legendValues.colour[i] );
+
+      jsColours.push( legendValues.colour[i].substring(0,7) );
     }
 
     colours = '(' + jsColours.join() + ')';
@@ -114,6 +115,7 @@ function generateColourBox(colourType, colour) {
         return ('height: 20px; width: 15px; background: ' + colour);
     } else {
         // http://jsfiddle.net/UES6U/2/
+        console.log( colour) ;
         return ('height: 20px; width: 15px; background: linear-gradient(to bottom, white 25%, ' + colour + ' 25%, ' + colour + ' 45%, ' + 'white 45%)');
     }
 }
@@ -185,7 +187,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
             divVal = document.createElement('div');
 
         //colourBox = 'height: 20px; width: 15px; background: ' + legendValues.legend.colour[i];
-        colourBox = generateColourBox(legendValues.colourType, legendValues.colour[i]);
+        colourBox = generateColourBox(legendValues.colourType, legendValues.colour[i].substring(0,7) );
         divCol.setAttribute('style', colourBox);
         colourContainer.appendChild(divCol);
 

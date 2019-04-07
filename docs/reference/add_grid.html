@@ -65,7 +65,7 @@ The color and height of the cell is scaled by number of points it contains." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1003</span>
       </span>
     </div>
 
@@ -143,10 +143,12 @@ The color and height of the cell is scaled by number of points it contains.</p>
     </div>
 
     <pre class="usage"><span class='fu'>add_grid</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cell_size</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>extruded</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cell_size</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>extruded</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>,
+  <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,20 +175,32 @@ Web Mercator Projection</p></td>
       <td><p>optional column of <code>data</code> containing the polylines, if using encoded polylines</p></td>
     </tr>
     <tr>
-      <th>colour_range</th>
-      <td><p>vector of 6 hex colours</p></td>
-    </tr>
-    <tr>
       <th>cell_size</th>
-      <td><p>size of each cell in meters</p></td>
+      <td><p>size of each cell in meters. Default 1000</p></td>
     </tr>
     <tr>
       <th>extruded</th>
-      <td><p>logical indicating if cells are elevated or not</p></td>
+      <td><p>logical indicating if cells are elevated or not. Default TRUE</p></td>
+    </tr>
+    <tr>
+      <th>elevation</th>
+      <td><p>column containing the elevation of the value. This is used to calculate the
+height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
+within the <code>radius</code>. If NULL, the number of coordinates is used.</p></td>
     </tr>
     <tr>
       <th>elevation_scale</th>
-      <td><p>cell elevation multiplier</p></td>
+      <td><p>cell elevation multiplier. Default 1</p></td>
+    </tr>
+    <tr>
+      <th>colour</th>
+      <td><p>column containing numeric values to colour by.
+The colour is calculated by the sum of values within the <code>radius</code>.
+If NULL, the number of coordinates is used.</p></td>
+    </tr>
+    <tr>
+      <th>colour_range</th>
+      <td><p>vector of 6 hex colours</p></td>
     </tr>
     <tr>
       <th>auto_highlight</th>
@@ -209,6 +223,10 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>focus_layer</th>
       <td><p>logical indicating if the map should update the bounds to only include this layer</p></td>
+    </tr>
+    <tr>
+      <th>transitions</th>
+      <td><p>list specifying the duration of transitions.</p></td>
     </tr>
     </table>
     

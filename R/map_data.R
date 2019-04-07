@@ -319,7 +319,11 @@ resolve_palette <- function( l, palette ) {
 
 
 resolve_legend <- function( l, legend ) {
-	l[['legend']] <- legend
+	if(inherits( legend, "json" ) ) {
+		l[["legend"]] <- FALSE
+	} else {
+	  l[['legend']] <- legend
+	}
 	return( l )
 }
 

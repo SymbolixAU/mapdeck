@@ -1,11 +1,14 @@
 
-function add_text_geo( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_text_geo( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight ) {
+
+  console.log( billboard );
 
   const textLayer = new TextLayer({
   	map_id: map_id,
     id: 'text-'+layer_id,
     data: text_data,
     pickable: true,
+
     getPosition: d => md_get_point_coordinates( d ),
     getColor: d => md_hexToRGBA( d.properties.fill_colour ),
     getText: d => d.properties.text,
@@ -13,6 +16,11 @@ function add_text_geo( map_id, text_data, layer_id, auto_highlight, highlight_co
     getAngle: d => d.properties.angle,
     getTextAnchor: d => d.properties.anchor,
     getAlignmentBaseline: d => d.properties.alignment_baseline,
+
+    billboard: billboard,
+    fontFamily: font_family,
+    fontWeight: font_weight,
+
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "text", info ),
@@ -27,7 +35,7 @@ function add_text_geo( map_id, text_data, layer_id, auto_highlight, highlight_co
   md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight) {
 
   const textLayer = new TextLayer({
     map_id: map_id,
@@ -41,6 +49,11 @@ function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlig
     getAngle: d => d.angle,
     getTextAnchor: d => d.anchor,
     getAlignmentBaseline: d => d.alignment_baseline,
+
+    billboard: billboard,
+    fontFamily: font_family,
+    fontWeight: font_weight,
+
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "text", info ),

@@ -7,7 +7,9 @@
 \name{clear_arc}
 \alias{clear_arc}
 \alias{clear_bitmap}
+\alias{clear_column}
 \alias{clear_geojson}
+\alias{clear_greatcircle}
 \alias{clear_grid}
 \alias{clear_hexagon}
 \alias{clear_line}
@@ -22,9 +24,15 @@
 \usage{
 clear_arc(map, layer_id = NULL)
 
+
 clear_bitmap(map, layer_id = NULL)
 
+clear_column(map, layer_id = NULL)
+
+
 clear_geojson(map, layer_id = NULL)
+
+clear_greatcircle(map, layer_id = NULL)
 
 clear_grid(map, layer_id = NULL)
 
@@ -50,7 +58,13 @@ clear_title(map, layer_id = NULL)
 \item{map}{a mapdeck map object}
 
 \item{layer_id}{the layer_id of the layer you want to clear}
+
+\item{map}{a mapdeck map object}
+
+\item{layer_id}{the layer_id of the layer you want to clear}
 }
 \description{
+Clears elements from a map
+
 Clears elements from a map
 }

@@ -1,6 +1,8 @@
 
 function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
 
+  console.log( js_transition );
+
   const polygonLayer = new PolygonLayer({
   	map_id: map_id,
     id: 'polygon-'+layer_id,
@@ -23,6 +25,9 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     onClick: info => md_layer_click( map_id, "polygon", info ),
     transitions: js_transition || {}
   });
+
+  console.log( polygonLayer );
+
   md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
   if (legend !== false) {

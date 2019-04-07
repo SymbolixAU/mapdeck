@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1003</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@
       <h1>Why isn’t it working?</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-02-08</h4>
+            <h4 class="date">2019-04-06</h4>
       
       
       <div class="hidden name"><code>issues.Rmd</code></div>
@@ -120,6 +120,11 @@
 <p>Are you subsetting an <code>sf</code> object without the <code>sf</code> library loaded? <a href="file:///Users/dave/Documents/github/mapdeck/docs/articles/tips_tricks.html#sf">See here</a></p>
 <p>Or are you plotting GeoJSON or an <code>sfencodedLite</code> object? The bounding box is not calculated for either of these, so the map doesn’t know where to focus</p>
 </div>
+<div id="map-loads-but-the-layer-data-doesnt" class="section level2">
+<h2 class="hasAnchor">
+<a href="#map-loads-but-the-layer-data-doesnt" class="anchor"></a>Map loads but the layer / data doesn’t</h2>
+<p>Do you have <code>NA</code>s in your data? Mapdeck will have issues plotting if there are, so it’s worth checking.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -130,6 +135,7 @@
 <li><a href="#rstudio-viewer-is-blank">RStudio viewer is blank</a></li>
       <li><a href="#browser-is-blank">Browser is blank</a></li>
       <li><a href="#map-doesnt-zoom-to-the-layer">Map doesn’t zoom to the layer</a></li>
+      <li><a href="#map-loads-but-the-layer-data-doesnt">Map loads but the layer / data doesn’t</a></li>
       </ul>
 </div>
       </div>

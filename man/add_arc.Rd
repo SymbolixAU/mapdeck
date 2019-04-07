@@ -34,13 +34,15 @@ to conflict and not plot correctly}
 
 \item{stroke_from_opacity}{Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+between 1 and 255 to be applied to all the shapes. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
 
 \item{stroke_to}{variable or hex colour to use as the ending stroke colour}
 
 \item{stroke_to_opacity}{Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+between 1 and 255 to be applied to all the shapes. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
 
 \item{stroke_width}{width of the stroke in pixels}
 
@@ -159,6 +161,7 @@ stroke_width = 0
 
 ## You need a valid access token from Mapbox
 key <- 'abc'
+set_token( key )
 
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 flights <- read.csv(url)
@@ -166,7 +169,7 @@ flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 
-mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
   add_arc(
   data = flights
   , layer_id = "arc_layer"

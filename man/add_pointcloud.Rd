@@ -33,7 +33,8 @@ Web Mercator Projection}
 
 \item{fill_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-to be applied to all the shapes. Default 255.}
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 

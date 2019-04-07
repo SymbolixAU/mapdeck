@@ -34,7 +34,8 @@ to conflict and not plot correctly}
 
 \item{stroke_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-to be applied to all the shapes. Default 255.}
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -136,13 +137,14 @@ you are clicking on
 
 ## You need a valid access token from Mapbox
 key <- 'abc'
+set_token( key )
 
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 flights <- read.csv(url)
 flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 
-mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+mapdeck(style = mapdeck_style("dark"), pitch = 45 ) \%>\%
   add_line(
     data = flights
     , layer_id = "line_layer"

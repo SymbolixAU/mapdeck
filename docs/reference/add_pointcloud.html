@@ -64,7 +64,7 @@ with a certain radius." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1003</span>
       </span>
     </div>
 
@@ -171,7 +171,7 @@ Web Mercator Projection</p></td>
     </tr>
     <tr>
       <th>elevation</th>
-      <td><p>column containing the elevation values</p></td>
+      <td><p>column containing the elevation values. Default 0</p></td>
     </tr>
     <tr>
       <th>polyline</th>
@@ -179,7 +179,7 @@ Web Mercator Projection</p></td>
     </tr>
     <tr>
       <th>radius</th>
-      <td><p>value in pixels of each point</p></td>
+      <td><p>value in pixels of each point. Default 10.</p></td>
     </tr>
     <tr>
       <th>fill_colour</th>
@@ -187,9 +187,10 @@ Web Mercator Projection</p></td>
     </tr>
     <tr>
       <th>fill_opacity</th>
-      <td><p>value between 0 and 255. Either a string specifying the
-column of <code>data</code> containing the fill opacity of each shape, or a single value
-to be applied to all the shapes</p></td>
+      <td><p>Either a string specifying the column of <code>data</code>
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string</p></td>
     </tr>
     <tr>
       <th>tooltip</th>
@@ -220,8 +221,10 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>palette</th>
       <td><p>string or matrix. String will be one of <code><a href='https://www.rdocumentation.org/packages/colourvalues/topics/colour_palettes'>colourvalues::colour_palettes()</a></code>.
-A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
-where the 4th column represents the alpha.</p></td>
+A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255],
+where the 4th column represents the alpha. You can use a named list to specify a different
+palette for different colour options (where available),
+ e.g. list(fill_colour = "viridis", stroke_colour = "inferno")</p></td>
     </tr>
     <tr>
       <th>na_colour</th>
@@ -324,8 +327,7 @@ you are clicking on</p>
   , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"country"</span>
   , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"country"</span>
   , <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)
-
+)</div><div class='output co'>#&gt; is_factor: 0</div><div class='input'>
 <span class='co'>## as an sf object wtih a Z attribute</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sf</span>)
 <span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>( <span class='no'>df</span> , <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"lon"</span>,<span class='st'>"lat"</span>,<span class='st'>"z"</span>))
@@ -337,7 +339,8 @@ you are clicking on</p>
   , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"country"</span>
   , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"country"</span>
   , <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</div><div class='input'>
+)</div><div class='output co'>#&gt; is_factor: 0</div><div class='input'>
+</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

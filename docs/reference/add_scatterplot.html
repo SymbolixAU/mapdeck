@@ -64,7 +64,7 @@ with a certain radius." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1003</span>
       </span>
     </div>
 
@@ -142,11 +142,12 @@ with a certain radius.</p>
 
     <pre class="usage"><span class='fu'>add_scatterplot</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fill_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>fill_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>, <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>brush_radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,7 +175,7 @@ Web Mercator Projection</p></td>
     </tr>
     <tr>
       <th>radius</th>
-      <td><p>in metres</p></td>
+      <td><p>in metres. Default 1</p></td>
     </tr>
     <tr>
       <th>fill_colour</th>
@@ -182,9 +183,19 @@ Web Mercator Projection</p></td>
     </tr>
     <tr>
       <th>fill_opacity</th>
-      <td><p>value between 0 and 255. Either a string specifying the
-column of <code>data</code> containing the fill opacity of each shape, or a single value
-to be applied to all the shapes</p></td>
+      <td><p>Either a string specifying the column of <code>data</code>
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string</p></td>
+    </tr>
+    <tr>
+      <th>stroke_colour</th>
+      <td><p>variable of <code>data</code> or hex colour for the stroke. If used,
+<code>elevation</code> is ignored.</p></td>
+    </tr>
+    <tr>
+      <th>stroke_width</th>
+      <td><p>width of the stroke in meters. If used, <code>elevation</code> is ignored. Default 1.</p></td>
     </tr>
     <tr>
       <th>tooltip</th>
@@ -211,8 +222,10 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>palette</th>
       <td><p>string or matrix. String will be one of <code><a href='https://www.rdocumentation.org/packages/colourvalues/topics/colour_palettes'>colourvalues::colour_palettes()</a></code>.
-A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
-where the 4th column represents the alpha.</p></td>
+A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255],
+where the 4th column represents the alpha. You can use a named list to specify a different
+palette for different colour options (where available),
+ e.g. list(fill_colour = "viridis", stroke_colour = "inferno")</p></td>
     </tr>
     <tr>
       <th>na_colour</th>
@@ -303,8 +316,9 @@ you are clicking on</p>
     <pre class="examples"><div class='input'>
 </div><div class='input'><span class='co'>## You need a valid access token from Mapbox</span>
 <span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='st'>'abc'</span>
+<span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='no'>key</span> )
 
-<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
 <span class='fu'>add_scatterplot</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>capitals</span>
   , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
@@ -313,8 +327,7 @@ you are clicking on</p>
   , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"country"</span>
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"scatter_layer"</span>
   , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"capital"</span>
-)
-
+)</div><div class='output co'>#&gt; is_factor: 0</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/read.table'>read.csv</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(
 <span class='st'>'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,
 <span class='st'>'examples/3d-heatmap/heatmap-data.csv'</span>
@@ -341,7 +354,8 @@ you are clicking on</p>
   , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"country"</span>
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"scatter_layer"</span>
   , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"capital"</span>
-)</div><div class='input'>
+)</div><div class='output co'>#&gt; is_factor: 0</div><div class='input'>
+</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
