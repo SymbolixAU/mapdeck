@@ -205,9 +205,6 @@ add_polygon <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
-	# lst <- jsonlite::fromJSON( shape[["data"]] )
-	# print( lst$properties )
-
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
