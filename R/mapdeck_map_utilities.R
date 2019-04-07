@@ -21,7 +21,7 @@ mapdeck_dispatch = function(
   mapdeck = stop(paste(funcName, "requires a map update object")),
   mapdeck_update = stop(paste(funcName, "does not support map update objects"))
   ) {
-  if (inherits(map, "mapdeck"))
+  if (inherits(map, "mapdeck") | inherits(map, "google_map") )
     return(mapdeck)
   else if (inherits(map, "mapdeck_update"))
     return(mapdeck_update)
