@@ -59,3 +59,38 @@
 # 		, fill_colour = "my_colour"
 # 		, legend = js
 # 	)
+
+# library(googleway)
+# library(mapdeck)
+# library(sf)
+#
+# set_key( read.dcf("~/.googleAPI" ,fields = "GOOGLE_MAP_KEY"))
+#
+# m <- google_map()
+# m <- mapdeck:::addDependency(
+# 	m
+# 	, mapdeck:::deckgl_min_js()
+# )
+#
+# m <- mapdeck:::addDependency(
+# 	m
+# 	, mapdeck:::mapdeck_dependencies()
+# )
+#
+# str(m)
+#
+# sf <- spatialwidget::widget_melbourne
+#
+# sf$elev <- sf$AREASQKM * 1000
+# m %>%
+# 	add_polygon(
+# 		data = sf
+# 		, fill_colour = "SA2_NAME"
+# 	)
+# #
+# #
+# mapdeck() %>%
+# 	add_polygon(
+# 		data = sf
+# 		, elevation = "elev"
+# 	)

@@ -39,6 +39,8 @@ mapdeck <- function(
     , bearing = force( bearing )
   )
 
+  dep <- mapdeck_dependencies()
+
   # create widget
   mapdeckmap <- htmlwidgets::createWidget(
     name = 'mapdeck',
@@ -54,9 +56,33 @@ mapdeck <- function(
     	defaultHeight = 800,
     	padding = padding,
     	browser.fill = FALSE
-    )
+    ),
+    dependencies = dep
   )
   return(mapdeckmap)
+}
+
+# loads the javascript dependencies
+deckgl_min_js <- function() {
+	list(
+		createHtmlDependency(
+			name = "deckgl",
+			version = "7.0.0",
+			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
+			script = c("deckgl.min.js")
+		)
+	)
+}
+
+mapdeck_dependencies <- function() {
+	list(
+		createHtmlDependency(
+			name = "mpadeck_functions",
+			version = "7.0.0",
+			src = system.file("htmlwidgets/", package = "mapdeck"),
+			script = c("mapdeck_functions.js")
+		)
+	)
 }
 
 #' Shiny bindings for mapdeck

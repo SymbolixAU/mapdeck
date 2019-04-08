@@ -111,7 +111,7 @@ add_polygon <- function(
 	data = get_map_data(map),
 	polyline = NULL,
 	stroke_colour = NULL,
-	stroke_width = 0.1,
+	stroke_width = NULL,
 	#stroke_opacity = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,

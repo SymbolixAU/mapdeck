@@ -26,15 +26,25 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     transitions: js_transition || {}
   });
 
-  console.log( polygonLayer );
+  console.log( deck );
 
-  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
+  const overlay = new GoogleMapsOverlay({
+  	layers: [
+  		polygonLayer
+  	]
+  });
 
-  if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
-  }
+  overlay.setMap( window[map_id + 'map']);
 
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  //console.log( polygonLayer );
+
+  //md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
+
+  //if (legend !== false) {
+  //  add_legend(map_id, layer_id, legend);
+  //}
+
+  //md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
 
 
