@@ -2,6 +2,8 @@
 
 function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
+  //console.log( scatter_data );
+
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
