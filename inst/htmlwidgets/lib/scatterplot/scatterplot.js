@@ -22,12 +22,25 @@ function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, hi
     onHover: md_update_tooltip,
     transitions: js_transition || {}
   });
+
+
+  const overlay = new GoogleMapsOverlay({
+  	layers: [
+  		scatterLayer
+  	]
+  });
+
+  overlay.setMap( window[map_id + 'map'] );
+
+  /*
+
   md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
 
   if (legend !== false) {
     add_legend(map_id, layer_id, legend);
   }
   md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  */
 }
 
 function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {

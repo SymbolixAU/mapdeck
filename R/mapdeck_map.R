@@ -39,7 +39,7 @@ mapdeck <- function(
     , bearing = force( bearing )
   )
 
-  dep <- mapdeck_dependencies()
+  #dep <- mapdeck_dependencies()
 
   # create widget
   mapdeckmap <- htmlwidgets::createWidget(
@@ -56,13 +56,66 @@ mapdeck <- function(
     	defaultHeight = 800,
     	padding = padding,
     	browser.fill = FALSE
-    ),
-    dependencies = dep
+    )
+    #, dependencies = dep
   )
+
+  mapdeckmap <- mapdeck_dependencies( mapdeckmap )
+  mapdeckmap$dependencies <- c( mapdeckmap$dependencies, mapboxgl())
+
   return(mapdeckmap)
 }
 
-# loads the javascript dependencies
+#' Mapdeck Dependencies
+#'
+#' Javascript dependencies for mapdeck and deck.gl, useful for when not using
+#' a Mapbox map
+#'
+#' @examples
+#' mapdeck_dependencies()
+#' \dontrun{
+#'
+#' ## use with a google map from googleway
+#' library(googleway)
+#'
+#' set_key("GOOGLE_MAP_KEY")
+#'
+#' google_map() %>%
+#' 	mapdeck_dependencies() %>%
+#' 	add_scatterplot(
+#' 		data = capitals
+#' 		, lon = "lon"
+#' 		, lat = "lat"
+#' 		, fill_colour = "country"
+#' 		, radius = 10000
+#' 	)
+#'
+#' }
+#'
+#'
+#'
+#' @export
+mapdeck_dependencies <- function( map ) {
+	deps <- c(
+		mapdeck_functions()
+		, deckgl_min_js()
+	)
+
+	map$dependencies <- c( map$dependencies, deps )
+	return( map )
+}
+
+mapdeck_functions <- function() {
+	list(
+		createHtmlDependency(
+			name = "mpadeck_functions",
+			version = "7.0.0",
+			src = system.file("htmlwidgets/", package = "mapdeck"),
+			script = c("mapdeck_functions.js")
+		)
+	)
+}
+
 deckgl_min_js <- function() {
 	list(
 		createHtmlDependency(
@@ -74,13 +127,14 @@ deckgl_min_js <- function() {
 	)
 }
 
-mapdeck_dependencies <- function() {
+mapboxgl <- function() {
 	list(
 		createHtmlDependency(
-			name = "mpadeck_functions",
-			version = "7.0.0",
-			src = system.file("htmlwidgets/", package = "mapdeck"),
-			script = c("mapdeck_functions.js")
+			name = "mapboxgl",
+			version = "0.52.0",
+			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
+			script = c("mapbox-gl.js"),
+			stylesheet = c("mapbox-gl.css")
 		)
 	)
 }

@@ -26,8 +26,6 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     transitions: js_transition || {}
   });
 
-  console.log( deck );
-
   const overlay = new GoogleMapsOverlay({
   	layers: [
   		polygonLayer

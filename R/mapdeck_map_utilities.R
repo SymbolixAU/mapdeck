@@ -111,7 +111,7 @@ doResolveFormula.data.frame = function(data, f) {
 }
 
 ## from htmltools::htmlDependency()
-createHtmlDependency <- function(name, version, src, script) {
+createHtmlDependency <- function(name, version, src, script, stylesheet = NULL) {
 	structure(
 		list(
 			name = name
@@ -119,7 +119,7 @@ createHtmlDependency <- function(name, version, src, script) {
 			, src = list( file = src )
 			, meta = NULL
 			, script = script
-			, stylesheet = NULL
+			, stylesheet = stylesheet
 			, head = NULL
 			, attachment = NULL
 			, package = NULL
