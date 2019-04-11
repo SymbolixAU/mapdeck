@@ -72,8 +72,7 @@ a named list indicating which colour attributes should be included in the legend
 \item{transitions}{list specifying the duration of transitions.}
 }
 \description{
-The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects
-only POLYGONs are supported, MULTIPOLYGONs are ignored.
+The Polygon Layer renders filled and/or stroked polygons.
 }
 \details{
 \code{add_polygon} supports POLYGON and MULTIPOLYGON sf objects
