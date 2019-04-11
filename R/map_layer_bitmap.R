@@ -12,6 +12,7 @@ mapdeckBitmapDependency <- function() {
 
 #' Add bitmap
 #'
+#' @inheritParams add_arc
 #' @param image url to an image to use on the map
 #' @param bounds coordinates of the bounding box of the image [left, bottom, right, top]
 #' @param desaturate the desatruation of the bitmap, in range [0,1], 0 being the original colour
@@ -24,9 +25,7 @@ mapdeckBitmapDependency <- function() {
 #'
 #' set_token( "MAPBOX_TOKEN" )
 #'
-#' mapdeck(
-#'   location = c(-122.519, 37.7045), zoom = 10
-#' ) %>%
+#' mapdeck() %>%
 #'  add_bitmap(
 #'    image = 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/website/sf-districts.png'
 #'    , bounds = c(-122.519, 37.7045, -122.355, 37.829)
@@ -62,8 +61,17 @@ add_bitmap <- function(
 	desaturate = 0,
 	transparent_colour = "#000000",
 	tint_colour = "#FFFFFF",
-	layer_id = NULL
+	layer_id = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE
 ) {
+
+	bbox <- init_bbox()
+	bbox[[1]] <- bounds[1:2]
+	bbox[[2]] <- bounds[3:4]
+
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
 
 	transparent_colour <- force( transparent_colour )
 	tin_colour <- force( tint_colour )
@@ -78,7 +86,8 @@ add_bitmap <- function(
 	layer_id <- layerId( layer_id, "bitmap" )
 
 	invoke_method(
-		map, "add_bitmap", layer_id, image, bounds, desaturate, transparent_colour, tint_colour
+		map, "add_bitmap", layer_id, image, bounds, desaturate, transparent_colour,
+		tint_colour, bbox, focus_layer, update_view
 	)
 }
 

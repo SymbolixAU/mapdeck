@@ -1,6 +1,6 @@
 
 
-function add_bitmap(map_id, layer_id, image, bounds, desaturate, transparent_colour, tint_colour) {
+function add_bitmap(map_id, layer_id, image, bounds, desaturate, transparent_colour, tint_colour, bbox, focus_layer, update_view) {
 
   const bitmapLayer = new BitmapLayer({
   	map_id: map_id,
@@ -13,5 +13,5 @@ function add_bitmap(map_id, layer_id, image, bounds, desaturate, transparent_col
   });
 
   md_update_layer( map_id, 'bitmap-'+layer_id, bitmapLayer );
-  //md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 }
