@@ -10,6 +10,7 @@ function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, hi
     data: scatter_data,
     radiusScale: 1,
     radiusMinPixels: 1,
+    lineWidthMinPixels: 0,
     stroked: true,  // TODO( make conditional IFF stroke provided?)
     filled: true,
     getRadius: d => d.properties.radius,
@@ -40,6 +41,7 @@ function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highligh
     data: scatter_data,
     radiusScale: 1,
     radiusMinPixels: 1,
+    lineWidthMinPixels: 0,
     stroked: true,
     filled: true,
     getRadius: d => d.radius,
