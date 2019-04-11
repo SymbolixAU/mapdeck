@@ -104,16 +104,13 @@ function md_update_tooltip({x, y, object, layer, index}) {
   const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
   var tt;
 
-  //console.log( tooltip );
-  //console.log( object );
-  //console.log( x, ", ", y );
-
   if (object) {
-  	//if(object.tooltip === undefined && object.properties.tooltip === undefined ) {
-  	//	return;
-  	//}
-  	if ( object.properties.tooltip !== undefined ) {
-	  	tt = object.properties.tooltip;
+  	if( object.properties !== undefined ) {
+	  	if ( object.properties.tooltip !== undefined ) {
+	  	  tt = object.properties.tooltip;
+	  	} else {
+	  		return;
+	  	}
 	  } else if ( object.tooltip !== undefined ) {
 	  	tt = object.tooltip;
 	  } else {
