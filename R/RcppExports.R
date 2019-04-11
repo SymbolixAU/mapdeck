@@ -13,8 +13,32 @@ rcpp_arc_polyline <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_arc_polyline`, data, params, geometry_columns)
 }
 
+rcpp_column_geojson <- function(data, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_column_geojson`, data, params, geometry_columns)
+}
+
+rcpp_column_geojson_df <- function(data, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_column_geojson_df`, data, params, geometry_columns)
+}
+
+rcpp_column_polyline <- function(data, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_column_polyline`, data, params, geometry_columns)
+}
+
 rcpp_geojson_geojson <- function(data, params, geometry_column) {
     .Call(`_mapdeck_rcpp_geojson_geojson`, data, params, geometry_column)
+}
+
+rcpp_greatcircle_geojson <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_greatcircle_geojson`, data, params, geometry_columns, digits)
+}
+
+rcpp_greatcircle_geojson_df <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_greatcircle_geojson_df`, data, params, geometry_columns, digits)
+}
+
+rcpp_greatcircle_polyline <- function(data, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_greatcircle_polyline`, data, params, geometry_columns)
 }
 
 rcpp_grid_geojson <- function(data, params, geometry_column, digits) {

@@ -134,7 +134,11 @@ add_path <- function(
 	}
 
 	js_transitions <- resolve_transitions( transitions, "path" )
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, auto_highlight,

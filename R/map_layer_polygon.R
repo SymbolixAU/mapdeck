@@ -21,12 +21,10 @@ mapdeckPolygonDependency <- function() {
 #' @param fill_colour column of \code{data} or hex colour for the fill colour.
 #' @param fill_opacity Either a string specifying the column of \code{data}
 #' containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-#' to be applied to all the shapes. Default 255.
+#' to be applied to all the shapes. Default 255. If a hex-string is used as the
+#' colour, this argument is ignored and you should include the alpha on the hex string
 #' @param stroke_colour variable of \code{data} or hex colour for the stroke. If used,
 #' \code{elevation} is ignored.
-#' @param stroke_opacity Either a string specifying the column of \code{data}
-#' containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-#' to be applied to all the shapes. Default 255.
 #' @param stroke_width width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param elevation the height the polygon extrudes from the map. Only available if neither
@@ -66,6 +64,7 @@ mapdeckPolygonDependency <- function() {
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
 #' library(sf)
 #' library(geojsonsf)
@@ -73,8 +72,7 @@ mapdeckPolygonDependency <- function() {
 #' sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
 #'
 #' mapdeck(
-#'   token = key
-#'   , style = mapdeck_style('dark')
+#'   style = mapdeck_style('dark')
 #' ) %>%
 #'   add_polygon(
 #'     data = sf
@@ -87,8 +85,7 @@ mapdeckPolygonDependency <- function() {
 #' df$info <- paste0("<b>SA2 - </b><br>",df$SA2_NAME)
 #'
 #' mapdeck(
-#'   token = key
-#'   , style = mapdeck_style('dark')
+#'   style = mapdeck_style('dark')
 #'   , location = c(145, -38)
 #'   , zoom = 8
 #'   ) %>%
@@ -98,7 +95,6 @@ mapdeckPolygonDependency <- function() {
 #'     , layer = "polygon_layer"
 #'     , fill_colour = "SA2_NAME"
 #'     , elevation = "elevation"
-#'     , stroke_width = 200
 #'     , tooltip = 'info'
 #'     , legend = T
 #'   )
@@ -115,8 +111,8 @@ add_polygon <- function(
 	data = get_map_data(map),
 	polyline = NULL,
 	stroke_colour = NULL,
-	stroke_width = NULL,
-	stroke_opacity = NULL,
+	stroke_width = 0.1,
+	#stroke_opacity = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	elevation = NULL,
@@ -136,11 +132,13 @@ add_polygon <- function(
 	transitions = NULL
 ) {
 
+	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
+
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_width"]] <- force( stroke_width )
-	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
+	#l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
 	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["elevation"]] <- force( elevation )
@@ -201,9 +199,14 @@ add_polygon <- function(
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 	js_transitions <- resolve_transitions( transitions, "polygon" )
 
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
-	#print( shape )
+	# lst <- jsonlite::fromJSON( shape[["data"]] )
+	# print( lst$properties )
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings,

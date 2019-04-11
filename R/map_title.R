@@ -3,7 +3,8 @@
 #' Adds a title to a map
 #'
 #' @inheritParams add_arc
-#' @param title
+#' @param title Either a single string for the title, or a list with a 'title' element,
+#' and an optional 'css' element. See examples
 #'
 #' @examples
 #' \donttest{

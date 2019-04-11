@@ -9,7 +9,8 @@ add_title(map, title, layer_id = NULL)
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{title}{}
+\item{title}{Either a single string for the title, or a list with a 'title' element,
+and an optional 'css' element. See examples}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely

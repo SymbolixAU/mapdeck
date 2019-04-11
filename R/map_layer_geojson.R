@@ -272,7 +272,11 @@ add_geojson <- function(
 	js_transitions <- resolve_transitions( transitions, "geojson" )
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight,

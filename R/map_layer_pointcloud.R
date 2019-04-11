@@ -110,7 +110,7 @@ add_pointcloud <- function(
 	l[["lat"]] <- force( lat )
 	l[["polyline"]] <- force( polyline )
 	l[["elevation"]] <- force( elevation )
-	l[["fill_colour"]] <- force( fill_colour)
+	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["tooltip"]] <- force( tooltip )
 	l[["id"]] <- force( id )
@@ -167,7 +167,12 @@ add_pointcloud <- function(
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 	js_transitions <- resolve_transitions( transitions, "pointcloud" )
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
 		map, jsfunc, shape[["data"]], radius, layer_id, light_settings,
