@@ -190,7 +190,6 @@ add_greatcircle <- function(
 
 #' Clear greatcircle
 #'
-#' Clears elements from a map
 #' @rdname clear
 #' @param map a mapdeck map object
 #' @param layer_id the layer_id of the layer you want to clear
