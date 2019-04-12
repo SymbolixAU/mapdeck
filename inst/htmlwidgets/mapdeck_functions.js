@@ -290,6 +290,35 @@ function md_update_layer( map_id, layer_id, layer ) {
   window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
 }
 
+function md_update_overlay( map_id, layer_id, layer ) {
+
+
+  if ( window[ map_id + 'layers' ] == null ) {
+  	window[ map_id + 'layers' ] = [];
+  }
+
+	var elem = md_findObjectElementByKey( window[map_id + 'layers'], 'id', layer_id );
+
+	console.log( elem );
+  console.log( window[map_id + 'layers'] );
+
+  if ( elem != -1 ) {
+  	window[ map_id + 'layers'][elem] = layer;
+  } else {
+  	window[map_id + 'layers'].push( layer );
+  }
+
+	const overlay = new GoogleMapsOverlay({
+  	layers: [
+  		...window[map_id + 'layers']
+  	]
+  });
+
+  overlay.setMap( window[map_id + 'map'] );
+
+}
+
+
 function md_clear_layer( map_id, layer_id ) {
 
   var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);

@@ -26,13 +26,16 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     transitions: js_transition || {}
   });
 
+  /*
   const overlay = new GoogleMapsOverlay({
   	layers: [
   		polygonLayer
   	]
   });
 
-  overlay.setMap( window[map_id + 'map']);
+  overlay.setMap( window[map_id + 'map'] );
+  */
+  md_update_overlay( map_id, 'polygon-'+layer_id, polygonLayer );
 
   //console.log( polygonLayer );
 

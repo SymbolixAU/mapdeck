@@ -23,7 +23,7 @@ function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, hi
     transitions: js_transition || {}
   });
 
-
+  /*
   const overlay = new GoogleMapsOverlay({
   	layers: [
   		scatterLayer
@@ -31,6 +31,8 @@ function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, hi
   });
 
   overlay.setMap( window[map_id + 'map'] );
+  */
+  md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
 
   /*
 

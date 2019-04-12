@@ -26,6 +26,7 @@ google_map() \%>\%
 		, lon = "lon"
 		, lat = "lat"
 		, fill_colour = "country"
+		, radius = 10000
 	)
 
 }
