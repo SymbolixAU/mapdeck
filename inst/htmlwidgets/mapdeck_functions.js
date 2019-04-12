@@ -297,6 +297,11 @@ function md_update_overlay( map_id, layer_id, layer ) {
   	window[ map_id + 'layers' ] = [];
   }
 
+  if ( window[ map_id + 'GoogleMapsOverlay'] == null ) {
+  	window[ map_id + 'GoogleMapsOverlay'] = new GoogleMapsOverlay();
+  	//console.log( window[ map_id + 'GoogleMapsOverlay'] );
+  }
+
 	var elem = md_findObjectElementByKey( window[map_id + 'layers'], 'id', layer_id );
 
 	console.log( elem );
@@ -308,14 +313,24 @@ function md_update_overlay( map_id, layer_id, layer ) {
   	window[map_id + 'layers'].push( layer );
   }
 
+  window[ map_id + 'GoogleMapsOverlay'].setProps({ layers: [ ...window[map_id + 'layers'] ] });
+  const overlay = window[ map_id + 'GoogleMapsOverlay'];
+
+  /*
 	const overlay = new GoogleMapsOverlay({
   	layers: [
   		...window[map_id + 'layers']
   	]
   });
+  */
+
+  console.log( overlay );
+
+  // TODO( do I need to clear or update an existing overlay?)
+  //console.log( window[map_id + 'map'] );
+  // maybe I need to keep an array of overlays?
 
   overlay.setMap( window[map_id + 'map'] );
-
 }
 
 

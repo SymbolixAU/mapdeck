@@ -157,7 +157,54 @@ mapboxgl <- function() {
 #'
 #' @export
 mapdeckOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'mapdeck', width, height, package = 'mapdeck')
+
+	## htmlwidgets::shinyWidgetOutput2(outputId, 'mapdeck', width, height, package = 'mapdeck')
+  shinyWidgetOutput2(outputId, 'mapdeck', width, height, package = 'mapdeck')
+}
+
+
+shinyWidgetOutput2 <- function (outputId, name, width, height, package = name, inline = FALSE,
+					reportSize = FALSE){
+	# checkShinyVersion()
+	html <- htmltools::tagList(
+		widget_html2(
+			name
+			, package
+			, id = outputId
+			, class = paste0(
+				name
+				, " html-widget html-widget-output"
+				, if (reportSize) " shiny-report-size"
+				)
+			, style = sprintf(
+				"width:%s; height:%s; %s"
+				, htmltools::validateCssUnit(width)
+				, htmltools::validateCssUnit(height)
+				, if (inline) "display: inline-block;" else ""
+				)
+			, width = width
+			, height = height
+			)
+		)
+
+	#dependencies = widget_dependencies(name, package)
+	dependencies <- c( deckgl_min_js(), mapdeck_functions(), mapboxgl() )
+	htmltools::attachDependencies(html, dependencies)
+}
+
+widget_html2 <- function (name, package, id, style, class, inline = FALSE, ...)
+{
+	fn <- tryCatch(get(paste0(name, "_html"), asNamespace(package),
+										 inherits = FALSE), error = function(e) NULL)
+	if (is.function(fn)) {
+		fn(id = id, style = style, class = class, ...)
+	}
+	else if (inline) {
+		tags$span(id = id, style = style, class = class)
+	}
+	else {
+		tags$div(id = id, style = style, class = class)
+	}
 }
 
 #' @rdname mapdeck-shiny
