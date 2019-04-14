@@ -1,5 +1,5 @@
 
-function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
+function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
 
   console.log( js_transition );
 
@@ -26,26 +26,19 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     transitions: js_transition || {}
   });
 
-  /*
-  const overlay = new GoogleMapsOverlay({
-  	layers: [
-  		polygonLayer
-  	]
-  });
 
-  overlay.setMap( window[map_id + 'map'] );
-  */
-  md_update_overlay( map_id, 'polygon-'+layer_id, polygonLayer );
+  if( map_type == "googleway") {
+    md_update_overlay( map_id, 'polygon-'+layer_id, polygonLayer );
+  } else {
 
-  //console.log( polygonLayer );
+	  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
-  //md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
+	  if (legend !== false) {
+	    add_legend(map_id, layer_id, legend);
+	  }
 
-  //if (legend !== false) {
-  //  add_legend(map_id, layer_id, legend);
-  //}
-
-  //md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  }
 }
 
 

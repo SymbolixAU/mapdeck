@@ -205,8 +205,12 @@ add_polygon <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
+	map_type <- attr( map, "class")
+	if( "mapdeck" %in% map_type ) map_type <- "mapdeck"
+	if( "googleway" %in% map_type ) map_type <- "googleway"
+
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, light_settings,
+		map, jsfunc, map_type, shape[["data"]], layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
 		js_transitions, is_extruded
 		)
