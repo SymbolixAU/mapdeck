@@ -26,7 +26,7 @@ mapdeck <- function(
 	pitch = 0,
 	zoom = 0,
 	bearing = 0,
-	location = c( 0, 0 )
+	location = c(0, 0)
 	) {
 
   # forward options using x
@@ -38,8 +38,6 @@ mapdeck <- function(
     , location = force( as.numeric( location ) )
     , bearing = force( bearing )
   )
-
-  #dep <- mapdeck_dependencies()
 
   # create widget
   mapdeckmap <- htmlwidgets::createWidget(
@@ -66,14 +64,13 @@ mapdeck <- function(
   return(mapdeckmap)
 }
 
-#' Mapdeck Dependencies
+#' Add Dependencies
 #'
 #' Javascript dependencies for mapdeck and deck.gl, useful for when not using
 #' a Mapbox map
 #'
 #' @examples
-#' mapdeck_dependencies()
-#' \dontrun{
+#' \donttest{
 #'
 #' ## use with a google map from googleway
 #' library(googleway)
@@ -81,7 +78,7 @@ mapdeck <- function(
 #' set_key("GOOGLE_MAP_KEY")
 #'
 #' google_map() %>%
-#' 	mapdeck_dependencies() %>%
+#' 	add_dependencies() %>%
 #' 	add_scatterplot(
 #' 		data = capitals
 #' 		, lon = "lon"
@@ -95,15 +92,15 @@ mapdeck <- function(
 #'
 #'
 #' @export
-mapdeck_dependencies <- function( map ) {
-	deps <- c(
-		mapdeck_functions()
-		, deckgl_min_js()
-	)
-
-	map$dependencies <- c( map$dependencies, deps )
+add_dependencies <- function( map ) {
+	map$dependencies <- c( map$dependencies, mapdeck_dependencies() )
 	return( map )
 }
+
+#' Mapdeck Dependencies
+#'
+#' @export
+mapdeck_dependencies <- function() c( mapdeck_functions(), deckgl_min_js() )
 
 mapdeck_functions <- function() {
 	list(
@@ -138,6 +135,11 @@ mapboxgl <- function() {
 		)
 	)
 }
+
+
+## For shiny to use mapdeck javascript it needs the files
+## - deckgl.min.js
+## - mapdeck_functions.js
 
 #' Shiny bindings for mapdeck
 #'
@@ -187,12 +189,11 @@ shinyWidgetOutput2 <- function (outputId, name, width, height, package = name, i
 		)
 
 	dependencies = htmlwidgets:::getDependency(name, package)
-	dependencies <- c(dependencies, deckgl_min_js(), mapdeck_functions(), mapboxgl() )
+	dependencies <- c( dependencies, deckgl_min_js(), mapdeck_functions(), mapboxgl() )
 	htmltools::attachDependencies(html, dependencies)
 }
 
-widget_html2 <- function (name, package, id, style, class, inline = FALSE, ...)
-{
+widget_html2 <- function (name, package, id, style, class, inline = FALSE, ...) {
 	fn <- tryCatch(get(paste0(name, "_html"), asNamespace(package),
 										 inherits = FALSE), error = function(e) NULL)
 	if (is.function(fn)) {

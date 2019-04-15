@@ -4,33 +4,8 @@
 \alias{mapdeck_dependencies}
 \title{Mapdeck Dependencies}
 \usage{
-mapdeck_dependencies(map)
+mapdeck_dependencies()
 }
 \description{
-Javascript dependencies for mapdeck and deck.gl, useful for when not using
-a Mapbox map
-}
-\examples{
-mapdeck_dependencies()
-\dontrun{
-
-## use with a google map from googleway
-library(googleway)
-
-set_key("GOOGLE_MAP_KEY")
-
-google_map() \%>\%
-	mapdeck_dependencies() \%>\%
-	add_scatterplot(
-		data = capitals
-		, lon = "lon"
-		, lat = "lat"
-		, fill_colour = "country"
-		, radius = 10000
-	)
-
-}
-
-
-
+Mapdeck Dependencies
 }

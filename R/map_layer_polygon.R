@@ -205,9 +205,10 @@ add_polygon <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
+	## TODO - update / imporve this bit
 	map_type <- attr( map, "class")
 	if( "mapdeck" %in% map_type ) map_type <- "mapdeck"
-	if( "googleway" %in% map_type ) map_type <- "googleway"
+	if( "google_map" %in% map_type ) map_type <- "google_map"
 
 	invoke_method(
 		map, jsfunc, map_type, shape[["data"]], layer_id, light_settings,

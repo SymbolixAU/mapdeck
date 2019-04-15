@@ -26,8 +26,7 @@ function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settin
     transitions: js_transition || {}
   });
 
-
-  if( map_type == "googleway") {
+  if( map_type == "google_map") {
     md_update_overlay( map_id, 'polygon-'+layer_id, polygonLayer );
   } else {
 

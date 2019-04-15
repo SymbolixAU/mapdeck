@@ -72,16 +72,8 @@
 # sf$elev <- sf$AREASQKM * 1000
 #
 # google_map() %>%
-# 	mapdeck_dependencies() %>%
+# 	add_dependencies() %>%
 # 	add_polygon(
 # 		data = sf
 # 		, fill_colour = "SA3_NAME"
-# 	)
-#
-# #
-# #
-# mapdeck() %>%
-# 	add_polygon(
-# 		data = sf
-# 		, elevation = "elev"
 # 	)
