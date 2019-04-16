@@ -1,6 +1,6 @@
 
 
-function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
@@ -32,7 +32,20 @@ function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, hi
 
   overlay.setMap( window[map_id + 'map'] );
   */
-  md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
+  //md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
+
+	if( map_type == "google_map") {
+	    md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
+	  } else {
+
+	  md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
+
+	  if (legend !== false) {
+	    add_legend(map_id, layer_id, legend);
+	  }
+
+	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  }
 
   /*
 

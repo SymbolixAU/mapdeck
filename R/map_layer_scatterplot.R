@@ -203,8 +203,13 @@ add_scatterplot <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
+	## TODO - update / imporve this bit
+	map_type <- attr( map, "class")
+	if( "mapdeck" %in% map_type ) map_type <- "mapdeck"
+	if( "google_map" %in% map_type ) map_type <- "google_map"
+
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
+		map, jsfunc, map_type, shape[["data"]], layer_id, auto_highlight, highlight_colour,
 		shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
 		brush_radius
 		)

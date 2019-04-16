@@ -110,37 +110,6 @@ doResolveFormula.data.frame = function(data, f) {
 	eval(f[[2]], data, environment(f))
 }
 
-## from htmltools::htmlDependency()
-createHtmlDependency <- function(name, version, src, script, stylesheet = NULL) {
-	structure(
-		list(
-			name = name
-			, version = version
-			, src = list( file = src )
-			, meta = NULL
-			, script = script
-			, stylesheet = stylesheet
-			, head = NULL
-			, attachment = NULL
-			, package = NULL
-			, all_files = TRUE
-		)
-		, class = "html_dependency"
-	)
-}
-
-
-addDependency <- function(map, dependencyFunction) {
-
-	existingDeps <- sapply(map$dependencies, function(x) x[['name']])
-	addingDependency <- sapply(dependencyFunction, function(x) x[['name']])
-
-	if(!addingDependency %in% existingDeps)
-		map$dependencies <- c(map$dependencies, dependencyFunction)
-
-	return(map)
-}
-
 # Layer Id
 #
 # Checks the layer_id parameter, and provides a default one if NULL

@@ -58,88 +58,18 @@ mapdeck <- function(
     #, dependencies = dep
   )
 
-  mapdeckmap <- mapdeck_dependencies( mapdeckmap )
-  mapdeckmap$dependencies <- c( mapdeckmap$dependencies, mapboxgl())
+  mapdeckmap <- add_dependencies( mapdeckmap )
+  mapdeckmap$dependencies <- c(
+  	mapdeckmap$dependencies
+  	, mapboxgl()
+  	, mapdeck_css()
+  	, mapdeck_legend()
+  	, mapdeck_title()
+  	)
 
   return(mapdeckmap)
 }
 
-#' Add Dependencies
-#'
-#' Javascript dependencies for mapdeck and deck.gl, useful for when not using
-#' a Mapbox map
-#'
-#' @examples
-#' \donttest{
-#'
-#' ## use with a google map from googleway
-#' library(googleway)
-#'
-#' set_key("GOOGLE_MAP_KEY")
-#'
-#' google_map() %>%
-#' 	add_dependencies() %>%
-#' 	add_scatterplot(
-#' 		data = capitals
-#' 		, lon = "lon"
-#' 		, lat = "lat"
-#' 		, fill_colour = "country"
-#' 		, radius = 10000
-#' 	)
-#'
-#' }
-#'
-#'
-#'
-#' @export
-add_dependencies <- function( map ) {
-	map$dependencies <- c( map$dependencies, mapdeck_dependencies() )
-	return( map )
-}
-
-#' Mapdeck Dependencies
-#'
-#' @export
-mapdeck_dependencies <- function() c( mapdeck_functions(), deckgl_min_js() )
-
-mapdeck_functions <- function() {
-	list(
-		createHtmlDependency(
-			name = "mpadeck_functions",
-			version = "7.0.0",
-			src = system.file("htmlwidgets/", package = "mapdeck"),
-			script = c("mapdeck_functions.js")
-		)
-	)
-}
-
-deckgl_min_js <- function() {
-	list(
-		createHtmlDependency(
-			name = "deckgl",
-			version = "7.0.0",
-			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
-			script = c("deckgl.min.js")
-		)
-	)
-}
-
-mapboxgl <- function() {
-	list(
-		createHtmlDependency(
-			name = "mapboxgl",
-			version = "0.52.0",
-			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
-			script = c("mapbox-gl.js"),
-			stylesheet = c("mapbox-gl.css")
-		)
-	)
-}
-
-
-## For shiny to use mapdeck javascript it needs the files
-## - deckgl.min.js
-## - mapdeck_functions.js
 
 #' Shiny bindings for mapdeck
 #'
