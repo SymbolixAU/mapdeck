@@ -36,7 +36,7 @@
 #
 # 	observeEvent({input$scatterplot},{
 #
-# 		mapdeck_update(map_id = "map") %>%
+# 		mapdeck_update(map_id = "map", map_type = "google_map") %>%
 # 			add_scatterplot(
 # 				data = capitals
 # 				, lon = "lon"

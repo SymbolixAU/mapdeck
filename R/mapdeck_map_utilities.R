@@ -21,6 +21,9 @@ mapdeck_dispatch = function(
   mapdeck = stop(paste(funcName, "requires a map update object")),
   mapdeck_update = stop(paste(funcName, "does not support map update objects"))
   ) {
+
+	print( str( map ) )
+
   if (inherits(map, "mapdeck") | inherits(map, "google_map") )
     return(mapdeck)
   else if (inherits(map, "mapdeck_update") | inherits(map, "google_map_update"))
@@ -55,8 +58,13 @@ invoke_method = function(map, method, ...) {
 
 
 invoke_remote = function(map, method, args = list()) {
-  if (!inherits(map, "mapdeck_update") )
+
+  if (!( inherits(map, "mapdeck_update") | inherits(map, "google_map_update") ) )
     stop("Invalid map parameter; mapdeck_update object was expected")
+
+
+	calls <- "mapdeckmap-calls"
+	if( inherits(map, "google_map_update")) calls <- "googlemap-calls"
 
   msg <- list(
     id = map$id,
@@ -73,11 +81,11 @@ invoke_remote = function(map, method, args = list()) {
   if (map$deferUntilFlush) {
 
     sess$onFlushed(function() {
-      sess$sendCustomMessage("mapdeckmap-calls", msg)
+      sess$sendCustomMessage(calls, msg)
     }, once = TRUE)
 
   } else {
-    sess$sendCustomMessage("mapdeckmap-calls", msg)
+    sess$sendCustomMessage(calls, msg)
   }
   map
 }

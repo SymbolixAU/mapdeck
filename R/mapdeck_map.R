@@ -161,8 +161,11 @@ mapdeck_update <- function(
 	map_id,
 	session = shiny::getDefaultReactiveDomain(),
 	data = NULL,
-	deferUntilFlush = TRUE
+	deferUntilFlush = TRUE,
+	map_type = c("mapdeck_update", "google_map_update")
 	) {
+
+	map_type <- match.arg( map_type )
 
 	if (is.null(session)) {
 		stop("mapdeck_update must be called from the server function of a Shiny app")
@@ -179,7 +182,7 @@ mapdeck_update <- function(
 			deferUntilFlush = deferUntilFlush,
 			dependencies = NULL
 		),
-		class = "mapdeck_update"
+		class = c(map_type)
 	)
 }
 
@@ -226,7 +229,9 @@ get_map_data <- function( map ) {
 map_type <- function( map ) {
 
 	map_type <- attr( map, "class")
-	if( "mapdeck" %in% map_type ) return( "mapdeck" )
+	if( any( c("mapdeck", "mapdeck_update") %in% map_type ) ) return( "mapdeck" )
 
-	if( "google_map" %in% map_type ) return( "google_map" )
+	if( any( c("google_map", "google_map_update") %in% map_type ) ) return( "google_map" )
+
+	return(NULL)
 }

@@ -1,4 +1,5 @@
 
+/*
 if (HTMLWidgets.shinyMode) {
 
   Shiny.addCustomMessageHandler("mapdeckmap-calls", function (data) {
@@ -35,3 +36,4 @@ if (HTMLWidgets.shinyMode) {
     }
   });
 }
+*/
