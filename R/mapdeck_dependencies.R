@@ -64,7 +64,14 @@ add_dependencies <- function( map ) {
 #' Mapdeck Dependencies
 #'
 #' @export
-mapdeck_dependencies <- function() c( mapdeck_functions(), deckgl_min_js() )
+mapdeck_dependencies <- function() {
+	c(
+		mapdeck_functions()
+		, deckgl_min_js()
+		, mapdeck_legend()
+		, mapdeck_title()
+		)
+}
 
 mapdeck_functions <- function() {
 	list(

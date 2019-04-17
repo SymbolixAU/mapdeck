@@ -63,8 +63,6 @@ mapdeck <- function(
   	mapdeckmap$dependencies
   	, mapboxgl()
   	, mapdeck_css()
-  	, mapdeck_legend()
-  	, mapdeck_title()
   	)
 
   return(mapdeckmap)
@@ -130,10 +128,10 @@ widget_html2 <- function (name, package, id, style, class, inline = FALSE, ...) 
 		fn(id = id, style = style, class = class, ...)
 	}
 	else if (inline) {
-		tags$span(id = id, style = style, class = class)
+		shiny::tags$span(id = id, style = style, class = class)
 	}
 	else {
-		tags$div(id = id, style = style, class = class)
+		shiny::tags$div(id = id, style = style, class = class)
 	}
 }
 
@@ -218,6 +216,17 @@ mapdeck_view <- function(
 #
 # @param map a mapdeck map object
 #
-get_map_data = function( map ) {
+get_map_data <- function( map ) {
 	attr( map$x, "mapdeck_data", exact = TRUE )
+}
+
+# map_type
+#
+# determines the source/type of map
+map_type <- function( map ) {
+
+	map_type <- attr( map, "class")
+	if( "mapdeck" %in% map_type ) return( "mapdeck" )
+
+	if( "google_map" %in% map_type ) return( "google_map" )
 }
