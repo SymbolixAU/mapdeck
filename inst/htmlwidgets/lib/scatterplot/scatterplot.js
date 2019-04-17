@@ -23,16 +23,10 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
     transitions: js_transition || {}
   });
 
-  /*
-  const overlay = new GoogleMapsOverlay({
-  	layers: [
-  		scatterLayer
-  	]
-  });
-
-  overlay.setMap( window[map_id + 'map'] );
-  */
-  //md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
+  console.log( "scatterLayer" );
+  console.log( scatterLayer );
+  console.log( "map_type -" + map_type );
+  //map_type = "google_map";
 
 	if( map_type == "google_map") {
 	    md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );

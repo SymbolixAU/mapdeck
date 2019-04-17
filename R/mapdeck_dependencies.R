@@ -70,7 +70,19 @@ mapdeck_dependencies <- function() {
 		, deckgl_min_js()
 		, mapdeck_legend()
 		, mapdeck_title()
+		, mapdeck_shiny()
 		)
+}
+
+mapdeck_shiny <- function() {
+	list(
+		createHtmlDependency(
+			name = "mapdeck_shiny",
+			version = "0.0.1",
+			src = system.file("htmlwidgets/", package = "mapdeck"),
+			script = c("mapdeck_shiny.js")
+		)
+	)
 }
 
 mapdeck_functions <- function() {

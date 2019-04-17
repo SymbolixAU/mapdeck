@@ -55,7 +55,7 @@ invoke_method = function(map, method, ...) {
 
 
 invoke_remote = function(map, method, args = list()) {
-  if (!inherits(map, "mapdeck_update") & !inherits(map, "google_map_update"))
+  if (!inherits(map, "mapdeck_update") )
     stop("Invalid map parameter; mapdeck_update object was expected")
 
   msg <- list(
