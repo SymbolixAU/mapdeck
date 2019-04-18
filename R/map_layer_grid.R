@@ -166,7 +166,7 @@ add_grid <- function(
 	js_transitions <- resolve_transitions( transitions, "grid" )
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, cell_size,
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, cell_size,
 		jsonify::to_json(extruded, unbox = TRUE), elevation_scale,
 		colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer,
 		js_transitions, use_weight, use_colour
@@ -178,5 +178,5 @@ add_grid <- function(
 #' @export
 clear_grid <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "grid")
-	invoke_method(map, "md_layer_clear", layer_id, "grid" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "grid" )
 }

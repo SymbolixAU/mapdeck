@@ -110,11 +110,17 @@ function md_layer_view( map_id, layer_id, focus_layer, bbox, update_view ) {
   }
 }
 
-function md_layer_clear( map_id, layer_id, layer ) {
-	md_clear_layer( map_id, layer+'-'+layer_id );
-  md_clear_legend( map_id, layer_id );
-  md_remove_from_bounds( map_id, layer_id );
-  md_update_location( map_id );
+function md_layer_clear( map_id, map_type, layer_id, layer ) {
+
+  if( map_type == "mapdeck" ) {
+		md_clear_layer( map_id, layer+'-'+layer_id );
+	  md_clear_legend( map_id, layer_id );
+	  md_remove_from_bounds( map_id, layer_id );
+	  md_update_location( map_id );
+  } else if ( map_type == "google_map" ) {
+  	md_clear_overlay( map_id, layer+'-'+layer_id );
+  }
+
 }
 
 function md_center_location( bbox ) {
@@ -309,24 +315,21 @@ function md_update_overlay( map_id, layer_id, layer ) {
 
   window[ map_id + 'GoogleMapsOverlay'].setProps({ layers: [ ...window[map_id + 'layers'] ] });
   const overlay = window[ map_id + 'GoogleMapsOverlay'];
-
-  /*
-	const overlay = new GoogleMapsOverlay({
-  	layers: [
-  		...window[map_id + 'layers']
-  	]
-  });
-  */
-
-  console.log( overlay );
-
-  // TODO( do I need to clear or update an existing overlay?)
-  //console.log( window[map_id + 'map'] );
-  // maybe I need to keep an array of overlays?
-
   overlay.setMap( window[map_id + 'map'] );
 }
 
+
+function md_clear_overlay( map_id, layer_id ) {
+	var elem = md_findObjectElementByKey( window[map_id + 'layers'], 'id', layer_id );
+	if( elem != -1 ) {
+		window[ map_id + 'layers'].splice( elem, 1 );
+	}
+
+	window[ map_id + 'GoogleMapsOverlay'].setProps({ layers: [ ...window[map_id + 'layers'] ] });
+  const overlay = window[ map_id + 'GoogleMapsOverlay'];
+  overlay.setMap( window[map_id + 'map'] );
+
+}
 
 function md_clear_layer( map_id, layer_id ) {
 

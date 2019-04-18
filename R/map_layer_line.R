@@ -177,7 +177,7 @@ add_line <- function(
 	}
 
 	invoke_method(
-		map, "add_line_geo", shape[["data"]], layer_id, auto_highlight,
+		map, "add_line_geo", map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
 		js_transitions
 		)
@@ -189,6 +189,6 @@ add_line <- function(
 #' @export
 clear_line <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "line")
-	invoke_method(map, "md_layer_clear", layer_id, "line" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "line" )
 }
 

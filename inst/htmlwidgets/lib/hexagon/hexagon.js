@@ -1,5 +1,5 @@
 
-function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function ) {
+function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function ) {
 
   const hexagonLayer = new deck.HexagonLayer({
         map_id: map_id,
@@ -20,11 +20,16 @@ function add_hexagon_geo( map_id, hexagon_data, layer_id, radius, elevation_scal
         getColorValue: d => md_hexagon_colour( d, use_colour, false, colour_function ),
         transitions: js_transition || {}
   });
-	md_update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
-	md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+
+  if( map_type == "google_map") {
+	    md_update_overlay( map_id, 'hexagon-'+layer_id, hexagonLayer );
+	} else {
+		md_update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
+		md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	}
 }
 
-function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour) {
+function add_hexagon_polyline( map_id, map_type, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour) {
 
 
   const hexagonLayer = new deck.HexagonLayer({
@@ -47,8 +52,12 @@ function add_hexagon_polyline( map_id, hexagon_data, layer_id, radius, elevation
         transitions: js_transition || {}
   });
 
-  md_update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  if( map_type == "google_map") {
+	    md_update_overlay( map_id, 'hexagon-'+layer_id, hexagonLayer );
+	} else {
+	  md_update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
+	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	}
 }
 
 function md_hexagon_elevation(d, use_weight, use_polyline, elevation_function ) {

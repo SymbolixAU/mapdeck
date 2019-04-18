@@ -175,7 +175,7 @@ add_pointcloud <- function(
 	}
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], radius, layer_id, light_settings,
+		map, jsfunc, map_type( map ), shape[["data"]], radius, layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
 		js_transitions
 		)
@@ -186,6 +186,6 @@ add_pointcloud <- function(
 #' @export
 clear_pointcloud <- function( map, layer_id = NULL) {
 	layer_id <- layerId( layer_id, "pointcloud" )
-	invoke_method(map, "md_layer_clear", layer_id, "pointcloud" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "pointcloud" )
 }
 

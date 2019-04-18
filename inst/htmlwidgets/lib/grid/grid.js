@@ -1,4 +1,4 @@
-function add_grid_geo( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour ) {
+function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour ) {
 
   const gridLayer = new deck.GridLayer({
   	map_id: map_id,
@@ -17,11 +17,16 @@ function add_grid_geo( map_id, grid_data, layer_id, cell_size, extruded, elevati
     getColorValue: d => md_grid_colour( d, use_colour, false ),
     transitions: js_transition || {}
   });
-  md_update_layer( map_id, 'grid-'+layer_id, gridLayer );
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+
+  if( map_type == "google_map") {
+	    md_update_overlay( map_id, 'grid-'+layer_id, gridLayer );
+	} else {
+	  md_update_layer( map_id, 'grid-'+layer_id, gridLayer );
+	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	}
 }
 
-function add_grid_polyline( map_id, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition ) {
+function add_grid_polyline( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition ) {
 
   const gridLayer = new deck.GridLayer({
     map_id: map_id,
@@ -40,8 +45,13 @@ function add_grid_polyline( map_id, grid_data, layer_id, cell_size, extruded, el
     getColorValue: d => md_grid_colour( d, use_colour, true ),
     transitions: js_transition || {}
   });
-  md_update_layer( map_id, 'grid-'+layer_id, gridLayer );
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+
+  if( map_type == "google_map") {
+	    md_update_overlay( map_id, 'grid-'+layer_id, gridLayer );
+	} else {
+	  md_update_layer( map_id, 'grid-'+layer_id, gridLayer );
+	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	}
 }
 
 

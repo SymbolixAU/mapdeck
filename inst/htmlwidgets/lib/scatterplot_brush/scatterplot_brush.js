@@ -110,7 +110,7 @@ void main(void) {
 `;
 
 
-function add_scatterplot_brush_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
+function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
 
 
   //var all_points = scatter_data.geometry.geometry.coordinates;
@@ -246,12 +246,16 @@ function add_scatterplot_brush_geo( map_id, scatter_data, layer_id, auto_highlig
   document.addEventListener('mousemove', scatterbrushMoveListener, false);
   document.addEventListener('mouseleave', scatterbrushLeaveListener, false);
 
-  md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
+	if( map_type == "google_map") {
+	    md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
+	  } else {
+	  md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
 
-  if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
-  }
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	  if (legend !== false) {
+	    add_legend(map_id, layer_id, legend);
+	  }
+	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	}
 
 }
 

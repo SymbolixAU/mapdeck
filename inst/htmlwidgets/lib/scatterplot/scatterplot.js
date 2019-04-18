@@ -23,11 +23,6 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
     transitions: js_transition || {}
   });
 
-  console.log( "scatterLayer" );
-  console.log( scatterLayer );
-  console.log( "map_type -" + map_type );
-  //map_type = "google_map";
-
 	if( map_type == "google_map") {
 	    md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
 	  } else {
@@ -52,7 +47,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
   */
 }
 
-function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,

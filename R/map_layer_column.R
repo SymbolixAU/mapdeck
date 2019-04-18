@@ -164,7 +164,7 @@ add_column <- function(
 	}
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
 		radius, elevation_scale, disk_resolution, angle, coverage, shape[["legend"]], bbox, update_view,
 		focus_layer, js_transitions
 	)
@@ -175,5 +175,5 @@ add_column <- function(
 #' @export
 clear_column <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "column")
-	invoke_method(map, "md_layer_clear", layer_id, "column" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "column" )
 }

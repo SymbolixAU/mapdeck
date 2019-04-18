@@ -1,6 +1,6 @@
 
 
-function add_path_geo( map_id, path_data, layer_id, auto_highlight, highlight_colour,
+function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour,
 legend, bbox, update_view, focus_layer, js_transition ) {
 
   console.log( "add_path" );
@@ -22,16 +22,21 @@ legend, bbox, update_view, focus_layer, js_transition ) {
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {}
   });
-  md_update_layer( map_id, 'path-'+layer_id, pathLayer );
 
-  if ( legend !== false ) {
-      add_legend( map_id, layer_id, legend );
-  }
+  if( map_type == "google_map") {
+	    md_update_overlay( map_id, 'path-'+layer_id, pathLayer );
+	} else {
+	  md_update_layer( map_id, 'path-'+layer_id, pathLayer );
 
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	  if ( legend !== false ) {
+	      add_legend( map_id, layer_id, legend );
+	  }
+
+	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	}
 }
 
-function add_path_polyline( map_id, path_data, layer_id, auto_highlight, highlight_colour,
+function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour,
 legend, bbox, update_view, focus_layer, js_transition ) {
 
   const pathLayer = new PathLayer({
@@ -51,11 +56,16 @@ legend, bbox, update_view, focus_layer, js_transition ) {
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {}
   });
-  md_update_layer( map_id, 'path-'+layer_id, pathLayer );
 
-  if ( legend !== false ) {
-      add_legend( map_id, layer_id, legend );
-  }
+  if( map_type == "google_map") {
+	    md_update_overlay( map_id, 'path-'+layer_id, pathLayer );
+	} else {
+	  md_update_layer( map_id, 'path-'+layer_id, pathLayer );
 
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	  if ( legend !== false ) {
+	      add_legend( map_id, layer_id, legend );
+	  }
+
+	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	}
 }
