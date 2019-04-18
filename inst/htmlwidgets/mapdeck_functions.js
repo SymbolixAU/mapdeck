@@ -111,7 +111,6 @@ function md_layer_view( map_id, layer_id, focus_layer, bbox, update_view ) {
 }
 
 function md_layer_clear( map_id, layer_id, layer ) {
-
 	md_clear_layer( map_id, layer+'-'+layer_id );
   md_clear_legend( map_id, layer_id );
   md_remove_from_bounds( map_id, layer_id );
@@ -292,20 +291,15 @@ function md_update_layer( map_id, layer_id, layer ) {
 
 function md_update_overlay( map_id, layer_id, layer ) {
 
-
   if ( window[ map_id + 'layers' ] == null ) {
   	window[ map_id + 'layers' ] = [];
   }
 
   if ( window[ map_id + 'GoogleMapsOverlay'] == null ) {
   	window[ map_id + 'GoogleMapsOverlay'] = new GoogleMapsOverlay();
-  	//console.log( window[ map_id + 'GoogleMapsOverlay'] );
   }
 
 	var elem = md_findObjectElementByKey( window[map_id + 'layers'], 'id', layer_id );
-
-	console.log( elem );
-  console.log( window[map_id + 'layers'] );
 
   if ( elem != -1 ) {
   	window[ map_id + 'layers'][elem] = layer;
