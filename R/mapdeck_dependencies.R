@@ -31,7 +31,7 @@ addDependency <- function(map, dependencyFunction) {
 
 #' Add Dependencies
 #'
-#' Add javascript dependencies to a map when not using a mapdeck map.
+#' Adds the required mapdeck javascript dependencies to a map when not using a mapdeck map.
 #'
 #' @examples
 #' \donttest{
@@ -63,6 +63,11 @@ add_dependencies <- function( map ) {
 
 #' Mapdeck Dependencies
 #'
+#' Adds the required mapdeck javascript dependencies to a Shiny UI when you want to use
+#' mapdeck layers, but not with a mapdeck map.
+#'
+#'
+#'
 #' @export
 mapdeck_dependencies <- function() {
 	c(
@@ -70,28 +75,52 @@ mapdeck_dependencies <- function() {
 		, deckgl_min_js()
 		, mapdeck_legend()
 		, mapdeck_title()
-		, mapdeck_shiny()
+		, mapdeck_location()
+		, mapdeck_colours()
+		, mapdeck_coordinates()
 		)
-}
-
-mapdeck_shiny <- function() {
-	list(
-		createHtmlDependency(
-			name = "mapdeck_shiny",
-			version = "0.0.1",
-			src = system.file("htmlwidgets/", package = "mapdeck"),
-			script = c("mapdeck_shiny.js")
-		)
-	)
 }
 
 mapdeck_functions <- function() {
 	list(
 		createHtmlDependency(
 			name = "mpadeck_functions",
-			version = "7.0.0",
+			version = "0.0.1",
 			src = system.file("htmlwidgets/", package = "mapdeck"),
 			script = c("mapdeck_functions.js")
+		)
+	)
+}
+
+mapdeck_coordinates <- function() {
+	list(
+		createHtmlDependency(
+			name = "mapdeck_coordinates",
+			version = "0.0.1",
+			src = system.file("htmlwidgets/", package = "mapdeck"),
+			script = c("mapdeck_coordinates.js")
+		)
+	)
+}
+
+mapdeck_colours <- function() {
+	list(
+		createHtmlDependency(
+			name = "mapdeck_colours",
+			version = "0.0.1",
+			src = system.file("htmlwidgets/", package = "mapdeck"),
+			script = c("mapdeck_colours.js")
+		)
+	)
+}
+
+mapdeck_location <- function() {
+	list(
+		createHtmlDependency(
+			name = "mapdeck_location",
+			version = "0.0.1",
+			src = system.file("htmlwidgets/", package = "mapdeck"),
+			script = c("mapdeck_location.js")
 		)
 	)
 }

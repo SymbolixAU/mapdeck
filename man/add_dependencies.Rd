@@ -7,7 +7,7 @@
 add_dependencies(map)
 }
 \description{
-Add javascript dependencies to a map when not using a mapdeck map.
+Adds the required mapdeck javascript dependencies to a map when not using a mapdeck map.
 }
 \examples{
 \donttest{

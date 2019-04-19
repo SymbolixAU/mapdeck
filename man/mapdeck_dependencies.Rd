@@ -7,5 +7,6 @@
 mapdeck_dependencies()
 }
 \description{
-Mapdeck Dependencies
+Adds the required mapdeck javascript dependencies to a Shiny UI when you want to use
+mapdeck layers, but not with a mapdeck map.
 }
