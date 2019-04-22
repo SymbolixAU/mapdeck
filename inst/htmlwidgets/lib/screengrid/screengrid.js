@@ -20,8 +20,8 @@ function add_screengrid_geo( map_id, map_type, screengrid_data, layer_id, opacit
 	    md_update_overlay( map_id, 'screengrid-'+layer_id, screengridLayer );
 	} else {
 	  md_update_layer( map_id, 'screengrid-'+layer_id, screengridLayer );
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 function add_screengrid_polyline( map_id, map_type, screengrid_data, layer_id, opacity, cell_size, colour_range, bbox, update_view, focus_layer ) {
@@ -43,6 +43,6 @@ function add_screengrid_polyline( map_id, map_type, screengrid_data, layer_id, o
 	    md_update_overlay( map_id, 'screengrid-'+layer_id, screengridLayer );
 	} else {
 	  md_update_layer( map_id, 'screengrid-'+layer_id, screengridLayer );
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

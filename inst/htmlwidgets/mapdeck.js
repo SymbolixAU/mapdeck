@@ -10,35 +10,7 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
 
-      	//window.params = [];
-      	//window.params.push({ 'map_id' : el.id });
-
-      	window[el.id + 'layers'] = []; // keep track of layers for overlaying multiple
-        window[el.id + 'legendPositions'] = [];     // array for keeping a referene to legend positions
-        window[el.id + 'mapTitlePositions'] = [];
-        window[el.id + 'mapdeckBounds'] = [];       // store the bounding box of each layer
-        window[el.id + 'globalBox'] = [];
-        window[el.id + 'currentZoomLevel'] = 0;
-
-      	// needs to be an array because .props takes an array of layers
-
-        var mapDiv = document.getElementById(el.id);
-        mapDiv.className = 'mapdeckmap';
-
-        var legendContainer = document.createElement('div');
-        legendContainer.className = "legendContainer";
-        legendContainer.id = "legendContainer"+el.id;
-        mapDiv.appendChild( legendContainer );
-
-        var mapTitle = document.createElement('div');
-        mapTitle.className = "mapTitleContainer";
-        mapTitle.id = "mapTitleContainer"+el.id;
-        mapDiv.appendChild( mapTitle );
-
-        var tooltipdiv = document.createElement('div');
-        tooltipdiv.setAttribute("class", "mapdecktooltip");
-        tooltipdiv.setAttribute("id", "mapdecktooltip"+el.id);
-        mapDiv.appendChild(tooltipdiv);
+      	md_setup_window( el.id );
 
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {

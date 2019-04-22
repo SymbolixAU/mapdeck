@@ -2,8 +2,9 @@ function add_title(map_id, layer_id, title_data) {
 
     'use strict';
 
-    console.log( title_data );
-
+  if( !document.getElementById('mapTitlecontainer'+map_id)) {
+  	md_setup_title( map_id );
+  }
     var title,
         style = '',
         isUpdating = false;

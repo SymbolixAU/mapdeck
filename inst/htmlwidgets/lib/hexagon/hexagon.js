@@ -25,8 +25,8 @@ function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elev
 	    md_update_overlay( map_id, 'hexagon-'+layer_id, hexagonLayer );
 	} else {
 		md_update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
-		md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+  md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 function add_hexagon_polyline( map_id, map_type, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour) {
@@ -56,8 +56,8 @@ function add_hexagon_polyline( map_id, map_type, hexagon_data, layer_id, radius,
 	    md_update_overlay( map_id, 'hexagon-'+layer_id, hexagonLayer );
 	} else {
 	  md_update_layer( map_id, 'hexagon-'+layer_id, hexagonLayer );
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 function md_hexagon_elevation(d, use_weight, use_polyline, elevation_function ) {

@@ -27,8 +27,8 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
 	  if (legend !== false) {
 	    add_legend( map_id, layer_id, legend );
 	  }
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 
@@ -61,7 +61,6 @@ function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id,
 	  if (legend !== false) {
 	    add_legend( map_id, layer_id, legend );
 	  }
-
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+  md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

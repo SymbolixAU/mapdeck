@@ -254,8 +254,8 @@ function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, au
 	  if (legend !== false) {
 	    add_legend(map_id, layer_id, legend);
 	  }
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 
 }
 

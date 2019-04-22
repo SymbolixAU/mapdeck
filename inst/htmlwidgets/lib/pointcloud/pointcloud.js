@@ -26,8 +26,8 @@ function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id
 	  if (legend !== false) {
 	    add_legend(map_id, layer_id, legend);
 	  }
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 function add_pointcloud_polyline( map_id, map_type, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
@@ -56,8 +56,8 @@ function add_pointcloud_polyline( map_id, map_type, pointcloud_data, radius, lay
 	  if (legend !== false) {
 	    add_legend(map_id, layer_id, legend);
 	  }
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 

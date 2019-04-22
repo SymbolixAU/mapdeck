@@ -35,9 +35,8 @@ function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settin
 	  if (legend !== false) {
 	    add_legend(map_id, layer_id, legend);
 	  }
-
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
   }
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 
@@ -65,13 +64,18 @@ function add_polygon_polyline( map_id, map_type, polygon_data, layer_id, light_s
     onClick: info => md_layer_click( map_id, "polygon", info ),
     transitions: js_transition || {}
   });
-  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
-  if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
+  if( map_type == "google_map") {
+    md_update_overlay( map_id, 'polygon-'+layer_id, polygonLayer );
+  } else {
+
+	  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
+
+	  if (legend !== false) {
+	    add_legend(map_id, layer_id, legend);
+	  }
   }
-
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 function decode_polygons( polylines ) {

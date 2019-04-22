@@ -30,9 +30,8 @@ function add_column_geo( map_id, map_type, column_data, layer_id, auto_highlight
 		if (legend !== false) {
 	    add_legend(map_id, layer_id, legend);
 	  }
-
-		md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 
@@ -68,9 +67,8 @@ function add_column_polyline( map_id, map_type, column_data, layer_id, auto_high
 		if (legend !== false) {
 	    add_legend(map_id, layer_id, legend);
 	  }
-
-		md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 function md_column_elevation(d, use_weight, use_polyline, elevation_function ) {

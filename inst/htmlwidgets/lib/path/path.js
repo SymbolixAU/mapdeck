@@ -31,9 +31,8 @@ legend, bbox, update_view, focus_layer, js_transition ) {
 	  if ( legend !== false ) {
 	      add_legend( map_id, layer_id, legend );
 	  }
-
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour,
@@ -65,7 +64,6 @@ legend, bbox, update_view, focus_layer, js_transition ) {
 	  if ( legend !== false ) {
 	      add_legend( map_id, layer_id, legend );
 	  }
-
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

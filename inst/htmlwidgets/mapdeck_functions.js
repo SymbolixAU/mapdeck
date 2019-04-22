@@ -1,7 +1,59 @@
+function md_setup_window( map_id ) {
+
+	md_setup_window_objects( map_id );
+  md_setup_mapdeck_div( map_id );
+
+  md_setup_legend( map_id );
+  md_setup_title( map_id );
+  md_setup_tooltip( map_id );
+}
+
+function md_setup_window_objects( map_id ) {
+	window[map_id + 'layers'] = []; // keep track of layers for overlaying multiple
+  window[map_id + 'legendPositions'] = [];     // array for keeping a referene to legend positions
+  window[map_id + 'mapTitlePositions'] = [];
+  window[map_id + 'mapdeckBounds'] = [];       // store the bounding box of each layer
+  window[map_id + 'globalBox'] = [];
+  window[map_id + 'currentZoomLevel'] = 0;
+}
+
+function md_setup_mapdeck_div( map_id ) {
+	var mapDiv = document.getElementById(map_id);
+  mapDiv.className = 'mapdeckmap';
+}
+
+function md_setup_legend( map_id ) {
+	var mapDiv = document.getElementById(map_id);
+	var legendContainer = document.createElement('div');
+  legendContainer.className = "legendContainer";
+  legendContainer.id = "legendContainer"+map_id;
+  mapDiv.appendChild( legendContainer );
+}
+
+function md_setup_title( map_id ) {
+	var mapDiv = document.getElementById(map_id);
+	var mapTitle = document.createElement('div');
+  mapTitle.className = "mapTitleContainer";
+  mapTitle.id = "mapTitleContainer"+map_id;
+  mapDiv.appendChild( mapTitle );
+}
+
+function md_setup_tooltip( map_id ) {
+	var mapDiv = document.getElementById(map_id);
+	var tooltipdiv = document.createElement('div');
+  tooltipdiv.setAttribute("class", "mapdecktooltip");
+  tooltipdiv.setAttribute("id", "mapdecktooltip"+map_id);
+  mapDiv.appendChild(tooltipdiv);
+}
+
 // following: https://codepen.io/vis-gl/pen/pLLQpN
 // and: https://beta.observablehq.com/@pessimistress/deck-gl-geojsonlayer-example
 function md_update_tooltip({x, y, object, layer, index}) {
     // object is the data object sent to the layer function
+
+  if( !document.getElementById('mapdecktooltip'+layer.props.map_id)) {
+  	md_setup_tooltip( layer.props.map_id );
+  }
 
   const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
   var tt;
@@ -11,11 +63,12 @@ function md_update_tooltip({x, y, object, layer, index}) {
   //console.log( x, ", ", y );
 
   if (object) {
-  	//if(object.tooltip === undefined && object.properties.tooltip === undefined ) {
-  	//	return;
-  	//}
-  	if ( object.properties.tooltip !== undefined ) {
-	  	tt = object.properties.tooltip;
+  	if( object.properties !== undefined ) {
+	  	if ( object.properties.tooltip !== undefined ) {
+	  	  tt = object.properties.tooltip;
+	  	} else {
+	  		return;
+	  	}
 	  } else if ( object.tooltip !== undefined ) {
 	  	tt = object.tooltip;
 	  } else {
@@ -64,24 +117,19 @@ function md_findObjectElementByKey(array, key, value ) {
     return -1;
 }
 
-
-
-
-
-
 function md_layer_clear( map_id, map_type, layer_id, layer ) {
 
   if( map_type == "mapdeck" ) {
 		md_clear_layer( map_id, layer+'-'+layer_id );
 	  md_clear_legend( map_id, layer_id );
-	  md_remove_from_bounds( map_id, layer_id );
-	  md_update_location( map_id );
   } else if ( map_type == "google_map" ) {
   	md_clear_overlay( map_id, layer+'-'+layer_id );
   }
 
-}
+  md_remove_from_bounds( map_id, layer_id );
+	md_update_location( map_id, map_type );
 
+}
 
 
 function md_update_layer( map_id, layer_id, layer ) {

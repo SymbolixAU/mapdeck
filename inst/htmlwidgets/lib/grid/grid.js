@@ -22,8 +22,8 @@ function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extrude
 	    md_update_overlay( map_id, 'grid-'+layer_id, gridLayer );
 	} else {
 	  md_update_layer( map_id, 'grid-'+layer_id, gridLayer );
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 function add_grid_polyline( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition ) {
@@ -50,8 +50,8 @@ function add_grid_polyline( map_id, map_type, grid_data, layer_id, cell_size, ex
 	    md_update_overlay( map_id, 'grid-'+layer_id, gridLayer );
 	} else {
 	  md_update_layer( map_id, 'grid-'+layer_id, gridLayer );
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 

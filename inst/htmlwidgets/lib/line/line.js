@@ -25,8 +25,8 @@ function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, hi
 	  if (legend !== false) {
 	    add_legend(map_id, layer_id, legend);
 	  }
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 
@@ -56,6 +56,6 @@ function add_line_polyline( map_id, map_type, line_data, layer_id, auto_highligh
 	  if (legend !== false) {
 	    add_legend(map_id, layer_id, legend);
 	  }
-	  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
 	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

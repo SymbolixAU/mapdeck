@@ -1,37 +1,45 @@
 
-function md_change_location( map_id, location, zoom, pitch, bearing, duration, transition ) {
+function md_change_location( map_id, map_type, location, zoom, pitch, bearing, duration, transition ) {
 
   var currentLon, currentLat, currentPitch, currentBearing, currentZoom;
 
-  if ( window[ map_id + 'map'].viewState["default-view"] !== undefined ) {
-  	currentLon = location === null ? window[ map_id + 'map'].viewState["default-view"].longitude : location[0];
-  	currentLat = location === null ? window[ map_id + 'map'].viewState["default-view"].latitude : location[1];
-    currentPitch = pitch === null ? window[ map_id + 'map'].viewState["default-view"].pitch : pitch;
-    currentBearing = bearing === null ? window[ map_id + 'map' ].viewState["default-view"].bearing : bearing;
-    currentZoom = zoom === null ? window[ map_id + 'map'].viewState["default-view"].zoom : zoom;
+  if( map_type == "google_map" ) {
+  	console.log( location );
+  	window[map_id + 'map'].setCenter( { lat: location[1], lng: location[0] } );
+  	window[map_id + 'map'].setZoom( zoom );
   } else {
-  	currentLon = location === null ? window[ map_id + 'map'].viewState.longitude : location[0];
-  	currentLat = location === null ? window[ map_id + 'map'].viewState.latitude : location[1];
-    currentPitch = pitch === null ? window[ map_id + 'map'].viewState.pitch : pitch;
-    currentBearing = bearing === null ? window[ map_id + 'map' ].viewState.bearing : bearing;
-    currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
-  }
 
-	window[map_id + 'map'].setProps({
-    viewState: {
-      longitude: currentLon,
-      latitude: currentLat,
-      zoom: currentZoom,
-      pitch: currentPitch,
-      bearing: currentBearing,
-      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
-      transitionDuration: duration
-    },
-  });
+	  if ( window[ map_id + 'map'].viewState["default-view"] !== undefined ) {
+	  	currentLon = location === null ? window[ map_id + 'map'].viewState["default-view"].longitude : location[0];
+	  	currentLat = location === null ? window[ map_id + 'map'].viewState["default-view"].latitude : location[1];
+	    currentPitch = pitch === null ? window[ map_id + 'map'].viewState["default-view"].pitch : pitch;
+	    currentBearing = bearing === null ? window[ map_id + 'map' ].viewState["default-view"].bearing : bearing;
+	    currentZoom = zoom === null ? window[ map_id + 'map'].viewState["default-view"].zoom : zoom;
+	  } else {
+	  	currentLon = location === null ? window[ map_id + 'map'].viewState.longitude : location[0];
+	  	currentLat = location === null ? window[ map_id + 'map'].viewState.latitude : location[1];
+	    currentPitch = pitch === null ? window[ map_id + 'map'].viewState.pitch : pitch;
+	    currentBearing = bearing === null ? window[ map_id + 'map' ].viewState.bearing : bearing;
+	    currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
+	  }
+
+
+		window[map_id + 'map'].setProps({
+	    viewState: {
+	      longitude: currentLon,
+	      latitude: currentLat,
+	      zoom: currentZoom,
+	      pitch: currentPitch,
+	      bearing: currentBearing,
+	      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
+	      transitionDuration: duration
+	    },
+	  });
+  }
 }
 
 
-function md_layer_view( map_id, layer_id, focus_layer, bbox, update_view ) {
+function md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view ) {
 
 	if( focus_layer ) {
   	md_clear_bounds( map_id );
@@ -41,7 +49,7 @@ function md_layer_view( map_id, layer_id, focus_layer, bbox, update_view ) {
   if( bbox !== undefined && update_view) {
 	  md_add_to_bounds( map_id, bbox, layer_id );
 	  var loc = md_center_location( window[ map_id + 'globalBox'] );
-	  md_change_location( map_id, loc, window[ map_id + 'currentZoomLevel'], null, null, 0, "linear" );
+	  md_change_location( map_id, map_type, loc, window[ map_id + 'currentZoomLevel'], null, null, 0, "linear" );
   }
 }
 
@@ -60,6 +68,18 @@ function md_add_to_bounds( map_id, bbox, layer_id ) {
   	layer_id: layer_id,
   	bbox: bbox
   };
+
+  if( window[ map_id + 'mapdeckBounds'] == null ) {
+  	window[ map_id + 'mapdeckBounds'] = [];
+  }
+
+  if( window[ map_id + 'currentZoomLevel'] == null ) {
+  	window[ map_id + 'currentZoomLevel'] = [];
+  }
+
+  if( window[ map_id + 'globalBox'] == null ) {
+  	window[ map_id + 'globalBox'] = [];
+  }
 
   var elem = md_findObjectElementByKey( window[ map_id + 'mapdeckBounds'], 'layer_id', layer_id );
 	if ( elem != -1 ) {
@@ -90,7 +110,7 @@ function md_clear_bounds( map_id ) {
 	window[ map_id + 'currentZoomLevel'] = 0;
 }
 
-function md_update_location( map_id ) {
+function md_update_location( map_id, map_type ) {
 
 	var loc = md_center_location( window[ map_id + 'globalBox' ] );
 	var zoom =  window[ map_id + 'currentZoomLevel' ];
@@ -99,7 +119,7 @@ function md_update_location( map_id ) {
 		return;
 	}
 
-  md_change_location( map_id, loc, zoom, null, null, 0, "linear" );
+  md_change_location( map_id, map_type, loc, zoom, null, null, 0, "linear" );
 }
 
 
