@@ -58,7 +58,7 @@ server <- function( input, output ) {
 		if( res == 1 ) {
 			googleway::google_map_update(map_id = "map") %>%
 				mapdeck::add_path(
-					data = roads[1:500, ]
+					data = roads
 					, stroke_colour = "RIGHT_LOC"
 					, legend = TRUE
 				)
