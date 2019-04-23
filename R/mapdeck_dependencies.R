@@ -71,17 +71,17 @@ add_dependencies <- function( map ) {
 #' @export
 mapdeck_dependencies <- function() {
 	c(
-		mapdeck_functions()
+		mapdeck_dep_functions()
 		, deckgl_min_js()
-		, mapdeck_legend()
-		, mapdeck_title()
-		, mapdeck_location()
-		, mapdeck_colours()
-		, mapdeck_coordinates()
+		, mapdeck_dep_legend()
+		, mapdeck_dep_title()
+		, mapdeck_dep_location()
+		, mapdeck_dep_colours()
+		, mapdeck_dep_coordinates()
 		)
 }
 
-mapdeck_functions <- function() {
+mapdeck_dep_functions <- function() {
 	list(
 		createHtmlDependency(
 			name = "mpadeck_functions",
@@ -92,7 +92,7 @@ mapdeck_functions <- function() {
 	)
 }
 
-mapdeck_coordinates <- function() {
+mapdeck_dep_coordinates <- function() {
 	list(
 		createHtmlDependency(
 			name = "mapdeck_coordinates",
@@ -103,7 +103,7 @@ mapdeck_coordinates <- function() {
 	)
 }
 
-mapdeck_colours <- function() {
+mapdeck_dep_colours <- function() {
 	list(
 		createHtmlDependency(
 			name = "mapdeck_colours",
@@ -114,7 +114,7 @@ mapdeck_colours <- function() {
 	)
 }
 
-mapdeck_location <- function() {
+mapdeck_dep_location <- function() {
 	list(
 		createHtmlDependency(
 			name = "mapdeck_location",
@@ -160,7 +160,7 @@ mapdeck_css <- function() {
 	)
 }
 
-mapdeck_legend <- function() {
+mapdeck_dep_legend <- function() {
 	list(
 		createHtmlDependency(
 			name = "legend",
@@ -171,7 +171,7 @@ mapdeck_legend <- function() {
 	)
 }
 
-mapdeck_title <- function() {
+mapdeck_dep_title <- function() {
 	list(
 		createHtmlDependency(
 			name = "title",

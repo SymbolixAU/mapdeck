@@ -47,7 +47,7 @@ test_that("manual legends can be created", {
 
 	expect_true(inherits(l1, "mapdeck_legend"))
 
-	js <- mapdeck_legend(l1)
+	js <- mapdeck_legend( l1 )
 	expect_true(inherits(js, "json"))
 
 	expect_error(

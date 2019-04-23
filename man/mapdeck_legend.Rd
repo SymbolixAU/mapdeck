@@ -4,7 +4,7 @@
 \alias{mapdeck_legend}
 \title{Mapdeck Legend}
 \usage{
-mapdeck_legend()
+mapdeck_legend(legend_elements)
 }
 \arguments{
 \item{legend_elements}{vector of legend elements (made from \link{legend_element})}

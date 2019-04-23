@@ -23,6 +23,7 @@ function md_setup_mapdeck_div( map_id ) {
 }
 
 function md_setup_legend( map_id ) {
+  console.log( "setup_legend" );
 	var mapDiv = document.getElementById(map_id);
 	var legendContainer = document.createElement('div');
   legendContainer.className = "legendContainer";
@@ -31,6 +32,7 @@ function md_setup_legend( map_id ) {
 }
 
 function md_setup_title( map_id ) {
+	console.log( "setup_title" ) ;
 	var mapDiv = document.getElementById(map_id);
 	var mapTitle = document.createElement('div');
   mapTitle.className = "mapTitleContainer";
