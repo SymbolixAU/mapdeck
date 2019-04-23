@@ -58,10 +58,12 @@ df <- read.csv(paste0(
 	'examples/3d-heatmap/heatmap-data.csv'
 ))
 
+df <- df[ !is.na( df$lng ), ]
+
 google_map(location = c(52, 0), zoom = 6) %>%
 	add_dependencies() %>%
 	add_grid(
-		data = df[1:100000, ]
+		data = df[1:50000, ]
 		, lat = "lat"
 		, lon = "lng"
 		, cell_size = 1000
