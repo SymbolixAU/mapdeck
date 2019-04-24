@@ -110,7 +110,7 @@ function add_legend_gradient(map_id, map_type, layer_id, legendValues) {
     window[map_id + 'legend' + layer_id + legendValues.colourType].appendChild(legendContent);
 
     if (isUpdating === false) {
-        placeControl(map_id, map_type, window[map_id + 'legend' + layer_id + legendValues.colourType], legendValues.position);
+        placeControl(map_id, map_type, window[map_id + 'legend' + layer_id + legendValues.colourType] );
     }
 }
 
@@ -216,7 +216,7 @@ function add_legend_category(map_id, map_type, layer_id, legendValues) {
     window[map_id + 'legend' + layer_id + legendValues.colourType].appendChild(legendContent);
 
     if (isUpdating === false) {
-        placeControl(map_id, map_type, window[map_id + 'legend' + layer_id + legendValues.colourType], legendValues.position);
+        placeControl(map_id, map_type, window[map_id + 'legend' + layer_id + legendValues.colourType] );
     }
 
 }
@@ -257,43 +257,19 @@ function md_clear_legend( map_id, layer_id ) {
 }
 
 
-function placeControl( map_id, map_type, object, position ) {
+function placeControl( map_id, map_type, object ) {
 
     var mapbox_ctrl = document.getElementById( "legendContainer"+map_id);
 
-    console.log( mapbox_ctrl );
-
-    //mapbox_ctrl[0].appendChild( object );
     mapbox_ctrl.appendChild( object );
     var ledge = {};
     var position = "BOTTOM_RIGHT";
 
-    console.log( window[map_id + 'map'] );
 
     if( map_type == "google_map" ) {
-    	window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT].push( object );
+    	window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_RIGHT].push( object );
     }
 
-/*
-    switch (position) {
-    case 'TOP_LEFT':
-        window[map_id + 'map'].controls["TOP_LEFT"].push( object );
-        break;
-    case 'TOP_RIGHT':
-        window[map_id + 'map'].controls["TOP_RIGHT"].push( object );
-        break;
-    case 'BOTTOM_LEFT':
-        window[map_id + 'map'].controls["BOTTOM_LEFT"].push( object );
-        break;
-    case 'BOTTOM_RIGHT':
-        window[map_id + 'map'].controls["BOTTOM_RIGHT"].push( object );
-        break;
-    default:
-        position = "BOTTOM_LEFT"
-        window[map_id + 'map'].controls["BOTTOM_LEFT"].push( object );
-        break;
-    }
-*/
     ledge = {
         id: object.getAttribute('id'),
         position: position

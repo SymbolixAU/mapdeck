@@ -28,7 +28,7 @@ function add_column_geo( map_id, map_type, column_data, layer_id, auto_highlight
 		md_update_layer( map_id, 'column-'+layer_id, columnLayer );
 
 		if (legend !== false) {
-	    add_legend(map_id, layer_id, legend);
+	    add_legend(map_id, map_type, layer_id, legend);
 	  }
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
@@ -65,7 +65,7 @@ function add_column_polyline( map_id, map_type, column_data, layer_id, auto_high
 		md_update_layer( map_id, 'column-'+layer_id, columnLayer );
 
 		if (legend !== false) {
-	    add_legend(map_id, layer_id, legend);
+	    add_legend(map_id, map_type, layer_id, legend);
 	  }
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );

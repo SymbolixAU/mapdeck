@@ -184,7 +184,7 @@ function add_arc_brush_geo( map_id, map_type, arc_data, layer_id, auto_highlight
 	  md_update_layer( map_id, 'arc_brush-'+layer_id, arcLayer );
 
 	  if (legend !== false) {
-	    add_legend( map_id, layer_id, legend );
+	    add_legend( map_id, map_type, layer_id, legend );
 	  }
 	}
 }
@@ -236,7 +236,7 @@ function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight,
 	  md_update_layer( map_id, 'arc_brush-'+layer_id, arcLayer );
 
 	  if (legend !== false) {
-	    add_legend( map_id, layer_id, legend );
+	    add_legend( map_id, map_type, layer_id, legend );
 	  }
 	}
 }

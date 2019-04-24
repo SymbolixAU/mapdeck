@@ -24,7 +24,7 @@ function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, high
 	} else {
 	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
 	  if (legend !== false) {
-	    add_legend( map_id, layer_id, legend );
+	    add_legend( map_id, map_type, layer_id, legend );
 	  }
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
@@ -57,7 +57,7 @@ function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight,
 	} else {
 	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
 	  if (legend !== false) {
-	    add_legend( map_id, layer_id, legend );
+	    add_legend( map_id, map_type, layer_id, legend );
 	  }
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
