@@ -1,4 +1,10 @@
-function add_legend(map_id, layer_id, legendValues) {
+function add_legend(map_id, map_type, layer_id, legendValues) {
+
+  console.log( "add_legend" );
+
+  if( !md_div_exists( 'legendContainer'+map_id ) ) {
+  	md_setup_legend( map_id );
+  }
 
   'use strict';
 
@@ -9,16 +15,16 @@ function add_legend(map_id, layer_id, legendValues) {
 
         if ( this_legend.colour !== undefined ) {
             if ( this_legend.type[0] === "category" || this_legend.colour.length == 1 ) {
-                add_legend_category( map_id, layer_id, this_legend );
+                add_legend_category( map_id, map_type, layer_id, this_legend );
             } else {
-                add_legend_gradient( map_id, layer_id, this_legend);
+                add_legend_gradient( map_id, map_type, layer_id, this_legend);
             }
         }
     });
 
 }
 
-function add_legend_gradient(map_id, layer_id, legendValues) {
+function add_legend_gradient(map_id, map_type, layer_id, legendValues) {
     // fill gradient
     'use strict';
     var legendContent,
@@ -104,7 +110,7 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
     window[map_id + 'legend' + layer_id + legendValues.colourType].appendChild(legendContent);
 
     if (isUpdating === false) {
-        placeControl(map_id, window[map_id + 'legend' + layer_id + legendValues.colourType], legendValues.position);
+        placeControl(map_id, map_type, window[map_id + 'legend' + layer_id + legendValues.colourType], legendValues.position);
     }
 }
 
@@ -120,9 +126,12 @@ function generateColourBox(colourType, colour) {
     }
 }
 
-function add_legend_category(map_id, layer_id, legendValues) {
+function add_legend_category(map_id, map_type, layer_id, legendValues) {
 
     'use strict';
+
+    console.log( "legendValues: " );
+    console.log( legendValues );
 
     var legendContent,
         legendTitle,
@@ -207,7 +216,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
     window[map_id + 'legend' + layer_id + legendValues.colourType].appendChild(legendContent);
 
     if (isUpdating === false) {
-        placeControl(map_id, window[map_id + 'legend' + layer_id + legendValues.colourType], legendValues.position);
+        placeControl(map_id, map_type, window[map_id + 'legend' + layer_id + legendValues.colourType], legendValues.position);
     }
 
 }
@@ -248,7 +257,7 @@ function md_clear_legend( map_id, layer_id ) {
 }
 
 
-function placeControl( map_id, object, position ) {
+function placeControl( map_id, map_type, object, position ) {
 
     var mapbox_ctrl = document.getElementById( "legendContainer"+map_id);
 
@@ -258,6 +267,13 @@ function placeControl( map_id, object, position ) {
     mapbox_ctrl.appendChild( object );
     var ledge = {};
     var position = "BOTTOM_RIGHT";
+
+    console.log( window[map_id + 'map'] );
+
+    if( map_type == "google_map" ) {
+    	window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT].push( object );
+    }
+
 /*
     switch (position) {
     case 'TOP_LEFT':

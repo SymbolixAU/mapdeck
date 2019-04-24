@@ -28,11 +28,12 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 	} else {
 
 	  md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
-
-	  if (legend !== false) {
-      add_legend(map_id, layer_id, legend);
-    }
 	}
+
+	if (legend !== false) {
+      add_legend(map_id, map_type, layer_id, legend);
+  }
+
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 

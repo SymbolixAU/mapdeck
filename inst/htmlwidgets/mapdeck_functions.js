@@ -48,12 +48,19 @@ function md_setup_tooltip( map_id ) {
   mapDiv.appendChild(tooltipdiv);
 }
 
+function md_div_exists( div_element ) {
+	if( !document.getElementById( div_element ) ) {
+		return( false );
+	}
+	return( true );
+}
+
 // following: https://codepen.io/vis-gl/pen/pLLQpN
 // and: https://beta.observablehq.com/@pessimistress/deck-gl-geojsonlayer-example
 function md_update_tooltip({x, y, object, layer, index}) {
     // object is the data object sent to the layer function
 
-  if( !document.getElementById('mapdecktooltip'+layer.props.map_id)) {
+  if( !md_div_exists( 'mapdecktooltip'+layer.props.map_id ) ) {
   	md_setup_tooltip( layer.props.map_id );
   }
 
