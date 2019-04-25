@@ -236,24 +236,26 @@ function md_find_by_id( source, id, returnType ) {
     return;
 }
 
-function md_try_remove_legend( map_id, layer_id, colour_type ) {
+function md_try_remove_legend( map_id, map_type, layer_id, colour_type ) {
 	// find reference to this layer in the legends
 	var id = map_id + 'legend' + layer_id + colour_type;
 	var objIndex = md_find_by_id( window[map_id + 'legendPositions'], id, "index" );
 
+	console.log("objIndex legend to remove: " + objIndex);
+
 	if( objIndex !== undefined ) {
-		md_removeControl( map_id, id, window[map_id + 'legendPositions'][objIndex].position );
+		md_removeControl( map_id, map_type, id, window[map_id + 'legendPositions'][objIndex].position );
 		window[map_id + 'legendPositions'].splice(objIndex, 1);
 	  window[id] = null;
 	}
 }
 
-function md_clear_legend( map_id, layer_id ) {
+function md_clear_legend( map_id, map_type, layer_id ) {
 
-	md_try_remove_legend( map_id, layer_id, "fill_colour");
-	md_try_remove_legend( map_id, layer_id, "stroke_colour");
-	md_try_remove_legend( map_id, layer_id, "stroke_from");
-	md_try_remove_legend( map_id, layer_id, "stroke_to");
+	md_try_remove_legend( map_id, map_type, layer_id, "fill_colour");
+	md_try_remove_legend( map_id, map_type, layer_id, "stroke_colour");
+	md_try_remove_legend( map_id, map_type, layer_id, "stroke_from");
+	md_try_remove_legend( map_id, map_type, layer_id, "stroke_to");
 }
 
 
@@ -279,10 +281,17 @@ function md_placeControl( map_id, map_type, object ) {
 }
 
 
-function md_removeControl( map_id, legend_id, position ) {
+function md_removeControl( map_id, map_type, legend_id, position ) {
 
-    var element = document.getElementById( legend_id );
-    element.parentNode.removeChild( element );
+  console.log("legend_id to remove: " + legend_id);
+	var element = document.getElementById( legend_id );
+	console.log( "element legend to remove" );
+	console.log( element );
+	element.parentNode.removeChild( element );
+
+	if( map_type == "google_map") {
+	  clearControl( window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT], legend_id );
+	}
 
 /*
     switch (position) {
@@ -306,17 +315,16 @@ function md_removeControl( map_id, legend_id, position ) {
 */
 }
 
-/*
 function clearControl(control, legend_id) {
 
   if (control !== undefined ) {
     control.forEach(function (item, index) {
       if (item !== undefined ) {
         if (item.getAttribute('id') === legend_id) {
+        	console.log( "removing legend_id " + legend_id );
           control.removeAt(index);
         }
       }
     });
   }
 }
-*/
