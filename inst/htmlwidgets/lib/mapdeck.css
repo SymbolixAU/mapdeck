@@ -33,6 +33,7 @@
     bottom: 0;
     right: 0;
     z-index: 99;
+/*    z-index: 999999999; */
     padding-bottom: 14px;
 }
 

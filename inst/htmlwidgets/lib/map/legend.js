@@ -265,9 +265,9 @@ function placeControl( map_id, map_type, object ) {
     var ledge = {};
     var position = "BOTTOM_RIGHT";
 
-
     if( map_type == "google_map" ) {
-    	window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_RIGHT].push( object );
+    	//window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT].push( mapbox_ctrl );
+    	window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT].push( object );
     }
 
     ledge = {
