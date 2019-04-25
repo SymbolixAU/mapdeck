@@ -22,10 +22,10 @@ function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id
 	    md_update_overlay( map_id, 'pointcloud-'+layer_id, pointcloudLayer );
 	} else {
 	  md_update_layer( map_id, 'pointcloud-'+layer_id, pointcloudLayer );
+	}
 
-	  if (legend !== false) {
-	    add_legend(map_id, map_type, layer_id, legend);
-	  }
+	if (legend !== false) {
+	  add_legend(map_id, map_type, layer_id, legend);
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
@@ -52,10 +52,10 @@ function add_pointcloud_polyline( map_id, map_type, pointcloud_data, radius, lay
 	    md_update_overlay( map_id, 'pointcloud-'+layer_id, pointcloudLayer );
 	} else {
 	  md_update_layer( map_id, 'pointcloud-'+layer_id, pointcloudLayer );
+	}
 
-	  if (legend !== false) {
-	    add_legend(map_id, map_type, layer_id, legend);
-	  }
+	if (legend !== false) {
+	  add_legend(map_id, map_type, layer_id, legend);
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

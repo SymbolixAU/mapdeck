@@ -117,7 +117,7 @@ shinyWidgetOutput2 <- function (outputId, name, width, height, package = name, i
 		)
 
 	dependencies = htmlwidgets:::getDependency(name, package)
-	dependencies <- c( dependencies, deckgl_min_js(), mapdeck_functions(), mapboxgl() )
+	dependencies <- c( dependencies, deckgl_min_js(), mapdeck_dep_functions(), mapboxgl() )
 	htmltools::attachDependencies(html, dependencies)
 }
 

@@ -21,13 +21,14 @@ ui <- dashboardPage(
 		mapdeck::mapdeck_dependencies()  ## add JS dependencies
 		, googleway::google_mapOutput(
 			outputId = "map"
+			, height = "600"
 		)
 	)
 )
 
 server <- function( input, output ) {
 
-	set_token( Sys.getenv("MAPBOX") )
+	#set_token( Sys.getenv("MAPBOX") )
 
 	output$map <- googleway::renderGoogle_map({
 		googleway::google_map() %>%
@@ -58,7 +59,7 @@ server <- function( input, output ) {
 		if( res == 1 ) {
 			googleway::google_map_update(map_id = "map") %>%
 				mapdeck::add_path(
-					data = roads
+					data = roads[1:200, ]
 					, stroke_colour = "RIGHT_LOC"
 					, legend = TRUE
 				)

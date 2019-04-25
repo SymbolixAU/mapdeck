@@ -31,11 +31,11 @@ function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settin
   } else {
 
 	  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
-
-	  if (legend !== false) {
-	    add_legend(map_id, map_type, layer_id, legend);
-	  }
   }
+
+	if (legend !== false) {
+	  add_legend(map_id, map_type, layer_id, legend);
+	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
@@ -70,11 +70,11 @@ function add_polygon_polyline( map_id, map_type, polygon_data, layer_id, light_s
   } else {
 
 	  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
-
-	  if (legend !== false) {
-	    add_legend(map_id, map_type, layer_id, legend);
-	  }
   }
+
+	if (legend !== false) {
+	  add_legend(map_id, map_type, layer_id, legend);
+	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 

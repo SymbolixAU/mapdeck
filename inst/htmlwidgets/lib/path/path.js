@@ -27,10 +27,12 @@ legend, bbox, update_view, focus_layer, js_transition ) {
 	    md_update_overlay( map_id, 'path-'+layer_id, pathLayer );
 	} else {
 	  md_update_layer( map_id, 'path-'+layer_id, pathLayer );
+	}
 
-	  if ( legend !== false ) {
-	      add_legend( map_id, map_type, layer_id, legend );
-	  }
+	if ( legend !== false ) {
+		console.log( "path legend: " );
+		console.log( legend );
+	  add_legend( map_id, map_type, layer_id, legend );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
@@ -60,10 +62,10 @@ legend, bbox, update_view, focus_layer, js_transition ) {
 	    md_update_overlay( map_id, 'path-'+layer_id, pathLayer );
 	} else {
 	  md_update_layer( map_id, 'path-'+layer_id, pathLayer );
+	}
 
-	  if ( legend !== false ) {
-	      add_legend( map_id, map_type, layer_id, legend );
-	  }
+	if ( legend !== false ) {
+	  add_legend( map_id, map_type, layer_id, legend );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
