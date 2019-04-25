@@ -20,12 +20,14 @@ function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, high
   });
 
   if( map_type == "google_map") {
-	    md_update_overlay( map_id, 'arc-'+layer_id, arcLayer );
+	  md_update_overlay( map_id, 'arc-'+layer_id, arcLayer );
 	} else {
 	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
-	  if (legend !== false) {
-	    add_legend( map_id, map_type, layer_id, legend );
-	  }
+	}
+
+	if (legend !== false) {
+		console.log( "add_arc legend");
+	  md_add_legend( map_id, map_type, layer_id, legend );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
@@ -53,13 +55,13 @@ function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight,
   });
 
   if( map_type == "google_map") {
-	    md_update_overlay( map_id, 'arc-'+layer_id, arcLayer );
+	  md_update_overlay( map_id, 'arc-'+layer_id, arcLayer );
 	} else {
 	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
 	}
 
 	if (legend !== false) {
-	    add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

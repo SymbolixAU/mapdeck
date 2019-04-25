@@ -1,4 +1,4 @@
-function add_legend(map_id, map_type, layer_id, legendValues) {
+function md_add_legend(map_id, map_type, layer_id, legendValues) {
 
   console.log( "add_legend" );
 
@@ -15,16 +15,16 @@ function add_legend(map_id, map_type, layer_id, legendValues) {
 
         if ( this_legend.colour !== undefined ) {
             if ( this_legend.type[0] === "category" || this_legend.colour.length == 1 ) {
-                add_legend_category( map_id, map_type, layer_id, this_legend );
+                md_add_legend_category( map_id, map_type, layer_id, this_legend );
             } else {
-                add_legend_gradient( map_id, map_type, layer_id, this_legend);
+                md_add_legend_gradient( map_id, map_type, layer_id, this_legend);
             }
         }
     });
 
 }
 
-function add_legend_gradient(map_id, map_type, layer_id, legendValues) {
+function md_add_legend_gradient(map_id, map_type, layer_id, legendValues) {
     // fill gradient
     'use strict';
     var legendContent,
@@ -110,11 +110,11 @@ function add_legend_gradient(map_id, map_type, layer_id, legendValues) {
     window[map_id + 'legend' + layer_id + legendValues.colourType].appendChild(legendContent);
 
     if (isUpdating === false) {
-        placeControl(map_id, map_type, window[map_id + 'legend' + layer_id + legendValues.colourType] );
+        md_placeControl(map_id, map_type, window[map_id + 'legend' + layer_id + legendValues.colourType] );
     }
 }
 
-function generateColourBox(colourType, colour) {
+function md_generateColourBox(colourType, colour) {
     'use strict';
 
     if (colourType[0] === "fill_colour") {
@@ -126,7 +126,7 @@ function generateColourBox(colourType, colour) {
     }
 }
 
-function add_legend_category(map_id, map_type, layer_id, legendValues) {
+function md_add_legend_category(map_id, map_type, layer_id, legendValues) {
 
     'use strict';
 
@@ -216,7 +216,7 @@ function add_legend_category(map_id, map_type, layer_id, legendValues) {
     window[map_id + 'legend' + layer_id + legendValues.colourType].appendChild(legendContent);
 
     if (isUpdating === false) {
-        placeControl(map_id, map_type, window[map_id + 'legend' + layer_id + legendValues.colourType] );
+        md_placeControl(map_id, map_type, window[map_id + 'legend' + layer_id + legendValues.colourType] );
     }
 
 }
@@ -257,7 +257,7 @@ function md_clear_legend( map_id, layer_id ) {
 }
 
 
-function placeControl( map_id, map_type, object ) {
+function md_placeControl( map_id, map_type, object ) {
 
     var mapbox_ctrl = document.getElementById( "legendContainer"+map_id);
 

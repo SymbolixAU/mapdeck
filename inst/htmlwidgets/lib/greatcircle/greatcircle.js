@@ -21,12 +21,12 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
   });
 
   if( map_type == "google_map") {
-	    md_update_overlay( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
+	  md_update_overlay( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
 	} else {
 	  md_update_layer( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
 	}
 	if (legend !== false) {
-	  add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
@@ -55,12 +55,12 @@ function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id,
   });
 
   if( map_type == "google_map") {
-	    md_update_overlay( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
+	  md_update_overlay( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
 	} else {
 	  md_update_layer( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
 	}
 	if (legend !== false) {
-	  add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend );
 	}
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

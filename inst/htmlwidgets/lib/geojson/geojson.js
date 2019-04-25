@@ -32,13 +32,13 @@ function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, au
   });
 
   if( map_type == "google_map") {
-	    md_update_overlay( map_id, 'geojson-'+layer_id, geojsonLayer );
+	  md_update_overlay( map_id, 'geojson-'+layer_id, geojsonLayer );
 	} else {
 	  md_update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
 	}
 
 	if (legend !== false) {
-	  add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend);
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
@@ -73,7 +73,7 @@ function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_
   });
 
   if( map_type == "google_map") {
-	    md_update_overlay( map_id, 'geojson-'+layer_id, geojsonLayer );
+	  md_update_overlay( map_id, 'geojson-'+layer_id, geojsonLayer );
 	} else {
     md_update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
 	}

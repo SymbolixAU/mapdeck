@@ -247,13 +247,13 @@ function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, au
   document.addEventListener('mouseleave', scatterbrushLeaveListener, false);
 
 	if( map_type == "google_map") {
-	    md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
-	  } else {
+	  md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
+	} else {
 	  md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
 	}
 
 	if (legend !== false) {
-	  add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend);
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 

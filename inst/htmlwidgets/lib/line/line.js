@@ -18,13 +18,13 @@ function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, hi
   });
 
   if( map_type == "google_map") {
-	    md_update_overlay( map_id, 'line-'+layer_id, lineLayer );
+	  md_update_overlay( map_id, 'line-'+layer_id, lineLayer );
 	} else {
 	  md_update_layer( map_id, 'line-'+layer_id, lineLayer );
 	}
 
 	if (legend !== false) {
-	  add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend);
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
@@ -49,13 +49,13 @@ function add_line_polyline( map_id, map_type, line_data, layer_id, auto_highligh
   });
 
   if( map_type == "google_map") {
-	    md_update_overlay( map_id, 'line-'+layer_id, lineLayer );
+	  md_update_overlay( map_id, 'line-'+layer_id, lineLayer );
 	} else {
 	  md_update_layer( map_id, 'line-'+layer_id, lineLayer );
 	}
 
 	if (legend !== false) {
-	  add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend);
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
