@@ -176,7 +176,7 @@ add_hexagon <- function(
 	js_transitions <- resolve_transitions( transitions, "hexagon" )
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, radius, elevation_scale,
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, radius, elevation_scale,
 		auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer,
 		js_transitions, use_weight, use_colour, elevation_function, colour_function
 		)
@@ -187,5 +187,5 @@ add_hexagon <- function(
 #' @export
 clear_hexagon <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "hexagon")
-	invoke_method(map, "md_layer_clear", layer_id, "hexagon" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "hexagon" )
 }

@@ -1,6 +1,6 @@
 
 
-function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
   //console.log( scatter_data );
 
@@ -25,15 +25,22 @@ function add_scatterplot_geo( map_id, scatter_data, layer_id, auto_highlight, hi
     onHover: md_update_tooltip,
     transitions: js_transition || {}
   });
-  md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
 
-  if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
+	if( map_type == "google_map") {
+	  md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
+	} else {
+
+	  md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
+	}
+
+	if (legend !== false) {
+    md_add_legend(map_id, map_type, layer_id, legend);
   }
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+
+  md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
@@ -56,10 +63,15 @@ function add_scatterplot_polyline( map_id, scatter_data, layer_id, auto_highligh
     onHover: md_update_tooltip,
     transitions: js_transition || {}
   });
-  md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
 
-  if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
+	if( map_type == "google_map") {
+	  md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
+	} else {
+	  md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
+	}
+
+	if (legend !== false) {
+    md_add_legend(map_id, map_type, layer_id, legend);
   }
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

@@ -26,7 +26,7 @@ mapdeck <- function(
 	pitch = 0,
 	zoom = 0,
 	bearing = 0,
-	location = c( 0, 0 )
+	location = c(0, 0)
 	) {
 
   # forward options using x
@@ -55,9 +55,19 @@ mapdeck <- function(
     	padding = padding,
     	browser.fill = FALSE
     )
+    #, dependencies = dep
   )
+
+  mapdeckmap <- add_dependencies( mapdeckmap )
+  mapdeckmap$dependencies <- c(
+  	mapdeckmap$dependencies
+  	, mapboxgl()
+  	, mapdeck_css()
+  	)
+
   return(mapdeckmap)
 }
+
 
 #' Shiny bindings for mapdeck
 #'
@@ -77,7 +87,52 @@ mapdeck <- function(
 #'
 #' @export
 mapdeckOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'mapdeck', width, height, package = 'mapdeck')
+	#htmlwidgets::shinyWidgetOutput(outputId, 'mapdeck', width, height, package = 'mapdeck')
+  shinyWidgetOutput2(outputId, 'mapdeck', width, height, package = 'mapdeck')
+}
+
+
+shinyWidgetOutput2 <- function (outputId, name, width, height, package = name, inline = FALSE,
+					reportSize = FALSE){
+	# checkShinyVersion()
+	html <- htmltools::tagList(
+		widget_html2(
+			name
+			, package
+			, id = outputId
+			, class = paste0(
+				name
+				, " html-widget html-widget-output"
+				, if (reportSize) " shiny-report-size"
+				)
+			, style = sprintf(
+				"width:%s; height:%s; %s"
+				, htmltools::validateCssUnit(width)
+				, htmltools::validateCssUnit(height)
+				, if (inline) "display: inline-block;" else ""
+				)
+			, width = width
+			, height = height
+			)
+		)
+
+	dependencies = htmlwidgets:::getDependency(name, package)
+	dependencies <- c( dependencies, deckgl_min_js(), mapdeck_dep_functions(), mapboxgl() )
+	htmltools::attachDependencies(html, dependencies)
+}
+
+widget_html2 <- function (name, package, id, style, class, inline = FALSE, ...) {
+	fn <- tryCatch(get(paste0(name, "_html"), asNamespace(package),
+										 inherits = FALSE), error = function(e) NULL)
+	if (is.function(fn)) {
+		fn(id = id, style = style, class = class, ...)
+	}
+	else if (inline) {
+		shiny::tags$span(id = id, style = style, class = class)
+	}
+	else {
+		shiny::tags$div(id = id, style = style, class = class)
+	}
 }
 
 #' @rdname mapdeck-shiny
@@ -106,8 +161,11 @@ mapdeck_update <- function(
 	map_id,
 	session = shiny::getDefaultReactiveDomain(),
 	data = NULL,
-	deferUntilFlush = TRUE
+	deferUntilFlush = TRUE,
+	map_type = c("mapdeck_update", "google_map_update")
 	) {
+
+	map_type <- match.arg( map_type )
 
 	if (is.null(session)) {
 		stop("mapdeck_update must be called from the server function of a Shiny app")
@@ -124,7 +182,7 @@ mapdeck_update <- function(
 			deferUntilFlush = deferUntilFlush,
 			dependencies = NULL
 		),
-		class = "mapdeck_update"
+		class = c(map_type)
 	)
 }
 
@@ -161,6 +219,19 @@ mapdeck_view <- function(
 #
 # @param map a mapdeck map object
 #
-get_map_data = function( map ) {
+get_map_data <- function( map ) {
 	attr( map$x, "mapdeck_data", exact = TRUE )
+}
+
+# map_type
+#
+# determines the source/type of map
+map_type <- function( map ) {
+
+	map_type <- attr( map, "class")
+	if( any( c("mapdeck", "mapdeck_update") %in% map_type ) ) return( "mapdeck" )
+
+	if( any( c("google_map", "google_map_update") %in% map_type ) ) return( "google_map" )
+
+	return(NULL)
 }

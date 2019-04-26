@@ -1,4 +1,8 @@
-function add_legend(map_id, layer_id, legendValues) {
+function md_add_legend(map_id, map_type, layer_id, legendValues) {
+
+  if( !md_div_exists( 'legendContainer'+map_id ) ) {
+  	md_setup_legend( map_id );
+  }
 
   'use strict';
 
@@ -9,16 +13,16 @@ function add_legend(map_id, layer_id, legendValues) {
 
         if ( this_legend.colour !== undefined ) {
             if ( this_legend.type[0] === "category" || this_legend.colour.length == 1 ) {
-                add_legend_category( map_id, layer_id, this_legend );
+                md_add_legend_category( map_id, map_type, layer_id, this_legend );
             } else {
-                add_legend_gradient( map_id, layer_id, this_legend);
+                md_add_legend_gradient( map_id, map_type, layer_id, this_legend);
             }
         }
     });
 
 }
 
-function add_legend_gradient(map_id, layer_id, legendValues) {
+function md_add_legend_gradient(map_id, map_type, layer_id, legendValues) {
     // fill gradient
     'use strict';
     var legendContent,
@@ -104,23 +108,22 @@ function add_legend_gradient(map_id, layer_id, legendValues) {
     window[map_id + 'legend' + layer_id + legendValues.colourType].appendChild(legendContent);
 
     if (isUpdating === false) {
-        placeControl(map_id, window[map_id + 'legend' + layer_id + legendValues.colourType], legendValues.position);
+        md_placeControl(map_id, map_type, window[map_id + 'legend' + layer_id + legendValues.colourType] );
     }
 }
 
-function generateColourBox(colourType, colour) {
+function md_generateColourBox(colourType, colour) {
     'use strict';
 
     if (colourType[0] === "fill_colour") {
         return ('height: 20px; width: 15px; background: ' + colour);
     } else {
         // http://jsfiddle.net/UES6U/2/
-        console.log( colour) ;
         return ('height: 20px; width: 15px; background: linear-gradient(to bottom, white 25%, ' + colour + ' 25%, ' + colour + ' 45%, ' + 'white 45%)');
     }
 }
 
-function add_legend_category(map_id, layer_id, legendValues) {
+function md_add_legend_category(map_id, map_type, layer_id, legendValues) {
 
     'use strict';
 
@@ -187,7 +190,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
             divVal = document.createElement('div');
 
         //colourBox = 'height: 20px; width: 15px; background: ' + legendValues.legend.colour[i];
-        colourBox = generateColourBox(legendValues.colourType, legendValues.colour[i].substring(0,7) );
+        colourBox = md_generateColourBox(legendValues.colourType, legendValues.colour[i].substring(0,7) );
         divCol.setAttribute('style', colourBox);
         colourContainer.appendChild(divCol);
 
@@ -207,7 +210,7 @@ function add_legend_category(map_id, layer_id, legendValues) {
     window[map_id + 'legend' + layer_id + legendValues.colourType].appendChild(legendContent);
 
     if (isUpdating === false) {
-        placeControl(map_id, window[map_id + 'legend' + layer_id + legendValues.colourType], legendValues.position);
+        md_placeControl(map_id, map_type, window[map_id + 'legend' + layer_id + legendValues.colourType] );
     }
 
 }
@@ -227,57 +230,39 @@ function md_find_by_id( source, id, returnType ) {
     return;
 }
 
-function md_try_remove_legend( map_id, layer_id, colour_type ) {
+function md_try_remove_legend( map_id, map_type, layer_id, colour_type ) {
 	// find reference to this layer in the legends
 	var id = map_id + 'legend' + layer_id + colour_type;
 	var objIndex = md_find_by_id( window[map_id + 'legendPositions'], id, "index" );
 
 	if( objIndex !== undefined ) {
-		md_removeControl( map_id, id, window[map_id + 'legendPositions'][objIndex].position );
+		md_removeControl( map_id, map_type, id, window[map_id + 'legendPositions'][objIndex].position );
 		window[map_id + 'legendPositions'].splice(objIndex, 1);
 	  window[id] = null;
 	}
 }
 
-function md_clear_legend( map_id, layer_id ) {
+function md_clear_legend( map_id, map_type, layer_id ) {
 
-	md_try_remove_legend( map_id, layer_id, "fill_colour");
-	md_try_remove_legend( map_id, layer_id, "stroke_colour");
-	md_try_remove_legend( map_id, layer_id, "stroke_from");
-	md_try_remove_legend( map_id, layer_id, "stroke_to");
+	md_try_remove_legend( map_id, map_type, layer_id, "fill_colour");
+	md_try_remove_legend( map_id, map_type, layer_id, "stroke_colour");
+	md_try_remove_legend( map_id, map_type, layer_id, "stroke_from");
+	md_try_remove_legend( map_id, map_type, layer_id, "stroke_to");
 }
 
 
-function placeControl( map_id, object, position ) {
+function md_placeControl( map_id, map_type, object ) {
 
-    //var mapbox_ctrl = document.getElementsByClassName("mapdeckmap");
-    //var mapbox_ctrl = document.getElementsByClassName("legendContainer"+map_id);
     var mapbox_ctrl = document.getElementById( "legendContainer"+map_id);
-
-    //mapbox_ctrl[0].appendChild( object );
     mapbox_ctrl.appendChild( object );
+
     var ledge = {};
     var position = "BOTTOM_RIGHT";
-/*
-    switch (position) {
-    case 'TOP_LEFT':
-        window[map_id + 'map'].controls["TOP_LEFT"].push( object );
-        break;
-    case 'TOP_RIGHT':
-        window[map_id + 'map'].controls["TOP_RIGHT"].push( object );
-        break;
-    case 'BOTTOM_LEFT':
-        window[map_id + 'map'].controls["BOTTOM_LEFT"].push( object );
-        break;
-    case 'BOTTOM_RIGHT':
-        window[map_id + 'map'].controls["BOTTOM_RIGHT"].push( object );
-        break;
-    default:
-        position = "BOTTOM_LEFT"
-        window[map_id + 'map'].controls["BOTTOM_LEFT"].push( object );
-        break;
+
+    if( map_type == "google_map" ) {
+    	window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT].push( object );
     }
-*/
+
     ledge = {
         id: object.getAttribute('id'),
         position: position
@@ -287,10 +272,14 @@ function placeControl( map_id, object, position ) {
 }
 
 
-function md_removeControl( map_id, legend_id, position ) {
+function md_removeControl( map_id, map_type, legend_id, position ) {
 
-    var element = document.getElementById( legend_id );
-    element.parentNode.removeChild( element );
+	var element = document.getElementById( legend_id );
+	element.parentNode.removeChild( element );
+
+	if( map_type == "google_map") {
+	  md_clear_control( window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT], legend_id );
+	}
 
 /*
     switch (position) {
@@ -314,8 +303,7 @@ function md_removeControl( map_id, legend_id, position ) {
 */
 }
 
-/*
-function clearControl(control, legend_id) {
+function md_clear_control(control, legend_id) {
 
   if (control !== undefined ) {
     control.forEach(function (item, index) {
@@ -327,4 +315,3 @@ function clearControl(control, legend_id) {
     });
   }
 }
-*/

@@ -1,4 +1,4 @@
-function add_greatcircle_geo( map_id, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude ) {
+function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude ) {
 
   const greatcircleLayer = new GreatCircleLayer({
   	map_id: map_id,
@@ -20,15 +20,19 @@ function add_greatcircle_geo( map_id, greatcircle_data, layer_id, auto_highlight
     transitions: js_transition || {}
   });
 
-  md_update_layer( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
-  if (legend !== false) {
-    add_legend( map_id, layer_id, legend );
-  }
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  if( map_type == "google_map") {
+	  md_update_overlay( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
+	} else {
+	  md_update_layer( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
+	}
+	if (legend !== false) {
+	  md_add_legend( map_id, map_type, layer_id, legend );
+	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 
-function add_greatcircle_polyline( map_id, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude ) {
+function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude ) {
 
   const greatcircleLayer = new GreatCircleLayer({
     map_id: map_id,
@@ -50,10 +54,13 @@ function add_greatcircle_polyline( map_id, greatcircle_data, layer_id, auto_high
     transitions: js_transition || {}
   });
 
-  md_update_layer( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
-  if (legend !== false) {
-    add_legend( map_id, layer_id, legend );
-  }
-
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  if( map_type == "google_map") {
+	  md_update_overlay( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
+	} else {
+	  md_update_layer( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
+	}
+	if (legend !== false) {
+	  md_add_legend( map_id, map_type, layer_id, legend );
+	}
+  md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

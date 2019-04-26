@@ -180,7 +180,7 @@ add_greatcircle <- function(
 	}
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition,
 		wrap_longitude
 	)
@@ -196,5 +196,5 @@ add_greatcircle <- function(
 #' @export
 clear_greatcircle <- function( map, layer_id = NULL ) {
 	layer_id <- layerId(layer_id, "greatcircle")
-	invoke_method(map, "md_layer_clear", layer_id, "greatcircle" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "greatcircle" )
 }

@@ -59,3 +59,63 @@
 # 		, fill_colour = "my_colour"
 # 		, legend = js
 # 	)
+#
+# library(googleway)
+# library(mapdeck)
+# library(sf)
+#
+# set_key( read.dcf("~/Documents/.googleAPI" ,fields = "GOOGLE_MAP_KEY"))
+#
+# sf <- spatialwidget::widget_melbourne
+#
+# sf$elev <- sf$AREASQKM * 1000
+#
+# google_map() %>%
+# 	add_dependencies() %>%
+# 	add_polygon(
+# 		data = sf
+# 		, fill_colour = "SA3_NAME"
+# 	)
+
+
+# library(shiny)
+# library(shinydashboard)
+# library(googleway)
+# library(mapdeck)
+#
+# ui <- dashboardPage(
+# 	dashboardHeader()
+# 	, dashboardSidebar()
+# 	, dashboardBody(
+# 		mapdeck::mapdeck_dependencies()
+# 		,box(
+# 			width = 8
+# 			, googleway::google_mapOutput(
+# 				outputId = "map"
+# 				, height = "600"
+# 			)
+# 		)
+# 	)
+# )
+#
+# server <- function( input, output ) {
+# 	output$map <- googleway::renderGoogle_map({
+# 		googleway::google_map(
+# 			location = c(0,0)
+# 			, zoom = 2
+# 		) %>%
+# 			mapdeck::add_dependencies() %>%
+# 			mapdeck::add_scatterplot(
+# 				data = mapdeck::capitals
+# 				, lat = "lat"
+# 				, lon = "lon"
+# 			)
+# 	})
+# }
+#
+# shinyApp( ui, server )
+
+
+
+
+

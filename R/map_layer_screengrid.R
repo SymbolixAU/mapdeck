@@ -140,7 +140,7 @@ add_screengrid <- function(
 	}
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, opacity, cell_size, colour_range,
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, opacity, cell_size, colour_range,
 		bbox, update_view, focus_layer
 		)
 }
@@ -150,6 +150,6 @@ add_screengrid <- function(
 #' @export
 clear_screengrid <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "screengrid")
-	invoke_method(map, "md_layer_clear", layer_id, "screengrid" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "screengrid" )
 }
 

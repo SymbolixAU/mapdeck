@@ -141,7 +141,7 @@ add_path <- function(
 	}
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
 		js_transitions
 		)
@@ -152,7 +152,7 @@ add_path <- function(
 #' @export
 clear_path <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "path")
-	invoke_method(map, "md_layer_clear", layer_id, "path" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "path" )
 }
 
 

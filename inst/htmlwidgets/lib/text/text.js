@@ -1,7 +1,5 @@
 
-function add_text_geo( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight ) {
-
-  console.log( billboard );
+function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight ) {
 
   const textLayer = new TextLayer({
   	map_id: map_id,
@@ -27,15 +25,21 @@ function add_text_geo( map_id, text_data, layer_id, auto_highlight, highlight_co
     onHover: md_update_tooltip,
     transitions: js_transition || {}
   });
-  md_update_layer( map_id, 'text-'+layer_id, textLayer );
 
-  if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
-  }
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  if( map_type == "google_map") {
+	  md_update_overlay( map_id, 'text-'+layer_id, textLayer );
+	} else {
+
+	  md_update_layer( map_id, 'text-'+layer_id, textLayer );
+	}
+
+	if (legend !== false) {
+	  md_add_legend(map_id, map_type, layer_id, legend);
+	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight) {
+function add_text_polyline( map_id, map_type, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight) {
 
   const textLayer = new TextLayer({
     map_id: map_id,
@@ -60,10 +64,15 @@ function add_text_polyline( map_id, text_data, layer_id, auto_highlight, highlig
     onHover: md_update_tooltip,
     transitions: js_transition || {}
   });
-  md_update_layer( map_id, 'text-'+layer_id, textLayer );
 
-  if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
-  }
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  if( map_type == "google_map") {
+	  md_update_overlay( map_id, 'text-'+layer_id, textLayer );
+	} else {
+	  md_update_layer( map_id, 'text-'+layer_id, textLayer );
+	}
+
+	if (legend !== false) {
+	  md_add_legend(map_id, map_type, layer_id, legend);
+	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

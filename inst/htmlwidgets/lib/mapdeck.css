@@ -16,7 +16,7 @@
     margin: 8px;
 /*    border: 1px solid #b8b8b8; */
     border-radius: 4px;
-    display:inline-block;
+    display: inline-block;
     overflow: auto;
     position: relative;
 }
@@ -33,6 +33,7 @@
     bottom: 0;
     right: 0;
     z-index: 99;
+/*    z-index: 999999999; */
     padding-bottom: 14px;
 }
 

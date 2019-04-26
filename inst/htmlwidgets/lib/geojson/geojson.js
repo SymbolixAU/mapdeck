@@ -1,6 +1,6 @@
 
 
-function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
   geojson = geojson.features;
 
@@ -31,16 +31,19 @@ function add_geojson_sf( map_id, geojson, layer_id, light_settings, auto_highlig
     transitions: js_transition || {}
   });
 
-  md_update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
+  if( map_type == "google_map") {
+	  md_update_overlay( map_id, 'geojson-'+layer_id, geojsonLayer );
+	} else {
+	  md_update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
+	}
 
-  if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
-  }
-
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	if (legend !== false) {
+	  md_add_legend(map_id, map_type, layer_id, legend);
+	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition ) {
+function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition ) {
 
   const geojsonLayer = new deck.GeoJsonLayer({
     map_id: map_id,
@@ -69,7 +72,11 @@ function add_geojson( map_id, geojson, layer_id, light_settings, auto_highlight,
     transitions: js_transition || {}
   });
 
-  md_update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
+  if( map_type == "google_map") {
+	  md_update_overlay( map_id, 'geojson-'+layer_id, geojsonLayer );
+	} else {
+    md_update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
+	}
 }
 
 function geojson_radius( g ) {

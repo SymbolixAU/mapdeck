@@ -1,5 +1,5 @@
 
-function add_column_geo( map_id, column_data, layer_id, auto_highlight, highlight_colour, radius, elevation_scale, disk_resolution, angle, coverage, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_column_geo( map_id, map_type, column_data, layer_id, auto_highlight, highlight_colour, radius, elevation_scale, disk_resolution, angle, coverage, legend, bbox, update_view, focus_layer, js_transition ) {
 
   const columnLayer = new deck.ColumnLayer({
         map_id: map_id,
@@ -21,17 +21,21 @@ function add_column_geo( map_id, column_data, layer_id, auto_highlight, highligh
         onHover: md_update_tooltip,
         transitions: js_transition || {}
   });
-	md_update_layer( map_id, 'column-'+layer_id, columnLayer );
 
-	if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
-  }
+  if( map_type == "google_map") {
+	  md_update_overlay( map_id, 'column-'+layer_id, columnLayer );
+	} else {
+		md_update_layer( map_id, 'column-'+layer_id, columnLayer );
+	}
 
-	md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+  if (legend !== false) {
+	  md_add_legend(map_id, map_type, layer_id, legend);
+	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 
-function add_column_polyline( map_id, column_data, layer_id, auto_highlight, highlight_colour, radius, elevation_scale, disk_resolution, angle, coverage, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_column_polyline( map_id, map_type, column_data, layer_id, auto_highlight, highlight_colour, radius, elevation_scale, disk_resolution, angle, coverage, legend, bbox, update_view, focus_layer, js_transition ) {
 
   const columnLayer = new deck.ColumnLayer({
         map_id: map_id,
@@ -53,13 +57,18 @@ function add_column_polyline( map_id, column_data, layer_id, auto_highlight, hig
         onHover: md_update_tooltip,
         transitions: js_transition || {}
   });
-	md_update_layer( map_id, 'column-'+layer_id, columnLayer );
+
+  if( map_type == "google_map") {
+	  md_update_overlay( map_id, 'column-'+layer_id, columnLayer );
+	} else {
+
+		md_update_layer( map_id, 'column-'+layer_id, columnLayer );
+	}
 
 	if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
-  }
-
-	md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	  md_add_legend(map_id, map_type, layer_id, legend);
+	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 function md_column_elevation(d, use_weight, use_polyline, elevation_function ) {

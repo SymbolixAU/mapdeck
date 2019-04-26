@@ -26,7 +26,7 @@ test_that("add_arc accepts multiple objects", {
 	sf <- cbind( sf_from, sf_to )
 
 	p <- add_arc(map = m, data = sf, origin = "geometry", destination = "geometry.1")
-	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), geo )
+	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 
 	# ## sfencoded
 	# enc_from <- googlePolylines::encode( sf_from )
@@ -51,6 +51,6 @@ test_that("add_arc accepts multiple objects", {
 
 	## data.frame
 	p <- add_arc( map = m, data = df, origin = c("lon_from", "lat_from"), destination = c("lon_to", "lat_to") )
-	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), geo )
+	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 
 })

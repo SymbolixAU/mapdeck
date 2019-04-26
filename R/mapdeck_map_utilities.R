@@ -21,9 +21,10 @@ mapdeck_dispatch = function(
   mapdeck = stop(paste(funcName, "requires a map update object")),
   mapdeck_update = stop(paste(funcName, "does not support map update objects"))
   ) {
-  if (inherits(map, "mapdeck"))
+
+  if (inherits(map, "mapdeck") | inherits(map, "google_map") )
     return(mapdeck)
-  else if (inherits(map, "mapdeck_update"))
+  else if (inherits(map, "mapdeck_update") | inherits(map, "google_map_update"))
     return(mapdeck_update)
   else
     stop("Invalid map parameter")
@@ -55,8 +56,13 @@ invoke_method = function(map, method, ...) {
 
 
 invoke_remote = function(map, method, args = list()) {
-  if (!inherits(map, "mapdeck_update"))
+
+  if (!( inherits(map, "mapdeck_update") | inherits(map, "google_map_update") ) )
     stop("Invalid map parameter; mapdeck_update object was expected")
+
+
+	calls <- "mapdeckmap-calls"
+	if( inherits(map, "google_map_update")) calls <- "googlemap-calls"
 
   msg <- list(
     id = map$id,
@@ -73,11 +79,11 @@ invoke_remote = function(map, method, args = list()) {
   if (map$deferUntilFlush) {
 
     sess$onFlushed(function() {
-      sess$sendCustomMessage("mapdeckmap-calls", msg)
+      sess$sendCustomMessage(calls, msg)
     }, once = TRUE)
 
   } else {
-    sess$sendCustomMessage("mapdeckmap-calls", msg)
+    sess$sendCustomMessage(calls, msg)
   }
   map
 }
@@ -110,45 +116,13 @@ doResolveFormula.data.frame = function(data, f) {
 	eval(f[[2]], data, environment(f))
 }
 
-## from htmltools::htmlDependency()
-createHtmlDependency <- function(name, version, src, script) {
-	structure(
-		list(
-			name = name
-			, version = version
-			, src = list( file = src )
-			, meta = NULL
-			, script = script
-			, stylesheet = NULL
-			, head = NULL
-			, attachment = NULL
-			, package = NULL
-			, all_files = TRUE
-		)
-		, class = "html_dependency"
-	)
-}
-
-
-addDependency <- function(map, dependencyFunction) {
-
-	existingDeps <- sapply(map$dependencies, function(x) x[['name']])
-	addingDependency <- sapply(dependencyFunction, function(x) x[['name']])
-
-	if(!addingDependency %in% existingDeps)
-		map$dependencies <- c(map$dependencies, dependencyFunction)
-
-	return(map)
-}
-
 # Layer Id
 #
 # Checks the layer_id parameter, and provides a default one if NULL
 # @param layer_id
 layerId <- function(
 	layer_id,
-	layer = c("arc", "bitmap", "column", "geojson", "greatcircle", "grid", "hexagon",
-						"line","path","pointcloud", "polygon","scatterplot", "screengrid","text", "title")
+	layer = mapdeck_layers()
 	) {
 
 	layer <- match.arg( layer )
@@ -161,4 +135,11 @@ layerId <- function(
 		return(layer_id)
 	}
 }
+
+mapdeck_layers <- function() {
+	c("arc", "bitmap", "column", "geojson", "greatcircle","grid","hexagon",
+		"line","path","pointcloud", "polygon","scatterplot", "screengrid",
+		"text", "title")
+}
+
 

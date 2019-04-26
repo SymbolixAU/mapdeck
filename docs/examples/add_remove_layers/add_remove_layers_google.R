@@ -1,6 +1,8 @@
 library(shiny)
 library(shinydashboard)
 library(mapdeck)
+library(googleway)
+library(sf)
 
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 flights <- read.csv(url)
@@ -16,7 +18,8 @@ ui <- dashboardPage(
 		, actionButton(inputId = "scatterplot", label = "scatterplot")
 	)
 	, dashboardBody(
-		mapdeckOutput(
+		mapdeck::mapdeck_dependencies()  ## add JS dependencies
+		, googleway::google_mapOutput(
 			outputId = "map"
 			, height = "600"
 		)
@@ -27,25 +30,26 @@ server <- function( input, output ) {
 
 	#set_token( Sys.getenv("MAPBOX") )
 
-	output$map <- renderMapdeck({
-		mapdeck()
+	output$map <- googleway::renderGoogle_map({
+		googleway::google_map() %>%
+			mapdeck::add_dependencies()  ## specific mapdeck map dependencies
 	})
 
 	observeEvent({input$arc},{
 		res <- input$arc %% 2
 		if( res == 1 ) {
-			mapdeck_update(map_id = "map") %>%
-				add_arc(
+			googleway::google_map_update(map_id = "map") %>%
+				mapdeck::add_arc(
 					data = flights
-				  , origin = c("start_lon", "start_lat")
-				  , destination = c("end_lon", "end_lat")
-				  , stroke_from = "airport1"
-				  , stroke_to = "airport2"
+					, origin = c("start_lon", "start_lat")
+					, destination = c("end_lon", "end_lat")
+					, stroke_from = "airport1"
+					, stroke_to = "airport2"
 					, legend = TRUE
 				)
 		} else {
-			mapdeck_update(map_id = "map") %>%
-				clear_arc()
+			googleway::google_map_update(map_id = "map") %>%
+				mapdeck::clear_arc()
 		}
 	})
 
@@ -53,23 +57,23 @@ server <- function( input, output ) {
 	observeEvent({input$path},{
 		res <- input$path %% 2
 		if( res == 1 ) {
-			mapdeck_update(map_id = "map") %>%
-				add_path(
-					data = roads
+			googleway::google_map_update(map_id = "map") %>%
+				mapdeck::add_path(
+					data = roads[1:200, ]
 					, stroke_colour = "RIGHT_LOC"
 					, legend = TRUE
 				)
 		} else {
-			mapdeck_update(map_id = "map") %>%
-				clear_path()
+			googleway::google_map_update(map_id = "map") %>%
+				mapdeck::clear_path()
 		}
 	})
 
 	observeEvent({input$scatterplot},{
 		res <- input$scatterplot %% 2
 		if( res == 1 ) {
-			mapdeck_update(map_id = "map") %>%
-				add_scatterplot(
+			googleway::google_map_update(map_id = "map") %>%
+				mapdeck::add_scatterplot(
 					data = capitals
 					, lon = "lon"
 					, lat = "lat"
@@ -77,8 +81,8 @@ server <- function( input, output ) {
 					, legend = TRUE
 				)
 		} else {
-			mapdeck_update(map_id = "map") %>%
-				clear_scatterplot()
+			googleway::google_map_update(map_id = "map") %>%
+				mapdeck::clear_scatterplot()
 		}
 	})
 

@@ -4,7 +4,7 @@
 %   R/map_layer_grid.R, R/map_layer_hexagon.R, R/map_layer_line.R,
 %   R/map_layer_path.R, R/map_layer_pointcloud.R, R/map_layer_polygon.R,
 %   R/map_layer_scatterplot.R, R/map_layer_screengrid.R, R/map_layer_text.R,
-%   R/map_title.R
+%   R/map_layer_title.R
 \name{clear_arc}
 \alias{clear_arc}
 \alias{clear_bitmap}
