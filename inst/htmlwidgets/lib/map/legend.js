@@ -190,7 +190,7 @@ function md_add_legend_category(map_id, map_type, layer_id, legendValues) {
             divVal = document.createElement('div');
 
         //colourBox = 'height: 20px; width: 15px; background: ' + legendValues.legend.colour[i];
-        colourBox = generateColourBox(legendValues.colourType, legendValues.colour[i].substring(0,7) );
+        colourBox = md_generateColourBox(legendValues.colourType, legendValues.colour[i].substring(0,7) );
         divCol.setAttribute('style', colourBox);
         colourContainer.appendChild(divCol);
 
