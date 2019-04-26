@@ -51,7 +51,10 @@ function clear_title( map_id, map_type, layer_id ) {
 
 	var element = document.getElementById( map_id + 'mapTitle' + layer_id );
 	console.log( element );
-	element.parentNode.removeChild( element );
+
+	if( element !== null ) {
+	  element.parentNode.removeChild( element );
+	}
 
 
 	if( map_type == "google_map") {
