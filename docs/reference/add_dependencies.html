@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>mapdeck dispatch — mapdeck_dispatch • mapdeck</title>
+<title>Add Dependencies — add_dependencies • mapdeck</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="mapdeck dispatch — mapdeck_dispatch" />
+<meta property="og:title" content="Add Dependencies — add_dependencies" />
 
-<meta property="og:description" content="Extension points for plugins" />
+<meta property="og:description" content="Adds the required mapdeck javascript dependencies to a map when not using a mapdeck map." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -130,70 +130,49 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>mapdeck dispatch</h1>
+    <h1>Add Dependencies</h1>
     
-    <div class="hidden name"><code>mapdeck_dispatch.Rd</code></div>
+    <div class="hidden name"><code>add_dependencies.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Extension points for plugins</p>
+    <p>Adds the required mapdeck javascript dependencies to a map when not using a mapdeck map.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>mapdeck_dispatch</span>(<span class='no'>map</span>, <span class='no'>funcName</span>, <span class='kw'>mapdeck</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/stop'>stop</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>funcName</span>,
-  <span class='st'>"requires a map update object"</span>)), <span class='kw'>mapdeck_update</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/stop'>stop</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>funcName</span>,
-  <span class='st'>"does not support map update objects"</span>)))
+    <pre class="usage"><span class='fu'>add_dependencies</span>(<span class='no'>map</span>)</pre>
+        
 
-<span class='fu'>invoke_method</span>(<span class='no'>map</span>, <span class='no'>method</span>, <span class='no'>...</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>map</th>
-      <td><p>a map object, as returned from <code><a href='mapdeck.html'>mapdeck</a></code></p></td>
-    </tr>
-    <tr>
-      <th>funcName</th>
-      <td><p>the name of the function that the user called that caused
-this <code>mapdeck_dispatch</code> call; for error message purposes</p></td>
-    </tr>
-    <tr>
-      <th>mapdeck</th>
-      <td><p>an action to be performed if the map is from
-<code><a href='mapdeck.html'>mapdeck</a></code></p></td>
-    </tr>
-    <tr>
-      <th>mapdeck_update</th>
-      <td><p>an action to be performed if the map is from
-<code><a href='mapdeck_update.html'>mapdeck_update</a></code></p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>the name of the JavaScript method to invoke</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>unnamed arguments to be passed to the JavaScript method</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='co'>## use with a google map from googleway</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>googleway</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘googleway’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:mapdeck’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    add_geojson, clear_geojson, invoke_method, melbourne</span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/googleway/topics/set_key'>set_key</a></span>(<span class='st'>"GOOGLE_MAP_KEY"</span>)
 
-    <p><code>mapdeck_dispatch</code> returns the value of <code>mapdeck</code> or
-or an error. <code>invokeMethod</code> returns the
-<code>map</code> object that was passed in, possibly modified.</p>
-    
+<span class='fu'><a href='https://www.rdocumentation.org/packages/googleway/topics/google_map'>google_map</a></span>() <span class='kw'>%&gt;%</span>
+        <span class='fu'>add_dependencies</span>() <span class='kw'>%&gt;%</span>
+        <span class='fu'><a href='add_scatterplot.html'>add_scatterplot</a></span>(
+                <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>capitals</span>
+                , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"lon"</span>
+                , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
+                , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"country"</span>
+                , <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>10000</span>
+        )</div><div class='output co'>#&gt; is_factor: 0</div><div class='input'>
+</div><div class='input'>
 
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

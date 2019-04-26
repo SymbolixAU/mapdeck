@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>mapdeck dispatch — mapdeck_dispatch • mapdeck</title>
+<title>Mapdeck Dependencies — mapdeck_dependencies • mapdeck</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="mapdeck dispatch — mapdeck_dispatch" />
+<meta property="og:title" content="Mapdeck Dependencies — mapdeck_dependencies" />
 
-<meta property="og:description" content="Extension points for plugins" />
+<meta property="og:description" content="Adds the required mapdeck javascript dependencies to a Shiny UI when you want to use
+mapdeck layers, but not with a mapdeck map." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -130,70 +131,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>mapdeck dispatch</h1>
+    <h1>Mapdeck Dependencies</h1>
     
-    <div class="hidden name"><code>mapdeck_dispatch.Rd</code></div>
+    <div class="hidden name"><code>mapdeck_dependencies.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Extension points for plugins</p>
+    <p>Adds the required mapdeck javascript dependencies to a Shiny UI when you want to use
+mapdeck layers, but not with a mapdeck map.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>mapdeck_dispatch</span>(<span class='no'>map</span>, <span class='no'>funcName</span>, <span class='kw'>mapdeck</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/stop'>stop</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>funcName</span>,
-  <span class='st'>"requires a map update object"</span>)), <span class='kw'>mapdeck_update</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/stop'>stop</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>funcName</span>,
-  <span class='st'>"does not support map update objects"</span>)))
-
-<span class='fu'>invoke_method</span>(<span class='no'>map</span>, <span class='no'>method</span>, <span class='no'>...</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>map</th>
-      <td><p>a map object, as returned from <code><a href='mapdeck.html'>mapdeck</a></code></p></td>
-    </tr>
-    <tr>
-      <th>funcName</th>
-      <td><p>the name of the function that the user called that caused
-this <code>mapdeck_dispatch</code> call; for error message purposes</p></td>
-    </tr>
-    <tr>
-      <th>mapdeck</th>
-      <td><p>an action to be performed if the map is from
-<code><a href='mapdeck.html'>mapdeck</a></code></p></td>
-    </tr>
-    <tr>
-      <th>mapdeck_update</th>
-      <td><p>an action to be performed if the map is from
-<code><a href='mapdeck_update.html'>mapdeck_update</a></code></p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>the name of the JavaScript method to invoke</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>unnamed arguments to be passed to the JavaScript method</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p><code>mapdeck_dispatch</code> returns the value of <code>mapdeck</code> or
-or an error. <code>invokeMethod</code> returns the
-<code>map</code> object that was passed in, possibly modified.</p>
-    
+    <pre class="usage"><span class='fu'>mapdeck_dependencies</span>()</pre>
+        
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

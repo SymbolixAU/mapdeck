@@ -64,7 +64,7 @@ lines and points" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1004</span>
       </span>
     </div>
 
@@ -94,6 +94,9 @@ lines and points" />
     </li>
     <li>
       <a href="../articles/colours.html">Colours</a>
+    </li>
+    <li>
+      <a href="../articles/google_map.html">Google Map</a>
     </li>
     <li>
       <a href="../articles/issues.html">Why isn't it working?</a>
@@ -350,8 +353,7 @@ This should be a named list, where the names are one of</p><ul>
  <span class='fu'>add_geojson</span>(
    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geojson</span>
    , <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
- )
-
+ )</div><div class='output co'>#&gt; <span class='error'>Error in add_geojson(., data = geojson, auto_highlight = TRUE): unused argument (auto_highlight = TRUE)</span></div><div class='input'>
 <span class='co'>## only supplying values to use for fill, the stroke will be default</span>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
  <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>
@@ -363,8 +365,7 @@ This should be a named list, where the names are one of</p><ul>
  <span class='fu'>add_geojson</span>(
    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geojson</span>
    , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"random"</span>
- )
-
+ )</div><div class='output co'>#&gt; <span class='error'>Error in add_geojson(., data = geojson, fill_colour = "random"): unused argument (fill_colour = "random")</span></div><div class='input'>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
  <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>
  , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.9</span>)
@@ -376,8 +377,7 @@ This should be a named list, where the names are one of</p><ul>
    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geojson</span>
    , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"random"</span>
    , <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='st'>"random"</span>
- )
-
+ )</div><div class='output co'>#&gt; <span class='error'>Error in add_geojson(., data = geojson, fill_colour = "random", stroke_colour = "random"): unused arguments (fill_colour = "random", stroke_colour = "random")</span></div><div class='input'>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
  <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>
  , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.9</span>)
@@ -390,11 +390,12 @@ This should be a named list, where the names are one of</p><ul>
    , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"random"</span>
    , <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='st'>"random"</span>
    , <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='fl'>300</span>
- )
-
+ )</div><div class='output co'>#&gt; <span class='error'>Error in add_geojson(., data = geojson, fill_colour = "random", stroke_colour = "random",     elevation = 300): unused arguments (fill_colour = "random", stroke_colour = "random", elevation = 300)</span></div><div class='input'>
 <span class='co'>## putting elevation and width values onto raw GeoJSON</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>geojsonsf</span>)
-<span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/geojsonsf/topics/geojson_sf'>geojson_sf</a></span>( <span class='no'>geojson</span> )
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>geojsonsf</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘geojsonsf’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:googleway’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    geo_melbourne</span></div><div class='input'><span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/geojsonsf/topics/geojson_sf'>geojson_sf</a></span>( <span class='no'>geojson</span> )
 <span class='no'>sf</span>$<span class='no'>width</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>100</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>sf</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>sf</span>$<span class='no'>elevation</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>100</span>:<span class='fl'>1000</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>sf</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='no'>T</span>)
 <span class='no'>geo</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/geojsonsf/topics/sf_geojson'>sf_geojson</a></span>( <span class='no'>sf</span> )
@@ -408,7 +409,8 @@ This should be a named list, where the names are one of</p><ul>
 ) <span class='kw'>%&gt;%</span>
  <span class='fu'>add_geojson</span>(
    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geo</span>
- )</div><div class='input'>
+ )</div><div class='output co'>#&gt; <span class='error'>Error in google_dispatch(map, method, google_map = {    x = map$x$calls    if (is.null(x))         x = list()    n = length(x)    x[[n + 1]] = list(functions = method, args = args)    map$x$calls = x    map}, google_map_update = {    invoke_remote(map, method, args)}): Invalid map parameter</span></div><div class='input'>
+</div><div class='input'>
 
 </div></pre>
   </div>

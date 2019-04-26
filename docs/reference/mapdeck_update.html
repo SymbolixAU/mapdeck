@@ -64,7 +64,7 @@ to respond to reactive content." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1004</span>
       </span>
     </div>
 
@@ -94,6 +94,9 @@ to respond to reactive content." />
     </li>
     <li>
       <a href="../articles/colours.html">Colours</a>
+    </li>
+    <li>
+      <a href="../articles/google_map.html">Google Map</a>
     </li>
     <li>
       <a href="../articles/issues.html">Why isn't it working?</a>
@@ -141,7 +144,8 @@ to respond to reactive content.</p>
     </div>
 
     <pre class="usage"><span class='fu'>mapdeck_update</span>(<span class='no'>map_id</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/domains'>getDefaultReactiveDomain</a></span>(),
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>deferUntilFlush</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>deferUntilFlush</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>map_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"mapdeck_update"</span>,
+  <span class='st'>"google_map_update"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

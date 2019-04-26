@@ -21,18 +21,17 @@ knitr::opts_chunk$set(
 )
 ```
 
-
-
 ```{r packages, eval = TRUE, message = FALSE}
 library(mapdeck)
 library(googleway)
 ```
 
 
+As of version 0.2.2 you can add `mapdeck` layers to a `googleway` Google Map. 
 
-## How do I add layers to a Google Map
+### How, you ask?
 
-Very simply. You add Mapdeck's dependencies to a googleway map
+Very simple. You add Mapdeck's dependencies to the map
 
 ```r
 
@@ -40,21 +39,62 @@ googleway::google_map() %>%
   mapdeck::add_dependencies()
 ```
 
-Then you can add any of the Mapdeck layers
+Then you can add any of the layers
 
 
-```{r}
-
+```r
 googleway::google_map() %>%
   mapdeck::add_dependencies() %>%
-	mapdeck::add_scatterplot(
-		data = capitals
-		, lat = "lat"
-		, lon = "lon"
-		, fill_colour = "country"
+	mapdeck::add_path(
+		data = roads
+		, stroke_colour = "ROAD_TYPE"
 		, legend = T
 	)
 
 ```
+![](./img/articles/google_map_path.png)
 
+If you're using `shiny` you also need to add `mapdeck_dependencies()` to the UI
 
+```r
+
+library(shiny)
+library(shinydashboard)
+library(mapdeck)
+library(googleway)
+
+ui <- dashboardPage(
+	
+	dashboardHeader(),
+	dashboardSidebar(),
+	dashboardBody(
+	  mapdeck::mapdeck_dependencies()
+		, box(
+		  width = 12
+		  , google_mapOutput(
+		    outputId = "map"
+		    , height = "600"
+		    )
+		)
+	)
+)
+
+server <- function(input, output) {
+
+	#set_key("GOOGLE_KEY")
+	
+	output$map <- renderGoogle_map({
+		google_map() %>%
+			mapdeck::add_dependencies() %>%
+			mapdeck::add_path(
+				data = mapdeck::roads
+				, stroke_width = 10
+				, stroke_colour = "ROAD_TYPE"
+				, legend = TRUE
+			)
+	})
+}
+
+shinyApp(ui, server)
+```
+![](./img/articles/google_map_shiny.png)
