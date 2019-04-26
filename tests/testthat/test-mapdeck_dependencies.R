@@ -20,7 +20,7 @@ test_that("dependencies are loaded", {
 	expect_equal(
 		s,
 		c("mapdeck_functions.js", "deckgl.min.js","legend.js","title.js","mapdeck_location.js",
-			"mapdeck_colours.js","mapdeck_coordinates.js", "mapbox-gl.js")
+			"mapdeck_colours.js","mapdeck_coordinates.js", "mapbox-gl.js","mapdeck.js","htmlwidgets.js")
 	)
 
 	l <- lapply( m$dependencies, function(x) x[["stylesheet"]])

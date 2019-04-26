@@ -81,6 +81,28 @@ mapdeck_dependencies <- function() {
 		)
 }
 
+htmlwidgets_js <- function() {
+	list(
+		createHtmlDependency(
+			name = "htmlwidgets",
+			version = as.character( packageVersion("htmlwidgets") ),
+			src = system.file("www", package = "htmlwidgets"),
+			script = c("htmlwidgets.js")
+		)
+	)
+}
+
+mapdeck_js <- function() {
+	list(
+		createHtmlDependency(
+			name = "mpadeck-binding",
+			version = as.character( packageVersion("mapdeck") ),
+			src = system.file("htmlwidgets/", package = "mapdeck"),
+			script = c("mapdeck.js")
+		)
+	)
+}
+
 mapdeck_dep_functions <- function() {
 	list(
 		createHtmlDependency(
