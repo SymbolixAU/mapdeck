@@ -28,7 +28,7 @@ add_title <- function(map, title, layer_id = NULL) {
 	layer_id <- layerId( layer_id, layer = "title" )
 	if(!inherits(title, "list")) title <- list(title = title)
 
-	invoke_method(map, "add_title", layer_id, jsonify::to_json( title, unbox = TRUE ) )
+	invoke_method(map, "add_title", map_type( map ), layer_id, jsonify::to_json( title, unbox = TRUE ) )
 }
 
 
@@ -36,5 +36,5 @@ add_title <- function(map, title, layer_id = NULL) {
 #' @export
 clear_title <- function(map, layer_id = NULL ) {
 	layer_id <- layerId( layer_id, layer = "title")
-	invoke_method(map, "clear_title", layer_id)
+	invoke_method(map, "clear_title", map_type( map ), layer_id)
 }

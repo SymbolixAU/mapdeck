@@ -85,7 +85,6 @@ function md_hexagon_elevation(d, use_weight, use_polyline, elevation_function ) 
 
 function md_hexagon_colour(d, use_colour, use_polyline, colour_function ) {
 
-	//console.log( d );
 	if( !use_colour ) {
 		return d.length;
 	}

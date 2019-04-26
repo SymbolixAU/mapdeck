@@ -1,8 +1,6 @@
 
 function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
 
-  console.log( js_transition );
-
   const polygonLayer = new PolygonLayer({
   	map_id: map_id,
     id: 'polygon-'+layer_id,
@@ -83,10 +81,7 @@ function decode_polygons( polylines ) {
   var lines = [];
 
   for (i = 0; i < polylines.length; i++ ) {
-    //p = polylines[i];
     lines = polylines[i];
-    //console.log( "p");
-    //console.log( p );
 
     for (j = 0; j < lines.length; j++ ) {
     	p = lines[j];

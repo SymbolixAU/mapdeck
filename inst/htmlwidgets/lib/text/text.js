@@ -1,8 +1,6 @@
 
 function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight ) {
 
-  console.log( billboard );
-
   const textLayer = new TextLayer({
   	map_id: map_id,
     id: 'text-'+layer_id,

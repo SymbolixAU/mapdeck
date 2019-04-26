@@ -26,7 +26,6 @@ function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, high
 	}
 
 	if (legend !== false) {
-		console.log( "add_arc legend");
 	  md_add_legend( map_id, map_type, layer_id, legend );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );

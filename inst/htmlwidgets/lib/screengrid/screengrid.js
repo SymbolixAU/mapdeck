@@ -1,7 +1,5 @@
 function add_screengrid_geo( map_id, map_type, screengrid_data, layer_id, opacity, cell_size, colour_range, bbox, update_view, focus_layer ) {
 
-
-  console.log( "screengrid-" +map_type ) ;
   const screengridLayer = new deck.ScreenGridLayer({
     map_id: map_id,
     id: 'screengrid-'+layer_id,

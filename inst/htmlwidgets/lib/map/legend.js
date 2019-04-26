@@ -1,7 +1,5 @@
 function md_add_legend(map_id, map_type, layer_id, legendValues) {
 
-  console.log( "add_legend" );
-
   if( !md_div_exists( 'legendContainer'+map_id ) ) {
   	md_setup_legend( map_id );
   }
@@ -121,7 +119,6 @@ function md_generateColourBox(colourType, colour) {
         return ('height: 20px; width: 15px; background: ' + colour);
     } else {
         // http://jsfiddle.net/UES6U/2/
-        console.log( colour) ;
         return ('height: 20px; width: 15px; background: linear-gradient(to bottom, white 25%, ' + colour + ' 25%, ' + colour + ' 45%, ' + 'white 45%)');
     }
 }
@@ -129,9 +126,6 @@ function md_generateColourBox(colourType, colour) {
 function md_add_legend_category(map_id, map_type, layer_id, legendValues) {
 
     'use strict';
-
-    console.log( "legendValues: " );
-    console.log( legendValues );
 
     var legendContent,
         legendTitle,
@@ -241,8 +235,6 @@ function md_try_remove_legend( map_id, map_type, layer_id, colour_type ) {
 	var id = map_id + 'legend' + layer_id + colour_type;
 	var objIndex = md_find_by_id( window[map_id + 'legendPositions'], id, "index" );
 
-	console.log("objIndex legend to remove: " + objIndex);
-
 	if( objIndex !== undefined ) {
 		md_removeControl( map_id, map_type, id, window[map_id + 'legendPositions'][objIndex].position );
 		window[map_id + 'legendPositions'].splice(objIndex, 1);
@@ -262,13 +254,12 @@ function md_clear_legend( map_id, map_type, layer_id ) {
 function md_placeControl( map_id, map_type, object ) {
 
     var mapbox_ctrl = document.getElementById( "legendContainer"+map_id);
-
     mapbox_ctrl.appendChild( object );
+
     var ledge = {};
     var position = "BOTTOM_RIGHT";
 
     if( map_type == "google_map" ) {
-    	//window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT].push( mapbox_ctrl );
     	window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT].push( object );
     }
 
@@ -283,14 +274,11 @@ function md_placeControl( map_id, map_type, object ) {
 
 function md_removeControl( map_id, map_type, legend_id, position ) {
 
-  console.log("legend_id to remove: " + legend_id);
 	var element = document.getElementById( legend_id );
-	console.log( "element legend to remove" );
-	console.log( element );
 	element.parentNode.removeChild( element );
 
 	if( map_type == "google_map") {
-	  clearControl( window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT], legend_id );
+	  md_clear_control( window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT], legend_id );
 	}
 
 /*
@@ -315,13 +303,12 @@ function md_removeControl( map_id, map_type, legend_id, position ) {
 */
 }
 
-function clearControl(control, legend_id) {
+function md_clear_control(control, legend_id) {
 
   if (control !== undefined ) {
     control.forEach(function (item, index) {
       if (item !== undefined ) {
         if (item.getAttribute('id') === legend_id) {
-        	console.log( "removing legend_id " + legend_id );
           control.removeAt(index);
         }
       }

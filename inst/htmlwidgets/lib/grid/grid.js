@@ -71,13 +71,11 @@ function md_grid_elevation(d, use_weight, use_polyline) {
 		  total = total + d[i].properties.elevation;
 	  }
 	}
-	console.log( total );
 	return total;
 }
 
 function md_grid_colour(d, use_colour, use_polyline ) {
 
-	//console.log( d );
 	if( !use_colour ) {
 		return d.length;
 	}
