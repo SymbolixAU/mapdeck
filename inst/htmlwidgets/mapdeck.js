@@ -68,7 +68,6 @@ HTMLWidgets.widget({
   }
 });
 
-
 if (HTMLWidgets.shinyMode) {
 
   Shiny.addCustomMessageHandler("mapdeckmap-calls", function (data) {

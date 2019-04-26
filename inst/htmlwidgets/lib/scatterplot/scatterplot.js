@@ -2,12 +2,15 @@
 
 function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
+  //console.log( scatter_data );
+
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
     radiusScale: 1,
     radiusMinPixels: 1,
+    lineWidthMinPixels: 0,
     stroked: true,  // TODO( make conditional IFF stroke provided?)
     filled: true,
     getRadius: d => d.properties.radius,
@@ -45,6 +48,7 @@ function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, aut
     data: scatter_data,
     radiusScale: 1,
     radiusMinPixels: 1,
+    lineWidthMinPixels: 0,
     stroked: true,
     filled: true,
     getRadius: d => d.radius,

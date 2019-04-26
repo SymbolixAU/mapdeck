@@ -6,9 +6,11 @@
 \usage{
 add_bitmap(map, image, bounds, desaturate = 0,
   transparent_colour = "#000000", tint_colour = "#FFFFFF",
-  layer_id = NULL)
+  layer_id = NULL, update_view = TRUE, focus_layer = FALSE)
 }
 \arguments{
+\item{map}{a mapdeck map object}
+
 \item{image}{url to an image to use on the map}
 
 \item{bounds}{coordinates of the bounding box of the image [left, bottom, right, top]}
@@ -19,6 +21,14 @@ and 1 being greyscale}
 \item{transparent_colour}{the colour to use for transparent pixels as a hex string}
 
 \item{tint_colour}{the colour to tint the bipmap by, as a hex string}
+
+\item{layer_id}{single value specifying an id for the layer. Use this value to
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
 Add bitmap
@@ -28,9 +38,7 @@ Add bitmap
 
 set_token( "MAPBOX_TOKEN" )
 
-mapdeck(
-  location = c(-122.519, 37.7045), zoom = 10
-) \%>\%
+mapdeck() \%>\%
  add_bitmap(
    image = 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/website/sf-districts.png'
    , bounds = c(-122.519, 37.7045, -122.355, 37.829)

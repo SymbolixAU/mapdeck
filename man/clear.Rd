@@ -64,6 +64,4 @@ clear_title(map, layer_id = NULL)
 }
 \description{
 Clears elements from a map
-
-Clears elements from a map
 }
