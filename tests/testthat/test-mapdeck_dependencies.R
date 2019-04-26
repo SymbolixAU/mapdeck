@@ -55,7 +55,7 @@ test_that("dependencies are loaded", {
 																					knitr = list(defaultWidth = NULL, defaultHeight = NULL,
 																											 figure = TRUE)), dependencies = list(structure(list(
 																											 	name = "googleway", version = "9999", src = list(file = "."),
-																											 	meta = NULL, script = NULL, stylesheet = NULL, head = "<script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyAQIyRpnExL-vHKmz7oqL9zR5gErxFGtjI&libraries=visualization,geometry,places,drawing\"></script><script type=\"text/javascript\" src=\"https://www.gstatic.com/charts/loader.js\"></script>",
+																											 	meta = NULL, script = NULL, stylesheet = NULL, head = "<script src=\"https://maps.googleapis.com/maps/api/js?key=abc&libraries=visualization,geometry,places,drawing\"></script><script type=\"text/javascript\" src=\"https://www.gstatic.com/charts/loader.js\"></script>",
 																											 	attachment = NULL, package = NULL, all_files = FALSE), class = "html_dependency")),
 											elementId = NULL, preRenderHook = NULL, jsHooks = list()), class = c("google_map",
 																																													 "htmlwidget"), package = "googleway")
