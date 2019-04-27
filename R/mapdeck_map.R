@@ -55,7 +55,6 @@ mapdeck <- function(
     	padding = padding,
     	browser.fill = FALSE
     )
-    #, dependencies = dep
   )
 
   mapdeckmap <- add_dependencies( mapdeckmap )
@@ -117,10 +116,8 @@ shinyWidgetOutput2 <- function (outputId, name, width, height, package = name, i
 			, height = height
 			)
 		)
-
-	# dependencies = htmlwidgets:::getDependency(name, package)
 	dependencies <- c( htmlwidgets_js(), mapdeck_js(), deckgl_min_js(), mapdeck_dep_functions(), mapboxgl() )
-	htmltools::attachDependencies(html, dependencies)
+	htmltools::attachDependencies(html, unique( dependencies ) )
 }
 
 widget_html2 <- function (name, package, id, style, class, inline = FALSE, ...) {

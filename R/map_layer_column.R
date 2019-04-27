@@ -4,7 +4,8 @@ mapdeckColumnDependency <- function() {
 			name = "column",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/column", package = "mapdeck"),
-			script = c("column.js")
+			script = c("column.js"),
+			all_files = FALSE
 		)
 	)
 }

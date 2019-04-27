@@ -4,7 +4,8 @@ mapdeckBitmapDependency <- function() {
 			name = "bitmap",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/bitmap", package = "mapdeck"),
-			script = c("bitmap.js")
+			script = c("bitmap.js"),
+			all_files = FALSE
 		)
 	)
 }

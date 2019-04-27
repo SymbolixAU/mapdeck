@@ -4,7 +4,8 @@ mapdeckTextDependency <- function() {
 			name = "text",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/text", package = "mapdeck"),
-			script = c("text.js")
+			script = c("text.js"),
+			all_files = FALSE
 		)
 	)
 }

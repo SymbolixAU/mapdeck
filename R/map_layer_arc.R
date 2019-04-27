@@ -4,7 +4,8 @@ mapdeckArcDependency <- function() {
 			name = "arc",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/arc", package = "mapdeck"),
-			script = c("arc.js")
+			script = c("arc.js"),
+			all_files = FALSE
 		)
 	)
 }
@@ -15,7 +16,8 @@ mapdeckArcBrushDependency <- function() {
 			name = "arc_brush",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/arc_brush", package = "mapdeck"),
-			script = c("arc_brush.js")
+			script = c("arc_brush.js"),
+			all_files = FALSE
 		)
 	)
 }

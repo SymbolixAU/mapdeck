@@ -4,7 +4,8 @@ mapdeckGridDependency <- function() {
 			name = "grid",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/grid", package = "mapdeck"),
-			script = c("grid.js")
+			script = c("grid.js"),
+			all_files = FALSE
 		)
 	)
 }

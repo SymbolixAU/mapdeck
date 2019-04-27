@@ -4,7 +4,8 @@ mapdeckScatterplotDependency <- function() {
 			name = "scatterplot",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/scatterplot", package = "mapdeck"),
-			script = c("scatterplot.js")
+			script = c("scatterplot.js"),
+			all_files = FALSE
 		)
 	)
 }
@@ -15,7 +16,8 @@ mapdeckScatterplotBrushDependency <- function() {
 			name = "scatterplot_brush",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/scatterplot_brush", package = "mapdeck"),
-			script = c("scatterplot_brush.js")
+			script = c("scatterplot_brush.js"),
+			all_files = FALSE
 		)
 	)
 }
