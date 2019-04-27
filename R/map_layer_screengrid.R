@@ -4,7 +4,8 @@ mapdeckScreengridDependency <- function() {
 			name = "screengrid",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/screengrid", package = "mapdeck"),
-			script = c("screengrid.js")
+			script = c("screengrid.js"),
+			all_files = FALSE
 		)
 	)
 }

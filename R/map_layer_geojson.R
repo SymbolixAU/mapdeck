@@ -5,7 +5,8 @@ mapdeckGeojsonDependency <- function() {
 			name = "geojson",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/geojson", package = "mapdeck"),
-			script = c("geojson.js")
+			script = c("geojson.js"),
+			all_files = FALSE
 		)
 	)
 }

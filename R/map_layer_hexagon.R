@@ -4,7 +4,8 @@ mapdeckHexagonDependency <- function() {
 			name = "hexagon",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/hexagon", package = "mapdeck"),
-			script = c("hexagon.js")
+			script = c("hexagon.js"),
+			all_files = FALSE
 		)
 	)
 }

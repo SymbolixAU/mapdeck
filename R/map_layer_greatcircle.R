@@ -4,7 +4,8 @@ mapdeckGreatCircleDependency <- function() {
 			name = "greatcircle",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/greatcircle", package = "mapdeck"),
-			script = c("greatcircle.js")
+			script = c("greatcircle.js"),
+			all_files = FALSE
 		)
 	)
 }

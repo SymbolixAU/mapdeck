@@ -4,7 +4,8 @@ mapdeckLineDependency <- function() {
 			name = "line",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/line", package = "mapdeck"),
-			script = c("line.js")
+			script = c("line.js"),
+			all_files = FALSE
 		)
 	)
 }

@@ -4,7 +4,8 @@ mapdeckPathDependency <- function() {
 			name = "path",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/path", package = "mapdeck"),
-			script = c("path.js")
+			script = c("path.js"),
+			all_files = FALSE
 		)
 	)
 }
