@@ -24,7 +24,7 @@ void main(void) {
 `;
 
 var scatterplotVertex = `\
-#define SHADER_NAME scatterplot-brushing-ayer-vertex-shader
+#define SHADER_NAME scatterplot-brushing-layer-vertex-shader
 const float R_EARTH = 6371000.; // earth radius in km
 attribute vec3 positions;
 attribute vec3 instancePositions;
@@ -71,12 +71,11 @@ void main(void) {
   float isPtInBrush = isPointInRange(instancePositions.xy, mousePos, brushRadius, enableBrushing);
   // for use with arc layer, if brushTarget is truthy
   // calculate whether instanceTargetPositions is in range
-  float isTargetInBrush = isPointInRange(instanceTargetPositions.xy, mousePos, brushRadius, true);
+  //float isTargetInBrush = isPointInRange(instanceTargetPositions.xy, mousePos, brushRadius, true);
   // if brushTarget is falsy, when pt is in brush return true
   // if brushTarget is truthy and target is in brush return true
   // if brushTarget is truthy and pt is in brush return false
-  float isInBrush = float(float(isPtInBrush > 0. && brushTarget <= 0.) > 0. ||
-  float(brushTarget > 0. && isTargetInBrush > 0.) > 0.);
+  float isInBrush = float(float(isPtInBrush > 0. ) > 0.);
   float finalRadius = mix(0., instanceRadius, isInBrush);
   // Multiply out radius and clamp to limits
   float outerRadiusPixels = clamp(
@@ -112,50 +111,26 @@ void main(void) {
 
 function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
 
-
-  //var all_points = scatter_data.geometry.geometry.coordinates;
-  var all_points = new Array( scatter_data.length );
-  for( i = 0; i < scatter_data.length; i++ ) {
-  	all_points[i] = scatter_data[i].geometry.geometry.coordinates;
-  }
-  //console.log( all_points );
-
 	const defaultProps = {
-	  ...ScatterplotLayer.defaultProps,
 	  enableBrushing: true,
 	  // show point only if source is in brush
 	  brushTarget: false,
 	  // brush radius in meters
 	  brushRadius: brush_radius,
 	  mousePosition: [0, 0],
-	  getTargetPosition: d => d.target,
 	  radiusMinPixels: 0
 	};
 
 	class ScatterplotBrushingLayer extends ScatterplotLayer {
 	  getShaders() {
 	    // get customized shaders
-	    return Object.assign({}, super.getShaders(), {
+
+	    const shaders =  Object.assign({}, super.getShaders(), {
 	      vs: scatterplotVertex,
 	      fs: scatterplotFragment
 	    });
+	    return shaders;
 	  }
-
-	  // add instanceSourcePositions as attribute
-	  // instanceSourcePositions is used to calculate whether
-	  // point source is in range when brushTarget is truthy
-	  initializeState() {
-	    super.initializeState();
-
-	    this.state.attributeManager.addInstanced({
-	      instanceTargetPositions: {
-	        size: 3,
-	        accessor: 'getTargetPosition',
-	        update: this.calculateInstanceTargetPositions
-	      }
-	    });
-	  }
-
 
 	  draw(opts) {
 	    // add uniforms
@@ -169,20 +144,6 @@ function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, au
 	    });
 	    const newOpts = Object.assign({}, opts, {uniforms});
 	    super.draw(newOpts);
-	  }
-
-	  // calculate instanceSourcePositions
-	  calculateInstanceTargetPositions(attribute) {
-	    const {data, getTargetPosition} = this.props;
-	    const {value, size} = attribute;
-	    let point;
-	    for (let i = 0; i < data.length; i++) {
-	      point = data[i];
-	      const position = getTargetPosition(point) || [0, 0, 0];
-	      value[i * size + 0] = position[0];
-	      value[i * size + 1] = position[1];
-	      value[i * size + 2] = position[2];
-	    }
 	  }
 	}
 
@@ -219,22 +180,6 @@ function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, au
 
   var scatterbrushMoveListener = function(evt) {
 	  scatterLayer.setState({ mousePosition: [evt.offsetX, evt.offsetY] });
-	  // TODO
-	  // capture coordinates, and number of points, and some data about the points
-	  // and return to shiny
-	  //console.log( scatterLayer.state );
-	  //console.log( scatterLayer.state.attributeManager.attributes.instanceTargetPositions.gl );
-	  //console.log( isPointInRange );
-	  //console.log( scatterLayer.isPointInRange );
-
-	  //var eventInfo = {
-	  //	mousePosition: [ evt.offsetX, evt.offsetY ]
-	  //}
-	  //Shiny.onInputChange(map_id + "_" + layer_id + "_brush", eventInfo);
-	  //for( i = 0; i < all_points.length; i++ ) {
-	  //	console.log( is_point_in_range( all_points[1], all_points[0], evt.offsetX, evt.offsetY, 10 ) );
-	  //}
-
   }
 
   var scatterbrushLeaveListener = function(evt) {
@@ -256,25 +201,7 @@ function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, au
 	  md_add_legend(map_id, map_type, layer_id, legend);
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
-
 }
-
-//https://stackoverflow.com/a/21623206/5977215
-function distance_between_coordinates(lat1, lon1, lat2, lon2) {
-  var p = 0.017453292519943295;    // Math.PI / 180
-  var c = Math.cos;
-  var a = 0.5 - c((lat2 - lat1) * p)/2 +
-          c(lat1 * p) * c(lat2 * p) *
-          (1 - c((lon2 - lon1) * p))/2;
-
-  return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
-}
-
-// range is km
-function is_point_in_range(point_lat, point_lon, mouse_lat, mouse_lon, range) {
-  return (distance_between_coordinates(point_lat, point_lon, mouse_lat, mouse_lon) <= range);
-}
-
 
 
 
