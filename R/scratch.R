@@ -1,5 +1,5 @@
 
-
+#
 # library(gpxsf)
 # library(sf) ## for print methods of sf objects
 # gpx <- system.file("gpx/city_trail.gpx", package = "gpxsf")
@@ -16,9 +16,8 @@
 # 	) %>%
 # 	add_trips(
 # 		data = sf
-# 		, trail_length = 1000
-# #		, end_time = 11861
-# 		, animation_speed = 250
+# 		, trail_length = 2000
+# 		, animation_speed = 200
 # 		, stroke_colour = "#FFFFFF"
 # 	)
 

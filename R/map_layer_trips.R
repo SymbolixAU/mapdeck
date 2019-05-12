@@ -18,6 +18,7 @@ mapdeckTripsDependency <- function() {
 #' @inheritParams add_polygon
 #' @param stroke_width
 #' @param trail_length
+#' @param opacity single value in [0,1]
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
@@ -32,6 +33,8 @@ add_trips <- function(
 	map,
 	data = get_map_data(map),
 	stroke_colour = NULL,
+	stroke_width = NULL,
+	opacity = 0.3,
 	palette = "viridis",
 	trail_length = 180,
 	start_time = get_m_range_start( data ),
@@ -47,7 +50,8 @@ add_trips <- function(
 	experimental_layer("trips")
 
 	l <- list()
-	l[["stroke_colour"]] <- force( stroke_colour)
+	l[["stroke_colour"]] <- force( stroke_colour )
+	l[["stroke_width"]] <- force( stroke_width )
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -90,7 +94,7 @@ add_trips <- function(
 	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, trail_length, start_time, end_time, animation_speed,
+		map, jsfunc, shape[["data"]], opacity, layer_id, trail_length, start_time, end_time, animation_speed,
 		shape[["legend"]]
 	)
 }
