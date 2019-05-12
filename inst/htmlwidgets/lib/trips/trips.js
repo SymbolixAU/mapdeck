@@ -4,13 +4,13 @@ function add_trips_geo( map_id, trips_data, layer_id, trail_length, start_time, 
   var tripsLayer = new TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
-    getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
+    getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates, start_time ),
     getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
     opacity: 0.3,
     widthMinPixels: 2,
     rounded: true,
     trailLength: trail_length,
-    currentTime: start_time
+    currentTime: 0
   });
 
   console.log( tripsLayer );
@@ -28,7 +28,7 @@ function add_trips_geo( map_id, trips_data, layer_id, trail_length, start_time, 
   //function animate_trips( tripsLayer ) {
 function animate_trips( map_id, trips_data, layer_id, trail_length, start_time, end_time, animation_speed ) {
 
-  	var loopLength = end_time; // unit corresponds to the timestamp in source data
+  	var loopLength = end_time - start_time; // unit corresponds to the timestamp in source data
     var animationSpeed = animation_speed; // unit time per second
 
     const timestamp = Date.now() / 1000;
@@ -39,7 +39,7 @@ function animate_trips( map_id, trips_data, layer_id, trail_length, start_time, 
 		var tripsLayer = new TripsLayer({
 		    id: 'trips-'+layer_id,
 		    data: trips_data,
-		    getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
+		    getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates, start_time ),
 		    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
 		    opacity: 0.3,
 		    widthMinPixels: 2,
@@ -57,7 +57,7 @@ function animate_trips( map_id, trips_data, layer_id, trail_length, start_time, 
   }
 }
 
-function md_trip_coordinates( coords ) {
+function md_trip_coordinates( coords, start_time ) {
 	//console.log( coords );
 	//return [ coords[0], coords[1], coords[3] ];     // TODO( return 3rd or 4th column)
 	// because the sf object has either Z and or M
@@ -68,7 +68,7 @@ function md_trip_coordinates( coords ) {
 		inner = coords[i];
 		x = inner[0];
 		y = inner[1];
-		z = inner[3];
+		z = inner[3] - start_time;
 		res[i] = [x,y,z];
 	}
 	return res;

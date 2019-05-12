@@ -18,7 +18,7 @@
 # 		data = sf
 # 		, trail_length = 1000
 # #		, end_time = 11861
-# 		, animation_speed = 200
+# 		, animation_speed = 250
 # 		, stroke_colour = "#FFFFFF"
 # 	)
 

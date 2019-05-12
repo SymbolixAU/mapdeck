@@ -89,9 +89,6 @@ add_trips <- function(
 	# js_transitions <- resolve_transitions( transitions, "path" )
 	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
-	print( start_time )
-	print( end_time )
-
 	invoke_method(
 		map, jsfunc, shape[["data"]], layer_id, trail_length, start_time, end_time, animation_speed,
 		shape[["legend"]]
