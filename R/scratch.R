@@ -1,4 +1,27 @@
+
+
+# library(gpxsf)
+# library(sf) ## for print methods of sf objects
+# gpx <- system.file("gpx/city_trail.gpx", package = "gpxsf")
+# sf <- gpxsf::gpx_sf( gpx )
 #
+# library(mapdeck)
+#
+# set_token( read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+#
+# mapdeck(
+# 	style = mapdeck_style("dark")
+# 	, location = c(144.5, -37.9)
+# 	, zoom = 8
+# 	) %>%
+# 	add_trips(
+# 		data = sf
+# #		, end_time = 11861
+# 		, animation_speed = 200
+# 		, stroke_colour = "#FFFFFF"
+# 	)
+
+
 # trips <- jsonlite::fromJSON( 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/trips/trips.json' )
 #
 # library(data.table)
@@ -38,7 +61,7 @@
 # 	add_path( data = sf )
 
 
-#
+
 #
 # library(data.table)
 # library(sf)
@@ -68,24 +91,35 @@
 #
 # dt[, range(time)]
 #
+# dt[, elev := 0]
+#
 # sf <- dt[
 # 	, {
-# 		geometry = sf::st_linestring( x = matrix( c(lon, lat, time ), ncol = 3 ) )
+# 		geometry = sf::st_linestring( x = matrix( c(lon, lat, elev, time ), ncol = 4 ) )
 # 		geometry = sf::st_sf( geometry = sf::st_sfc( geometry ) )
 # 	}
 # 	, by = r
 # ] %>% sf::st_as_sf()
-#
-# ## the linestring now has a Z component, which we're usign as 'time' (not elevation)
-#
+
+## the linestring now has a Z component, which we're usign as 'time' (not elevation)
+
+## Trip layer coordinates can only include M component, not Z
+## Or I need to make the javascript code drop the Z component??
+
 # mapdeck(
 # 	style = mapdeck_style("dark")
 # 	, location = c(145., -37.8)
 # 	, zoom = 10
 # ) %>%
 # 	add_trips(
-# 		data = sf[1:5000, ], stroke_colour = "#FFFFFF"
+# 		data = sf[11, ], stroke_colour = "#FFFFFF"
 # 	)
+
+
+
+
+
+
 
 # install.packages("plotKML")
 # library(plotKML)
@@ -287,7 +321,7 @@
 #
 # library(sf)
 #
-# sf <- gpxsf::gpx_sf( gpx[1], time_return = "counter" )
+# sf <- gpxsf::gpx_sf( gpx[1], time = "counter" )
 #
 #
 # mapdeck(
@@ -298,134 +332,8 @@
 # 	add_trips(
 # 		data = sf
 # 		, loop_length = 1440
-# 		, animation_speed = 200
+# 		, animation_speed = 10
 # 	)
-
-
-
-
-
-
-
-
-
-#
-# set_token( read.dcf("~/.googleAPI", fields = "MAPBOX"))
-#
-# df <- melbourne  ## data.frame with encoded polylnies
-# df$elevation <- sample(100:5000, size = nrow(df))
-# df$info <- paste0("<b>SA2 - </b><br>",df$SA2_NAME)
-#
-# l1 <- legend_element(
-# 	colours = colourvalues::colour_values(1:5)
-# 	, variables = letters[1:5]
-# 	, colour_type = "fill"
-# 	, variable_type = "category"
-# 	, title = "new legend"
-# 	)
-#
-# l2 <- legend_element(
-# 	colours = colourvalues::colour_values(1:5, palette = "inferno")
-# 	, variables = letters[1:5]
-# 	, colour_type = "stroke"
-# 	, variable_type = "category"
-# 	, title = "new legend"
-# )
-#
-# js <- mapdeck_legend(c(l1, l2))
-#
-# mapdeck(
-#   style = mapdeck_style('dark')
-#   , location = c(145, -38)
-#   , zoom = 8
-#   ) %>%
-#   add_polygon(
-#     data = df
-#     , polyline = "geometry"
-#     , layer = "polygon_layer"
-#     , fill_colour = "SA2_NAME"
-#     , stroke_colour = "SA3_NAME"
-#     , elevation = "elevation"
-#     , tooltip = 'info'
-#     , legend = js
-#   )
-
-
-# sf <- spatialwidget::widget_melbourne
-# sf$my_colour <- ifelse( substr(sf$SA2_NAME, 1, 1) == "A", "#00FF00FF", "#FF0000FF")
-#
-# l1 <- legend_element(
-# 	variables = c("begins with A", "Doesn't begin with A")
-# 	, colours = c("#00FF00FF", "#FF0000FF")
-# 	, colour_type = "fill"
-# 	, variable_type = "category"
-# )
-# js <- mapdeck_legend(l1)
-# js
-# # {"fill_colour":{"colour":["#00FF00FF","#FF0000FF"],"variable":["begins with A","Doesn't begin with A"],"colourType":["fill_colour"],"type":["category"],"title":[""],"css":[""]}}
-# mapdeck( ) %>%
-# 	add_polygon(
-# 		data = sf
-# 		, fill_colour = "my_colour"
-# 		, legend = js
-# 	)
-#
-# library(googleway)
-# library(mapdeck)
-# library(sf)
-#
-# set_key( read.dcf("~/Documents/.googleAPI" ,fields = "GOOGLE_MAP_KEY"))
-#
-# sf <- spatialwidget::widget_melbourne
-#
-# sf$elev <- sf$AREASQKM * 1000
-#
-# google_map() %>%
-# 	add_dependencies() %>%
-# 	add_polygon(
-# 		data = sf
-# 		, fill_colour = "SA3_NAME"
-# 	)
-
-
-# library(shiny)
-# library(shinydashboard)
-# library(googleway)
-# library(mapdeck)
-#
-# ui <- dashboardPage(
-# 	dashboardHeader()
-# 	, dashboardSidebar()
-# 	, dashboardBody(
-# 		mapdeck::mapdeck_dependencies()
-# 		,box(
-# 			width = 8
-# 			, googleway::google_mapOutput(
-# 				outputId = "map"
-# 				, height = "600"
-# 			)
-# 		)
-# 	)
-# )
-#
-# server <- function( input, output ) {
-# 	output$map <- googleway::renderGoogle_map({
-# 		googleway::google_map(
-# 			location = c(0,0)
-# 			, zoom = 2
-# 		) %>%
-# 			mapdeck::add_dependencies() %>%
-# 			mapdeck::add_scatterplot(
-# 				data = mapdeck::capitals
-# 				, lat = "lat"
-# 				, lon = "lon"
-# 			)
-# 	})
-# }
-#
-# shinyApp( ui, server )
-
-
 
 
 

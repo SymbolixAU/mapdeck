@@ -32,7 +32,7 @@ void main(void) {
 }
 `;
 
-function add_trips_geo( map_id, trips_data, layer_id, trail_length, loop_length, animation_speed, legend ) {
+function add_trips_geo( map_id, trips_data, layer_id, trail_length, end_time, animation_speed, legend ) {
 
   const defaultProps = {
 	  trailLength: {type: 'number', value: trail_length, min: 0},
@@ -356,9 +356,7 @@ void main() {
 `;
 
 
-function add_trips_geo( map_id, trips_data, layer_id, trail_length, loop_length, animation_speed, legend ) {
-
-	console.log( trips_data );
+function add_trips_geo( map_id, trips_data, layer_id, trail_length, start_time, end_time, animation_speed, legend ) {
 
 	class PathTimeLayer extends PathLayer {
   	getShaders() {
@@ -431,33 +429,35 @@ function add_trips_geo( map_id, trips_data, layer_id, trail_length, loop_length,
   var tripsLayer = new TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
-    getPath: d => d.geometry.geometry.coordinates,
+    getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
     getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
     opacity: 0.3,
     widthMinPixels: 2,
     rounded: true,
     //trailLength: trail_length,
-    time: 0,
-    currentTime: 0
+    time: start_time,
+    currentTime: start_time
   });
 
   console.log( tripsLayer );
 
   md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 
+/*
   if (legend !== false) {
     add_legend( map_id, layer_id, legend );
   }
+*/
 
-  animate_trips( map_id, trips_data, layer_id, loop_length, animation_speed );
+  animate_trips( map_id, trips_data, layer_id, start_time, end_time, animation_speed );
 
   //function animate_trips( tripsLayer ) {
-function animate_trips( map_id, trips_data, layer_id, loop_length, animation_speed ) {
+function animate_trips( map_id, trips_data, layer_id, start_time, end_time, animation_speed ) {
 
-	 //console.log( loop_length );
+	 //console.log( end_time );
 	 //console.log( animation_speed );
 
-  	var loopLength = loop_length; // unit corresponds to the timestamp in source data
+  	var loopLength = end_time; // unit corresponds to the timestamp in source data
     var animationSpeed = animation_speed; // unit time per second
 
     const timestamp = Date.now() / 1000;
@@ -465,10 +465,14 @@ function animate_trips( map_id, trips_data, layer_id, loop_length, animation_spe
 
     var time = ((timestamp % loopTime) / loopTime) * loopLength;
 
+    //console.log( timestamp );
+    //console.log( loopTime );
+    //console.log( time );
+
 		var tripsLayer = new TripsLayer({
 		    id: 'trips-'+layer_id,
 		    data: trips_data,
-		    getPath: d => d.geometry.geometry.coordinates,
+		    getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
 		    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
 		    opacity: 0.3,
 		    widthMinPixels: 2,
@@ -479,11 +483,26 @@ function animate_trips( map_id, trips_data, layer_id, loop_length, animation_spe
    md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 
    window.requestAnimationFrame( function() {
-   	  animate_trips( map_id, trips_data, layer_id, loop_length, animation_speed );
+   	  animate_trips( map_id, trips_data, layer_id, start_time, end_time, animation_speed );
    });
 
   }
 }
 
-
+function md_trip_coordinates( coords ) {
+	//console.log( coords );
+	//return [ coords[0], coords[1], coords[3] ];     // TODO( return 3rd or 4th column)
+	// because the sf object has either Z and or M
+	var res = [];
+	var inner = [];
+	var x, y, z;
+	for( i = 0; i < coords.length; i++ ) {
+		inner = coords[i];
+		x = inner[0];
+		y = inner[1];
+		z = inner[3];
+		res[i] = [x,y,z];
+	}
+	return res;
+}
 

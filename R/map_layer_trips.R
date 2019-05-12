@@ -24,6 +24,7 @@ mapdeckTripsDependency <- function() {
 #' @inheritSection add_arc id
 #'
 #'
+#'
 #' \code{add_trips} supports LINESTRING and MULTILINESTRING sf objects
 #'
 #' @export
@@ -33,7 +34,8 @@ add_trips <- function(
 	stroke_colour = NULL,
 	palette = "viridis",
 	trail_length = 180,
-	loop_length = 1000,
+	start_time = get_m_range_start( data ),
+	end_time = get_m_range_end( data ),
 	animation_speed = 30,
 	layer_id = NULL,
 	legend = FALSE,
@@ -87,8 +89,11 @@ add_trips <- function(
 	# js_transitions <- resolve_transitions( transitions, "path" )
 	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
+	print( start_time )
+	print( end_time )
+
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, trail_length, loop_length, animation_speed,
+		map, jsfunc, shape[["data"]], layer_id, trail_length, start_time, end_time, animation_speed,
 		shape[["legend"]]
 	)
 }
@@ -101,5 +106,20 @@ clear_path <- function( map, layer_id = NULL) {
 	invoke_method(map, "md_layer_clear", layer_id, "path" )
 }
 
+
+get_m_range_start <- function(x) unname( get_m_range(x)[1] )
+
+get_m_range_end <- function(x) unname( get_m_range(x)[2] )
+
+get_m_range <- function( x ) UseMethod("get_m_range")
+
+## TODO error handle if doesn't exist
+## TODO get the geometry column from the sf attributes
+
+#' @export
+get_m_range.sf <- function( x ) attr(x$geometry, "m_range")
+
+#' @export
+get_m_range.default <- function( x ) stop("only sf objects with ZM attributes are supported for the trips layer")
 
 
