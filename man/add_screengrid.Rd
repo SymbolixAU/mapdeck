@@ -58,6 +58,7 @@ where \code{"your_column"} is the name of the column you're activating. See \cod
 
 ## You need a valid access token from Mapbox
 key <- 'abc'
+set_token( key )
 
 df <- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
@@ -67,7 +68,7 @@ df <- read.csv(paste0(
 df <- df[ !is.na(df$lng), ]
 df$weight <- sample(1:10, size = nrow(df), replace = T)
 
-mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) \%>\%
+mapdeck( style = mapdeck_style('dark'), pitch = 45 ) \%>\%
 add_screengrid(
   data = df
   , lat = "lat"

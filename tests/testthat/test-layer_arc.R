@@ -5,7 +5,7 @@ test_that("add_arc accepts multiple objects", {
 	testthat::skip_on_cran()
 	testthat::skip_on_travis()
 
-	geo <- '[{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF"},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15]},"destination":{"type":"Point","coordinates":[-0.05,51.36]}}}]'
+	geo <- '[{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15]},"destination":{"type":"Point","coordinates":[-0.05,51.36]}}}]'
 	# poly <- '[{"radius":1000,"fill_colour":"#440154FF","polyline":"_ifpEo`ydL"}]'
 
 	## sf
@@ -26,7 +26,7 @@ test_that("add_arc accepts multiple objects", {
 	sf <- cbind( sf_from, sf_to )
 
 	p <- add_arc(map = m, data = sf, origin = "geometry", destination = "geometry.1")
-	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), geo )
+	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 
 	# ## sfencoded
 	# enc_from <- googlePolylines::encode( sf_from )
@@ -51,6 +51,6 @@ test_that("add_arc accepts multiple objects", {
 
 	## data.frame
 	p <- add_arc( map = m, data = df, origin = c("lon_from", "lat_from"), destination = c("lon_to", "lat_to") )
-	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), geo )
+	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 
 })

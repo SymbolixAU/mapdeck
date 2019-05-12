@@ -27,15 +27,12 @@ Web Mercator Projection}
 
 \item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
 
-\item{stroke_opacity}{Either a string specifying the column of \code{data}
-containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-to be applied to all the shapes. Default 255.}
-
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
 
 \item{fill_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
-to be applied to all the shapes. Default 255.}
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
 
 \item{elevation}{the height the polygon extrudes from the map. Only available if neither
 \code{stroke_colour} or \code{stroke_width} are supplied. Default 0}
@@ -76,8 +73,7 @@ a named list indicating which colour attributes should be included in the legend
 \item{transitions}{list specifying the duration of transitions.}
 }
 \description{
-The Polygon Layer renders filled and/or stroked polygons. If using \code{sf} objects
-only POLYGONs are supported, MULTIPOLYGONs are ignored.
+The Polygon Layer renders filled and/or stroked polygons.
 }
 \details{
 \code{add_polygon} supports POLYGON and MULTIPOLYGON sf objects
@@ -152,6 +148,7 @@ you are clicking on
 
 ## You need a valid access token from Mapbox
 key <- 'abc'
+set_token( key )
 
 library(sf)
 library(geojsonsf)
@@ -159,8 +156,7 @@ library(geojsonsf)
 sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
 
 mapdeck(
-  token = key
-  , style = mapdeck_style('dark')
+  style = mapdeck_style('dark')
 ) \%>\%
   add_polygon(
     data = sf
@@ -173,8 +169,7 @@ df$elevation <- sample(100:5000, size = nrow(df))
 df$info <- paste0("<b>SA2 - </b><br>",df$SA2_NAME)
 
 mapdeck(
-  token = key
-  , style = mapdeck_style('dark')
+  style = mapdeck_style('dark')
   , location = c(145, -38)
   , zoom = 8
   ) \%>\%
@@ -184,7 +179,6 @@ mapdeck(
     , layer = "polygon_layer"
     , fill_colour = "SA2_NAME"
     , elevation = "elevation"
-    , stroke_width = 200
     , tooltip = 'info'
     , legend = T
   )

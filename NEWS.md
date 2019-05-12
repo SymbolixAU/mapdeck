@@ -1,5 +1,10 @@
 # mapdeck 0.3
 
+* Google Map supported
+* `mapdeck_legend` and `legend_element` for manually creating legends
+* `add_column()` to draw columns (as any polygon shape)
+* `add_text()` gets `billbaord`, `font_family`, `font_weight`
+* `add_greatcircles()` to draw flat great circles
 * `add_line` width docs updated to say 'metres'
 * `add_arc` gets `tilt` and `height` arguments
 * `add_arc` gets `brush_radius` argument for brushing

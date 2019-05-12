@@ -65,7 +65,7 @@ The color and height of the hexagon is scaled by number of points it contains." 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1004</span>
       </span>
     </div>
 
@@ -95,6 +95,9 @@ The color and height of the hexagon is scaled by number of points it contains." 
     </li>
     <li>
       <a href="../articles/colours.html">Colours</a>
+    </li>
+    <li>
+      <a href="../articles/google_map.html">Google Map</a>
     </li>
     <li>
       <a href="../articles/issues.html">Why isn't it working?</a>
@@ -144,9 +147,11 @@ The color and height of the hexagon is scaled by number of points it contains.</
 
     <pre class="usage"><span class='fu'>add_hexagon</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elevation_function</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"total"</span>, <span class='st'>"average"</span>),
+  <span class='kw'>colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>colour_function</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"total"</span>, <span class='st'>"average"</span>),
   <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,11 +185,31 @@ to conflict and not plot correctly</p></td>
     </tr>
     <tr>
       <th>radius</th>
-      <td><p>in metres</p></td>
+      <td><p>in metres. Default 1000</p></td>
+    </tr>
+    <tr>
+      <th>elevation</th>
+      <td><p>column containing the elevation of the value. This is used to calculate the
+height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
+within the <code>radius</code>. If NULL, the number of coordinates is used.</p></td>
+    </tr>
+    <tr>
+      <th>elevation_function</th>
+      <td><p>either "total" or "average"</p></td>
+    </tr>
+    <tr>
+      <th>colour</th>
+      <td><p>column containing numeric values to colour by.
+The colour is calculated by the sum of values within the <code>radius</code>.
+If NULL, the number of coordinates is used.</p></td>
+    </tr>
+    <tr>
+      <th>colour_function</th>
+      <td><p>either "total" or "average"</p></td>
     </tr>
     <tr>
       <th>elevation_scale</th>
-      <td><p>value to sacle the elevations of the hexagons</p></td>
+      <td><p>value to sacle the elevations of the hexagons. Default 1</p></td>
     </tr>
     <tr>
       <th>auto_highlight</th>
@@ -205,6 +230,10 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>focus_layer</th>
       <td><p>logical indicating if the map should update the bounds to only include this layer</p></td>
+    </tr>
+    <tr>
+      <th>transitions</th>
+      <td><p>list specifying the duration of transitions.</p></td>
     </tr>
     </table>
     
@@ -250,6 +279,24 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"hex_layer"</span>
   , <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>100</span>
 )
+
+<span class='co'>## Using elevation and colour</span>
+<span class='no'>df</span>$<span class='no'>weight</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
+<span class='no'>df</span>$<span class='no'>colour</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
+<span class='no'>df</span>[<span class='fl'>10</span>, ]$<span class='no'>weight</span> <span class='kw'>&lt;-</span> <span class='fl'>100000</span>
+<span class='no'>df</span>[<span class='fl'>1000</span>, ]$<span class='no'>colour</span> <span class='kw'>&lt;-</span> <span class='fl'>100000</span>
+
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span>) <span class='kw'>%&gt;%</span>
+<span class='fu'>add_hexagon</span>(
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>
+  , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
+  , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"lng"</span>
+  , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"hex_layer"</span>
+  , <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>100</span>
+  , <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='st'>"weight"</span>
+  , <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>"colour"</span>
+)
+
 
 <span class='co'># }</span><div class='input'>
 </div></pre>

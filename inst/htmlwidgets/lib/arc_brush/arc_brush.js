@@ -99,7 +99,7 @@ void main(void) {
 }
 `;
 
-function add_arc_brush_geo( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
+function add_arc_brush_geo( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
 
   const defaultProps = {
     ...ArcLayer.defaultProps,
@@ -178,15 +178,19 @@ function add_arc_brush_geo( map_id, arc_data, layer_id, auto_highlight, highligh
   document.addEventListener('mousemove', myListener, false);
   document.addEventListener('mouseleave', myLeaveListener, false);
 
-  md_update_layer( map_id, 'arc_brush-'+layer_id, arcLayer );
+  if( map_type == "google_map") {
+	  md_update_overlay( map_id, 'arc_brush-'+layer_id, arcLayer );
+	} else {
+	  md_update_layer( map_id, 'arc_brush-'+layer_id, arcLayer );
 
-  if (legend !== false) {
-    add_legend( map_id, layer_id, legend );
-  }
+	}
+	if (legend !== false) {
+	  md_add_legend( map_id, map_type, layer_id, legend );
+	}
 }
 
 
-function add_arc_polyline( map_id, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius) {
+function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius) {
 
   const arcLayer = new ArcLayer({
     map_id: map_id,
@@ -225,9 +229,14 @@ function add_arc_polyline( map_id, arc_data, layer_id, auto_highlight, highlight
   document.addEventListener('mousemove', myListener, false);
   document.addEventListener('mouseleave', myLeaveListener, false);
 
-  md_update_layer( map_id, 'arc_brush-'+layer_id, arcLayer );
+  if( map_type == "google_map") {
+	  md_update_overlay( map_id, 'arc_brush-'+layer_id, arcLayer );
+	} else {
 
-  if (legend !== false) {
-    add_legend( map_id, layer_id, legend );
-  }
+	  md_update_layer( map_id, 'arc_brush-'+layer_id, arcLayer );
+	}
+
+	if (legend !== false) {
+	  md_add_legend( map_id, map_type, layer_id, legend );
+	}
 }

@@ -5,7 +5,8 @@ mapdeckGeojsonDependency <- function() {
 			name = "geojson",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/geojson", package = "mapdeck"),
-			script = c("geojson.js")
+			script = c("geojson.js"),
+			all_files = FALSE
 		)
 	)
 }
@@ -272,10 +273,14 @@ add_geojson <- function(
 	js_transitions <- resolve_transitions( transitions, "geojson" )
 
 	map <- addDependency(map, mapdeckGeojsonDependency())
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, light_settings, auto_highlight,
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, light_settings, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
 		js_transitions
 		)
@@ -286,5 +291,5 @@ add_geojson <- function(
 #' @export
 clear_geojson <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "geojson")
-	invoke_method(map, "md_layer_clear", layer_id, "geojson" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "geojson" )
 }

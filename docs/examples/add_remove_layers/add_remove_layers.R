@@ -18,13 +18,14 @@ ui <- dashboardPage(
 	, dashboardBody(
 		mapdeckOutput(
 			outputId = "map"
+			, height = "600"
 		)
 	)
 )
 
 server <- function( input, output ) {
 
-	set_token( Sys.getenv("MAPBOX") )
+	#set_token( Sys.getenv("MAPBOX") )
 
 	output$map <- renderMapdeck({
 		mapdeck()

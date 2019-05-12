@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1004</span>
       </span>
     </div>
 
@@ -93,6 +93,9 @@
     </li>
     <li>
       <a href="../articles/colours.html">Colours</a>
+    </li>
+    <li>
+      <a href="../articles/google_map.html">Google Map</a>
     </li>
     <li>
       <a href="../articles/issues.html">Why isn't it working?</a>
@@ -140,7 +143,13 @@
 
     <pre class="usage"><span class='fu'>clear_arc</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
+<span class='fu'>clear_bitmap</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>clear_column</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
 <span class='fu'>clear_geojson</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>clear_greatcircle</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>clear_grid</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
@@ -158,11 +167,21 @@
 
 <span class='fu'>clear_screengrid</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>clear_text</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>clear_text</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>clear_title</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>map</th>
+      <td><p>a mapdeck map object</p></td>
+    </tr>
+    <tr>
+      <th>layer_id</th>
+      <td><p>the layer_id of the layer you want to clear</p></td>
+    </tr>
     <tr>
       <th>map</th>
       <td><p>a mapdeck map object</p></td>

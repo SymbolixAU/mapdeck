@@ -12,8 +12,8 @@ mapdeckTripsDependency <- function() {
 
 #' Add Trips
 #'
-#' The Trips Layer takes in lists of coordinate points and renders them as
-#' extruded lines with mitering.
+#' The Trips Layer takes in lists of coordinate points with a timestamp and renders
+#' them as an animated trip
 #'
 #' @inheritParams add_polygon
 #' @param stroke_width

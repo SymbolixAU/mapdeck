@@ -170,3 +170,29 @@ mapdeck() %>%
 
 Note, also, the final `as.character()` call in the formatting function. This is because the legend is converted to JSON using `jsonify::to_json()`, which uses the same C++ code as mapdeck (in fact, it IS the c++ code mapdeck uses). So if the legend contains a POSIXct object after formatting, it will again be converted to UTC. 
 
+## Manual Legends
+
+If you want to create your own legend you can do so using `mapdeck_legend()`, which accepts `legend_elements` as its argument, creates the required JSON, which you can then use in the `legend` argument of any of the layers
+
+```{r, eval = FALSE}
+
+sf <- spatialwidget::widget_melbourne
+sf$my_colour <- ifelse( substr(sf$SA2_NAME, 1, 1) == "A", "#00FF00FF", "#FF0000FF")
+
+l1 <- legend_element(
+	variables = c("Begins with A", "Doesn't begin with A")
+	, colours = c("#00FF00FF", "#FF0000FF")
+	, colour_type = "fill"
+	, variable_type = "category"
+)
+js <- mapdeck_legend(l1)
+
+mapdeck() %>%
+	add_polygon(
+		data = sf
+		, fill_colour = "my_colour"
+		, legend = js
+	)
+
+```
+![manual legend](./img/articles/manual_legend.png)

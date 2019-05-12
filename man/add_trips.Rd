@@ -40,8 +40,8 @@ a named list indicating which colour attributes should be included in the legend
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 }
 \description{
-The Trips Layer takes in lists of coordinate points and renders them as
-extruded lines with mitering.
+The Trips Layer takes in lists of coordinate points with a timestamp and renders
+them as an animated trip
 }
 \section{data}{
 

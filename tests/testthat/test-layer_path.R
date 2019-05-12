@@ -14,24 +14,24 @@ test_that("add_path accepts multiple objects", {
 
 	sf <- roads[1:2, ]
 	p <- add_path(map = m, data = sf)
-	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), geo )
+	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 
 	## sfencoded
 	enc <- googlePolylines::encode( sf )
 	p <- add_path( map = m, data = enc )
-	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), poly )
+	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly )
 
 	## sfencodedLite
 	enc <- googlePolylines::encode( sf, strip = T )
 	p <- add_path( map = m, data = enc )
-	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), poly )
+	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly )
 
 	## data.frame with polyline
 	df <- as.data.frame( enc )
 	df$geometry <- unlist( df$geometry )
 
 	p <- add_path( map = m, data = df, polyline = "geometry" )
-	expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), poly )
+	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly )
 
 	## data.frame - not supported for LINESTRINGS
 })

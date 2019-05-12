@@ -4,7 +4,8 @@ mapdeckPointcloudDependency <- function() {
 			name = "pointcloud",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/pointcloud", package = "mapdeck"),
-			script = c("pointcloud.js")
+			script = c("pointcloud.js"),
+			all_files = FALSE
 		)
 	)
 }
@@ -110,7 +111,7 @@ add_pointcloud <- function(
 	l[["lat"]] <- force( lat )
 	l[["polyline"]] <- force( polyline )
 	l[["elevation"]] <- force( elevation )
-	l[["fill_colour"]] <- force( fill_colour)
+	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["tooltip"]] <- force( tooltip )
 	l[["id"]] <- force( id )
@@ -167,10 +168,15 @@ add_pointcloud <- function(
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 	js_transitions <- resolve_transitions( transitions, "pointcloud" )
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], radius, layer_id, light_settings,
+		map, jsfunc, map_type( map ), shape[["data"]], radius, layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
 		js_transitions
 		)
@@ -181,6 +187,6 @@ add_pointcloud <- function(
 #' @export
 clear_pointcloud <- function( map, layer_id = NULL) {
 	layer_id <- layerId( layer_id, "pointcloud" )
-	invoke_method(map, "md_layer_clear", layer_id, "pointcloud" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "pointcloud" )
 }
 
