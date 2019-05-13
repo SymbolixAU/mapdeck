@@ -9,7 +9,7 @@ add_trips(map, data = get_map_data(map), stroke_colour = NULL,
   trail_length = 180, start_time = get_m_range_start(data),
   end_time = get_m_range_end(data), animation_speed = 30,
   layer_id = NULL, legend = FALSE, legend_options = NULL,
-  legend_format = NULL, update_view = TRUE)
+  legend_format = NULL, update_view = FALSE, focus_layer = FALSE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -42,10 +42,12 @@ a named list indicating which colour attributes should be included in the legend
 \item{legend_format}{A list containing functions to apply to legend values. See section legend}
 
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
-The Trips Layer takes in lists of coordinate points with a timestamp and renders
-them as an animated trip
+The Trips Layer takes an sf object with an M attribute and renders
+it as animated trips
 }
 \section{data}{
 

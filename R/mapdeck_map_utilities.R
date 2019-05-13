@@ -139,7 +139,7 @@ layerId <- function(
 mapdeck_layers <- function() {
 	c("arc", "bitmap", "column", "geojson", "greatcircle","grid","hexagon",
 		"line","path","pointcloud", "polygon","scatterplot", "screengrid",
-		"text", "title")
+		"text", "title","trips")
 }
 
 

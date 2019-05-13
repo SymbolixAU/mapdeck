@@ -21,6 +21,38 @@
 # 		, stroke_colour = "#FFFFFF"
 # 	)
 
+# library(data.table)
+# dt <- fread("~/Downloads/Turkey vultures in North and South America.csv")
+#
+# dt[, timestamp := as.numeric( as.POSIXct(`study-local-timestamp`))]
+# dt[, elev := 0 ]
+#
+# dt_tracks <- dt[
+# 	, {
+# 		geometry = sf::st_linestring(x = matrix( c(`location-long`, `location-lat`, elev, timestamp), ncol = 4, byrow = F))
+# 		geometry = sf::st_sf( geometry = sf::st_sfc( geometry ))
+# 	}
+# 	, by = .(`individual-local-identifier`)
+# ]
+#
+# sf <- sf::st_as_sf( dt_tracks )
+#
+# m <- sf::st_coordinates( sf )
+#
+# attr(sf$geometry, "m_range") <- c("mmin" = min( m[,4]), "mmax" = max( m[,4]) )
+#
+# sf[6,]
+#
+# mapdeck(
+# 	style = mapdeck_style("light")
+# ) %>%
+# 	add_trips(
+# 		data = sf[6,]
+# 		, trail_length = 2000
+# 		, animation_speed = 200
+# 		, stroke_colour = "individual-local-identifier"
+# 	)
+
 
 # trips <- jsonlite::fromJSON( 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/trips/trips.json' )
 #

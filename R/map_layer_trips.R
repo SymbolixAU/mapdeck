@@ -12,8 +12,8 @@ mapdeckTripsDependency <- function() {
 
 #' Add Trips
 #'
-#' The Trips Layer takes in lists of coordinate points with a timestamp and renders
-#' them as an animated trip
+#' The Trips Layer takes an sf object with an M attribute and renders
+#' it as animated trips
 #'
 #' @inheritParams add_polygon
 #' @param stroke_width
@@ -44,7 +44,8 @@ add_trips <- function(
 	legend = FALSE,
 	legend_options = NULL,
 	legend_format = NULL,
-	update_view = TRUE
+	update_view = FALSE,
+	focus_layer = FALSE
 ) {
 
 	experimental_layer("trips")
@@ -60,7 +61,7 @@ add_trips <- function(
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
-	# focus_layer <- force( focus_layer )
+	focus_layer <- force( focus_layer )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -72,7 +73,7 @@ add_trips <- function(
 		l[["bbox"]] <- NULL
 	}
 
-	layer_id <- layerId(layer_id, "path")
+	layer_id <- layerId(layer_id, "trips")
 	# checkHexAlpha( highlight_colour )
 
 	map <- addDependency(map, mapdeckTripsDependency())
@@ -80,22 +81,20 @@ add_trips <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
-	# if ( tp == "sf" ) {
+	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
 		shape <- rcpp_trips_geojson( data, l, geometry_column )
 		jsfunc <- "add_trips_geo"
-	# } else if ( tp == "sfencoded" ) {
-	# 	jsfunc <- "add_path_polyline"
-	# 	geometry_column <- "polyline"
-	# 	shape <- rcpp_path_polyline( data, l, geometry_column )
-	# }
+	} else {
+		stop("currently only sf objects are supported for the trips layer")
+	}
 
 	# js_transitions <- resolve_transitions( transitions, "path" )
 	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], opacity, layer_id, trail_length, start_time, end_time, animation_speed,
-		shape[["legend"]]
+		map, jsfunc, map_type( map ), shape[["data"]], opacity, layer_id, trail_length,
+		start_time, end_time, animation_speed, shape[["legend"]], focus_layer, bbox, update_view
 	)
 }
 
@@ -103,8 +102,8 @@ add_trips <- function(
 #' @rdname clear
 #' @export
 clear_path <- function( map, layer_id = NULL) {
-	layer_id <- layerId(layer_id, "path")
-	invoke_method(map, "md_layer_clear", layer_id, "path" )
+	layer_id <- layerId(layer_id, "trips")
+	invoke_method(map, "md_layer_clear", layer_id, "trips" )
 }
 
 

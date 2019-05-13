@@ -1,5 +1,6 @@
 # mapdeck 0.3
 
+* `add_trips()` for adding animated trips to the map
 * Google Map supported
 * `mapdeck_legend` and `legend_element` for manually creating legends
 * `add_column()` to draw columns (as any polygon shape)
