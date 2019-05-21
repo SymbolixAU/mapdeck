@@ -30,3 +30,8 @@ Are you subsetting an `sf` object without the `sf` library loaded? [See here](fi
 Or are you plotting GeoJSON or an `sfencodedLite` object? The bounding box is not calculated for either of these, so the map doesn't know where to focus
 
 
+## Map loads but the layer / data doesn't
+
+Do you have `NA`s in your data? Mapdeck will have issues plotting if there are, so it's worth checking.
+
+

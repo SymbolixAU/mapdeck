@@ -4,7 +4,8 @@ mapdeckScatterplotDependency <- function() {
 			name = "scatterplot",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/scatterplot", package = "mapdeck"),
-			script = c("scatterplot.js")
+			script = c("scatterplot.js"),
+			all_files = FALSE
 		)
 	)
 }
@@ -15,7 +16,8 @@ mapdeckScatterplotBrushDependency <- function() {
 			name = "scatterplot_brush",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/scatterplot_brush", package = "mapdeck"),
-			script = c("scatterplot_brush.js")
+			script = c("scatterplot_brush.js"),
+			all_files = FALSE
 		)
 	)
 }
@@ -29,9 +31,6 @@ mapdeckScatterplotBrushDependency <- function() {
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param radius in metres. Default 1
-#' @param palette string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
-#' A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
-#' where the 4th column represents the alpha.
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
@@ -58,8 +57,9 @@ mapdeckScatterplotBrushDependency <- function() {
 #' \donttest{
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = capitals
 #'   , lat = "lat"
@@ -199,10 +199,16 @@ add_scatterplot <- function(
 	}
 
 	js_transitions <- resolve_transitions( transitions, "scatterplot" )
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
+
+	#print( shape[["data"]] )
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
 		shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
 		brush_radius
 		)
@@ -212,5 +218,5 @@ add_scatterplot <- function(
 #' @export
 clear_scatterplot <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "scatterplot")
-	invoke_method(map, "md_layer_clear", layer_id, "scatterplot" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "scatterplot" )
 }

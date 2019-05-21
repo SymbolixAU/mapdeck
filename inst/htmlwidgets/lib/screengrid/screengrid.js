@@ -1,4 +1,4 @@
-function add_screengrid_geo( map_id, screengrid_data, layer_id, opacity, cell_size, colour_range, bbox, update_view, focus_layer ) {
+function add_screengrid_geo( map_id, map_type, screengrid_data, layer_id, opacity, cell_size, colour_range, bbox, update_view, focus_layer ) {
 
   const screengridLayer = new deck.ScreenGridLayer({
     map_id: map_id,
@@ -13,11 +13,16 @@ function add_screengrid_geo( map_id, screengrid_data, layer_id, opacity, cell_si
     onHover: md_update_tooltip,
     pickable: true
   });
-  md_update_layer( map_id, 'screengrid-'+layer_id, screengridLayer );
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+
+  if( map_type == "google_map") {
+	    md_update_overlay( map_id, 'screengrid-'+layer_id, screengridLayer );
+	} else {
+	  md_update_layer( map_id, 'screengrid-'+layer_id, screengridLayer );
+	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_screengrid_polyline( map_id, screengrid_data, layer_id, opacity, cell_size, colour_range, bbox, update_view, focus_layer ) {
+function add_screengrid_polyline( map_id, map_type, screengrid_data, layer_id, opacity, cell_size, colour_range, bbox, update_view, focus_layer ) {
 
   const screengridLayer = new deck.ScreenGridLayer({
     map_id: map_id,
@@ -32,6 +37,10 @@ function add_screengrid_polyline( map_id, screengrid_data, layer_id, opacity, ce
     onHover: md_update_tooltip,
     pickable: true
   });
-  md_update_layer( map_id, 'screengrid-'+layer_id, screengridLayer );
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+    if( map_type == "google_map") {
+	    md_update_overlay( map_id, 'screengrid-'+layer_id, screengridLayer );
+	} else {
+	  md_update_layer( map_id, 'screengrid-'+layer_id, screengridLayer );
+	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

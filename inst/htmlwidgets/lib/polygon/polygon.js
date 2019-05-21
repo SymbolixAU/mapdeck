@@ -1,5 +1,5 @@
 
-function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
+function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
 
   const polygonLayer = new PolygonLayer({
   	map_id: map_id,
@@ -23,17 +23,22 @@ function add_polygon_geo( map_id, polygon_data, layer_id, light_settings, auto_h
     onClick: info => md_layer_click( map_id, "polygon", info ),
     transitions: js_transition || {}
   });
-  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
-  if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
+  if( map_type == "google_map") {
+    md_update_overlay( map_id, 'polygon-'+layer_id, polygonLayer );
+  } else {
+
+	  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
   }
 
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	if (legend !== false) {
+	  md_add_legend(map_id, map_type, layer_id, legend);
+	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 
-function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
+function add_polygon_polyline( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
 
   const polygonLayer = new PolygonLayer({
     map_id: map_id,
@@ -57,13 +62,17 @@ function add_polygon_polyline( map_id, polygon_data, layer_id, light_settings, a
     onClick: info => md_layer_click( map_id, "polygon", info ),
     transitions: js_transition || {}
   });
-  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
 
-  if (legend !== false) {
-    add_legend(map_id, layer_id, legend);
+  if( map_type == "google_map") {
+    md_update_overlay( map_id, 'polygon-'+layer_id, polygonLayer );
+  } else {
+	  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
   }
 
-  md_layer_view( map_id, layer_id, focus_layer, bbox, update_view );
+	if (legend !== false) {
+	  md_add_legend(map_id, map_type, layer_id, legend);
+	}
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 function decode_polygons( polylines ) {
@@ -72,10 +81,7 @@ function decode_polygons( polylines ) {
   var lines = [];
 
   for (i = 0; i < polylines.length; i++ ) {
-    //p = polylines[i];
     lines = polylines[i];
-    //console.log( "p");
-    //console.log( p );
 
     for (j = 0; j < lines.length; j++ ) {
     	p = lines[j];

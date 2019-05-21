@@ -1,22 +1,17 @@
 
-dependencies:
-  - name: deck.gl
-    version: 6.4.3
-    src: "htmlwidgets/lib/"
-    script:
-    - deckgl.min.js
-  - name: mapbox-gl
-    version: 0.52.0
-    src: "htmlwidgets/lib"
-    script: mapbox-gl.js
-    style: mapbox-gl.css
-  - name: mapdeck
-    version: 0.0.1
-    src: "htmlwidgets/lib"
-    style: mapdeck.css
-  - name: map
-    src: "htmlwidgets/lib/map"
-    version: 0.0.1
-    script:
-      - legend.js
-      - title.js
+# dependencies:
+#  - name: mapbox-gl
+#    version: 0.52.0
+#    src: "htmlwidgets/lib"
+#    script: mapbox-gl.js
+#    style: mapbox-gl.css
+#  - name: mapdeck
+#    version: 0.0.1
+#    src: "htmlwidgets/lib"
+#    style: mapdeck.css
+#  - name: map
+#    src: "htmlwidgets/lib/map"
+#    version: 0.0.1
+#    script:
+#      - legend.js
+#      - title.js

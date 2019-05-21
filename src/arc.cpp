@@ -7,7 +7,9 @@
 Rcpp::List arc_defaults(int n) {
 	return Rcpp::List::create(
 		_["stroke_from"] = mapdeck::defaults::default_stroke_colour(n),
-		_["stroke_to"] = mapdeck::defaults::default_stroke_colour(n)
+		_["stroke_to"] = mapdeck::defaults::default_stroke_colour(n),
+		_["tilt"] = mapdeck::defaults::default_arc_tilt(n),
+		_["height"] = mapdeck::defaults::default_arc_height(n)
 	);
 }
 

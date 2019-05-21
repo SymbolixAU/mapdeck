@@ -4,7 +4,8 @@ mapdeckScreengridDependency <- function() {
 			name = "screengrid",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/screengrid", package = "mapdeck"),
-			script = c("screengrid.js")
+			script = c("screengrid.js"),
+			all_files = FALSE
 		)
 	)
 }
@@ -30,6 +31,7 @@ mapdeckScreengridDependency <- function() {
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
 #' df <- read.csv(paste0(
 #' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
@@ -39,7 +41,7 @@ mapdeckScreengridDependency <- function() {
 #' df <- df[ !is.na(df$lng), ]
 #' df$weight <- sample(1:10, size = nrow(df), replace = T)
 #'
-#' mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%
+#' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_screengrid(
 #'   data = df
 #'   , lat = "lat"
@@ -140,7 +142,7 @@ add_screengrid <- function(
 	}
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, opacity, cell_size, colour_range,
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, opacity, cell_size, colour_range,
 		bbox, update_view, focus_layer
 		)
 }
@@ -150,6 +152,6 @@ add_screengrid <- function(
 #' @export
 clear_screengrid <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "screengrid")
-	invoke_method(map, "md_layer_clear", layer_id, "screengrid" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "screengrid" )
 }
 
