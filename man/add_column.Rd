@@ -6,6 +6,7 @@
 \usage{
 add_column(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, fill_colour = NULL, fill_opacity = NULL,
+  stroke_colour = NULL, stroke_opacity = NULL, stroke_width = NULL,
   radius = 1000, elevation = NULL, elevation_scale = 1,
   coverage = 1, angle = 0, disk_resolution = 20, tooltip = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
@@ -25,6 +26,8 @@ Web Mercator Projection}
 \item{lon}{column containing longitude values}
 
 \item{lat}{column containing latitude values}
+
+\item{stroke_width}{width of the stroke in pixels}
 
 \item{radius}{in metres. Default 1000}
 

@@ -84,6 +84,9 @@ add_column <- function(
 	lat = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
+	stroke_colour = NULL,
+	stroke_opacity = NULL,
+	stroke_width = NULL,
 	radius = 1000,
 	elevation = NULL,
 	elevation_scale = 1,
@@ -111,6 +114,9 @@ add_column <- function(
 	l[["lat"]] <- force( lat )
 	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
+	l[["stroke_colour"]] <- force( stroke_colour )
+	l[["stroke_width"]] <- force( stroke_width )
+	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
 	l[["elevation"]] <- force( elevation )
 	l[["tooltip"]] <- force( tooltip )
 	l[["id"]] <- force( id )
