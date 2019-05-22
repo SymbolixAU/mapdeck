@@ -107,6 +107,21 @@ function add_mapbox_source( map_id, id, source_json ) {
   //});
 }
 
+function clear_mapbox_layer( map_id, layer ) {
+		var map = window[ map_id + 'map'];
+		console.log( map );
+		if (map.hasLayer( layer ) ) {
+			map.removeLayer( layer );
+		}
+}
+
+function clear_mapbox_source( map_id, source ) {
+	var map = window[ map_id + 'map'];
+		if (map.hasSource( source ) ) {
+			map.removeSource( source );
+		}
+}
+
 /*
 function add_mapbox_layer( map_id, layer_json ) {
   var map = window[ map_id + 'map'];
