@@ -86,7 +86,9 @@
 
 function add_mapbox_layer( map_id, layer_json ) {
   var map = window[ map_id + 'map'];
+  //console.log( layer_json );
   var js = JSON.parse( layer_json );
+  //console.log( js );
   //map.on('styledata', function() {
     map.addLayer( js );
   //});
@@ -94,9 +96,9 @@ function add_mapbox_layer( map_id, layer_json ) {
 
 function add_mapbox_source( map_id, id, source_json ) {
 	var map = window[ map_id + 'map'];
+	//console.log( source_json );
   var js = JSON.parse( source_json );
-
-  console.log( js );
+  //console.log( js );
 
   //map.on('styledata', function() {
 
