@@ -12,17 +12,11 @@ Rcpp::List mesh_defaults(int n) {
 	);
 }
 
-// [[Rcpp::export]]
-Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params, std::string geometry_columns ) {
-
-	// TODO
+Rcpp::List mesh_to_sf( Rcpp::List& mesh ) {
 	// convert mesh3d object into a pseudo-sf.data.farme object
 	// so it will go into all teh spatialwidget functions as-is
 	Rcpp::NumericMatrix vb = mesh["vb"];
 	Rcpp::NumericMatrix ib = mesh["ib"];
-
-	//Rcpp::NumericMatrix vbt = transpose( vb );
-	//Rcpp::NumericMatrix ibt = transpose( ib );
 
 	// each column of each row of ib gives the row of vb containing coordinates which form the mesh
 	// as we're working with polygons, we can turn the coordinates into list of matrices
@@ -95,9 +89,13 @@ Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params, std::string ge
 	}
 
 	sf.attr("sf_column") = "geometry";
-	//return sf;
+	return sf;
+}
 
-	Rcpp::DataFrame data = sf;
+// [[Rcpp::export]]
+Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params, std::string geometry_columns ) {
+
+	Rcpp::DataFrame data = mesh_to_sf( mesh );
 
 	//return data;
 
