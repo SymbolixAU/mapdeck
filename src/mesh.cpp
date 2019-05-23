@@ -30,29 +30,34 @@ Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh ) {
 	size_t n_col = ibt.ncol();
 
 	Rcpp::List sfc( n_row );
+	Rcpp::List z( n_row ); // for creating a list-column of the z attributes
 
 	size_t i, j;
 
 	Rcpp::NumericVector polygon_indeces( n_col );
 	Rcpp::NumericVector polygon_coordinates( 4 );  // TODO always 4?
 
-
-
 	for( i = 0; i < n_row; i++ ) {
 		polygon_indeces = ibt(i, _);
 		Rcpp::NumericMatrix a_polygon( n_col, 4 ); // the number of cols of ib teslls us the number of sets of coordinates
 		Rcpp::List sfg(1);
+		Rcpp::NumericVector z_values( n_col ); // each 'col' contains the index of the xyz1 coords
 
 		for( j = 0; j < n_col; j++ ) {
 			int this_index = polygon_indeces[j];
 			this_index = this_index - 1;
 			a_polygon(j, _) = vbt(this_index, _);
+			z_values[ j ] = a_polygon(j, 2);
 		}
 
 		sfg[0] = a_polygon;
 		sfg.attr("class") = Rcpp::CharacterVector::create("XYZM", "POLYGON", "sfg");
 		sfc[i] = sfg;
+		//Rcpp::Rcout << "z_values : " << z_values << std::endl;
+		z[i] = z_values;
 	}
+
+	//return z;
 
 	sfc.attr("class") = Rcpp::CharacterVector::create("sfc_POLYGON", "sfc");
 
@@ -73,7 +78,20 @@ Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh ) {
 
 	sfc.attr("bbox") = bbox;
 	// polygons should now be similar in shape to `sfc` objects
-	return sfc;
+	//return sfc;
+
+	Rcpp::List z_column(1);
+	z_column[0] = z;
+	z_column.attr("class") = "AsIs";
+
+	Rcpp::DataFrame sf = Rcpp::DataFrame::create(
+		_["geometry"] = sfc
+		//_["z"] = z_column
+	);
+
+	sf.attr("class") = Rcpp::CharacterVector::create("sf","data.frame");
+	sf.attr("sf_column") = "geometry";
+	return sf;
 
 	// can now create a data.frame of the vbt objc, and this new polygons list,
 	// where polygons list is the sf_geometry column
