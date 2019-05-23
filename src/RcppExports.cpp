@@ -245,6 +245,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_mesh_geojson
+Rcpp::List rcpp_mesh_geojson(Rcpp::List mesh);
+RcppExport SEXP _mapdeck_rcpp_mesh_geojson(SEXP meshSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type mesh(meshSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_mesh_geojson(mesh));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_path_geojson
 Rcpp::List rcpp_path_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_columns);
 RcppExport SEXP _mapdeck_rcpp_path_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP) {
@@ -473,6 +484,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_hexagon_polyline", (DL_FUNC) &_mapdeck_rcpp_hexagon_polyline, 3},
     {"_mapdeck_rcpp_line_geojson", (DL_FUNC) &_mapdeck_rcpp_line_geojson, 3},
     {"_mapdeck_rcpp_line_geojson_df", (DL_FUNC) &_mapdeck_rcpp_line_geojson_df, 3},
+    {"_mapdeck_rcpp_mesh_geojson", (DL_FUNC) &_mapdeck_rcpp_mesh_geojson, 1},
     {"_mapdeck_rcpp_path_geojson", (DL_FUNC) &_mapdeck_rcpp_path_geojson, 3},
     {"_mapdeck_rcpp_path_polyline", (DL_FUNC) &_mapdeck_rcpp_path_polyline, 3},
     {"_mapdeck_rcpp_pointcloud_geojson", (DL_FUNC) &_mapdeck_rcpp_pointcloud_geojson, 3},

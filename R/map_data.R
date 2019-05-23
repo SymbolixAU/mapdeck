@@ -144,6 +144,12 @@ sf_needs_subsetting <- function( data, sfc_col, sf_geom ) {
 	return( !sfc_type( data, sfc_col ) %in% toupper( sf_geom ) )
 }
 
+resolve_data.mesh3d <- function( data, l, sf_geom ) {
+	l[["data"]] <- data
+	l[["data_type"]] <- "mesh"
+	return(l)
+}
+
 ## use the specificed st_geometry column
 #' @export
 resolve_data.sf <- function( data, l, sf_geom ) {

@@ -1,0 +1,131 @@
+mapdeckMeshDependency <- function() {
+	list(
+		createHtmlDependency(
+			name = "mesh",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/mesh", package = "mapdeck"),
+			script = c("mesh.js"),
+			all_files = FALSE
+		)
+	)
+}
+
+
+#' Add Mesh
+#'
+#'
+#' @export
+add_mesh <- function(
+	map,
+	data = get_map_data(map),
+	fill_colour = NULL,
+	fill_opacity = NULL,
+	elevation = NULL,
+	tooltip = NULL,
+	auto_highlight = FALSE,
+	highlight_colour = "#AAFFFFFF",
+	light_settings = list(),
+	layer_id = NULL,
+	id = NULL,
+	palette = "viridis",
+	na_colour = "#808080FF",
+	legend = FALSE,
+	legend_options = NULL,
+	legend_format = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE,
+	transitions = NULL
+) {
+
+	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
+	experimental_layer( "mesh" )
+
+	l <- list()
+	l[["fill_colour"]] <- force( fill_colour )
+	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
+	l[["elevation"]] <- force( elevation )
+	l[["tooltip"]] <- force( tooltip )
+	l[["id"]] <- force( id )
+	l[["na_colour"]] <- force( na_colour )
+
+	l <- resolve_palette( l, palette )
+	l <- resolve_legend( l, legend )
+	l <- resolve_legend_options( l, legend_options )
+	l <- resolve_data( data, l, c("POLYGON","MULTIPOLYGON") )
+
+	bbox <- init_bbox()
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
+	is_extruded <- TRUE
+	if( !is.null( l[["stroke_width"]] ) | !is.null( l[["stroke_colour"]] ) ) {
+		is_extruded <- FALSE
+		if( !is.null( elevation ) ) {
+			message("stroke provided, ignoring elevation")
+		}
+		if( is.null( l[["stroke_width"]] ) ) {
+			l[["stroke_width"]] <- 1L
+		}
+	}
+
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
+	}
+
+	## sf objects come with a bounding box
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
+	}
+
+	checkHexAlpha(highlight_colour)
+	layer_id <- layerId(layer_id, "polygon")
+
+	map <- addDependency(map, mapdeckPolygonDependency())
+
+	tp <- l[["data_type"]]
+	l[["data_type"]] <- NULL
+
+	jsfunc <- "add_mesh"
+
+	if ( tp == "mesh" ) {
+
+		print( "mesh data")
+		shape <- rcpp_mesh_geojson( data );
+
+	}
+	#	geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
+	#	shape <- rcpp_polygon_geojson( data, l, geometry_column )
+	# } else if ( tp == "sfencoded" ) {
+	# 	geometry_column <- "polyline"
+	# 	shape <- rcpp_polygon_polyline( data, l, geometry_column )
+	# 	jsfunc <- "add_polygon_polyline"
+	# }
+
+	light_settings <- jsonify::to_json(light_settings, unbox = T)
+	js_transitions <- resolve_transitions( transitions, "polygon" )
+
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
+
+	invoke_method(
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, light_settings,
+		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		js_transitions, is_extruded
+	)
+}
+
+
+
+#' @rdname clear
+#' @export
+clear_mesh <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "mesh")
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "mesh" )
+}
+
+
