@@ -1,6 +1,8 @@
 
 function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
 
+
+  	/*
   class MeshLayer extends PolygonLayer({
 		calculateFillColors(attribute) {
      // value is a Uint8ClampedArray
@@ -18,15 +20,11 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
 	       polygon.forEach(ring => {
 	         ring.forEach(vertex => {
 
-
-
-	         	/*
 	           const color = ...
 	           value[i++] = color[0]; // R
 	           value[i++] = color[1]; // G
 	           value[i++] = color[2]; // B
 	           value[i++] = color[3]; // A
-	           */
 	         });
 	       });
 	     }
@@ -34,8 +32,10 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
   });
 
   MeshLayer.layerName = 'MeshLayer';
+  */
 
-  const meshLayer = new MeshLayer({
+
+  const meshLayer = new PolygonLayer({
   	map_id: map_id,
     id: 'polygon-'+layer_id,
     data: polygon_data,
@@ -46,9 +46,9 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
     extruded: is_extruded,
     lineWidthMinPixels: 0,
     getPolygon: d => md_get_polygon_coordinates( d ),
-    getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
+    // getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
     getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
-    getLineWidth: d => d.properties.stroke_width,
+    //getLineWidth: d => d.properties.stroke_width,
     getElevation: d => d.properties.elevation,
     lightSettings: light_settings,
     autoHighlight: auto_highlight,
@@ -57,6 +57,8 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
     onClick: info => md_layer_click( map_id, "mesh", info ),
     transitions: js_transition || {}
   });
+
+  console.log( meshLayer );
 
   if( map_type == "google_map") {
     md_update_overlay( map_id, 'mesh-'+layer_id, meshLayer );

@@ -38,7 +38,7 @@ add_mesh <- function(
 ) {
 
 	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
-	experimental_layer( "mesh" )
+	# experimental_layer( "mesh" )
 
 	l <- list()
 	l[["fill_colour"]] <- force( fill_colour )
@@ -58,15 +58,15 @@ add_mesh <- function(
 	focus_layer <- force( focus_layer )
 
 	is_extruded <- TRUE
-	if( !is.null( l[["stroke_width"]] ) | !is.null( l[["stroke_colour"]] ) ) {
-		is_extruded <- FALSE
-		if( !is.null( elevation ) ) {
-			message("stroke provided, ignoring elevation")
-		}
-		if( is.null( l[["stroke_width"]] ) ) {
-			l[["stroke_width"]] <- 1L
-		}
-	}
+	# if( !is.null( l[["stroke_width"]] ) | !is.null( l[["stroke_colour"]] ) ) {
+	# 	is_extruded <- FALSE
+	# 	if( !is.null( elevation ) ) {
+	# 		message("stroke provided, ignoring elevation")
+	# 	}
+	# 	if( is.null( l[["stroke_width"]] ) ) {
+	# 		l[["stroke_width"]] <- 1L
+	# 	}
+	# }
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -82,7 +82,7 @@ add_mesh <- function(
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "polygon")
 
-	map <- addDependency(map, mapdeckPolygonDependency())
+	map <- addDependency(map, mapdeckMeshDependency())
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
@@ -90,10 +90,8 @@ add_mesh <- function(
 	jsfunc <- "add_mesh"
 
 	if ( tp == "mesh" ) {
-
-		print( "mesh data")
-		shape <- rcpp_mesh_geojson( data );
-
+ 		geometry_column <- c( "geometry" )
+		shape <- rcpp_mesh_geojson( data, l, geometry_column )
 	}
 	#	geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
 	#	shape <- rcpp_polygon_geojson( data, l, geometry_column )
@@ -102,6 +100,8 @@ add_mesh <- function(
 	# 	shape <- rcpp_polygon_polyline( data, l, geometry_column )
 	# 	jsfunc <- "add_polygon_polyline"
 	# }
+
+	# return( shape )
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 	js_transitions <- resolve_transitions( transitions, "polygon" )

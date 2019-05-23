@@ -6,13 +6,13 @@
 namespace mapdeck {
 namespace mesh {
 
-const std::unordered_map< std::string, std::string > mesh_colours({
-	{ "fill_colour", "fill_opacity" }
-});
+	const std::unordered_map< std::string, std::string > mesh_colours({
+		{ "fill_colour", "fill_opacity" }
+	});
 
-const Rcpp::StringVector mesh_legend = Rcpp::StringVector::create(
-	"fill_colour"
-);
+	const Rcpp::StringVector mesh_legend = Rcpp::StringVector::create(
+		"fill_colour"
+	);
 
 } // namespace mesh
 } // namespace mapdeck
