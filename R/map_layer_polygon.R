@@ -195,6 +195,10 @@ add_polygon <- function(
 		geometry_column <- "polyline"
 		shape <- rcpp_polygon_polyline( data, l, geometry_column )
 		jsfunc <- "add_polygon_polyline"
+	# } else if ( tp == "mesh" ) {
+	# 	geometry_column <- "geometry"
+	# 	jsfunc <- "add_mesh"
+	# 	shape <- rcpp_mesh_geojson( data, l, geometry_column )
 	}
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)

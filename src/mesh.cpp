@@ -12,11 +12,14 @@ Rcpp::List mesh_defaults(int n) {
 	);
 }
 
-Rcpp::List mesh_to_sf( Rcpp::List& mesh ) {
+Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 	// convert mesh3d object into a pseudo-sf.data.farme object
 	// so it will go into all teh spatialwidget functions as-is
-	Rcpp::NumericMatrix vb = mesh["vb"];
-	Rcpp::NumericMatrix ib = mesh["ib"];
+
+	Rcpp::String vertex_b = vertices[0];
+	Rcpp::String vertex_i = vertices[1];
+	Rcpp::NumericMatrix vb = mesh[ vertex_b ];
+	Rcpp::NumericMatrix ib = mesh[ vertex_i ];
 
 	// each column of each row of ib gives the row of vb containing coordinates which form the mesh
 	// as we're working with polygons, we can turn the coordinates into list of matrices
@@ -31,11 +34,11 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh ) {
 	size_t i, j;
 
 	Rcpp::NumericVector polygon_indeces( n_row );
-	Rcpp::NumericVector polygon_coordinates( 4 );  // TODO always 4?
+	Rcpp::NumericVector polygon_coordinates( n_row );  // TODO always 4?
 
 	for( i = 0; i < n_col; i++ ) {
 		polygon_indeces = ib(_, i);
-		Rcpp::NumericMatrix a_polygon( n_row, 4 ); // the number of cols of ib teslls us the number of sets of coordinates
+		Rcpp::NumericMatrix a_polygon( n_row, n_row ); // the number of cols of ib teslls us the number of sets of coordinates
 		Rcpp::List sfg(1);
 		Rcpp::NumericVector z_values( n_row ); // each 'col' contains the index of the xyz1 coords
 
@@ -93,9 +96,9 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh ) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params, std::string geometry_columns ) {
+Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params, Rcpp::StringVector vertices ) {
 
-	Rcpp::DataFrame data = mesh_to_sf( mesh );
+	Rcpp::DataFrame data = mesh_to_sf( mesh, vertices );
 
 	//return data;
 
@@ -104,6 +107,7 @@ Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params, std::string ge
 
 	int data_rows = data.nrows();
 
+	std::string geometry_columns = "geometry";
 
 	Rcpp::List lst_defaults = mesh_defaults( data_rows );  // initialise with defaults
 	std::unordered_map< std::string, std::string > mesh_colours = mapdeck::mesh::mesh_colours;

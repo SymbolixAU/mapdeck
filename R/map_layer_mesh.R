@@ -18,6 +18,8 @@ mapdeckMeshDependency <- function() {
 add_mesh <- function(
 	map,
 	data = get_map_data(map),
+	vertex,
+	index,
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	elevation = NULL,
@@ -47,6 +49,9 @@ add_mesh <- function(
 	l[["tooltip"]] <- force( tooltip )
 	l[["id"]] <- force( id )
 	l[["na_colour"]] <- force( na_colour )
+
+	vertex <- force( vertex )
+	index <- force( index )
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -90,7 +95,8 @@ add_mesh <- function(
 	jsfunc <- "add_mesh"
 
 	if ( tp == "mesh" ) {
- 		geometry_column <- c( "geometry" )
+ 		# geometry_column <- c( "geometry" )
+		geometry_column <- c( vertex, index )
 		shape <- rcpp_mesh_geojson( data, l, geometry_column )
 	}
 	#	geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'

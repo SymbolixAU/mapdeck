@@ -246,15 +246,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_mesh_geojson
-Rcpp::List rcpp_mesh_geojson(Rcpp::List mesh, Rcpp::List params, std::string geometry_columns);
-RcppExport SEXP _mapdeck_rcpp_mesh_geojson(SEXP meshSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP) {
+Rcpp::List rcpp_mesh_geojson(Rcpp::List mesh, Rcpp::List params, Rcpp::StringVector vertices);
+RcppExport SEXP _mapdeck_rcpp_mesh_geojson(SEXP meshSEXP, SEXP paramsSEXP, SEXP verticesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type mesh(meshSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_mesh_geojson(mesh, params, geometry_columns));
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type vertices(verticesSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_mesh_geojson(mesh, params, vertices));
     return rcpp_result_gen;
 END_RCPP
 }

@@ -4,13 +4,14 @@
 \alias{add_mesh}
 \title{Add Mesh}
 \usage{
-add_mesh(map, data = get_map_data(map), fill_colour = NULL,
-  fill_opacity = NULL, elevation = NULL, tooltip = NULL,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  light_settings = list(), layer_id = NULL, id = NULL,
-  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, transitions = NULL)
+add_mesh(map, data = get_map_data(map), vertex, index,
+  fill_colour = NULL, fill_opacity = NULL, elevation = NULL,
+  tooltip = NULL, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF", light_settings = list(),
+  layer_id = NULL, id = NULL, palette = "viridis",
+  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
+  legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL)
 }
 \description{
 Add Mesh
