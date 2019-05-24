@@ -144,6 +144,15 @@ sf_needs_subsetting <- function( data, sfc_col, sf_geom ) {
 	return( !sfc_type( data, sfc_col ) %in% toupper( sf_geom ) )
 }
 
+#' @export
+resolve_data.quadmesh <- function( data, l, sf_geom ) {
+	l[["data"]] <- data
+	l[["bbox"]] <- get_box( data, l )
+	l[["geometry"]] <- "geometry"
+	l[["data_type"]] <- "mesh"
+	return(l)
+}
+
 ## use the specificed st_geometry column
 #' @export
 resolve_data.sf <- function( data, l, sf_geom ) {
@@ -161,6 +170,20 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 }
 
 get_box <- function( data, l ) UseMethod("get_box")
+
+
+#' @export
+get_box.quadmesh <- function( data, l ) {
+	md <- data[["raster_metadata"]]
+	if(is.null(md)) {
+		stop("expecting raster_metadata attribute on quadmesh object. Make sure you are using v0.4.0 of quadmesh")
+	}
+  bbox <- list(
+  	 c(md[["xmn"]], md[["ymn"]]), c(md[["xmx"]], md[["ymx"]])
+  	 )
+  return( jsonify::to_json( bbox ) )
+}
+
 
 #' @export
 get_box.sfencoded <- function( data, l ) {
