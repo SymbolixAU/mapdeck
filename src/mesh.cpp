@@ -79,7 +79,7 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 	Rcpp::List sf = Rcpp::List::create(
 		_["geometry"] = sfc,
 		//_["z"] = z,
-		_["avg_z"] = avg_z
+		_["average_z"] = avg_z
 	);
 
 	sf.attr("class") = Rcpp::CharacterVector::create("sf","data.frame");

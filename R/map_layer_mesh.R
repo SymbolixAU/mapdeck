@@ -11,15 +11,34 @@ mapdeckMeshDependency <- function() {
 }
 
 
+
+find_mesh_index <- function( data ) {
+	switch(
+		data[["primitivetype"]]
+		, "quad" = "ib"
+		, "triangle" = "it"
+	)
+}
+
+
 #' Add Mesh
 #'
+#' Adds polygons to the map from a \code{quadmesh} object
+#'
+#' @inheritParams add_polygon
+#'
+#' @inheritSection add_arc legend
+#' @inheritSection add_arc id
+#'
+#' @details
+#'
+#' \code{add_mesh} supports quadmesh objects
 #'
 #' @export
 add_mesh <- function(
 	map,
 	data = get_map_data(map),
-	vertex,
-	index,
+	fill_opacity = NULL,
 	elevation = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
@@ -39,10 +58,12 @@ add_mesh <- function(
 
 	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
 	# experimental_layer( "mesh" )
+	if(!inherits(data, "quadmesh")) {
+		stop("expecting quadmesh object")
+	}
 
 	l <- list()
-	fill_colour = "avg_z"
-	fill_opacity = NULL
+	fill_colour = "average_z"
 	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["elevation"]] <- force( elevation )
@@ -50,8 +71,8 @@ add_mesh <- function(
 	l[["id"]] <- force( id )
 	l[["na_colour"]] <- force( na_colour )
 
-	vertex <- force( vertex )
-	index <- force( index )
+	vertex <- "vb"
+	index <- find_mesh_index( data )
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -95,7 +116,7 @@ add_mesh <- function(
 	jsfunc <- "add_mesh"
 
 	if ( tp == "mesh" ) {
- 		# geometry_column <- c( "geometry" )
+		# geometry_column <- c( "geometry" )
 		geometry_column <- c( vertex, index )
 		shape <- rcpp_mesh_geojson( data, l, geometry_column )
 	}
