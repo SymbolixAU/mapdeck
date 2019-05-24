@@ -75,6 +75,11 @@ add_mesh <- function(
 	vertex <- "vb"
 	index <- find_mesh_index( data )
 
+	## check:
+	if ( data[["primitivetype"]] == "quad" & is.null( data[["ib"]] ) ) {
+		stop("badly formed quadmesh type. Found quad and expecting ib index")
+	}
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
