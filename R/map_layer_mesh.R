@@ -57,7 +57,8 @@ add_mesh <- function(
 ) {
 
 	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
-	# experimental_layer( "mesh" )
+	experimental_layer( "mesh" )
+
 	if(!inherits(data, "quadmesh")) {
 		stop("expecting quadmesh object")
 	}
