@@ -20,8 +20,6 @@ add_mesh <- function(
 	data = get_map_data(map),
 	vertex,
 	index,
-	fill_colour = NULL,
-	fill_opacity = NULL,
 	elevation = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
@@ -43,6 +41,8 @@ add_mesh <- function(
 	# experimental_layer( "mesh" )
 
 	l <- list()
+	fill_colour = "avg_z"
+	fill_opacity = NULL
 	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["elevation"]] <- force( elevation )
