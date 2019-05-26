@@ -26,7 +26,7 @@ mapdeck <- function(
 	pitch = 0,
 	zoom = 0,
 	bearing = 0,
-	location = c( 0, 0 )
+	location = c(0, 0)
 	) {
 
   # forward options using x
@@ -66,8 +66,19 @@ mapdeck <- function(
     	browser.fill = FALSE
     )
   )
+
+  mapdeckmap <- add_dependencies( mapdeckmap )
+  mapdeckmap$dependencies <- c(
+  	mapdeckmap$dependencies
+  	, mapboxgl()
+  	, mapdeck_css()
+  	, mapdeck_js()
+  	, htmlwidgets_js()
+  	)
+
   return(mapdeckmap)
 }
+
 
 #' Shiny bindings for mapdeck
 #'
@@ -87,8 +98,9 @@ mapdeck <- function(
 #'
 #' @export
 mapdeckOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'mapdeck', width, height, package = 'mapdeck')
+	htmlwidgets::shinyWidgetOutput(outputId, 'mapdeck', width, height, package = 'mapdeck')
 }
+
 
 #' @rdname mapdeck-shiny
 #' @export
@@ -96,6 +108,7 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   htmlwidgets::shinyRenderWidget(expr, mapdeckOutput, env, quoted = TRUE)
 }
+
 
 
 #' Mapdeck update
@@ -116,8 +129,11 @@ mapdeck_update <- function(
 	map_id,
 	session = shiny::getDefaultReactiveDomain(),
 	data = NULL,
-	deferUntilFlush = TRUE
+	deferUntilFlush = TRUE,
+	map_type = c("mapdeck_update", "google_map_update")
 	) {
+
+	map_type <- match.arg( map_type )
 
 	if (is.null(session)) {
 		stop("mapdeck_update must be called from the server function of a Shiny app")
@@ -134,7 +150,7 @@ mapdeck_update <- function(
 			deferUntilFlush = deferUntilFlush,
 			dependencies = NULL
 		),
-		class = "mapdeck_update"
+		class = c(map_type)
 	)
 }
 
@@ -160,7 +176,7 @@ mapdeck_view <- function(
 
 	transition <- match.arg(transition)
 	invoke_method(
-		map, 'md_change_location', as.numeric( location ), zoom, pitch,
+		map, 'md_change_location', map_type( map ) , as.numeric( location ), zoom, pitch,
 		bearing, duration, transition
 		)
 }
@@ -171,6 +187,19 @@ mapdeck_view <- function(
 #
 # @param map a mapdeck map object
 #
-get_map_data = function( map ) {
+get_map_data <- function( map ) {
 	attr( map$x, "mapdeck_data", exact = TRUE )
+}
+
+# map_type
+#
+# determines the source/type of map
+map_type <- function( map ) {
+
+	map_type <- attr( map, "class")
+	if( any( c("mapdeck", "mapdeck_update") %in% map_type ) ) return( "mapdeck" )
+
+	if( any( c("google_map", "google_map_update") %in% map_type ) ) return( "google_map" )
+
+	return(NULL)
 }

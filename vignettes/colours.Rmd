@@ -141,6 +141,66 @@ The same ordering applies to characters, factors, dates, etc. In this example I'
 colourvalues::colour_values(letters[10:1])
 ```
 
+### Vectors vs scalar
+
+There is a difference in behaviour when you supply a vector for the opacity compared to when you use a single value.
+
+See how these two lines produce different results
+
+```{r}
+colourvalues::colour_values(x = rep(1,5), alpha = rep(255,5))
+
+colourvalues::colour_values(x = rep(1,5), alpha = 255)
+```
+
+This is because one uses a vector, where all the values are 255, and the other uses a single value of 255.
+
+Lke with colours, when you supply a vector for the opacity, `colourvalues` treats each element relative to the other elements and maps the opacity accordingly. 
+
+It does this by rescaling the values in the vector to be in [0,1] (source code is [here](https://github.com/SymbolixAU/colourvalues/blob/master/inst/include/colourvalues/scale/scale.hpp#L37) if you want to look), then multiplies by 255. 
+
+The [0,255] values are then the actual opacities. 
+
+So in this example, since every value of the vector is the same, they all get scaled to zero, which is the most transparent opacity.
+
+Here are the result in action.
+
+```{r, eval = FALSE}
+
+library(sf)
+library(spatialwidget)
+sf <- spatialwidget::widget_melbourne
+sf$opacity <- 150
+
+mapdeck() %>%
+  add_polygon(
+    data = sf
+    , fill_colour = "SA2_NAME"
+    , fill_opacity = "opacity"
+  )
+
+```
+![](./img/articles/opacity1.png)
+
+The polygons are completely tranparent. Now if I use a single value of 150, rather than a vector, we get the desired opacity.
+
+```{r, eval = FALSE}
+
+library(sf)
+library(spatialwidget)
+sf <- spatialwidget::widget_melbourne
+sf$opacity <- 150
+
+mapdeck() %>%
+  add_polygon(
+    data = sf
+    , fill_colour = "SA2_NAME"
+    , fill_opacity = 150
+    , stroke_colour = "SA2_NAME"
+  )
+
+```
+![](./img/articles/opacity2.png)
 
 ## Manual colours
 
@@ -159,6 +219,9 @@ mapdeck( ) %>%
 
 ```
 ![fill manual](./img/articles/fill_my_colour.png)
+
+
+Setting `legend = TRUE` in this example will just show the legend with the hex-strings, which probably isn't what you're after. In this case you can also create a manual legend, which I've described over on the [legends article](https://symbolixau.github.io/mapdeck/articles/legends.html#manual-legends)
 
 
 ## colour_range

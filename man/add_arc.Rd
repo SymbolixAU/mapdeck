@@ -7,11 +7,12 @@
 add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
   destination, id = NULL, stroke_from = NULL,
   stroke_from_opacity = NULL, stroke_to = NULL,
-  stroke_to_opacity = NULL, stroke_width = NULL, tooltip = NULL,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF", legend = F,
-  legend_options = NULL, legend_format = NULL, palette = "viridis",
-  na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL, digits = 6, brush_radius = NULL)
+  stroke_to_opacity = NULL, stroke_width = NULL, tilt = NULL,
+  height = NULL, tooltip = NULL, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF", legend = F, legend_options = NULL,
+  legend_format = NULL, palette = "viridis", na_colour = "#808080FF",
+  update_view = TRUE, focus_layer = FALSE, transitions = NULL,
+  digits = 6, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -33,15 +34,21 @@ to conflict and not plot correctly}
 
 \item{stroke_from_opacity}{Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+between 1 and 255 to be applied to all the shapes. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
 
 \item{stroke_to}{variable or hex colour to use as the ending stroke colour}
 
 \item{stroke_to_opacity}{Either a string specifying the
 column of \code{data} containing the stroke opacity of each shape, or a value
-between 1 and 255 to be applied to all the shapes}
+between 1 and 255 to be applied to all the shapes. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
 
 \item{stroke_width}{width of the stroke in pixels}
+
+\item{tilt}{value to tilt the arcs to the side, in degrees [-90, 90]}
+
+\item{height}{value to multiply the height.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -57,8 +64,10 @@ a named list indicating which colour attributes should be included in the legend
 \item{legend_format}{A list containing functions to apply to legend values. See section legend}
 
 \item{palette}{string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
-A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
-where the 4th column represents the alpha.}
+A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255],
+where the 4th column represents the alpha. You can use a named list to specify a different
+palette for different colour options (where available),
+ e.g. list(fill_colour = "viridis", stroke_colour = "inferno")}
 
 \item{na_colour}{hex string colour to use for NA values}
 
@@ -152,6 +161,7 @@ stroke_width = 0
 
 ## You need a valid access token from Mapbox
 key <- 'abc'
+set_token( key )
 
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 flights <- read.csv(url)
@@ -159,7 +169,7 @@ flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 
-mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
   add_arc(
   data = flights
   , layer_id = "arc_layer"

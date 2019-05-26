@@ -32,7 +32,7 @@ server <- function( input, output ) {
 
 	observeEvent({input$btn},{
 
-		df <- melbourne
+		df <- mapdeck::melbourne
 		df$z <- sample(100:5000, size = nrow(df))
 		df$col <- rnorm( n = nrow( df ) )
 

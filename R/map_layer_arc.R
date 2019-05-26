@@ -4,7 +4,8 @@ mapdeckArcDependency <- function() {
 			name = "arc",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/arc", package = "mapdeck"),
-			script = c("arc.js")
+			script = c("arc.js"),
+			all_files = FALSE
 		)
 	)
 }
@@ -15,7 +16,8 @@ mapdeckArcBrushDependency <- function() {
 			name = "arc_brush",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/arc_brush", package = "mapdeck"),
-			script = c("arc_brush.js")
+			script = c("arc_brush.js"),
+			all_files = FALSE
 		)
 	)
 }
@@ -36,18 +38,24 @@ mapdeckArcBrushDependency <- function() {
 #' @param stroke_from variable or hex colour to use as the staring stroke colour
 #' @param stroke_from_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
-#' between 1 and 255 to be applied to all the shapes
+#' between 1 and 255 to be applied to all the shapes. If a hex-string is used as the
+#' colour, this argument is ignored and you should include the alpha on the hex string
 #' @param stroke_to variable or hex colour to use as the ending stroke colour
 #' @param stroke_to_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
-#' between 1 and 255 to be applied to all the shapes
+#' between 1 and 255 to be applied to all the shapes. If a hex-string is used as the
+#' colour, this argument is ignored and you should include the alpha on the hex string
 #' @param stroke_width width of the stroke in pixels
+#' @param height value to multiply the height.
+#' @param tilt value to tilt the arcs to the side, in degrees [-90, 90]
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #' @param auto_highlight logical indicating if the shape under the mouse should auto-highlight
 #' @param highlight_colour hex string colour to use for highlighting. Must contain the alpha component.
 #' @param palette string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
-#' A matrix is a 3 or 4 column numeric matrix of values between [0, 255],
-#' where the 4th column represents the alpha.
+#' A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255],
+#' where the 4th column represents the alpha. You can use a named list to specify a different
+#' palette for different colour options (where available),
+#'  e.g. list(fill_colour = "viridis", stroke_colour = "inferno")
 #' @param na_colour hex string colour to use for NA values
 #' @param legend either a logical indiciating if the legend(s) should be displayed, or
 #' a named list indicating which colour attributes should be included in the legend.
@@ -121,6 +129,7 @@ mapdeckArcBrushDependency <- function() {
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
 #' url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 #' flights <- read.csv(url)
@@ -128,7 +137,7 @@ mapdeckArcBrushDependency <- function() {
 #' flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 #' flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #'   add_arc(
 #'   data = flights
 #'   , layer_id = "arc_layer"
@@ -220,6 +229,8 @@ add_arc <- function(
 	stroke_to = NULL,
 	stroke_to_opacity = NULL,
 	stroke_width = NULL,
+	tilt = NULL,
+	height = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -243,6 +254,8 @@ add_arc <- function(
 	l[["stroke_from_opacity"]] <- force(stroke_from_opacity)
 	l[["stroke_to_opacity"]] <- force(stroke_to_opacity)
 	l[["stroke_width"]] <- force(stroke_width)
+	l[["tilt"]] <- force(tilt)
+	l[["height"]] <- force(height)
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)
@@ -297,10 +310,14 @@ add_arc <- function(
   }
 
 	js_transition <- resolve_transitions( transitions, "arc" )
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition,
 		brush_radius
 		)
@@ -317,5 +334,5 @@ add_arc <- function(
 #' @export
 clear_arc <- function( map, layer_id = NULL ) {
 	layer_id <- layerId(layer_id, "arc")
-	invoke_method(map, "md_layer_clear", layer_id, "arc" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "arc" )
 }

@@ -144,6 +144,15 @@ sf_needs_subsetting <- function( data, sfc_col, sf_geom ) {
 	return( !sfc_type( data, sfc_col ) %in% toupper( sf_geom ) )
 }
 
+#' @export
+resolve_data.quadmesh <- function( data, l, sf_geom ) {
+	l[["data"]] <- data
+	l[["bbox"]] <- get_box( data, l )
+	l[["geometry"]] <- "geometry"
+	l[["data_type"]] <- "mesh"
+	return(l)
+}
+
 ## use the specificed st_geometry column
 #' @export
 resolve_data.sf <- function( data, l, sf_geom ) {
@@ -162,6 +171,20 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 
 get_box <- function( data, l ) UseMethod("get_box")
 
+
+#' @export
+get_box.quadmesh <- function( data, l ) {
+	md <- data[["raster_metadata"]]
+	if(is.null(md)) {
+		stop("expecting raster_metadata attribute on quadmesh object. Make sure you are using v0.4.0 of quadmesh")
+	}
+  bbox <- list(
+  	 c(md[["xmn"]], md[["ymn"]]), c(md[["xmx"]], md[["ymx"]])
+  	 )
+  return( jsonify::to_json( bbox ) )
+}
+
+
 #' @export
 get_box.sfencoded <- function( data, l ) {
 	bbox <- attr( data, "sfAttributes")[["bbox"]]
@@ -179,8 +202,8 @@ get_box.sf <- function( data, l ) {
 #' @export
 get_box.data.frame <- function( data, l ) {
 
-	lat <- data[, l[["lat"]] ]
-	lon <- data[, l[["lon"]] ]
+	lat <- data[, l[["lat"]], drop = TRUE ]
+	lon <- data[, l[["lon"]], drop = TRUE ]
 	xmin <- min(lon); xmax <- max(lon)
 	ymin <- min(lat); ymax <- max(lat)
 	bbox <- list( c(xmin, ymin), c(xmax, ymax) )
@@ -205,8 +228,10 @@ get_od_box.sf <- function( data, l ) {
 
 #' @export
 get_od_box.data.frame <- function( data, l ) {
-	lon <- c( data[, l[["origin"]][1] ], data[, l[["destination"]][1]] )
-	lat <- c( data[, l[["origin"]][2] ], data[, l[["destination"]][2]] )
+
+	lon <- c( data[, l[["origin"]][1], drop = TRUE ], data[, l[["destination"]][1], drop = TRUE ] )
+	lat <- c( data[, l[["origin"]][2], drop = TRUE ], data[, l[["destination"]][2], drop = TRUE ] )
+
 	xmin <- min(lon); xmax <- max(lon)
 	ymin <- min(lat); ymax <- max(lat)
 	bbox <- list( c(xmin, ymin), c(xmax, ymax) )
@@ -317,7 +342,11 @@ resolve_palette <- function( l, palette ) {
 
 
 resolve_legend <- function( l, legend ) {
-	l[['legend']] <- legend
+	if(inherits( legend, "json" ) ) {
+		l[["legend"]] <- FALSE
+	} else {
+	  l[['legend']] <- legend
+	}
 	return( l )
 }
 

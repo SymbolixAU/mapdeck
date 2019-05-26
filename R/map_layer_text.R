@@ -4,7 +4,8 @@ mapdeckTextDependency <- function() {
 			name = "text",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/text", package = "mapdeck"),
-			script = c("text.js")
+			script = c("text.js"),
+			all_files = FALSE
 		)
 	)
 }
@@ -22,6 +23,13 @@ mapdeckTextDependency <- function() {
 #' 'start', 'middle' or 'end'
 #' @param alignment_baseline column of \code{data} containing the alignment. One of
 #' 'top', 'center' or 'bottom'
+#' @param billboard logical indicating if the text always faces the camera (TRUE) or
+#' if it always faces up (FALSE)
+#' @param font_family specifies a prioritised list of one or more font family names and/or
+#' generic family names. Follow the specifics for CSS font-family
+#' \url{https://developer.mozilla.org/en-US/docs/Web/CSS/font-family}
+#' @param font_weight specifies the font weight. Follow the specifics for CSS font-weight
+#' \url{https://htmldog.com/references/css/properties/font-weight/}
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip
 #'
 #' @inheritSection add_arc legend
@@ -50,9 +58,9 @@ mapdeckTextDependency <- function() {
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
 #' mapdeck(
-#'   token = key,
 #'   style = mapdeck_style('dark')
 #' ) %>%
 #'   add_text(
@@ -83,6 +91,9 @@ add_text <- function(
 	angle = NULL,
 	anchor = NULL,
 	alignment_baseline = NULL,
+	billboard = TRUE,
+	font_family = 'Monaco, monospace',
+	font_weight = "normal",
 	tooltip = NULL,
 	layer_id = NULL,
 	id = NULL,
@@ -92,6 +103,7 @@ add_text <- function(
 	na_colour = "#808080FF",
 	legend = FALSE,
 	legend_options = NULL,
+	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL
@@ -157,10 +169,16 @@ add_text <- function(
 	}
 
 	js_transitions <- resolve_transitions( transitions, "text" )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, auto_highlight, highlight_colour,
-		shape[["legend"]], bbox, update_view, focus_layer, js_transitions
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
+		shape[["legend"]], bbox, update_view, focus_layer, js_transitions, billboard,
+		font_family, font_weight
 		)
 }
 
@@ -168,6 +186,6 @@ add_text <- function(
 #' @export
 clear_text <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "text")
-	invoke_method(map, "md_layer_clear", layer_id, "text" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "text" )
 }
 

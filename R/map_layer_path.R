@@ -4,7 +4,8 @@ mapdeckPathDependency <- function() {
 			name = "path",
 			version = "1.0.0",
 			src = system.file("htmlwidgets/lib/path", package = "mapdeck"),
-			script = c("path.js")
+			script = c("path.js"),
+			all_files = FALSE
 		)
 	)
 }
@@ -134,10 +135,14 @@ add_path <- function(
 	}
 
 	js_transitions <- resolve_transitions( transitions, "path" )
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
 
 	invoke_method(
-		map, jsfunc, shape[["data"]], layer_id, auto_highlight,
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
 		js_transitions
 		)
@@ -148,7 +153,7 @@ add_path <- function(
 #' @export
 clear_path <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "path")
-	invoke_method(map, "md_layer_clear", layer_id, "path" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "path" )
 }
 
 

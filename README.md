@@ -53,6 +53,8 @@ To use the development version you need some other development dependant
 libraries
 
 ``` r
+
+devtools::install_github("SymbolixAU/geojsonsf", force = TRUE)
 devtools::install_github("SymbolixAU/colourvalues", force = TRUE)
 devtools::install_github("SymbolixAU/spatialwidget", force = TRUE)
 devtools::install_github("SymbolixAU/mapdeck")
@@ -67,8 +69,7 @@ token](https://www.mapbox.com/help/how-access-tokens-work/).
 Once you’ve generate a token you can use their maps.
 
 Call `mapdeck(token = 'your_token')` to generate a basic map. Then start
-adding layers by using one of the various `add_*()`
-functions.
+adding layers by using one of the various `add_*()` functions.
 
 ``` r
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'

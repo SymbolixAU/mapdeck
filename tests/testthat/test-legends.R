@@ -35,4 +35,25 @@ test_that("legend values can be formatted", {
 
 })
 
+test_that("manual legends can be created", {
 
+	l1 <- legend_element(
+		variables = c("a","b")
+		, colours = c("#00FF00","#FF0000")
+		, colour_type = "fill"
+		, variable_type = "category"
+		, title = "my title"
+	)
+
+	expect_true(inherits(l1, "mapdeck_legend"))
+
+	js <- mapdeck_legend( l1 )
+	expect_true(inherits(js, "json"))
+
+	expect_error(
+		mapdeck_legend(c())
+		, "mapdeck_legend will only work on objects created with legend_element"
+	)
+
+
+})

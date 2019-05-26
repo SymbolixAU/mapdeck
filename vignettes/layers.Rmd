@@ -82,6 +82,31 @@ mapdeck(
 
 **sf** : supports all `sf` geometry types. Converted to geojson using `geojsonsf::sf_geojson()`. Useful if your `sf` object contains different geometry types.
 
+## Great Circles
+
+```{r}
+
+url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
+flights <- read.csv(url)
+flights$id <- seq_len(nrow(flights))
+flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
+
+mapdeck( style = 'mapbox://styles/mapbox/dark-v9') %>%
+  add_greatcircle(
+    data = flights
+    , layer_id = "arc_layer"
+    , origin = c("start_lon", "start_lat")
+    , destination = c("end_lon", "end_lat")
+    , stroke_from = "airport1"
+    , stroke_to = "airport2"
+    , stroke_width = "stroke"
+  )
+```
+
+![Great Circles](./img/articles/greatcircles.png)
+
+**sf** : supports `sf` objects with two POINT or MULTIPOINT geometry columns.
+
 ## Grid
 
 ```{r}
@@ -303,8 +328,8 @@ mapdeck(
 
 The three main functions to use are
 
-1. `render_mapdeck()` in the **Server**
-2. `mapdeck_output()` in the **UI**
+1. `renderMapdeck()` in the **Server**
+2. `mapdeckOutput()` in the **UI**
 3. `mapdeck_update()` to update an existing map
 
 You can observe interactions with the layers by using `observeEvent()`. The event you observe is formed by combining
@@ -322,7 +347,8 @@ There's an example of this in the shiny.
 ```{r}
 library(shiny)
 library(shinydashboard)
-library(jsonlite)
+library(jsonify)
+
 ui <- dashboardPage(
 	dashboardHeader()
 	, dashboardSidebar()
@@ -397,7 +423,7 @@ server <- function(input, output) {
 		
 		event <- input$myMap_arc_click
 		output$observed_click <- renderText({
-			jsonlite::prettify( event )
+			jsonify::pretty_json( event )
 		})
 	})
 }
