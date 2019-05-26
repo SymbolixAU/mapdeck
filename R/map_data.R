@@ -382,3 +382,25 @@ resolve_opacity <- function( opacity ) {
 	}
 	return( opacity )
 }
+
+
+find_lat_column = function(names) {
+
+	lats = names[grep("^(lat|lats|latitude|latitudes|stop_lat|shape_pt_lon)$", names, ignore.case = TRUE)]
+
+	if (length(lats) == 1) {
+		return(lats)
+	}
+	stop("could not find latitude column")
+}
+
+
+find_lon_column = function(names) {
+
+	lons = names[grep("^(lon|lons|lng|lngs|long|longs|longitude|longitudes|stop_lon|shape_pt_lon)$", names, ignore.case = TRUE)]
+
+	if (length(lons) == 1) {
+		return(lons)
+	}
+	stop("could not find longitude column")
+}
