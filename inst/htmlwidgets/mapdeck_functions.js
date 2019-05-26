@@ -147,7 +147,14 @@ function md_update_layer( map_id, layer_id, layer ) {
   } else {
   	window[map_id + 'layers'].push( layer );
   }
-  window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
+
+  // seeing what the viewstate is
+  var vs = window[ map_id + 'map'].viewState;
+
+  window[map_id + 'map'].setProps({
+  	layers: [...window[map_id + 'layers'] ],
+  	viewState: vs
+  });
 }
 
 function md_update_overlay( map_id, layer_id, layer ) {
@@ -192,7 +199,13 @@ function md_clear_layer( map_id, layer_id ) {
   if ( elem != -1 ) {
   	window[ map_id + 'layers'].splice( elem, 1 );
   }
-  window[map_id + 'map'].setProps({ layers: [...window[map_id + 'layers'] ] });
+
+  var vs = window[ map_id + 'map'].viewState;
+
+  window[map_id + 'map'].setProps({
+  	layers: [...window[map_id + 'layers'] ],
+  	viewState: vs
+  });
 }
 
 

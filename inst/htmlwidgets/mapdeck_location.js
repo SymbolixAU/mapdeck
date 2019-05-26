@@ -23,8 +23,6 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 	    currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
 	  }
 
-    console.log( window[ map_id + 'map'] );
-
 		window[map_id + 'map'].setProps({
 	    viewState: {
 	      longitude: currentLon,
