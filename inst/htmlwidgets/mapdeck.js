@@ -25,7 +25,8 @@ HTMLWidgets.widget({
        	 const deckgl = new deck.DeckGL({
        	 	  map: false,
 			      container: el.id,
-			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
 			      //onLayerHover: setTooltip
 			   });
@@ -35,10 +36,12 @@ HTMLWidgets.widget({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
-			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
 			      //onLayerHover: setTooltip
 			  });
+			  //deckgl.setProps({viewState: window[el.id + 'INITIAL_VIEW_STATE']});
 			  window[el.id + 'map'] = deckgl;
        }
         // https://github.com/uber/deck.gl/issues/2114
@@ -54,7 +57,6 @@ HTMLWidgets.widget({
 			  });
 			  console.log( viewPort );
 			  */
-
 
 			    md_initialise_map(el, x);
       },
@@ -104,4 +106,3 @@ if (HTMLWidgets.shinyMode) {
     }
   });
 }
-

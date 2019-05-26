@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 
 /**
  * Based off of [the offical Google document](https://developers.google.com/maps/documentation/utilities/polylinealgorithm)
