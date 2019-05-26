@@ -148,7 +148,7 @@ function md_update_layer( map_id, layer_id, layer ) {
   	window[map_id + 'layers'].push( layer );
   }
 
-  // seeing what the viewstate is
+  // ## issue 137
   var vs = window[ map_id + 'map'].viewState;
 
   window[map_id + 'map'].setProps({
@@ -200,6 +200,7 @@ function md_clear_layer( map_id, layer_id ) {
   	window[ map_id + 'layers'].splice( elem, 1 );
   }
 
+  // ## issue 137
   var vs = window[ map_id + 'map'].viewState;
 
   window[map_id + 'map'].setProps({
