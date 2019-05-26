@@ -37,9 +37,10 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 	    },
 	  });
 
-	  window[ map_id + 'map' ].setProps({
-	  	viewState: null
-	  });
+
+	  //window[ map_id + 'map' ].setProps({
+	  //	viewState: null
+	  //});
 
   }
 }
