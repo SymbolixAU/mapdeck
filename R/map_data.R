@@ -273,6 +273,15 @@ resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
 #' @export
 resolve_data.data.frame <- function( data, l, sf_geom ) {
 
+	if( !inherits(data, "sf") & !inherits(data, "sfencoded") & !inherits(data, "sfencodedLite" )) {
+		if( is.null(l[["lon"]] ) ) {
+			l[["lon"]] <- find_lon_column( names( data ) )
+		}
+		if( is.null(l[["lat"]] ) ) {
+			l[["lat"]] <- find_lat_column( names( data ) )
+		}
+	}
+
 	## data.frame will only really work for points, with a lon & lat column
 	if ( !is.null( l[["polyline"]] ) ) {
 		## the user supplied a polyline in a data.frame, so we need to allow this through
@@ -284,6 +293,7 @@ resolve_data.data.frame <- function( data, l, sf_geom ) {
 		l[["bbox"]] <- get_box( data, l )
 		l[["data_type"]] <- "df"
 	}
+
 	l[["data"]] <- data
 	return( l )
 }
@@ -386,7 +396,7 @@ resolve_opacity <- function( opacity ) {
 
 find_lat_column = function(names) {
 
-	lats = names[grep("^(lat|lats|latitude|latitudes|stop_lat|shape_pt_lon)$", names, ignore.case = TRUE)]
+	lats = names[grep("^(lat|lats|latitude|latitudes|stop_lat|shape_pt_lat)$", names, ignore.case = TRUE)]
 
 	if (length(lats) == 1) {
 		return(lats)
