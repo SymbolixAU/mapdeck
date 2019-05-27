@@ -129,7 +129,7 @@ add_mesh <- function(
 		geometry_column <- c( vertex, index )
 		shape <- rcpp_mesh_geojson( data, l, geometry_column )
 	}
-	browser()
+
 	#	geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
 	#	shape <- rcpp_polygon_geojson( data, l, geometry_column )
 	# } else if ( tp == "sfencoded" ) {
