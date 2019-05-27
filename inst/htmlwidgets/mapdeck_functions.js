@@ -201,11 +201,11 @@ function md_clear_layer( map_id, layer_id ) {
   }
 
   // ## issue 137
-  var vs = window[ map_id + 'map'].viewState;
+  //var vs = window[ map_id + 'map'].viewState;
 
   window[map_id + 'map'].setProps({
-  	layers: [...window[map_id + 'layers'] ],
-  	viewState: vs
+  	layers: [...window[map_id + 'layers'] ]
+  	//viewState: vs
   });
 }
 
