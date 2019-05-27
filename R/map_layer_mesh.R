@@ -59,8 +59,8 @@ add_mesh <- function(
 	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
 	experimental_layer( "mesh" )
 
-	if(!inherits(data, "quadmesh")) {
-		stop("expecting quadmesh object")
+	if(!inherits(data, "mesh3d")) {
+		stop("expecting mesh3d object")
 	}
 
 	l <- list()
@@ -77,12 +77,15 @@ add_mesh <- function(
 
 	## check:
 	if ( data[["primitivetype"]] == "quad" & is.null( data[["ib"]] ) ) {
-		stop("badly formed quadmesh type. Found quad and expecting ib index")
+		stop("badly formed mesh3d type. Found quad and expecting ib index")
 	}
-
+	if ( data[["primitivetype"]] == "triangle" & is.null( data[["it"]] ) ) {
+		stop("badly formed mesh3d type. Found triangle and expecting it index")
+	}
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
+
 	l <- resolve_data( data, l, c("POLYGON","MULTIPOLYGON") )
 
 	bbox <- init_bbox()
@@ -126,6 +129,7 @@ add_mesh <- function(
 		geometry_column <- c( vertex, index )
 		shape <- rcpp_mesh_geojson( data, l, geometry_column )
 	}
+	browser()
 	#	geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
 	#	shape <- rcpp_polygon_geojson( data, l, geometry_column )
 	# } else if ( tp == "sfencoded" ) {
