@@ -12,6 +12,7 @@ Rcpp::List mesh_defaults(int n) {
 	);
 }
 
+// [[Rcpp::export]]
 Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 	// convert mesh3d object into a pseudo-sf.data.farme object
 	// so it will go into all teh spatialwidget functions as-is

@@ -73,6 +73,10 @@ rcpp_line_geojson_df <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_line_geojson_df`, data, params, geometry_columns)
 }
 
+mesh_to_sf <- function(mesh, vertices) {
+    .Call(`_mapdeck_mesh_to_sf`, mesh, vertices)
+}
+
 rcpp_mesh_geojson <- function(mesh, params, vertices) {
     .Call(`_mapdeck_rcpp_mesh_geojson`, mesh, params, vertices)
 }
