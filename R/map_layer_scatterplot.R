@@ -31,6 +31,11 @@ mapdeckScatterplotBrushDependency <- function() {
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param radius in metres. Default 1
+#' @param radius_min_pixels the minimum radius in pixels. Can prevent circle from
+#' getting too small when zoomed out
+#' small for the given zoom level
+#' @param radius_max_pixels the maximum radius in pixels. Can prevent the circle from
+#' getting too big when zoomed in
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
@@ -112,6 +117,8 @@ add_scatterplot <- function(
 	lat = NULL,
 	polyline = NULL,
 	radius = NULL,
+	radius_min_pixels = 1,
+	radius_max_pixels = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	stroke_colour = NULL,
@@ -210,7 +217,7 @@ add_scatterplot <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
 		shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
-		brush_radius
+		radius_min_pixels, radius_max_pixels, brush_radius
 		)
 }
 

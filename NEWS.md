@@ -1,5 +1,6 @@
 # mapdeck 0.3
 
+* `radius_min_pixels` and `radius_max_pixels` arguemnts for scatterplots
 * `add_mesh()` for quadmesh objects
 * Google Map supported
 * `mapdeck_legend` and `legend_element` for manually creating legends

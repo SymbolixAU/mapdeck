@@ -1,15 +1,16 @@
 
 
-function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
 
-  //console.log( scatter_data );
+  console.log( radius_min_pixels );
 
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
     radiusScale: 1,
-    radiusMinPixels: 1,
+    radiusMinPixels: radius_min_pixels || 1,
+    radiusMaxPixels: radius_max_pixels || Number.MAX_SAFE_INTEGER,
     lineWidthMinPixels: 0,
     stroked: true,  // TODO( make conditional IFF stroke provided?)
     filled: true,
@@ -40,14 +41,15 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
 
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
     radiusScale: 1,
-    radiusMinPixels: 1,
+    radiusMinPixels: radius_min_pixels || 1,
+    radiusMaxPixels: radius_max_pixels || Number.MAX_SAFE_INTEGER,
     lineWidthMinPixels: 0,
     stroked: true,
     filled: true,
