@@ -26,6 +26,7 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 	// as we're working with polygons, we can turn the coordinates into list of matrices
 	size_t n_row = ib.nrow();
 	size_t n_col = ib.ncol();
+	size_t n_coords = vb.nrow();
 
 	Rcpp::List sfc( n_col );
 	Rcpp::List z( n_col ); // for creating a list-column of the z attributes
@@ -39,7 +40,7 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 
 	for( i = 0; i < n_col; i++ ) {
 		polygon_indeces = ib(_, i);
-		Rcpp::NumericMatrix a_polygon( n_row, n_row ); // the number of cols of ib teslls us the number of sets of coordinates
+		Rcpp::NumericMatrix a_polygon( n_row, n_coords );
 		Rcpp::List sfg(1);
 		Rcpp::NumericVector z_values( n_row ); // each 'col' contains the index of the xyz1 coords
 
