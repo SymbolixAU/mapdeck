@@ -2,7 +2,7 @@
 
 function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
 
-  console.log( radius_min_pixels );
+  //console.log( radius_min_pixels );
 
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
