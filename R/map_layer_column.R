@@ -16,7 +16,7 @@ mapdeckColumnDependency <- function() {
 #'The ColumnLayer can be used to render a heatmap of vertical cylinders. It renders
 #'a tesselated regular polygon centered at each given position (a "disk"), and extrude it in 3d.
 #'
-#' @inheritParams add_arc
+#' @inheritParams add_polygon
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param polyline column of \code{data} containing the polylines
@@ -132,6 +132,17 @@ add_column <- function(
 	update_view <- force( update_view )
 	focus_layer <- force( focus_layer )
 
+	is_extruded <- TRUE
+	if( !is.null( l[["stroke_width"]] ) | !is.null( l[["stroke_colour"]] ) ) {
+		is_extruded <- FALSE
+		if( !is.null( elevation ) ) {
+			message("stroke provided, ignoring elevation")
+		}
+		if( is.null( l[["stroke_width"]] ) ) {
+			l[["stroke_width"]] <- 1L
+		}
+	}
+
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
@@ -173,7 +184,7 @@ add_column <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
 		radius, elevation_scale, disk_resolution, angle, coverage, shape[["legend"]], bbox, update_view,
-		focus_layer, js_transitions
+		focus_layer, js_transitions, is_extruded
 	)
 }
 
