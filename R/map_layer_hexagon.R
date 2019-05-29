@@ -40,6 +40,7 @@ mapdeckHexagonDependency <- function() {
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
 #' df <- read.csv(paste0(
 #' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/'
@@ -48,7 +49,7 @@ mapdeckHexagonDependency <- function() {
 #'
 #' df <- df[!is.na(df$lng), ]
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45) %>%
+#' mapdeck(style = mapdeck_style("dark"), pitch = 45) %>%
 #' add_hexagon(
 #'   data = df
 #'   , lat = "lat"
