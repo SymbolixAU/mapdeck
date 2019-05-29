@@ -5,13 +5,15 @@
 \title{Add Scatterplot}
 \usage{
 add_scatterplot(map, data = get_map_data(map), lon = NULL,
-  lat = NULL, polyline = NULL, radius = NULL, fill_colour = NULL,
-  fill_opacity = NULL, stroke_colour = NULL, stroke_width = NULL,
-  stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL,
-  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, transitions = NULL, brush_radius = NULL)
+  lat = NULL, polyline = NULL, radius = NULL,
+  radius_min_pixels = 1, radius_max_pixels = NULL,
+  fill_colour = NULL, fill_opacity = NULL, stroke_colour = NULL,
+  stroke_width = NULL, stroke_opacity = NULL, tooltip = NULL,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  layer_id = NULL, id = NULL, palette = "viridis",
+  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
+  legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -26,6 +28,13 @@ Web Mercator Projection}
 \item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{radius}{in metres. Default 1}
+
+\item{radius_min_pixels}{the minimum radius in pixels. Can prevent circle from
+getting too small when zoomed out
+small for the given zoom level}
+
+\item{radius_max_pixels}{the maximum radius in pixels. Can prevent the circle from
+getting too big when zoomed in}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
 

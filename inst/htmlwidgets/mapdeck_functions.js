@@ -157,6 +157,22 @@ function md_update_layer( map_id, layer_id, layer ) {
   });
 }
 
+function md_clear_layer( map_id, layer_id ) {
+
+  var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
+  if ( elem != -1 ) {
+  	window[ map_id + 'layers'].splice( elem, 1 );
+  }
+
+  // ## issue 137
+  var vs = window[ map_id + 'map'].viewState;
+  window[map_id + 'map'].setProps({
+  	layers: [...window[map_id + 'layers'] ],
+  	viewState: vs
+  });
+}
+
+
 function md_update_overlay( map_id, layer_id, layer ) {
 
   if ( window[ map_id + 'layers' ] == null ) {
@@ -192,23 +208,6 @@ function md_clear_overlay( map_id, layer_id ) {
   overlay.setMap( window[map_id + 'map'] );
 
 }
-
-function md_clear_layer( map_id, layer_id ) {
-
-  var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
-  if ( elem != -1 ) {
-  	window[ map_id + 'layers'].splice( elem, 1 );
-  }
-
-  // ## issue 137
-  var vs = window[ map_id + 'map'].viewState;
-
-  window[map_id + 'map'].setProps({
-  	layers: [...window[map_id + 'layers'] ],
-  	viewState: vs
-  });
-}
-
 
 function md_layer_click( map_id, layer, info ) {
 

@@ -110,7 +110,7 @@ void main(void) {
 `;
 
 
-function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
+function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
 
 
   //var all_points = scatter_data.geometry.geometry.coordinates;
@@ -194,7 +194,8 @@ function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, au
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
     radiusScale: 1,
-    //radiusMinPixels: 1,
+    radiusMinPixels: radius_min_pixels || 1,
+    radiusMaxPixels: radius_max_pixels || Number.MAX_SAFE_INTEGER,
     stroked: true,  // TODO( make conditional IFF stroke provided?)
     filled: true,
     getRadius: d => d.properties.radius,
