@@ -32,6 +32,7 @@ mapdeckHexagonDependency <- function() {
 #' The colour is calculated by the sum of values within the \code{radius}.
 #' If NULL, the number of coordinates is used.
 #' @param colour_function either "total" or "average"
+#' @param legend logical indicating if a legend should be displayed
 #'
 #' @inheritSection add_polygon data
 #'
@@ -84,6 +85,20 @@ mapdeckHexagonDependency <- function() {
 #'   , colour = "colour"
 #' )
 #'
+#' ## with a legend
+#' df$val <- sample(1:10, size = nrow(df), replace = T)
+#'
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
+#' add_hexagon(
+#' 	data = df
+#' 	, lat = "lat"
+#' 	, lon = "lng"
+#' 	, layer_id = "hex_layer"
+#' 	, elevation_scale = 100
+#' 	, legend= T
+#' 	, colour_function = "average"
+#' 	, colour = "val"
+#' )
 #'
 #' }
 #'
@@ -105,6 +120,7 @@ add_hexagon <- function(
 	elevation_function = c("total", "average"),
 	colour = NULL,
 	colour_function = c("total", "average"),
+	legend = FALSE,
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -123,6 +139,8 @@ add_hexagon <- function(
 
 	colour_function <- match.arg( colour_function )
 	elevation_function <- match.arg( elevation_function )
+
+	legend <- force( legend )
 
 	use_weight <- FALSE
 	if(!is.null(elevation)) use_weight <- TRUE
@@ -180,7 +198,7 @@ add_hexagon <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, radius, elevation_scale,
 		auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer,
-		js_transitions, use_weight, use_colour, elevation_function, colour_function
+		js_transitions, use_weight, use_colour, elevation_function, colour_function, legend
 		)
 }
 

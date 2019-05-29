@@ -8,7 +8,7 @@ add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
   elevation = NULL, elevation_function = c("total", "average"),
   colour = NULL, colour_function = c("total", "average"),
-  elevation_scale = 1, auto_highlight = FALSE,
+  legend = FALSE, elevation_scale = 1, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", colour_range = NULL,
   update_view = TRUE, focus_layer = FALSE, transitions = NULL)
 }
@@ -41,6 +41,8 @@ The colour is calculated by the sum of values within the \code{radius}.
 If NULL, the number of coordinates is used.}
 
 \item{colour_function}{either "total" or "average"}
+
+\item{legend}{logical indicating if a legend should be displayed}
 
 \item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
 
@@ -122,6 +124,20 @@ add_hexagon(
   , colour = "colour"
 )
 
+## with a legend
+df$val <- sample(1:10, size = nrow(df), replace = T)
+
+mapdeck( style = mapdeck_style("dark"), pitch = 45) \%>\%
+add_hexagon(
+	data = df
+	, lat = "lat"
+	, lon = "lng"
+	, layer_id = "hex_layer"
+	, elevation_scale = 100
+	, legend= T
+	, colour_function = "average"
+	, colour = "val"
+)
 
 }
 

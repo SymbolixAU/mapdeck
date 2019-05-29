@@ -1,5 +1,5 @@
 
-function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function ) {
+function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend ) {
 
   const hexagonLayer = new deck.HexagonLayer({
         map_id: map_id,
@@ -19,15 +19,8 @@ function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elev
         getElevationValue: d => md_hexagon_elevation( d, use_weight, false, elevation_function ),
         getColorValue: d => md_hexagon_colour( d, use_colour, false, colour_function ),
         transitions: js_transition || {},
-        onSetColorDomain: d => colour_domain( d, colour_range, map_id, map_type, layer_id )
+        onSetColorDomain: d => md_colour_domain( d, colour_range, map_id, map_type, layer_id, legend )
   });
-
-  //console.log( colour_range );
-  // given colour_domain(); we can create and update a legend!
-  //if (legend !== false) {
-	//  md_add_legend( map_id, map_type, layer_id, legend );
-	//}
-
 
   if( map_type == "google_map") {
 	    md_update_overlay( map_id, 'hexagon-'+layer_id, hexagonLayer );
@@ -37,41 +30,10 @@ function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elev
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-//https://stackoverflow.com/a/40475362/5977215
-function colour_domain( x, colour_range, map_id, map_type, layer_id ) {
-		console.log( "colour domain" );
-		console.log( x );
-		//return x;
-
-		var cd = makeArr(x[0], x[1],6);
-
-		var ledge = {
-  	fill_colour: {
-  		colour: colour_range,
-  		variable: cd,
-  		colourType: ["fill_colour"],
-  		type: ["gradient"],
-  		title: ["test"],
-  		css: [""]
-  	}
-  };
-  md_add_legend( map_id, map_type, layer_id, ledge );
-  }
-
-function makeArr(startValue, stopValue, cardinality) {
-  var arr = [];
-  var currValue = startValue;
-  var step = (stopValue - startValue) / (cardinality - 1);
-  for (var i = 0; i < cardinality; i++) {
-    //arr.push(currValue + (step * i));
-    arr.push(parseFloat((currValue + (step * i)).toFixed(2)));
-  }
-  return arr;
-}
 
 
 
-function add_hexagon_polyline( map_id, map_type, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour) {
+function add_hexagon_polyline( map_id, map_type, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend) {
 
 
   const hexagonLayer = new deck.HexagonLayer({
@@ -89,9 +51,10 @@ function add_hexagon_polyline( map_id, map_type, hexagon_data, layer_id, radius,
         highlightColor: md_hexToRGBA( highlight_colour ),
         onClick: info => md_layer_click( map_id, "hexagon", info ),
         //onHover: md_update_tooltip,
-        getElevationValue: d => md_hexagon_elevation( d, use_weight, true ),
-        getColorValue: d => md_hexagon_colour( d, use_colour, true ),
-        transitions: js_transition || {}
+        getElevationValue: d => md_hexagon_elevation( d, use_weight, true, elevation_function ),
+        getColorValue: d => md_hexagon_colour( d, use_colour, true, colour_function ),
+        transitions: js_transition || {},
+        onSetColorDomain: d => md_colour_domain( d, colour_range, map_id, map_type, layer_id, legend )
   });
 
   if( map_type == "google_map") {
