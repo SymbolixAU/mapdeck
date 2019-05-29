@@ -22,6 +22,9 @@ function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elev
         onSetColorDomain: d => colour_domain( d )
   });
 
+  // given colour_domain(); we can create and update a legend!
+
+
 
   if( map_type == "google_map") {
 	    md_update_overlay( map_id, 'hexagon-'+layer_id, hexagonLayer );

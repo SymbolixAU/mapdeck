@@ -49,7 +49,7 @@ mapdeckHexagonDependency <- function() {
 #'
 #' df <- df[!is.na(df$lng), ]
 #'
-#' mapdeck(style = mapdeck_style("dark"), pitch = 45) %>%
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
 #' add_hexagon(
 #'   data = df
 #'   , lat = "lat"
@@ -60,7 +60,7 @@ mapdeckHexagonDependency <- function() {
 #'
 #' library( sf )
 #' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_hexagon(
 #'   data = sf
 #'   , layer_id = "hex_layer"
@@ -73,7 +73,7 @@ mapdeckHexagonDependency <- function() {
 #' df[10, ]$weight <- 100000
 #' df[1000, ]$colour <- 100000
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45) %>%
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
 #' add_hexagon(
 #'   data = df
 #'   , lat = "lat"
