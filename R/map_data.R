@@ -186,7 +186,7 @@ get_box.mesh3d <- function( data, l ) {
 	yrange <- range(data[["vb"]][2L, ], na.rm = TRUE)
 
 	bbox <- list(
-		c(xrange[1L], yrange[1L], xrange[2L], yrange[2L])
+		c(xrange[1L], yrange[1L]), c(xrange[2L], yrange[2L])
 	)
 	return( jsonify::to_json( bbox ) )
 }
