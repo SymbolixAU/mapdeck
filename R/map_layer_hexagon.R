@@ -121,6 +121,7 @@ add_hexagon <- function(
 	colour = NULL,
 	colour_function = c("total", "average"),
 	legend = FALSE,
+	legend_options = NULL,
 	elevation_scale = 1,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -141,6 +142,7 @@ add_hexagon <- function(
 	elevation_function <- match.arg( elevation_function )
 
 	legend <- force( legend )
+	legend <- aggregation_legend( legend, legend_options )
 
 	use_weight <- FALSE
 	if(!is.null(elevation)) use_weight <- TRUE

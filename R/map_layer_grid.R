@@ -96,6 +96,7 @@ add_grid <- function(
 	elevation_scale = 1,
 	colour_range = NULL,
 	legend = FALSE,
+	legend_options = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	layer_id = NULL,
@@ -116,6 +117,7 @@ add_grid <- function(
 	elevation_function <- match.arg( elevation_function )
 
 	legend <- force( legend )
+	legend <- aggregation_legend( legend, legend_options )
 
 	use_weight <- FALSE
 	if(!is.null(elevation)) use_weight <- TRUE

@@ -8,9 +8,10 @@ add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
   elevation = NULL, elevation_function = c("total", "average"),
   colour = NULL, colour_function = c("total", "average"),
-  legend = FALSE, elevation_scale = 1, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", colour_range = NULL,
-  update_view = TRUE, focus_layer = FALSE, transitions = NULL)
+  legend = FALSE, legend_options = NULL, elevation_scale = 1,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
+  transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -43,6 +44,8 @@ If NULL, the number of coordinates is used.}
 \item{colour_function}{either "total" or "average"}
 
 \item{legend}{logical indicating if a legend should be displayed}
+
+\item{legend_options}{A list of options for controlling the legend.}
 
 \item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
 

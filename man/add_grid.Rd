@@ -9,9 +9,10 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   elevation = NULL, elevation_function = c("total", "average"),
   colour = NULL, colour_function = c("total", "average"),
   elevation_scale = 1, colour_range = NULL, legend = FALSE,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  layer_id = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL)
+  legend_options = NULL, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF", layer_id = NULL,
+  update_view = TRUE, focus_layer = FALSE, digits = 6,
+  transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -47,6 +48,8 @@ If NULL, the number of coordinates is used.}
 
 \item{legend}{either a logical indiciating if the legend(s) should be displayed, or
 a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 

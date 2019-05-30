@@ -1,7 +1,10 @@
 
 //https://stackoverflow.com/a/40475362/5977215
 function md_colour_domain( x, colour_range, map_id, map_type, layer_id, legend  ) {
-	if( legend ) {
+	if( legend.legend ) {
+
+		console.log( x );
+
 		var cd = md_make_legend_range(x[0], x[1], colour_range.length );
 
 		var ledge = {
@@ -10,8 +13,8 @@ function md_colour_domain( x, colour_range, map_id, map_type, layer_id, legend  
   		variable: cd,
   		colourType: ["fill_colour"],
   		type: ["gradient"],
-  		title: [""],        // TODO: the 'colour' argument, or if not supplied simply 'value' ?
-  		css: [""]
+  		title: legend.title,        // TODO: the 'colour' argument, or if not supplied simply 'value' ?
+  		css: legend.css
   	}
   };
   md_add_legend( map_id, map_type, layer_id, ledge );
@@ -24,8 +27,8 @@ function md_make_legend_range(startValue, stopValue, cardinality) {
   var currValue = startValue;
   var step = (stopValue - startValue) / (cardinality - 1);
   for (var i = 0; i < cardinality; i++) {
-    //arr.push(currValue + (step * i));
-    arr.push(parseFloat((currValue + (step * i)).toFixed(0)));
+    arr.push(currValue + (step * i));
+    //arr.push(parseFloat((currValue + (step * i)).toFixed(0)));
   }
   return arr;
 }
