@@ -31,7 +31,7 @@ mapdeckHexagonDependency <- function() {
 #' @param colour column containing numeric values to colour by.
 #' The colour is calculated by the sum of values within the \code{radius}.
 #' If NULL, the number of coordinates is used.
-#' @param colour_function either "total" or "average"
+#' @param colour_function
 #' @param legend logical indicating if a legend should be displayed
 #'
 #' @inheritSection add_polygon data
@@ -96,7 +96,7 @@ mapdeckHexagonDependency <- function() {
 #' 	, layer_id = "hex_layer"
 #' 	, elevation_scale = 100
 #' 	, legend= T
-#' 	, colour_function = "average"
+#' 	, colour_function = "mean"
 #' 	, colour = "val"
 #' )
 #'
@@ -119,7 +119,7 @@ add_hexagon <- function(
 	elevation = NULL,
 	elevation_function = c("total", "average"),
 	colour = NULL,
-	colour_function = c("total", "average"),
+	colour_function = c("sum","mean","min","max"),
 	legend = FALSE,
 	legend_options = NULL,
 	elevation_scale = 1,
@@ -139,6 +139,8 @@ add_hexagon <- function(
 	l[["colour"]] <- force( colour )
 
 	colour_function <- match.arg( colour_function )
+	colour_function <- toupper( colour_function )
+
 	elevation_function <- match.arg( elevation_function )
 
 	legend <- force( legend )

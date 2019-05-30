@@ -7,7 +7,7 @@
 add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
   elevation = NULL, elevation_function = c("total", "average"),
-  colour = NULL, colour_function = c("total", "average"),
+  colour = NULL, colour_function = c("sum", "mean", "min", "max"),
   legend = FALSE, legend_options = NULL, elevation_scale = 1,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
@@ -40,8 +40,6 @@ within the \code{radius}. If NULL, the number of coordinates is used.}
 \item{colour}{column containing numeric values to colour by.
 The colour is calculated by the sum of values within the \code{radius}.
 If NULL, the number of coordinates is used.}
-
-\item{colour_function}{either "total" or "average"}
 
 \item{legend}{logical indicating if a legend should be displayed}
 
@@ -138,7 +136,7 @@ add_hexagon(
 	, layer_id = "hex_layer"
 	, elevation_scale = 100
 	, legend= T
-	, colour_function = "average"
+	, colour_function = "mean"
 	, colour = "val"
 )
 

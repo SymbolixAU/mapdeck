@@ -40,8 +40,6 @@ within the \code{radius}. If NULL, the number of coordinates is used.}
 The colour is calculated by the sum of values within the \code{radius}.
 If NULL, the number of coordinates is used.}
 
-\item{colour_function}{either "total" or "average"}
-
 \item{elevation_scale}{cell elevation multiplier. Default 1}
 
 \item{colour_range}{vector of 6 hex colours}
