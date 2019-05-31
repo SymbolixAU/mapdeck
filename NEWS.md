@@ -1,5 +1,6 @@
 # mapdeck 0.3
 
+* `add_hexagon` now supports GPU aggregation for colour and elevation
 * `radius_min_pixels` and `radius_max_pixels` arguemnts for scatterplots
 * `add_mesh()` for quadmesh objects
 * Google Map supported
