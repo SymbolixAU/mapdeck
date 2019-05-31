@@ -6,9 +6,9 @@
 \usage{
 add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, cell_size = 1000, extruded = TRUE,
-  elevation = NULL, elevation_function = c("total", "average"),
-  colour = NULL, colour_function = c("total", "average"),
-  elevation_scale = 1, colour_range = NULL, legend = FALSE,
+  elevation = NULL, elevation_function = c("sum", "mean", "min",
+  "max"), colour = NULL, colour_function = c("sum", "mean", "min",
+  "max"), elevation_scale = 1, colour_range = NULL, legend = FALSE,
   legend_options = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", layer_id = NULL,
   update_view = TRUE, focus_layer = FALSE, digits = 6,
@@ -30,21 +30,18 @@ Web Mercator Projection}
 
 \item{extruded}{logical indicating if cells are elevated or not. Default TRUE}
 
-\item{elevation}{column containing the elevation of the value. This is used to calculate the
-height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
-within the \code{radius}. If NULL, the number of coordinates is used.}
+\item{elevation}{the height the polygon extrudes from the map. Only available if neither
+\code{stroke_colour} or \code{stroke_width} are supplied. Default 0}
 
 \item{elevation_function}{one of 'min', 'mean', 'max', 'sum'.
 IF supplied it specifies how the elevation values are calcualted. Defaults to sum.}
 
-\item{colour}{column containing numeric values to colour by.
-The colour is calculated by the sum of values within the \code{radius}.
-If NULL, the number of coordinates is used.}
+\item{colour}{column containing numeric values to colour by.}
 
 \item{colour_function}{one of 'min', 'mean', 'max', 'sum'.
 If supplied it specifies how the colour values are calculated. Defaults to sum.}
 
-\item{elevation_scale}{cell elevation multiplier. Default 1}
+\item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
 
 \item{colour_range}{vector of 6 hex colours}
 

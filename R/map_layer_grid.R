@@ -24,13 +24,6 @@ mapdeckGridDependency <- function() {
 #' @param colour_range vector of 6 hex colours
 #' @param cell_size size of each cell in meters. Default 1000
 #' @param extruded logical indicating if cells are elevated or not. Default TRUE
-#' @param elevation_scale cell elevation multiplier. Default 1
-#' @param elevation column containing the elevation of the value. This is used to calculate the
-#' height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
-#' within the \code{radius}. If NULL, the number of coordinates is used.
-#' @param colour column containing numeric values to colour by.
-#' The colour is calculated by the sum of values within the \code{radius}.
-#' If NULL, the number of coordinates is used.
 #'
 #' @inheritSection add_polygon data
 #'
@@ -90,9 +83,9 @@ add_grid <- function(
 	cell_size = 1000,
 	extruded = TRUE,
 	elevation = NULL,
-	elevation_function = c("total", "average"),
+	elevation_function =  c("sum","mean","min","max"),
 	colour = NULL,
-	colour_function = c("total", "average"),
+	colour_function =  c("sum","mean","min","max"),
 	elevation_scale = 1,
 	colour_range = NULL,
 	legend = FALSE,
@@ -114,7 +107,10 @@ add_grid <- function(
 	l[["colour"]] <- force( colour )
 
 	colour_function <- match.arg( colour_function )
+	colour_function <- toupper( colour_function )
+
 	elevation_function <- match.arg( elevation_function )
+	elevation_function <- toupper( elevation_function )
 
 	legend <- force( legend )
 	legend <- aggregation_legend( legend, legend_options )

@@ -10,11 +10,19 @@ function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extrude
     colorRange: md_to_rgba( colour_range ),
     elevationScale: elevation_scale,
     getPosition: d => md_get_point_coordinates( d ),
+
+    //getElevationValue: d => md_grid_elevation( d, use_weight, false, elevation_function ),
+    //getColorValue: d => md_grid_colour( d, use_colour, false, colour_function ),
+
+    getColorWeight: d => d.properties.colour,
+    colorAggregation: colour_function,
+
+    getElevationWeight: d => d.properties.elevation,
+    elevationAggregation: elevation_function,
+
     onClick: info => md_layer_click( map_id, "grid", info ),
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
-    getElevationValue: d => md_grid_elevation( d, use_weight, false, elevation_function ),
-    getColorValue: d => md_grid_colour( d, use_colour, false, colour_function ),
     transitions: js_transition || {},
     onSetColorDomain: d => md_colour_domain( d, colour_range, map_id, map_type, layer_id, legend )
   });
