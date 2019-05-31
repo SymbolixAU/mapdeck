@@ -109,12 +109,12 @@ rcpp_polygon_polyline <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_polygon_polyline`, data, params, geometry_columns)
 }
 
-rcpp_scatterplot_geojson <- function(data, params, geometry_columns) {
-    .Call(`_mapdeck_rcpp_scatterplot_geojson`, data, params, geometry_columns)
+rcpp_scatterplot_geojson <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_scatterplot_geojson`, data, params, geometry_columns, digits)
 }
 
-rcpp_scatterplot_geojson_df <- function(data, params, geometry_columns) {
-    .Call(`_mapdeck_rcpp_scatterplot_geojson_df`, data, params, geometry_columns)
+rcpp_scatterplot_geojson_df <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_scatterplot_geojson_df`, data, params, geometry_columns, digits)
 }
 
 rcpp_scatterplot_polyline <- function(data, params, geometry_columns) {

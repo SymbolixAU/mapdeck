@@ -18,8 +18,8 @@ Rcpp::List scatterplot_defaults(int n) {
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_scatterplot_geojson( Rcpp::DataFrame data,
-                                     Rcpp::List params, std::string geometry_columns) {
+Rcpp::List rcpp_scatterplot_geojson( Rcpp::DataFrame data, Rcpp::List params,
+                                     std::string geometry_columns, int digits ) {
 
 	int data_rows = data.nrows();
 
@@ -37,14 +37,15 @@ Rcpp::List rcpp_scatterplot_geojson( Rcpp::DataFrame data,
 		data_rows,
 		parameter_exclusions,
 		geometry_columns,
-		true  // jsonify legend
+		true,  // jsonify legend
+		digits
 	);
 }
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_scatterplot_geojson_df( Rcpp::DataFrame data,
-                                     Rcpp::List params, Rcpp::List geometry_columns) {
+Rcpp::List rcpp_scatterplot_geojson_df( Rcpp::DataFrame data, Rcpp::List params,
+                                        Rcpp::List geometry_columns, int digits) {
 
 	int data_rows = data.nrows();
 
@@ -62,13 +63,14 @@ Rcpp::List rcpp_scatterplot_geojson_df( Rcpp::DataFrame data,
 		data_rows,
 		parameter_exclusions,
 		geometry_columns,
-		true  // jsonify legend
+		true,  // jsonify legend
+		digits
 	);
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_scatterplot_polyline( Rcpp::DataFrame data,
-                                     Rcpp::List params, Rcpp::StringVector geometry_columns) {
+Rcpp::List rcpp_scatterplot_polyline( Rcpp::DataFrame data, Rcpp::List params,
+                                      Rcpp::StringVector geometry_columns) {
 
 	int data_rows = data.nrows();
 
