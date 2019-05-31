@@ -1,8 +1,6 @@
 
 function add_column_geo( map_id, map_type, column_data, layer_id, auto_highlight, highlight_colour, radius, elevation_scale, disk_resolution, angle, coverage, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
 
-  console.log( column_data );
-
   const columnLayer = new deck.ColumnLayer({
         map_id: map_id,
         id: 'column-'+layer_id,

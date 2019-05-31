@@ -6,8 +6,10 @@
 \usage{
 add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, cell_size = 1000, extruded = TRUE,
-  elevation = NULL, elevation_scale = 1, colour = NULL,
-  colour_range = NULL, auto_highlight = FALSE,
+  elevation = NULL, elevation_function = c("total", "average"),
+  colour = NULL, colour_function = c("total", "average"),
+  elevation_scale = 1, colour_range = NULL, legend = FALSE,
+  legend_options = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", layer_id = NULL,
   update_view = TRUE, focus_layer = FALSE, digits = 6,
   transitions = NULL)
@@ -32,13 +34,24 @@ Web Mercator Projection}
 height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
 within the \code{radius}. If NULL, the number of coordinates is used.}
 
-\item{elevation_scale}{cell elevation multiplier. Default 1}
+\item{elevation_function}{one of 'min', 'mean', 'max', 'sum'.
+IF supplied it specifies how the elevation values are calcualted. Defaults to sum.}
 
 \item{colour}{column containing numeric values to colour by.
 The colour is calculated by the sum of values within the \code{radius}.
 If NULL, the number of coordinates is used.}
 
+\item{colour_function}{one of 'min', 'mean', 'max', 'sum'.
+If supplied it specifies how the colour values are calculated. Defaults to sum.}
+
+\item{elevation_scale}{cell elevation multiplier. Default 1}
+
 \item{colour_range}{vector of 6 hex colours}
+
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
+
+\item{legend_options}{A list of options for controlling the legend.}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
@@ -75,6 +88,7 @@ where \code{"your_column"} is the name of the column you're activating. See \cod
 \donttest{
 ## You need a valid access token from Mapbox
 key <- 'abc'
+set_token( key )
 
 df <- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
@@ -83,7 +97,7 @@ df <- read.csv(paste0(
 
 df <- df[ !is.na(df$lng ), ]
 
-mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_grid(
   data = df
   , lat = "lat"
