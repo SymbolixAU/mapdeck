@@ -6,9 +6,9 @@
 \usage{
 add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
-  elevation = NULL, elevation_function = c("total", "average"),
-  colour = NULL, colour_function = c("sum", "mean", "min", "max"),
-  legend = FALSE, legend_options = NULL, elevation_scale = 1,
+  elevation = NULL, elevation_function = c("sum", "mean", "min",
+  "max"), colour = NULL, colour_function = c("sum", "mean", "min",
+  "max"), legend = FALSE, legend_options = NULL, elevation_scale = 1,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
   transitions = NULL)
@@ -31,15 +31,15 @@ to conflict and not plot correctly}
 
 \item{radius}{in metres. Default 1000}
 
-\item{elevation}{column containing the elevation of the value. This is used to calculate the
-height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
-within the \code{radius}. If NULL, the number of coordinates is used.}
+\item{elevation}{column containing the elevation of the value.}
 
-\item{elevation_function}{either "total" or "average"}
+\item{elevation_function}{one of 'min', 'mean', 'max', 'sum'.
+IF supplied it specifies how the elevation values are calcualted. Defaults to sum.}
 
-\item{colour}{column containing numeric values to colour by.
-The colour is calculated by the sum of values within the \code{radius}.
-If NULL, the number of coordinates is used.}
+\item{colour}{column containing numeric values to colour by.}
+
+\item{colour_function}{one of 'min', 'mean', 'max', 'sum'.
+If supplied it specifies how the colour values are calculated. Defaults to sum.}
 
 \item{legend}{logical indicating if a legend should be displayed}
 
@@ -109,10 +109,8 @@ add_hexagon(
 )
 
 ## Using elevation and colour
-df$weight <- 1
-df$colour <- 1
-df[10, ]$weight <- 100000
-df[1000, ]$colour <- 100000
+df$colour <- rnorm(nrow(df))
+df$elevation <- rnorm(nrow(df))
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_hexagon(
@@ -123,6 +121,19 @@ add_hexagon(
   , elevation_scale = 100
   , elevation = "weight"
   , colour = "colour"
+)
+
+mapdeck( style = mapdeck_style("dark"), pitch = 45) \%>\%
+add_hexagon(
+  data = df
+  , lat = "lat"
+  , lon = "lng"
+  , layer_id = "hex_layer"
+  , elevation_scale = 100
+  , elevation = "weight"
+  , elevation_function = "mean"
+  , colour = "colour"
+  , colour_function = "mean"
 )
 
 ## with a legend

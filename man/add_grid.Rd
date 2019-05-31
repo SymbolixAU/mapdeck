@@ -34,11 +34,15 @@ Web Mercator Projection}
 height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
 within the \code{radius}. If NULL, the number of coordinates is used.}
 
-\item{elevation_function}{either "total" or "average"}
+\item{elevation_function}{one of 'min', 'mean', 'max', 'sum'.
+IF supplied it specifies how the elevation values are calcualted. Defaults to sum.}
 
 \item{colour}{column containing numeric values to colour by.
 The colour is calculated by the sum of values within the \code{radius}.
 If NULL, the number of coordinates is used.}
+
+\item{colour_function}{one of 'min', 'mean', 'max', 'sum'.
+If supplied it specifies how the colour values are calculated. Defaults to sum.}
 
 \item{elevation_scale}{cell elevation multiplier. Default 1}
 
