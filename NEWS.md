@@ -1,5 +1,6 @@
 # mapdeck 0.3
 
+* Fix for legends in GeoJSON layer - [issue #190](https://github.com/SymbolixAU/mapdeck/issues/190)
 * `add_hexagon` now supports GPU aggregation for colour and elevation
 * `radius_min_pixels` and `radius_max_pixels` arguemnts for scatterplots
 * `add_mesh()` for quadmesh objects
