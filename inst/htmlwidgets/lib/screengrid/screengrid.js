@@ -4,6 +4,7 @@ function add_screengrid_geo( map_id, map_type, screengrid_data, layer_id, opacit
     map_id: map_id,
     id: 'screengrid-'+layer_id,
     data: screengrid_data,
+    pickable: true,
     opacity: opacity,
     cellSizePixels: cell_size,
     colorRange: md_to_rgba( colour_range ),
@@ -11,8 +12,7 @@ function add_screengrid_geo( map_id, map_type, screengrid_data, layer_id, opacit
     getWeight: d => d.properties.weight,
     aggregation: aggregation,
     onClick: info => md_layer_click( map_id, "screengrid", info ),
-    onHover: md_update_tooltip,
-    pickable: true
+    onHover: md_update_tooltip
   });
 
   if( map_type == "google_map") {

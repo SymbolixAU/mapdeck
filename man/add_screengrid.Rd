@@ -73,7 +73,7 @@ df$weight <- sample(1:10, size = nrow(df), replace = T)
 
 mapdeck( style = mapdeck_style('dark'), pitch = 45 ) \%>\%
 add_screengrid(
-  data = df
+  data = df[1:1000, ]
   , lat = "lat"
   , lon = "lng"
   , weight = "weight",

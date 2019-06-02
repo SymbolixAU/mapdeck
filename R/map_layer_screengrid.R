@@ -45,7 +45,7 @@ mapdeckScreengridDependency <- function() {
 #'
 #' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_screengrid(
-#'   data = df
+#'   data = df[1:1000, ]
 #'   , lat = "lat"
 #'   , lon = "lng"
 #'   , weight = "weight",
