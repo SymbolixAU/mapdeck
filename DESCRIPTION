@@ -43,4 +43,4 @@ LinkingTo:
     jsonify,
     rapidjsonr,
     Rcpp,
-    spatialwidget (>= 0.2.1)
+    spatialwidget (>= 0.2.1003)
