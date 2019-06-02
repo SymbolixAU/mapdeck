@@ -18,6 +18,8 @@ mapdeckPathDependency <- function() {
 #'
 #' @inheritParams add_polygon
 #' @param stroke_width width of the stroke in meters. Default 1.
+#' @param billboard logical indicating if the path always faces the camera (TRUE) or
+#' if it always faces up (FALSE)
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
@@ -45,10 +47,10 @@ mapdeckPathDependency <- function() {
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
 #' mapdeck(
-#'   token = key
-#'   , style = 'mapbox://styles/mapbox/dark-v9'
+#'   style = 'mapbox://styles/mapbox/dark-v9'
 #'   , location = c(145, -37.8)
 #'   , zoom = 10) %>%
 #'   add_path(
@@ -74,6 +76,7 @@ add_path <- function(
 	stroke_width = NULL,
 	stroke_opacity = NULL,
 	tooltip = NULL,
+	billboard = FALSE,
 	layer_id = NULL,
 	id = NULL,
 	auto_highlight = FALSE,
@@ -144,7 +147,7 @@ add_path <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions
+		js_transitions, billboard
 		)
 }
 
