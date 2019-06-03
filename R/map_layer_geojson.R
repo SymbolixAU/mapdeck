@@ -203,6 +203,7 @@ add_geojson <- function(
 	na_colour = "#808080FF",
 	update_view = TRUE,
 	focus_layer = FALSE,
+	digits = 6,
 	transitions = NULL
 	) {
 
@@ -259,7 +260,7 @@ add_geojson <- function(
 	l[["data_type"]] <- NULL
 
 	if( tp == "sf" ) {
-	  shape <- rcpp_geojson_geojson( data, l, "geometry" )
+	  shape <- rcpp_geojson_geojson( data, l, "geometry", digits)
 	  jsfunc <- "add_geojson_sf"
 	} else if ( tp == "geojson" ) {
 		## leave as is?

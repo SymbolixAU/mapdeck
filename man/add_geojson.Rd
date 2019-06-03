@@ -12,7 +12,7 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
   auto_highlight = FALSE, tooltip = NULL,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
   na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL)
+  digits = 6, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}

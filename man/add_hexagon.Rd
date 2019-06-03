@@ -11,7 +11,7 @@ add_hexagon(map, data = get_map_data(map), polyline = NULL,
   "max"), legend = FALSE, legend_options = NULL, elevation_scale = 1,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL)
+  digits = 6, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}

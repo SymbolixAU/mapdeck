@@ -104,7 +104,7 @@ mapdeckHexagonDependency <- function() {
 #' 	, lon = "lng"
 #' 	, layer_id = "hex_layer"
 #' 	, elevation_scale = 100
-#' 	, legend= T
+#' 	, legend = T
 #' 	, colour_function = "mean"
 #' 	, colour = "val"
 #' )
@@ -137,6 +137,7 @@ add_hexagon <- function(
 	colour_range = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
+	digits = 6,
 	transitions = NULL
 ) {
 
@@ -197,10 +198,10 @@ add_hexagon <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_hexagon_geojson( data, l, geometry_column )
+		shape <- rcpp_hexagon_geojson( data, l, geometry_column, digits )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_hexagon_geojson_df( data, l, geometry_column )
+		shape <- rcpp_hexagon_geojson_df( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
 		shape <- rcpp_hexagon_polyline( data, l, geometry_column )

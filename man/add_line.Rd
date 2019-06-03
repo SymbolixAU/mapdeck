@@ -10,7 +10,7 @@ add_line(map, data = get_map_data(map), layer_id = NULL, origin,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
   na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
   legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL)
+  digits = 6, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
