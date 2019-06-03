@@ -98,7 +98,8 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params, Rcpp::StringVector vertices ) {
+Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params,
+                              Rcpp::StringVector vertices, int digits ) {
 
 	Rcpp::DataFrame data = mesh_to_sf( mesh, vertices );
 
@@ -125,7 +126,8 @@ Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params, Rcpp::StringVe
 		data_rows,
 		parameter_exclusions,
 		geometry_columns,
-		true  // jsonify legend
+		true,  // jsonify legend
+		digits
 	);
 
 }

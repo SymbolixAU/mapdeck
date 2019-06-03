@@ -6,11 +6,11 @@
 \usage{
 add_path(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
-  tooltip = NULL, layer_id = NULL, id = NULL,
+  tooltip = NULL, billboard = FALSE, layer_id = NULL, id = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, transitions = NULL)
+  focus_layer = FALSE, digits = 6, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -26,6 +26,9 @@ Web Mercator Projection}
 \item{stroke_width}{width of the stroke in meters. Default 1.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
+
+\item{billboard}{logical indicating if the path always faces the camera (TRUE) or
+if it always faces up (FALSE)}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
@@ -133,10 +136,10 @@ you are clicking on
 
 ## You need a valid access token from Mapbox
 key <- 'abc'
+set_token( key )
 
 mapdeck(
-  token = key
-  , style = 'mapbox://styles/mapbox/dark-v9'
+  style = 'mapbox://styles/mapbox/dark-v9'
   , location = c(145, -37.8)
   , zoom = 10) \%>\%
   add_path(

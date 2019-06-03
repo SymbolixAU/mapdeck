@@ -43,7 +43,7 @@ function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, au
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition ) {
+function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
   const geojsonLayer = new deck.GeoJsonLayer({
     map_id: map_id,
@@ -77,6 +77,11 @@ function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_
 	} else {
     md_update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
 	}
+
+	if (legend !== false) {
+	  md_add_legend(map_id, map_type, layer_id, legend);
+	}
+
 }
 
 function geojson_radius( g ) {

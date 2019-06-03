@@ -53,6 +53,7 @@ add_mesh <- function(
 	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
+	digits = 6,
 	transitions = NULL
 ) {
 
@@ -127,7 +128,7 @@ add_mesh <- function(
 	if ( tp == "mesh" ) {
 		# geometry_column <- c( "geometry" )
 		geometry_column <- c( vertex, index )
-		shape <- rcpp_mesh_geojson( data, l, geometry_column )
+		shape <- rcpp_mesh_geojson( data, l, geometry_column, digits )
 	}
 
 	#	geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'

@@ -86,7 +86,8 @@ add_screengrid <- function(
 	cell_size = 50,
 	layer_id = NULL,
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	digits = 6
 ) {
 	l <- list()
 	l[["polyline"]] <- force( polyline )
@@ -137,10 +138,10 @@ add_screengrid <- function(
 	jsfunc <- "add_screengrid_geo"
 	if( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_screengrid_geojson( data, l, geometry_column )
+		shape <- rcpp_screengrid_geojson( data, l, geometry_column, digits )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_screengrid_geojson_df( data, l, geometry_column )
+		shape <- rcpp_screengrid_geojson_df( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
 		shape <- rcpp_screengrid_polyline( data, l, geometry_column )

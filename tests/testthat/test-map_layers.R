@@ -11,6 +11,7 @@ test_that("layerId includes all layers", {
 		, "grid"
 		, "hexagon"
 		, "line"
+		, "mesh"
 		, "path"
 		, "pointcloud"
 		, "polygon"

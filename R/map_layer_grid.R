@@ -64,6 +64,32 @@ mapdeckGridDependency <- function() {
 #'   , auto_highlight = TRUE
 #' )
 #'
+#' ## using colour and elevation functions, and legends
+#' df$val <- sample(1:10, size = nrow(df), replace = T)
+#'
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
+#' add_grid(
+#' 	data = df
+#' 	, lat = "lat"
+#' 	, lon = "lng"
+#' 	, layer_id = "hex_layer"
+#' 	, elevation_scale = 100
+#' 	, legend = T
+#' 	, colour_function = "mean"
+#' 	, colour = "val"
+#' )
+#'
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
+#' add_grid(
+#' 	data = df
+#' 	, lat = "lat"
+#' 	, lon = "lng"
+#' 	, layer_id = "hex_layer"
+#' 	, elevation_scale = 100
+#' 	, legend = T
+#' 	, elevation_function = "mean"
+#' 	, elevation = "val"
+#' )
 #'
 #' }
 #'
@@ -71,7 +97,7 @@ mapdeckGridDependency <- function() {
 #'
 #' \code{add_grid} supports POINT and MULTIPOINT sf objects
 #'
-#'
+#' @seealso add_hexagon
 #'
 #' @export
 add_grid <- function(

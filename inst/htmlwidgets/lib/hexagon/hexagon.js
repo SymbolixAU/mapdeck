@@ -14,10 +14,10 @@ function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elev
         colorRange: md_to_rgba( colour_range ),
         elevationScale: elevation_scale,
 
-        getColorWeight: d => d.properties.colour,
+        getColorWeight: d => d.properties.colour || 1,
         colorAggregation: colour_function,
 
-        getElevationWeight: d => d.properties.elevation,
+        getElevationWeight: d => d.properties.elevation || 1,
         elevationAggregation: elevation_function,
 
         highlightColor: md_hexToRGBA( highlight_colour ),
@@ -26,6 +26,7 @@ function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elev
         transitions: js_transition || {},
         onSetColorDomain: d => md_colour_domain( d, colour_range, map_id, map_type, layer_id, legend )
   });
+
 
   if( map_type == "google_map") {
 	    md_update_overlay( map_id, 'hexagon-'+layer_id, hexagonLayer );
@@ -53,10 +54,10 @@ function add_hexagon_polyline( map_id, map_type, hexagon_data, layer_id, radius,
         colorRange: md_to_rgba( colour_range ),
         elevationScale: elevation_scale,
 
-        getColorWeight: d => d.colour,
+        getColorWeight: d => d.colour || 1,
         colorAggregation: colour_function,
 
-        getElevationWeight: d => d.elevation,
+        getElevationWeight: d => d.elevation || 1,
         elevationAggregation: elevation_function,
 
         highlightColor: md_hexToRGBA( highlight_colour ),
