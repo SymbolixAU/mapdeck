@@ -75,7 +75,7 @@ mapdeckGridDependency <- function() {
 #' df$val <- sample(1:10, size = nrow(df), replace = T)
 #'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
-#' add_hexagon(
+#' add_grid(
 #' 	data = df
 #' 	, lat = "lat"
 #' 	, lon = "lng"
@@ -87,7 +87,7 @@ mapdeckGridDependency <- function() {
 #' )
 #'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
-#' add_hexagon(
+#' add_grid(
 #' 	data = df
 #' 	, lat = "lat"
 #' 	, lon = "lng"
