@@ -6,9 +6,9 @@
 \usage{
 add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, cell_size = 1000, extruded = TRUE,
-  elevation = NULL, elevation_function = c("total", "average"),
-  colour = NULL, colour_function = c("total", "average"),
-  elevation_scale = 1, colour_range = NULL, legend = FALSE,
+  elevation = NULL, elevation_function = c("sum", "mean", "min",
+  "max"), colour = NULL, colour_function = c("sum", "mean", "min",
+  "max"), elevation_scale = 1, colour_range = NULL, legend = FALSE,
   legend_options = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", layer_id = NULL,
   update_view = TRUE, focus_layer = FALSE, digits = 6,
@@ -121,7 +121,36 @@ add_grid(
   , auto_highlight = TRUE
 )
 
+## using colour and elevation functions, and legends
+df$val <- sample(1:10, size = nrow(df), replace = T)
+
+mapdeck( style = mapdeck_style("dark"), pitch = 45) \%>\%
+add_hexagon(
+	data = df
+	, lat = "lat"
+	, lon = "lng"
+	, layer_id = "hex_layer"
+	, elevation_scale = 100
+	, legend = T
+	, colour_function = "mean"
+	, colour = "val"
+)
+
+mapdeck( style = mapdeck_style("dark"), pitch = 45) \%>\%
+add_hexagon(
+	data = df
+	, lat = "lat"
+	, lon = "lng"
+	, layer_id = "hex_layer"
+	, elevation_scale = 100
+	, legend = T
+	, elevation_function = "mean"
+	, elevation = "val"
+)
 
 }
 
+}
+\seealso{
+add_hexagon
 }

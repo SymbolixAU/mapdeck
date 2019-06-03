@@ -146,7 +146,7 @@ add_hexagon(
 	, lon = "lng"
 	, layer_id = "hex_layer"
 	, elevation_scale = 100
-	, legend= T
+	, legend = T
 	, colour_function = "mean"
 	, colour = "val"
 )

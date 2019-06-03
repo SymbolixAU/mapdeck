@@ -71,6 +71,32 @@ mapdeckGridDependency <- function() {
 #'   , auto_highlight = TRUE
 #' )
 #'
+#' ## using colour and elevation functions, and legends
+#' df$val <- sample(1:10, size = nrow(df), replace = T)
+#'
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
+#' add_hexagon(
+#' 	data = df
+#' 	, lat = "lat"
+#' 	, lon = "lng"
+#' 	, layer_id = "hex_layer"
+#' 	, elevation_scale = 100
+#' 	, legend = T
+#' 	, colour_function = "mean"
+#' 	, colour = "val"
+#' )
+#'
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
+#' add_hexagon(
+#' 	data = df
+#' 	, lat = "lat"
+#' 	, lon = "lng"
+#' 	, layer_id = "hex_layer"
+#' 	, elevation_scale = 100
+#' 	, legend = T
+#' 	, elevation_function = "mean"
+#' 	, elevation = "val"
+#' )
 #'
 #' }
 #'
@@ -78,7 +104,7 @@ mapdeckGridDependency <- function() {
 #'
 #' \code{add_grid} supports POINT and MULTIPOINT sf objects
 #'
-#'
+#' @seealso add_hexagon
 #'
 #' @export
 add_grid <- function(
@@ -90,9 +116,9 @@ add_grid <- function(
 	cell_size = 1000,
 	extruded = TRUE,
 	elevation = NULL,
-	elevation_function = c("total", "average"),
+	elevation_function = c("sum","mean","min","max"),
 	colour = NULL,
-	colour_function = c("total", "average"),
+	colour_function = c("sum","mean","min","max"),
 	elevation_scale = 1,
 	colour_range = NULL,
 	legend = FALSE,
@@ -114,7 +140,10 @@ add_grid <- function(
 	l[["colour"]] <- force( colour )
 
 	colour_function <- match.arg( colour_function )
+	colour_function <- toupper( colour_function )
+
 	elevation_function <- match.arg( elevation_function )
+	elevation_function <- toupper( elevation_function )
 
 	legend <- force( legend )
 	legend <- aggregation_legend( legend, legend_options )
