@@ -131,3 +131,42 @@ Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params,
 	);
 
 }
+
+
+// [[Rcpp::export]]
+Rcpp::StringVector rcpp_mesh_geojson2( Rcpp::List mesh, Rcpp::StringVector vertices ) {
+
+	//Rcpp::DataFrame data = mesh_to_sf( mesh, vertices );
+
+	//return data;
+
+	// can now create a data.frame of the vbt objc, and this new polygons list,
+	// where polygons list is the sf_geometry column
+
+	// int data_rows = data.nrows();
+	//
+	// std::string geometry_columns = "geometry";
+	//
+	// Rcpp::List lst_defaults = mesh_defaults( data_rows );  // initialise with defaults
+	// std::unordered_map< std::string, std::string > mesh_colours = mapdeck::mesh::mesh_colours;
+	// Rcpp::StringVector mesh_legend = mapdeck::mesh::mesh_legend;
+	// Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
+	//
+	// return spatialwidget::api::create_geojson_downcast(
+	// 	data,
+	// 	params,
+	// 	lst_defaults,
+	// 	mesh_colours,
+	// 	mesh_legend,
+	// 	data_rows,
+	// 	parameter_exclusions,
+	// 	geometry_columns,
+	// 	true,  // jsonify legend
+	// 	digits
+	// );
+
+	return spatialwidget::api::create_geojson_mesh(
+		mesh, vertices
+	);
+
+}
