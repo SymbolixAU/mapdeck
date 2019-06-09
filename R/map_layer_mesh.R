@@ -65,7 +65,8 @@ add_mesh <- function(
 	}
 
 	l <- list()
-	fill_colour = "average_z"
+	# fill_colour = "average_z"
+	# fill_colour = "z"
 	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["elevation"]] <- force( elevation )

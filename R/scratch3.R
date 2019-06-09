@@ -1,4 +1,5 @@
 #
+# library(mapdeck)
 # library(quadmesh)
 # set_token(read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
 # x <- readRDS( unzip( "~/Downloads/melbourne_mesh.zip") )
@@ -9,7 +10,8 @@
 # 	)
 #
 #
-#
+# x <- readRDS( unzip("~/Downloads/GEBCO_lowres.zip"))
+# x <- x %>% quadmesh()
 #
 # library(microbenchmark)
 #
