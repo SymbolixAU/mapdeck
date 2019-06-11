@@ -27,8 +27,8 @@ mapdeckArcBrushDependency <- function() {
 #' The Arc Layer renders raised arcs joining pairs of source and target coordinates
 #'
 #' @param map a mapdeck map object
-#' @param data data to be used in the layer. All coordinates are expected to be in
-#' Web Mercator Projection
+#' @param data data to be used in the layer. All coordinates are expected to be
+#' EPSG:4326 (WGS 84) coordinate system
 #' @param layer_id single value specifying an id for the layer. Use this value to
 #' distinguish between shape layers of the same type. Layers with the same id are likely
 #' to conflict and not plot correctly

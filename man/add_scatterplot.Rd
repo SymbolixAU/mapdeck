@@ -18,8 +18,8 @@ add_scatterplot(map, data = get_map_data(map), lon = NULL,
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection}
+\item{data}{data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system}
 
 \item{lon}{column containing longitude values}
 
@@ -123,6 +123,7 @@ This should be a named list, where the names are one of
 \itemize{
   \item{css - a string of valid \code{css} for controlling the appearance of the legend}
   \item{title - a string to use for the title of the legend}
+  \item{digits - number to round the legend values to}
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
@@ -168,6 +169,22 @@ add_scatterplot(
   , layer_id = "scatter_layer"
   , tooltip = "capital"
 )
+
+## using legend options
+mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+add_scatterplot(
+  data = capitals
+  , lat = "lat"
+  , lon = "lon"
+  , radius = 100000
+  , fill_colour = "lon"
+  , stroke_colour = "lat"
+  , layer_id = "scatter_layer"
+  , tooltip = "capital"
+  , legend = T
+  , legend_options = list( digits = 5 )
+)
+
 
 df <- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
