@@ -1,6 +1,14 @@
 # mapdeck 0.3
 
+<<<<<<< HEAD
 * `add_trips()` for adding animated trips to the map
+=======
+* `add_path` gets `billboard` argument so the path always faces the 'camera'
+* Fix for legends in GeoJSON layer - [issue #190](https://github.com/SymbolixAU/mapdeck/issues/190)
+* `add_hexagon` now supports GPU aggregation for colour and elevation
+* `radius_min_pixels` and `radius_max_pixels` arguemnts for scatterplots
+* `add_mesh()` for quadmesh objects
+>>>>>>> master
 * Google Map supported
 * `mapdeck_legend` and `legend_element` for manually creating legends
 * `add_column()` to draw columns (as any polygon shape)

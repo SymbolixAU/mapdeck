@@ -1,5 +1,6 @@
 function add_title(map_id, map_type, layer_id, title_data) {
 
+    // test
     'use strict';
 
   if( !md_div_exists( 'mapTitleContainer'+map_id ) ) {
@@ -93,6 +94,7 @@ function md_placeTitle( map_id, map_type, object, position ) {
     window[map_id + 'mapTitlePositions'].push( title );
 */
 }
+
 
 function md_clear_title_control(control, layer_id) {
 

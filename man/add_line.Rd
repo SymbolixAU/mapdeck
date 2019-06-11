@@ -10,13 +10,13 @@ add_line(map, data = get_map_data(map), layer_id = NULL, origin,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
   na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
   legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL)
+  digits = 6, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection}
+\item{data}{data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
@@ -104,6 +104,7 @@ This should be a named list, where the names are one of
 \itemize{
   \item{css - a string of valid \code{css} for controlling the appearance of the legend}
   \item{title - a string to use for the title of the legend}
+  \item{digits - number to round the legend values to}
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.

@@ -15,8 +15,8 @@ Rcpp::List geojson_defaults(int n) {
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_geojson_geojson( Rcpp::DataFrame data,
-                                 Rcpp::List params, std::string geometry_column ) {
+Rcpp::List rcpp_geojson_geojson( Rcpp::DataFrame data, Rcpp::List params,
+                                 std::string geometry_column, int digits ) {
 
 	int data_rows = data.nrows();
 
@@ -35,7 +35,8 @@ Rcpp::List rcpp_geojson_geojson( Rcpp::DataFrame data,
 		data_rows,
 		parameter_exclusions,
 		geometry_column,
-		true  // jsonify legend
+		true,  // jsonify legend
+		digits
 	);
 }
 

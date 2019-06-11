@@ -105,3 +105,36 @@ legend_colour_type <- function( colour_type ) {
 		, "stroke" = "stroke_colour"
 	)
 }
+
+aggregation_legend <- function( legend, legend_options ) {
+
+	if( is.null( legend_options ) ) {
+		legend_options <- list(
+			css = ""
+			, title = "value"
+			, digits = 2
+		)
+	}
+	if( is.null( legend_options[["css"]] ) ) {
+		legend_options[["css"]] <- ""
+	}
+
+	if( is.null( legend_options[["title"]] ) ) {
+		legend_options[["title"]] <- "value"
+	}
+
+	if( is.null( legend_options[["digits"]] ) ) {
+		legend_optiosn[["digits"]] <- 2
+	}
+
+	legend <- list(
+		legend = legend
+		, css = legend_options[["css"]]
+		, title = legend_options[["title"]]
+		, digits = legend_options[["digits"]]
+	)
+
+	return( legend )
+}
+
+

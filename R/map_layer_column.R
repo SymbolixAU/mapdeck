@@ -16,7 +16,7 @@ mapdeckColumnDependency <- function() {
 #'The ColumnLayer can be used to render a heatmap of vertical cylinders. It renders
 #'a tesselated regular polygon centered at each given position (a "disk"), and extrude it in 3d.
 #'
-#' @inheritParams add_arc
+#' @inheritParams add_polygon
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param polyline column of \code{data} containing the polylines
@@ -84,6 +84,9 @@ add_column <- function(
 	lat = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
+	stroke_colour = NULL,
+	stroke_opacity = NULL,
+	stroke_width = NULL,
 	radius = 1000,
 	elevation = NULL,
 	elevation_scale = 1,
@@ -102,6 +105,7 @@ add_column <- function(
 	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
+	digits = 6,
 	transitions = NULL
 ) {
 
@@ -111,6 +115,9 @@ add_column <- function(
 	l[["lat"]] <- force( lat )
 	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
+	l[["stroke_colour"]] <- force( stroke_colour )
+	l[["stroke_width"]] <- force( stroke_width )
+	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
 	l[["elevation"]] <- force( elevation )
 	l[["tooltip"]] <- force( tooltip )
 	l[["id"]] <- force( id )
@@ -125,6 +132,17 @@ add_column <- function(
 	bbox <- init_bbox()
 	update_view <- force( update_view )
 	focus_layer <- force( focus_layer )
+
+	is_extruded <- TRUE
+	if( !is.null( l[["stroke_width"]] ) | !is.null( l[["stroke_colour"]] ) ) {
+		is_extruded <- FALSE
+		if( !is.null( elevation ) ) {
+			message("stroke provided, ignoring elevation")
+		}
+		if( is.null( l[["stroke_width"]] ) ) {
+			l[["stroke_width"]] <- 1L
+		}
+	}
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -147,10 +165,10 @@ add_column <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_column_geojson( data, l, geometry_column )
+		shape <- rcpp_column_geojson( data, l, geometry_column, digits )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_column_geojson_df( data, l, geometry_column )
+		shape <- rcpp_column_geojson_df( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
 		shape <- rcpp_column_polyline( data, l, geometry_column )
@@ -167,7 +185,7 @@ add_column <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
 		radius, elevation_scale, disk_resolution, angle, coverage, shape[["legend"]], bbox, update_view,
-		focus_layer, js_transitions
+		focus_layer, js_transitions, is_extruded
 	)
 }
 

@@ -18,18 +18,12 @@ mapdeckGridDependency <- function() {
 #' The color and height of the cell is scaled by number of points it contains.
 #'
 #' @inheritParams add_polygon
+#' @inheritParams add_hexagon
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param colour_range vector of 6 hex colours
 #' @param cell_size size of each cell in meters. Default 1000
 #' @param extruded logical indicating if cells are elevated or not. Default TRUE
-#' @param elevation_scale cell elevation multiplier. Default 1
-#' @param elevation column containing the elevation of the value. This is used to calculate the
-#' height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
-#' within the \code{radius}. If NULL, the number of coordinates is used.
-#' @param colour column containing numeric values to colour by.
-#' The colour is calculated by the sum of values within the \code{radius}.
-#' If NULL, the number of coordinates is used.
 #'
 #' @inheritSection add_polygon data
 #'
@@ -37,6 +31,7 @@ mapdeckGridDependency <- function() {
 #' \donttest{
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
 #' df <- read.csv(paste0(
 #' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
@@ -45,7 +40,7 @@ mapdeckGridDependency <- function() {
 #'
 #' df <- df[ !is.na(df$lng ), ]
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_grid(
 #'   data = df
 #'   , lat = "lat"
@@ -69,6 +64,32 @@ mapdeckGridDependency <- function() {
 #'   , auto_highlight = TRUE
 #' )
 #'
+#' ## using colour and elevation functions, and legends
+#' df$val <- sample(1:10, size = nrow(df), replace = T)
+#'
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
+#' add_grid(
+#' 	data = df
+#' 	, lat = "lat"
+#' 	, lon = "lng"
+#' 	, layer_id = "hex_layer"
+#' 	, elevation_scale = 100
+#' 	, legend = T
+#' 	, colour_function = "mean"
+#' 	, colour = "val"
+#' )
+#'
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
+#' add_grid(
+#' 	data = df
+#' 	, lat = "lat"
+#' 	, lon = "lng"
+#' 	, layer_id = "hex_layer"
+#' 	, elevation_scale = 100
+#' 	, legend = T
+#' 	, elevation_function = "mean"
+#' 	, elevation = "val"
+#' )
 #'
 #' }
 #'
@@ -76,7 +97,7 @@ mapdeckGridDependency <- function() {
 #'
 #' \code{add_grid} supports POINT and MULTIPOINT sf objects
 #'
-#'
+#' @seealso add_hexagon
 #'
 #' @export
 add_grid <- function(
@@ -88,9 +109,13 @@ add_grid <- function(
 	cell_size = 1000,
 	extruded = TRUE,
 	elevation = NULL,
-	elevation_scale = 1,
+	elevation_function =  c("sum","mean","min","max"),
 	colour = NULL,
+	colour_function =  c("sum","mean","min","max"),
+	elevation_scale = 1,
 	colour_range = NULL,
+	legend = FALSE,
+	legend_options = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
 	layer_id = NULL,
@@ -106,6 +131,15 @@ add_grid <- function(
 	l[["polyline"]] <- force( polyline )
 	l[["elevation"]] <- force( elevation )
 	l[["colour"]] <- force( colour )
+
+	colour_function <- match.arg( colour_function )
+	colour_function <- toupper( colour_function )
+
+	elevation_function <- match.arg( elevation_function )
+	elevation_function <- toupper( elevation_function )
+
+	legend <- force( legend )
+	legend <- aggregation_legend( legend, legend_options )
 
 	use_weight <- FALSE
 	if(!is.null(elevation)) use_weight <- TRUE
@@ -170,7 +204,7 @@ add_grid <- function(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, cell_size,
 		jsonify::to_json(extruded, unbox = TRUE), elevation_scale,
 		colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer,
-		js_transitions, use_weight, use_colour
+		js_transitions, use_weight, use_colour, elevation_function, colour_function, legend
 		)
 }
 

@@ -5,19 +5,21 @@
 \title{Add Scatterplot}
 \usage{
 add_scatterplot(map, data = get_map_data(map), lon = NULL,
-  lat = NULL, polyline = NULL, radius = NULL, fill_colour = NULL,
-  fill_opacity = NULL, stroke_colour = NULL, stroke_width = NULL,
-  stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", layer_id = NULL, id = NULL,
-  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, legend_format = NULL, update_view = TRUE,
+  lat = NULL, polyline = NULL, radius = NULL,
+  radius_min_pixels = 1, radius_max_pixels = NULL,
+  fill_colour = NULL, fill_opacity = NULL, stroke_colour = NULL,
+  stroke_width = NULL, stroke_opacity = NULL, tooltip = NULL,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  layer_id = NULL, id = NULL, palette = "viridis",
+  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
+  legend_format = NULL, digits = 6, update_view = TRUE,
   focus_layer = FALSE, transitions = NULL, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection}
+\item{data}{data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system}
 
 \item{lon}{column containing longitude values}
 
@@ -26,6 +28,13 @@ Web Mercator Projection}
 \item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{radius}{in metres. Default 1}
+
+\item{radius_min_pixels}{the minimum radius in pixels. Can prevent circle from
+getting too small when zoomed out
+small for the given zoom level}
+
+\item{radius_max_pixels}{the maximum radius in pixels. Can prevent the circle from
+getting too big when zoomed in}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
 
@@ -114,6 +123,7 @@ This should be a named list, where the names are one of
 \itemize{
   \item{css - a string of valid \code{css} for controlling the appearance of the legend}
   \item{title - a string to use for the title of the legend}
+  \item{digits - number to round the legend values to}
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
@@ -159,6 +169,22 @@ add_scatterplot(
   , layer_id = "scatter_layer"
   , tooltip = "capital"
 )
+
+## using legend options
+mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+add_scatterplot(
+  data = capitals
+  , lat = "lat"
+  , lon = "lon"
+  , radius = 100000
+  , fill_colour = "lon"
+  , stroke_colour = "lat"
+  , layer_id = "scatter_layer"
+  , tooltip = "capital"
+  , legend = T
+  , legend_options = list( digits = 5 )
+)
+
 
 df <- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',

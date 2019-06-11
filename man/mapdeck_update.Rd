@@ -14,8 +14,8 @@ mapdeck_update(map_id, session = shiny::getDefaultReactiveDomain(),
 \item{session}{the Shiny session object to which the map belongs; usually the
 default value will suffice.}
 
-\item{data}{data to be used in the map. All coordinates are expected to be in
-Web Mercator Projection}
+\item{data}{data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system}
 
 \item{deferUntilFlush}{indicates whether actions performed against this
 instance should be carried out right away, or whether they should be held until

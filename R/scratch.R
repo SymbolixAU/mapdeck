@@ -2,8 +2,8 @@
 #
 # library(gpxsf)
 # library(sf) ## for print methods of sf objects
-# gpx <- system.file("gpx/city_trail.gpx", package = "gpxsf")
-# sf <- gpxsf::gpx_sf( gpx, time = "counter" )
+# gpx <- system.file("gpx/city_trail.gpx", package = "gpx")
+# sf <- gpx::gpx_sf( gpx, time = "counter" )
 #
 # library(mapdeck)
 #
@@ -17,7 +17,7 @@
 # 	add_trips(
 # 		data = sf
 # 		, trail_length = 2000
-# 		, animation_speed = 200
+# 		, animation_speed = 50
 # 		, stroke_colour = "#FFFFFF"
 # 	)
 

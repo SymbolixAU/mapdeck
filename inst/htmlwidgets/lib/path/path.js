@@ -1,7 +1,7 @@
 
 
 function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour,
-legend, bbox, update_view, focus_layer, js_transition ) {
+legend, bbox, update_view, focus_layer, js_transition, billboard ) {
 
   const pathLayer = new PathLayer({
     map_id: map_id,
@@ -11,6 +11,7 @@ legend, bbox, update_view, focus_layer, js_transition ) {
     widthScale: 1,
     widthMinPixels: 1,
     rounded: true,
+    billboard: billboard,
     getPath: d => md_get_line_coordinates( d ),
     getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
     getWidth: d => d.properties.stroke_width,
@@ -33,8 +34,7 @@ legend, bbox, update_view, focus_layer, js_transition ) {
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour,
-legend, bbox, update_view, focus_layer, js_transition ) {
+function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard ) {
 
   const pathLayer = new PathLayer({
     map_id: map_id,
@@ -44,6 +44,7 @@ legend, bbox, update_view, focus_layer, js_transition ) {
     widthScale: 1,
     widthMinPixels: 1,
     rounded: true,
+    billboard: billboard,
     getPath: d => md_decode_polyline( d.polyline ),  // needs to be one row per polyline
     getColor: d => md_hexToRGBA( d.stroke_colour ),
     getWidth: d => d.stroke_width,

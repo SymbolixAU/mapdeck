@@ -11,13 +11,13 @@ add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
   light_settings = list(), layer_id = NULL, id = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, transitions = NULL)
+  focus_layer = FALSE, digits = 6, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection}
+\item{data}{data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system}
 
 \item{lon}{column containing longitude values}
 
@@ -112,6 +112,7 @@ This should be a named list, where the names are one of
 \itemize{
   \item{css - a string of valid \code{css} for controlling the appearance of the legend}
   \item{title - a string to use for the title of the legend}
+  \item{digits - number to round the legend values to}
 }
 
 If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.
@@ -144,11 +145,12 @@ you are clicking on
 \donttest{
 ## You need a valid access token from Mapbox
 key <- 'abc'
+set_token( key )
 
 df <- capitals
 df$z <- sample(10000:10000000, size = nrow(df))
 
-mapdeck(token = key, style = mapdeck_style("dark")) \%>\%
+mapdeck(style = mapdeck_style("dark")) \%>\%
 add_pointcloud(
   data = df
   , lon = 'lon'

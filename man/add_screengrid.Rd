@@ -5,15 +5,16 @@
 \title{Add Screengrid}
 \usage{
 add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, weight = NULL, colour_range = NULL,
-  opacity = 0.8, cell_size = 50, layer_id = NULL,
-  update_view = TRUE, focus_layer = FALSE)
+  polyline = NULL, weight = NULL, aggregation = c("sum", "mean",
+  "min", "max"), colour_range = NULL, opacity = 0.8, cell_size = 50,
+  layer_id = NULL, update_view = TRUE, focus_layer = FALSE,
+  digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection}
+\item{data}{data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system}
 
 \item{lon}{column containing longitude values}
 
@@ -22,6 +23,9 @@ Web Mercator Projection}
 \item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{weight}{the weight of each value. Default 1}
+
+\item{aggregation}{one of 'min', 'mean', 'max', 'sum'.
+If supplied it specifies how the weights used.}
 
 \item{colour_range}{vector of 6 hex colours}
 
@@ -70,7 +74,7 @@ df$weight <- sample(1:10, size = nrow(df), replace = T)
 
 mapdeck( style = mapdeck_style('dark'), pitch = 45 ) \%>\%
 add_screengrid(
-  data = df
+  data = df[1:1000, ]
   , lat = "lat"
   , lon = "lng"
   , weight = "weight",
