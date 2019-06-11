@@ -90,6 +90,7 @@ mapdeckArcBrushDependency <- function() {
 #' \itemize{
 #'   \item{css - a string of valid \code{css} for controlling the appearance of the legend}
 #'   \item{title - a string to use for the title of the legend}
+#'   \item{digits - number to round the legend values to}
 #' }
 #'
 #' If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.

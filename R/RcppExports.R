@@ -81,6 +81,10 @@ rcpp_mesh_geojson <- function(mesh, params, vertices, digits) {
     .Call(`_mapdeck_rcpp_mesh_geojson`, mesh, params, vertices, digits)
 }
 
+rcpp_mesh_geojson2 <- function(mesh, vertices) {
+    .Call(`_mapdeck_rcpp_mesh_geojson2`, mesh, vertices)
+}
+
 rcpp_path_geojson <- function(data, params, geometry_columns, digits) {
     .Call(`_mapdeck_rcpp_path_geojson`, data, params, geometry_columns, digits)
 }
