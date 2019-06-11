@@ -1,18 +1,20 @@
 
 function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
 
+  class MeshLayer extends SolidPolygonLayer {
 
   	/*
-  class MeshLayer extends PolygonLayer({
 		calculateFillColors(attribute) {
      // value is a Uint8ClampedArray
      const {value} = attribute;
      const {data, getPolygon} = this.props;
 
+     console.log( attribute );
+
 		 let i = 0;
 	     for (const object of data) {
 	       const polygon = getPolygon(object);
-
+	       const colour = getFillColor(object);
 	       console.log( "const polygon " );
 	       console.log( polygon );
 
@@ -20,7 +22,7 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
 	       polygon.forEach(ring => {
 	         ring.forEach(vertex => {
 
-	           const color = ...
+	           //const color = ...
 	           value[i++] = color[0]; // R
 	           value[i++] = color[1]; // G
 	           value[i++] = color[2]; // B
@@ -28,14 +30,13 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
 	         });
 	       });
 	     }
-  	}
-  });
+		}
+  }
 
   MeshLayer.layerName = 'MeshLayer';
-  */
+  /*
 
-
-  const meshLayer = new PolygonLayer({
+  const meshLayer = new MeshLayer({
   	map_id: map_id,
     id: 'polygon-'+layer_id,
     data: polygon_data,
