@@ -5,7 +5,7 @@ function md_colour_domain( x, colour_range, map_id, map_type, layer_id, legend  
 
 		console.log( x );
 
-		var cd = md_make_legend_range(x[0], x[1], colour_range.length );
+		var cd = md_make_legend_range(x[0], x[1], colour_range.length, legend.digits );
 
 		var ledge = {
   	fill_colour: {
@@ -22,13 +22,14 @@ function md_colour_domain( x, colour_range, map_id, map_type, layer_id, legend  
 
 }
 
-function md_make_legend_range(startValue, stopValue, cardinality) {
+function md_make_legend_range(startValue, stopValue, cardinality, digits ) {
+
   var arr = [];
   var currValue = startValue;
   var step = (stopValue - startValue) / (cardinality - 1);
   for (var i = 0; i < cardinality; i++) {
-    arr.push(currValue + (step * i));
-    //arr.push(parseFloat((currValue + (step * i)).toFixed(0)));
+    //arr.push(currValue + (step * i));
+    arr.push(parseFloat((currValue + (step * i)).toFixed( digits )));
   }
   return arr;
 }
@@ -60,6 +61,11 @@ function md_add_legend(map_id, map_type, layer_id, legendValues) {
 
 function md_add_legend_gradient(map_id, map_type, layer_id, legendValues) {
     // fill gradient
+    // numeric values; format numbers according to legendValues.digits
+
+    console.log( "legend digits" );
+    console.log( legendValues );
+
     'use strict';
     var legendContent,
         legendTitle,
@@ -107,7 +113,6 @@ function md_add_legend_gradient(map_id, map_type, layer_id, legendValues) {
     }
 
     for (i = 0; i < legendValues.colour.length; i++) {
-
       jsColours.push( legendValues.colour[i].substring(0,7) );
     }
 
