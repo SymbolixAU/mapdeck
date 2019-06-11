@@ -105,6 +105,7 @@ mapdeckHexagonDependency <- function() {
 #' 	, layer_id = "hex_layer"
 #' 	, elevation_scale = 100
 #' 	, legend = T
+#' 	, legend_options = list( digits = 0 )
 #' 	, colour_function = "mean"
 #' 	, colour = "val"
 #' )

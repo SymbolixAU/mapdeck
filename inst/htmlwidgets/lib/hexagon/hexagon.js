@@ -1,6 +1,8 @@
 
 function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend ) {
 
+  console.log( legend );
+
   const hexagonLayer = new deck.HexagonLayer({
         map_id: map_id,
         id: 'hexagon-'+layer_id,
