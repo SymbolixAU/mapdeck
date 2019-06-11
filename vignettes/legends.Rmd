@@ -72,7 +72,7 @@ There are two ways to format the legends
 
 ### Legend Options
 
-In the `legend_options` argument you use a list to control the title and css of the legend
+In the `legend_options` argument you use a list to control the title, css and digits (number of decimal places) of the legend
 
 ```{r eval = FALSE}
 
@@ -83,19 +83,22 @@ mapdeck() %>%
 		, origin = c("start_lon", "start_lat")
 		, destination = c("end_lon", "end_lat")
 		, stroke_from = "airport1"
-		, stroke_to = "airport2"
+		, stroke_to = "end_lon"
 		, stroke_width = "stroke"
 		, tooltip = "info"
 		, auto_highlight = TRUE
 		, legend = TRUE
 		, legend_options = list(
 			stroke_from = list( title = "Origin airport"), 
-			stroke_to = list( title = "Destination"), 
-			css = "max-height: 100px;" ## css applied to both stroke_from and stroke_to
+			stroke_to = list(title = "Destination (longitude)",  digits = 3)
+			, css = "max-height: 100px;" ## css applied to both stroke_from and stroke_to
 		)
 	)
 ```
 ![legend options](./img/articles/legend_options.png)
+
+
+
 
 
 ### Legend Format
