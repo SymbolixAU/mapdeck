@@ -2,6 +2,8 @@
 function add_trips_geo( map_id, map_type, trips_data, opacity, layer_id,
 trail_length, start_time, end_time, animation_speed, legend, focus_layer, bbox, update_view ) {
 
+  console.log( bbox );
+
   var tripsLayer = new TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
@@ -25,13 +27,12 @@ trail_length, start_time, end_time, animation_speed, legend, focus_layer, bbox, 
 	  md_add_legend( map_id, map_type, layer_id, legend );
 	}
 
-	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
+	//md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 
-  animate_trips( map_id, map_type, trips_data, opacity, layer_id, trail_length,
-  start_time, end_time, animation_speed, legend );
+  animate_trips( map_id, map_type, trips_data, opacity, layer_id, trail_length, start_time, end_time, animation_speed, legend );
 
   //function animate_trips( tripsLayer ) {
-function animate_trips( map_id, map_type, trips_data, opacity, layer_id,
+  function animate_trips( map_id, map_type, trips_data, opacity, layer_id,
 trail_length, start_time, end_time, animation_speed, legend ) {
 
   	var loopLength = end_time - start_time; // unit corresponds to the timestamp in source data
@@ -75,8 +76,6 @@ trail_length, start_time, end_time, animation_speed, legend ) {
 }
 
 function md_trip_coordinates( coords ) {
-	// TODO( return 3rd or 4th column)
-	// because the sf object has either Z and or M
 	var res = [];
 	var inner = [];
 	var x, y, z;
@@ -84,7 +83,7 @@ function md_trip_coordinates( coords ) {
 		inner = coords[i];
 		x = inner[0];
 		y = inner[1];
-		z = inner[2];
+		z = inner[2] || 0;
 		res[i] = [x,y,z];
 	}
 	return res;

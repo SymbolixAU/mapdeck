@@ -9,20 +9,20 @@ add_trips(map, data = get_map_data(map), stroke_colour = NULL,
   trail_length = 180, start_time = get_m_range_start(data),
   end_time = get_m_range_end(data), animation_speed = 30,
   layer_id = NULL, legend = FALSE, legend_options = NULL,
-  legend_format = NULL, update_view = FALSE, focus_layer = FALSE)
+  legend_format = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer. All coordinates are expected to be
-EPSG:4326 (WGS 84) coordinate system}
+\item{data}{sf object with XYZM dimensions.}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
 \code{elevation} is ignored.}
 
 \item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
 
-\item{opacity}{single value in [0,1]}
+\item{opacity}{single value in [0,1]
+am}
 
 \item{palette}{string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
 A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255],
@@ -40,24 +40,11 @@ a named list indicating which colour attributes should be included in the legend
 \item{legend_options}{A list of options for controlling the legend.}
 
 \item{legend_format}{A list containing functions to apply to legend values. See section legend}
-
-\item{update_view}{logical indicating if the map should update the bounds to include this layer}
-
-\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
-The Trips Layer takes an sf object with an M attribute and renders
+The Trips Layer takes an sf object with Z and M attributes and renders
 it as animated trips
 }
-\section{data}{
-
-
-If the \code{data} is a simple feature object, the geometry column is automatically
-detected. If the sf object contains more than one geometry column and you want to use a specific one,
-you'll need to set the active geometry using \code{sf::st_geometry( x ) <- "your_column" },
-where \code{"your_column"} is the name of the column you're activating. See \code{?sf::st_geometry}
-}
-
 \section{legend}{
 
 
@@ -83,3 +70,55 @@ depending on which type of colouring the layer supports.
 The list elements must be functions to apply to the values in the legend.
 }
 
+\section{id}{
+
+
+The \code{id} is returned to your R session from an interactive shiny environment
+by observing layer clicks. This is useful for returning the data.frame row relating to the
+cliked shape.
+
+From within a shiny server you would typically use \code{ observeEvent({input$map_arc_click})},
+where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the layer
+you are clicking on
+}
+
+\examples{
+\donttest{
+
+library(sf)
+et <- cbind(
+c(0,10, 50000, 1000, 200000, 10000, 30, 500000, 0) ## elevation
+, c(0,1,3,5,10,20,50, 200, 300)  # timestamps
+)
+
+sf <- sf::st_linestring(
+	x = cbind(
+		matrix(
+			c(0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,0,0,0)
+			, ncol = 2
+			, byrow = T
+		)
+		, et
+	)
+)
+
+
+sf <- sf::st_sf( geometry = sf::st_sfc( sf ) )
+
+mapdeck(
+	location = c(0, 0)
+	, zoom = 4
+	, pitch = 65
+) \%>\%
+	add_trips(
+		data = sf
+		, start_time = 0
+		, end_time = 300
+		, trail_length = 150
+	)
+
+}
+
+\\code{add_trips} supports LINESTRING and MULTILINESTRING sf objects
+
+}

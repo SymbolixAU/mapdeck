@@ -46,12 +46,14 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 
 function md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view ) {
 
+
 	if( focus_layer ) {
   	md_clear_bounds( map_id );
   	update_view = true;     // force this
   }
 
   if( bbox !== undefined && update_view) {
+
 	  md_add_to_bounds( map_id, bbox, layer_id );
 	  var loc = md_center_location( window[ map_id + 'globalBox'] );
 	  md_change_location( map_id, map_type, loc, window[ map_id + 'currentZoomLevel'], null, null, 0, "linear" );

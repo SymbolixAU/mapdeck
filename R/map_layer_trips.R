@@ -12,19 +12,55 @@ mapdeckTripsDependency <- function() {
 
 #' Add Trips
 #'
-#' The Trips Layer takes an sf object with an M attribute and renders
+#' The Trips Layer takes an sf object with Z and M attributes and renders
 #' it as animated trips
 #'
 #' @inheritParams add_polygon
+#' @param data sf object with XYZM dimensions.
 #' @param stroke_width
 #' @param trail_length
 #' @param opacity single value in [0,1]
-#'
-#' @inheritSection add_polygon data
+#'am
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'
 #'
+#' @examples
+#' \donttest{
+#'
+#' library(sf)
+#' et <- cbind(
+#' c(0,10, 50000, 1000, 200000, 10000, 30, 500000, 0) ## elevation
+#' , c(0,1,3,5,10,20,50, 200, 300)  # timestamps
+#' )
+#'
+#' sf <- sf::st_linestring(
+#' 	x = cbind(
+#' 		matrix(
+#' 			c(0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,0,0,0)
+#' 			, ncol = 2
+#' 			, byrow = T
+#' 		)
+#' 		, et
+#' 	)
+#' )
+#'
+#'
+#' sf <- sf::st_sf( geometry = sf::st_sfc( sf ) )
+#'
+#' mapdeck(
+#' 	location = c(0, 0)
+#' 	, zoom = 4
+#' 	, pitch = 65
+#' ) %>%
+#' 	add_trips(
+#' 		data = sf
+#' 		, start_time = 0
+#' 		, end_time = 300
+#' 		, trail_length = 150
+#' 	)
+#'
+#' }
 #'
 #' \code{add_trips} supports LINESTRING and MULTILINESTRING sf objects
 #'
@@ -43,9 +79,7 @@ add_trips <- function(
 	layer_id = NULL,
 	legend = FALSE,
 	legend_options = NULL,
-	legend_format = NULL,
-	update_view = FALSE,
-	focus_layer = FALSE
+	legend_format = NULL
 ) {
 
 	experimental_layer("trips")
@@ -59,19 +93,19 @@ add_trips <- function(
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_data( data, l, c("LINESTRING","MULTILINESTRING") )
 
-	bbox <- init_bbox()
-	update_view <- force( update_view )
-	focus_layer <- force( focus_layer )
+	#bbox <- init_bbox()
+	#update_view <- force( update_view )
+	#focus_layer <- force( focus_layer )
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
 		l[["data"]] <- NULL
 	}
 
-	if( !is.null(l[["bbox"]] ) ) {
-		bbox <- l[["bbox"]]
-		l[["bbox"]] <- NULL
-	}
+	# if( !is.null(l[["bbox"]] ) ) {
+	# 	bbox <- l[["bbox"]]
+	# 	l[["bbox"]] <- NULL
+	# }
 
 	layer_id <- layerId(layer_id, "trips")
 	# checkHexAlpha( highlight_colour )
@@ -94,14 +128,14 @@ add_trips <- function(
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], opacity, layer_id, trail_length,
-		start_time, end_time, animation_speed, shape[["legend"]], focus_layer, bbox, update_view
+		start_time, end_time, animation_speed, shape[["legend"]]
 	)
 }
 
 
 #' @rdname clear
 #' @export
-clear_path <- function( map, layer_id = NULL) {
+clear_trips <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "trips")
 	invoke_method(map, "md_layer_clear", layer_id, "trips" )
 }
@@ -117,8 +151,15 @@ get_m_range <- function( x ) UseMethod("get_m_range")
 ## TODO get the geometry column from the sf attributes
 
 #' @export
-get_m_range.sf <- function( x ) attr(x$geometry, "m_range")
+get_m_range.sf <- function( x ) {
 
+	geometry <- attr( x, "sf_column" )
+	if( is.null( attr( x[[geometry]], "m_range" ) ) ) {
+		stop("m_range attribute not set; please define the start_time and end_time")
+	}
+
+	attr( x[[geometry]], "m_range")
+}
 #' @export
 get_m_range.default <- function( x ) stop("only sf objects with ZM attributes are supported for the trips layer")
 

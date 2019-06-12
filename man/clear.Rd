@@ -22,6 +22,7 @@
 \alias{clear_screengrid}
 \alias{clear_text}
 \alias{clear_title}
+\alias{clear_trips}
 \title{Clear Arc}
 \usage{
 clear_arc(map, layer_id = NULL)
@@ -56,7 +57,7 @@ clear_text(map, layer_id = NULL)
 
 clear_title(map, layer_id = NULL)
 
-clear_path(map, layer_id = NULL)
+clear_trips(map, layer_id = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
