@@ -2,7 +2,7 @@
 function add_trips_geo( map_id, map_type, trips_data, opacity, layer_id,
 trail_length, start_time, end_time, animation_speed, legend, focus_layer, bbox, update_view ) {
 
-  console.log( bbox );
+  console.log( trips_data );
 
   var tripsLayer = new TripsLayer({
     id: 'trips-'+layer_id,
@@ -86,6 +86,7 @@ function md_trip_coordinates( coords ) {
 		z = inner[2] || 0;
 		res[i] = [x,y,z];
 	}
+
 	return res;
 }
 

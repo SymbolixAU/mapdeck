@@ -20,7 +20,9 @@ mapdeckTripsDependency <- function() {
 #' @param stroke_width
 #' @param trail_length
 #' @param opacity single value in [0,1]
-#'am
+#' @param start_time the minimum timestamp
+#' @param end_time the maximum timestamp
+#' @param animation_speed
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'

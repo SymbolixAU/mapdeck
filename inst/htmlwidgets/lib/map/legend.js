@@ -63,8 +63,8 @@ function md_add_legend_gradient(map_id, map_type, layer_id, legendValues) {
     // fill gradient
     // numeric values; format numbers according to legendValues.digits
 
-    console.log( "legend digits" );
-    console.log( legendValues );
+    //console.log( "legend digits" );
+    //console.log( legendValues );
 
     'use strict';
     var legendContent,

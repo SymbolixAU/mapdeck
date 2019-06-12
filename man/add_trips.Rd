@@ -21,14 +21,17 @@ add_trips(map, data = get_map_data(map), stroke_colour = NULL,
 
 \item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
 
-\item{opacity}{single value in [0,1]
-am}
+\item{opacity}{single value in [0,1]}
 
 \item{palette}{string or matrix. String will be one of \code{colourvalues::colour_palettes()}.
 A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255],
 where the 4th column represents the alpha. You can use a named list to specify a different
 palette for different colour options (where available),
  e.g. list(fill_colour = "viridis", stroke_colour = "inferno")}
+
+\item{start_time}{the minimum timestamp}
+
+\item{end_time}{the maximum timestamp}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
