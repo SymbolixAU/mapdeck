@@ -5,13 +5,17 @@
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List column_defaults(int n) {
-	return Rcpp::List::create();
+	return Rcpp::List::create(
+		_["elevation"] = mapdeck::defaults::default_elevation(n),
+		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n),
+		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour(n)
+	);
 }
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_column_geojson( Rcpp::DataFrame data,
-                                 Rcpp::List params, std::string geometry_columns ) {
+Rcpp::List rcpp_column_geojson( Rcpp::DataFrame data, Rcpp::List params,
+                                std::string geometry_columns, int digits ) {
 
 	int data_rows = data.nrows();
 
@@ -30,13 +34,14 @@ Rcpp::List rcpp_column_geojson( Rcpp::DataFrame data,
 		data_rows,
 		parameter_exclusions,
 		geometry_columns,
-		true  // jsonify legend
+		true,  // jsonify legend
+		digits
 	);
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_column_geojson_df( Rcpp::DataFrame data,
-                                    Rcpp::List params, Rcpp::List geometry_columns ) {
+Rcpp::List rcpp_column_geojson_df( Rcpp::DataFrame data, Rcpp::List params,
+                                   Rcpp::List geometry_columns, int digits ) {
 
 	int data_rows = data.nrows();
 
@@ -55,7 +60,8 @@ Rcpp::List rcpp_column_geojson_df( Rcpp::DataFrame data,
 		data_rows,
 		parameter_exclusions,
 		geometry_columns,
-		true  // jsonify legend
+		true,  // jsonify legend
+		digits
 	);
 
 }

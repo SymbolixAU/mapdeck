@@ -29,6 +29,9 @@ mapdeckGeojsonDependency <- function() {
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip.
 #' Only works on \code{sf} objects.
+#' @param legend either a logical indiciating if the legend(s) should be displayed, or
+#' a named list indicating which colour attributes should be included in the legend.
+#' A legend is only shown if you supply one of the colour arguments (fill or stroke)
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
@@ -106,10 +109,10 @@ mapdeckGeojsonDependency <- function() {
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
 #' ## Not supplying colouring arguments, the function will try and find them in the GeoJSON
 #' mapdeck(
-#'  token = key
 #'  , location = c(145, -37.9)
 #'  , zoom = 8
 #'  , style = mapdeck_style("dark")
@@ -122,7 +125,6 @@ mapdeckGeojsonDependency <- function() {
 #'
 #' ## only supplying values to use for fill, the stroke will be default
 #' mapdeck(
-#'  token = key
 #'  , location = c(145, -37.9)
 #'  , zoom = 8
 #'  , style = mapdeck_style("dark")
@@ -134,7 +136,6 @@ mapdeckGeojsonDependency <- function() {
 #'  )
 #'
 #' mapdeck(
-#'  token = key
 #'  , location = c(145, -37.9)
 #'  , zoom = 8
 #'  , style = mapdeck_style("dark")
@@ -147,7 +148,6 @@ mapdeckGeojsonDependency <- function() {
 #'  )
 #'
 #' mapdeck(
-#'  token = key
 #'  , location = c(145, -37.9)
 #'  , zoom = 8
 #'  , style = mapdeck_style("dark")
@@ -168,7 +168,6 @@ mapdeckGeojsonDependency <- function() {
 #' geo <- geojsonsf::sf_geojson( sf )
 #'
 #' mapdeck(
-#'  token = key
 #'  , location = c(145, -37.9)
 #'  , zoom = 8
 #'  , style = mapdeck_style("dark")
@@ -204,6 +203,7 @@ add_geojson <- function(
 	na_colour = "#808080FF",
 	update_view = TRUE,
 	focus_layer = FALSE,
+	digits = 6,
 	transitions = NULL
 	) {
 
@@ -260,7 +260,7 @@ add_geojson <- function(
 	l[["data_type"]] <- NULL
 
 	if( tp == "sf" ) {
-	  shape <- rcpp_geojson_geojson( data, l, "geometry" )
+	  shape <- rcpp_geojson_geojson( data, l, "geometry", digits)
 	  jsfunc <- "add_geojson_sf"
 	} else if ( tp == "geojson" ) {
 		## leave as is?

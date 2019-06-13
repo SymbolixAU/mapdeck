@@ -16,7 +16,7 @@ test_that("add_polygon accepts multiple objects", {
 	m <- mapdeck()
 
 	sf <- spatialwidget::widget_melbourne[ spatialwidget::widget_melbourne$SA2_NAME == "South Yarra - West", ]
-	p <- add_polygon(map = m, data = sf)
+	p <- add_polygon(map = m, data = sf, digits = 7)
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 
 	## TODO( these tests, because some characters are being escaped in the polyline)

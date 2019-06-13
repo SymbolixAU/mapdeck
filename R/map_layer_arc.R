@@ -27,8 +27,8 @@ mapdeckArcBrushDependency <- function() {
 #' The Arc Layer renders raised arcs joining pairs of source and target coordinates
 #'
 #' @param map a mapdeck map object
-#' @param data data to be used in the layer. All coordinates are expected to be in
-#' Web Mercator Projection
+#' @param data data to be used in the layer. All coordinates are expected to be
+#' EPSG:4326 (WGS 84) coordinate system
 #' @param layer_id single value specifying an id for the layer. Use this value to
 #' distinguish between shape layers of the same type. Layers with the same id are likely
 #' to conflict and not plot correctly
@@ -90,6 +90,7 @@ mapdeckArcBrushDependency <- function() {
 #' \itemize{
 #'   \item{css - a string of valid \code{css} for controlling the appearance of the legend}
 #'   \item{title - a string to use for the title of the legend}
+#'   \item{digits - number to round the legend values to}
 #' }
 #'
 #' If the layer allows different fill and stroke colours, you can use different options for each. See examples in \link{add_arc}.

@@ -50,14 +50,14 @@ test_that("pointcloud reads elevation from sf Z attribute", {
 
 	geo <- '[{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[0,0,1]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[0,0,2]}}]'
 	sf <- geojsonsf::geojson_sf( geo )
-	mapdeck:::resolve_data( sf, list(), "POINT" )
+	# mapdeck:::resolve_data( sf, list(), "POINT" )
 
 	l <- list()
 	l[["palette"]] <- "viridis"
 	l[["legend"]] <- FALSE
 	l[["geometry"]] <- "geometry"
 	geometry_column <- "geometry"
-	shape <- mapdeck:::rcpp_pointcloud_geojson( sf, l, geometry_column )
+	shape <- mapdeck:::rcpp_pointcloud_geojson( sf, l, geometry_column, digits = 6 )
 	js <- '[{"type":"Feature","properties":{"fill_colour":"#440154FF"},"geometry":{"geometry":{"type":"Point","coordinates":[0.0,0.0,1.0]}}},{"type":"Feature","properties":{"fill_colour":"#440154FF"},"geometry":{"geometry":{"type":"Point","coordinates":[0.0,0.0,2.0]}}}]'
 	expect_equal(as.character( shape$data ), js)
 })

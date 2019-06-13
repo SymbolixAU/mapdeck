@@ -118,6 +118,7 @@ add_line <- function(
 	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
+	digits = 6,
 	transitions = NULL
 ) {
 
@@ -160,10 +161,10 @@ add_line <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
-		shape <- rcpp_line_geojson( data, l, geometry_column )
+		shape <- rcpp_line_geojson( data, l, geometry_column, digits )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
-		shape <- rcpp_line_geojson_df( data, l, geometry_column )
+		shape <- rcpp_line_geojson_df( data, l, geometry_column, digits )
 	}
 	# } else if ( tp == "sfencoded" ) {
 	# 	geometry_column <- "geometry"

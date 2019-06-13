@@ -106,6 +106,7 @@ add_text <- function(
 	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
+	digits = 6,
 	transitions = NULL
 ) {
 
@@ -158,10 +159,10 @@ add_text <- function(
 
 	if( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_text_geojson( data, l, geometry_column )
+		shape <- rcpp_text_geojson( data, l, geometry_column, digits )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_text_geojson_df( data, l, geometry_column )
+		shape <- rcpp_text_geojson_df( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
 		shape <- rcpp_text_polyline( data, l, geometry_column )

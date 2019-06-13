@@ -144,6 +144,24 @@ sf_needs_subsetting <- function( data, sfc_col, sf_geom ) {
 	return( !sfc_type( data, sfc_col ) %in% toupper( sf_geom ) )
 }
 
+
+#' @export
+resolve_data.mesh3d <- function( data, l, sf_geom ) {
+	l[["data"]] <- data
+	l[["bbox"]] <- get_box( data, l )
+	l[["geometry"]] <- "geometry"
+	l[["data_type"]] <- "mesh"
+	return(l)
+}
+#' @export
+resolve_data.quadmesh <- function( data, l, sf_geom ) {
+	l[["data"]] <- data
+	l[["bbox"]] <- get_box( data, l )
+	l[["geometry"]] <- "geometry"
+	l[["data_type"]] <- "mesh"
+	return(l)
+}
+
 ## use the specificed st_geometry column
 #' @export
 resolve_data.sf <- function( data, l, sf_geom ) {
@@ -161,6 +179,29 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 }
 
 get_box <- function( data, l ) UseMethod("get_box")
+
+#' @export
+get_box.mesh3d <- function( data, l ) {
+	xrange <- range(data[["vb"]][1L, ], na.rm = TRUE)
+	yrange <- range(data[["vb"]][2L, ], na.rm = TRUE)
+
+	bbox <- list(
+		c(xrange[1L], yrange[1L]), c(xrange[2L], yrange[2L])
+	)
+	return( jsonify::to_json( bbox ) )
+}
+#' @export
+get_box.quadmesh <- function( data, l ) {
+	md <- data[["raster_metadata"]]
+	if(is.null(md)) {
+		stop("expecting raster_metadata attribute on quadmesh object. Make sure you are using v0.4.0 of quadmesh")
+	}
+  bbox <- list(
+  	 c(md[["xmn"]], md[["ymn"]]), c(md[["xmx"]], md[["ymx"]])
+  	 )
+  return( jsonify::to_json( bbox ) )
+}
+
 
 #' @export
 get_box.sfencoded <- function( data, l ) {
@@ -250,6 +291,15 @@ resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
 #' @export
 resolve_data.data.frame <- function( data, l, sf_geom ) {
 
+	if( !inherits(data, "sf") & !inherits(data, "sfencoded") & !inherits(data, "sfencodedLite" ) & is.null( l[["polyline"]] ) ) {
+		if( is.null(l[["lon"]] ) ) {
+			l[["lon"]] <- find_lon_column( names( data ) )
+		}
+		if( is.null(l[["lat"]] ) ) {
+			l[["lat"]] <- find_lat_column( names( data ) )
+		}
+	}
+
 	## data.frame will only really work for points, with a lon & lat column
 	if ( !is.null( l[["polyline"]] ) ) {
 		## the user supplied a polyline in a data.frame, so we need to allow this through
@@ -261,6 +311,7 @@ resolve_data.data.frame <- function( data, l, sf_geom ) {
 		l[["bbox"]] <- get_box( data, l )
 		l[["data_type"]] <- "df"
 	}
+
 	l[["data"]] <- data
 	return( l )
 }
@@ -358,4 +409,26 @@ resolve_opacity <- function( opacity ) {
 		}
 	}
 	return( opacity )
+}
+
+
+find_lat_column = function(names) {
+
+	lats = names[grep("^(lat|lats|latitude|latitudes|stop_lat|shape_pt_lat)$", names, ignore.case = TRUE)]
+
+	if (length(lats) == 1) {
+		return(lats)
+	}
+	stop("could not find latitude column")
+}
+
+
+find_lon_column = function(names) {
+
+	lons = names[grep("^(lon|lons|lng|lngs|long|longs|longitude|longitudes|stop_lon|shape_pt_lon)$", names, ignore.case = TRUE)]
+
+	if (length(lons) == 1) {
+		return(lons)
+	}
+	stop("could not find longitude column")
 }

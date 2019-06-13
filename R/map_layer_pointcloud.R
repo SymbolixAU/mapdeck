@@ -44,11 +44,12 @@ mapdeckPointcloudDependency <- function() {
 #' \donttest{
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
 #' df <- capitals
 #' df$z <- sample(10000:10000000, size = nrow(df))
 #'
-#' mapdeck(token = key, style = mapdeck_style("dark")) %>%
+#' mapdeck(style = mapdeck_style("dark")) %>%
 #' add_pointcloud(
 #'   data = df
 #'   , lon = 'lon'
@@ -103,6 +104,7 @@ add_pointcloud <- function(
 	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
+	digits = 6,
 	transitions = NULL
 ) {
 
@@ -148,7 +150,7 @@ add_pointcloud <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_pointcloud_geojson( data, l, geometry_column )
+		shape <- rcpp_pointcloud_geojson( data, l, geometry_column, digits )
 
 	} else if ( tp == "df" ) {
 		## TODO( here or in rcpp? )
@@ -157,7 +159,7 @@ add_pointcloud <- function(
 		}
 
 		geometry_column <- list( geometry = c("lon","lat","elevation") )
-	  shape <- rcpp_pointcloud_geojson_df( data, l, geometry_column )
+	  shape <- rcpp_pointcloud_geojson_df( data, l, geometry_column, digits )
 
 	} else if ( tp == "sfencoded" ) {
 

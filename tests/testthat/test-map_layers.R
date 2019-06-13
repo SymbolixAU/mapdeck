@@ -11,6 +11,7 @@ test_that("layerId includes all layers", {
 		, "grid"
 		, "hexagon"
 		, "line"
+		, "mesh"
 		, "path"
 		, "pointcloud"
 		, "polygon"
@@ -25,7 +26,7 @@ test_that("layerId includes all layers", {
 	res <- sapply( layers, function(x) { mapdeck:::layerId( layer_id = "test", layer = x) })
 	expect_equal( layers, names( res ) )
 
-	f <- list.files(path = system.file("./R", package = "mapdeck"))
+	f <- list.files(path = system.file("./R", package = "mapdeck") )
 	f <- f[ grepl("map_layer_*", f) ]
 	f <- gsub("map_layer_", "", f)
 	f <- gsub("\\.R","",f)

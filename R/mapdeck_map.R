@@ -4,8 +4,8 @@
 #'
 #' @param token Mapbox Acess token. Use \code{set_token()} to set a global token.
 #' If left empty layers will still be plotted, but without a Mapbox map.
-#' @param data data to be used on the map. All coordinates are expected to be in
-#' Web Mercator Projection
+#' @param data data to be used in the layer. All coordinates are expected to be
+#' EPSG:4326 (WGS 84) coordinate system
 #' @param width the width of the map
 #' @param height the height of the map
 #' @param padding the padding of the map
@@ -39,6 +39,15 @@ mapdeck <- function(
     , bearing = force( bearing )
   )
 
+  # deps <- list(
+  # 	createHtmlDependency(
+  # 		name = "map",
+  # 		version = "1.0.0",
+  # 		src = system.file("htmlwidgets/lib/map", package = "mapdeck"),
+  # 		script = c("legend.js", "title.js", "location.js", "coordinates.js", "colours.js")
+  # 	)
+  # )
+
   # create widget
   mapdeckmap <- htmlwidgets::createWidget(
     name = 'mapdeck',
@@ -49,6 +58,7 @@ mapdeck <- function(
     width = width,
     height = height,
     package = 'mapdeck',
+    #dependencies = deps,
     sizingPolicy = htmlwidgets::sizingPolicy(
     	defaultWidth = '100%',
     	defaultHeight = 800,
@@ -109,8 +119,8 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param map_id string containing the output ID of the map in a shiny application.
 #' @param session the Shiny session object to which the map belongs; usually the
 #' default value will suffice.
-#' @param data data to be used in the map. All coordinates are expected to be in
-#' Web Mercator Projection
+#' @param data data to be used in the layer. All coordinates are expected to be
+#' EPSG:4326 (WGS 84) coordinate system
 #' @param deferUntilFlush indicates whether actions performed against this
 #' instance should be carried out right away, or whether they should be held until
 #' after the next time all of the outputs are updated; defaults to TRUE.
@@ -166,7 +176,7 @@ mapdeck_view <- function(
 
 	transition <- match.arg(transition)
 	invoke_method(
-		map, 'md_change_location', as.numeric( location ), zoom, pitch,
+		map, 'md_change_location', map_type( map ) , as.numeric( location ), zoom, pitch,
 		bearing, duration, transition
 		)
 }

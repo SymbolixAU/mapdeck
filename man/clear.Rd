@@ -2,9 +2,9 @@
 % Please edit documentation in R/map_layer_arc.R, R/map_layer_bitmap.R,
 %   R/map_layer_column.R, R/map_layer_geojson.R, R/map_layer_greatcircle.R,
 %   R/map_layer_grid.R, R/map_layer_hexagon.R, R/map_layer_line.R,
-%   R/map_layer_path.R, R/map_layer_pointcloud.R, R/map_layer_polygon.R,
-%   R/map_layer_scatterplot.R, R/map_layer_screengrid.R, R/map_layer_text.R,
-%   R/map_layer_title.R
+%   R/map_layer_mesh.R, R/map_layer_path.R, R/map_layer_pointcloud.R,
+%   R/map_layer_polygon.R, R/map_layer_scatterplot.R, R/map_layer_screengrid.R,
+%   R/map_layer_text.R, R/map_layer_title.R
 \name{clear_arc}
 \alias{clear_arc}
 \alias{clear_bitmap}
@@ -14,6 +14,7 @@
 \alias{clear_grid}
 \alias{clear_hexagon}
 \alias{clear_line}
+\alias{clear_mesh}
 \alias{clear_path}
 \alias{clear_pointcloud}
 \alias{clear_polygon}
@@ -38,6 +39,8 @@ clear_grid(map, layer_id = NULL)
 clear_hexagon(map, layer_id = NULL)
 
 clear_line(map, layer_id = NULL)
+
+clear_mesh(map, layer_id = NULL)
 
 clear_path(map, layer_id = NULL)
 

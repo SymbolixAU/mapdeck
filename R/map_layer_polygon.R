@@ -112,7 +112,7 @@ add_polygon <- function(
 	polyline = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
-	#stroke_opacity = NULL,
+	stroke_opacity = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	elevation = NULL,
@@ -129,6 +129,7 @@ add_polygon <- function(
 	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
+	digits = 6,
 	transitions = NULL
 ) {
 
@@ -138,7 +139,7 @@ add_polygon <- function(
 	l[["polyline"]] <- force( polyline )
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_width"]] <- force( stroke_width )
-	#l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
+	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
 	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["elevation"]] <- force( elevation )
@@ -189,11 +190,15 @@ add_polygon <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		shape <- rcpp_polygon_geojson( data, l, geometry_column )
+		shape <- rcpp_polygon_geojson( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
 		shape <- rcpp_polygon_polyline( data, l, geometry_column )
 		jsfunc <- "add_polygon_polyline"
+	# } else if ( tp == "mesh" ) {
+	# 	geometry_column <- "geometry"
+	# 	jsfunc <- "add_mesh"
+	# 	shape <- rcpp_mesh_geojson( data, l, geometry_column )
 	}
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
