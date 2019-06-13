@@ -1,3 +1,17 @@
+
+
+# library(sf)
+# sf <- roads
+# coords <- sf::st_coordinates( sf )
+# sf <- sf::st_as_sf( as.data.frame( coords ), coords = c("X","Y") )
+#
+# mapdeck() %>%
+# 	add_scatterplot(
+# 		data = sf
+# 		, brush_radius = 10
+# 	)
+#
+
 #
 #
 # set_token( read.dcf("~/.googleAPI", fields = "MAPBOX"))

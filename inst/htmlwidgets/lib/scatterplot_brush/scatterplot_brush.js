@@ -66,7 +66,8 @@ const INITIAL_MODULE_OPTIONS = {};
 	  brushTarget: false,
 	  // brush radius in meters
 	  brushRadius: brush_radius,
-	  mousePosition: [0, 0],
+	  mousePosition: null,
+	  getTargetPosition: d => d.target,
 	  radiusMinPixels: 0
 	};
 
@@ -101,21 +102,28 @@ const INITIAL_MODULE_OPTIONS = {};
 	    return shaders;
 	  }
 
-	  draw(opts) {
-	    // add uniforms
-	    const uniforms = Object.assign({}, opts.uniforms, {
-	      brushTarget: this.props.brushTarget
-	      /*
-	      brushRadius: this.props.brushRadius,
-	      mousePos: this.state.mousePosition
-	        ? new Float32Array(this.unproject(this.state.mousePosition))
-	        : defaultProps.mousePosition,
-	      enableBrushing: Boolean(this.state.enableBrushing)
-	      */
-	    });
-	    const newOpts = Object.assign({}, opts, {uniforms});
-	    super.draw(newOpts);
-	  }
+	    // add instanceSourcePositions as attribute
+		  // instanceSourcePositions is used to calculate whether
+		  // point source is in range when brushTarget is truthy
+		  initializeState() {
+		    super.initializeState();
+
+		    this.state.attributeManager.addInstanced({
+		      instanceTargetPositions: {
+		        size: 3,
+		        accessor: 'getTargetPosition'
+		      }
+		    });
+		  }
+
+		  draw(opts) {
+		    // add uniforms
+		    const uniforms = Object.assign({}, opts.uniforms, {
+		      brushTarget: this.props.brushTarget
+		    });
+		    const newOpts = Object.assign({}, opts, {uniforms});
+		    super.draw(newOpts);
+		  }
 	}
 
 	ScatterplotBrushingLayer.layerName = 'ScatterplotBrushingLayer';
