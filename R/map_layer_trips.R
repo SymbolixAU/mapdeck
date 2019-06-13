@@ -53,7 +53,6 @@ mapdeckTripsDependency <- function() {
 #' 	location = c(0, 0)
 #' 	, zoom = 4
 #' 	, pitch = 65
-#' 	, style = mapdeck_style("dark")
 #' ) %>%
 #' 	add_trips(
 #' 		data = sf
@@ -61,11 +60,9 @@ mapdeckTripsDependency <- function() {
 #' 		, start_time = 0
 #' 		, end_time = 200
 #' 		, trail_length = 50
-#' 		, legend = T
 #' 	)
 #'
 #' library(gpxsf)
-#' library(sf) ## for print methods of sf objects
 #' gpx <- system.file("gpx/city_trail.gpx", package = "gpx")
 #' sf <- gpx::gpx_sf( gpx, time = "counter" )
 #'
@@ -141,7 +138,7 @@ add_trips <- function(
 		shape <- rcpp_trips_geojson( data, l, geometry_column )
 		jsfunc <- "add_trips_geo"
 	} else {
-		stop("currently only sf objects are supported for the trips layer")
+		stop("mapdeck - currently only sf objects are supported for the trips layer")
 	}
 
 	# js_transitions <- resolve_transitions( transitions, "path" )
@@ -176,12 +173,12 @@ get_m_range.sf <- function( x ) {
 
 	geometry <- attr( x, "sf_column" )
 	if( is.null( attr( x[[geometry]], "m_range" ) ) ) {
-		stop("m_range attribute not set; please define the start_time and end_time")
+		stop("mapdeck - m_range attribute not set; please define the start_time and end_time")
 	}
 
 	attr( x[[geometry]], "m_range")
 }
 #' @export
-get_m_range.default <- function( x ) stop("only sf objects with ZM attributes are supported for the trips layer")
+get_m_range.default <- function( x ) stop("mapdeck - only sf objects with ZM attributes are supported for the trips layer")
 
 

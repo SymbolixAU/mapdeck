@@ -1,6 +1,6 @@
 
 function add_trips_geo( map_id, map_type, trips_data, opacity, layer_id,
-trail_length, start_time, end_time, animation_speed, legend, focus_layer, bbox, update_view ) {
+trail_length, start_time, end_time, animation_speed, legend ) {
 
   //console.log( trips_data );
 

@@ -12,8 +12,11 @@ Rcpp::List trips_defaults(int n) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_trips_geojson( Rcpp::DataFrame data,
-                              Rcpp::List params, std::string geometry_columns  ) {
+Rcpp::List rcpp_trips_geojson(
+		Rcpp::DataFrame data,
+		Rcpp::List params,
+		std::string geometry_columns
+	) {
 
 	int data_rows = data.nrows();
 

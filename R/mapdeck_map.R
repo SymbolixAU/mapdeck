@@ -136,7 +136,7 @@ mapdeck_update <- function(
 	map_type <- match.arg( map_type )
 
 	if (is.null(session)) {
-		stop("mapdeck_update must be called from the server function of a Shiny app")
+		stop("mapdeck - mapdeck_update must be called from the server function of a Shiny app")
 	}
 
 	structure(

@@ -19,7 +19,7 @@
 #' @export
 add_sf <- function( map, data = get_map_data(map), ... ) {
 
-	if (!inherits(data, "sf")) stop("expecting sf object")
+	if (!inherits(data, "sf")) stop("mapdeck - expecting sf object")
 
 	geom <- data[[ attr( data, "sf_column" ) ]]
 	cls <- substr( class(geom)[1], 5, nchar(class(geom)[1]))

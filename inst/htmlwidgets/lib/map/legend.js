@@ -3,8 +3,6 @@
 function md_colour_domain( x, colour_range, map_id, map_type, layer_id, legend  ) {
 	if( legend.legend ) {
 
-		console.log( x );
-
 		var cd = md_make_legend_range(x[0], x[1], colour_range.length, legend.digits );
 
 		var ledge = {

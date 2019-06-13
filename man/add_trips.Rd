@@ -111,7 +111,6 @@ mapdeck(
 	location = c(0, 0)
 	, zoom = 4
 	, pitch = 65
-	, style = mapdeck_style("dark")
 ) \%>\%
 	add_trips(
 		data = sf
@@ -119,11 +118,9 @@ mapdeck(
 		, start_time = 0
 		, end_time = 200
 		, trail_length = 50
-		, legend = T
 	)
 
 library(gpxsf)
-library(sf) ## for print methods of sf objects
 gpx <- system.file("gpx/city_trail.gpx", package = "gpx")
 sf <- gpx::gpx_sf( gpx, time = "counter" )
 
