@@ -80,13 +80,13 @@ void main(void) {
   float finalRadius = mix(0., instanceRadius, isInBrush);
   // Multiply out radius and clamp to limits
   float outerRadiusPixels = clamp(
-    project_scale(radiusScale * finalRadius),
+    project_size(radiusScale * finalRadius),
     radiusMinPixels, radiusMaxPixels
   );
 
   // multiply out line width and clamp to limits
   float lineWidth = clamp(
-    project_scale(lineWidthScale * instanceLineWidths),
+    project_size(lineWidthScale * instanceLineWidths),
     lineWidthMinPixels, lineWidthMaxPixels
   );
 
@@ -100,7 +100,7 @@ void main(void) {
   // Find the center of the point and add the current vertex
   vec3 center = project_position(instancePositions);
   vec3 vertex = positions * outerRadiusPixels;
-  gl_Position = project_to_clipspace(vec4(center + vertex, 1.));
+  gl_Position = project_common_position_to_clipspace(vec4(center + vertex, 1.));
   // Apply opacity to instance color
   vFillColor = vec4(instanceFillColors.rgb, instanceFillColors.a * opacity) / 255.;
   vLineColor = vec4(instanceLineColors.rgb, instanceLineColors.a * opacity) / 255.;
