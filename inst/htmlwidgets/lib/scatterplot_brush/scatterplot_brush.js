@@ -67,7 +67,6 @@ const INITIAL_MODULE_OPTIONS = {};
 	  // brush radius in meters
 	  brushRadius: brush_radius,
 	  mousePosition: null,
-	  getTargetPosition: d => d.target,
 	  radiusMinPixels: 0
 	};
 
@@ -88,8 +87,8 @@ const INITIAL_MODULE_OPTIONS = {};
 
 	    shaders.inject = {
 	    	'vs:#decl': `
-					//attribute vec3 instanceTargetPositions;
-					//uniform bool brushTarget;
+					attribute vec3 instanceTargetPositions;
+					uniform bool brushTarget;
 					`,
 	      'vs:#main-end': `
 				  brushing_setVisible( brushing_isPointInRange(instancePositions.xy) );
@@ -114,10 +113,12 @@ const INITIAL_MODULE_OPTIONS = {};
 		        accessor: 'getTargetPosition'
 		      }
 		    });
+
 		  }
 
 		  draw(opts) {
 		    // add uniforms
+		    //console.log( "drawing" );
 		    const uniforms = Object.assign({}, opts.uniforms, {
 		      brushTarget: this.props.brushTarget
 		    });
@@ -140,6 +141,9 @@ const INITIAL_MODULE_OPTIONS = {};
     filled: true,
     getRadius: d => d.properties.radius,
     getPosition: d => md_get_point_coordinates( d ),
+
+    getTargetPosition: d => md_get_point_coordinates( d ),
+
     getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
     getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
     getLineWidth: d => d.properties.stroke_width,
