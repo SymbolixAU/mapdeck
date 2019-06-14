@@ -6,6 +6,8 @@
 namespace mapdeck {
 namespace arc {
 
+  int x;
+
 	const std::unordered_map< std::string, std::string > arc_colours = {
 		{ "stroke_from", "stroke_from_opacity" },
 		{ "stroke_to", "stroke_to_opacity" } // palette??

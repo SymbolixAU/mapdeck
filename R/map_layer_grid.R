@@ -172,7 +172,7 @@ add_grid <- function(
 	}
 
 	if(length(colour_range) != 6)
-		stop("colour_range must have 6 hex colours")
+		stop("mapdeck - colour_range must have 6 hex colours")
 
 	checkHex(colour_range)
 

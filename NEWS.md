@@ -1,5 +1,7 @@
 # mapdeck 0.3
 
+* factors correctly used in legends [issue #138](https://github.com/SymbolixAU/mapdeck/issues/138)
+* `add_trips()` for adding animated trips to the map
 * `add_path` gets `billboard` argument so the path always faces the 'camera'
 * Fix for legends in GeoJSON layer - [issue #190](https://github.com/SymbolixAU/mapdeck/issues/190)
 * `add_hexagon` now supports GPU aggregation for colour and elevation

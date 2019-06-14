@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1006</span>
       </span>
     </div>
 
@@ -78,6 +78,9 @@
     </li>
     <li>
       <a href="articles/tips_tricks.html">Tips &amp; Tricks</a>
+    </li>
+    <li>
+      <a href="articles/trips.html">Trips</a>
     </li>
   </ul>
 </li>
@@ -141,17 +144,17 @@
 <div id="from-cran" class="section level4">
 <h4 class="hasAnchor">
 <a href="#from-cran" class="anchor"></a>From cran</h4>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"mapdeck"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"mapdeck"</span>)</a></code></pre></div>
 </div>
 <div id="development-version" class="section level4">
 <h4 class="hasAnchor">
 <a href="#development-version" class="anchor"></a>Development version</h4>
 <p>To use the development version you need some other development dependant libraries</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"></a>
-<a class="sourceLine" id="cb2-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/geojsonsf"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-3" title="3">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/colourvalues"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-4" title="4">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/spatialwidget"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-5" title="5">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/mapdeck"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/geojsonsf"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/colourvalues"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/spatialwidget"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/mapdeck"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="getting-started" class="section level2">
@@ -160,20 +163,20 @@
 <p>Mapdeck uses <a href="https://www.mapbox.com/">Mapbox maps</a>, and to use Mapbox you need an <a href="https://www.mapbox.com/help/how-access-tokens-work/">access token</a>.</p>
 <p>Once you’ve generate a token you can use their maps.</p>
 <p>Call <code><a href="reference/mapdeck.html">mapdeck(token = 'your_token')</a></code> to generate a basic map. Then start adding layers by using one of the various <code>add_*()</code> functions.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
-<a class="sourceLine" id="cb3-2" title="2">flights &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(url)</a>
-<a class="sourceLine" id="cb3-3" title="3">flights<span class="op">$</span>info &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"&lt;b&gt;"</span>,flights<span class="op">$</span>airport1, <span class="st">" - "</span>, flights<span class="op">$</span>airport2, <span class="st">"&lt;/b&gt;"</span>)</a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="st">  </span><span class="kw"><a href="reference/add_arc.html">add_arc</a></span>(</a>
-<a class="sourceLine" id="cb3-7" title="7">    <span class="dt">data =</span> flights</a>
-<a class="sourceLine" id="cb3-8" title="8">    , <span class="dt">origin =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"start_lon"</span>, <span class="st">"start_lat"</span>)</a>
-<a class="sourceLine" id="cb3-9" title="9">    , <span class="dt">destination =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"end_lon"</span>, <span class="st">"end_lat"</span>)</a>
-<a class="sourceLine" id="cb3-10" title="10">    , <span class="dt">stroke_from =</span> <span class="st">"airport1"</span></a>
-<a class="sourceLine" id="cb3-11" title="11">    , <span class="dt">stroke_to =</span> <span class="st">"airport2"</span></a>
-<a class="sourceLine" id="cb3-12" title="12">    , <span class="dt">tooltip =</span> <span class="st">"info"</span></a>
-<a class="sourceLine" id="cb3-13" title="13">    , <span class="dt">layer_id =</span> <span class="st">'arclayer'</span></a>
-<a class="sourceLine" id="cb3-14" title="14">  )</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">flights &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(url)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">flights<span class="op">$</span>info &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"&lt;b&gt;"</span>,flights<span class="op">$</span>airport1, <span class="st">" - "</span>, flights<span class="op">$</span>airport2, <span class="st">"&lt;/b&gt;"</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="reference/add_arc.html">add_arc</a></span>(</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="dt">data =</span> flights</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">    , <span class="dt">origin =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"start_lon"</span>, <span class="st">"start_lat"</span>)</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">    , <span class="dt">destination =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"end_lon"</span>, <span class="st">"end_lat"</span>)</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">    , <span class="dt">stroke_from =</span> <span class="st">"airport1"</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">    , <span class="dt">stroke_to =</span> <span class="st">"airport2"</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">    , <span class="dt">tooltip =</span> <span class="st">"info"</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">    , <span class="dt">layer_id =</span> <span class="st">'arclayer'</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">  )</a></code></pre></div>
 <div class="figure">
 <img src="articles/img/readme_arcs_small.gif" alt="Arcs"><p class="caption">Arcs</p>
 </div>

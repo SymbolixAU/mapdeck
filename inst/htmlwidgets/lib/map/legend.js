@@ -3,8 +3,6 @@
 function md_colour_domain( x, colour_range, map_id, map_type, layer_id, legend  ) {
 	if( legend.legend ) {
 
-		console.log( x );
-
 		var cd = md_make_legend_range(x[0], x[1], colour_range.length, legend.digits );
 
 		var ledge = {
@@ -63,8 +61,8 @@ function md_add_legend_gradient(map_id, map_type, layer_id, legendValues) {
     // fill gradient
     // numeric values; format numbers according to legendValues.digits
 
-    console.log( "legend digits" );
-    console.log( legendValues );
+    //console.log( "legend digits" );
+    //console.log( legendValues );
 
     'use strict';
     var legendContent,

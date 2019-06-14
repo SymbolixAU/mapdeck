@@ -61,7 +61,7 @@ add_mesh <- function(
 	experimental_layer( "mesh" )
 
 	if(!inherits(data, "mesh3d")) {
-		stop("expecting mesh3d object")
+		stop("mapdeck - expecting mesh3d object")
 	}
 
 	l <- list()
@@ -79,10 +79,10 @@ add_mesh <- function(
 
 	## check:
 	if ( data[["primitivetype"]] == "quad" & is.null( data[["ib"]] ) ) {
-		stop("badly formed mesh3d type. Found quad and expecting ib index")
+		stop("mapdeck - badly formed mesh3d type. Found quad and expecting ib index")
 	}
 	if ( data[["primitivetype"]] == "triangle" & is.null( data[["it"]] ) ) {
-		stop("badly formed mesh3d type. Found triangle and expecting it index")
+		stop("mapdeck - badly formed mesh3d type. Found triangle and expecting it index")
 	}
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -187,7 +187,7 @@ add_mesh2 <- function(
 	experimental_layer( "mesh" )
 
 	if(!inherits(data, "mesh3d")) {
-		stop("expecting mesh3d object")
+		stop("mapdeck - expecting mesh3d object")
 	}
 
 	l <- list()
@@ -204,10 +204,10 @@ add_mesh2 <- function(
 
 	## check:
 	if ( data[["primitivetype"]] == "quad" & is.null( data[["ib"]] ) ) {
-		stop("badly formed mesh3d type. Found quad and expecting ib index")
+		stop("mapdeck - badly formed mesh3d type. Found quad and expecting ib index")
 	}
 	if ( data[["primitivetype"]] == "triangle" & is.null( data[["it"]] ) ) {
-		stop("badly formed mesh3d type. Found triangle and expecting it index")
+		stop("mapdeck - badly formed mesh3d type. Found triangle and expecting it index")
 	}
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )

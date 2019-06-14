@@ -11,7 +11,7 @@ resolve_od_data <- function( data, l, origin, destination ) UseMethod("resolve_o
 #' @export
 resolve_od_data.sf <- function( data, l, origin, destination ) {
 	if ( is.null( l[["origin"]] ) || is.null( l[["destination"]] ) ) {
-		stop("origin and destination columns required")
+		stop("mapdeck - origin and destination columns required")
 	}
 
 	l[["data_type"]] <- "sf"
@@ -31,7 +31,7 @@ resolve_od_data.sfencoded <- function( data, l, origin, destination ) {
 	# # l[["data"]] <- data
 	# l <- resolve_od_data.sfencodedLite( data, l, origin, destination )
 	# return( l )
-  stop("data type not yet for supported origin-destination plots")
+  stop("mapdeck - data type not yet for supported origin-destination plots")
 }
 
 #' @export
@@ -50,17 +50,17 @@ resolve_od_data.sfencodedLite <- function( data, l, origin, destination ) {
 # 	l[["data_type"]] <- "sfencoded"
 # 	l[["data"]] <- data ## attach the data becaue it gets modified and it needs to be returend
 # 	return( l )
-	stop("data type not supported")
+	stop("mapdeck - data type not supported")
 }
 
 #' @export
 resolve_od_data.data.frame <- function( data, l, origin, destination ) {
 	if ( is.null( l[["origin"]] ) || is.null( l[["destination"]] ) ) {
-		stop("origin and destination columns required")
+		stop("mapdeck - origin and destination columns required")
 	}
 
 	if( length(origin) != 2 | length(destination) != 2 ) {
-		stop("origin and destination columns should both contain lon & lat values")
+		stop("mapdeck - origin and destination columns should both contain lon & lat values")
 	}
 
 	l[["data_type"]] <- "df"
@@ -87,7 +87,7 @@ resolve_elevation_data.data.frame <- function( data, l, elevation, sf_geom ) {
 		l[["data_type"]] <- "sfencoded"
 	} else {
 	  if ( !(all(sf_geom %in% c( "POINT", "MULTIPOINT") ) ) )
-		  stop("unsupported data type")
+		  stop("mapdeck - unsupported data type")
 
 		l[["data_type"]] <- "df"
 		l[["bbox"]] <- get_box( data, l )
@@ -194,7 +194,7 @@ get_box.mesh3d <- function( data, l ) {
 get_box.quadmesh <- function( data, l ) {
 	md <- data[["raster_metadata"]]
 	if(is.null(md)) {
-		stop("expecting raster_metadata attribute on quadmesh object. Make sure you are using v0.4.0 of quadmesh")
+		stop("mapdeck - expecting raster_metadata attribute on quadmesh object. Make sure you are using v0.4.0 of quadmesh")
 	}
   bbox <- list(
   	 c(md[["xmn"]], md[["ymn"]]), c(md[["xmx"]], md[["ymx"]])
@@ -260,7 +260,7 @@ get_od_box.data.frame <- function( data, l ) {
 resolve_data.sfencoded <- function( data, l, sf_geom ) {
 
 	if ( "POLYGON" %in% sf_geom & !("list" %in% attr( data[[ attr( data, "encoded_column") ]], "class" )) ) {
-		stop("sfencoded POLYGON must be a list column")
+		stop("mapdeck - sfencoded POLYGON must be a list column")
 	}
 
 	if( !attr( data, "sfAttributes" )[["type"]] %in% sf_geom ) {
@@ -306,7 +306,7 @@ resolve_data.data.frame <- function( data, l, sf_geom ) {
 		l[["data_type"]] <- "sfencoded"
 	} else {
 		if ( sf_geom[1] != "POINT" )
-			stop("unsupported data type")
+			stop("mapdeck - unsupported data type")
 
 		l[["bbox"]] <- get_box( data, l )
 		l[["data_type"]] <- "df"
@@ -317,7 +317,7 @@ resolve_data.data.frame <- function( data, l, sf_geom ) {
 }
 
 #' @export
-resolve_data.default <- function( data, ... ) stop("This type of data is not supported")
+resolve_data.default <- function( data, ... ) stop("mapdeck - This type of data is not supported")
 
 resolve_geojson_data <- function( data, l ) UseMethod("resolve_geojson_data")
 
@@ -356,7 +356,7 @@ resolve_geojson_data.character <- function( data, l ) {
 }
 
 #' @export
-resolve_geojson_data.default <- function( data, l ) stop("I don't know how to handle this type of data")
+resolve_geojson_data.default <- function( data, l ) stop("mapdeck - I don't know how to handle this type of data")
 
 
 resolve_palette <- function( l, palette ) {
@@ -419,7 +419,7 @@ find_lat_column = function(names) {
 	if (length(lats) == 1) {
 		return(lats)
 	}
-	stop("could not find latitude column")
+	stop("mapdeck - could not find latitude column")
 }
 
 
@@ -430,5 +430,5 @@ find_lon_column = function(names) {
 	if (length(lons) == 1) {
 		return(lons)
 	}
-	stop("could not find longitude column")
+	stop("mapdeck - could not find longitude column")
 }

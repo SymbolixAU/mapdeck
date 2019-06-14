@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1006</span>
       </span>
     </div>
 
@@ -109,6 +109,9 @@
     <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
     </li>
+    <li>
+      <a href="../articles/trips.html">Trips</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -150,7 +153,7 @@
   <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
   <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>, <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,8 +164,8 @@
     </tr>
     <tr>
       <th>data</th>
-      <td><p>data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection</p></td>
+      <td><p>data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system</p></td>
     </tr>
     <tr>
       <th>text</th>
@@ -312,6 +315,7 @@ size = 0
 This should be a named list, where the names are one of</p><ul>
 <li><p>css - a string of valid <code>css</code> for controlling the appearance of the legend</p></li>
 <li><p>title - a string to use for the title of the legend</p></li>
+<li><p>digits - number to round the legend values to</p></li>
 </ul>
     <p>If the layer allows different fill and stroke colours, you can use different options for each. See examples in <a href='add_arc.html'>add_arc</a>.</p>
 <p>The <code>legend_format</code> can be used to control the format of the values in the legend.
@@ -350,7 +354,7 @@ you are clicking on</p>
     , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>'country'</span>
     , <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>'capital'</span>
     , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>'text'</span>
-  )</div><div class='output co'>#&gt; is_factor: 0</div><div class='input'>
+  )</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

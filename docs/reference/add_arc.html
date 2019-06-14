@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1006</span>
       </span>
     </div>
 
@@ -108,6 +108,9 @@
     </li>
     <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
+    </li>
+    <li>
+      <a href="../articles/trips.html">Trips</a>
     </li>
   </ul>
 </li>
@@ -160,8 +163,8 @@
     </tr>
     <tr>
       <th>data</th>
-      <td><p>data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection</p></td>
+      <td><p>data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system</p></td>
     </tr>
     <tr>
       <th>layer_id</th>
@@ -304,6 +307,7 @@ you are clicking on</p>
 This should be a named list, where the names are one of</p><ul>
 <li><p>css - a string of valid <code>css</code> for controlling the appearance of the legend</p></li>
 <li><p>title - a string to use for the title of the legend</p></li>
+<li><p>digits - number to round the legend values to</p></li>
 </ul>
     <p>If the layer allows different fill and stroke colours, you can use different options for each. See examples in add_arc.</p>
 <p>The <code>legend_format</code> can be used to control the format of the values in the legend.
@@ -358,8 +362,9 @@ stroke_width = 0
   , <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
     <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>( <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Origin airport"</span> ),
     <span class='kw'>css</span> <span class='kw'>=</span> <span class='st'>"max-height: 100px;"</span>)
- )</div><div class='output co'>#&gt; is_factor: 0
-#&gt; is_factor: 0</div><div class='input'>
+ )</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'jsonlite':</span>
+#&gt; <span class='message'>  method     from   </span>
+#&gt; <span class='message'>  print.json jsonify</span></div><div class='input'>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_arc</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>flights</span>
@@ -369,10 +374,10 @@ stroke_width = 0
   , <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='st'>"airport1"</span>
   , <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='st'>"airport2"</span>
   , <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='st'>"stroke"</span>
-  )</div><div class='output co'>#&gt; is_factor: 0
-#&gt; is_factor: 0</div><div class='input'>
+  )
+
 <span class='co'>## Using a 2-sfc-column sf object</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sf</span>)</div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3</span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sf</span>)</div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.7.0, GDAL 2.4.0, PROJ 5.2.0</span></div><div class='input'>
 <span class='no'>sf_flights</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>cbind</a></span>(
   <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>(<span class='no'>flights</span>, <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"start_lon"</span>, <span class='st'>"start_lat"</span>))
   , <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>(<span class='no'>flights</span>[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"end_lon"</span>,<span class='st'>"end_lat"</span>)], <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"end_lon"</span>, <span class='st'>"end_lat"</span>))
@@ -388,8 +393,8 @@ stroke_width = 0
    , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>'arcs'</span>
    , <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='st'>"airport1"</span>
    , <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='st'>"airport2"</span>
-)</div><div class='output co'>#&gt; is_factor: 0
-#&gt; is_factor: 0</div><div class='input'>
+)
+
 <span class='co'>## using a brush</span>
 
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
@@ -405,11 +410,7 @@ stroke_width = 0
    , <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='st'>"airport2"</span>
    , <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='fl'>4</span>
    , <span class='kw'>brush_radius</span> <span class='kw'>=</span> <span class='fl'>500000</span>
-)</div><div class='output co'>#&gt; is_factor: 0
-#&gt; is_factor: 0</div><div class='input'>
-
-
-</div><div class='input'>
+)</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
