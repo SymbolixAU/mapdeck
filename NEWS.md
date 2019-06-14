@@ -1,5 +1,6 @@
 # mapdeck 0.3
 
+* z-fighting [issue 199](https://github.com/SymbolixAU/mapdeck/issues/199)
 * factors correctly used in legends [issue #138](https://github.com/SymbolixAU/mapdeck/issues/138)
 * `add_trips()` for adding animated trips to the map
 * `add_path` gets `billboard` argument so the path always faces the 'camera'
