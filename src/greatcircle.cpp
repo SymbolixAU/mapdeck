@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 
 #include "mapdeck_defaults.hpp"
-#include "layers/greatcircle.hpp"
+#include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List greatcircle_defaults(int n) {
@@ -24,8 +24,8 @@ Rcpp::List rcpp_greatcircle_geojson(
 
 	Rcpp::List lst_defaults = greatcircle_defaults( data_rows );  // initialise with defaults
 
-	std::unordered_map< std::string, std::string > greatcircle_colours = mapdeck::greatcircle::greatcircle_colours;
-	Rcpp::StringVector greatcircle_legend = mapdeck::greatcircle::greatcircle_legend;
+	std::unordered_map< std::string, std::string > greatcircle_colours = mapdeck::layer_colours::stroke_od_colours;
+	Rcpp::StringVector greatcircle_legend = mapdeck::layer_colours::stroke_od_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson_downcast(
@@ -52,8 +52,8 @@ Rcpp::List rcpp_greatcircle_geojson_df(
 
 	Rcpp::List lst_defaults = greatcircle_defaults( data_rows );  // initialise with defaults
 
-	std::unordered_map< std::string, std::string > greatcircle_colours = mapdeck::greatcircle::greatcircle_colours;
-	Rcpp::StringVector greatcircle_legend = mapdeck::greatcircle::greatcircle_legend;
+	std::unordered_map< std::string, std::string > greatcircle_colours = mapdeck::layer_colours::stroke_od_colours;
+	Rcpp::StringVector greatcircle_legend = mapdeck::layer_colours::stroke_od_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(
@@ -72,15 +72,17 @@ Rcpp::List rcpp_greatcircle_geojson_df(
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_greatcircle_polyline( Rcpp::DataFrame data,
-                              Rcpp::List params, Rcpp::StringVector geometry_columns ) {
+Rcpp::List rcpp_greatcircle_polyline(
+		Rcpp::DataFrame data,
+		Rcpp::List params, Rcpp::StringVector geometry_columns
+	) {
 
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = greatcircle_defaults( data_rows );  // initialise with defaults
 
-	std::unordered_map< std::string, std::string > greatcircle_colours = mapdeck::greatcircle::greatcircle_colours;
-	Rcpp::StringVector greatcircle_legend = mapdeck::greatcircle::greatcircle_legend;
+	std::unordered_map< std::string, std::string > greatcircle_colours = mapdeck::layer_colours::stroke_od_colours;
+	Rcpp::StringVector greatcircle_legend = mapdeck::layer_colours::stroke_od_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(

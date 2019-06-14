@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 
 #include "mapdeck_defaults.hpp"
-#include "layers/polygon.hpp"
+#include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List polygon_defaults(int n) {
@@ -21,8 +21,9 @@ Rcpp::List rcpp_polygon_geojson(
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
-	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::polygon::polygon_colours;
-	Rcpp::StringVector polygon_legend = mapdeck::polygon::polygon_legend;
+
+	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::layer_colours::fill_stroke_colours;
+	Rcpp::StringVector polygon_legend = mapdeck::layer_colours::fill_stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson_downcast(
@@ -75,8 +76,9 @@ Rcpp::List rcpp_polygon_polyline(
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
-	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::polygon::polygon_colours;
-	Rcpp::StringVector polygon_legend = mapdeck::polygon::polygon_legend;
+
+	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::layer_colours::fill_stroke_colours;
+	Rcpp::StringVector polygon_legend = mapdeck::layer_colours::fill_stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(

@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 
 #include "mapdeck_defaults.hpp"
-#include "layers/mesh.hpp"
+#include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List mesh_defaults(int n) {
@@ -98,8 +98,10 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params,
-                              Rcpp::StringVector vertices, int digits ) {
+Rcpp::List rcpp_mesh_geojson(
+		Rcpp::List mesh, Rcpp::List params,
+		Rcpp::StringVector vertices, int digits
+	) {
 
 	Rcpp::DataFrame data = mesh_to_sf( mesh, vertices );
 
@@ -113,8 +115,8 @@ Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params,
 	std::string geometry_columns = "geometry";
 
 	Rcpp::List lst_defaults = mesh_defaults( data_rows );  // initialise with defaults
-	std::unordered_map< std::string, std::string > mesh_colours = mapdeck::mesh::mesh_colours;
-	Rcpp::StringVector mesh_legend = mapdeck::mesh::mesh_legend;
+	std::unordered_map< std::string, std::string > mesh_colours = mapdeck::layer_colours::fill_colours;
+	Rcpp::StringVector mesh_legend = mapdeck::layer_colours::fill_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson_downcast(

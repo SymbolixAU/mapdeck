@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 
 #include "mapdeck_defaults.hpp"
-#include "layers/arc.hpp"
+#include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List arc_defaults(int n) {
@@ -24,8 +24,8 @@ Rcpp::List rcpp_arc_geojson(
 
 	Rcpp::List lst_defaults = arc_defaults( data_rows );  // initialise with defaults
 
-	std::unordered_map< std::string, std::string > arc_colours = mapdeck::arc::arc_colours;
-	Rcpp::StringVector arc_legend = mapdeck::arc::arc_legend;
+	std::unordered_map< std::string, std::string > arc_colours = mapdeck::layer_colours::stroke_od_colours;
+	Rcpp::StringVector arc_legend = mapdeck::layer_colours::stroke_od_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson_downcast(
@@ -52,8 +52,8 @@ Rcpp::List rcpp_arc_geojson_df(
 
 	Rcpp::List lst_defaults = arc_defaults( data_rows );  // initialise with defaults
 
-	std::unordered_map< std::string, std::string > arc_colours = mapdeck::arc::arc_colours;
-	Rcpp::StringVector arc_legend = mapdeck::arc::arc_legend;
+	std::unordered_map< std::string, std::string > arc_colours = mapdeck::layer_colours::stroke_od_colours;
+	Rcpp::StringVector arc_legend = mapdeck::layer_colours::stroke_od_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(
@@ -72,15 +72,17 @@ Rcpp::List rcpp_arc_geojson_df(
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_arc_polyline( Rcpp::DataFrame data,
-                             Rcpp::List params, Rcpp::StringVector geometry_columns ) {
+Rcpp::List rcpp_arc_polyline(
+		Rcpp::DataFrame data,
+		Rcpp::List params, Rcpp::StringVector geometry_columns
+	) {
 
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = arc_defaults( data_rows );  // initialise with defaults
 
-	std::unordered_map< std::string, std::string > arc_colours = mapdeck::arc::arc_colours;
-	Rcpp::StringVector arc_legend = mapdeck::arc::arc_legend;
+	std::unordered_map< std::string, std::string > arc_colours = mapdeck::layer_colours::stroke_od_colours;
+	Rcpp::StringVector arc_legend = mapdeck::layer_colours::stroke_od_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(

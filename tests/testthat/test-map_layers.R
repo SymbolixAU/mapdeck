@@ -19,6 +19,7 @@ test_that("layerId includes all layers", {
 		, "screengrid"
 		, "text"
 		, "title"
+		, "trips"
 	)
 
 	expect_equal( layers, mapdeck:::mapdeck_layers() )

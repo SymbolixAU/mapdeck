@@ -242,7 +242,7 @@ add_mesh2 <- function(
 	}
 
 	checkHexAlpha(highlight_colour)
-	layer_id <- layerId(layer_id, "polygon")
+	layer_id <- layerId(layer_id, "mesh")
 
 	map <- addDependency(map, mapdeckMeshDependency())
 
