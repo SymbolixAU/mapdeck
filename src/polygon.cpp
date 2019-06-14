@@ -13,8 +13,10 @@ Rcpp::List polygon_defaults(int n) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_polygon_geojson( Rcpp::DataFrame data, Rcpp::List params,
-                                 std::string geometry_columns, int digits  ) {
+Rcpp::List rcpp_polygon_geojson(
+		Rcpp::DataFrame data, Rcpp::List params,
+		std::string geometry_columns, int digits
+	) {
 
 	int data_rows = data.nrows();
 
@@ -65,8 +67,10 @@ Rcpp::List rcpp_polygon_geojson( Rcpp::DataFrame data, Rcpp::List params,
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_polygon_polyline( Rcpp::DataFrame data,
-                                 Rcpp::List params, Rcpp::StringVector geometry_columns  ) {
+Rcpp::List rcpp_polygon_polyline(
+		Rcpp::DataFrame data,
+		Rcpp::List params, Rcpp::StringVector geometry_columns
+	) {
 
 	int data_rows = data.nrows();
 
