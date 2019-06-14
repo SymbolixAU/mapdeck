@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Clear Arc — clear_arc • mapdeck</title>
+<title>garmin — garmin • mapdeck</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Clear Arc — clear_arc" />
+<meta property="og:title" content="garmin — garmin" />
 
-<meta property="og:description" content="Clears elements from a map" />
+<meta property="og:description" content="An sf object of my cycling activities from my Garmin" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -133,79 +133,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Clear Arc</h1>
+    <h1>garmin</h1>
     
-    <div class="hidden name"><code>clear.Rd</code></div>
+    <div class="hidden name"><code>garmin.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Clears elements from a map</p>
+    <p>An sf object of my cycling activities from my Garmin</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>clear_arc</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='no'>garmin</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-<span class='fu'>clear_bitmap</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_column</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_geojson</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_greatcircle</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_grid</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_hexagon</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_line</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_mesh</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_path</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_pointcloud</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_polygon</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_scatterplot</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_screengrid</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_text</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_title</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>clear_trips</span>(<span class='no'>map</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>map</th>
-      <td><p>a mapdeck map object</p></td>
-    </tr>
-    <tr>
-      <th>layer_id</th>
-      <td><p>the layer_id of the layer you want to clear</p></td>
-    </tr>
-    <tr>
-      <th>map</th>
-      <td><p>a mapdeck map object</p></td>
-    </tr>
-    <tr>
-      <th>layer_id</th>
-      <td><p>the layer_id of the layer you want to clear</p></td>
-    </tr>
-    </table>
+    <p>An object of class <code>sf</code> (inherits from <code>data.table</code>, <code>data.frame</code>) with 151 rows and 3 columns.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#format">Format</a></li>
+          </ul>
 
   </div>
 </div>

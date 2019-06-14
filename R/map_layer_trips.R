@@ -17,8 +17,7 @@ mapdeckTripsDependency <- function() {
 #'
 #' @inheritParams add_polygon
 #' @param data sf object with XYZM dimensions.
-#' @param stroke_width
-#' @param trail_length
+#' @param trail_length length in metres of the trail
 #' @param opacity single value in [0,1]
 #' @param start_time the minimum timestamp
 #' @param end_time the maximum timestamp
@@ -30,37 +29,6 @@ mapdeckTripsDependency <- function() {
 #' @examples
 #' \donttest{
 #'
-#' library(sf)
-#'
-#' set_token( "MAPBOX_TOKEN" )
-#'
-#' x <- c(0,0,1,1,2,2,3,3,0)
-#' y <- c(0,1,1,2,2,3,3,0,0)
-#' z <- c(0,10, 50, 1000, 200000, 10000, 30, 5000, 0) ## elevation
-#' m <- c(0,1,3,5,10,20,50, 150, 200)  # timestamps
-#'
-#' l1 <- matrix( c(x, y, z, m), ncol = 4 )
-#' l2 <- matrix( c(rev(x), rev(y), rev(z), m ), ncol = 4 )
-#'
-#' l1 <- sf::st_sfc( sf::st_linestring( x = l1 ) )
-#' l2 <- sf::st_sfc( sf::st_linestring( x = l2 ) )
-#'
-#' sf <- sf::st_sf( geometry = sf::st_sfc( c(l1, l2)  ) )
-#'
-#' sf$id <- c(1,2)
-#'
-#' mapdeck(
-#' 	location = c(0, 0)
-#' 	, zoom = 4
-#' 	, pitch = 65
-#' ) %>%
-#' 	add_trips(
-#' 		data = sf
-#' 		, stroke_colour = "id"
-#' 		, start_time = 0
-#' 		, end_time = 200
-#' 		, trail_length = 50
-#' 	)
 #'
 #' library(gpxsf)
 #' gpx <- system.file("gpx/city_trail.gpx", package = "gpx")

@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r packages, eval = TRUE, message = FALSE}
+```
 library(mapdeck)
 library(googleway)
 ```

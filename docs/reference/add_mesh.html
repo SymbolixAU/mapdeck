@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add Text — add_text • mapdeck</title>
+<title>Add Mesh — add_mesh • mapdeck</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Add Text — add_text" />
+<meta property="og:title" content="Add Mesh — add_mesh" />
 
-<meta property="og:description" content="The Text Layer renders text labels on the map" />
+<meta property="og:description" content="Adds polygons to the map from a quadmesh object" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -133,27 +133,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add Text</h1>
+    <h1>Add Mesh</h1>
     
-    <div class="hidden name"><code>add_text.Rd</code></div>
+    <div class="hidden name"><code>add_mesh.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The Text Layer renders text labels on the map</p>
+    <p>Adds polygons to the map from a <code>quadmesh</code> object</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>add_text</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='no'>text</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>angle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>anchor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>alignment_baseline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>billboard</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>font_family</span> <span class='kw'>=</span> <span class='st'>"Monaco, monospace"</span>, <span class='kw'>font_weight</span> <span class='kw'>=</span> <span class='st'>"normal"</span>,
-  <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
-  <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>, <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>add_mesh</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>fill_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>light_settings</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>,
+  <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,26 +165,6 @@
 EPSG:4326 (WGS 84) coordinate system</p></td>
     </tr>
     <tr>
-      <th>text</th>
-      <td><p>column of <code>data</code> containing the text. The data must be a character.</p></td>
-    </tr>
-    <tr>
-      <th>lon</th>
-      <td><p>column containing longitude values</p></td>
-    </tr>
-    <tr>
-      <th>lat</th>
-      <td><p>column containing latitude values</p></td>
-    </tr>
-    <tr>
-      <th>polyline</th>
-      <td><p>optional column of <code>data</code> containing the polylines, if using encoded polylines</p></td>
-    </tr>
-    <tr>
-      <th>fill_colour</th>
-      <td><p>column of <code>data</code> or hex colour for the fill colour.</p></td>
-    </tr>
-    <tr>
       <th>fill_opacity</th>
       <td><p>Either a string specifying the column of <code>data</code>
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
@@ -195,42 +172,25 @@ to be applied to all the shapes. Default 255. If a hex-string is used as the
 colour, this argument is ignored and you should include the alpha on the hex string</p></td>
     </tr>
     <tr>
-      <th>size</th>
-      <td><p>column of <code>data</code> containing the size of the text. Default 32</p></td>
-    </tr>
-    <tr>
-      <th>angle</th>
-      <td><p>column of <code>data</code> containging the angle of the text. Default 0</p></td>
-    </tr>
-    <tr>
-      <th>anchor</th>
-      <td><p>column of <code>data</code> containing the anchor of the text. One of
-'start', 'middle' or 'end'</p></td>
-    </tr>
-    <tr>
-      <th>alignment_baseline</th>
-      <td><p>column of <code>data</code> containing the alignment. One of
-'top', 'center' or 'bottom'</p></td>
-    </tr>
-    <tr>
-      <th>billboard</th>
-      <td><p>logical indicating if the text always faces the camera (TRUE) or
-if it always faces up (FALSE)</p></td>
-    </tr>
-    <tr>
-      <th>font_family</th>
-      <td><p>specifies a prioritised list of one or more font family names and/or
-generic family names. Follow the specifics for CSS font-family
-<a href='https://developer.mozilla.org/en-US/docs/Web/CSS/font-family'>https://developer.mozilla.org/en-US/docs/Web/CSS/font-family</a></p></td>
-    </tr>
-    <tr>
-      <th>font_weight</th>
-      <td><p>specifies the font weight. Follow the specifics for CSS font-weight
-<a href='https://htmldog.com/references/css/properties/font-weight/'>https://htmldog.com/references/css/properties/font-weight/</a></p></td>
+      <th>elevation</th>
+      <td><p>the height the polygon extrudes from the map. Only available if neither
+<code>stroke_colour</code> or <code>stroke_width</code> are supplied. Default 0</p></td>
     </tr>
     <tr>
       <th>tooltip</th>
       <td><p>variable of <code>data</code> containing text or HTML to render as a tooltip</p></td>
+    </tr>
+    <tr>
+      <th>auto_highlight</th>
+      <td><p>logical indicating if the shape under the mouse should auto-highlight</p></td>
+    </tr>
+    <tr>
+      <th>highlight_colour</th>
+      <td><p>hex string colour to use for highlighting. Must contain the alpha component.</p></td>
+    </tr>
+    <tr>
+      <th>light_settings</th>
+      <td><p>list of light setting parameters. See <a href='light_settings.html'>light_settings</a></p></td>
     </tr>
     <tr>
       <th>layer_id</th>
@@ -241,14 +201,6 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>id</th>
       <td><p>an id value in <code>data</code> to identify layers when interacting in Shiny apps.</p></td>
-    </tr>
-    <tr>
-      <th>auto_highlight</th>
-      <td><p>logical indicating if the shape under the mouse should auto-highlight</p></td>
-    </tr>
-    <tr>
-      <th>highlight_colour</th>
-      <td><p>hex string colour to use for highlighting. Must contain the alpha component.</p></td>
     </tr>
     <tr>
       <th>palette</th>
@@ -291,22 +243,7 @@ a named list indicating which colour attributes should be included in the legend
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>add_text</code> supports POINT and MULTIPOINT sf objects</p>
-    
-    <h2 class="hasAnchor" id="transitions"><a class="anchor" href="#transitions"></a>transitions</h2>
-
-    
-    <p>The transitions argument lets you specify the time it will take for the shapes to transition
-from one state to the next. Only works in an interactive environment (Shiny)
-and on WebGL-2 supported browsers and hardware.</p>
-<p>The time is in milliseconds</p>
-<p>Available transitions for text</p>
-<p>list(
-position = 0,
-fill_colour = 0,
-angle = 0,
-size = 0
-)</p>
+    <p><code>add_mesh</code> supports quadmesh objects</p>
     
     <h2 class="hasAnchor" id="legend"><a class="anchor" href="#legend"></a>legend</h2>
 
@@ -337,25 +274,6 @@ where 'map' is the map_id supplied to <code><a href='mapdeck-shiny.html'>mapdeck
 you are clicking on</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-</div><div class='input'>
-<span class='co'>## You need a valid access token from Mapbox</span>
-<span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='st'>'abc'</span>
-<span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='no'>key</span> )
-
-<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
-  <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>)
-) <span class='kw'>%&gt;%</span>
-  <span class='fu'>add_text</span>(
-    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>capitals</span>
-    , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>'lon'</span>
-    , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>'lat'</span>
-    , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>'country'</span>
-    , <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>'capital'</span>
-    , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>'text'</span>
-  )</div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -364,14 +282,10 @@ you are clicking on</p>
       
       <li><a href="#details">Details</a></li>
 
-      <li><a href="#transitions">transitions</a></li>
-
       <li><a href="#legend">legend</a></li>
 
       <li><a href="#id">id</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>
