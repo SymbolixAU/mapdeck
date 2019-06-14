@@ -65,7 +65,7 @@ The color and height of the cell is scaled by number of points it contains." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1006</span>
       </span>
     </div>
 
@@ -111,6 +111,9 @@ The color and height of the cell is scaled by number of points it contains." />
     <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
     </li>
+    <li>
+      <a href="../articles/trips.html">Trips</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -147,8 +150,10 @@ The color and height of the cell is scaled by number of points it contains.</p>
 
     <pre class="usage"><span class='fu'>add_grid</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cell_size</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>extruded</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elevation_function</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"sum"</span>, <span class='st'>"mean"</span>, <span class='st'>"min"</span>,
+  <span class='st'>"max"</span>), <span class='kw'>colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>colour_function</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"sum"</span>, <span class='st'>"mean"</span>, <span class='st'>"min"</span>,
+  <span class='st'>"max"</span>), <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>,
   <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -162,8 +167,8 @@ The color and height of the cell is scaled by number of points it contains.</p>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection</p></td>
+      <td><p>data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system</p></td>
     </tr>
     <tr>
       <th>lon</th>
@@ -187,23 +192,39 @@ Web Mercator Projection</p></td>
     </tr>
     <tr>
       <th>elevation</th>
-      <td><p>column containing the elevation of the value. This is used to calculate the
-height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
-within the <code>radius</code>. If NULL, the number of coordinates is used.</p></td>
+      <td><p>the height the polygon extrudes from the map. Only available if neither
+<code>stroke_colour</code> or <code>stroke_width</code> are supplied. Default 0</p></td>
     </tr>
     <tr>
-      <th>elevation_scale</th>
-      <td><p>cell elevation multiplier. Default 1</p></td>
+      <th>elevation_function</th>
+      <td><p>one of 'min', 'mean', 'max', 'sum'.
+IF supplied it specifies how the elevation values are calcualted. Defaults to sum.</p></td>
     </tr>
     <tr>
       <th>colour</th>
-      <td><p>column containing numeric values to colour by.
-The colour is calculated by the sum of values within the <code>radius</code>.
-If NULL, the number of coordinates is used.</p></td>
+      <td><p>column containing numeric values to colour by.</p></td>
+    </tr>
+    <tr>
+      <th>colour_function</th>
+      <td><p>one of 'min', 'mean', 'max', 'sum'.
+If supplied it specifies how the colour values are calculated. Defaults to sum.</p></td>
+    </tr>
+    <tr>
+      <th>elevation_scale</th>
+      <td><p>value to sacle the elevations of the hexagons. Default 1</p></td>
     </tr>
     <tr>
       <th>colour_range</th>
       <td><p>vector of 6 hex colours</p></td>
+    </tr>
+    <tr>
+      <th>legend</th>
+      <td><p>either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.</p></td>
+    </tr>
+    <tr>
+      <th>legend_options</th>
+      <td><p>A list of options for controlling the legend.</p></td>
     </tr>
     <tr>
       <th>auto_highlight</th>
@@ -245,10 +266,15 @@ detected. If the sf object contains more than one geometry column and you want t
 you'll need to set the active geometry using <code>sf::st_geometry( x ) &lt;- "your_column" </code>,
 where <code>"your_column"</code> is the name of the column you're activating. See <code><a href='https://www.rdocumentation.org/packages/sf/topics/st_geometry'>?sf::st_geometry</a></code></p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>add_hexagon</p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## You need a valid access token from Mapbox</span>
 <span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='st'>'abc'</span>
+<span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='no'>key</span> )
 
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/read.table'>read.csv</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(
 <span class='st'>'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,
@@ -257,7 +283,7 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
 
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>df</span>[ !<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>df</span>$<span class='no'>lng</span> ), ]
 
-<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
 <span class='fu'>add_grid</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>
   , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
@@ -279,6 +305,33 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
   , <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>50</span>
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"grid_layer"</span>
   , <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
+
+<span class='co'>## using colour and elevation functions, and legends</span>
+<span class='no'>df</span>$<span class='no'>val</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>df</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='no'>T</span>)
+
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span>) <span class='kw'>%&gt;%</span>
+<span class='fu'>add_grid</span>(
+        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>
+        , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
+        , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"lng"</span>
+        , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"hex_layer"</span>
+        , <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>100</span>
+        , <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>T</span>
+        , <span class='kw'>colour_function</span> <span class='kw'>=</span> <span class='st'>"mean"</span>
+        , <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>"val"</span>
+)
+
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span>) <span class='kw'>%&gt;%</span>
+<span class='fu'>add_grid</span>(
+        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>
+        , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
+        , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"lng"</span>
+        , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"hex_layer"</span>
+        , <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>100</span>
+        , <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>T</span>
+        , <span class='kw'>elevation_function</span> <span class='kw'>=</span> <span class='st'>"mean"</span>
+        , <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='st'>"val"</span>
 )</div><div class='input'>
 </div></pre>
   </div>
@@ -290,6 +343,8 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
       <li><a href="#details">Details</a></li>
 
       <li><a href="#data">data</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

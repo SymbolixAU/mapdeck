@@ -64,7 +64,7 @@ aggregates them into histogram bins and renders as a grid" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1006</span>
       </span>
     </div>
 
@@ -110,6 +110,9 @@ aggregates them into histogram bins and renders as a grid" />
     <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
     </li>
+    <li>
+      <a href="../articles/trips.html">Trips</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -144,9 +147,10 @@ aggregates them into histogram bins and renders as a grid</p>
     </div>
 
     <pre class="usage"><span class='fu'>add_screengrid</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opacity</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>cell_size</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>aggregation</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"sum"</span>, <span class='st'>"mean"</span>,
+  <span class='st'>"min"</span>, <span class='st'>"max"</span>), <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opacity</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>cell_size</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,8 +161,8 @@ aggregates them into histogram bins and renders as a grid</p>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection</p></td>
+      <td><p>data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system</p></td>
     </tr>
     <tr>
       <th>lon</th>
@@ -175,6 +179,11 @@ Web Mercator Projection</p></td>
     <tr>
       <th>weight</th>
       <td><p>the weight of each value. Default 1</p></td>
+    </tr>
+    <tr>
+      <th>aggregation</th>
+      <td><p>one of 'min', 'mean', 'max', 'sum'.
+If supplied it specifies how the weights used.</p></td>
     </tr>
     <tr>
       <th>colour_range</th>
@@ -221,6 +230,7 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
     <pre class="examples"><div class='input'>
 <span class='co'>## You need a valid access token from Mapbox</span>
 <span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='st'>'abc'</span>
+<span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='no'>key</span> )
 
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/read.table'>read.csv</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(
 <span class='st'>'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,
@@ -230,9 +240,9 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>df</span>[ !<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>df</span>$<span class='no'>lng</span>), ]
 <span class='no'>df</span>$<span class='no'>weight</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>df</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='no'>T</span>)
 
-<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
 <span class='fu'>add_screengrid</span>(
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>[<span class='fl'>1</span>:<span class='fl'>1000</span>, ]
   , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
   , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"lng"</span>
   , <span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"weight"</span>,

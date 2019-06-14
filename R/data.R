@@ -37,3 +37,9 @@
 #'
 #' @format a 'json' object
 "geojson"
+
+#' garmin
+#'
+#' An sf object of my cycling activities from my Garmin
+#'
+"garmin"
