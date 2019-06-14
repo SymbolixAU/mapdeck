@@ -14,6 +14,9 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
     lineWidthMinPixels: 0,
     stroked: true,  // TODO( make conditional IFF stroke provided?)
     filled: true,
+    parameters: {
+	    depthTest: false
+	  },
     getRadius: d => d.properties.radius,
     getPosition: d => md_get_point_coordinates( d ),
     getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
@@ -53,6 +56,9 @@ function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, aut
     lineWidthMinPixels: 0,
     stroked: true,
     filled: true,
+    parameters: {
+	    depthTest: false
+	  },
     getRadius: d => d.radius,
     getPosition: d => md_decode_points( d.polyline ),
     getFillColor: d => md_hexToRGBA( d.fill_colour ),

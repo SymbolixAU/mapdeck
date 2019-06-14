@@ -7,6 +7,10 @@ trail_length, start_time, end_time, animation_speed, legend ) {
   var tripsLayer = new TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
+    parameters: {
+	    depthTest: false
+	  },
+
     getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
     getTimestamps: d => md_trip_timestamp( d.geometry.geometry.coordinates, start_time ),
     getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
@@ -46,6 +50,10 @@ trail_length, start_time, end_time, animation_speed, legend ) {
 		var tripsLayer = new TripsLayer({
 		    id: 'trips-'+layer_id,
 		    data: trips_data,
+		    parameters: {
+			    depthTest: false
+			  },
+
 		    getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
 		    getTimestamps: d => md_trip_timestamp( d.geometry.geometry.coordinates, start_time ),
 		    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),

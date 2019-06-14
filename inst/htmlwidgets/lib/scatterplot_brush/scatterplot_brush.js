@@ -198,6 +198,9 @@ function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, au
     radiusMaxPixels: radius_max_pixels || Number.MAX_SAFE_INTEGER,
     stroked: true,  // TODO( make conditional IFF stroke provided?)
     filled: true,
+    parameters: {
+	    depthTest: false
+	  },
     getRadius: d => d.properties.radius,
     getPosition: d => md_get_point_coordinates( d ),
     getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),

@@ -91,7 +91,7 @@ you are clicking on
 \donttest{
 
 
-library(gpxsf)
+library(gpx)
 gpx <- system.file("gpx/city_trail.gpx", package = "gpx")
 sf <- gpx::gpx_sf( gpx, time = "counter" )
 

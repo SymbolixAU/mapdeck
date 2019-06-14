@@ -6,6 +6,9 @@ function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, hi
     id: 'text-'+layer_id,
     data: text_data,
     pickable: true,
+    parameters: {
+	    depthTest: false
+	  },
 
     getPosition: d => md_get_point_coordinates( d ),
     getColor: d => md_hexToRGBA( d.properties.fill_colour ),
@@ -46,6 +49,10 @@ function add_text_polyline( map_id, map_type, text_data, layer_id, auto_highligh
     id: 'text-'+layer_id,
     data: text_data,
     pickable: true,
+    parameters: {
+	    depthTest: false
+	  },
+
     getPosition: d => md_decode_points( d.polyline ),
     getColor: d => md_hexToRGBA( d.fill_colour ),
     getText: d => d.text,
