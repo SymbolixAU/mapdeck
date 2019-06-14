@@ -16,3 +16,4 @@
 ^vignettes/img/articles/*
 ^vignettes/layers.Rmd
 ^vignettes/google_map.Rmd
+^vignettes/trips.Rmd
