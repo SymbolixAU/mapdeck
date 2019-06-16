@@ -69,8 +69,7 @@ token](https://www.mapbox.com/help/how-access-tokens-work/).
 Once you’ve generate a token you can use their maps.
 
 Call `mapdeck(token = 'your_token')` to generate a basic map. Then start
-adding layers by using one of the various `add_*()`
-functions.
+adding layers by using one of the various `add_*()` functions.
 
 ``` r
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
@@ -94,3 +93,15 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
 See the
 [Layers](https://symbolixau.github.io/mapdeck/articles/layers.html) page
 for more examples
+
+## Getting help
+
+For general help and advice the best place to ask is on
+[StackOverflow](https://stackoverflow.com/questions/tagged/mapdeck)
+(using the `mapdeck` tag).
+
+If you’ve found a bug, or want a new feature added then use the [issue
+tracker](https://github.com/SymbolixAU/mapdeck/issues) on github.
+
+I don’t respond to emails asking for help because this is an open source
+package, and any advice should be kept open so everyone can benefit.
