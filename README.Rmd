@@ -98,7 +98,7 @@ For general help and advice the best place to ask is on [StackOverflow](https://
 
 If you've found a bug, or want a new feature added then use the [issue tracker](https://github.com/SymbolixAU/mapdeck/issues) on github.
 
-I don't respond to emails asking for help because this is an open source package, and any advice should be kept open so everyone can benefit.
+I don't respond to emails asking for help because this is an open source package, and any advice should be kept open so everyone can benefit. (unless you want to pay me!)
 
 
 

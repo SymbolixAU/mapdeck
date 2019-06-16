@@ -105,3 +105,4 @@ tracker](https://github.com/SymbolixAU/mapdeck/issues) on github.
 
 I don’t respond to emails asking for help because this is an open source
 package, and any advice should be kept open so everyone can benefit.
+(unless you want to pay me\!)
