@@ -1,5 +1,5 @@
 
-function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, visible ) {
 
   const lineLayer = new LineLayer({
   	map_id: map_id,
@@ -9,6 +9,7 @@ function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, hi
     parameters: {
 	    depthTest: false
 	  },
+	  visible: visible,
     getWidth: d => d.properties.stroke_width,
     getSourcePosition: d => md_get_origin_coordinates( d ),
     getTargetPosition: d => md_get_destination_coordinates( d ),
@@ -33,7 +34,7 @@ function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, hi
 }
 
 
-function add_line_polyline( map_id, map_type, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_line_polyline( map_id, map_type, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, visible ) {
 
   const lineLayer = new LineLayer({
     map_id: map_id,
@@ -43,6 +44,7 @@ function add_line_polyline( map_id, map_type, line_data, layer_id, auto_highligh
     parameters: {
 	    depthTest: false
 	  },
+	  visible: visible,
     getWidth: d => d.stroke_width,
     getSourcePosition: d => md_decode_points( d.origin ),
     getTargetPosition: d => md_decode_points( d.destination ),

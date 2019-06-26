@@ -116,7 +116,8 @@ add_greatcircle <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL,
-	digits = 6
+	digits = 6,
+	visible = TRUE
 ) {
 
 	l <- list()
@@ -183,7 +184,7 @@ add_greatcircle <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition,
-		wrap_longitude
+		wrap_longitude, visible
 	)
 }
 

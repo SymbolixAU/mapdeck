@@ -106,7 +106,8 @@ add_column <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	visible = TRUE
 ) {
 
 	l <- list()
@@ -185,7 +186,7 @@ add_column <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
 		radius, elevation_scale, disk_resolution, angle, coverage, shape[["legend"]], bbox, update_view,
-		focus_layer, js_transitions, is_extruded
+		focus_layer, js_transitions, is_extruded, visible
 	)
 }
 

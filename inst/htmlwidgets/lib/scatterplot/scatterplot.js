@@ -1,6 +1,6 @@
 
 
-function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
+function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, visible ) {
 
   //console.log( radius_min_pixels );
 
@@ -17,6 +17,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
     parameters: {
 	    depthTest: false
 	  },
+	  visible: visible,
     getRadius: d => d.properties.radius,
     getPosition: d => md_get_point_coordinates( d ),
     getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
@@ -29,6 +30,9 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
     onHover: md_update_tooltip,
     transitions: js_transition || {}
   });
+
+
+  console.log( scatterLayer );
 
 	if( map_type == "google_map") {
 	  md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
@@ -44,7 +48,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
+function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, visible ) {
 
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
@@ -59,6 +63,7 @@ function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, aut
     parameters: {
 	    depthTest: false
 	  },
+	  visible: visible,
     getRadius: d => d.radius,
     getPosition: d => md_decode_points( d.polyline ),
     getFillColor: d => md_hexToRGBA( d.fill_colour ),

@@ -64,7 +64,8 @@ add_bitmap <- function(
 	tint_colour = "#FFFFFF",
 	layer_id = NULL,
 	update_view = TRUE,
-	focus_layer = FALSE
+	focus_layer = FALSE,
+	visible = TRUE
 ) {
 
 	bbox <- init_bbox()
@@ -88,7 +89,7 @@ add_bitmap <- function(
 
 	invoke_method(
 		map, "add_bitmap", layer_id, image, bounds, desaturate, transparent_colour,
-		tint_colour, bbox, focus_layer, update_view
+		tint_colour, bbox, focus_layer, update_view, visible
 	)
 }
 

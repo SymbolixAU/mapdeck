@@ -11,7 +11,7 @@ add_hexagon(map, data = get_map_data(map), polyline = NULL,
   "max"), legend = FALSE, legend_options = NULL, elevation_scale = 1,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL)
+  digits = 6, transitions = NULL, visible = TRUE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -58,6 +58,9 @@ If supplied it specifies how the colour values are calculated. Defaults to sum.}
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
+using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
 }
 \description{
 The Hexagon Layer renders a hexagon heatmap based on an array of points.

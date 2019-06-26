@@ -12,7 +12,7 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   legend_options = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", layer_id = NULL,
   update_view = TRUE, focus_layer = FALSE, digits = 6,
-  transitions = NULL)
+  transitions = NULL, visible = TRUE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -63,6 +63,9 @@ to conflict and not plot correctly}
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
+using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
 }
 \description{
 The Grid Layer renders a grid heatmap based on an array of points.

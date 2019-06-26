@@ -1,10 +1,11 @@
-function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend  ) {
+function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend, visible  ) {
 
   const gridLayer = new deck.GridLayer({
   	map_id: map_id,
     id: 'grid-'+layer_id,
     data: grid_data,
     pickable: true,
+    visible: visible,
     extruded: extruded,
     cellSize: cell_size,
     colorRange: md_to_rgba( colour_range ),
@@ -34,13 +35,14 @@ function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extrude
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_grid_polyline( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend  ) {
+function add_grid_polyline( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend, visible ) {
 
   const gridLayer = new deck.GridLayer({
     map_id: map_id,
     id: 'grid-'+layer_id,
     data: grid_data,
     pickable: true,
+    visible: visible,
     extruded: extruded,
     cellSize: cell_size,
     colorRange: md_to_rgba( colour_range ),

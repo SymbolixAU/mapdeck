@@ -1,5 +1,5 @@
 
-function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
+function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, visible ) {
 
   const polygonLayer = new PolygonLayer({
   	map_id: map_id,
@@ -9,6 +9,7 @@ function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settin
     stroked: true,
     filled: true,
     wireframe: false,
+    visible: visible,
     extruded: is_extruded,
     lineWidthMinPixels: 0,
     getPolygon: d => md_get_polygon_coordinates( d ),
@@ -38,7 +39,7 @@ function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settin
 }
 
 
-function add_polygon_polyline( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
+function add_polygon_polyline( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, visible ) {
 
   const polygonLayer = new PolygonLayer({
     map_id: map_id,
@@ -48,6 +49,7 @@ function add_polygon_polyline( map_id, map_type, polygon_data, layer_id, light_s
     stroked: true,
     filled: true,
     wireframe: false,
+    visible: visible,
     extruded: is_extruded,
     lineWidthMinPixels: 0,
     getPolygon: d => decode_polygons( d.polyline ),

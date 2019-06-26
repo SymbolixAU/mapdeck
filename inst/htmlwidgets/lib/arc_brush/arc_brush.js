@@ -99,7 +99,7 @@ void main(void) {
 }
 `;
 
-function add_arc_brush_geo( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
+function add_arc_brush_geo( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius, visible ) {
 
   const defaultProps = {
     ...ArcLayer.defaultProps,
@@ -146,6 +146,7 @@ function add_arc_brush_geo( map_id, map_type, arc_data, layer_id, auto_highlight
     id: 'arc-'+layer_id,
     data: arc_data,
     pickable: true,
+    visible: visible,
     getStrokeWidth: d => d.properties.stroke_width,
     getSourcePosition: d => md_get_origin_coordinates( d ),
     getTargetPosition: d => md_get_destination_coordinates( d ),
@@ -190,13 +191,14 @@ function add_arc_brush_geo( map_id, map_type, arc_data, layer_id, auto_highlight
 }
 
 
-function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius) {
+function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius, visible) {
 
   const arcLayer = new ArcLayer({
     map_id: map_id,
     id: 'arc-'+layer_id,
     data: arc_data,
     pickable: true,
+    visible: visible,
     getStrokeWidth: d => d.stroke_width,
     getSourcePosition: d => md_decode_points( d.origin ),
     getTargetPosition: d => md_decode_points( d.destination ),

@@ -119,7 +119,8 @@ add_line <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	visible = TRUE
 ) {
 
 	l <- list()
@@ -181,7 +182,7 @@ add_line <- function(
 	invoke_method(
 		map, "add_line_geo", map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions
+		js_transitions, visible
 		)
 }
 

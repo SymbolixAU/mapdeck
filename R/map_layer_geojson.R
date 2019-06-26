@@ -204,7 +204,8 @@ add_geojson <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	visible = TRUE
 	) {
 
 	l <- list()
@@ -282,7 +283,7 @@ add_geojson <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, light_settings, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions
+		js_transitions, visible
 		)
 }
 

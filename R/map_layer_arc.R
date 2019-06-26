@@ -67,6 +67,8 @@ mapdeckArcBrushDependency <- function() {
 #' @param brush_radius radius of the brush in metres. Default NULL. If supplied,
 #' the arcs will only show if the origin or destination are within the radius of the mouse.
 #' If NULL, all arcs are displayed
+#' @param visible logical indicating if the layer is shown on the map. Can be quicker than
+#' using \code{clear_} functions to remove the layer if you will be re-plotting the layer again
 #'
 #' @section data:
 #'
@@ -244,7 +246,8 @@ add_arc <- function(
 	focus_layer = FALSE,
 	transitions = NULL,
 	digits = 6,
-	brush_radius = NULL
+	brush_radius = NULL,
+	visible = TRUE
 ) {
 
 	l <- list()
@@ -272,6 +275,7 @@ add_arc <- function(
 
 	layer_id <- layerId(layer_id, "arc")
 	checkHexAlpha(highlight_colour)
+
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -320,7 +324,7 @@ add_arc <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition,
-		brush_radius
+		brush_radius, visible
 		)
 }
 

@@ -10,7 +10,8 @@ add_path(map, data = get_map_data(map), polyline = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, digits = 6, transitions = NULL)
+  focus_layer = FALSE, digits = 6, transitions = NULL,
+  visible = TRUE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -60,6 +61,9 @@ a named list indicating which colour attributes should be included in the legend
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
+using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
 }
 \description{
 The Path Layer takes in lists of coordinate points and renders them as

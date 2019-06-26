@@ -1,10 +1,11 @@
-function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, visible ) {
 
   const arcLayer = new ArcLayer({
   	map_id: map_id,
     id: 'arc-'+layer_id,
     data: arc_data,
     pickable: true,
+    visible: visible,
     getWidth: d => d.properties.stroke_width,
     getSourcePosition: d => md_get_origin_coordinates( d ),
     getTargetPosition: d => md_get_destination_coordinates( d ),
@@ -32,13 +33,14 @@ function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, high
 }
 
 
-function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, visible ) {
 
   const arcLayer = new ArcLayer({
     map_id: map_id,
     id: 'arc-'+layer_id,
     data: arc_data,
     pickable: true,
+    visible: visible,
     getWidth: d => d.stroke_width,
     getSourcePosition: d => md_decode_points( d.origin ),
     getTargetPosition: d => md_decode_points( d.destination ),

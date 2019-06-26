@@ -1,5 +1,5 @@
 
-function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
+function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, visible ) {
 
 
   	/*
@@ -43,6 +43,7 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
     stroked: true,
     filled: true,
     wireframe: false,
+    visible: visible,
     extruded: is_extruded,
     lineWidthMinPixels: 0,
     getPolygon: d => md_get_polygon_coordinates( d ),

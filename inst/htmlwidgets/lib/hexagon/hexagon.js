@@ -1,5 +1,5 @@
 
-function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend ) {
+function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend, visible ) {
 
   console.log( legend );
 
@@ -10,6 +10,7 @@ function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elev
         pickable: true,
         extruded: true,
         radius: radius,
+        visible: visible,
         //elevationRange: [0, 100],
         //onHover: md_update_tooltip,
         getPosition: d => md_get_point_coordinates( d ),
@@ -41,7 +42,7 @@ function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elev
 
 
 
-function add_hexagon_polyline( map_id, map_type, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend) {
+function add_hexagon_polyline( map_id, map_type, hexagon_data, layer_id, radius, elevation_scale, auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend, visible ) {
 
 
   const hexagonLayer = new deck.HexagonLayer({
@@ -51,6 +52,7 @@ function add_hexagon_polyline( map_id, map_type, hexagon_data, layer_id, radius,
         pickable: true,
         extruded: true,
         radius: radius,
+        visible: visible,
         //elevationRange: [0, 100],
         getPosition: d => md_decode_points( d.polyline ),
         colorRange: md_to_rgba( colour_range ),

@@ -12,7 +12,7 @@ add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
   highlight_colour = "#AAFFFFFF", legend = F, legend_options = NULL,
   legend_format = NULL, palette = "viridis", na_colour = "#808080FF",
   update_view = TRUE, focus_layer = FALSE, transitions = NULL,
-  digits = 6, brush_radius = NULL)
+  digits = 6, brush_radius = NULL, visible = TRUE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -80,6 +80,9 @@ palette for different colour options (where available),
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
+
+\item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
+using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
 }
 \description{
 The Arc Layer renders raised arcs joining pairs of source and target coordinates

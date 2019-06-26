@@ -110,7 +110,7 @@ void main(void) {
 `;
 
 
-function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
+function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, visible, brush_radius ) {
 
 
   //var all_points = scatter_data.geometry.geometry.coordinates;
@@ -201,6 +201,7 @@ function add_scatterplot_brush_geo( map_id, map_type, scatter_data, layer_id, au
     parameters: {
 	    depthTest: false
 	  },
+	  visible: visible,
     getRadius: d => d.properties.radius,
     getPosition: d => md_get_point_coordinates( d ),
     getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),

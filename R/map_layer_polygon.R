@@ -130,7 +130,8 @@ add_polygon <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	visible = TRUE
 ) {
 
 	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
@@ -213,7 +214,7 @@ add_polygon <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions, is_extruded
+		js_transitions, is_extruded, visible
 		)
 }
 

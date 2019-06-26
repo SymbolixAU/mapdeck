@@ -1,5 +1,5 @@
 
-function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, visible ) {
 
   const pointcloudLayer = new deck.PointCloudLayer({
   	map_id: map_id,
@@ -11,6 +11,7 @@ function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id
     getColor: d => md_hexToRGBA( d.properties.fill_colour ),
     lightSettings: light_settings,
     pickable: true,
+    visible: visible,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "pointcloud", info ),
@@ -30,7 +31,7 @@ function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_pointcloud_polyline( map_id, map_type, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_pointcloud_polyline( map_id, map_type, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, visible ) {
 
   const pointcloudLayer = new deck.PointCloudLayer({
     map_id: map_id,
@@ -41,6 +42,7 @@ function add_pointcloud_polyline( map_id, map_type, pointcloud_data, radius, lay
     getColor: d => md_hexToRGBA( d.fill_colour ),
     lightSettings: light_settings,
     pickable: true,
+    visible: visible,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "pointcloud", info ),

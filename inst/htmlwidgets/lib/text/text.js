@@ -1,5 +1,5 @@
 
-function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight ) {
+function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight, visible ) {
 
   const textLayer = new TextLayer({
   	map_id: map_id,
@@ -9,7 +9,7 @@ function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, hi
     parameters: {
 	    depthTest: false
 	  },
-
+	  visible: visible,
     getPosition: d => md_get_point_coordinates( d ),
     getColor: d => md_hexToRGBA( d.properties.fill_colour ),
     getText: d => d.properties.text,
@@ -42,7 +42,7 @@ function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, hi
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_text_polyline( map_id, map_type, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight) {
+function add_text_polyline( map_id, map_type, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight, visible) {
 
   const textLayer = new TextLayer({
     map_id: map_id,
@@ -52,7 +52,7 @@ function add_text_polyline( map_id, map_type, text_data, layer_id, auto_highligh
     parameters: {
 	    depthTest: false
 	  },
-
+	  visible: visible,
     getPosition: d => md_decode_points( d.polyline ),
     getColor: d => md_hexToRGBA( d.fill_colour ),
     getText: d => d.text,

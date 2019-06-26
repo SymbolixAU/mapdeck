@@ -1,4 +1,4 @@
-function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude ) {
+function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude, visible ) {
 
   const greatcircleLayer = new GreatCircleLayer({
   	map_id: map_id,
@@ -8,6 +8,7 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
     parameters: {
 	    depthTest: false
 	  },
+	  visible: visible,
     getWidth: d => d.properties.stroke_width,
     getSourcePosition: d => md_get_origin_coordinates( d ),
     getTargetPosition: d => md_get_destination_coordinates( d ),
@@ -35,7 +36,7 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
 }
 
 
-function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude ) {
+function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude, visible ) {
 
   const greatcircleLayer = new GreatCircleLayer({
     map_id: map_id,
@@ -45,6 +46,7 @@ function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id,
     parameters: {
 	    depthTest: false
 	  },
+	  visible: visible,
     getWidth: d => d.stroke_width,
     getSourcePosition: d => md_decode_points( d.origin ),
     getTargetPosition: d => md_decode_points( d.destination ),

@@ -12,7 +12,7 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
   auto_highlight = FALSE, tooltip = NULL,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
   na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL)
+  digits = 6, transitions = NULL, visible = TRUE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -67,6 +67,9 @@ palette for different colour options (where available),
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
+using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
 }
 \description{
 The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,

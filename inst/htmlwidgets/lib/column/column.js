@@ -1,5 +1,5 @@
 
-function add_column_geo( map_id, map_type, column_data, layer_id, auto_highlight, highlight_colour, radius, elevation_scale, disk_resolution, angle, coverage, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
+function add_column_geo( map_id, map_type, column_data, layer_id, auto_highlight, highlight_colour, radius, elevation_scale, disk_resolution, angle, coverage, legend, bbox, update_view, focus_layer, js_transition, is_extruded, visible ) {
 
   const columnLayer = new deck.ColumnLayer({
         map_id: map_id,
@@ -10,6 +10,7 @@ function add_column_geo( map_id, map_type, column_data, layer_id, auto_highlight
 		    filled: true,
 		    wireframe: false,
 		    extruded: is_extruded,
+		    visible: visible,
         getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
         getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
         getLineWidth: d => d.properties.stroke_width,
@@ -40,7 +41,7 @@ function add_column_geo( map_id, map_type, column_data, layer_id, auto_highlight
 }
 
 
-function add_column_polyline( map_id, map_type, column_data, layer_id, auto_highlight, highlight_colour, radius, elevation_scale, disk_resolution, angle, coverage, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
+function add_column_polyline( map_id, map_type, column_data, layer_id, auto_highlight, highlight_colour, radius, elevation_scale, disk_resolution, angle, coverage, legend, bbox, update_view, focus_layer, js_transition, is_extruded, visible ) {
 
   const columnLayer = new deck.ColumnLayer({
         map_id: map_id,
@@ -51,6 +52,7 @@ function add_column_polyline( map_id, map_type, column_data, layer_id, auto_high
 		    filled: true,
 		    wireframe: false,
 		    extruded: is_extruded,
+		    visible: visible,
         getFillColor: d => md_hexToRGBA( d.fill_colour ),
         getLineColor: d => md_hexToRGBA( d.stroke_colour ),
         getLineWidth: d => d.stroke_width,

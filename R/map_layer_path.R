@@ -89,7 +89,8 @@ add_path <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	visible = TRUE
 ) {
 
 	l <- list()
@@ -148,7 +149,7 @@ add_path <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions, billboard
+		js_transitions, billboard, visible
 		)
 }
 

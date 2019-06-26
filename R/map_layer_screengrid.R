@@ -87,7 +87,8 @@ add_screengrid <- function(
 	layer_id = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
-	digits = 6
+	digits = 6,
+	visible = TRUE
 ) {
 	l <- list()
 	l[["polyline"]] <- force( polyline )
@@ -150,7 +151,7 @@ add_screengrid <- function(
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, opacity, cell_size, colour_range,
-		bbox, update_view, focus_layer, aggregation
+		bbox, update_view, focus_layer, aggregation, visible
 		)
 }
 

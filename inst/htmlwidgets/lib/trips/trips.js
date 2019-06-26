@@ -1,6 +1,6 @@
 
 function add_trips_geo( map_id, map_type, trips_data, opacity, layer_id,
-trail_length, start_time, end_time, animation_speed, legend ) {
+trail_length, start_time, end_time, animation_speed, legend, visible ) {
 
   console.log( trips_data );
 
@@ -10,7 +10,7 @@ trail_length, start_time, end_time, animation_speed, legend ) {
     parameters: {
 	    depthTest: false
 	  },
-
+	  visible: visible,
     getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
     getTimestamps: d => md_trip_timestamp( d.geometry.geometry.coordinates, start_time ),
     getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
@@ -33,11 +33,11 @@ trail_length, start_time, end_time, animation_speed, legend ) {
 
 	//md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 
-  animate_trips( map_id, map_type, trips_data, opacity, layer_id, trail_length, start_time, end_time, animation_speed, legend );
+  animate_trips( map_id, map_type, trips_data, opacity, layer_id, trail_length, start_time, end_time, animation_speed, legend, visible );
 
   //function animate_trips( tripsLayer ) {
   function animate_trips( map_id, map_type, trips_data, opacity, layer_id,
-trail_length, start_time, end_time, animation_speed, legend ) {
+trail_length, start_time, end_time, animation_speed, legend, visible ) {
 
   	var loopLength = end_time - start_time; // unit corresponds to the timestamp in source data
     var animationSpeed = animation_speed; // unit time per second
@@ -53,7 +53,7 @@ trail_length, start_time, end_time, animation_speed, legend ) {
 		    parameters: {
 			    depthTest: false
 			  },
-
+			  visible: visible,
 		    getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
 		    getTimestamps: d => md_trip_timestamp( d.geometry.geometry.coordinates, start_time ),
 		    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
@@ -77,7 +77,7 @@ trail_length, start_time, end_time, animation_speed, legend ) {
 
    window.requestAnimationFrame( function() {
    	  animate_trips( map_id, map_type, trips_data, opacity, layer_id, trail_length,
-   	  start_time, end_time, animation_speed, legend );
+   	  start_time, end_time, animation_speed, legend, visible );
    });
 
   }

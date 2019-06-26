@@ -9,7 +9,7 @@ add_trips(map, data = get_map_data(map), stroke_colour = NULL,
   trail_length = 180, start_time = get_m_range_start(data),
   end_time = get_m_range_end(data), animation_speed = 30,
   layer_id = NULL, legend = FALSE, legend_options = NULL,
-  legend_format = NULL)
+  legend_format = NULL, visible = TRUE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -45,6 +45,9 @@ a named list indicating which colour attributes should be included in the legend
 \item{legend_options}{A list of options for controlling the legend.}
 
 \item{legend_format}{A list containing functions to apply to legend values. See section legend}
+
+\item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
+using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
 }
 \description{
 The Trips Layer takes an sf object with Z and M attributes and renders

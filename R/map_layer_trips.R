@@ -65,7 +65,8 @@ add_trips <- function(
 	layer_id = NULL,
 	legend = FALSE,
 	legend_options = NULL,
-	legend_format = NULL
+	legend_format = NULL,
+	visible = TRUE
 ) {
 
 	experimental_layer("trips")
@@ -114,7 +115,7 @@ add_trips <- function(
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], opacity, layer_id, trail_length,
-		start_time, end_time, animation_speed, shape[["legend"]]
+		start_time, end_time, animation_speed, shape[["legend"]], visible
 	)
 }
 

@@ -1,10 +1,11 @@
-function add_screengrid_geo( map_id, map_type, screengrid_data, layer_id, opacity, cell_size, colour_range, bbox, update_view, focus_layer, aggregation ) {
+function add_screengrid_geo( map_id, map_type, screengrid_data, layer_id, opacity, cell_size, colour_range, bbox, update_view, focus_layer, aggregation, visible ) {
 
   const screengridLayer = new deck.ScreenGridLayer({
     map_id: map_id,
     id: 'screengrid-'+layer_id,
     data: screengrid_data,
     pickable: true,
+    visible: visible,
     opacity: opacity,
     cellSizePixels: cell_size,
     colorRange: md_to_rgba( colour_range ),
@@ -23,12 +24,13 @@ function add_screengrid_geo( map_id, map_type, screengrid_data, layer_id, opacit
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_screengrid_polyline( map_id, map_type, screengrid_data, layer_id, opacity, cell_size, colour_range, bbox, update_view, focus_layer, aggregation ) {
+function add_screengrid_polyline( map_id, map_type, screengrid_data, layer_id, opacity, cell_size, colour_range, bbox, update_view, focus_layer, aggregation, visible ) {
 
   const screengridLayer = new deck.ScreenGridLayer({
     map_id: map_id,
     id: 'screengrid-'+layer_id,
     data: screengrid_data,
+    visible: visible,
     opacity: opacity,
     cellSizePixels: cell_size,
     colorRange: md_to_rgba( colour_range ),

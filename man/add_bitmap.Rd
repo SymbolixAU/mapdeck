@@ -6,7 +6,8 @@
 \usage{
 add_bitmap(map, image, bounds, desaturate = 0,
   transparent_colour = "#000000", tint_colour = "#FFFFFF",
-  layer_id = NULL, update_view = TRUE, focus_layer = FALSE)
+  layer_id = NULL, update_view = TRUE, focus_layer = FALSE,
+  visible = TRUE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -29,6 +30,9 @@ to conflict and not plot correctly}
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
+using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
 }
 \description{
 Add bitmap
