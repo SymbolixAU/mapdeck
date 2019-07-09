@@ -31,7 +31,6 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
     transitions: js_transition || {}
   });
 
-
   console.log( scatterLayer );
 
 	if( map_type == "google_map") {
