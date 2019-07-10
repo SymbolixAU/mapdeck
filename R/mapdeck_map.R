@@ -22,7 +22,7 @@
 #' checking if \code{set_token()} was used, then it will search environment variables using
 #' \code{Sys.getenv()} and the following values, in this order
 #'
-#' c("MAPBOX_TOKEN","MAPBOX_KEY","MAPBOX_API_KEY", "MAPBOX_API_TOKEN", "MAPBOX", "MAPDECK")
+#' c("MAPBOX_TOKEN","MAPBOX_KEY","MAPBOX_API_TOKEN", "MAPBOX_API_KEY", "MAPBOX", "MAPDECK")
 #'
 #' If multiple tokens are found, the first one is used
 #'

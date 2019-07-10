@@ -67,7 +67,7 @@ get_access_token <- function(api = "mapbox") {
 	api <- getOption("mapdeck")[['mapdeck']][[api]]
 	if( is.null( api ) || is.na( api ) ) {
 		api <- Sys.getenv(
-			c("MAPBOX_TOKEN","MAPBOX_KEY","MAPBOX_API_KEY", "MAPBOX_API_TOKEN", "MAPBOX", "MAPDECK")
+			c("MAPBOX_TOKEN","MAPBOX_KEY","MAPBOX_API_TOKEN", "MAPBOX_API_KEY", "MAPBOX", "MAPDECK")
 			)
 		api <- unname( api[which(nzchar(api))] )
 	}
