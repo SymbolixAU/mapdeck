@@ -67,6 +67,23 @@ The color and height of the hexagon is scaled by number of points it contains.
 \details{
 \code{add_hexagon} supports POINT and MULTIPOINT sf objects
 }
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny)
+and on WebGL-2 supported browsers and hardware.
+
+The time is in milliseconds
+
+Available transitions for hexagon
+
+list(
+elevation = 0
+colour = 0
+)
+}
+
 \section{data}{
 
 
