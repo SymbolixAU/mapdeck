@@ -13,7 +13,8 @@ mapdeck(data = NULL, token = get_access_token(api = "mapbox"),
 \item{data}{data to be used in the layer. All coordinates are expected to be
 EPSG:4326 (WGS 84) coordinate system}
 
-\item{token}{Mapbox Acess token. Use \code{set_token()} to set a global token.
+\item{token}{Mapbox Acess token. Use \code{set_token()} or \code{Sys.setenv()} to set a global token.
+See Access Tokens section for further details.
 If left empty layers will still be plotted, but without a Mapbox map.}
 
 \item{width}{the width of the map}
@@ -35,3 +36,15 @@ If left empty layers will still be plotted, but without a Mapbox map.}
 \description{
 mapdeck
 }
+\section{Access Tokens}{
+
+
+If the \code{token} argument is not used, the map will search for the token, firstly by
+checking if \code{set_token()} was used, then it will search environment variables using
+\code{Sys.getenv()} and the following values, in this order
+
+c("MAPBOX_TOKEN","MAPBOX_KEY","MAPBOX_API_KEY", "MAPBOX_API_TOKEN", "MAPBOX", "MAPDECK")
+
+If multiple tokens are found, the first one is used
+}
+

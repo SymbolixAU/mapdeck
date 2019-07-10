@@ -72,6 +72,6 @@ get_access_token <- function(api = "mapbox") {
 		api <- unname( api[which(nzchar(api))] )
 	}
 	if(length(api) == 0) api <- NULL
-	return(api)
+	return(api[1L])
 }
 
