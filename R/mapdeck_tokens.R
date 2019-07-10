@@ -64,10 +64,14 @@ clear_tokens <- function() {
 
 get_access_token <- function(api = "mapbox") {
 
-	## try and find specific key,
-	## then go for the general one
 	api <- getOption("mapdeck")[['mapdeck']][[api]]
-	# if(is.null(api) || is.na(api)) message("No access token supplied. Use either the 'token' parameter, or use `set_token()`")
-	return(api)
+	if( is.null( api ) || is.na( api ) ) {
+		api <- Sys.getenv(
+			c("MAPBOX_TOKEN","MAPBOX_KEY","MAPBOX_API_TOKEN", "MAPBOX_API_KEY", "MAPBOX", "MAPDECK")
+			)
+		api <- unname( api[which(nzchar(api))] )
+	}
+	if(length(api) == 0) api <- NULL
+	return(api[1L])
 }
 
