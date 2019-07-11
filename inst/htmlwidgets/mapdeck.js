@@ -12,6 +12,23 @@ HTMLWidgets.widget({
 
       	md_setup_window( el.id );
 
+        /*
+        // controller with events
+        const myController = new deck.Controller({
+
+
+        	handleEvent(event) {
+        		console.log( "event" );
+        		console.log( event );
+        		if( event.type == "zoom") {
+        			console.log("zooming");
+        		}
+        	}
+        });
+
+        console.log( myController );
+        */
+
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
         	longitude: x.location[0],
@@ -39,10 +56,33 @@ HTMLWidgets.widget({
 			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
+			      //controller: myController
 			      //onLayerHover: setTooltip
+			      onViewStateChange: ({viewState}) => {
+			      	if (!HTMLWidgets.shinyMode) {
+						    return;
+						  }
+						  Shiny.onInputChange(el.id + '_view_change', viewState);
+			      }
 			  });
+
+
 			  //deckgl.setProps({viewState: window[el.id + 'INITIAL_VIEW_STATE']});
 			  window[el.id + 'map'] = deckgl;
+
+			  console.log( deckgl );
+
+				/*
+			  console.log( deckgl._onViewStateChange );
+
+			    var myListener = function(evt) {
+					  console.log("evt");
+					  console.log( evt );
+				  }
+
+				document.addEventListener(onViewStateChange(deckgl), myListener, false);
+				*/
+
        }
         // https://github.com/uber/deck.gl/issues/2114
         /*
@@ -65,10 +105,10 @@ HTMLWidgets.widget({
 
         // TODO: code to re-render the widget with a new size
       }
-
     };
   }
 });
+
 
 if (HTMLWidgets.shinyMode) {
 
@@ -106,3 +146,4 @@ if (HTMLWidgets.shinyMode) {
     }
   });
 }
+
