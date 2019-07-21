@@ -59,6 +59,21 @@ HTMLWidgets.widget({
 			      //controller: myController
 			      //onLayerHover: setTooltip
 			      onViewStateChange: ({viewState}) => {
+
+							// as per:
+							// https://github.com/uber/deck.gl/issues/3344
+							// https://github.com/SymbolixAU/mapdeck/issues/211
+			      	const viewport = new WebMercatorViewport(viewState);
+  						const nw = viewport.unproject([0, 0]);
+  						const se = viewport.unproject([viewport.width, viewport.height]);
+
+  						viewState.viewBounds = {
+  							north: nw[1],
+  							east:  se[1],
+  							south: se[0],
+  							west:  nw[0]
+  						};
+
 			      	if (!HTMLWidgets.shinyMode) {
 						    return;
 						  }
