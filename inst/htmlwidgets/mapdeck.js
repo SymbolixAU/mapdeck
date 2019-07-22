@@ -69,8 +69,8 @@ HTMLWidgets.widget({
 
   						viewState.viewBounds = {
   							north: nw[1],
-  							east:  se[1],
-  							south: se[0],
+  							east:  se[0],
+  							south: se[1],
   							west:  nw[0]
   						};
 
