@@ -1,5 +1,6 @@
 # mapdeck 0.3
 
+* input$map_view_change now observed [issue211](https://github.com/SymbolixAU/mapdeck/issues/211) - thanks @zacdav
 * mapbox tokens are searched for in environement variables if one isn't provided [issue209](https://github.com/SymbolixAU/mapdeck/issues/209)
 * z-fighting [issue 199](https://github.com/SymbolixAU/mapdeck/issues/199)
 * factors correctly used in legends [issue #138](https://github.com/SymbolixAU/mapdeck/issues/138)
