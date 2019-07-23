@@ -155,7 +155,7 @@ mapdeckArcBrushDependency <- function() {
 #'     css = "max-height: 100px;")
 #'  )
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark")) %>%
+#' mapdeck( style = mapdeck_style("dark")) %>%
 #'   add_arc(
 #'   data = flights
 #'   , layer_id = "arc_layer"
@@ -174,9 +174,7 @@ mapdeckArcBrushDependency <- function() {
 #'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
 #' )
 #'
-#' mapdeck(
-#'   token = key
-#' ) %>%
+#' mapdeck() %>%
 #'  add_arc(
 #'    data = sf_flights
 #'    , origin = 'geometry'
@@ -188,9 +186,7 @@ mapdeckArcBrushDependency <- function() {
 #'
 #' ## using a brush
 #'
-#' mapdeck(
-#'   token = key
-#'   , style = mapdeck_style("light")
+#' mapdeck( style = mapdeck_style("light")
 #' ) %>%
 #'  add_arc(
 #'    data = sf_flights

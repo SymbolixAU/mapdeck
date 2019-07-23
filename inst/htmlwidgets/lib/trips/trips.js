@@ -13,7 +13,7 @@ trail_length, start_time, end_time, animation_speed, legend ) {
 
     getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
     getTimestamps: d => md_trip_timestamp( d.geometry.geometry.coordinates, start_time ),
-    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
+    getColor: d => d.properties.stroke_colour,
     opacity: opacity,
     widthMinPixels: 2,
     rounded: true,
@@ -56,7 +56,7 @@ trail_length, start_time, end_time, animation_speed, legend ) {
 
 		    getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
 		    getTimestamps: d => md_trip_timestamp( d.geometry.geometry.coordinates, start_time ),
-		    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
+		    getColor: d => d.properties.stroke_colour,
 		    opacity: opacity,
 		    widthMinPixels: 2,
 		    trailLength: trail_length,

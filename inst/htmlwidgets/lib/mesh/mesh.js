@@ -47,7 +47,7 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
     lineWidthMinPixels: 0,
     getPolygon: d => md_get_polygon_coordinates( d ),
     // getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
-    getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
+    getFillColor: d => d.properties.fill_colour,
     //getLineWidth: d => d.properties.stroke_width,
     getElevation: d => d.properties.elevation,
     lightSettings: light_settings,

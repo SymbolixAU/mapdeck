@@ -35,7 +35,8 @@ Rcpp::List rcpp_pointcloud_geojson(
 		parameter_exclusions,
 		geometry_columns,
 		true,  // jsonify legend
-		digits
+		digits,
+		"rgb"
 	);
 }
 

@@ -11,7 +11,7 @@ function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, hi
 	  },
 
     getPosition: d => md_get_point_coordinates( d ),
-    getColor: d => md_hexToRGBA( d.properties.fill_colour ),
+    getColor: d => d.properties.fill_colour,
     getText: d => d.properties.text,
     getSize: d => d.properties.size,
     getAngle: d => d.properties.angle,
@@ -54,7 +54,7 @@ function add_text_polyline( map_id, map_type, text_data, layer_id, auto_highligh
 	  },
 
     getPosition: d => md_decode_points( d.polyline ),
-    getColor: d => md_hexToRGBA( d.fill_colour ),
+    getColor: d => d.fill_colour,
     getText: d => d.text,
     getSize: d => d.size,
     getAngle: d => d.angle,

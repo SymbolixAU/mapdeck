@@ -16,7 +16,7 @@ legend, bbox, update_view, focus_layer, js_transition, billboard ) {
 	    depthTest: false
 	  },
     getPath: d => md_get_line_coordinates( d ),
-    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
+    getColor: d => d.properties.stroke_colour,
     getWidth: d => d.properties.stroke_width,
     onClick: info => md_layer_click( map_id, "path", info ),
     onHover: md_update_tooltip,
@@ -52,7 +52,7 @@ function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highligh
 	  },
     billboard: billboard,
     getPath: d => md_decode_polyline( d.polyline ),  // needs to be one row per polyline
-    getColor: d => md_hexToRGBA( d.stroke_colour ),
+    getColor: d => d.stroke_colour,
     getWidth: d => d.stroke_width,
     onClick: info => md_layer_click( map_id, "path", info ),
     onHover: md_update_tooltip,

@@ -18,8 +18,8 @@ function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, au
     lineWidthScale: 1,
     lineWidthMinPixels: 1,
     lineJointRounded: true,
-    getFillColor: g => md_hexToRGBA( g.properties.fill_colour ),
-    getLineColor: g => md_hexToRGBA( g.properties.stroke_colour),
+    getFillColor: g => g.properties.fill_colour,
+    getLineColor: g => g.properties.stroke_colour,
     getRadius: g => g.properties.radius,
     getLineWidth: g => g.properties.stroke_width,
     getElevation: g => g.properties.elevation,
@@ -59,8 +59,8 @@ function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_
     lineWidthScale: 1,
     lineWidthMinPixels: 1,
     lineJointRounded: true,
-    getFillColor: g => md_hexToRGBA( geojson_fill_colour( g ) ),
-    getLineColor: g => md_hexToRGBA( geojson_line_colour( g ) ),
+    getFillColor: g => geojson_fill_colour( g ),
+    getLineColor: g => geojson_line_colour( g ),
     getRadius: g => geojson_radius( g ),
     getLineWidth: g => geojson_line_width( g ),
     getElevation: g => geojson_elevation( g ),
@@ -117,7 +117,7 @@ function get_fill_colour( p ) {
 		case p.fill !== undefined:
 			return p.fill;
 		default:
-		  return "#440154FF";
+		  return [68, 1, 84];
 	}
 }
 
@@ -126,7 +126,7 @@ function geojson_fill_colour( g ) {
 		case g.properties !== undefined:
 			return get_fill_colour( g.properties );
 		default:
-		  return "#440154FF";
+		  return [68, 1, 84];
 	}
 }
 
@@ -154,7 +154,7 @@ function get_line_colour( p ) {
 		case p.stroke !== undefined:
 			return p.stroke;
 		default:
-		  return "#440154FF";
+		  return [68, 1, 84];
 	}
 }
 
@@ -163,7 +163,7 @@ function geojson_line_colour( g ) {
 		case g.properties !== undefined:
 			return get_line_colour( g.properties );
 		default:
-		  return "#440154FF";
+		  return [68, 1, 84];
 	}
 }
 

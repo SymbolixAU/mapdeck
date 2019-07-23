@@ -41,7 +41,8 @@ Rcpp::List rcpp_scatterplot_geojson(
 		parameter_exclusions,
 		geometry_columns,
 		true,  // jsonify legend
-		digits
+		digits,
+		"rgb"
 	);
 }
 
@@ -70,7 +71,8 @@ Rcpp::List rcpp_scatterplot_geojson_df(
 		parameter_exclusions,
 		geometry_columns,
 		true,  // jsonify legend
-		digits
+		digits,
+		"rgb"
 	);
 }
 
@@ -88,6 +90,7 @@ Rcpp::List rcpp_scatterplot_polyline(
 	Rcpp::StringVector scatterplot_legend = mapdeck::layer_colours::fill_stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
+	
 	return spatialwidget::api::create_polyline(
 		data,
 		params,
@@ -97,6 +100,7 @@ Rcpp::List rcpp_scatterplot_polyline(
 		data_rows,
 		parameter_exclusions,
 		geometry_columns,
-		true  // jsonify legend
+		true,  // jsonify legend
+		"rgb"
 	);
 }

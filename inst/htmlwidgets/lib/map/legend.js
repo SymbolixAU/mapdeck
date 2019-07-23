@@ -111,7 +111,10 @@ function md_add_legend_gradient(map_id, map_type, layer_id, legendValues) {
     }
 
     for (i = 0; i < legendValues.colour.length; i++) {
-      jsColours.push( legendValues.colour[i].substring(0,7) );
+    	//console.log( legendValues.colour[i] );
+      //jsColours.push( legendValues.colour[i].substring(0,7) );
+      var rgba = legendValues.colour[i];
+      jsColours.push( md_RGBToHex( rgba[0], rgba[1], rgba[2] ) );
     }
 
     colours = '(' + jsColours.join() + ')';
@@ -229,7 +232,8 @@ function md_add_legend_category(map_id, map_type, layer_id, legendValues) {
             divVal = document.createElement('div');
 
         //colourBox = 'height: 20px; width: 15px; background: ' + legendValues.legend.colour[i];
-        colourBox = md_generateColourBox(legendValues.colourType, legendValues.colour[i].substring(0,7) );
+        var rgba = legendValues.colour[i];
+        colourBox = md_generateColourBox(legendValues.colourType, md_RGBToHex( rgba[0], rgba[1], rgba[2] ) );
         divCol.setAttribute('style', colourBox);
         colourContainer.appendChild(divCol);
 

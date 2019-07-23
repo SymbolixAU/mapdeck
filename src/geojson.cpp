@@ -38,7 +38,8 @@ Rcpp::List rcpp_geojson_geojson(
 		parameter_exclusions,
 		geometry_column,
 		true,  // jsonify legend
-		digits
+		digits,
+		"rgb"
 	);
 }
 

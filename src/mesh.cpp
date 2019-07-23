@@ -129,7 +129,8 @@ Rcpp::List rcpp_mesh_geojson(
 		parameter_exclusions,
 		geometry_columns,
 		true,  // jsonify legend
-		digits
+		digits,
+		"rgb"
 	);
 
 }
@@ -164,7 +165,8 @@ Rcpp::StringVector rcpp_mesh_geojson2( Rcpp::List mesh, Rcpp::StringVector verti
 	// 	parameter_exclusions,
 	// 	geometry_columns,
 	// 	true,  // jsonify legend
-	// 	digits
+	// 	digits,
+	//  "rgb"
 	// );
 
 	return spatialwidget::api::create_geojson_mesh(

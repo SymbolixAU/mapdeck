@@ -36,7 +36,8 @@ Rcpp::List rcpp_polygon_geojson(
 		parameter_exclusions,
 		geometry_columns,
 		true,  // jsonify legend
-		digits
+		digits,
+		"rgb"
 	);
 }
 
@@ -62,7 +63,8 @@ Rcpp::List rcpp_polygon_geojson(
 // 		geometry_columns,
 // 		data_rows,
 // 		parameter_exclusions,
-// 		true  // jsonify legend
+// 		true,  // jsonify legend
+//    "rgb"
 // 		);
 // }
 
@@ -90,7 +92,8 @@ Rcpp::List rcpp_polygon_polyline(
 		data_rows,
 		parameter_exclusions,
 		geometry_columns,
-		true  // jsonify legend
+		true,  // jsonify legend
+		"rgb"
 	);
 }
 

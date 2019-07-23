@@ -149,7 +149,7 @@ rcpp_text_polyline <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_text_polyline`, data, params, geometry_columns)
 }
 
-rcpp_trips_geojson <- function(data, params, geometry_columns) {
-    .Call(`_mapdeck_rcpp_trips_geojson`, data, params, geometry_columns)
+rcpp_trips_geojson <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_trips_geojson`, data, params, geometry_columns, digits)
 }
 

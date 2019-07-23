@@ -36,7 +36,8 @@ Rcpp::List rcpp_line_geojson(
 		parameter_exclusions,
 		geometry_columns,
 		true,  // jsonify legend
-		digits
+		digits,
+		"rgb"
 	);
 }
 
@@ -64,7 +65,8 @@ Rcpp::List rcpp_line_geojson_df(
 		parameter_exclusions,
 		geometry_columns,
 		true,  // jsonify legend
-		digits
+		digits,
+		"rgb"
 	);
 }
 

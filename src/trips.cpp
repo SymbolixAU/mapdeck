@@ -15,7 +15,8 @@ Rcpp::List trips_defaults(int n) {
 Rcpp::List rcpp_trips_geojson(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
-		std::string geometry_columns
+		std::string geometry_columns,
+		int digits
 	) {
 
 	int data_rows = data.nrows();
@@ -34,6 +35,8 @@ Rcpp::List rcpp_trips_geojson(
 		data_rows,
 		parameter_exclusions,
 		geometry_columns,
-		true  // jsonify legend
+		true,  // jsonify legend
+		digits,
+		"rgb"
 	);
 }

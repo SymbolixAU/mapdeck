@@ -98,7 +98,7 @@ mapdeckScatterplotBrushDependency <- function() {
 #'
 #' df <- df[ !is.na(df$lng), ]
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = df
 #'   , lat = "lat"
@@ -110,7 +110,7 @@ mapdeckScatterplotBrushDependency <- function() {
 #' library(sf)
 #' sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = sf
 #'   , radius = 100000
