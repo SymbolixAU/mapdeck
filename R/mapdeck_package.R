@@ -27,3 +27,7 @@ NULL
 #' )
 #' }
 NULL
+
+experimental_layer <- function(layer) {
+	message(layer, " is an experimental layer and the function may change without warning")
+}

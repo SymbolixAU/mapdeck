@@ -13,7 +13,7 @@ add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, transitions = NULL)
+  focus_layer = FALSE, digits = 6, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}

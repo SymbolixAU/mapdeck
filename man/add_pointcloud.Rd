@@ -11,7 +11,7 @@ add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
   light_settings = list(), layer_id = NULL, id = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, transitions = NULL)
+  focus_layer = FALSE, digits = 6, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -144,11 +144,12 @@ you are clicking on
 \donttest{
 ## You need a valid access token from Mapbox
 key <- 'abc'
+set_token( key )
 
 df <- capitals
 df$z <- sample(10000:10000000, size = nrow(df))
 
-mapdeck(token = key, style = mapdeck_style("dark")) \%>\%
+mapdeck(style = mapdeck_style("dark")) \%>\%
 add_pointcloud(
   data = df
   , lon = 'lon'

@@ -12,7 +12,7 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
   auto_highlight = FALSE, tooltip = NULL,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
   na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL)
+  digits = 6, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -40,7 +40,8 @@ to conflict and not plot correctly}
 \item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
 \item{legend}{either a logical indiciating if the legend(s) should be displayed, or
-a named list indicating which colour attributes should be included in the legend.}
+a named list indicating which colour attributes should be included in the legend.
+A legend is only shown if you supply one of the colour arguments (fill or stroke)}
 
 \item{legend_options}{A list of options for controlling the legend.}
 
@@ -180,10 +181,10 @@ The list elements must be functions to apply to the values in the legend.
 
 ## You need a valid access token from Mapbox
 key <- 'abc'
+set_token( key )
 
 ## Not supplying colouring arguments, the function will try and find them in the GeoJSON
 mapdeck(
- token = key
  , location = c(145, -37.9)
  , zoom = 8
  , style = mapdeck_style("dark")
@@ -196,7 +197,6 @@ mapdeck(
 
 ## only supplying values to use for fill, the stroke will be default
 mapdeck(
- token = key
  , location = c(145, -37.9)
  , zoom = 8
  , style = mapdeck_style("dark")
@@ -208,7 +208,6 @@ mapdeck(
  )
 
 mapdeck(
- token = key
  , location = c(145, -37.9)
  , zoom = 8
  , style = mapdeck_style("dark")
@@ -221,7 +220,6 @@ mapdeck(
  )
 
 mapdeck(
- token = key
  , location = c(145, -37.9)
  , zoom = 8
  , style = mapdeck_style("dark")
@@ -242,7 +240,6 @@ sf$elevation <- sample(100:1000, size = nrow(sf), replace = T)
 geo <- geojsonsf::sf_geojson( sf )
 
 mapdeck(
- token = key
  , location = c(145, -37.9)
  , zoom = 8
  , style = mapdeck_style("dark")

@@ -18,6 +18,8 @@ mapdeckPathDependency <- function() {
 #'
 #' @inheritParams add_polygon
 #' @param stroke_width width of the stroke in meters. Default 1.
+#' @param billboard logical indicating if the path always faces the camera (TRUE) or
+#' if it always faces up (FALSE)
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
@@ -45,10 +47,10 @@ mapdeckPathDependency <- function() {
 #'
 #' ## You need a valid access token from Mapbox
 #' key <- 'abc'
+#' set_token( key )
 #'
 #' mapdeck(
-#'   token = key
-#'   , style = 'mapbox://styles/mapbox/dark-v9'
+#'   style = 'mapbox://styles/mapbox/dark-v9'
 #'   , location = c(145, -37.8)
 #'   , zoom = 10) %>%
 #'   add_path(
@@ -74,6 +76,7 @@ add_path <- function(
 	stroke_width = NULL,
 	stroke_opacity = NULL,
 	tooltip = NULL,
+	billboard = FALSE,
 	layer_id = NULL,
 	id = NULL,
 	auto_highlight = FALSE,
@@ -85,6 +88,7 @@ add_path <- function(
 	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
+	digits = 6,
 	transitions = NULL
 ) {
 
@@ -126,7 +130,7 @@ add_path <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		shape <- rcpp_path_geojson( data, l, geometry_column )
+		shape <- rcpp_path_geojson( data, l, geometry_column, digits )
 		jsfunc <- "add_path_geo"
 	} else if ( tp == "sfencoded" ) {
 		jsfunc <- "add_path_polyline"
@@ -144,7 +148,7 @@ add_path <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions
+		js_transitions, billboard
 		)
 }
 

@@ -13,7 +13,7 @@ add_column(map, data = get_map_data(map), polyline = NULL,
   layer_id = NULL, id = NULL, palette = "viridis",
   na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
   legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
-  transitions = NULL)
+  digits = 6, transitions = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -27,9 +27,22 @@ Web Mercator Projection}
 
 \item{lat}{column containing latitude values}
 
-\item{stroke_width}{width of the stroke in pixels}
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
+
+\item{fill_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
+
+\item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
+\code{elevation} is ignored.}
+
+\item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
 
 \item{radius}{in metres. Default 1000}
+
+\item{elevation}{the height the polygon extrudes from the map. Only available if neither
+\code{stroke_colour} or \code{stroke_width} are supplied. Default 0}
 
 \item{elevation_scale}{value to scale the elevations of the columns Default 1}
 

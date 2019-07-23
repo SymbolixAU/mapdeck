@@ -7,11 +7,12 @@ namespace mapdeck {
 namespace column {
 
 const std::unordered_map< std::string, std::string > column_colours({
-	{ "fill_colour", "fill_opacity" }
+	{ "fill_colour", "fill_opacity" },
+	{ "stroke_colour", "stroke_opacity"}
 });
 
 const Rcpp::StringVector column_legend = Rcpp::StringVector::create(
-	"fill_colour"
+	"fill_colour","stroke_colour"
 );
 
 
