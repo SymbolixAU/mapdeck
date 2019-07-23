@@ -22,7 +22,7 @@ Imports:
     googlePolylines (>= 0.7.2),
     htmltools,
     htmlwidgets,
-    jsonify (>= 0.2.10001),
+    jsonify (>= 0.2.10002),
     magrittr,
     Rcpp,
     shiny
@@ -43,4 +43,4 @@ LinkingTo:
     jsonify,
     rapidjsonr,
     Rcpp,
-    spatialwidget (>= 0.2.1005)
+    spatialwidget (>= 0.2.1006)

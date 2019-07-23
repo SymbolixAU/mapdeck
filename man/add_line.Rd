@@ -164,9 +164,7 @@ sf_flights <- cbind(
   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
 )
 
-mapdeck(
-  token = key
-) \%>\%
+mapdeck( ) \%>\%
  add_line(
    data = sf_flights
    , origin = 'geometry'

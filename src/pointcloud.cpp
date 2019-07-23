@@ -65,7 +65,8 @@ Rcpp::List rcpp_pointcloud_geojson_df(
 		geometry_columns,
 		true,  // jsonify legend
 		true,  // elevation
-		digits
+		digits,
+		"rgb"
 	);
 }
 
@@ -93,6 +94,7 @@ Rcpp::List rcpp_pointcloud_polyline(
 		data_rows,
 		parameter_exclusions,
 		geometry_columns,
-		true  // jsonify legend
+		true,  // jsonify legend
+		"rgb"
 	);
 }

@@ -267,6 +267,7 @@ add_geojson <- function(
 		jsfunc <- "add_geojson"
 		shape <- list()
 		shape[["data"]] <- data
+		shape[["legend"]] <- jsonify::as.json( '{"stroke_colour":[false],"fill_colour":[false]}' )
 	}
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)

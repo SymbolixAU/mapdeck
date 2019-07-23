@@ -166,7 +166,7 @@ add_pointcloud(
 library(sf)
 sf <- sf::st_as_sf( df , coords = c("lon","lat","z"))
 
-mapdeck(token = key, style = mapdeck_style("dark")) \%>\%
+mapdeck( style = mapdeck_style("dark")) \%>\%
 add_pointcloud(
   data = sf
   , layer_id = 'point'
