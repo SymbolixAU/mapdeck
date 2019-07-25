@@ -2,6 +2,7 @@
 function md_change_location( map_id, map_type, location, zoom, pitch, bearing, duration, transition ) {
 
   console.log("changing location");
+  console.log("map_id " + map_id);
 
   var currentLon, currentLat, currentPitch, currentBearing, currentZoom;
 
