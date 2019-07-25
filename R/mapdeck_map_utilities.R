@@ -22,6 +22,7 @@ mapdeck_dispatch = function(
   mapdeck_update = stop(paste(funcName, "does not support map update objects"))
   ) {
 
+	print("mapdeck_dispatch")
   if (inherits(map, "mapdeck") | inherits(map, "google_map") )
     return(mapdeck)
   else if (inherits(map, "mapdeck_update") | inherits(map, "google_map_update"))
@@ -36,6 +37,7 @@ mapdeck_dispatch = function(
 #' @rdname mapdeck_dispatch
 #' @export
 invoke_method = function(map, method, ...) {
+	print("invoking method")
 	args = evalFormula(list(...))
 	mapdeck_dispatch(
 		map,

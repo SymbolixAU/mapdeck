@@ -185,6 +185,8 @@ mapdeck_view <- function(
 	transition = c("linear", "fly")
 	) {
 
+	print("mapdeck_view")
+
 	transition <- match.arg(transition)
 	invoke_method(
 		map, 'md_change_location', map_type( map ) , as.numeric( location ), zoom, pitch,

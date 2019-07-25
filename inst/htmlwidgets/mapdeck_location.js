@@ -1,6 +1,8 @@
 
 function md_change_location( map_id, map_type, location, zoom, pitch, bearing, duration, transition ) {
 
+  console.log("changing location");
+
   var currentLon, currentLat, currentPitch, currentBearing, currentZoom;
 
   if( map_type == "google_map" ) {
