@@ -45,7 +45,7 @@ namespace layer_colours {
 	const Rcpp::StringVector no_legend = Rcpp::StringVector::create();
 
 
-} // namespace column
+} // namespace layer_colours
 } // namespace mapdeck
 
 
