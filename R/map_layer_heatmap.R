@@ -78,6 +78,9 @@ add_heatmap <- function(
 	focus_layer = FALSE,
 	digits = 6
 ) {
+
+	experimental_layer("heatmap")
+
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["weight"]] <- force( weight )
