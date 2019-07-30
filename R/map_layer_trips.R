@@ -15,7 +15,7 @@ mapdeckTripsDependency <- function() {
 #' The Trips Layer takes an sf object with Z and M attributes and renders
 #' it as animated trips
 #'
-#' @inheritParams add_polygon
+#' @inheritParams add_path
 #' @param data sf object with XYZM dimensions.
 #' @param trail_length length in metres of the trail
 #' @param opacity single value in [0,1]

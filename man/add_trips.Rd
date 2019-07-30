@@ -19,7 +19,7 @@ add_trips(map, data = get_map_data(map), stroke_colour = NULL,
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
 \code{elevation} is ignored.}
 
-\item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
+\item{stroke_width}{width of the stroke in meters. Default 1.}
 
 \item{opacity}{single value in [0,1]}
 
