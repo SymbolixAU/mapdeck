@@ -16,8 +16,7 @@ add_trips(map, data = get_map_data(map), stroke_colour = NULL,
 
 \item{data}{sf object with XYZM dimensions.}
 
-\item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
-\code{elevation} is ignored.}
+\item{stroke_colour}{variable of data or hex colour for the stroke.}
 
 \item{stroke_width}{width of the stroke in meters. Default 1.}
 

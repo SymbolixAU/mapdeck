@@ -17,6 +17,7 @@ mapdeckTripsDependency <- function() {
 #'
 #' @inheritParams add_path
 #' @param data sf object with XYZM dimensions.
+#' @param stroke_colour variable of data or hex colour for the stroke.
 #' @param trail_length length in metres of the trail
 #' @param opacity single value in [0,1]
 #' @param start_time the minimum timestamp
