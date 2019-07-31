@@ -141,7 +141,7 @@ mapdeck_update <- function(
 	session = shiny::getDefaultReactiveDomain(),
 	data = NULL,
 	deferUntilFlush = TRUE,
-	map_type = c("mapdeck_update", "google_map_update")
+	map_type = c("mapdeck_update", "google_map_update", "mapbox_update")
 	) {
 
 	map_type <- match.arg( map_type )
@@ -211,6 +211,8 @@ map_type <- function( map ) {
 	if( any( c("mapdeck", "mapdeck_update") %in% map_type ) ) return( "mapdeck" )
 
 	if( any( c("google_map", "google_map_update") %in% map_type ) ) return( "google_map" )
+
+	if (any( c("mapbox", "mapbox_update" ) %in% map_type ) ) return( "mapbox" )
 
 	return(NULL)
 }

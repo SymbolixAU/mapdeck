@@ -6,7 +6,7 @@
 \usage{
 mapdeck_update(map_id, session = shiny::getDefaultReactiveDomain(),
   data = NULL, deferUntilFlush = TRUE, map_type = c("mapdeck_update",
-  "google_map_update"))
+  "google_map_update", "mapbox_update"))
 }
 \arguments{
 \item{map_id}{string containing the output ID of the map in a shiny application.}

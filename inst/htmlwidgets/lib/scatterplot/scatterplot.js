@@ -30,6 +30,14 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
     transitions: js_transition || {}
   });
 
+  // if it's a mapbox map, add a 'gl:' property to the 'deck' object?
+  console.log( deck );
+  if( map_type == "mapbox" ) {
+  	var map = window[ map_id + 'map'];
+  	console.log( map );
+  	map.addLayer( new MapboxLayer({id: 'scatterplot-'+layer_id, deck}));
+  }
+
 	if( map_type == "google_map") {
 	  md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
 	} else {
