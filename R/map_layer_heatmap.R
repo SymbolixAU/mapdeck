@@ -13,8 +13,13 @@ mapdeckHeatmapDependency <- function() {
 
 #' Add Heatmap
 #'
-#' The Screen Grid Layer takes in an array of latitude and longitude coordinated points,
-#' aggregates them into histogram bins and renders as a grid
+#' The Heatmap Layer can be used to visualise spatial distribution of data.
+#' It implements Gaussian Kernel Density Estimation to render the heatmaps.
+#'
+#' @section note:
+#'
+#' The current version of this layer is supported only for WebGL2 enabled browswers
+#' So you may find it doesn't render in the RStudio viewer.
 #'
 #' @inheritParams add_polygon
 #' @param lon column containing longitude values
@@ -41,7 +46,7 @@ mapdeckHeatmapDependency <- function() {
 #'
 #' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_heatmap(
-#'   data = df[1:1000, ]
+#'   data = df
 #'   , lat = "lat"
 #'   , lon = "lng"
 #'   , weight = "weight",

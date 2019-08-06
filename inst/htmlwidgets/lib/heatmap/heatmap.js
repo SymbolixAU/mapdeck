@@ -2,19 +2,19 @@ function add_heatmap_geo( map_id, map_type, heatmap_data, layer_id, colour_range
 
   const heatmapLayer = new deck.HeatmapLayer({
     map_id: map_id,
-    id: 'screengrid-'+layer_id,
+    id: 'heatmap-'+layer_id,
     data: heatmap_data,
-    pickable: true,
+    //pickable: true,
 
     radiusPixels: 30,
     intensity: 1,
-    enhanceFactor: 20,
+    threshold: 0.05,
     colorRange: md_to_rgba( colour_range ),
 
     getPosition: d => md_get_point_coordinates( d ),
-    getWeight: d => d.properties.weight,
+    getWeight: d => d.properties.weight
 
-    onClick: info => md_layer_click( map_id, "heatmap", info ),
+    //onClick: info => md_layer_click( map_id, "heatmap", info ),
 
   });
 
@@ -32,19 +32,19 @@ function add_heatmap_polyline( map_id, map_type, heatmap_data, layer_id, colour_
 
   const heatmapLayer = new deck.HeatmapLayer({
     map_id: map_id,
-    id: 'screengrid-'+layer_id,
+    id: 'heatmap-'+layer_id,
     data: heatmap_data,
-    pickable: true,
+    //pickable: true,
 
     radiusPixels: 30,
     intensity: 1,
-    enhanceFactor: 20,
+    threshold: 0.05,
     colorRange: md_to_rgba( colour_range ),
 
     getPosition: d => md_get_point_coordinates( d ),
     getWeight: d => d.properties.weight,
 
-    onClick: info => md_layer_click( map_id, "heatmap", info ),
+    //onClick: info => md_layer_click( map_id, "heatmap", info ),
   });
     if( map_type == "google_map") {
 	    md_update_overlay( map_id, 'heatmap-'+layer_id, heatmapLayer );
