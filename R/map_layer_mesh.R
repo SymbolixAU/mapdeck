@@ -68,7 +68,7 @@ add_mesh <- function(
 	l <- list()
 	# fill_colour = "average_z"
 	# fill_colour = "z"
-	l[["fill_colour"]] <- force( fill_colour )
+	# l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
 	l[["elevation"]] <- force( elevation )
 	l[["tooltip"]] <- force( tooltip )
@@ -131,7 +131,7 @@ add_mesh <- function(
 		# geometry_column <- c( "geometry" )
 		geometry_column <- c( vertex, index )
 		shape <- rcpp_mesh_geojson( data, l, geometry_column, digits )
-		return( shape )
+		#return( shape )
 	}
 
 	#	geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
@@ -256,8 +256,8 @@ add_mesh2 <- function(
 		# geometry_column <- c( "geometry" )
 		geometry_column <- c( vertex, index )
 		shape <- rcpp_mesh_geojson2( data, geometry_column )
-		return( shape )
-		shape[["legend"]] <- list()
+		# return( shape )
+		# shape[["legend"]] <- list()
 	}
 
 	#	geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'

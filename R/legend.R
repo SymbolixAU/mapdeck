@@ -124,7 +124,7 @@ aggregation_legend <- function( legend, legend_options ) {
 	}
 
 	if( is.null( legend_options[["digits"]] ) ) {
-		legend_optiosn[["digits"]] <- 2
+		legend_options[["digits"]] <- 2
 	}
 
 	legend <- list(
