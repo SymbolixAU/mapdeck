@@ -3,8 +3,20 @@
 #' Retrieves the mapdeck token that has been set
 #'
 #' @export
-mapdeck_tokens <- function() getOption("mapdeck")
+mapdeck_tokens <- function() {
 
+	if(!is.na( getOption("mapdeck")[["mapdeck"]][["mapbox"]] ) ) {
+		return( getOption("mapdeck") )
+	}
+
+	if( !is.null( get_access_token() ) ){
+		return( get_access_token() )
+	}
+
+	cat("no tokens found")
+	return(invisible())
+
+}
 
 #' @export
 print.mapdeck_api <- function(x, ...) {

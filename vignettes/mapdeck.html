@@ -11,7 +11,7 @@
 
 <meta name="author" content="David Cooley" />
 
-<meta name="date" content="2019-02-08" />
+<meta name="date" content="2019-08-16" />
 
 <title>mapdeck</title>
 
@@ -1345,9 +1345,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type="text/css">
 .main-container {
@@ -1378,8 +1376,6 @@ summary {
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -1538,6 +1534,16 @@ div.tocify {
 
 </style>
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
 <div class="col-xs-12 col-sm-4 col-md-3">
@@ -1555,8 +1561,8 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">mapdeck</h1>
-<h4 class="author"><em>David Cooley</em></h4>
-<h4 class="date"><em>2019-02-08</em></h4>
+<h4 class="author">David Cooley</h4>
+<h4 class="date">2019-08-16</h4>
 
 </div>
 
@@ -1573,17 +1579,21 @@ div.tocify {
 <div id="the-basics" class="section level1">
 <h1>The basics</h1>
 <p>You need a <a href="https://www.mapbox.com/help/how-access-tokens-work/">Mapbox Access Token</a> to load a map. Then call <code>mapdeck(token = token)</code> to give you a map</p>
-<pre class="r"><code>key &lt;- 'abc'    ## put your own token here
+<pre class="r"><code>key &lt;- &#39;abc&#39;    ## put your own token here
 mapdeck(token = key)</code></pre>
-<p>You can use <code>set_token()</code> to make your token available ‘globally’ to all future calls to <code>mapdeck()</code>.</p>
-<pre class="r"><code>set_token('abc')
+<p>You can make your token available ‘globally’ to all <code>mapdeck()</code> calls by either</p>
+<ol style="list-style-type: decimal">
+<li>using <code>set_token()</code>, which sets the token as an <code>option</code></li>
+<li>having the token in your environment (e.g., using <code>Sys.setenv()</code> ) with the key one of “MAPBOX_TOKEN”,“MAPBOX_KEY”,“MAPBOX_API_TOKEN”, “MAPBOX_API_KEY”, “MAPBOX”, “MAPDECK”</li>
+</ol>
+<pre class="r"><code>set_token(&#39;abc&#39;)
 mapdeck_tokens()
 #  Mapdeck tokens
 #   -  mapbox : abc</code></pre>
 <p>You can style the map using any <a href="https://www.mapbox.com/api-documentation/#styles">mapbox style</a> template styles, or you can <a href="https://www.mapbox.com/help/studio-manual-styles/">create one of your own</a></p>
-<pre class="r"><code>mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9')</code></pre>
+<pre class="r"><code>mapdeck(token = key, style = &#39;mapbox://styles/mapbox/dark-v9&#39;)</code></pre>
 <p>I’ve provided a convenience function to select one of the mapbox defined styles</p>
-<pre class="r"><code>mapdeck_style(style = 'dark')</code></pre>
+<pre class="r"><code>mapdeck_style(style = &#39;dark&#39;)</code></pre>
 <p>Once you have a map you can start adding layers through the various <code>add_*()</code> functions (there is an example of each one in this vignette).</p>
 <p>All details about layers, colours, tips &amp; triks, etc, are here</p>
 <ul>
