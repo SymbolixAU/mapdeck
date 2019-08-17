@@ -68,8 +68,8 @@ transitions_grid <- function( transitions ) {
 }
 
 transitions_hexagon <- function( transitions ) {
-	transitions <- replace_name( transitions, "elevation", "getElevationValue" )
-	transitions <- replace_name( transitions, "colour", "getColorValue" )
+	transitions <- replace_name( transitions, "elevation", "getElevationWeight" )
+	transitions <- replace_name( transitions, "colour", "getColorWeight" )
 	return( transitions )
 }
 

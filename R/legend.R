@@ -40,7 +40,7 @@ mapdeck_legend.mapdeck_legend <- function( legend_elements ) jsonify::to_json(le
 
 #' @export
 mapdeck_legend.default <- function( legend_elements ) {
-	stop("mapdeck_legend will only work on objects created with legend_element")
+	stop("mapdeck - mapdeck_legend will only work on objects created with legend_element")
 }
 
 #' Legend Element
@@ -77,7 +77,7 @@ legend_element <- function(
 	) {
 
 	if( length( colours ) != length( variables ) ) {
-		stop("colours and variables should be the same length")
+		stop("mapdeck - colours and variables should be the same length")
 	}
 
 	colour_type <- legend_colour_type( colour_type )
@@ -112,6 +112,7 @@ aggregation_legend <- function( legend, legend_options ) {
 		legend_options <- list(
 			css = ""
 			, title = "value"
+			, digits = 2
 		)
 	}
 	if( is.null( legend_options[["css"]] ) ) {
@@ -121,10 +122,16 @@ aggregation_legend <- function( legend, legend_options ) {
 	if( is.null( legend_options[["title"]] ) ) {
 		legend_options[["title"]] <- "value"
 	}
+
+	if( is.null( legend_options[["digits"]] ) ) {
+		legend_options[["digits"]] <- 2
+	}
+
 	legend <- list(
 		legend = legend
 		, css = legend_options[["css"]]
 		, title = legend_options[["title"]]
+		, digits = legend_options[["digits"]]
 	)
 
 	return( legend )

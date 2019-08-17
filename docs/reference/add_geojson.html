@@ -64,7 +64,7 @@ lines and points" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1006</span>
       </span>
     </div>
 
@@ -110,6 +110,9 @@ lines and points" />
     <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
     </li>
+    <li>
+      <a href="../articles/trips.html">Trips</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -151,7 +154,7 @@ lines and points</p>
   <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>,
   <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,7 +208,8 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>legend</th>
       <td><p>either a logical indiciating if the legend(s) should be displayed, or
-a named list indicating which colour attributes should be included in the legend.</p></td>
+a named list indicating which colour attributes should be included in the legend.
+A legend is only shown if you supply one of the colour arguments (fill or stroke)</p></td>
     </tr>
     <tr>
       <th>legend_options</th>
@@ -326,6 +330,7 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
 This should be a named list, where the names are one of</p><ul>
 <li><p>css - a string of valid <code>css</code> for controlling the appearance of the legend</p></li>
 <li><p>title - a string to use for the title of the legend</p></li>
+<li><p>digits - number to round the legend values to</p></li>
 </ul>
     <p>If the layer allows different fill and stroke colours, you can use different options for each. See examples in <a href='add_arc.html'>add_arc</a>.</p>
 <p>The <code>legend_format</code> can be used to control the format of the values in the legend.
@@ -341,10 +346,10 @@ This should be a named list, where the names are one of</p><ul>
     <pre class="examples"><div class='input'>
 <span class='co'>## You need a valid access token from Mapbox</span>
 <span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='st'>'abc'</span>
+<span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='no'>key</span> )
 
 <span class='co'>## Not supplying colouring arguments, the function will try and find them in the GeoJSON</span>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
- <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>
  , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.9</span>)
  , <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>8</span>
  , <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>)
@@ -356,7 +361,6 @@ This should be a named list, where the names are one of</p><ul>
  )</div><div class='output co'>#&gt; <span class='error'>Error in add_geojson(., data = geojson, auto_highlight = TRUE): unused argument (auto_highlight = TRUE)</span></div><div class='input'>
 <span class='co'>## only supplying values to use for fill, the stroke will be default</span>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
- <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>
  , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.9</span>)
  , <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>8</span>
  , <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>)
@@ -367,7 +371,6 @@ This should be a named list, where the names are one of</p><ul>
    , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"random"</span>
  )</div><div class='output co'>#&gt; <span class='error'>Error in add_geojson(., data = geojson, fill_colour = "random"): unused argument (fill_colour = "random")</span></div><div class='input'>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
- <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>
  , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.9</span>)
  , <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>8</span>
  , <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>)
@@ -379,7 +382,6 @@ This should be a named list, where the names are one of</p><ul>
    , <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='st'>"random"</span>
  )</div><div class='output co'>#&gt; <span class='error'>Error in add_geojson(., data = geojson, fill_colour = "random", stroke_colour = "random"): unused arguments (fill_colour = "random", stroke_colour = "random")</span></div><div class='input'>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
- <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>
  , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.9</span>)
  , <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>8</span>
  , <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>)
@@ -401,7 +403,6 @@ This should be a named list, where the names are one of</p><ul>
 <span class='no'>geo</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/geojsonsf/topics/sf_geojson'>sf_geojson</a></span>( <span class='no'>sf</span> )
 
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
- <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>
  , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.9</span>)
  , <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>8</span>
  , <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>)

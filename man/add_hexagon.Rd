@@ -16,8 +16,8 @@ add_hexagon(map, data = get_map_data(map), polyline = NULL,
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection}
+\item{data}{data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system}
 
 \item{polyline}{column of \code{data} containing the polylines}
 
@@ -67,6 +67,23 @@ The color and height of the hexagon is scaled by number of points it contains.
 \details{
 \code{add_hexagon} supports POINT and MULTIPOINT sf objects
 }
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny)
+and on WebGL-2 supported browsers and hardware.
+
+The time is in milliseconds
+
+Available transitions for hexagon
+
+list(
+elevation = 0
+colour = 0
+)
+}
+
 \section{data}{
 
 
@@ -147,6 +164,7 @@ add_hexagon(
 	, layer_id = "hex_layer"
 	, elevation_scale = 100
 	, legend = T
+	, legend_options = list( digits = 0 )
 	, colour_function = "mean"
 	, colour = "val"
 )

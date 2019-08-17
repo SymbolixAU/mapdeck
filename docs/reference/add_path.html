@@ -64,7 +64,7 @@ extruded lines with mitering." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1006</span>
       </span>
     </div>
 
@@ -110,6 +110,9 @@ extruded lines with mitering." />
     <li>
       <a href="../articles/tips_tricks.html">Tips &amp; Tricks</a>
     </li>
+    <li>
+      <a href="../articles/trips.html">Trips</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -145,11 +148,11 @@ extruded lines with mitering.</p>
 
     <pre class="usage"><span class='fu'>add_path</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>billboard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
   <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>, <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,8 +163,8 @@ extruded lines with mitering.</p>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection</p></td>
+      <td><p>data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system</p></td>
     </tr>
     <tr>
       <th>polyline</th>
@@ -179,6 +182,11 @@ Web Mercator Projection</p></td>
     <tr>
       <th>tooltip</th>
       <td><p>variable of <code>data</code> containing text or HTML to render as a tooltip</p></td>
+    </tr>
+    <tr>
+      <th>billboard</th>
+      <td><p>logical indicating if the path always faces the camera (TRUE) or
+if it always faces up (FALSE)</p></td>
     </tr>
     <tr>
       <th>layer_id</th>
@@ -270,6 +278,7 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
 This should be a named list, where the names are one of</p><ul>
 <li><p>css - a string of valid <code>css</code> for controlling the appearance of the legend</p></li>
 <li><p>title - a string to use for the title of the legend</p></li>
+<li><p>digits - number to round the legend values to</p></li>
 </ul>
     <p>If the layer allows different fill and stroke colours, you can use different options for each. See examples in <a href='add_arc.html'>add_arc</a>.</p>
 <p>The <code>legend_format</code> can be used to control the format of the values in the legend.
@@ -295,10 +304,10 @@ you are clicking on</p>
     <pre class="examples"><div class='input'>
 <span class='co'>## You need a valid access token from Mapbox</span>
 <span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='st'>'abc'</span>
+<span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='no'>key</span> )
 
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
-  <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>
-  , <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>'mapbox://styles/mapbox/dark-v9'</span>
+  <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>'mapbox://styles/mapbox/dark-v9'</span>
   , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.8</span>)
   , <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_path</span>(
@@ -308,7 +317,7 @@ you are clicking on</p>
     , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"ROAD_NAME"</span>
     , <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
     , <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>T</span>
-  )</div><div class='output co'>#&gt; is_factor: 0</div><div class='input'>
+  )</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

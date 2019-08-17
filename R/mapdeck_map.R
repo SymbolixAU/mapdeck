@@ -2,10 +2,11 @@
 #'
 #' @import htmlwidgets
 #'
-#' @param token Mapbox Acess token. Use \code{set_token()} to set a global token.
+#' @param token Mapbox Acess token. Use \code{set_token()} or \code{Sys.setenv()} to set a global token.
+#' See Access Tokens section for further details.
 #' If left empty layers will still be plotted, but without a Mapbox map.
-#' @param data data to be used on the map. All coordinates are expected to be in
-#' Web Mercator Projection
+#' @param data data to be used in the layer. All coordinates are expected to be
+#' EPSG:4326 (WGS 84) coordinate system
 #' @param width the width of the map
 #' @param height the height of the map
 #' @param padding the padding of the map
@@ -14,6 +15,16 @@
 #' @param zoom zoom level of the map
 #' @param bearing bearing of the map between 0 and 360
 #' @param location unnamed vector of lon and lat coordinates (in that order)
+#'
+#' @section Access Tokens:
+#'
+#' If the \code{token} argument is not used, the map will search for the token, firstly by
+#' checking if \code{set_token()} was used, then it will search environment variables using
+#' \code{Sys.getenv()} and the following values, in this order
+#'
+#' c("MAPBOX_TOKEN","MAPBOX_KEY","MAPBOX_API_TOKEN", "MAPBOX_API_KEY", "MAPBOX", "MAPDECK")
+#'
+#' If multiple tokens are found, the first one is used
 #'
 #' @export
 mapdeck <- function(
@@ -119,8 +130,8 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param map_id string containing the output ID of the map in a shiny application.
 #' @param session the Shiny session object to which the map belongs; usually the
 #' default value will suffice.
-#' @param data data to be used in the map. All coordinates are expected to be in
-#' Web Mercator Projection
+#' @param data data to be used in the layer. All coordinates are expected to be
+#' EPSG:4326 (WGS 84) coordinate system
 #' @param deferUntilFlush indicates whether actions performed against this
 #' instance should be carried out right away, or whether they should be held until
 #' after the next time all of the outputs are updated; defaults to TRUE.
@@ -136,7 +147,7 @@ mapdeck_update <- function(
 	map_type <- match.arg( map_type )
 
 	if (is.null(session)) {
-		stop("mapdeck_update must be called from the server function of a Shiny app")
+		stop("mapdeck - mapdeck_update must be called from the server function of a Shiny app")
 	}
 
 	structure(

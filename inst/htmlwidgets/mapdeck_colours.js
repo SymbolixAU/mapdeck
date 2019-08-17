@@ -1,4 +1,7 @@
 function md_hexToRGBA( hex ) {
+
+	//console.log( hex );
+
     let parseString = hex;
     if (hex.startsWith('#')) { parseString = hex.slice(1, 9); }
 
@@ -23,6 +26,9 @@ function md_hexToRGBA( hex ) {
  * Converts a 'vector' of hex colours (with alpha) into an array
  */
 function md_to_rgba( colour_range ) {
+
+	console.log( "md_to_rgba" );
+
 	var arr = [],
 	i,
 	n = colour_range.length;
@@ -30,5 +36,6 @@ function md_to_rgba( colour_range ) {
 	for (i = 0; i < n; i++) {
 		arr.push( md_hexToRGBA( colour_range[i]) );
 	}
+	console.log( arr );
   return arr;
 }

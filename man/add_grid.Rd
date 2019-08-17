@@ -17,8 +17,8 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
 \arguments{
 \item{map}{a mapdeck map object}
 
-\item{data}{data to be used in the layer. All coordinates are expected to be in
-Web Mercator Projection}
+\item{data}{data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system}
 
 \item{lon}{column containing longitude values}
 
@@ -30,21 +30,18 @@ Web Mercator Projection}
 
 \item{extruded}{logical indicating if cells are elevated or not. Default TRUE}
 
-\item{elevation}{column containing the elevation of the value. This is used to calculate the
-height of the hexagons. The height is calculated by the sum of elevations of all the coordinates
-within the \code{radius}. If NULL, the number of coordinates is used.}
+\item{elevation}{the height the polygon extrudes from the map. Only available if neither
+\code{stroke_colour} or \code{stroke_width} are supplied. Default 0}
 
 \item{elevation_function}{one of 'min', 'mean', 'max', 'sum'.
 IF supplied it specifies how the elevation values are calcualted. Defaults to sum.}
 
-\item{colour}{column containing numeric values to colour by.
-The colour is calculated by the sum of values within the \code{radius}.
-If NULL, the number of coordinates is used.}
+\item{colour}{column containing numeric values to colour by.}
 
 \item{colour_function}{one of 'min', 'mean', 'max', 'sum'.
 If supplied it specifies how the colour values are calculated. Defaults to sum.}
 
-\item{elevation_scale}{cell elevation multiplier. Default 1}
+\item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
 
 \item{colour_range}{vector of 6 hex colours}
 

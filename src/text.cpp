@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 
 #include "mapdeck_defaults.hpp"
-#include "layers/text.hpp"
+#include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List text_defaults(int n) {
@@ -16,15 +16,17 @@ Rcpp::List text_defaults(int n) {
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_text_geojson( Rcpp::DataFrame data, Rcpp::List params,
-                              std::string geometry_columns, int digits ) {
+Rcpp::List rcpp_text_geojson(
+		Rcpp::DataFrame data, Rcpp::List params,
+		std::string geometry_columns, int digits
+	) {
 
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = text_defaults( data_rows );  // initialise with defaults
 
-	std::unordered_map< std::string, std::string > text_colours = mapdeck::text::text_colours;
-	Rcpp::StringVector text_legend = mapdeck::text::text_legend;
+	std::unordered_map< std::string, std::string > text_colours = mapdeck::layer_colours::fill_colours;
+	Rcpp::StringVector text_legend = mapdeck::layer_colours::fill_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson_downcast(
@@ -42,15 +44,17 @@ Rcpp::List rcpp_text_geojson( Rcpp::DataFrame data, Rcpp::List params,
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_text_geojson_df( Rcpp::DataFrame data, Rcpp::List params,
-                                 Rcpp::List geometry_columns, int digits ) {
+Rcpp::List rcpp_text_geojson_df(
+		Rcpp::DataFrame data, Rcpp::List params,
+		Rcpp::List geometry_columns, int digits
+	) {
 
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = text_defaults( data_rows );  // initialise with defaults
 
-	std::unordered_map< std::string, std::string > text_colours = mapdeck::text::text_colours;
-	Rcpp::StringVector text_legend = mapdeck::text::text_legend;
+	std::unordered_map< std::string, std::string > text_colours = mapdeck::layer_colours::fill_colours;
+	Rcpp::StringVector text_legend = mapdeck::layer_colours::fill_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(
@@ -68,15 +72,17 @@ Rcpp::List rcpp_text_geojson_df( Rcpp::DataFrame data, Rcpp::List params,
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_text_polyline( Rcpp::DataFrame data,
-                              Rcpp::List params, Rcpp::StringVector geometry_columns ) {
+Rcpp::List rcpp_text_polyline(
+		Rcpp::DataFrame data,
+		Rcpp::List params, Rcpp::StringVector geometry_columns
+	) {
 
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = text_defaults( data_rows );  // initialise with defaults
 
-	std::unordered_map< std::string, std::string > text_colours = mapdeck::text::text_colours;
-	Rcpp::StringVector text_legend = mapdeck::text::text_legend;
+	std::unordered_map< std::string, std::string > text_colours = mapdeck::layer_colours::fill_colours;
+	Rcpp::StringVector text_legend = mapdeck::layer_colours::fill_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(

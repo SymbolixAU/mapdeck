@@ -27,7 +27,7 @@ mapdeck_dispatch = function(
   else if (inherits(map, "mapdeck_update") | inherits(map, "google_map_update"))
     return(mapdeck_update)
   else
-    stop("Invalid map parameter")
+    stop("mapdeck - Invalid map parameter")
 }
 
 
@@ -58,7 +58,7 @@ invoke_method <- function(map, method, ...) {
 invoke_remote = function(map, method, args = list()) {
 
   if (!( inherits(map, "mapdeck_update") | inherits(map, "google_map_update") ) )
-    stop("Invalid map parameter; mapdeck_update object was expected")
+    stop("mapdeck - Invalid map parameter; mapdeck_update object was expected")
 
 
 	calls <- "mapdeckmap-calls"
@@ -102,7 +102,7 @@ evalFormula = function(list, data) {
 
 resolveFormula = function(f, data) {
 	if (!inherits(f, 'formula')) return(f)
-	if (length(f) != 2L) stop("Unexpected two-sided formula: ", deparse(f))
+	if (length(f) != 2L) stop("mapdeck - Unexpected two-sided formula: ", deparse(f))
 
 	doResolveFormula(data, f)
 }
@@ -127,7 +127,7 @@ layerId <- function(
 
 	layer <- match.arg( layer )
 	if (!is.null(layer_id) & length(layer_id) != 1)
-		stop("please provide a single value for 'layer_id'")
+		stop("mapdeck - please provide a single value for 'layer_id'")
 
 	if (is.null(layer_id)) {
 		return(paste0(layer, "-defaultLayerId"))
@@ -137,9 +137,9 @@ layerId <- function(
 }
 
 mapdeck_layers <- function() {
-	c("arc", "bitmap", "column", "geojson", "greatcircle","grid","hexagon",
+	c("arc", "bitmap", "column", "geojson", "greatcircle","grid","heatmap","hexagon",
 		"line", "mesh", "path","pointcloud", "polygon","scatterplot", "screengrid",
-		"text", "title")
+		"text", "title","trips")
 }
 
 

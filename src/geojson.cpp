@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 
 #include "mapdeck_defaults.hpp"
-#include "layers/geojson.hpp"
+#include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List geojson_defaults(int n) {
@@ -15,15 +15,17 @@ Rcpp::List geojson_defaults(int n) {
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_geojson_geojson( Rcpp::DataFrame data, Rcpp::List params,
-                                 std::string geometry_column, int digits ) {
+Rcpp::List rcpp_geojson_geojson(
+		Rcpp::DataFrame data, Rcpp::List params,
+		std::string geometry_column, int digits
+	) {
 
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = geojson_defaults( data_rows );  // initialise with defaults
 
-	std::unordered_map< std::string, std::string > geojson_colours = mapdeck::geojson::geojson_colours;
-	Rcpp::StringVector geojson_legend = mapdeck::geojson::geojson_legend;
+	std::unordered_map< std::string, std::string > geojson_colours = mapdeck::layer_colours::fill_stroke_colours;
+	Rcpp::StringVector geojson_legend = mapdeck::layer_colours::fill_stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(

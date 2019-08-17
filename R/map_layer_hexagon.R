@@ -33,6 +33,20 @@ mapdeckHexagonDependency <- function() {
 #' @param legend logical indicating if a legend should be displayed
 #'
 #' @inheritSection add_polygon data
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny)
+#' and on WebGL-2 supported browsers and hardware.
+#'
+#' The time is in milliseconds
+#'
+#' Available transitions for hexagon
+#'
+#' list(
+#' elevation = 0
+#' colour = 0
+#' )
 #'
 #' @examples
 #' \dontrun{
@@ -105,6 +119,7 @@ mapdeckHexagonDependency <- function() {
 #' 	, layer_id = "hex_layer"
 #' 	, elevation_scale = 100
 #' 	, legend = T
+#' 	, legend_options = list( digits = 0 )
 #' 	, colour_function = "mean"
 #' 	, colour = "val"
 #' )
@@ -184,7 +199,7 @@ add_hexagon <- function(
 	}
 
 	if(length(colour_range) != 6)
-		stop("colour_range must have 6 hex colours")
+		stop("mapdeck - colour_range must have 6 hex colours")
 
 	checkHex(colour_range)
 	checkHexAlpha(highlight_colour)

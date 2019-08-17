@@ -9,6 +9,7 @@ test_that("layerId includes all layers", {
 		, "geojson"
 		, "greatcircle"
 		, "grid"
+		, "heatmap"
 		, "hexagon"
 		, "line"
 		, "mesh"
@@ -19,6 +20,7 @@ test_that("layerId includes all layers", {
 		, "screengrid"
 		, "text"
 		, "title"
+		, "trips"
 	)
 
 	expect_equal( layers, mapdeck:::mapdeck_layers() )

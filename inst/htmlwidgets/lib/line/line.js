@@ -6,6 +6,9 @@ function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, hi
     id: 'line-'+layer_id,
     data: line_data,
     pickable: true,
+    parameters: {
+	    depthTest: false
+	  },
     getWidth: d => d.properties.stroke_width,
     getSourcePosition: d => md_get_origin_coordinates( d ),
     getTargetPosition: d => md_get_destination_coordinates( d ),
@@ -37,6 +40,9 @@ function add_line_polyline( map_id, map_type, line_data, layer_id, auto_highligh
     id: 'line-'+layer_id,
     data: line_data,
     pickable: true,
+    parameters: {
+	    depthTest: false
+	  },
     getWidth: d => d.stroke_width,
     getSourcePosition: d => md_decode_points( d.origin ),
     getTargetPosition: d => md_decode_points( d.destination ),

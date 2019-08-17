@@ -53,6 +53,18 @@ rcpp_grid_polyline <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_grid_polyline`, data, params, geometry_columns)
 }
 
+rcpp_heatmap_geojson <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_heatmap_geojson`, data, params, geometry_columns, digits)
+}
+
+rcpp_heatmap_geojson_df <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_heatmap_geojson_df`, data, params, geometry_columns, digits)
+}
+
+rcpp_heatmap_polyline <- function(data, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_heatmap_polyline`, data, params, geometry_columns)
+}
+
 rcpp_hexagon_geojson <- function(data, params, geometry_columns, digits) {
     .Call(`_mapdeck_rcpp_hexagon_geojson`, data, params, geometry_columns, digits)
 }
@@ -79,6 +91,10 @@ mesh_to_sf <- function(mesh, vertices) {
 
 rcpp_mesh_geojson <- function(mesh, params, vertices, digits) {
     .Call(`_mapdeck_rcpp_mesh_geojson`, mesh, params, vertices, digits)
+}
+
+rcpp_mesh_geojson2 <- function(mesh, vertices) {
+    .Call(`_mapdeck_rcpp_mesh_geojson2`, mesh, vertices)
 }
 
 rcpp_path_geojson <- function(data, params, geometry_columns, digits) {
@@ -143,5 +159,9 @@ rcpp_text_geojson_df <- function(data, params, geometry_columns, digits) {
 
 rcpp_text_polyline <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_text_polyline`, data, params, geometry_columns)
+}
+
+rcpp_trips_geojson <- function(data, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_trips_geojson`, data, params, geometry_columns)
 }
 

@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 
 #include "mapdeck_defaults.hpp"
-#include "layers/mesh.hpp"
+#include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List mesh_defaults(int n) {
@@ -50,7 +50,7 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 			a_polygon(j, _) = vb(_, this_index);
 			z_values[ j ] = a_polygon(j, 2);
 		}
-		avg_z[i] = Rcpp::mean( z_values );
+		//avg_z[i] = Rcpp::mean( z_values );
 
 		sfg[0] = a_polygon;
 		sfg.attr("class") = Rcpp::CharacterVector::create("XYZM", "POLYGON", "sfg");
@@ -80,8 +80,8 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 
 	Rcpp::List sf = Rcpp::List::create(
 		_["geometry"] = sfc,
-		//_["z"] = z,
-		_["average_z"] = avg_z
+		_["z"] = z
+		//_["average_z"] = avg_z
 	);
 
 	sf.attr("class") = Rcpp::CharacterVector::create("sf","data.frame");
@@ -98,8 +98,10 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params,
-                              Rcpp::StringVector vertices, int digits ) {
+Rcpp::List rcpp_mesh_geojson(
+		Rcpp::List mesh, Rcpp::List params,
+		Rcpp::StringVector vertices, int digits
+	) {
 
 	Rcpp::DataFrame data = mesh_to_sf( mesh, vertices );
 
@@ -113,8 +115,8 @@ Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params,
 	std::string geometry_columns = "geometry";
 
 	Rcpp::List lst_defaults = mesh_defaults( data_rows );  // initialise with defaults
-	std::unordered_map< std::string, std::string > mesh_colours = mapdeck::mesh::mesh_colours;
-	Rcpp::StringVector mesh_legend = mapdeck::mesh::mesh_legend;
+	std::unordered_map< std::string, std::string > mesh_colours = mapdeck::layer_colours::fill_colours;
+	Rcpp::StringVector mesh_legend = mapdeck::layer_colours::fill_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson_downcast(
@@ -128,6 +130,45 @@ Rcpp::List rcpp_mesh_geojson( Rcpp::List mesh, Rcpp::List params,
 		geometry_columns,
 		true,  // jsonify legend
 		digits
+	);
+
+}
+
+
+// [[Rcpp::export]]
+Rcpp::StringVector rcpp_mesh_geojson2( Rcpp::List mesh, Rcpp::StringVector vertices ) {
+
+	//Rcpp::DataFrame data = mesh_to_sf( mesh, vertices );
+
+	//return data;
+
+	// can now create a data.frame of the vbt objc, and this new polygons list,
+	// where polygons list is the sf_geometry column
+
+	// int data_rows = data.nrows();
+	//
+	// std::string geometry_columns = "geometry";
+	//
+	// Rcpp::List lst_defaults = mesh_defaults( data_rows );  // initialise with defaults
+	// std::unordered_map< std::string, std::string > mesh_colours = mapdeck::mesh::mesh_colours;
+	// Rcpp::StringVector mesh_legend = mapdeck::mesh::mesh_legend;
+	// Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
+	//
+	// return spatialwidget::api::create_geojson_downcast(
+	// 	data,
+	// 	params,
+	// 	lst_defaults,
+	// 	mesh_colours,
+	// 	mesh_legend,
+	// 	data_rows,
+	// 	parameter_exclusions,
+	// 	geometry_columns,
+	// 	true,  // jsonify legend
+	// 	digits
+	// );
+
+	return spatialwidget::api::create_geojson_mesh(
+		mesh, vertices
 	);
 
 }

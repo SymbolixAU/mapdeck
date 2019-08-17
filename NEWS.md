@@ -1,5 +1,9 @@
 # mapdeck 0.3
 
+* mapbox tokens are searched for in environement variables if one isn't provided [issue209](https://github.com/SymbolixAU/mapdeck/issues/209)
+* z-fighting [issue 199](https://github.com/SymbolixAU/mapdeck/issues/199)
+* factors correctly used in legends [issue #138](https://github.com/SymbolixAU/mapdeck/issues/138)
+* `add_trips()` for adding animated trips to the map
 * `add_path` gets `billboard` argument so the path always faces the 'camera'
 * Fix for legends in GeoJSON layer - [issue #190](https://github.com/SymbolixAU/mapdeck/issues/190)
 * `add_hexagon` now supports GPU aggregation for colour and elevation

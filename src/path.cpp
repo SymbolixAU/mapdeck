@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 
 #include "mapdeck_defaults.hpp"
-#include "layers/path.hpp"
+#include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 
 Rcpp::List path_defaults(int n) {
@@ -12,14 +12,17 @@ Rcpp::List path_defaults(int n) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_path_geojson( Rcpp::DataFrame data, Rcpp::List params,
-                              std::string geometry_columns, int digits  ) {
+Rcpp::List rcpp_path_geojson(
+		Rcpp::DataFrame data, Rcpp::List params,
+		std::string geometry_columns, int digits
+	) {
 
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = path_defaults( data_rows );  // initialise with defaults
-	std::unordered_map< std::string, std::string > path_colours = mapdeck::path::path_colours;
-	Rcpp::StringVector path_legend = mapdeck::path::path_legend;
+
+	std::unordered_map< std::string, std::string > path_colours = mapdeck::layer_colours::stroke_colours;
+	Rcpp::StringVector path_legend = mapdeck::layer_colours::stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson_downcast(
@@ -37,14 +40,17 @@ Rcpp::List rcpp_path_geojson( Rcpp::DataFrame data, Rcpp::List params,
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_path_polyline( Rcpp::DataFrame data,
-                               Rcpp::List params, Rcpp::StringVector geometry_columns ) {
+Rcpp::List rcpp_path_polyline(
+		Rcpp::DataFrame data,
+		Rcpp::List params, Rcpp::StringVector geometry_columns
+	) {
 
 	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = path_defaults( data_rows );  // initialise with defaults
-	std::unordered_map< std::string, std::string > path_colours = mapdeck::path::path_colours;
-	Rcpp::StringVector path_legend = mapdeck::path::path_legend;
+
+	std::unordered_map< std::string, std::string > path_colours = mapdeck::layer_colours::stroke_colours;
+	Rcpp::StringVector path_legend = mapdeck::layer_colours::stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_polyline(

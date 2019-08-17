@@ -53,7 +53,7 @@ To use the development version you need some other development dependant
 libraries
 
 ``` r
-
+devtools::install_github("SymbolixAU/jsonify", force = TRUE)
 devtools::install_github("SymbolixAU/geojsonsf", force = TRUE)
 devtools::install_github("SymbolixAU/colourvalues", force = TRUE)
 devtools::install_github("SymbolixAU/spatialwidget", force = TRUE)
@@ -93,3 +93,16 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
 See the
 [Layers](https://symbolixau.github.io/mapdeck/articles/layers.html) page
 for more examples
+
+## Getting help
+
+For general help and advice the best place to ask is on
+[StackOverflow](https://stackoverflow.com/questions/tagged/mapdeck)
+(using the `mapdeck` tag).
+
+If you’ve found a bug, or want a new feature added then use the [issue
+tracker](https://github.com/SymbolixAU/mapdeck/issues) on github.
+
+I don’t respond to emails asking for help because this is an open source
+package, and any advice should be kept open so everyone can benefit.
+(unless you want to pay me\!)

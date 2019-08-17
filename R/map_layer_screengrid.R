@@ -20,6 +20,8 @@ mapdeckScreengridDependency <- function() {
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param weight the weight of each value. Default 1
+#' @param aggregation one of 'min', 'mean', 'max', 'sum'.
+#' If supplied it specifies how the weights used.
 #' @param colour_range vector of 6 hex colours
 #' @param opacity opacity of cells. Value between 0 and 1. Default 0.8
 #' @param cell_size size of grid squares in pixels. Default 50
@@ -78,6 +80,7 @@ add_screengrid <- function(
 	lat = NULL,
 	polyline = NULL,
 	weight = NULL,
+	aggregation = c("sum","mean","min","max"),
 	colour_range = NULL,
 	opacity = 0.8,
 	cell_size = 50,
@@ -93,6 +96,9 @@ add_screengrid <- function(
 	l[["lat"]] <- force( lat )
 
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+
+	aggregation <- match.arg( aggregation )
+	aggregation <- toupper( aggregation )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -119,7 +125,7 @@ add_screengrid <- function(
 	}
 
 	if(length(colour_range) != 6)
-		stop("colour_range must have 6 hex colours")
+		stop("mapdeck - colour_range must have 6 hex colours")
 	## end parameter checks
 
 	checkHex(colour_range)
@@ -144,7 +150,7 @@ add_screengrid <- function(
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, opacity, cell_size, colour_range,
-		bbox, update_view, focus_layer
+		bbox, update_view, focus_layer, aggregation
 		)
 }
 

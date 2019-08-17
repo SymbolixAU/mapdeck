@@ -5,6 +5,9 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
     id: 'greatcircle-'+layer_id,
     data: greatcircle_data,
     pickable: true,
+    parameters: {
+	    depthTest: false
+	  },
     getWidth: d => d.properties.stroke_width,
     getSourcePosition: d => md_get_origin_coordinates( d ),
     getTargetPosition: d => md_get_destination_coordinates( d ),
@@ -39,6 +42,9 @@ function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id,
     id: 'greatcircle-'+layer_id,
     data: greatcircle_data,
     pickable: true,
+    parameters: {
+	    depthTest: false
+	  },
     getWidth: d => d.stroke_width,
     getSourcePosition: d => md_decode_points( d.origin ),
     getTargetPosition: d => md_decode_points( d.destination ),
