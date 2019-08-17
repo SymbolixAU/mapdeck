@@ -44,9 +44,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
   //if( map_type == "mapbox" ) {
   var map = window[ map_id + 'map'];  // mapbox map
 
-
 /*
-
   	const deck = new Deck({
   		gl: map.painter.context.gl,
   		layers: [
@@ -77,47 +75,27 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 			  })
   		]
   	});
+ */
 
-  	console.log( "deck:" );
-  	console.log( deck );
+      console.log( scatter_data );
 
-   const ml = new MapboxLayer({id: 'scatterplot-'+layer_id, deck: deck });
-   console.log( "ml" );
-   console.log( ml );
-
-   //map.addLayer();
-  //}
-*/
-
-  const scatterLayer = new MapboxLayer({
-  	//map_id: map_id,
-  	type: ScatterplotLayer,
-  	id: 'scatterplot-'+layer_id,
-    data: scatter_data,
-    radiusScale: 1,
-    radiusMinPixels: radius_min_pixels || 1,
-    radiusMaxPixels: radius_max_pixels || Number.MAX_SAFE_INTEGER,
-    lineWidthMinPixels: 0,
-    stroked: true,  // TODO( make conditional IFF stroke provided?)
-    filled: true,
-    parameters: {
-	    depthTest: false
-	  },
-    getRadius: d => d.properties.radius,
-    getPosition: d => md_get_point_coordinates( d ),
-    getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
-    getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
-    getLineWidth: d => d.properties.stroke_width,
-    pickable: true,
-    autoHighlight: auto_highlight,
-    highlightColor: md_hexToRGBA( highlight_colour ),
-    onClick: info => md_layer_click( map_id, "scatterplot", info ),
-    onHover: md_update_tooltip,
-    transitions: js_transition || {}
-
+  	  const deck = new Deck({
+      gl: map.painter.context.gl,
+      layers: [
+          new ScatterplotLayer({
+              id: 'my-scatterplot',
+              data: scatter_data,
+              getPosition: d => md_get_point_coordinates( d ),
+              getRadius: d => d.properties.radius,
+              getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
+              getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
+			        getLineWidth: d => d.properties.stroke_width
+          })
+      ]
   });
 
-  map.addLayer( scatterLayer );
+   map.addLayer( new MapboxLayer({id: 'scatterplot-'+layer_id, deck }) );
+  //}
 
 
 /*
