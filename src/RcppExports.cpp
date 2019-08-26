@@ -440,6 +440,15 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// duktape_test
+void duktape_test();
+RcppExport SEXP _mapdeck_duktape_test() {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    duktape_test();
+    return R_NilValue;
+END_RCPP
+}
 // rcpp_scatterplot_geojson_df
 Rcpp::List rcpp_scatterplot_geojson_df(Rcpp::DataFrame data, Rcpp::List params, Rcpp::List geometry_columns, int digits);
 RcppExport SEXP _mapdeck_rcpp_scatterplot_geojson_df(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
@@ -596,6 +605,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_polygon_geojson", (DL_FUNC) &_mapdeck_rcpp_polygon_geojson, 4},
     {"_mapdeck_rcpp_polygon_polyline", (DL_FUNC) &_mapdeck_rcpp_polygon_polyline, 3},
     {"_mapdeck_rcpp_scatterplot_geojson", (DL_FUNC) &_mapdeck_rcpp_scatterplot_geojson, 4},
+    {"_mapdeck_duktape_test", (DL_FUNC) &_mapdeck_duktape_test, 0},
     {"_mapdeck_rcpp_scatterplot_geojson_df", (DL_FUNC) &_mapdeck_rcpp_scatterplot_geojson_df, 4},
     {"_mapdeck_rcpp_scatterplot_polyline", (DL_FUNC) &_mapdeck_rcpp_scatterplot_polyline, 3},
     {"_mapdeck_rcpp_screengrid_geojson", (DL_FUNC) &_mapdeck_rcpp_screengrid_geojson, 4},

@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 
+#include "duktape.h"
 
 #include "mapdeck_defaults.hpp"
 #include "layers/layer_colours.hpp"
@@ -43,6 +44,18 @@ Rcpp::List rcpp_scatterplot_geojson(
 		true,  // jsonify legend
 		digits
 	);
+}
+
+// [[Rcpp::export]]
+void duktape_test() {
+	duk_context *ctx = duk_create_heap_default();
+	if (!ctx) {
+		Rcpp::Rcout << "Failed to create a Duktape heap.\n" << std::endl;
+	} else {
+		//duk_push_file_as_string(ctx, "../inst/htmlwidgets/lib/scatterplot.js")
+		Rcpp::Rcout << "made context" << std::endl;
+	}
+	duk_destroy_heap(ctx);
 }
 
 

@@ -129,6 +129,10 @@ rcpp_scatterplot_geojson <- function(data, params, geometry_columns, digits) {
     .Call(`_mapdeck_rcpp_scatterplot_geojson`, data, params, geometry_columns, digits)
 }
 
+duktape_test <- function() {
+    invisible(.Call(`_mapdeck_duktape_test`))
+}
+
 rcpp_scatterplot_geojson_df <- function(data, params, geometry_columns, digits) {
     .Call(`_mapdeck_rcpp_scatterplot_geojson_df`, data, params, geometry_columns, digits)
 }

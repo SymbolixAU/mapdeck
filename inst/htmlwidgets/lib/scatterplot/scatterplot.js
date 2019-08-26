@@ -1,4 +1,7 @@
 
+function duktape_js() {
+	console.log("called from C++");
+}
 
 function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
 
