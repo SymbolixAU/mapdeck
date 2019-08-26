@@ -1,9 +1,17 @@
-#include <Rcpp.h>
 
+
+#include <Rcpp.h>
 
 #include "mapdeck_defaults.hpp"
 #include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
+
+// #include "emscripten/val.h"
+//
+// void call_js() {
+// 	emscripten::val embind_test = emscripten::val::global("embind_test");
+// 	embind_test.call<void>("embind_test");
+// }
 
 Rcpp::List scatterplot_defaults(int n) {
 
@@ -30,6 +38,9 @@ Rcpp::List rcpp_scatterplot_geojson(
 	std::unordered_map< std::string, std::string > scatterplot_colours = mapdeck::layer_colours::fill_stroke_colours;
 	Rcpp::StringVector scatterplot_legend = mapdeck::layer_colours::fill_stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
+
+	//call_js();
+
 
 	return spatialwidget::api::create_geojson_downcast(
 		data,

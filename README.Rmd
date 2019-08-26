@@ -21,6 +21,19 @@ knitr::opts_chunk$set(
 [![Build Status](https://travis-ci.org/SymbolixAU/mapdeck.svg?branch=master)](https://travis-ci.org/SymbolixAU/mapdeck)
 [![Coverage Status](https://codecov.io/github/SymbolixAU/mapdeck/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/mapdeck?branch=master)
 
+Emscripten notes
+
+1. src/Makevars include - relative to github install
+2. ~/.R/Makevars - points to emcc compiler
+
+```
+LLVM_EMSCRIPTEN = /Users/david/Documents/github/emsdk/fastcomp/emscripten
+CXX=$(LLVM_EMSCRIPTEN)/emcc
+```
+
+3. emcripten.h - changed `_IO_FILE FILE` to `_IO_FILE emFILE` to resolve a conflict
+
+
 ## What is mapdeck?
 
 An R library which lets you plot interactive maps using Mapbox GL and Deck.gl
