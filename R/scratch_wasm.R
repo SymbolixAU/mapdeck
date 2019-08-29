@@ -1,6 +1,5 @@
 library(shiny)
 library(shinydashboard)
-library(jsonify)
 
 ui <- dashboardPage(
 	dashboardHeader()
@@ -18,9 +17,10 @@ ui <- dashboardPage(
 server <- function(input, output) {
 
 	output$myMap <- renderMapdeck({
-		m <- mapdeck()
-		print( str( m ) )
-		m
+		mapdeck() %>%
+			add_scatterplot(
+				data = capitals
+			)
 	})
 
 

@@ -36,6 +36,7 @@ mapdeck_dispatch = function(
 #' @rdname mapdeck_dispatch
 #' @export
 invoke_method = function(map, method, ...) {
+	print(paste0("invoke ", method ))
 	args = evalFormula(list(...))
 	mapdeck_dispatch(
 		map,

@@ -22,5 +22,5 @@ extern "C" {
 //[[Rcpp::export]]
 void call_js() {
 	//Rcpp::Rcout << "call_js()" << std::endl;
-	//my_js();
+	my_js();
 }
