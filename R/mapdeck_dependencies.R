@@ -117,6 +117,18 @@ mapdeck_dep_functions <- function() {
 	)
 }
 
+wasm_calls <- function() {
+	list(
+		createHtmlDependency(
+			name = "wasm_calls",
+			version = "0.0.1",
+			src = system.file("htmlwidgets/", package = "mapdeck"),
+			script = c("wasm_calls.js"),
+			all_files = FALSE
+		)
+	)
+}
+
 mapdeck_dep_coordinates <- function() {
 	list(
 		createHtmlDependency(

@@ -85,6 +85,7 @@ mapdeck <- function(
   	, mapdeck_css()
   	, mapdeck_js()
   	, htmlwidgets_js()
+  	, wasm_calls()
   	)
 
   return(mapdeckmap)

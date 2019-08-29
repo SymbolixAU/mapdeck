@@ -5,6 +5,8 @@
 #include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 
+#include "wasm.hpp"
+
 Rcpp::List scatterplot_defaults(int n) {
 
 	Rcpp::NumericVector nv = Rcpp::NumericVector(n);  // initalised to 0
@@ -23,7 +25,7 @@ Rcpp::List rcpp_scatterplot_geojson(
 		std::string geometry_columns, int digits
 	) {
 
-	int data_rows = data.nrows();
+  int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
 
@@ -46,11 +48,17 @@ Rcpp::List rcpp_scatterplot_geojson(
 }
 
 
+
+
 // [[Rcpp::export]]
 Rcpp::List rcpp_scatterplot_geojson_df(
 		Rcpp::DataFrame data, Rcpp::List params,
 		Rcpp::List geometry_columns, int digits
 	) {
+
+	Rcpp::Rcout << "calling js function" << std::endl;
+
+	//return Rcpp::List::create();
 
 	int data_rows = data.nrows();
 
