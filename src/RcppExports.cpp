@@ -562,15 +562,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// call_js
-void call_js();
-RcppExport SEXP _mapdeck_call_js() {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    call_js();
-    return R_NilValue;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_arc_geojson", (DL_FUNC) &_mapdeck_rcpp_arc_geojson, 4},
@@ -614,7 +605,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_text_geojson_df", (DL_FUNC) &_mapdeck_rcpp_text_geojson_df, 4},
     {"_mapdeck_rcpp_text_polyline", (DL_FUNC) &_mapdeck_rcpp_text_polyline, 3},
     {"_mapdeck_rcpp_trips_geojson", (DL_FUNC) &_mapdeck_rcpp_trips_geojson, 3},
-    {"_mapdeck_call_js", (DL_FUNC) &_mapdeck_call_js, 0},
     {NULL, NULL, 0}
 };
 

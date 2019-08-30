@@ -9,18 +9,28 @@
 
 //#include "wasm.hpp"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-	extern void my_js() {};
-
-#ifdef __cplusplus
-}
-#endif
-
-//[[Rcpp::export]]
-void call_js() {
-	//Rcpp::Rcout << "call_js()" << std::endl;
-	my_js();
-}
+// #ifdef __cplusplus
+// extern "C" {
+// #endif
+//
+// 	extern void my_js() {};
+//
+// #ifdef __cplusplus
+// }
+// #endif
+//
+// #ifdef __cplusplus
+// extern "C" {
+// #endif
+//
+// 	extern void consoleLog( int num  );
+// #ifdef __cplusplus
+// }
+// #endif
+//
+// //[[Rcpp::export]]
+// void call_js() {
+// 	//Rcpp::Rcout << "call_js()" << std::endl;
+// 	//my_js();
+// 	consoleLog( 42 );
+// }

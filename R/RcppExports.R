@@ -165,7 +165,3 @@ rcpp_trips_geojson <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_trips_geojson`, data, params, geometry_columns)
 }
 
-call_js <- function() {
-    invisible(.Call(`_mapdeck_call_js`))
-}
-

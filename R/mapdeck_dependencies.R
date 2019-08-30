@@ -1,5 +1,13 @@
 ## from htmltools::htmlDependency()
-createHtmlDependency <- function(name, version, src, script = NULL, stylesheet = NULL, all_files = FALSE) {
+createHtmlDependency <- function(
+	name,
+	version,
+	src,
+	script = NULL,
+	stylesheet = NULL,
+	all_files = FALSE,
+	attachment = NULL
+	) {
 	structure(
 		list(
 			name = name
@@ -9,7 +17,7 @@ createHtmlDependency <- function(name, version, src, script = NULL, stylesheet =
 			, script = script
 			, stylesheet = stylesheet
 			, head = NULL
-			, attachment = NULL
+			, attachment = attachment
 			, package = NULL
 			, all_files = all_files
 		)

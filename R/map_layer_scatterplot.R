@@ -10,6 +10,19 @@ mapdeckScatterplotDependency <- function() {
 	)
 }
 
+wasmDependency <- function() {
+	list(
+		createHtmlDependency(
+			name = "scatterplot",
+			version = "1.0.0",
+			src = system.file("htmlwidgets/lib/scatterplot", package = "mapdeck"),
+			script = NULL,
+			all_files = FALSE,
+			attachment = "/program.wasm",
+		)
+	)
+}
+
 mapdeckScatterplotBrushDependency <- function() {
 	list(
 		createHtmlDependency(
@@ -194,6 +207,7 @@ add_scatterplot <- function(
 	checkHexAlpha(highlight_colour)
 
 	map <- addDependency(map, mapdeckScatterplotDependency())
+	map <- addDependency(map, wasmDependency())
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
