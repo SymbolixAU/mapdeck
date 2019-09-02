@@ -30,6 +30,14 @@ function md_setup_legend( map_id ) {
   mapDiv.appendChild( legendContainer );
 }
 
+function md_setup_controls( map_id ) {
+	var mapDiv = document.getElementById(map_id);
+	var controlContainer = document.createElement('div');
+	controlContainer.className = "controlContainer";
+	controlContainer.id = "controlContainer"+map_id;
+	mapDiv.appendChild( controlContainer );
+}
+
 function md_setup_title( map_id ) {
 	console.log( "setup_title" ) ;
 	var mapDiv = document.getElementById(map_id);

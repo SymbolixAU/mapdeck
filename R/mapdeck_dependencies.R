@@ -74,6 +74,7 @@ mapdeck_dependencies <- function() {
 		mapdeck_dep_functions()
 		, deckgl_min_js()
 		, mapdeck_dep_legend()
+		, mapdeck_dep_controls()
 		, mapdeck_dep_title()
 		, mapdeck_dep_location()
 		, mapdeck_dep_colours()
@@ -197,6 +198,18 @@ mapdeck_dep_legend <- function() {
 			version = "0.0.1",
 			src = system.file("htmlwidgets/lib/map/", package = "mapdeck"),
 			script = c("legend.js"),
+			all_files = FALSE
+		)
+	)
+}
+
+mapdeck_dep_controls <- function() {
+	list(
+		createHtmlDependency(
+			name = "controls",
+			version = "0.0.1",
+			src = system.file("htmlwidgets/lib/map/", package = "mapdeck"),
+			script = c("controls.js"),
 			all_files = FALSE
 		)
 	)

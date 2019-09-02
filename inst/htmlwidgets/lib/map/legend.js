@@ -54,7 +54,6 @@ function md_add_legend(map_id, map_type, layer_id, legendValues) {
             }
         }
     });
-
 }
 
 function md_add_legend_gradient(map_id, map_type, layer_id, legendValues) {
