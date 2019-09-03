@@ -1,8 +1,17 @@
 
 
-function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
+function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
 
   //console.log( radius_min_pixels );
+
+  var extensions = [];
+
+//  if ( brush_radius > 0 ) {
+//  	// add brushing extension
+//  	extensions.append( new BrushingExtension() );
+//  }
+
+//  console.log( extensions );
 
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
@@ -27,7 +36,11 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "scatterplot", info ),
     onHover: md_update_tooltip,
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingEnabled: true,
+    brushingRadius: brush_radius,
+    mousePosition: [0, 0],
+    extensions: [ new deck.BrushingExtension() ]
   });
 
 	if( map_type == "google_map") {
