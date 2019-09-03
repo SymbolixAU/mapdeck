@@ -31,8 +31,16 @@ function md_add_control( map_id, map_type ) {
   // querySelector is a css selector
   // so use # for id, and . for class
   let rangeListener = document.querySelector("#myRange");
-  rangeListener.addEventListener('input', function() {
+  rangeListener.addEventListener('input', function(evt) {
+    /*
     console.log(" range slider moved ");
+    console.log( evt );
+    console.log( rangeListener );
+    console.log( rangeListener.value );
+    */
+
+    // need to hook this up with the updateTrigger{}
+
   });
 
 }
