@@ -2,8 +2,6 @@
 
 function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
 
-  //console.log( radius_min_pixels );
-
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
@@ -40,6 +38,9 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 	if (legend !== false) {
     md_add_legend(map_id, map_type, layer_id, legend);
   }
+
+  md_add_control( map_id, map_type );
+
 
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

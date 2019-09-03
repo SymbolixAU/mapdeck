@@ -27,13 +27,25 @@
     white-space: nowrap;
 }
 */
-
+/*
 .controlContainer {
   position: absolute;
-  bottom: 0;
+  top: 0;
   right: 0;
   z-index: 99;
-  padding-bottom: 14px;
+  padding-top: 14px;
+}
+*/
+.controlContainer {
+  position: fixed;
+  z-index: 1;
+  background: #fff;
+  top: 0;
+  right: 0;
+/*  margin: 14px; */
+  padding: 12px;
+  font-size: 11px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
 }
 
 .legendContainer {
@@ -43,6 +55,7 @@
     z-index: 99;
 /*    z-index: 999999999; */
     padding-bottom: 14px;
+/*    box-shadow: 0 0 8px rgba(0,0,0,0.3); */
 }
 
 .legend {
