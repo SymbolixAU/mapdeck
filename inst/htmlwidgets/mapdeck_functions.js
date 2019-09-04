@@ -149,7 +149,11 @@ function md_layer_clear( map_id, map_type, layer_id, layer ) {
 
 function md_update_layer( map_id, layer_id, layer ) {
 
+  console.log( "map_id = " + map_id );
+  console.log( "layer_id = " + layer_id );
+
   var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id );
+  console.log( "layer elem " + elem );
   if ( elem != -1 ) {
   	window[ map_id + 'layers'][elem] = layer;
   } else {
@@ -158,6 +162,9 @@ function md_update_layer( map_id, layer_id, layer ) {
 
   // ## issue 137
   var vs = window[ map_id + 'map'].viewState;
+
+  console.log( "layer to update " );
+  console.log( layer );
 
   window[map_id + 'map'].setProps({
   	layers: [...window[map_id + 'layers'] ],

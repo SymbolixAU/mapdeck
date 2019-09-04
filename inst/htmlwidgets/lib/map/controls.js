@@ -4,7 +4,7 @@
 // reference for multiple controls
 // https://stackoverflow.com/questions/14853779/adding-input-elements-dynamically-to-form
 
-function md_add_control( map_id, map_type ) {
+function md_add_control( map_id, map_type, layer_id, layer ) {
 
   if( !md_div_exists( 'controlContainer'+map_id ) ) {
   	md_setup_controls( map_id );
@@ -40,7 +40,16 @@ function md_add_control( map_id, map_type ) {
     */
 
     // need to hook this up with the updateTrigger{}
+    console.log( "change radius from " + myRadius );
+    myRadius = rangeListener.value;
+    console.log( "change radius to " + myRadius );
 
+    // need to re-draw the layer when this value changes
+    //md_update_layer( map_id, layer_id, layer );
+    // https://github.com/uber/deck.gl/issues/2123#issuecomment-407687152
+    //add_scatterplot_geo();
   });
+
+
 
 }
