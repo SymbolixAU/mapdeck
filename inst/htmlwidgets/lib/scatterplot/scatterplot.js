@@ -4,7 +4,8 @@ var myRadius = 10;
 
 function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
 
-  console.log( myRadius );
+  //var radius = JSON.parse('d.properties.radius + Number( myRadius )');
+  //const rad = function(d) { d.properties.radius + Number( myRadius );};
 
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
@@ -20,7 +21,8 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 	    depthTest: false
 	  },
     //getRadius: d => d.properties.radius,
-    getRadius: Number( myRadius ),
+    getRadius: d => d.properties.radius + Number( myRadius ),
+    //getRadius: d => rad(d),
     updateTriggers: {
     	getRadius: Number( myRadius )
     },
@@ -54,37 +56,42 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 
   // TODO
   // add the controls to the container
-  if( !document.getElementById("myRange") ) {
-	  var slider_input = document.createElement("input");
-	  slider_input.setAttribute('type', 'range');
-	  slider_input.setAttribute('id', 'myRange');
-	  slider_input.setAttribute('name', 'width');
-	  slider_input.setAttribute('step', '10');
-	  slider_input.setAttribute('min', '100');
-	  slider_input.setAttribute('max', '1000000');
-	  slider_input.setAttribute('value', '100');
+  for( i = 0; i < 2; i ++ ) {
+  	var my_id = `myRange ${i}`;
+    if( !document.getElementById(my_id) ) {
+		  var slider_input = document.createElement("input");
+		  slider_input.setAttribute('type', 'range');
+		  slider_input.setAttribute('id', my_id);
+		  slider_input.setAttribute('name', my_id);
+		  slider_input.setAttribute('step', '10');
+		  slider_input.setAttribute('min', '100');
+		  slider_input.setAttribute('max', '1000000');
+		  slider_input.setAttribute('value', '100');
 
-	  var slider_input_title  = document.createElement("div");
-	  slider_input_title.innerHTML = `test + ${myRadius}` ;
+		  var slider_input_title  = document.createElement("div");
+		  slider_input_title.innerHTML = `test + ${myRadius}` ;
 
-	  var mapbox_ctrl = document.getElementById( "controlContainer"+map_id );
-	  mapbox_ctrl.appendChild(slider_input_title);
-	  mapbox_ctrl.appendChild(slider_input);
+		  var mapbox_ctrl = document.getElementById( "controlContainer"+map_id );
+		  mapbox_ctrl.appendChild(slider_input_title);
+		  mapbox_ctrl.appendChild(slider_input);
 
-	  // need to add an observer for the control added
-	  // querySelector is a css selector
-	  // so use # for id, and . for class
-	  slider_input.addEventListener('input', function(evt) {
-	    // need to hook this up with the updateTrigger{}
-	    myRadius = slider_input.value;
-	    slider_input_title.innerHTML = `test + ${myRadius}` ;
+		  // need to add an observer for the control added
+		  // querySelector is a css selector
+		  // so use # for id, and . for class
+		  slider_input.addEventListener('input', function(evt) {
+		    // need to hook this up with the updateTrigger{}
+		    //console.log( slider_input.value );
+		    //console.log("update radius " + myRadius );
 
-	    // need to re-draw the layer when this value changes
-	    //md_update_layer( map_id, layer_id, layer );
-	    // https://github.com/uber/deck.gl/issues/2123#issuecomment-407687152
-	    add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, false, focus_layer, js_transition, radius_min_pixels, radius_max_pixels );
-	  });
+		    myRadius = this.value;
+		    slider_input_title.innerHTML = `test + ${myRadius}`;
 
+		    // need to re-draw the layer when this value changes
+		    //md_update_layer( map_id, layer_id, layer );
+		    // https://github.com/uber/deck.gl/issues/2123#issuecomment-407687152
+		    add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, false, focus_layer, js_transition, radius_min_pixels, radius_max_pixels );
+		  });
+  	}
   }
 
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
