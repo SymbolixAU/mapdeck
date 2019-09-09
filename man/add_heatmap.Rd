@@ -6,6 +6,7 @@
 \usage{
 add_heatmap(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, weight = NULL, colour_range = NULL,
+  radius_pixels = 30, intensity = 1, threshold = 0.05,
   layer_id = NULL, update_view = TRUE, focus_layer = FALSE,
   digits = 6)
 }
@@ -24,6 +25,20 @@ EPSG:4326 (WGS 84) coordinate system}
 \item{weight}{the weight of each value. Default 1}
 
 \item{colour_range}{vector of 6 hex colours}
+
+\item{radius_pixels}{Radius of the circle in pixels, to which the weight of an object is distributed}
+
+\item{intensity}{Value that is multiplied with the total weight at a pixel to
+obtain the final weight. A value larger than 1 biases the output color towards
+the higher end of the spectrum, and a value less than 1 biases the output
+color towards the lower end of the spectrum}
+
+\item{threshold}{The HeatmapLayer reduces the opacity of the pixels with relatively
+low weight to create a fading effect at the edge.
+A larger threshold smoothens the boundaries of color blobs, while making pixels
+with low relative weight harder to spot (due to low alpha value).
+Threshold is defined as the ratio of the fading weight to the max weight, between 0 and 1.
+For example, 0.1 affects all pixels with weight under 10\% of the max.}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely

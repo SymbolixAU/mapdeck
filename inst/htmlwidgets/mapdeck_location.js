@@ -1,6 +1,5 @@
 
 function md_change_location( map_id, map_type, location, zoom, pitch, bearing, duration, transition ) {
-
   var currentLon, currentLat, currentPitch, currentBearing, currentZoom;
 
   if( map_type == "google_map" ) {
@@ -34,18 +33,11 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 	      transitionDuration: duration
 	    },
 	  });
-
-
-	  //window[ map_id + 'map' ].setProps({
-	  //	viewState: null
-	  //});
-
   }
 }
 
 
 function md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view ) {
-
 
 	if( focus_layer ) {
   	md_clear_bounds( map_id );
