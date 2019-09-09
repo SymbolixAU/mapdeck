@@ -7,6 +7,8 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
   //var radius = JSON.parse('d.properties.radius + Number( myRadius )');
   //const rad = function(d) { d.properties.radius + Number( myRadius );};
 
+  var rad = new Function("d", "input", "return d + Number( input )");
+
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
@@ -21,10 +23,10 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 	    depthTest: false
 	  },
     //getRadius: d => d.properties.radius,
-    getRadius: d => d.properties.radius + Number( myRadius ),
+    getRadius: d => rad( d.properties.radius, myRadius ), // + Number( myRadius ),
     //getRadius: d => rad(d),
     updateTriggers: {
-    	getRadius: Number( myRadius )
+    	getRadius: myRadius
     },
     getPosition: d => md_get_point_coordinates( d ),
     getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
