@@ -1,6 +1,7 @@
 
 
-var myRadius = 10;
+//var myRadius = 10;
+//window[ "myRadius" ] = 10;
 
 function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
 
@@ -8,6 +9,8 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
   //const rad = function(d) { d.properties.radius + Number( myRadius );};
 
   var rad = new Function("d", "input", "return d + Number( input )");
+
+  window.mapdeck.globals.push({'myRadius' : 10 });
 
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
@@ -23,10 +26,10 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 	    depthTest: false
 	  },
     //getRadius: d => d.properties.radius,
-    getRadius: d => rad( d.properties.radius, myRadius ), // + Number( myRadius ),
+    getRadius: d => rad( d.properties.radius, window.mapdeck.globals[ 'myRadius' ] ), // + Number( myRadius ),
     //getRadius: d => rad(d),
     updateTriggers: {
-    	getRadius: myRadius
+    	getRadius: window.mapdeck.globals[ 'myRadius' ]
     },
     getPosition: d => md_get_point_coordinates( d ),
     getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
@@ -71,7 +74,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 		  slider_input.setAttribute('value', '100');
 
 		  var slider_input_title  = document.createElement("div");
-		  slider_input_title.innerHTML = `test + ${myRadius}` ;
+		  slider_input_title.innerHTML = `test + ${window.mapdeck.globals[ 'myRadius']}` ;
 
 		  var mapbox_ctrl = document.getElementById( "controlContainer"+map_id );
 		  mapbox_ctrl.appendChild(slider_input_title);
@@ -83,10 +86,10 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 		  slider_input.addEventListener('input', function(evt) {
 		    // need to hook this up with the updateTrigger{}
 		    //console.log( slider_input.value );
-		    //console.log("update radius " + myRadius );
+		    console.log("update radius " + window.mapdeck.globals[ 'myRadius'] );
 
-		    myRadius = this.value;
-		    slider_input_title.innerHTML = `test + ${myRadius}`;
+		    window.mapdeck.globals[ 'myRadius' ] = this.value;
+		    slider_input_title.innerHTML = `test + ${window.mapdeck.globals[ 'myRadius' ]}`;
 
 		    // need to re-draw the layer when this value changes
 		    //md_update_layer( map_id, layer_id, layer );

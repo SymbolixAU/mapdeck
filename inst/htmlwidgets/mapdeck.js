@@ -10,6 +10,10 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
 
+        window.mapdeck = [];
+        window.mapdeck.globals = [];
+
+
       	md_setup_window( el.id );
 
         // INITIAL VIEW
