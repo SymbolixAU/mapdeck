@@ -5,10 +5,15 @@
 
 function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
 
+	//console.log( scatter_data );
+
   //var radius = JSON.parse('d.properties.radius + Number( myRadius )');
   //const rad = function(d) { d.properties.radius + Number( myRadius );};
 
-  var rad = new Function("d", "input", "return d + Number( input )");
+  //var rad = new Function("d", "input", "return d + Number( input )");
+
+  var strFun = 'function single_row(d, year ) { return d; }';
+  var year = new Function("d", "input", strFun);
 
   window.mapdeck.globals.push({'myRadius' : 10 });
 
@@ -26,7 +31,8 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 	    depthTest: false
 	  },
     //getRadius: d => d.properties.radius,
-    getRadius: d => rad( d.properties.radius, window.mapdeck.globals[ 'myRadius' ] ), // + Number( myRadius ),
+    //getRadius: d => rad( d.properties.radius, window.mapdeck.globals[ 'myRadius' ] ), // + Number( myRadius ),
+    getRadius: d => year( d.properties.radius, window.mapdeck.globals[ 'myRadius' ]),
     //getRadius: d => rad(d),
     updateTriggers: {
     	getRadius: window.mapdeck.globals[ 'myRadius' ]
@@ -65,6 +71,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
   	var my_id = `myRange ${i}`;
     if( !document.getElementById(my_id) ) {
 		  var slider_input = document.createElement("input");
+		  /*
 		  slider_input.setAttribute('type', 'range');
 		  slider_input.setAttribute('id', my_id);
 		  slider_input.setAttribute('name', my_id);
@@ -72,6 +79,14 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 		  slider_input.setAttribute('min', '100');
 		  slider_input.setAttribute('max', '1000000');
 		  slider_input.setAttribute('value', '100');
+		  */
+		  slider_input.setAttribute('type', 'range');
+		  slider_input.setAttribute('id', my_id);
+		  slider_input.setAttribute('name', my_id);
+		  slider_input.setAttribute('step', '1');
+		  slider_input.setAttribute('min', '1');
+		  slider_input.setAttribute('max', '200');
+		  slider_input.setAttribute('value', '1');
 
 		  var slider_input_title  = document.createElement("div");
 		  slider_input_title.innerHTML = `test + ${window.mapdeck.globals[ 'myRadius']}` ;
