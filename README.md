@@ -16,8 +16,8 @@ Status](https://codecov.io/github/SymbolixAU/mapdeck/coverage.svg?branch=master)
 
 ## What is mapdeck?
 
-An R library which lets you plot interactive maps using Mapbox GL and
-Deck.gl
+An R library which lets you plot large data sets (as much as your GPU &
+browser can handle), on interactive maps using Mapbox GL and Deck.gl
 
 ## What is mapbox?
 
