@@ -1,5 +1,6 @@
 # mapdeck 0.3
 
+* `update_stype()` function
 * `add_path()` accepts dashed lines
 * mapbox tokens are searched for in environement variables if one isn't provided [issue209](https://github.com/SymbolixAU/mapdeck/issues/209)
 * z-fighting [issue 199](https://github.com/SymbolixAU/mapdeck/issues/199)
