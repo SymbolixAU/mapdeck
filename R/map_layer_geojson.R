@@ -22,11 +22,24 @@ mapdeckGeojsonDependency <- function() {
 #' @param stroke_colour column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for colour
 #' @param stroke_opacity column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for opacity
 #' @param stroke_width column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for width (in meters)
+#' @param dash_size size of each dash, relative to the width of the stroke
+#' @param dash_gap size of the gap between dashes, relative to the width of the stroke
 #' @param fill_colour column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for colour
 #' @param fill_opacity column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for opacity
 #' @param radius radius of points in meters. Default 1. See details
 #' @param elevation elevation of polygons. Default 0. See details
 #' @param light_settings list of light setting parameters. See \link{light_settings}
+#' @param line_width_units The units of the line width, one of 'meters', 'pixels'.
+#' When zooming in and out, meter sizes scale with the base map, and pixel sizes remain the same on screen.
+#' @param line_width_scale The line width multiplier that multiplied to all lines,
+#' including the LineString and MultiLineString features and also the outline for
+#' Polygon and MultiPolygon features if the stroked attribute is true
+#' @param line_width_min_pixels The minimum line width in pixels.
+#' @param elevation_scale Elevation multiplier. The final elevation is calculated by
+#' elevationScale * getElevation(d). elevationScale is a handy property to scale
+#' all polygon elevation without updating the data
+#' @param point_radius_scale A global radius multiplier for all points.
+#' @param point_radius_min_pixels The minimum radius in pixels.
 #' @param tooltip variable of \code{data} containing text or HTML to render as a tooltip.
 #' Only works on \code{sf} objects.
 #' @param legend either a logical indiciating if the legend(s) should be displayed, or
@@ -188,6 +201,8 @@ add_geojson <- function(
 	stroke_colour = NULL,
 	stroke_opacity = NULL,
 	stroke_width = NULL,
+	dash_size = NULL,
+	dash_gap = NULL,
 	fill_colour = NULL,
 	fill_opacity = NULL,
 	radius = NULL,
@@ -201,6 +216,12 @@ add_geojson <- function(
 	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
 	na_colour = "#808080FF",
+	line_width_units = c("metres", "pixels"),
+	line_width_scale = 1,
+	line_width_min_pixels = 0,
+	elevation_scale = 1,
+	point_radius_scale = 1,
+	point_radius_min_pixels = 1,
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
@@ -211,6 +232,8 @@ add_geojson <- function(
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_opacity"]] <- force( stroke_opacity )
 	l[["stroke_width"]] <- force( stroke_width )
+	l[["dash_size"]] <- force(dash_size)
+	l[["dash_gap"]] <- force(dash_gap)
 	l[["fill_colour"]] <- force( fill_colour )
 	l[["fill_opacity"]] <- force( fill_opacity )
 	l[["elevation"]] <- force( elevation )
@@ -227,6 +250,8 @@ add_geojson <- function(
 		!is.null( l[["stroke_colour"]] ) |
 		!is.null( l[["stroke_opacity"]] ) |
 		!is.null( l[["stroke_width"]] ) |
+		!is.null( l[["dash_size"]] ) |
+		!is.null( l[["dash_gap"]] ) |
 		!is.null( l[["fill_colour"]] ) |
 		!is.null( l[["fill_opacity"]] ) |
 		!is.null( l[["elevation"]] ) |
@@ -242,6 +267,8 @@ add_geojson <- function(
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_geojson_data( data, l )
+
+	line_width_units <- match.arg(line_width_units)
 
 	if( !is.null(l[["data"]] ) ) {
 		data <- l[["data"]]
@@ -282,7 +309,8 @@ add_geojson <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, light_settings, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions
+		js_transitions, line_width_units, line_width_scale, line_width_min_pixels,
+		elevation_scale, point_radius_scale, point_radius_min_pixels
 		)
 }
 

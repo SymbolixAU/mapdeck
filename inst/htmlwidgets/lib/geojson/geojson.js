@@ -1,6 +1,6 @@
 
 
-function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, line_width_units, line_width_scale, line_width_min_pixels, elevation_scale, point_radius_scale, point_radius_min_pixels ) {
 
   geojson = geojson.features;
 
@@ -13,16 +13,22 @@ function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, au
     filled: true,
     extruded: true,
     wireframe: false,
-    pointRadiusScale: 1,
-    pointRadiusMinPixels: 0.5,
-    lineWidthScale: 1,
-    lineWidthMinPixels: 1,
+
+    pointRadiusMinPixels: point_radius_min_pixels,
+    pointRadiusScale: point_radius_scale,
+    lineWidthUnits: line_width_units,
+    lineWidthScale: line_width_scale,
+    lineWidthMinPixels: line_width_min_pixels,
     lineJointRounded: true,
+    elevationScale: elevation_scale,
+
     getFillColor: g => md_hexToRGBA( g.properties.fill_colour ),
     getLineColor: g => md_hexToRGBA( g.properties.stroke_colour),
     getRadius: g => g.properties.radius,
     getLineWidth: g => g.properties.stroke_width,
     getElevation: g => g.properties.elevation,
+    getLineDashArray: d => [ d.properties.dash_size, d.properties.dash_gap ],
+
     lightSettings: light_settings,
     onClick: info => md_layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
@@ -37,13 +43,14 @@ function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, au
 	  md_update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
 	}
 
-	if (legend !== false) {
+  //console.log( legend );
+	if (legend !== false && legend !== null ) {
 	  md_add_legend(map_id, map_type, layer_id, legend);
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, line_width_units, line_width_scale, line_width_min_pixels, elevation_scale, point_radius_scale, point_radius_min_pixels) {
 
   const geojsonLayer = new deck.GeoJsonLayer({
     map_id: map_id,
@@ -54,16 +61,22 @@ function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_
     filled: true,
     extruded: true,
     wireframe: false,
-    pointRadiusScale: 1,
-    pointRadiusMinPixels: 0.5,
-    lineWidthScale: 1,
-    lineWidthMinPixels: 1,
+
+    pointRadiusMinPixels: point_radius_min_pixels,
+    pointRadiusScale: point_radius_scale,
+    lineWidthUnits: line_width_units,
+    lineWidthScale: line_width_scale,
+    lineWidthMinPixels: line_width_min_pixels,
     lineJointRounded: true,
+    elevationScale: elevation_scale,
+
     getFillColor: g => md_hexToRGBA( geojson_fill_colour( g ) ),
     getLineColor: g => md_hexToRGBA( geojson_line_colour( g ) ),
     getRadius: g => geojson_radius( g ),
     getLineWidth: g => geojson_line_width( g ),
     getElevation: g => geojson_elevation( g ),
+    getLineDashArray: d => [ d.dash_size, d.dash_gap ],
+
     lightSettings: light_settings,
     onClick: info => md_layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
@@ -78,7 +91,8 @@ function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_
     md_update_layer( map_id, 'geojson-'+layer_id, geojsonLayer );
 	}
 
-	if (legend !== false) {
+  //console.log( legend );
+	if (legend !== false && legend !== null ) {
 	  md_add_legend(map_id, map_type, layer_id, legend);
 	}
 
