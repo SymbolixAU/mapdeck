@@ -198,13 +198,13 @@ add_scatterplot <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
-	if(!is.null(brush_radius)) {
-		jsfunc <- "add_scatterplot_brush_geo"
-		map <- addDependency(map, mapdeckScatterplotBrushDependency())
-	} else {
+	# if(!is.null(brush_radius)) {
+	# 	jsfunc <- "add_scatterplot_brush_geo"
+	# 	map <- addDependency(map, mapdeckScatterplotBrushDependency())
+	# } else {
 		jsfunc <- "add_scatterplot_geo"
 		map <- addDependency(map, mapdeckScatterplotDependency())
-	}
+	# }
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
