@@ -85,38 +85,9 @@ HTMLWidgets.widget({
 			      }
 			  });
 
-
-			  //deckgl.setProps({viewState: window[el.id + 'INITIAL_VIEW_STATE']});
 			  window[el.id + 'map'] = deckgl;
 
-			  console.log( deckgl );
-
-				/*
-			  console.log( deckgl._onViewStateChange );
-
-			    var myListener = function(evt) {
-					  console.log("evt");
-					  console.log( evt );
-				  }
-
-				document.addEventListener(onViewStateChange(deckgl), myListener, false);
-				*/
-
        }
-        // https://github.com/uber/deck.gl/issues/2114
-        /*
-			  const viewPort = WebMercartorViewport({
-			  	width: 800,
-				  height: 600,
-				  longitude: -122.45,
-				  latitude: 37.78,
-				  zoom: 12,
-				  pitch: 60,
-				  bearing: 30
-			  });
-			  console.log( viewPort );
-			  */
-
 			    md_initialise_map(el, x);
       },
 
