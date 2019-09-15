@@ -18,6 +18,8 @@ mapdeckPathDependency <- function() {
 #'
 #' @inheritParams add_polygon
 #' @param stroke_width width of the stroke in meters. Default 1.
+#' @param dash_size size of each dash, relative to the width of the stroke
+#' @param dash_gap size of the gap between dashes, relative to the width of the stroke
 #' @param billboard logical indicating if the path always faces the camera (TRUE) or
 #' if it always faces up (FALSE)
 #'
@@ -75,6 +77,8 @@ add_path <- function(
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	stroke_opacity = NULL,
+	dash_size = NULL,
+	dash_gap = NULL,
 	tooltip = NULL,
 	billboard = FALSE,
 	layer_id = NULL,
@@ -97,6 +101,8 @@ add_path <- function(
 	l[["stroke_colour"]] <- force( stroke_colour)
 	l[["stroke_width"]] <- force( stroke_width )
 	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
+	l[["dash_size"]] <- force(dash_size)
+	l[["dash_gap"]] <- force(dash_gap)
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)

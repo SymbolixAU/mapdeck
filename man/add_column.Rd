@@ -49,6 +49,8 @@ colour, this argument is ignored and you should include the alpha on the hex str
 \item{coverage}{radius multiplier, in range [0,1]. The radius of the disk is calcualted
 by coverage * radius}
 
+\item{angle}{disk rotation, counter-clockwise, in degrees}
+
 \item{disk_resolution}{The number of sides to render the disk as.
 The disk is a regular polygon that fits inside the given radius.
 A higher resolution will yield a smoother look close-up, but also requires more resources to render.}

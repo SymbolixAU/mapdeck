@@ -2,8 +2,6 @@
 function add_trips_geo( map_id, map_type, trips_data, opacity, layer_id,
 trail_length, start_time, end_time, animation_speed, legend ) {
 
-  console.log( trips_data );
-
   var tripsLayer = new TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
@@ -23,21 +21,21 @@ trail_length, start_time, end_time, animation_speed, legend ) {
 
   if( map_type == "google_map") {
 		  md_update_overlay( map_id, 'trips-'+layer_id, tripsLayer );
-		} else {
-		   md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
-		}
+	} else {
+		  md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
+	}
 
 	if (legend !== false) {
 	  md_add_legend( map_id, map_type, layer_id, legend );
 	}
 
-	//md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
+	//md_layer_view( map_id, map_type, layer_id, true, bbox, true );
 
   animate_trips( map_id, map_type, trips_data, opacity, layer_id, trail_length, start_time, end_time, animation_speed, legend );
 
   //function animate_trips( tripsLayer ) {
   function animate_trips( map_id, map_type, trips_data, opacity, layer_id,
-trail_length, start_time, end_time, animation_speed, legend ) {
+trail_length, start_time, end_time, animation_speed, legend) {
 
   	var loopLength = end_time - start_time; // unit corresponds to the timestamp in source data
     var animationSpeed = animation_speed; // unit time per second
@@ -66,7 +64,7 @@ trail_length, start_time, end_time, animation_speed, legend ) {
 
 
 	  if( map_type == "google_map") {
-		  md_update_overlay( map_id, 'trips-'+layer_id, tripsLayer );
+		   md_update_overlay( map_id, 'trips-'+layer_id, tripsLayer );
 		} else {
 		   md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 		}
@@ -74,6 +72,8 @@ trail_length, start_time, end_time, animation_speed, legend ) {
    if (legend !== false) {
 	   md_add_legend( map_id, map_type, layer_id, legend );
 	 }
+
+	 //md_layer_view( map_id, map_type, layer_id, false, bbox, false );
 
    window.requestAnimationFrame( function() {
    	  animate_trips( map_id, map_type, trips_data, opacity, layer_id, trail_length,

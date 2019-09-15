@@ -18,7 +18,8 @@ mapdeckTripsDependency <- function() {
 #' @inheritParams add_path
 #' @param data sf object with XYZM dimensions.
 #' @param stroke_colour variable of data or hex colour for the stroke.
-#' @param trail_length length in metres of the trail
+#' @param trail_length how long it takes for the trail to completely fade out
+#' (in same units as timestamps )
 #' @param opacity single value in [0,1]
 #' @param start_time the minimum timestamp
 #' @param end_time the maximum timestamp
@@ -37,8 +38,8 @@ mapdeckTripsDependency <- function() {
 #'
 #' mapdeck(
 #' 	style = mapdeck_style("dark")
-#' 	, location = c(145, -37.9)
-#' 	, zoom = 8
+#' 	#, location = c(145, -37.9)
+#' 	#, zoom = 8
 #' ) %>%
 #' 	add_trips(
 #' 		data = sf
@@ -80,7 +81,7 @@ add_trips <- function(
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_data( data, l, c("LINESTRING","MULTILINESTRING") )
 
-	#bbox <- init_bbox()
+	# bbox <- init_bbox()
 	#update_view <- force( update_view )
 	#focus_layer <- force( focus_layer )
 
