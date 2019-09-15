@@ -6,9 +6,13 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 
   var extensions = [];
 
-  var l = new deck.LightingExtension();
-  console.log( l );
-  var b = new deck.BrushingExtension();
+  const d = new deck.DirectionalLight({
+	  color: [255, 255, 255],
+	  intensity: 1.0,
+	  direction: [-3, -9, -1]
+	});
+	console.log( d );
+  const b = new deck.BrushingExtension();
   console.log( b );
 
 
