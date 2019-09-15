@@ -4,6 +4,14 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 
   //console.log( radius_min_pixels );
 
+  const direction = new DirectionalLight({
+  	color: [255, 255, 255],
+	  intensity: 1.0,
+	  direction: [-3, -9, -1]
+  });
+
+  console.log( direction );
+
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
