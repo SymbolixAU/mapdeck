@@ -6,6 +6,12 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 
   var extensions = [];
 
+  var l = new deck.LightingExtension();
+  console.log( l );
+  var b = new deck.BrushingExtension();
+  console.log( b );
+
+
 //  if ( brush_radius > 0 ) {
 //  	// add brushing extension
 //  	extensions.append( new BrushingExtension() );
@@ -40,7 +46,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
     brushingEnabled: true,
     brushingRadius: brush_radius,
     mousePosition: [0, 0],
-    extensions: [ new deck.BrushingExtension() ]
+    extensions: [  ]
   });
 
 	if( map_type == "google_map") {
