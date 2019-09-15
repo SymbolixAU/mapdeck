@@ -53,6 +53,18 @@ rcpp_grid_polyline <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_grid_polyline`, data, params, geometry_columns)
 }
 
+rcpp_heatmap_geojson <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_heatmap_geojson`, data, params, geometry_columns, digits)
+}
+
+rcpp_heatmap_geojson_df <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_heatmap_geojson_df`, data, params, geometry_columns, digits)
+}
+
+rcpp_heatmap_polyline <- function(data, params, geometry_columns) {
+    .Call(`_mapdeck_rcpp_heatmap_polyline`, data, params, geometry_columns)
+}
+
 rcpp_hexagon_geojson <- function(data, params, geometry_columns, digits) {
     .Call(`_mapdeck_rcpp_hexagon_geojson`, data, params, geometry_columns, digits)
 }

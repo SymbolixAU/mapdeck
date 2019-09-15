@@ -33,7 +33,6 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 	if( map_type == "google_map") {
 	  md_update_overlay( map_id, 'scatterplot-'+layer_id, scatterLayer );
 	} else {
-
 	  md_update_layer( map_id, 'scatterplot-'+layer_id, scatterLayer );
 	}
 

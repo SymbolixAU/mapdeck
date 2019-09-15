@@ -49,7 +49,12 @@ key <- 'abc'    ## put your own token here
 mapdeck(token = key)
 ```
 
-You can use `set_token()` to make your token available 'globally' to all future calls to `mapdeck()`. 
+You can make your token available 'globally' to all `mapdeck()` calls by either
+
+1. using `set_token()`, which sets the token as an `option`
+2. having the token in your environment (e.g., using `Sys.setenv()` ) with the key one of "MAPBOX_TOKEN","MAPBOX_KEY","MAPBOX_API_TOKEN", "MAPBOX_API_KEY", "MAPBOX", "MAPDECK"
+
+Here's an example using `set_token()`
 
 ```{r, eval = T}
 set_token('abc')

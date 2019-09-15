@@ -10,6 +10,9 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
 
+        //console.log( "getting mapbox map??" );
+        //console.log( mapboxgl );
+
       	md_setup_window( el.id );
 
         /*
@@ -51,6 +54,7 @@ HTMLWidgets.widget({
        } else {
         const deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
+          	//map: mapboxgl,
 			      container: el.id,
 			      mapStyle: x.style,
 			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],

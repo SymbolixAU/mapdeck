@@ -1,30 +1,42 @@
-mapdeckScreengridDependency <- function() {
+mapdeckHeatmapDependency <- function() {
 	list(
 		createHtmlDependency(
-			name = "screengrid",
+			name = "heatmap",
 			version = "1.0.0",
-			src = system.file("htmlwidgets/lib/screengrid", package = "mapdeck"),
-			script = c("screengrid.js"),
+			src = system.file("htmlwidgets/lib/heatmap", package = "mapdeck"),
+			script = c("heatmap.js"),
 			all_files = FALSE
 		)
 	)
 }
 
 
-#' Add Screengrid
+#' Add Heatmap
 #'
-#' The Screen Grid Layer takes in an array of latitude and longitude coordinated points,
-#' aggregates them into histogram bins and renders as a grid
+#' The Heatmap Layer can be used to visualise spatial distribution of data.
+#' It implements Gaussian Kernel Density Estimation to render the heatmaps.
+#'
+#' @section note:
+#'
+#' The current version of this layer is supported only for WebGL2 enabled browswers
+#' So you may find it doesn't render in the RStudio viewer.
 #'
 #' @inheritParams add_polygon
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
 #' @param weight the weight of each value. Default 1
-#' @param aggregation one of 'min', 'mean', 'max', 'sum'.
-#' If supplied it specifies how the weights used.
 #' @param colour_range vector of 6 hex colours
-#' @param opacity opacity of cells. Value between 0 and 1. Default 0.8
-#' @param cell_size size of grid squares in pixels. Default 50
+#' @param radius_pixels Radius of the circle in pixels, to which the weight of an object is distributed
+#' @param intensity Value that is multiplied with the total weight at a pixel to
+#' obtain the final weight. A value larger than 1 biases the output color towards
+#' the higher end of the spectrum, and a value less than 1 biases the output
+#' color towards the lower end of the spectrum
+#' @param threshold The HeatmapLayer reduces the opacity of the pixels with relatively
+#' low weight to create a fading effect at the edge.
+#' A larger threshold smoothens the boundaries of color blobs, while making pixels
+#' with low relative weight harder to spot (due to low alpha value).
+#' Threshold is defined as the ratio of the fading weight to the max weight, between 0 and 1.
+#' For example, 0.1 affects all pixels with weight under 10\% of the max.
 #'
 #' @inheritSection add_polygon data
 #'
@@ -44,51 +56,50 @@ mapdeckScreengridDependency <- function() {
 #' df$weight <- sample(1:10, size = nrow(df), replace = T)
 #'
 #' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
-#' add_screengrid(
+#' add_heatmap(
 #'   data = df
 #'   , lat = "lat"
 #'   , lon = "lng"
 #'   , weight = "weight",
-#'   , layer_id = "screengrid_layer"
-#'   , cell_size = 10
-#'   , opacity = 0.3
+#'   , layer_id = "heatmap_layer"
 #' )
 #'
 #' ## as an sf object
 #' library(sf)
 #' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
 #' mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%
-#' add_screengrid(
+#' add_heatmap(
 #'   data = sf
 #'   , weight = "weight",
-#'   , layer_id = "screengrid_layer"
-#'   , cell_size = 10
-#'   , opacity = 0.3
+#'   , layer_id = "heatmap_layer"
 #' )
 #'
 #' }
 #'
 #' @details
 #'
-#' \code{add_screengrid} supports POINT and MULTIPOINT sf objects
+#' \code{add_heatmap} supports POINT and MULTIPOINT sf objects
 #'
 #' @export
-add_screengrid <- function(
+add_heatmap <- function(
 	map,
 	data = get_map_data(map),
 	lon = NULL,
 	lat = NULL,
 	polyline = NULL,
 	weight = NULL,
-	aggregation = c("sum","mean","min","max"),
 	colour_range = NULL,
-	opacity = 0.8,
-	cell_size = 50,
+	radius_pixels = 30,
+	intensity = 1,
+	threshold = 0.05,
 	layer_id = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6
 ) {
+
+	experimental_layer("heatmap")
+
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["weight"]] <- force( weight )
@@ -96,9 +107,6 @@ add_screengrid <- function(
 	l[["lat"]] <- force( lat )
 
 	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
-
-	aggregation <- match.arg( aggregation )
-	aggregation <- toupper( aggregation )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -116,9 +124,7 @@ add_screengrid <- function(
 
 	## parmater checks
 	#usePolyline <- isUsingPolyline(polyline)
-	checkNumeric(opacity)
-	checkNumeric(cell_size)
-	layer_id <- layerId(layer_id, "screengrid")
+	layer_id <- layerId(layer_id, "heatmap")
 
 	if( is.null( colour_range ) ) {
 		colour_range <- colourvalues::colour_values(1:6, palette = "viridis")
@@ -130,35 +136,35 @@ add_screengrid <- function(
 
 	checkHex(colour_range)
 
-	map <- addDependency(map, mapdeckScreengridDependency())
+	map <- addDependency(map, mapdeckHeatmapDependency())
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
-	jsfunc <- "add_screengrid_geo"
+	jsfunc <- "add_heatmap_geo"
 	if( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_screengrid_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_heatmap_geojson( data, l, geometry_column, digits )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_screengrid_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_heatmap_geojson_df( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_screengrid_polyline( data, l, geometry_column )
-		jsfunc <- "add_screengrid_polyline"
+		shape <- rcpp_heatmap_polyline( data, l, geometry_column )
+		jsfunc <- "add_heatmap_polyline"
 	}
 
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["data"]], layer_id, opacity, cell_size, colour_range,
-		bbox, update_view, focus_layer, aggregation
-		)
+		map, jsfunc, map_type( map ), shape[["data"]], layer_id, colour_range,
+		radius_pixels, intensity, threshold, bbox, update_view, focus_layer
+	)
 }
 
 
 #' @rdname clear
 #' @export
-clear_screengrid <- function( map, layer_id = NULL) {
-	layer_id <- layerId(layer_id, "screengrid")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "screengrid" )
+clear_heatmap <- function( map, layer_id = NULL) {
+	layer_id <- layerId(layer_id, "heatmap")
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "heatmap" )
 }
 

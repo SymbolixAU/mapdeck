@@ -16,10 +16,9 @@ add_trips(map, data = get_map_data(map), stroke_colour = NULL,
 
 \item{data}{sf object with XYZM dimensions.}
 
-\item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
-\code{elevation} is ignored.}
+\item{stroke_colour}{variable of data or hex colour for the stroke.}
 
-\item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
+\item{stroke_width}{width of the stroke in meters. Default 1.}
 
 \item{opacity}{single value in [0,1]}
 
@@ -29,7 +28,8 @@ where the 4th column represents the alpha. You can use a named list to specify a
 palette for different colour options (where available),
  e.g. list(fill_colour = "viridis", stroke_colour = "inferno")}
 
-\item{trail_length}{length in metres of the trail}
+\item{trail_length}{how long it takes for the trail to completely fade out
+(in same units as timestamps )}
 
 \item{start_time}{the minimum timestamp}
 
@@ -97,8 +97,8 @@ sf <- gpx::gpx_sf( gpx, time = "counter" )
 
 mapdeck(
 	style = mapdeck_style("dark")
-	, location = c(145, -37.9)
-	, zoom = 8
+	#, location = c(145, -37.9)
+	#, zoom = 8
 ) \%>\%
 	add_trips(
 		data = sf
