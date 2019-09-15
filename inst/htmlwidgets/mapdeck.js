@@ -10,7 +10,27 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
 
+        //console.log( "getting mapbox map??" );
+        //console.log( mapboxgl );
+
       	md_setup_window( el.id );
+
+        /*
+        // controller with events
+        const myController = new deck.Controller({
+
+
+        	handleEvent(event) {
+        		console.log( "event" );
+        		console.log( event );
+        		if( event.type == "zoom") {
+        			console.log("zooming");
+        		}
+        	}
+        });
+
+        console.log( myController );
+        */
 
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
@@ -34,30 +54,40 @@ HTMLWidgets.widget({
        } else {
         const deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
+          	//map: mapboxgl,
 			      container: el.id,
 			      mapStyle: x.style,
 			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
+			      //controller: myController
 			      //onLayerHover: setTooltip
-			  });
-			  //deckgl.setProps({viewState: window[el.id + 'INITIAL_VIEW_STATE']});
-			  window[el.id + 'map'] = deckgl;
-       }
-        // https://github.com/uber/deck.gl/issues/2114
-        /*
-			  const viewPort = WebMercartorViewport({
-			  	width: 800,
-				  height: 600,
-				  longitude: -122.45,
-				  latitude: 37.78,
-				  zoom: 12,
-				  pitch: 60,
-				  bearing: 30
-			  });
-			  console.log( viewPort );
-			  */
+			      onViewStateChange: ({viewState}) => {
 
+							// as per:
+							// https://github.com/uber/deck.gl/issues/3344
+							// https://github.com/SymbolixAU/mapdeck/issues/211
+			      	const viewport = new WebMercatorViewport(viewState);
+  						const nw = viewport.unproject([0, 0]);
+  						const se = viewport.unproject([viewport.width, viewport.height]);
+
+  						viewState.viewBounds = {
+  							north: nw[1],
+  							east:  se[0],
+  							south: se[1],
+  							west:  nw[0]
+  						};
+
+			      	if (!HTMLWidgets.shinyMode) {
+						    return;
+						  }
+						  Shiny.onInputChange(el.id + '_view_change', viewState);
+			      }
+			  });
+
+			  window[el.id + 'map'] = deckgl;
+
+       }
 			    md_initialise_map(el, x);
       },
 
@@ -65,10 +95,10 @@ HTMLWidgets.widget({
 
         // TODO: code to re-render the widget with a new size
       }
-
     };
   }
 });
+
 
 if (HTMLWidgets.shinyMode) {
 
@@ -106,3 +136,4 @@ if (HTMLWidgets.shinyMode) {
     }
   });
 }
+

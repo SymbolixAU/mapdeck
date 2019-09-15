@@ -92,6 +92,11 @@ namespace defaults {
 		return nv;
 	}
 
+  inline Rcpp::NumericVector default_dash( int n ) {
+  	Rcpp::NumericVector nv(n, 0.0);
+  	return nv;
+  }
+
 } // namespace defaults
 } // namespace mapdeck
 
