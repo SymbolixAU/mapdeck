@@ -13,6 +13,8 @@ mapdeckBitmapDependency <- function() {
 
 #' Add bitmap
 #'
+#' Adds an image to a map
+#'
 #' @inheritParams add_arc
 #' @param image url to an image to use on the map
 #' @param bounds coordinates of the bounding box of the image [left, bottom, right, top]
