@@ -83,7 +83,7 @@ get_access_token <- function(api = "mapbox") {
 
 		api <- unique( as.character( e ) )
 		if( length( api ) > 1 ) {
-			warning("Multiple MAPBOX API tokens found in Sys.getenv(), using the firt one")
+			warning("Multiple MAPBOX API tokens found in Sys.getenv(), using the first one")
 		}
 	}
 	if(length(api) == 0) api <- NULL
