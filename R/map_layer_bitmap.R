@@ -77,7 +77,7 @@ add_bitmap <- function(
 	focus_layer <- force( focus_layer )
 
 	transparent_colour <- force( transparent_colour )
-	tin_colour <- force( tint_colour )
+	tint_colour <- force( tint_colour )
 
 	transparent_colour <- colourvalues::convert_colour( transparent_colour )
 	tint_colour <- colourvalues::convert_colour( tint_colour )
