@@ -140,6 +140,7 @@ add_scatterplot <- function(
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	stroke_opacity = NULL,
+	filter_columns = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -171,10 +172,16 @@ add_scatterplot <- function(
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)
 
+	# l[["other_columns"]] <- NULL
+	lapply( filter_columns, function(x) {
+		l[[x]] <<- x
+	})
+
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
 	l <- resolve_data( data, l, c( "POINT", "MULTIPOINT") )
+
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )

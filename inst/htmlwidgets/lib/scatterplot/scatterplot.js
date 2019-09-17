@@ -17,7 +17,11 @@ function my_radius( d, radius ) {
 
 function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
 
-	//console.log( scatter_data );
+	console.log( scatter_data );
+
+	//var df = new deck.DataFilterExtension({});
+	//console.log("df");
+	//console.log( df );
 
   //var radius = JSON.parse('d.properties.radius + Number( myRadius )');
   //const rad = function(d) { d.properties.radius + Number( myRadius );};
