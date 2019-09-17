@@ -7,7 +7,9 @@
 mapdeck(data = NULL, token = get_access_token(api = "mapbox"),
   width = NULL, height = NULL, padding = 0,
   style = "mapbox://styles/mapbox/streets-v9", pitch = 0, zoom = 0,
-  bearing = 0, location = c(0, 0))
+  bearing = 0, location = c(0, 0),
+  js_functions = list(htmlwidgets::JS("function my_radius1(d, r) { return d * r; }"),
+  htmlwidgets::JS("function my_radius2(d, r) { return d / r; }")))
 }
 \arguments{
 \item{data}{data to be used in the layer. All coordinates are expected to be

@@ -15,7 +15,7 @@ function my_radius( d, radius ) {
 }
 */
 
-function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
+function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
 
 	//console.log( scatter_data );
 
@@ -25,10 +25,32 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
   //var rad = new Function("d", "input", "return d + Number( input )");
   //var my_fun = window.mapdeck.globals[ 'my_radius' ];
 
-  //console.log("my_fun");
-  //console.log( my_fun );
-
+  //window.mapdeck.globals[ 'my_radius'] = js;
   window.mapdeck.globals.push({'myRadius' : 10 });
+
+  var getRadius;
+  var func = "my_radius1";
+  console.log( window.mapdeck.globals[ func ] );
+
+  if( typeof func === 'undefined' ) {
+
+  	getRadius = function(d){
+  		return d.properties.radius;
+  	}
+
+  } else {
+
+  	getRadius = function( d ){
+  		return window.mapdeck.globals[ func ].apply(
+  			null, [ d.properties.radius, window.mapdeck.globals[ 'myRadius' ] ]
+  			);
+  	}
+
+  }
+
+  var getPosition = function( d ) {
+  	return md_get_point_coordinates( d );
+  }
 
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
@@ -44,13 +66,12 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 	    depthTest: false
 	  },
     //getRadius: d => d.properties.radius,
-    //getRadius: d => rad( d.properties.radius, window.mapdeck.globals[ 'myRadius' ] ), // + Number( myRadius ),
-    getRadius: d => window.mapdeck.globals[ 'my_radius' ].apply( null, [ d.properties.radius, window.mapdeck.globals[ 'myRadius' ] ] ),
-    //getRadius: d => rad(d),
+    //getRadius: d => window.mapdeck.globals[ 'my_radius1' ].apply( null, [ d.properties.radius, window.mapdeck.globals[ 'myRadius' ] ] ),
+    getRadius,
     updateTriggers: {
     	getRadius: window.mapdeck.globals[ 'myRadius' ]
     },
-    getPosition: d => md_get_point_coordinates( d ),
+    getPosition,
     getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
     getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
     getLineWidth: d => d.properties.stroke_width,

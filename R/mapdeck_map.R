@@ -37,7 +37,11 @@ mapdeck <- function(
 	pitch = 0,
 	zoom = 0,
 	bearing = 0,
-	location = c(0, 0)
+	location = c(0, 0),
+	js_functions = list(
+		htmlwidgets::JS("function my_radius1(d, r) { return d * r; }")
+		, htmlwidgets::JS("function my_radius2(d, r) { return d / r; }")
+	)
 	) {
 
   # forward options using x
@@ -48,7 +52,7 @@ mapdeck <- function(
     , zoom = force( zoom )
     , location = force( as.numeric( location ) )
     , bearing = force( bearing )
-    , callback = htmlwidgets::JS("function my_radius(d, r) { return d * r; }")
+    , js_functions = js_functions
   )
 
   # deps <- list(

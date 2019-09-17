@@ -20,7 +20,14 @@ HTMLWidgets.widget({
         window.mapdeck.globals = [];
 
       	md_setup_window( el.id );
-      	window.mapdeck.globals[ 'my_radius'] = x.callback;
+      	// TODO -loop through x.js_functions
+      	for( i = 0; i < x.js_functions.length; i++ ) {
+      		//window.mapdeck.globals[ 'my_radius'] = x.js_functions;
+      		console.log( x.js_functions[i] );
+      		var fn_name = x.js_functions[i].prototype.constructor.name;
+      		window.mapdeck.globals[ fn_name ] = x.js_functions[i];
+      	}
+
       	//window.my_radius = x.callback;
 
       	console.log( window.mapdeck.globals );
