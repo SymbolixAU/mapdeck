@@ -20,6 +20,10 @@ HTMLWidgets.widget({
         window.mapdeck.globals = [];
 
       	md_setup_window( el.id );
+      	window.mapdeck.globals.push( x.callback );
+      	//window.my_radius = x.callback;
+
+      	console.log( window.mapdeck.globals );
 
         /*
         // controller with events
