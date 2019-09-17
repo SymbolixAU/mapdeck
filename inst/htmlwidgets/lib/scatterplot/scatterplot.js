@@ -2,6 +2,19 @@
 
 //var myRadius = 10;
 //window[ "myRadius" ] = 10;
+/*
+  var strFun = `function single_row(d, year ) {
+    console.log( d );
+  	return d[ year ];
+  }`;
+
+  var year = new Function("d", "input", strFun);
+  console.log( year );
+
+function my_radius( d, radius ) {
+	return d * radius;
+}
+*/
 
 function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
 
@@ -12,8 +25,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 
   //var rad = new Function("d", "input", "return d + Number( input )");
 
-  var strFun = 'function single_row(d, year ) { return d; }';
-  var year = new Function("d", "input", strFun);
+
 
   window.mapdeck.globals.push({'myRadius' : 10 });
 
@@ -32,7 +44,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 	  },
     //getRadius: d => d.properties.radius,
     //getRadius: d => rad( d.properties.radius, window.mapdeck.globals[ 'myRadius' ] ), // + Number( myRadius ),
-    getRadius: d => year( d.properties.radius, window.mapdeck.globals[ 'myRadius' ]),
+    getRadius: d => my_radius( d.properties.radius, window.mapdeck.globals[ 'myRadius' ]),
     //getRadius: d => rad(d),
     updateTriggers: {
     	getRadius: window.mapdeck.globals[ 'myRadius' ]

@@ -36,6 +36,18 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
   }
 }
 
+function md_update_style( map_id, style ) {
+
+  var vs = window[ map_id + 'map'].viewState;
+	var map = window[ map_id + 'map'].getMapboxMap();
+	map.setStyle( style );
+
+  window[ map_id + 'map' ].setProps({
+  	layers: [...window[map_id + 'layers'] ],
+  	map: map,
+  	viewState: vs
+  });
+}
 
 function md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view ) {
 

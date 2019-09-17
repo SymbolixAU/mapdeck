@@ -48,6 +48,7 @@ mapdeck <- function(
     , zoom = force( zoom )
     , location = force( as.numeric( location ) )
     , bearing = force( bearing )
+    , callback = htmlwidgets::JS("function my_radius(d, r) { return d * r; }")
   )
 
   # deps <- list(
@@ -88,6 +89,19 @@ mapdeck <- function(
   	)
 
   return(mapdeckmap)
+}
+
+
+#' update style
+#'
+#' @param map a mapdeck map object
+#' @param style the style of the map (see \link{mapdeck_style})
+#'
+#' @export
+update_style <- function( map, style ) {
+	invoke_method(
+		map, "md_update_style", style
+	)
 }
 
 

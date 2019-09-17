@@ -7,7 +7,9 @@
 Rcpp::List path_defaults(int n) {
 	return Rcpp::List::create(
 		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour( n ),
-		_["stroke_width"] = mapdeck::defaults::default_stroke_width( n )
+		_["stroke_width"] = mapdeck::defaults::default_stroke_width( n ),
+		_["dash_size"] = mapdeck::defaults::default_dash( n ),
+		_["dash_gap"] = mapdeck::defaults::default_dash( n )
 	);
 }
 
