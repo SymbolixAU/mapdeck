@@ -10,18 +10,6 @@ mapdeckScatterplotDependency <- function() {
 	)
 }
 
-mapdeckScatterplotBrushDependency <- function() {
-	list(
-		createHtmlDependency(
-			name = "scatterplot_brush",
-			version = "1.0.0",
-			src = system.file("htmlwidgets/lib/scatterplot_brush", package = "mapdeck"),
-			script = c("scatterplot_brush.js"),
-			all_files = FALSE
-		)
-	)
-}
-
 #' Add Scatterplot
 #'
 #' The Scatterplot Layer takes in coordinate points and renders them as circles

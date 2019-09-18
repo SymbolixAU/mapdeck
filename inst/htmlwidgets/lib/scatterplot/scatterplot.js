@@ -2,18 +2,11 @@
 
 function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
 
-  //console.log( radius_min_pixels );
-
   var extensions = [];
-  const b = new deck.BrushingExtension();
-  extensions.push( b );
 
-//  if ( brush_radius > 0 ) {
-//  	// add brushing extension
-//  	extensions.append( new BrushingExtension() );
-//  }
-
-//  console.log( extensions );
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
 
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
@@ -39,14 +32,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
     onClick: info => md_layer_click( map_id, "scatterplot", info ),
     onHover: md_update_tooltip,
     transitions: js_transition || {},
-
-//    brushingEnabled: true,
-//    brushingRadius: brush_radius,
-//    mousePosition: [0, 0],
-//    extensions: [  ]
-    //brushingEnabled: true,
-    brushingRadius: 100000,
-    //mousePosition: [0, 0],
+    brushingRadius: brush_radius,
     extensions: extensions
   });
 
@@ -63,8 +49,13 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels ) {
+function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
 
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
   const scatterLayer = new ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
@@ -88,7 +79,9 @@ function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, aut
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "scatterplot", info ),
     onHover: md_update_tooltip,
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
 	if( map_type == "google_map") {
