@@ -8,7 +8,7 @@ add_heatmap(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, weight = NULL, colour_range = NULL,
   radius_pixels = 30, intensity = 1, threshold = 0.05,
   layer_id = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6)
+  digits = 6, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}

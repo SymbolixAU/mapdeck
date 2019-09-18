@@ -95,7 +95,8 @@ add_heatmap <- function(
 	layer_id = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
-	digits = 6
+	digits = 6,
+	brush_radius = NULL
 ) {
 
 	experimental_layer("heatmap")
@@ -156,7 +157,7 @@ add_heatmap <- function(
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, colour_range,
-		radius_pixels, intensity, threshold, bbox, update_view, focus_layer
+		radius_pixels, intensity, threshold, bbox, update_view, focus_layer, brush_radius
 	)
 }
 

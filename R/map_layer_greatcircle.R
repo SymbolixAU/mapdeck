@@ -118,6 +118,7 @@ add_greatcircle <- function(
 	transitions = NULL,
 	digits = 6
 ) {
+	brush_radius = NULL
 
 	l <- list()
 	l[["origin"]] <- force(origin)
@@ -183,7 +184,7 @@ add_greatcircle <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition,
-		wrap_longitude
+		wrap_longitude, brush_radius
 	)
 }
 

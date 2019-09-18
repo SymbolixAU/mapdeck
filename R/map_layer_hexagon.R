@@ -153,7 +153,8 @@ add_hexagon <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -228,7 +229,8 @@ add_hexagon <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, radius, elevation_scale,
 		auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer,
-		js_transitions, use_weight, use_colour, elevation_function, colour_function, legend
+		js_transitions, use_weight, use_colour, elevation_function, colour_function, legend,
+		brush_radius
 		)
 }
 

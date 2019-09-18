@@ -1,5 +1,11 @@
-function add_heatmap_geo( map_id, map_type, heatmap_data, layer_id, colour_range, radius_pixels, intensity, threshold, bbox, update_view, focus_layer , legend) {
+function add_heatmap_geo( map_id, map_type, heatmap_data, layer_id, colour_range, radius_pixels, intensity, threshold, bbox, update_view, focus_layer , legend, brush_radius ) {
 
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
+    
   const heatmapLayer = new deck.HeatmapLayer({
     map_id: map_id,
     id: 'heatmap-'+layer_id,
@@ -13,6 +19,8 @@ function add_heatmap_geo( map_id, map_type, heatmap_data, layer_id, colour_range
 
     getPosition: d => md_get_point_coordinates( d ),
     getWeight: d => d.properties.weight,
+    brushingRadius: brush_radius,
+    extensions: extensions
 
     //onClick: info => md_layer_click( map_id, "heatmap", info ),
     //onSetColorDomain: d => md_colour_domain( d, colour_range, map_id, map_type, layer_id, legend )
@@ -29,8 +37,14 @@ function add_heatmap_geo( map_id, map_type, heatmap_data, layer_id, colour_range
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_heatmap_polyline( map_id, map_type, heatmap_data, layer_id, colour_range, radius_pixels, intensity, threshold, bbox, update_view, focus_layer, legend ) {
+function add_heatmap_polyline( map_id, map_type, heatmap_data, layer_id, colour_range, radius_pixels, intensity, threshold, bbox, update_view, focus_layer, legend, brush_radius ) {
 
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
+    
   const heatmapLayer = new deck.HeatmapLayer({
     map_id: map_id,
     id: 'heatmap-'+layer_id,
@@ -44,6 +58,8 @@ function add_heatmap_polyline( map_id, map_type, heatmap_data, layer_id, colour_
 
     getPosition: d => md_get_point_coordinates( d ),
     getWeight: d => d.properties.weight,
+    brushingRadius: brush_radius,
+    extensions: extensions
 
     //onClick: info => md_layer_click( map_id, "heatmap", info ),
     //onSetColorDomain: d => md_colour_domain( d, colour_range, map_id, map_type, layer_id, legend )

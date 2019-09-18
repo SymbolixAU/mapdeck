@@ -58,7 +58,6 @@ mapdeckPointcloudDependency <- function() {
 #'   , layer_id = 'point'
 #'   , fill_colour = "country"
 #'   , tooltip = "country"
-#'   , update_view = FALSE
 #' )
 #'
 #' ## as an sf object wtih a Z attribute
@@ -105,7 +104,8 @@ add_pointcloud <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -180,7 +180,7 @@ add_pointcloud <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], radius, layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions
+		js_transitions, brush_radius
 		)
 }
 

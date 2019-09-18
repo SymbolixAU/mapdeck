@@ -1,4 +1,10 @@
-function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend  ) {
+function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend, brush_radius  ) {
+
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
 
   const gridLayer = new deck.GridLayer({
   	map_id: map_id,
@@ -23,6 +29,8 @@ function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extrude
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions,
     onSetColorDomain: d => md_colour_domain( d, colour_range, map_id, map_type, layer_id, legend )
   });
 
@@ -34,7 +42,13 @@ function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extrude
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_grid_polyline( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend  ) {
+function add_grid_polyline( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend, brush_radius ) {
+
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
 
   const gridLayer = new deck.GridLayer({
     map_id: map_id,
@@ -59,6 +73,8 @@ function add_grid_polyline( map_id, map_type, grid_data, layer_id, cell_size, ex
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions,
     onSetColorDomain: d => md_colour_domain( d, colour_range, map_id, map_type, layer_id, legend )
   });
 
