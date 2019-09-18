@@ -13,6 +13,8 @@ mapdeckBitmapDependency <- function() {
 
 #' Add bitmap
 #'
+#' Adds an image to a map
+#'
 #' @inheritParams add_arc
 #' @param image url to an image to use on the map
 #' @param bounds coordinates of the bounding box of the image [left, bottom, right, top]
@@ -75,7 +77,7 @@ add_bitmap <- function(
 	focus_layer <- force( focus_layer )
 
 	transparent_colour <- force( transparent_colour )
-	tin_colour <- force( tint_colour )
+	tint_colour <- force( tint_colour )
 
 	transparent_colour <- colourvalues::convert_colour( transparent_colour )
 	tint_colour <- colourvalues::convert_colour( tint_colour )

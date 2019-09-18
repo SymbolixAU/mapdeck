@@ -5,15 +5,8 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
   //console.log( radius_min_pixels );
 
   var extensions = [];
-
-  const d = new deck.DirectionalLight({
-	  color: [255, 255, 255],
-	  intensity: 1.0,
-	  direction: [-3, -9, -1]
-	});
-	console.log( d );
   const b = new deck.BrushingExtension();
-  console.log( b );
+  extensions.push( b );
 
 //  if ( brush_radius > 0 ) {
 //  	// add brushing extension
@@ -46,17 +39,15 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
     onClick: info => md_layer_click( map_id, "scatterplot", info ),
     onHover: md_update_tooltip,
     transitions: js_transition || {},
-<<<<<<< HEAD
-    brushingEnabled: true,
-    brushingRadius: brush_radius,
-    mousePosition: [0, 0],
-    extensions: [  ]
-=======
+
+//    brushingEnabled: true,
+//    brushingRadius: brush_radius,
+//    mousePosition: [0, 0],
+//    extensions: [  ]
     //brushingEnabled: true,
-    //brushingRadius: brush_radius,
+    brushingRadius: 100000,
     //mousePosition: [0, 0],
     extensions: extensions
->>>>>>> 2864a15abb152b17b6a74b884d281b8b84f3b344
   });
 
 	if( map_type == "google_map") {

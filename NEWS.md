@@ -1,5 +1,6 @@
 # mapdeck 0.3
 
+* `add_bitmap()` to add a bitmap / image to the map
 * input$map_view_change now observed [issue211](https://github.com/SymbolixAU/mapdeck/issues/211) - thanks @zacdav
 * `update_stype()` function
 * `add_path()` accepts dashed lines
