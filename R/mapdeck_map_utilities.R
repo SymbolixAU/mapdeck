@@ -68,7 +68,7 @@ invoke_remote = function(map, method, args = list()) {
     id = map$id,
     calls = list(
       list(
-        dependencies = lapply(map$dependencies, shiny::createWebDependency),
+        dependencies = lapply(map$dependencies, createWebDependency),
         method = method,
         args = args
       )

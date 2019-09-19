@@ -20,12 +20,13 @@ Imports:
     colourvalues (>= 0.3.0),
     geojsonsf (>= 1.3.0),
     googlePolylines (>= 0.7.2),
+    httpuv,
     htmltools,
     htmlwidgets,
     jsonify (>= 0.2.10001),
     magrittr,
-    Rcpp,
-    shiny
+    mime,
+    Rcpp
 RoxygenNote: 6.1.1
 Suggests: 
     covr,

@@ -4,7 +4,7 @@
 \alias{mapdeck_update}
 \title{Mapdeck update}
 \usage{
-mapdeck_update(map_id, session = getShinyDefaultReactiveDomain(),
+mapdeck_update(map_id, session = getDefaultReactiveDomain(),
   data = NULL, deferUntilFlush = TRUE, map_type = c("mapdeck_update",
   "google_map_update"))
 }
