@@ -151,7 +151,7 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @export
 mapdeck_update <- function(
 	map_id,
-	session = shiny::getDefaultReactiveDomain(),
+	session = getShinyDefaultReactiveDomain(),
 	data = NULL,
 	deferUntilFlush = TRUE,
 	map_type = c("mapdeck_update", "google_map_update")
@@ -176,6 +176,11 @@ mapdeck_update <- function(
 		),
 		class = c(map_type)
 	)
+}
+
+getShinyDefaultReactiveDomain <- function() {
+	globals <- getFromNamespace( ".globals", ns = "shiny")
+	return( globals$domain )
 }
 
 
