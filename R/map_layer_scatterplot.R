@@ -10,18 +10,6 @@ mapdeckScatterplotDependency <- function() {
 	)
 }
 
-mapdeckScatterplotBrushDependency <- function() {
-	list(
-		createHtmlDependency(
-			name = "scatterplot_brush",
-			version = "1.0.0",
-			src = system.file("htmlwidgets/lib/scatterplot_brush", package = "mapdeck"),
-			script = c("scatterplot_brush.js"),
-			all_files = FALSE
-		)
-	)
-}
-
 #' Add Scatterplot
 #'
 #' The Scatterplot Layer takes in coordinate points and renders them as circles
@@ -98,7 +86,7 @@ mapdeckScatterplotBrushDependency <- function() {
 #'
 #' df <- df[ !is.na(df$lng), ]
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+#' mapdeck(style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = df
 #'   , lat = "lat"
@@ -110,7 +98,7 @@ mapdeckScatterplotBrushDependency <- function() {
 #' library(sf)
 #' sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = sf
 #'   , radius = 100000
@@ -198,13 +186,13 @@ add_scatterplot <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
-	if(!is.null(brush_radius)) {
-		jsfunc <- "add_scatterplot_brush_geo"
-		map <- addDependency(map, mapdeckScatterplotBrushDependency())
-	} else {
+	# if(!is.null(brush_radius)) {
+	# 	jsfunc <- "add_scatterplot_brush_geo"
+	# 	map <- addDependency(map, mapdeckScatterplotBrushDependency())
+	# } else {
 		jsfunc <- "add_scatterplot_geo"
 		map <- addDependency(map, mapdeckScatterplotDependency())
-	}
+	# }
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
@@ -215,11 +203,11 @@ add_scatterplot <- function(
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- c( "polyline" )
 		shape <- rcpp_scatterplot_polyline( data, l, geometry_column )
-		if(!is.null(brush_radius)) {
-			jsfunc <- "add_scatterplot_brush_polyline"
-		} else {
-			jsfunc <- "add_scatterplot_polyline"
-		}
+		# if(!is.null(brush_radius)) {
+		# 	jsfunc <- "add_scatterplot_brush_polyline"
+		# } else {
+		# 	jsfunc <- "add_scatterplot_polyline"
+		# }
 	}
 
 	js_transitions <- resolve_transitions( transitions, "scatterplot" )

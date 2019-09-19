@@ -122,7 +122,8 @@ add_grid <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -204,7 +205,8 @@ add_grid <- function(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, cell_size,
 		jsonify::to_json(extruded, unbox = TRUE), elevation_scale,
 		colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer,
-		js_transitions, use_weight, use_colour, elevation_function, colour_function, legend
+		js_transitions, use_weight, use_colour, elevation_function, colour_function, legend,
+		brush_radius
 		)
 }
 

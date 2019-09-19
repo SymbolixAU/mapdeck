@@ -1,4 +1,12 @@
-function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude ) {
+function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude, brush_radius ) {
+
+ var extensions = [];
+
+  console.log( brush_radius ) ;
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
 
   const greatcircleLayer = new GreatCircleLayer({
   	map_id: map_id,
@@ -20,7 +28,9 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
     wrapLongitude: wrap_longitude,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -35,7 +45,13 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
 }
 
 
-function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude ) {
+function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude, brush_radius ) {
+
+ var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
 
   const greatcircleLayer = new GreatCircleLayer({
     map_id: map_id,
@@ -57,7 +73,9 @@ function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onHover: md_update_tooltip,
     wrapLongitude: wrap_longitude,
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {

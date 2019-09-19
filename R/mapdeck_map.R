@@ -91,6 +91,19 @@ mapdeck <- function(
 }
 
 
+#' update style
+#'
+#' @param map a mapdeck map object
+#' @param style the style of the map (see \link{mapdeck_style})
+#'
+#' @export
+update_style <- function( map, style ) {
+	invoke_method(
+		map, "md_update_style", style
+	)
+}
+
+
 #' Shiny bindings for mapdeck
 #'
 #' Output and render functions for using mapdeck within Shiny

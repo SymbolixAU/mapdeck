@@ -10,18 +10,6 @@ mapdeckArcDependency <- function() {
 	)
 }
 
-mapdeckArcBrushDependency <- function() {
-	list(
-		createHtmlDependency(
-			name = "arc_brush",
-			version = "1.0.0",
-			src = system.file("htmlwidgets/lib/arc_brush", package = "mapdeck"),
-			script = c("arc_brush.js"),
-			all_files = FALSE
-		)
-	)
-}
-
 #' Add arc
 #'
 #' The Arc Layer renders raised arcs joining pairs of source and target coordinates
@@ -175,7 +163,6 @@ mapdeckArcBrushDependency <- function() {
 #' )
 #'
 #' mapdeck(
-#'   token = key
 #' ) %>%
 #'  add_arc(
 #'    data = sf_flights
@@ -189,7 +176,6 @@ mapdeckArcBrushDependency <- function() {
 #' ## using a brush
 #'
 #' mapdeck(
-#'   token = key
 #'   , style = mapdeck_style("light")
 #' ) %>%
 #'  add_arc(
@@ -286,13 +272,13 @@ add_arc <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
-	if(!is.null(brush_radius)) {
-		jsfunc <- "add_arc_brush_geo"
-		map <- addDependency(map, mapdeckArcBrushDependency())
-	} else {
+	# if(!is.null(brush_radius)) {
+	# 	jsfunc <- "add_arc_brush_geo"
+	# 	map <- addDependency(map, mapdeckArcBrushDependency())
+	# } else {
 		jsfunc <- "add_arc_geo"
 		map <- addDependency(map, mapdeckArcDependency())
-	}
+	# }
 
   if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
@@ -303,11 +289,11 @@ add_arc <- function(
   } else if ( tp == "sfencoded" ) {
   	geometry_column <- c("origin", "destination")
   	shape <- rcpp_arc_polyline( data, l, geometry_column )
-  	if(!is.null(brush_radius)) {
-  		jsfunc <- "add_arc_brush_polyline"
-  	} else {
-  	  jsfunc <- "add_arc_polyline"
-  	}
+  	# if(!is.null(brush_radius)) {
+  	# 	jsfunc <- "add_arc_brush_polyline"
+  	# } else {
+  	#   jsfunc <- "add_arc_polyline"
+  	# }
   }
 
 	js_transition <- resolve_transitions( transitions, "arc" )

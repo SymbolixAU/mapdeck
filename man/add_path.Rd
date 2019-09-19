@@ -6,7 +6,8 @@
 \usage{
 add_path(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
-  tooltip = NULL, billboard = FALSE, layer_id = NULL, id = NULL,
+  dash_size = NULL, dash_gap = NULL, tooltip = NULL,
+  billboard = FALSE, layer_id = NULL, id = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, legend_format = NULL, update_view = TRUE,
@@ -24,6 +25,10 @@ EPSG:4326 (WGS 84) coordinate system}
 \code{elevation} is ignored.}
 
 \item{stroke_width}{width of the stroke in meters. Default 1.}
+
+\item{dash_size}{size of each dash, relative to the width of the stroke}
+
+\item{dash_gap}{size of the gap between dashes, relative to the width of the stroke}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 

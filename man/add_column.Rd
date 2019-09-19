@@ -13,7 +13,7 @@ add_column(map, data = get_map_data(map), polyline = NULL,
   layer_id = NULL, id = NULL, palette = "viridis",
   na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
   legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL)
+  digits = 6, transitions = NULL, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -48,6 +48,8 @@ colour, this argument is ignored and you should include the alpha on the hex str
 
 \item{coverage}{radius multiplier, in range [0,1]. The radius of the disk is calcualted
 by coverage * radius}
+
+\item{angle}{disk rotation, counter-clockwise, in degrees}
 
 \item{disk_resolution}{The number of sides to render the disk as.
 The disk is a regular polygon that fits inside the given radius.

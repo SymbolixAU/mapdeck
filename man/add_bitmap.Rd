@@ -31,7 +31,7 @@ to conflict and not plot correctly}
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 }
 \description{
-Add bitmap
+Adds an image to a map
 }
 \examples{
 \donttest{

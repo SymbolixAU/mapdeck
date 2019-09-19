@@ -9,7 +9,9 @@ Rcpp::List geojson_defaults(int n) {
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour( n ),
 		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour( n ),
 		_["elevation"] = mapdeck::defaults::default_elevation( n ),
-		_["stroke_width"] = mapdeck::defaults::default_stroke_width( n )
+		_["stroke_width"] = mapdeck::defaults::default_stroke_width( n ),
+		_["dash_size"] = mapdeck::defaults::default_dash( n ),
+		_["dash_gap"] = mapdeck::defaults::default_dash( n )
 	);
 }
 

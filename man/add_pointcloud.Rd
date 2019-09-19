@@ -11,7 +11,8 @@ add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
   light_settings = list(), layer_id = NULL, id = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, digits = 6, transitions = NULL)
+  focus_layer = FALSE, digits = 6, transitions = NULL,
+  brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -159,7 +160,6 @@ add_pointcloud(
   , layer_id = 'point'
   , fill_colour = "country"
   , tooltip = "country"
-  , update_view = FALSE
 )
 
 ## as an sf object wtih a Z attribute

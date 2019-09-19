@@ -34,3 +34,4 @@ mapdeck_style <- function(
     )
   )
 }
+

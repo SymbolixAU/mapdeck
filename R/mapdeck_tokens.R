@@ -78,10 +78,13 @@ get_access_token <- function(api = "mapbox") {
 
 	api <- getOption("mapdeck")[['mapdeck']][[api]]
 	if( is.null( api ) || is.na( api ) ) {
-		api <- Sys.getenv(
-			c("MAPBOX_TOKEN","MAPBOX_KEY","MAPBOX_API_TOKEN", "MAPBOX_API_KEY", "MAPBOX", "MAPDECK")
-			)
-		api <- unname( api[which(nzchar(api))] )
+		e <- Sys.getenv()
+		e <- e[ grep( "mapbox|mapdeck", names( e ), ignore.case = TRUE ) ]
+
+		api <- unique( as.character( e ) )
+		if( length( api ) > 1 ) {
+			warning("Multiple MAPBOX API tokens found in Sys.getenv(), using the first one")
+		}
 	}
 	if(length(api) == 0) api <- NULL
 	return(api[1L])

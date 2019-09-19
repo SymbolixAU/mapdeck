@@ -207,7 +207,6 @@ sf_flights <- cbind(
 )
 
 mapdeck(
-  token = key
 ) \%>\%
  add_arc(
    data = sf_flights
@@ -221,7 +220,6 @@ mapdeck(
 ## using a brush
 
 mapdeck(
-  token = key
   , style = mapdeck_style("light")
 ) \%>\%
  add_arc(

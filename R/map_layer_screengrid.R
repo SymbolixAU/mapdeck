@@ -45,7 +45,7 @@ mapdeckScreengridDependency <- function() {
 #'
 #' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_screengrid(
-#'   data = df
+#'   data = df[1:12000, ]
 #'   , lat = "lat"
 #'   , lon = "lng"
 #'   , weight = "weight",
@@ -89,6 +89,7 @@ add_screengrid <- function(
 	focus_layer = FALSE,
 	digits = 6
 ) {
+	brush_radius = NULL
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["weight"]] <- force( weight )
@@ -150,7 +151,7 @@ add_screengrid <- function(
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, opacity, cell_size, colour_range,
-		bbox, update_view, focus_layer, aggregation
+		bbox, update_view, focus_layer, aggregation, brush_radius
 		)
 }
 

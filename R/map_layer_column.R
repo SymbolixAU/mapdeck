@@ -24,6 +24,7 @@ mapdeckColumnDependency <- function() {
 #' The disk is a regular polygon that fits inside the given radius.
 #' A higher resolution will yield a smoother look close-up, but also requires more resources to render.
 #' @param radius in metres. Default 1000
+#' @param angle disk rotation, counter-clockwise, in degrees
 #' @param coverage radius multiplier, in range [0,1]. The radius of the disk is calcualted
 #' by coverage * radius
 #' @param elevation_scale value to scale the elevations of the columns Default 1
@@ -106,7 +107,8 @@ add_column <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -185,7 +187,7 @@ add_column <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
 		radius, elevation_scale, disk_resolution, angle, coverage, shape[["legend"]], bbox, update_view,
-		focus_layer, js_transitions, is_extruded
+		focus_layer, js_transitions, is_extruded, brush_radius
 	)
 }
 
