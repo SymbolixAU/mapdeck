@@ -99,7 +99,7 @@ add_heatmap <- function(
 	brush_radius = NULL
 ) {
 
-	experimental_layer("heatmap")
+	#experimental_layer("heatmap")
 
 	l <- list()
 	l[["polyline"]] <- force( polyline )
