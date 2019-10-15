@@ -153,6 +153,7 @@ mapdeck_dep_location <- function() {
 	)
 }
 
+# https://unpkg.com/deck.gl@latest/dist.min.js
 deckgl_min_js <- function() {
 	list(
 		createHtmlDependency(

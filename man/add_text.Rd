@@ -30,7 +30,8 @@ EPSG:4326 (WGS 84) coordinate system}
 
 \item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
-\item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour.
+If using a hex colour, use either a single value, or a vector the same length as \code{data}}
 
 \item{fill_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),

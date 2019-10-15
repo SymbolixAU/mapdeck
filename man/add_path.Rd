@@ -22,7 +22,8 @@ EPSG:4326 (WGS 84) coordinate system}
 \item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
-\code{elevation} is ignored.}
+\code{elevation} is ignored.
+If using a hex colour, use either a single value, or a vector the same length as \code{data}}
 
 \item{stroke_width}{width of the stroke in meters. Default 1.}
 
