@@ -13,11 +13,13 @@ mapdeckMeshDependency <- function() {
 
 
 find_mesh_index <- function( data ) {
-	switch(
-		data[["primitivetype"]]
-		, "quad" = "ib"
-		, "triangle" = "it"
-	)
+	 ## prefer triangles (in future maybe we do both)
+	idx <- "it"
+	if (!idx %in% names(data)) {
+		idx <- "ib"
+	}
+	if (!idx %in% names(data)) stop("seems to be a malformed mesh3d,withno 'it' 'ib' array?")
+	idx
 }
 
 
@@ -77,13 +79,13 @@ add_mesh <- function(
 	vertex <- "vb"
 	index <- find_mesh_index( data )
 
-	## check:
-	if ( data[["primitivetype"]] == "quad" & is.null( data[["ib"]] ) ) {
-		stop("mapdeck - badly formed mesh3d type. Found quad and expecting ib index")
-	}
-	if ( data[["primitivetype"]] == "triangle" & is.null( data[["it"]] ) ) {
-		stop("mapdeck - badly formed mesh3d type. Found triangle and expecting it index")
-	}
+	## check: need different checks for sense
+	# if ( data[["primitivetype"]] == "quad" & is.null( data[["ib"]] ) ) {
+	# 	stop("mapdeck - badly formed mesh3d type. Found quad and expecting ib index")
+	# }
+	# if ( data[["primitivetype"]] == "triangle" & is.null( data[["it"]] ) ) {
+	# 	stop("mapdeck - badly formed mesh3d type. Found triangle and expecting it index")
+	# }
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
@@ -202,13 +204,13 @@ add_mesh2 <- function(
 	vertex <- "vb"
 	index <- find_mesh_index( data )
 
-	## check:
-	if ( data[["primitivetype"]] == "quad" & is.null( data[["ib"]] ) ) {
-		stop("mapdeck - badly formed mesh3d type. Found quad and expecting ib index")
-	}
-	if ( data[["primitivetype"]] == "triangle" & is.null( data[["it"]] ) ) {
-		stop("mapdeck - badly formed mesh3d type. Found triangle and expecting it index")
-	}
+	## check:   this check is now done in find_mesh_index()
+	# if ( data[["primitivetype"]] == "quad" & is.null( data[["ib"]] ) ) {
+	# 	stop("mapdeck - badly formed mesh3d type. Found quad and expecting ib index")
+	# }
+	# if ( data[["primitivetype"]] == "triangle" & is.null( data[["it"]] ) ) {
+	# 	stop("mapdeck - badly formed mesh3d type. Found triangle and expecting it index")
+	# }
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
