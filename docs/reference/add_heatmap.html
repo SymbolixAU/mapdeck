@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add Screengrid — add_screengrid • mapdeck</title>
+<title>Add Heatmap — add_heatmap • mapdeck</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,10 @@
 
 
 
-<meta property="og:title" content="Add Screengrid — add_screengrid" />
+<meta property="og:title" content="Add Heatmap — add_heatmap" />
 
-<meta property="og:description" content="The Screen Grid Layer takes in an array of latitude and longitude coordinated points,
-aggregates them into histogram bins and renders as a grid" />
+<meta property="og:description" content="The Heatmap Layer can be used to visualise spatial distribution of data.
+It implements Gaussian Kernel Density Estimation to render the heatmaps." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -134,23 +134,23 @@ aggregates them into histogram bins and renders as a grid" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add Screengrid</h1>
+    <h1>Add Heatmap</h1>
     
-    <div class="hidden name"><code>add_screengrid.Rd</code></div>
+    <div class="hidden name"><code>add_heatmap.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The Screen Grid Layer takes in an array of latitude and longitude coordinated points,
-aggregates them into histogram bins and renders as a grid</p>
+    <p>The Heatmap Layer can be used to visualise spatial distribution of data.
+It implements Gaussian Kernel Density Estimation to render the heatmaps.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>add_screengrid</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>aggregation</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"sum"</span>, <span class='st'>"mean"</span>,
-  <span class='st'>"min"</span>, <span class='st'>"max"</span>), <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opacity</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>cell_size</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+    <pre class="usage"><span class='fu'>add_heatmap</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>radius_pixels</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>intensity</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
   <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>)</pre>
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>brush_radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -181,21 +181,28 @@ EPSG:4326 (WGS 84) coordinate system</p></td>
       <td><p>the weight of each value. Default 1</p></td>
     </tr>
     <tr>
-      <th>aggregation</th>
-      <td><p>one of 'min', 'mean', 'max', 'sum'.
-If supplied it specifies how the weights used.</p></td>
-    </tr>
-    <tr>
       <th>colour_range</th>
       <td><p>vector of 6 hex colours</p></td>
     </tr>
     <tr>
-      <th>opacity</th>
-      <td><p>opacity of cells. Value between 0 and 1. Default 0.8</p></td>
+      <th>radius_pixels</th>
+      <td><p>Radius of the circle in pixels, to which the weight of an object is distributed</p></td>
     </tr>
     <tr>
-      <th>cell_size</th>
-      <td><p>size of grid squares in pixels. Default 50</p></td>
+      <th>intensity</th>
+      <td><p>Value that is multiplied with the total weight at a pixel to
+obtain the final weight. A value larger than 1 biases the output color towards
+the higher end of the spectrum, and a value less than 1 biases the output
+color towards the lower end of the spectrum</p></td>
+    </tr>
+    <tr>
+      <th>threshold</th>
+      <td><p>The HeatmapLayer reduces the opacity of the pixels with relatively
+low weight to create a fading effect at the edge.
+A larger threshold smoothens the boundaries of color blobs, while making pixels
+with low relative weight harder to spot (due to low alpha value).
+Threshold is defined as the ratio of the fading weight to the max weight, between 0 and 1.
+For example, 0.1 affects all pixels with weight under 10% of the max.</p></td>
     </tr>
     <tr>
       <th>layer_id</th>
@@ -215,7 +222,13 @@ to conflict and not plot correctly</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>add_screengrid</code> supports POINT and MULTIPOINT sf objects</p>
+    <p><code>add_heatmap</code> supports POINT and MULTIPOINT sf objects</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>note</h2>
+
+    
+    <p>The current version of this layer is supported only for WebGL2 enabled browswers
+So you may find it doesn't render in the RStudio viewer.</p>
     
     <h2 class="hasAnchor" id="data"><a class="anchor" href="#data"></a>data</h2>
 
@@ -241,27 +254,23 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
 <span class='no'>df</span>$<span class='no'>weight</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>df</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='no'>T</span>)
 
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
-<span class='fu'>add_screengrid</span>(
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>[<span class='fl'>1</span>:<span class='fl'>12000</span>, ]
+<span class='fu'>add_heatmap</span>(
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>
   , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
   , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"lng"</span>
   , <span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"weight"</span>,
-  , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"screengrid_layer"</span>
-  , <span class='kw'>cell_size</span> <span class='kw'>=</span> <span class='fl'>10</span>
-  , <span class='kw'>opacity</span> <span class='kw'>=</span> <span class='fl'>0.3</span>
-)
-
+  , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"heatmap_layer"</span>
+)</div><div class='output co'>#&gt; <span class='error'>Error in google_dispatch(map, method, google_map = {    x = map$x$calls    if (is.null(x))         x = list()    n = length(x)    x[[n + 1]] = list(functions = method, args = args)    map$x$calls = x    map}, google_map_update = {    invoke_remote(map, method, args)}): Invalid map parameter</span></div><div class='input'>
 <span class='co'>## as an sf object</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sf</span>)
 <span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>( <span class='no'>df</span>, <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"lng"</span>, <span class='st'>"lat"</span>))
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
-<span class='fu'>add_screengrid</span>(
+<span class='fu'>add_heatmap</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sf</span>
   , <span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"weight"</span>,
-  , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"screengrid_layer"</span>
-  , <span class='kw'>cell_size</span> <span class='kw'>=</span> <span class='fl'>10</span>
-  , <span class='kw'>opacity</span> <span class='kw'>=</span> <span class='fl'>0.3</span>
-)</div><div class='input'>
+  , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"heatmap_layer"</span>
+)</div><div class='output co'>#&gt; <span class='error'>Error in find_lat_column(dataNames, layer_call, TRUE): Couldn't infer latitude column for add_heatmap</span></div><div class='input'>
+</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -270,6 +279,8 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#note">note</a></li>
 
       <li><a href="#data">data</a></li>
       

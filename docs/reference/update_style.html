@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>mapdeck — mapdeck • mapdeck</title>
+<title>update style — update_style • mapdeck</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="mapdeck — mapdeck" />
+<meta property="og:title" content="update style — update_style" />
 
-<meta property="og:description" content="mapdeck" />
+<meta property="og:description" content="update style" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -133,78 +133,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>mapdeck</h1>
+    <h1>update style</h1>
     
-    <div class="hidden name"><code>mapdeck.Rd</code></div>
+    <div class="hidden name"><code>update_style.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>mapdeck</p>
+    <p>update style</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>mapdeck</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'>get_access_token</span>(<span class='kw'>api</span> <span class='kw'>=</span> <span class='st'>"mapbox"</span>),
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>padding</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"mapbox://styles/mapbox/streets-v9"</span>, <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>bearing</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>))</pre>
+    <pre class="usage"><span class='fu'>update_style</span>(<span class='no'>map</span>, <span class='no'>style</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>data to be used in the layer. All coordinates are expected to be
-EPSG:4326 (WGS 84) coordinate system</p></td>
-    </tr>
-    <tr>
-      <th>token</th>
-      <td><p>Mapbox Acess token. Use <code><a href='set_token.html'>set_token()</a></code> or <code><a href='https://www.rdocumentation.org/packages/base/topics/Sys.setenv'>Sys.setenv()</a></code> to set a global token.
-See Access Tokens section for further details.
-If left empty layers will still be plotted, but without a Mapbox map.</p></td>
-    </tr>
-    <tr>
-      <th>width</th>
-      <td><p>the width of the map</p></td>
-    </tr>
-    <tr>
-      <th>height</th>
-      <td><p>the height of the map</p></td>
-    </tr>
-    <tr>
-      <th>padding</th>
-      <td><p>the padding of the map</p></td>
+      <th>map</th>
+      <td><p>a mapdeck map object</p></td>
     </tr>
     <tr>
       <th>style</th>
       <td><p>the style of the map (see <a href='mapdeck_style.html'>mapdeck_style</a>)</p></td>
     </tr>
-    <tr>
-      <th>pitch</th>
-      <td><p>the pitch angle of the map</p></td>
-    </tr>
-    <tr>
-      <th>zoom</th>
-      <td><p>zoom level of the map</p></td>
-    </tr>
-    <tr>
-      <th>bearing</th>
-      <td><p>bearing of the map between 0 and 360</p></td>
-    </tr>
-    <tr>
-      <th>location</th>
-      <td><p>unnamed vector of lon and lat coordinates (in that order)</p></td>
-    </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="access-tokens"><a class="anchor" href="#access-tokens"></a>Access Tokens</h2>
-
-    
-    <p>If the <code>token</code> argument is not used, the map will search for the token, firstly by
-checking if <code><a href='set_token.html'>set_token()</a></code> was used, then it will search environment variables using
-<code><a href='https://www.rdocumentation.org/packages/base/topics/Sys.getenv'>Sys.getenv()</a></code> and the following values, in this order</p>
-<p>c("MAPBOX_TOKEN","MAPBOX_KEY","MAPBOX_API_TOKEN", "MAPBOX_API_KEY", "MAPBOX", "MAPDECK")</p>
-<p>If multiple tokens are found, the first one is used</p>
     
 
   </div>
@@ -212,9 +165,7 @@ checking if <code><a href='set_token.html'>set_token()</a></code> was used, then
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#access-tokens">Access Tokens</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

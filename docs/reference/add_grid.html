@@ -156,7 +156,7 @@ The color and height of the cell is scaled by number of points it contains.</p>
   <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>,
-  <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>brush_radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -251,6 +251,12 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>transitions</th>
       <td><p>list specifying the duration of transitions.</p></td>
+    </tr>
+    <tr>
+      <th>brush_radius</th>
+      <td><p>radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed</p></td>
     </tr>
     </table>
     

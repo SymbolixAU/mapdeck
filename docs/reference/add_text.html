@@ -153,7 +153,8 @@
   <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
   <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>, <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>brush_radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,7 +186,8 @@ EPSG:4326 (WGS 84) coordinate system</p></td>
     </tr>
     <tr>
       <th>fill_colour</th>
-      <td><p>column of <code>data</code> or hex colour for the fill colour.</p></td>
+      <td><p>column of <code>data</code> or hex colour for the fill colour.
+If using a hex colour, use either a single value, or a vector the same length as <code>data</code></p></td>
     </tr>
     <tr>
       <th>fill_opacity</th>

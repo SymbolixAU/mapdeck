@@ -100,7 +100,7 @@
       <h1>Why isn’t it working?</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-06-14</h4>
+            <h4 class="date">2019-10-28</h4>
       
       
       <div class="hidden name"><code>issues.Rmd</code></div>
@@ -123,13 +123,20 @@
 <div id="map-doesnt-zoom-to-the-layer" class="section level2">
 <h2 class="hasAnchor">
 <a href="#map-doesnt-zoom-to-the-layer" class="anchor"></a>Map doesn’t zoom to the layer</h2>
-<p>Are you subsetting an <code>sf</code> object without the <code>sf</code> library loaded? <a href="file:///Users/dave/Documents/github/mapdeck/docs/articles/tips_tricks.html#sf">See here</a></p>
+<p>Are you subsetting an <code>sf</code> object without the <code>sf</code> library loaded? <a href="https://symbolixau.github.io/mapdeck/articles/tips_tricks.html#sf">See here</a></p>
 <p>Or are you plotting GeoJSON or an <code>sfencodedLite</code> object? The bounding box is not calculated for either of these, so the map doesn’t know where to focus</p>
 </div>
 <div id="map-loads-but-the-layer-data-doesnt" class="section level2">
 <h2 class="hasAnchor">
 <a href="#map-loads-but-the-layer-data-doesnt" class="anchor"></a>Map loads but the layer / data doesn’t</h2>
 <p>Do you have <code>NA</code>s in your data? Mapdeck will have issues plotting if there are, so it’s worth checking.</p>
+</div>
+<div id="some-maps-in-a-document-rmd-shiny-load-some-dont" class="section level2">
+<h2 class="hasAnchor">
+<a href="#some-maps-in-a-document-rmd-shiny-load-some-dont" class="anchor"></a>Some maps in a document (Rmd, shiny) load, some don’t</h2>
+<p>Maybe you have too many maps loaded. There is a <a href="https://github.com/mapbox/mapbox-gl-js/issues/7332">known issue with Mapbox</a> where browsers don’t support enough WebGL contexts.</p>
+<p>If you inspect your document you may see this error. This indicates you have too many maps.</p>
+<p><img src="img/articles/too_many_contexts.png"></p>
 </div>
   </div>
 
@@ -142,6 +149,7 @@
       <li><a href="#browser-is-blank">Browser is blank</a></li>
       <li><a href="#map-doesnt-zoom-to-the-layer">Map doesn’t zoom to the layer</a></li>
       <li><a href="#map-loads-but-the-layer-data-doesnt">Map loads but the layer / data doesn’t</a></li>
+      <li><a href="#some-maps-in-a-document-rmd-shiny-load-some-dont">Some maps in a document (Rmd, shiny) load, some don’t</a></li>
       </ul>
 </div>
       </div>

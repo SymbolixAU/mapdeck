@@ -148,7 +148,8 @@ extruded lines with mitering.</p>
 
     <pre class="usage"><span class='fu'>add_path</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>billboard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dash_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dash_gap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>billboard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
   <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>, <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -173,11 +174,20 @@ EPSG:4326 (WGS 84) coordinate system</p></td>
     <tr>
       <th>stroke_colour</th>
       <td><p>variable of <code>data</code> or hex colour for the stroke. If used,
-<code>elevation</code> is ignored.</p></td>
+<code>elevation</code> is ignored.
+If using a hex colour, use either a single value, or a vector the same length as <code>data</code></p></td>
     </tr>
     <tr>
       <th>stroke_width</th>
       <td><p>width of the stroke in meters. Default 1.</p></td>
+    </tr>
+    <tr>
+      <th>dash_size</th>
+      <td><p>size of each dash, relative to the width of the stroke</p></td>
+    </tr>
+    <tr>
+      <th>dash_gap</th>
+      <td><p>size of the gap between dashes, relative to the width of the stroke</p></td>
     </tr>
     <tr>
       <th>tooltip</th>

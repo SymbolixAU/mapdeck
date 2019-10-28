@@ -155,7 +155,7 @@ The color and height of the hexagon is scaled by number of points it contains.</
   <span class='st'>"max"</span>), <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
   <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>brush_radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -245,11 +245,30 @@ If supplied it specifies how the colour values are calculated. Defaults to sum.<
       <th>transitions</th>
       <td><p>list specifying the duration of transitions.</p></td>
     </tr>
+    <tr>
+      <th>brush_radius</th>
+      <td><p>radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>add_hexagon</code> supports POINT and MULTIPOINT sf objects</p>
+    
+    <h2 class="hasAnchor" id="transitions"><a class="anchor" href="#transitions"></a>transitions</h2>
+
+    
+    <p>The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny)
+and on WebGL-2 supported browsers and hardware.</p>
+<p>The time is in milliseconds</p>
+<p>Available transitions for hexagon</p>
+<p>list(
+elevation = 0
+colour = 0
+)</p>
     
     <h2 class="hasAnchor" id="data"><a class="anchor" href="#data"></a>data</h2>
 
@@ -344,6 +363,8 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#transitions">transitions</a></li>
 
       <li><a href="#data">data</a></li>
       

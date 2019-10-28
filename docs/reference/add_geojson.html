@@ -148,13 +148,16 @@ lines and points</p>
 
     <pre class="usage"><span class='fu'>add_geojson</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>light_settings</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>F</span>,
-  <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dash_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dash_gap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fill_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>light_settings</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>,
-  <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>line_width_units</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"metres"</span>, <span class='st'>"pixels"</span>),
+  <span class='kw'>line_width_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>line_width_min_pixels</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>point_radius_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>point_radius_min_pixels</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,6 +187,14 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>stroke_width</th>
       <td><p>column of an <code>sf</code> object, or field inside a GeoJSON <code>property</code> to use for width (in meters)</p></td>
+    </tr>
+    <tr>
+      <th>dash_size</th>
+      <td><p>size of each dash, relative to the width of the stroke</p></td>
+    </tr>
+    <tr>
+      <th>dash_gap</th>
+      <td><p>size of the gap between dashes, relative to the width of the stroke</p></td>
     </tr>
     <tr>
       <th>fill_colour</th>
@@ -243,6 +254,35 @@ palette for different colour options (where available),
     <tr>
       <th>na_colour</th>
       <td><p>hex string colour to use for NA values</p></td>
+    </tr>
+    <tr>
+      <th>line_width_units</th>
+      <td><p>The units of the line width, one of 'meters', 'pixels'.
+When zooming in and out, meter sizes scale with the base map, and pixel sizes remain the same on screen.</p></td>
+    </tr>
+    <tr>
+      <th>line_width_scale</th>
+      <td><p>The line width multiplier that multiplied to all lines,
+including the LineString and MultiLineString features and also the outline for
+Polygon and MultiPolygon features if the stroked attribute is true</p></td>
+    </tr>
+    <tr>
+      <th>line_width_min_pixels</th>
+      <td><p>The minimum line width in pixels.</p></td>
+    </tr>
+    <tr>
+      <th>elevation_scale</th>
+      <td><p>Elevation multiplier. The final elevation is calculated by
+elevationScale * getElevation(d). elevationScale is a handy property to scale
+all polygon elevation without updating the data</p></td>
+    </tr>
+    <tr>
+      <th>point_radius_scale</th>
+      <td><p>A global radius multiplier for all points.</p></td>
+    </tr>
+    <tr>
+      <th>point_radius_min_pixels</th>
+      <td><p>The minimum radius in pixels.</p></td>
     </tr>
     <tr>
       <th>update_view</th>

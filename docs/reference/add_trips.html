@@ -166,12 +166,11 @@ it as animated trips</p>
     </tr>
     <tr>
       <th>stroke_colour</th>
-      <td><p>variable of <code>data</code> or hex colour for the stroke. If used,
-<code>elevation</code> is ignored.</p></td>
+      <td><p>variable of data or hex colour for the stroke.</p></td>
     </tr>
     <tr>
       <th>stroke_width</th>
-      <td><p>width of the stroke in meters. If used, <code>elevation</code> is ignored. Default 1.</p></td>
+      <td><p>width of the stroke in meters. Default 1.</p></td>
     </tr>
     <tr>
       <th>opacity</th>
@@ -187,7 +186,8 @@ palette for different colour options (where available),
     </tr>
     <tr>
       <th>trail_length</th>
-      <td><p>length in metres of the trail</p></td>
+      <td><p>how long it takes for the trail to completely fade out
+(in same units as timestamps )</p></td>
     </tr>
     <tr>
       <th>start_time</th>
@@ -250,13 +250,13 @@ you are clicking on</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>gpxsf</span>)</div><div class='output co'>#&gt; <span class='error'>Error in library(gpxsf): there is no package called ‘gpxsf’</span></div><div class='input'><span class='no'>gpx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"gpx/city_trail.gpx"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"gpx"</span>)
-<span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>gpx</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/gpx/topics/gpx_sf'>gpx_sf</a></span>( <span class='no'>gpx</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"counter"</span> )
-
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>gpx</span>)
+<span class='no'>gpx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"gpx/city_trail.gpx"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"gpx"</span>)
+<span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>gpx</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/gpx/topics/gpx_sf'>gpx_sf</a></span>( <span class='no'>gpx</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"counter"</span> )</div><div class='output co'>#&gt; file_size: 1</div><div class='input'>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
         <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>)
-        , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.9</span>)
-        , <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>8</span>
+        <span class='co'>#, location = c(145, -37.9)</span>
+        <span class='co'>#, zoom = 8</span>
 ) <span class='kw'>%&gt;%</span>
         <span class='fu'>add_trips</span>(
                 <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sf</span>
