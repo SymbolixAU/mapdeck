@@ -5,14 +5,15 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl' • mapdeck</title>
+<title>Interactive Maps Using Mapbox GL JS and Deck.gl • mapdeck</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'">
-<meta property="og:description" content="Provides a mechanism to plot an interactive map using 'Mapbox GL' 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script><meta property="og:title" content="Interactive Maps Using Mapbox GL JS and Deck.gl">
+<meta property="og:description" content="Provides a mechanism to plot an interactive map using Mapbox GL 
 		(&lt;https://www.mapbox.com/mapbox-gl-js/api/&gt;), a javascript library for interactive maps,
-		and 'Deck.gl' (&lt;http://deck.gl/#/&gt;), a javascript library which uses 'WebGL' for 
+		and Deck.gl (&lt;http://deck.gl/#/&gt;), a javascript library which uses WebGL for 
 		visualising large data sets.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -21,7 +22,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -41,7 +42,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -97,13 +98,9 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    
 
-    
-    
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+      </header><div class="row">
+  <div class="contents col-md-9">
 <div id="mapdeck" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#mapdeck" class="anchor"></a>mapdeck</h1></div>
@@ -123,9 +120,9 @@
 <li><a href="https://www.mapbox.com/about/" class="uri">https://www.mapbox.com/about/</a></li>
 </ul>
 </div>
-<div id="what-is-deck-gl" class="section level2">
+<div id="what-is-deckgl" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-is-deck-gl" class="anchor"></a>What is deck.gl?</h2>
+<a href="#what-is-deckgl" class="anchor"></a>What is deck.gl?</h2>
 <blockquote>
 <p>deck.gl is a WebGL-powered framework for visual exploratory data analysis of large datasets.</p>
 </blockquote>
@@ -144,18 +141,18 @@
 <div id="from-cran" class="section level4">
 <h4 class="hasAnchor">
 <a href="#from-cran" class="anchor"></a>From cran</h4>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"mapdeck"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"mapdeck"</span>)</a></code></pre></div>
 </div>
 <div id="development-version" class="section level4">
 <h4 class="hasAnchor">
 <a href="#development-version" class="anchor"></a>Development version</h4>
 <p>To use the development version you need some other development dependant libraries</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/jsonify"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"dcooley/sfheaders"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb2-3"><a href="#cb2-3"></a>devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/geojsonsf"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb2-4"><a href="#cb2-4"></a>devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/colourvalues"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb2-5"><a href="#cb2-5"></a>devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/spatialwidget"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb2-6"><a href="#cb2-6"></a>devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"SymbolixAU/mapdeck"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"SymbolixAU/jsonify"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"dcooley/sfheaders"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-3" title="3">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"SymbolixAU/geojsonsf"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"SymbolixAU/colourvalues"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-5" title="5">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"SymbolixAU/spatialwidget"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-6" title="6">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"SymbolixAU/mapdeck"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="getting-started" class="section level2">
@@ -164,23 +161,21 @@
 <p>Mapdeck uses <a href="https://www.mapbox.com/">Mapbox maps</a>, and to use Mapbox you need an <a href="https://www.mapbox.com/help/how-access-tokens-work/">access token</a>.</p>
 <p>Once you’ve generate a token you can use their maps.</p>
 <p>Call <code><a href="reference/mapdeck.html">mapdeck(token = 'your_token')</a></code> to generate a basic map. Then start adding layers by using one of the various <code>add_*()</code> functions.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>flights &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(url)</span>
-<span id="cb3-3"><a href="#cb3-3"></a>flights<span class="op">$</span>info &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"&lt;b&gt;"</span>,flights<span class="op">$</span>airport1, <span class="st">" - "</span>, flights<span class="op">$</span>airport2, <span class="st">"&lt;/b&gt;"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="kw"><a href="reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="st">  </span><span class="kw"><a href="reference/add_arc.html">add_arc</a></span>(</span>
-<span id="cb3-7"><a href="#cb3-7"></a>    <span class="dt">data =</span> flights</span>
-<span id="cb3-8"><a href="#cb3-8"></a>    , <span class="dt">origin =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"start_lon"</span>, <span class="st">"start_lat"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9"></a>    , <span class="dt">destination =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"end_lon"</span>, <span class="st">"end_lat"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10"></a>    , <span class="dt">stroke_from =</span> <span class="st">"airport1"</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a>    , <span class="dt">stroke_to =</span> <span class="st">"airport2"</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a>    , <span class="dt">tooltip =</span> <span class="st">"info"</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a>    , <span class="dt">layer_id =</span> <span class="st">'arclayer'</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a>  )</span></code></pre></div>
-<div class="figure">
-<img src="articles/img/readme_arcs_small.gif" alt=""><p class="caption">Arcs</p>
-</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
+<a class="sourceLine" id="cb3-2" title="2">flights &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(url)</a>
+<a class="sourceLine" id="cb3-3" title="3">flights<span class="op">$</span>info &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"&lt;b&gt;"</span>,flights<span class="op">$</span>airport1, <span class="st">" - "</span>, flights<span class="op">$</span>airport2, <span class="st">"&lt;/b&gt;"</span>)</a>
+<a class="sourceLine" id="cb3-4" title="4"></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="st">  </span><span class="kw"><a href="reference/add_arc.html">add_arc</a></span>(</a>
+<a class="sourceLine" id="cb3-7" title="7">    <span class="dt">data =</span> flights</a>
+<a class="sourceLine" id="cb3-8" title="8">    , <span class="dt">origin =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"start_lon"</span>, <span class="st">"start_lat"</span>)</a>
+<a class="sourceLine" id="cb3-9" title="9">    , <span class="dt">destination =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"end_lon"</span>, <span class="st">"end_lat"</span>)</a>
+<a class="sourceLine" id="cb3-10" title="10">    , <span class="dt">stroke_from =</span> <span class="st">"airport1"</span></a>
+<a class="sourceLine" id="cb3-11" title="11">    , <span class="dt">stroke_to =</span> <span class="st">"airport2"</span></a>
+<a class="sourceLine" id="cb3-12" title="12">    , <span class="dt">tooltip =</span> <span class="st">"info"</span></a>
+<a class="sourceLine" id="cb3-13" title="13">    , <span class="dt">layer_id =</span> <span class="st">'arclayer'</span></a>
+<a class="sourceLine" id="cb3-14" title="14">  )</a></code></pre></div>
+<p><img src="./vignettes/img/readme_arcs_small.gif" alt="Arcs"></p>
 <p>See the <a href="https://symbolixau.github.io/mapdeck/articles/layers.html">Layers</a> page for more examples</p>
 </div>
 <div id="getting-help" class="section level2">
@@ -216,8 +211,7 @@
 </ul>
 </div>
 
-      </div>
-
+  </div>
 </div>
 
 
@@ -226,12 +220,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

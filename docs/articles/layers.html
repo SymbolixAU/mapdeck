@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Layers • mapdeck</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Layers">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -94,13 +95,14 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Layers</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-10-28</h4>
+            <h4 class="date">2019-11-03</h4>
       
       
       <div class="hidden name"><code>layers.Rmd</code></div>
@@ -109,284 +111,312 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mapdeck)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mapdeck)</a></code></pre></div>
 <div id="layers" class="section level1">
 <h1 class="hasAnchor">
 <a href="#layers" class="anchor"></a>Layers</h1>
-<p>All layers support Simple Feature (from <code><a href="https://www.rdocumentation.org/packages/base/topics/library">library(sf)</a></code>) objects.</p>
+<p>All layers support Simple Feature (from <code><a href="https://rdrr.io/r/base/library.html">library(sf)</a></code>) objects.</p>
 <div id="layer_id" class="section level2">
 <h2 class="hasAnchor">
 <a href="#layer_id" class="anchor"></a>layer_id</h2>
 <p>Each layer requires a <code>layer_id</code> value. If you don’t supply one, it will create it for you, but this may have some unintended consequences for you.</p>
-<p>The <code>layer_id</code> is the ID that <code>deck.gl</code> uses to ‘shallow-compare’ layers to see if they need updating. Which comes in handy when working in Shiny. If you update data, for example when using a <code><a href="https://www.rdocumentation.org/packages/shiny/topics/reactive">reactive()</a></code> function, and use the same <code>layer_id</code>, <code>deck.gl</code> knows it should update the layer rather than re-draw it completely.</p>
+<p>The <code>layer_id</code> is the ID that <code>deck.gl</code> uses to ‘shallow-compare’ layers to see if they need updating. Which comes in handy when working in Shiny. If you update data, for example when using a <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive()</a></code> function, and use the same <code>layer_id</code>, <code>deck.gl</code> knows it should update the layer rather than re-draw it completely.</p>
 <p><strong>However</strong>, if two of your layers have the same <code>layer_id</code>, then <code>deck.gl</code> will get confused and start updating the wrong thing. So while I’ve made the <code>layer_id</code> argument optional, you should still set it manually when using it in Shiny apps.</p>
 </div>
 <div id="arcs" class="section level2">
 <h2 class="hasAnchor">
 <a href="#arcs" class="anchor"></a>Arcs</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2"></a>url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>flights &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(url)</span>
-<span id="cb2-4"><a href="#cb2-4"></a>flights<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq_len</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(flights))</span>
-<span id="cb2-5"><a href="#cb2-5"></a>flights<span class="op">$</span>stroke &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(flights), <span class="dt">replace =</span> T)</span>
-<span id="cb2-6"><a href="#cb2-6"></a></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="st">  </span><span class="kw"><a href="../reference/add_arc.html">add_arc</a></span>(</span>
-<span id="cb2-9"><a href="#cb2-9"></a>    <span class="dt">data =</span> flights</span>
-<span id="cb2-10"><a href="#cb2-10"></a>    , <span class="dt">layer_id =</span> <span class="st">"arc_layer"</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a>    , <span class="dt">origin =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"start_lon"</span>, <span class="st">"start_lat"</span>)</span>
-<span id="cb2-12"><a href="#cb2-12"></a>    , <span class="dt">destination =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"end_lon"</span>, <span class="st">"end_lat"</span>)</span>
-<span id="cb2-13"><a href="#cb2-13"></a>    , <span class="dt">stroke_from =</span> <span class="st">"airport1"</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a>    , <span class="dt">stroke_to =</span> <span class="st">"airport2"</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a>    , <span class="dt">stroke_width =</span> <span class="st">"stroke"</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"></a>
+<a class="sourceLine" id="cb2-2" title="2">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
+<a class="sourceLine" id="cb2-3" title="3">flights &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(url)</a>
+<a class="sourceLine" id="cb2-4" title="4">flights<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(flights))</a>
+<a class="sourceLine" id="cb2-5" title="5">flights<span class="op">$</span>stroke &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(flights), <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb2-6" title="6"></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>, <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/add_arc.html">add_arc</a></span>(</a>
+<a class="sourceLine" id="cb2-9" title="9">    <span class="dt">data =</span> flights</a>
+<a class="sourceLine" id="cb2-10" title="10">    , <span class="dt">layer_id =</span> <span class="st">"arc_layer"</span></a>
+<a class="sourceLine" id="cb2-11" title="11">    , <span class="dt">origin =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"start_lon"</span>, <span class="st">"start_lat"</span>)</a>
+<a class="sourceLine" id="cb2-12" title="12">    , <span class="dt">destination =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"end_lon"</span>, <span class="st">"end_lat"</span>)</a>
+<a class="sourceLine" id="cb2-13" title="13">    , <span class="dt">stroke_from =</span> <span class="st">"airport1"</span></a>
+<a class="sourceLine" id="cb2-14" title="14">    , <span class="dt">stroke_to =</span> <span class="st">"airport2"</span></a>
+<a class="sourceLine" id="cb2-15" title="15">    , <span class="dt">stroke_width =</span> <span class="st">"stroke"</span></a>
+<a class="sourceLine" id="cb2-16" title="16">  )</a></code></pre></div>
 <div class="figure">
-<img src="img/articles/arcs.gif" alt=""><p class="caption">Arcs</p>
+<img src="img/articles/arcs.gif" alt="Arcs"><p class="caption">Arcs</p>
 </div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with two POINT or MULTIPOINT geometry columns.</p>
 </div>
 <div id="geojson" class="section level2">
 <h2 class="hasAnchor">
 <a href="#geojson" class="anchor"></a>GeoJSON</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(</span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">token =</span> key</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  , <span class="dt">pitch =</span> <span class="dv">35</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="st">    </span><span class="kw"><a href="../reference/add_geojson.html">add_geojson</a></span>(</span>
-<span id="cb3-6"><a href="#cb3-6"></a>    <span class="dt">data =</span> geojson</span>
-<span id="cb3-7"><a href="#cb3-7"></a>    , <span class="dt">layer_id =</span> <span class="st">"geojson"</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(</a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="dt">token =</span> key</a>
+<a class="sourceLine" id="cb3-3" title="3">  , <span class="dt">pitch =</span> <span class="dv">35</span></a>
+<a class="sourceLine" id="cb3-4" title="4">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="st">    </span><span class="kw"><a href="../reference/add_geojson.html">add_geojson</a></span>(</a>
+<a class="sourceLine" id="cb3-6" title="6">    <span class="dt">data =</span> geojson</a>
+<a class="sourceLine" id="cb3-7" title="7">    , <span class="dt">layer_id =</span> <span class="st">"geojson"</span></a>
+<a class="sourceLine" id="cb3-8" title="8">  )</a></code></pre></div>
 <div class="figure">
-<img src="img/articles/geojson.png" alt=""><p class="caption">GeoJSON</p>
+<img src="img/articles/geojson.png" alt="GeoJSON"><p class="caption">GeoJSON</p>
 </div>
-<p><strong>sf</strong> : supports all <code>sf</code> geometry types. Converted to geojson using <code><a href="https://www.rdocumentation.org/packages/geojsonsf/topics/sf_geojson">geojsonsf::sf_geojson()</a></code>. Useful if your <code>sf</code> object contains different geometry types.</p>
+<p><strong>sf</strong> : supports all <code>sf</code> geometry types. Converted to geojson using <code><a href="https://rdrr.io/pkg/geojsonsf/man/sf_geojson.html">geojsonsf::sf_geojson()</a></code>. Useful if your <code>sf</code> object contains different geometry types.</p>
 </div>
 <div id="great-circles" class="section level2">
 <h2 class="hasAnchor">
 <a href="#great-circles" class="anchor"></a>Great Circles</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2"></a>url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>flights &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(url)</span>
-<span id="cb4-4"><a href="#cb4-4"></a>flights<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq_len</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(flights))</span>
-<span id="cb4-5"><a href="#cb4-5"></a>flights<span class="op">$</span>stroke &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(flights), <span class="dt">replace =</span> T)</span>
-<span id="cb4-6"><a href="#cb4-6"></a></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>) <span class="op">%&gt;%</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="st">  </span><span class="kw"><a href="../reference/add_greatcircle.html">add_greatcircle</a></span>(</span>
-<span id="cb4-9"><a href="#cb4-9"></a>    <span class="dt">data =</span> flights</span>
-<span id="cb4-10"><a href="#cb4-10"></a>    , <span class="dt">layer_id =</span> <span class="st">"arc_layer"</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a>    , <span class="dt">origin =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"start_lon"</span>, <span class="st">"start_lat"</span>)</span>
-<span id="cb4-12"><a href="#cb4-12"></a>    , <span class="dt">destination =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"end_lon"</span>, <span class="st">"end_lat"</span>)</span>
-<span id="cb4-13"><a href="#cb4-13"></a>    , <span class="dt">stroke_from =</span> <span class="st">"airport1"</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a>    , <span class="dt">stroke_to =</span> <span class="st">"airport2"</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a>    , <span class="dt">stroke_width =</span> <span class="st">"stroke"</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"></a>
+<a class="sourceLine" id="cb4-2" title="2">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
+<a class="sourceLine" id="cb4-3" title="3">flights &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(url)</a>
+<a class="sourceLine" id="cb4-4" title="4">flights<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(flights))</a>
+<a class="sourceLine" id="cb4-5" title="5">flights<span class="op">$</span>stroke &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(flights), <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb4-6" title="6"></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/add_greatcircle.html">add_greatcircle</a></span>(</a>
+<a class="sourceLine" id="cb4-9" title="9">    <span class="dt">data =</span> flights</a>
+<a class="sourceLine" id="cb4-10" title="10">    , <span class="dt">layer_id =</span> <span class="st">"arc_layer"</span></a>
+<a class="sourceLine" id="cb4-11" title="11">    , <span class="dt">origin =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"start_lon"</span>, <span class="st">"start_lat"</span>)</a>
+<a class="sourceLine" id="cb4-12" title="12">    , <span class="dt">destination =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"end_lon"</span>, <span class="st">"end_lat"</span>)</a>
+<a class="sourceLine" id="cb4-13" title="13">    , <span class="dt">stroke_from =</span> <span class="st">"airport1"</span></a>
+<a class="sourceLine" id="cb4-14" title="14">    , <span class="dt">stroke_to =</span> <span class="st">"airport2"</span></a>
+<a class="sourceLine" id="cb4-15" title="15">    , <span class="dt">stroke_width =</span> <span class="st">"stroke"</span></a>
+<a class="sourceLine" id="cb4-16" title="16">  )</a></code></pre></div>
 <div class="figure">
-<img src="./img/articles/greatcircles.png" alt=""><p class="caption">Great Circles</p>
+<img src="./img/articles/greatcircles.png" alt="Great Circles"><p class="caption">Great Circles</p>
 </div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with two POINT or MULTIPOINT geometry columns.</p>
 </div>
 <div id="grid" class="section level2">
 <h2 class="hasAnchor">
 <a href="#grid" class="anchor"></a>Grid</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="st">'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,</span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>))</span>
-<span id="cb5-5"><a href="#cb5-5"></a></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="kw"><a href="../reference/add_grid.html">add_grid</a></span>(</span>
-<span id="cb5-8"><a href="#cb5-8"></a>  <span class="dt">data =</span> df</span>
-<span id="cb5-9"><a href="#cb5-9"></a>  , <span class="dt">lat =</span> <span class="st">"lat"</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a>  , <span class="dt">lon =</span> <span class="st">"lng"</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a>  , <span class="dt">cell_size =</span> <span class="dv">5000</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a>  , <span class="dt">elevation_scale =</span> <span class="dv">50</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a>  , <span class="dt">layer_id =</span> <span class="st">"grid_layer"</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="st">'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></a>
+<a class="sourceLine" id="cb5-4" title="4">))</a>
+<a class="sourceLine" id="cb5-5" title="5"></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="kw"><a href="../reference/add_grid.html">add_grid</a></span>(</a>
+<a class="sourceLine" id="cb5-8" title="8">  <span class="dt">data =</span> df</a>
+<a class="sourceLine" id="cb5-9" title="9">  , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
+<a class="sourceLine" id="cb5-10" title="10">  , <span class="dt">lon =</span> <span class="st">"lng"</span></a>
+<a class="sourceLine" id="cb5-11" title="11">  , <span class="dt">cell_size =</span> <span class="dv">5000</span></a>
+<a class="sourceLine" id="cb5-12" title="12">  , <span class="dt">elevation_scale =</span> <span class="dv">50</span></a>
+<a class="sourceLine" id="cb5-13" title="13">  , <span class="dt">layer_id =</span> <span class="st">"grid_layer"</span></a>
+<a class="sourceLine" id="cb5-14" title="14">)</a></code></pre></div>
 <div class="figure">
-<img src="img/articles/grid.gif" alt=""><p class="caption">Grid</p>
+<img src="img/articles/grid.gif" alt="Grid"><p class="caption">Grid</p>
 </div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
+</div>
+<div id="hexagons" class="section level2">
+<h2 class="hasAnchor">
+<a href="#hexagons" class="anchor"></a>Hexagons</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"></a>
+<a class="sourceLine" id="cb6-2" title="2"></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mapdeck)</a>
+<a class="sourceLine" id="cb6-4" title="4"></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw"><a href="../reference/set_token.html">set_token</a></span>( <span class="kw"><a href="https://rdrr.io/r/base/dcf.html">read.dcf</a></span>(<span class="st">"~/Documents/.googleAPI"</span>, <span class="dt">fields =</span> <span class="st">"MAPBOX"</span>))</a>
+<a class="sourceLine" id="cb6-6" title="6">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(</a>
+<a class="sourceLine" id="cb6-7" title="7">  <span class="st">'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/'</span></a>
+<a class="sourceLine" id="cb6-8" title="8">  , <span class="st">'3d-heatmap/heatmap-data.csv'</span></a>
+<a class="sourceLine" id="cb6-9" title="9">))</a>
+<a class="sourceLine" id="cb6-10" title="10"></a>
+<a class="sourceLine" id="cb6-11" title="11">df &lt;-<span class="st"> </span>df[<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(df<span class="op">$</span>lng), ]</a>
+<a class="sourceLine" id="cb6-12" title="12"></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>), <span class="dt">pitch =</span> <span class="dv">45</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="st">  </span><span class="kw"><a href="../reference/add_hexagon.html">add_hexagon</a></span>(</a>
+<a class="sourceLine" id="cb6-15" title="15">    <span class="dt">data =</span> df[ df<span class="op">$</span>lat <span class="op">&gt;</span><span class="st"> </span><span class="fl">54.5</span>, ]</a>
+<a class="sourceLine" id="cb6-16" title="16">    , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
+<a class="sourceLine" id="cb6-17" title="17">    , <span class="dt">lon =</span> <span class="st">"lng"</span></a>
+<a class="sourceLine" id="cb6-18" title="18">    , <span class="dt">layer_id =</span> <span class="st">"hex_layer"</span></a>
+<a class="sourceLine" id="cb6-19" title="19">    , <span class="dt">elevation_scale =</span> <span class="dv">100</span></a>
+<a class="sourceLine" id="cb6-20" title="20">    , <span class="dt">colour_range =</span> colourvalues<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/colourvalues/man/colour_values.html">colour_values</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">palette =</span> colourvalues<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/colourvalues/man/get_palette.html">get_palette</a></span>(<span class="st">"viridis"</span>)[<span class="dv">70</span><span class="op">:</span><span class="dv">256</span>,])</a>
+<a class="sourceLine" id="cb6-21" title="21">  )</a></code></pre></div>
+<div class="figure">
+<img src="img/articles/hexagons.png" alt="Hexagons"><p class="caption">Hexagons</p>
+</div>
 </div>
 <div id="lines" class="section level2">
 <h2 class="hasAnchor">
 <a href="#lines" class="anchor"></a>Lines</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>flights &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(url)</span>
-<span id="cb6-3"><a href="#cb6-3"></a>flights<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq_len</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(flights))</span>
-<span id="cb6-4"><a href="#cb6-4"></a>flights<span class="op">$</span>stroke &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(flights), <span class="dt">replace =</span> T)</span>
-<span id="cb6-5"><a href="#cb6-5"></a></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="st">  </span><span class="kw"><a href="../reference/add_line.html">add_line</a></span>(</span>
-<span id="cb6-8"><a href="#cb6-8"></a>    <span class="dt">data =</span> flights</span>
-<span id="cb6-9"><a href="#cb6-9"></a>    , <span class="dt">layer_id =</span> <span class="st">"line_layer"</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a>    , <span class="dt">origin =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"start_lon"</span>, <span class="st">"start_lat"</span>)</span>
-<span id="cb6-11"><a href="#cb6-11"></a>    , <span class="dt">destination =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"end_lon"</span>, <span class="st">"end_lat"</span>)</span>
-<span id="cb6-12"><a href="#cb6-12"></a>    , <span class="dt">stroke_colour =</span> <span class="st">"airport1"</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a>    , <span class="dt">stroke_width =</span> <span class="st">"stroke"</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
+<a class="sourceLine" id="cb7-2" title="2">flights &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(url)</a>
+<a class="sourceLine" id="cb7-3" title="3">flights<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(flights))</a>
+<a class="sourceLine" id="cb7-4" title="4">flights<span class="op">$</span>stroke &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(flights), <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb7-5" title="5"></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw"><a href="../reference/add_line.html">add_line</a></span>(</a>
+<a class="sourceLine" id="cb7-8" title="8">    <span class="dt">data =</span> flights</a>
+<a class="sourceLine" id="cb7-9" title="9">    , <span class="dt">layer_id =</span> <span class="st">"line_layer"</span></a>
+<a class="sourceLine" id="cb7-10" title="10">    , <span class="dt">origin =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"start_lon"</span>, <span class="st">"start_lat"</span>)</a>
+<a class="sourceLine" id="cb7-11" title="11">    , <span class="dt">destination =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"end_lon"</span>, <span class="st">"end_lat"</span>)</a>
+<a class="sourceLine" id="cb7-12" title="12">    , <span class="dt">stroke_colour =</span> <span class="st">"airport1"</span></a>
+<a class="sourceLine" id="cb7-13" title="13">    , <span class="dt">stroke_width =</span> <span class="st">"stroke"</span></a>
+<a class="sourceLine" id="cb7-14" title="14">  )</a></code></pre></div>
 <div class="figure">
-<img src="img/articles/lines.png" alt=""><p class="caption">Lines</p>
+<img src="img/articles/lines.png" alt="Lines"><p class="caption">Lines</p>
 </div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with two POINT and MULTIPOINT geometry columns.</p>
 </div>
 <div id="path" class="section level2">
 <h2 class="hasAnchor">
 <a href="#path" class="anchor"></a>Path</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(</span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="dt">token =</span> key</span>
-<span id="cb7-3"><a href="#cb7-3"></a>  , <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)</span>
-<span id="cb7-4"><a href="#cb7-4"></a>  , <span class="dt">zoom =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="st">  </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>(</span>
-<span id="cb7-6"><a href="#cb7-6"></a>    <span class="dt">data =</span> roads</span>
-<span id="cb7-7"><a href="#cb7-7"></a>    , <span class="dt">stroke_colour =</span> <span class="st">"RIGHT_LOC"</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>    , <span class="dt">layer_id =</span> <span class="st">"path_layer"</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(</a>
+<a class="sourceLine" id="cb8-2" title="2">  <span class="dt">token =</span> key</a>
+<a class="sourceLine" id="cb8-3" title="3">  , <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)</a>
+<a class="sourceLine" id="cb8-4" title="4">  , <span class="dt">zoom =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>(</a>
+<a class="sourceLine" id="cb8-6" title="6">    <span class="dt">data =</span> roads</a>
+<a class="sourceLine" id="cb8-7" title="7">    , <span class="dt">stroke_colour =</span> <span class="st">"RIGHT_LOC"</span></a>
+<a class="sourceLine" id="cb8-8" title="8">    , <span class="dt">layer_id =</span> <span class="st">"path_layer"</span></a>
+<a class="sourceLine" id="cb8-9" title="9">  )</a></code></pre></div>
 <div class="figure">
-<img src="img/articles/path.gif" alt=""><p class="caption">Path</p>
+<img src="img/articles/path.gif" alt="Path"><p class="caption">Path</p>
 </div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with LINESTRING and MULTILINESTRING geometries</p>
 </div>
 <div id="point-cloud" class="section level2">
 <h2 class="hasAnchor">
 <a href="#point-cloud" class="anchor"></a>Point cloud</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>df &lt;-<span class="st"> </span>capitals</span>
-<span id="cb8-2"><a href="#cb8-2"></a>df<span class="op">$</span>z &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">10000</span><span class="op">:</span><span class="dv">10000000</span>, <span class="dt">size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(df))</span>
-<span id="cb8-3"><a href="#cb8-3"></a></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="kw"><a href="../reference/add_pointcloud.html">add_pointcloud</a></span>(</span>
-<span id="cb8-6"><a href="#cb8-6"></a>  <span class="dt">data =</span> df</span>
-<span id="cb8-7"><a href="#cb8-7"></a>  , <span class="dt">lon =</span> <span class="st">'lon'</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a>  , <span class="dt">lat =</span> <span class="st">'lat'</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a>  , <span class="dt">elevation =</span> <span class="st">'z'</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a>  , <span class="dt">layer_id =</span> <span class="st">'point'</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a>  , <span class="dt">fill_colour =</span> <span class="st">"country"</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">df &lt;-<span class="st"> </span>capitals</a>
+<a class="sourceLine" id="cb9-2" title="2">df<span class="op">$</span>z &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="dv">10000</span><span class="op">:</span><span class="dv">10000000</span>, <span class="dt">size =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(df))</a>
+<a class="sourceLine" id="cb9-3" title="3"></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="kw"><a href="../reference/add_pointcloud.html">add_pointcloud</a></span>(</a>
+<a class="sourceLine" id="cb9-6" title="6">  <span class="dt">data =</span> df</a>
+<a class="sourceLine" id="cb9-7" title="7">  , <span class="dt">lon =</span> <span class="st">'lon'</span></a>
+<a class="sourceLine" id="cb9-8" title="8">  , <span class="dt">lat =</span> <span class="st">'lat'</span></a>
+<a class="sourceLine" id="cb9-9" title="9">  , <span class="dt">elevation =</span> <span class="st">'z'</span></a>
+<a class="sourceLine" id="cb9-10" title="10">  , <span class="dt">layer_id =</span> <span class="st">'point'</span></a>
+<a class="sourceLine" id="cb9-11" title="11">  , <span class="dt">fill_colour =</span> <span class="st">"country"</span></a>
+<a class="sourceLine" id="cb9-12" title="12">)</a></code></pre></div>
 <div class="figure">
-<img src="img/articles/pointcloud.gif" alt=""><p class="caption">Pointcloud</p>
+<img src="img/articles/pointcloud.gif" alt="Pointcloud"><p class="caption">Pointcloud</p>
 </div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
 <div id="polygons" class="section level2">
 <h2 class="hasAnchor">
 <a href="#polygons" class="anchor"></a>Polygons</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(geojsonsf)</span>
-<span id="cb9-3"><a href="#cb9-3"></a></span>
-<span id="cb9-4"><a href="#cb9-4"></a>sf &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/geojsonsf/topics/geojson_sf">geojson_sf</a></span>(<span class="st">"https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json"</span>)</span>
-<span id="cb9-5"><a href="#cb9-5"></a>sf<span class="op">$</span>e &lt;-<span class="st"> </span>sf<span class="op">$</span>AREASQKM16 <span class="op">*</span><span class="st"> </span><span class="dv">10</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="st">  </span><span class="kw"><a href="../reference/add_polygon.html">add_polygon</a></span>(</span>
-<span id="cb9-9"><a href="#cb9-9"></a>    <span class="dt">data =</span> sf[ data.table<span class="op">::</span><span class="st">`</span><span class="dt">%like%</span><span class="st">`</span>(sf<span class="op">$</span>SA4_NAME16, <span class="st">"Melbourne"</span>), ]</span>
-<span id="cb9-10"><a href="#cb9-10"></a>    , <span class="dt">layer =</span> <span class="st">"polygon_layer"</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a>    , <span class="dt">fill_colour =</span> <span class="st">"SA2_NAME16"</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a>    , <span class="dt">elevation =</span> <span class="st">"e"</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(sf)</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(geojsonsf)</a>
+<a class="sourceLine" id="cb10-3" title="3"></a>
+<a class="sourceLine" id="cb10-4" title="4">sf &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/geojsonsf/man/geojson_sf.html">geojson_sf</a></span>(<span class="st">"https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json"</span>)</a>
+<a class="sourceLine" id="cb10-5" title="5">sf<span class="op">$</span>e &lt;-<span class="st"> </span>sf<span class="op">$</span>AREASQKM16 <span class="op">*</span><span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb10-6" title="6"></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/add_polygon.html">add_polygon</a></span>(</a>
+<a class="sourceLine" id="cb10-9" title="9">    <span class="dt">data =</span> sf[ data.table<span class="op">::</span><span class="st">`</span><span class="dt">%like%</span><span class="st">`</span>(sf<span class="op">$</span>SA4_NAME16, <span class="st">"Melbourne"</span>), ]</a>
+<a class="sourceLine" id="cb10-10" title="10">    , <span class="dt">layer =</span> <span class="st">"polygon_layer"</span></a>
+<a class="sourceLine" id="cb10-11" title="11">    , <span class="dt">fill_colour =</span> <span class="st">"SA2_NAME16"</span></a>
+<a class="sourceLine" id="cb10-12" title="12">    , <span class="dt">elevation =</span> <span class="st">"e"</span></a>
+<a class="sourceLine" id="cb10-13" title="13">  )</a></code></pre></div>
 <div class="figure">
-<img src="img/articles/polygons.gif" alt=""><p class="caption">Polygons</p>
+<img src="img/articles/polygons.gif" alt="Polygons"><p class="caption">Polygons</p>
 </div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with POLYGON and MULTIPOLYGON geometries</p>
 </div>
 <div id="scatter" class="section level2">
 <h2 class="hasAnchor">
 <a href="#scatter" class="anchor"></a>Scatter</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key ) <span class="op">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</span>
-<span id="cb10-4"><a href="#cb10-4"></a>  <span class="dt">data =</span> capitals</span>
-<span id="cb10-5"><a href="#cb10-5"></a>  , <span class="dt">lat =</span> <span class="st">"lat"</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a>  , <span class="dt">lon =</span> <span class="st">"lon"</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a>  , <span class="dt">radius =</span> <span class="dv">500000</span></span>
-<span id="cb10-8"><a href="#cb10-8"></a>  , <span class="dt">fill_colour =</span> <span class="st">"country"</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a>  , <span class="dt">layer_id =</span> <span class="st">"scatter_layer"</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a>  , <span class="dt">palette =</span> <span class="st">"plasma"</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</a>
+<a class="sourceLine" id="cb11-4" title="4">  <span class="dt">data =</span> capitals</a>
+<a class="sourceLine" id="cb11-5" title="5">  , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
+<a class="sourceLine" id="cb11-6" title="6">  , <span class="dt">lon =</span> <span class="st">"lon"</span></a>
+<a class="sourceLine" id="cb11-7" title="7">  , <span class="dt">radius =</span> <span class="dv">500000</span></a>
+<a class="sourceLine" id="cb11-8" title="8">  , <span class="dt">fill_colour =</span> <span class="st">"country"</span></a>
+<a class="sourceLine" id="cb11-9" title="9">  , <span class="dt">layer_id =</span> <span class="st">"scatter_layer"</span></a>
+<a class="sourceLine" id="cb11-10" title="10">  , <span class="dt">palette =</span> <span class="st">"plasma"</span></a>
+<a class="sourceLine" id="cb11-11" title="11">)</a></code></pre></div>
 <div class="figure">
-<img src="img/articles/scatter.png" alt=""><p class="caption">Scatter</p>
+<img src="img/articles/scatter.png" alt="Scatter"><p class="caption">Scatter</p>
 </div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
 <div id="screen-grid" class="section level2">
 <h2 class="hasAnchor">
 <a href="#screen-grid" class="anchor"></a>Screen grid</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(</span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="st">'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,</span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a>))</span>
-<span id="cb11-5"><a href="#cb11-5"></a></span>
-<span id="cb11-6"><a href="#cb11-6"></a>df &lt;-<span class="st"> </span>df[ <span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(df<span class="op">$</span>lng), ]</span>
-<span id="cb11-7"><a href="#cb11-7"></a></span>
-<span id="cb11-8"><a href="#cb11-8"></a>df<span class="op">$</span>weight &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(df), <span class="dt">replace =</span> T)</span>
-<span id="cb11-9"><a href="#cb11-9"></a></span>
-<span id="cb11-10"><a href="#cb11-10"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></span>
-<span id="cb11-11"><a href="#cb11-11"></a><span class="kw"><a href="../reference/add_screengrid.html">add_screengrid</a></span>(</span>
-<span id="cb11-12"><a href="#cb11-12"></a>  <span class="dt">data =</span> df</span>
-<span id="cb11-13"><a href="#cb11-13"></a>  , <span class="dt">lat =</span> <span class="st">"lat"</span></span>
-<span id="cb11-14"><a href="#cb11-14"></a>  , <span class="dt">lon =</span> <span class="st">"lng"</span></span>
-<span id="cb11-15"><a href="#cb11-15"></a>  , <span class="dt">weight =</span> <span class="st">"weight"</span></span>
-<span id="cb11-16"><a href="#cb11-16"></a>  , <span class="dt">layer_id =</span> <span class="st">"screengrid_layer"</span></span>
-<span id="cb11-17"><a href="#cb11-17"></a>  , <span class="dt">cell_size =</span> <span class="dv">10</span></span>
-<span id="cb11-18"><a href="#cb11-18"></a>  , <span class="dt">opacity =</span> <span class="fl">0.3</span></span>
-<span id="cb11-19"><a href="#cb11-19"></a>  , <span class="dt">colour_range =</span> colourvalues<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/colourvalues/topics/colour_values">colour_values</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">palette =</span> <span class="st">"plasma"</span>)</span>
-<span id="cb11-20"><a href="#cb11-20"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="st">'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,</a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></a>
+<a class="sourceLine" id="cb12-4" title="4">))</a>
+<a class="sourceLine" id="cb12-5" title="5"></a>
+<a class="sourceLine" id="cb12-6" title="6">df &lt;-<span class="st"> </span>df[ <span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(df<span class="op">$</span>lng), ]</a>
+<a class="sourceLine" id="cb12-7" title="7"></a>
+<a class="sourceLine" id="cb12-8" title="8">df<span class="op">$</span>weight &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">size =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(df), <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb12-9" title="9"></a>
+<a class="sourceLine" id="cb12-10" title="10"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="kw"><a href="../reference/add_screengrid.html">add_screengrid</a></span>(</a>
+<a class="sourceLine" id="cb12-12" title="12">  <span class="dt">data =</span> df</a>
+<a class="sourceLine" id="cb12-13" title="13">  , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
+<a class="sourceLine" id="cb12-14" title="14">  , <span class="dt">lon =</span> <span class="st">"lng"</span></a>
+<a class="sourceLine" id="cb12-15" title="15">  , <span class="dt">weight =</span> <span class="st">"weight"</span></a>
+<a class="sourceLine" id="cb12-16" title="16">  , <span class="dt">layer_id =</span> <span class="st">"screengrid_layer"</span></a>
+<a class="sourceLine" id="cb12-17" title="17">  , <span class="dt">cell_size =</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb12-18" title="18">  , <span class="dt">opacity =</span> <span class="fl">0.3</span></a>
+<a class="sourceLine" id="cb12-19" title="19">  , <span class="dt">colour_range =</span> colourvalues<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/colourvalues/man/colour_values.html">colour_values</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">palette =</span> <span class="st">"plasma"</span>)</a>
+<a class="sourceLine" id="cb12-20" title="20">)</a></code></pre></div>
 <div class="figure">
-<img src="img/articles/screengrid_small.gif" alt=""><p class="caption">Screengrid</p>
+<img src="img/articles/screengrid_small.gif" alt="Screengrid"><p class="caption">Screengrid</p>
 </div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPOINT geometries</p>
 </div>
 <div id="text" class="section level2">
 <h2 class="hasAnchor">
 <a href="#text" class="anchor"></a>Text</h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="st">  </span><span class="kw"><a href="../reference/add_text.html">add_text</a></span>(</span>
-<span id="cb12-3"><a href="#cb12-3"></a>    <span class="dt">data =</span> capitals</span>
-<span id="cb12-4"><a href="#cb12-4"></a>    , <span class="dt">lon =</span> <span class="st">'lon'</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a>    , <span class="dt">lat =</span> <span class="st">'lat'</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a>    , <span class="dt">fill_colour =</span> <span class="st">'country'</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a>    , <span class="dt">text =</span> <span class="st">'capital'</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a>    , <span class="dt">layer_id =</span> <span class="st">'text'</span></span>
-<span id="cb12-9"><a href="#cb12-9"></a>    , <span class="dt">size =</span> <span class="dv">16</span></span>
-<span id="cb12-10"><a href="#cb12-10"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/add_text.html">add_text</a></span>(</a>
+<a class="sourceLine" id="cb13-3" title="3">    <span class="dt">data =</span> capitals</a>
+<a class="sourceLine" id="cb13-4" title="4">    , <span class="dt">lon =</span> <span class="st">'lon'</span></a>
+<a class="sourceLine" id="cb13-5" title="5">    , <span class="dt">lat =</span> <span class="st">'lat'</span></a>
+<a class="sourceLine" id="cb13-6" title="6">    , <span class="dt">fill_colour =</span> <span class="st">'country'</span></a>
+<a class="sourceLine" id="cb13-7" title="7">    , <span class="dt">text =</span> <span class="st">'capital'</span></a>
+<a class="sourceLine" id="cb13-8" title="8">    , <span class="dt">layer_id =</span> <span class="st">'text'</span></a>
+<a class="sourceLine" id="cb13-9" title="9">    , <span class="dt">size =</span> <span class="dv">16</span></a>
+<a class="sourceLine" id="cb13-10" title="10">  )</a></code></pre></div>
 <div class="figure">
-<img src="img/articles/text.png" alt=""><p class="caption">Text</p>
+<img src="img/articles/text.png" alt="Text"><p class="caption">Text</p>
 </div>
 <p><strong>sf</strong> : supports <code>sf</code> objects with POINT and MULTIPIONT geometries</p>
 </div>
 <div id="multiple-layers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#multiple-layers" class="anchor"></a>Multiple layers</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a></span>
-<span id="cb13-2"><a href="#cb13-2"></a>df1 &lt;-<span class="st"> </span>capitals[ capitals<span class="op">$</span>country <span class="op">==</span><span class="st"> "Australia"</span>, ]</span>
-<span id="cb13-3"><a href="#cb13-3"></a>df2 &lt;-<span class="st"> </span>capitals[ capitals<span class="op">$</span>country <span class="op">!=</span><span class="st"> "Australia"</span>, ]</span>
-<span id="cb13-4"><a href="#cb13-4"></a>df1<span class="op">$</span>key &lt;-<span class="st"> </span>1L</span>
-<span id="cb13-5"><a href="#cb13-5"></a>df2<span class="op">$</span>key &lt;-<span class="st"> </span>1L</span>
-<span id="cb13-6"><a href="#cb13-6"></a></span>
-<span id="cb13-7"><a href="#cb13-7"></a>df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/merge">merge</a></span>(df1, df2, <span class="dt">by =</span> <span class="st">'key'</span>)</span>
-<span id="cb13-8"><a href="#cb13-8"></a></span>
-<span id="cb13-9"><a href="#cb13-9"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(</span>
-<span id="cb13-10"><a href="#cb13-10"></a>  <span class="dt">token =</span> key</span>
-<span id="cb13-11"><a href="#cb13-11"></a>  , <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)</span>
-<span id="cb13-12"><a href="#cb13-12"></a>  , <span class="dt">pitch =</span> <span class="dv">35</span></span>
-<span id="cb13-13"><a href="#cb13-13"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb13-14"><a href="#cb13-14"></a><span class="st">  </span><span class="kw"><a href="../reference/add_arc.html">add_arc</a></span>(</span>
-<span id="cb13-15"><a href="#cb13-15"></a>    <span class="dt">data =</span> df</span>
-<span id="cb13-16"><a href="#cb13-16"></a>    , <span class="dt">origin =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon.x"</span>, <span class="st">"lat.x"</span>)</span>
-<span id="cb13-17"><a href="#cb13-17"></a>    , <span class="dt">destination =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon.y"</span>, <span class="st">"lat.y"</span>)</span>
-<span id="cb13-18"><a href="#cb13-18"></a>    , <span class="dt">layer_id =</span> <span class="st">"arc_layer"</span></span>
-<span id="cb13-19"><a href="#cb13-19"></a>    , <span class="dt">stroke_from =</span> <span class="st">"country.x"</span></span>
-<span id="cb13-20"><a href="#cb13-20"></a>    , <span class="dt">stroke_to =</span> <span class="st">"country.y"</span></span>
-<span id="cb13-21"><a href="#cb13-21"></a>    , <span class="dt">stroke_width =</span> <span class="dv">2</span></span>
-<span id="cb13-22"><a href="#cb13-22"></a>    ) <span class="op">%&gt;%</span></span>
-<span id="cb13-23"><a href="#cb13-23"></a><span class="st">    </span><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</span>
-<span id="cb13-24"><a href="#cb13-24"></a>    <span class="dt">data =</span> df2</span>
-<span id="cb13-25"><a href="#cb13-25"></a>    , <span class="dt">lon =</span> <span class="st">"lon"</span></span>
-<span id="cb13-26"><a href="#cb13-26"></a>    , <span class="dt">lat =</span> <span class="st">"lat"</span></span>
-<span id="cb13-27"><a href="#cb13-27"></a>    , <span class="dt">radius =</span> <span class="dv">100000</span></span>
-<span id="cb13-28"><a href="#cb13-28"></a>    , <span class="dt">fill_colour =</span> <span class="st">"country"</span></span>
-<span id="cb13-29"><a href="#cb13-29"></a>    , <span class="dt">layer_id =</span> <span class="st">"scatter"</span></span>
-<span id="cb13-30"><a href="#cb13-30"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"></a>
+<a class="sourceLine" id="cb14-2" title="2">df1 &lt;-<span class="st"> </span>capitals[ capitals<span class="op">$</span>country <span class="op">==</span><span class="st"> "Australia"</span>, ]</a>
+<a class="sourceLine" id="cb14-3" title="3">df2 &lt;-<span class="st"> </span>capitals[ capitals<span class="op">$</span>country <span class="op">!=</span><span class="st"> "Australia"</span>, ]</a>
+<a class="sourceLine" id="cb14-4" title="4">df1<span class="op">$</span>key &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb14-5" title="5">df2<span class="op">$</span>key &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb14-6" title="6"></a>
+<a class="sourceLine" id="cb14-7" title="7">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/merge.html">merge</a></span>(df1, df2, <span class="dt">by =</span> <span class="st">'key'</span>)</a>
+<a class="sourceLine" id="cb14-8" title="8"></a>
+<a class="sourceLine" id="cb14-9" title="9"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(</a>
+<a class="sourceLine" id="cb14-10" title="10">  <span class="dt">token =</span> key</a>
+<a class="sourceLine" id="cb14-11" title="11">  , <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>)</a>
+<a class="sourceLine" id="cb14-12" title="12">  , <span class="dt">pitch =</span> <span class="dv">35</span></a>
+<a class="sourceLine" id="cb14-13" title="13">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-14" title="14"><span class="st">  </span><span class="kw"><a href="../reference/add_arc.html">add_arc</a></span>(</a>
+<a class="sourceLine" id="cb14-15" title="15">    <span class="dt">data =</span> df</a>
+<a class="sourceLine" id="cb14-16" title="16">    , <span class="dt">origin =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lon.x"</span>, <span class="st">"lat.x"</span>)</a>
+<a class="sourceLine" id="cb14-17" title="17">    , <span class="dt">destination =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lon.y"</span>, <span class="st">"lat.y"</span>)</a>
+<a class="sourceLine" id="cb14-18" title="18">    , <span class="dt">layer_id =</span> <span class="st">"arc_layer"</span></a>
+<a class="sourceLine" id="cb14-19" title="19">    , <span class="dt">stroke_from =</span> <span class="st">"country.x"</span></a>
+<a class="sourceLine" id="cb14-20" title="20">    , <span class="dt">stroke_to =</span> <span class="st">"country.y"</span></a>
+<a class="sourceLine" id="cb14-21" title="21">    , <span class="dt">stroke_width =</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb14-22" title="22">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-23" title="23"><span class="st">    </span><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</a>
+<a class="sourceLine" id="cb14-24" title="24">    <span class="dt">data =</span> df2</a>
+<a class="sourceLine" id="cb14-25" title="25">    , <span class="dt">lon =</span> <span class="st">"lon"</span></a>
+<a class="sourceLine" id="cb14-26" title="26">    , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
+<a class="sourceLine" id="cb14-27" title="27">    , <span class="dt">radius =</span> <span class="dv">100000</span></a>
+<a class="sourceLine" id="cb14-28" title="28">    , <span class="dt">fill_colour =</span> <span class="st">"country"</span></a>
+<a class="sourceLine" id="cb14-29" title="29">    , <span class="dt">layer_id =</span> <span class="st">"scatter"</span></a>
+<a class="sourceLine" id="cb14-30" title="30">  )</a></code></pre></div>
 <div class="figure">
-<img src="img/articles/multiplelayers.gif" alt=""><p class="caption">Multiple Layers</p>
+<img src="img/articles/multiplelayers.gif" alt="Multiple Layers"><p class="caption">Multiple Layers</p>
 </div>
 </div>
 </div>
@@ -404,7 +434,7 @@
 <li>
 <code><a href="../reference/mapdeck_update.html">mapdeck_update()</a></code> to update an existing map</li>
 </ol>
-<p>You can observe interactions with the layers by using <code><a href="https://www.rdocumentation.org/packages/shiny/topics/observeEvent">observeEvent()</a></code>. The event you observe is formed by combining</p>
+<p>You can observe interactions with the layers by using <code><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent()</a></code>. The event you observe is formed by combining</p>
 <p><code>'map_id + "_" + layer + "_click"</code></p>
 <p>where</p>
 <ul>
@@ -416,97 +446,98 @@
 <code>_click</code> is you observing ‘clicking’ on the layer</li>
 </ul>
 <p>There’s an example of this in the shiny.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(shiny)</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(shinydashboard)</span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(jsonify)</span>
-<span id="cb14-4"><a href="#cb14-4"></a></span>
-<span id="cb14-5"><a href="#cb14-5"></a>ui &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardPage">dashboardPage</a></span>(</span>
-<span id="cb14-6"><a href="#cb14-6"></a>    <span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardHeader">dashboardHeader</a></span>()</span>
-<span id="cb14-7"><a href="#cb14-7"></a>    , <span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardSidebar">dashboardSidebar</a></span>()</span>
-<span id="cb14-8"><a href="#cb14-8"></a>    , <span class="kw"><a href="https://www.rdocumentation.org/packages/shinydashboard/topics/dashboardBody">dashboardBody</a></span>(</span>
-<span id="cb14-9"><a href="#cb14-9"></a>        <span class="kw"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(</span>
-<span id="cb14-10"><a href="#cb14-10"></a>            <span class="dt">outputId =</span> <span class="st">'myMap'</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a>            ),</span>
-<span id="cb14-12"><a href="#cb14-12"></a>        <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/sliderInput">sliderInput</a></span>(</span>
-<span id="cb14-13"><a href="#cb14-13"></a>            <span class="dt">inputId =</span> <span class="st">"longitudes"</span></span>
-<span id="cb14-14"><a href="#cb14-14"></a>            , <span class="dt">label =</span> <span class="st">"Longitudes"</span></span>
-<span id="cb14-15"><a href="#cb14-15"></a>            , <span class="dt">min =</span> <span class="dv">-180</span></span>
-<span id="cb14-16"><a href="#cb14-16"></a>            , <span class="dt">max =</span> <span class="dv">180</span></span>
-<span id="cb14-17"><a href="#cb14-17"></a>            , <span class="dt">value =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">180</span>,<span class="op">-</span><span class="dv">90</span>)</span>
-<span id="cb14-18"><a href="#cb14-18"></a>        )</span>
-<span id="cb14-19"><a href="#cb14-19"></a>        , <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/textOutput">verbatimTextOutput</a></span>(</span>
-<span id="cb14-20"><a href="#cb14-20"></a>            <span class="dt">outputId =</span> <span class="st">"observed_click"</span></span>
-<span id="cb14-21"><a href="#cb14-21"></a>        )</span>
-<span id="cb14-22"><a href="#cb14-22"></a>    )</span>
-<span id="cb14-23"><a href="#cb14-23"></a>)</span>
-<span id="cb14-24"><a href="#cb14-24"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
-<span id="cb14-25"><a href="#cb14-25"></a>    </span>
-<span id="cb14-26"><a href="#cb14-26"></a>    <span class="co">#set_token('abc') ## set your access token</span></span>
-<span id="cb14-27"><a href="#cb14-27"></a>    </span>
-<span id="cb14-28"><a href="#cb14-28"></a>    origin &lt;-<span class="st"> </span>capitals[capitals<span class="op">$</span>country <span class="op">==</span><span class="st"> "Australia"</span>, ]</span>
-<span id="cb14-29"><a href="#cb14-29"></a>    destination &lt;-<span class="st"> </span>capitals[capitals<span class="op">$</span>country <span class="op">!=</span><span class="st"> "Australia"</span>, ]</span>
-<span id="cb14-30"><a href="#cb14-30"></a>    origin<span class="op">$</span>key &lt;-<span class="st"> </span>1L</span>
-<span id="cb14-31"><a href="#cb14-31"></a>    destination<span class="op">$</span>key &lt;-<span class="st"> </span>1L</span>
-<span id="cb14-32"><a href="#cb14-32"></a>    </span>
-<span id="cb14-33"><a href="#cb14-33"></a>    df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/merge">merge</a></span>(origin, destination, <span class="dt">by =</span> <span class="st">'key'</span>, <span class="dt">all =</span> T)</span>
-<span id="cb14-34"><a href="#cb14-34"></a>    </span>
-<span id="cb14-35"><a href="#cb14-35"></a>    output<span class="op">$</span>myMap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mapdeck-shiny.html">renderMapdeck</a></span>({</span>
-<span id="cb14-36"><a href="#cb14-36"></a>        <span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) </span>
-<span id="cb14-37"><a href="#cb14-37"></a>    })</span>
-<span id="cb14-38"><a href="#cb14-38"></a>    </span>
-<span id="cb14-39"><a href="#cb14-39"></a>    <span class="co">## plot points &amp; lines according to the selected longitudes</span></span>
-<span id="cb14-40"><a href="#cb14-40"></a>    df_reactive &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/reactive">reactive</a></span>({</span>
-<span id="cb14-41"><a href="#cb14-41"></a>        <span class="cf">if</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NULL">is.null</a></span>(input<span class="op">$</span>longitudes)) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(<span class="ot">NULL</span>)</span>
-<span id="cb14-42"><a href="#cb14-42"></a>        lons &lt;-<span class="st"> </span>input<span class="op">$</span>longitudes</span>
-<span id="cb14-43"><a href="#cb14-43"></a>        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(</span>
-<span id="cb14-44"><a href="#cb14-44"></a>            df[df<span class="op">$</span>lon.y <span class="op">&gt;=</span><span class="st"> </span>lons[<span class="dv">1</span>] <span class="op">&amp;</span><span class="st"> </span>df<span class="op">$</span>lon.y <span class="op">&lt;=</span><span class="st"> </span>lons[<span class="dv">2</span>], ]</span>
-<span id="cb14-45"><a href="#cb14-45"></a>        )</span>
-<span id="cb14-46"><a href="#cb14-46"></a>    })</span>
-<span id="cb14-47"><a href="#cb14-47"></a>    </span>
-<span id="cb14-48"><a href="#cb14-48"></a>    <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/observeEvent">observeEvent</a></span>({input<span class="op">$</span>longitudes}, {</span>
-<span id="cb14-49"><a href="#cb14-49"></a>        <span class="cf">if</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NULL">is.null</a></span>(input<span class="op">$</span>longitudes)) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>()</span>
-<span id="cb14-50"><a href="#cb14-50"></a>        </span>
-<span id="cb14-51"><a href="#cb14-51"></a>        <span class="kw"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="dt">map_id =</span> <span class="st">'myMap'</span>) <span class="op">%&gt;%</span></span>
-<span id="cb14-52"><a href="#cb14-52"></a><span class="st">            </span><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</span>
-<span id="cb14-53"><a href="#cb14-53"></a>                <span class="dt">data =</span> <span class="kw">df_reactive</span>()</span>
-<span id="cb14-54"><a href="#cb14-54"></a>                , <span class="dt">lon =</span> <span class="st">"lon.y"</span></span>
-<span id="cb14-55"><a href="#cb14-55"></a>                , <span class="dt">lat =</span> <span class="st">"lat.y"</span></span>
-<span id="cb14-56"><a href="#cb14-56"></a>                , <span class="dt">fill_colour =</span> <span class="st">"country.y"</span></span>
-<span id="cb14-57"><a href="#cb14-57"></a>                , <span class="dt">radius =</span> <span class="dv">100000</span></span>
-<span id="cb14-58"><a href="#cb14-58"></a>                , <span class="dt">layer_id =</span> <span class="st">"myScatterLayer"</span></span>
-<span id="cb14-59"><a href="#cb14-59"></a>                , <span class="dt">update_view =</span> <span class="ot">FALSE</span></span>
-<span id="cb14-60"><a href="#cb14-60"></a>            ) <span class="op">%&gt;%</span></span>
-<span id="cb14-61"><a href="#cb14-61"></a><span class="st">            </span><span class="kw"><a href="../reference/add_arc.html">add_arc</a></span>(</span>
-<span id="cb14-62"><a href="#cb14-62"></a>                <span class="dt">data =</span> <span class="kw">df_reactive</span>()</span>
-<span id="cb14-63"><a href="#cb14-63"></a>                , <span class="dt">origin =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon.x"</span>, <span class="st">"lat.x"</span>)</span>
-<span id="cb14-64"><a href="#cb14-64"></a>                , <span class="dt">destination =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon.y"</span>, <span class="st">"lat.y"</span>)</span>
-<span id="cb14-65"><a href="#cb14-65"></a>                , <span class="dt">stroke_from =</span> <span class="st">"country.x"</span></span>
-<span id="cb14-66"><a href="#cb14-66"></a>                , <span class="dt">stroke_to =</span> <span class="st">"country.y"</span></span>
-<span id="cb14-67"><a href="#cb14-67"></a>                , <span class="dt">layer_id =</span> <span class="st">"myArcLayer"</span></span>
-<span id="cb14-68"><a href="#cb14-68"></a>                , <span class="dt">id =</span> <span class="st">"country.x"</span></span>
-<span id="cb14-69"><a href="#cb14-69"></a>                , <span class="dt">stroke_width =</span> <span class="dv">4</span></span>
-<span id="cb14-70"><a href="#cb14-70"></a>                , <span class="dt">update_view =</span> <span class="ot">FALSE</span></span>
-<span id="cb14-71"><a href="#cb14-71"></a>            )</span>
-<span id="cb14-72"><a href="#cb14-72"></a>    })</span>
-<span id="cb14-73"><a href="#cb14-73"></a>    </span>
-<span id="cb14-74"><a href="#cb14-74"></a>    <span class="co">## observe clicking on a line and return the text</span></span>
-<span id="cb14-75"><a href="#cb14-75"></a>    <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/observeEvent">observeEvent</a></span>(input<span class="op">$</span>myMap_arc_click, {</span>
-<span id="cb14-76"><a href="#cb14-76"></a>        </span>
-<span id="cb14-77"><a href="#cb14-77"></a>        event &lt;-<span class="st"> </span>input<span class="op">$</span>myMap_arc_click</span>
-<span id="cb14-78"><a href="#cb14-78"></a>        output<span class="op">$</span>observed_click &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/renderText">renderText</a></span>({</span>
-<span id="cb14-79"><a href="#cb14-79"></a>            jsonify<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonify/topics/pretty_json">pretty_json</a></span>( event )</span>
-<span id="cb14-80"><a href="#cb14-80"></a>        })</span>
-<span id="cb14-81"><a href="#cb14-81"></a>    })</span>
-<span id="cb14-82"><a href="#cb14-82"></a>}</span>
-<span id="cb14-83"><a href="#cb14-83"></a></span>
-<span id="cb14-84"><a href="#cb14-84"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/shinyApp">shinyApp</a></span>(ui, server)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shiny)</a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shinydashboard)</a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(jsonify)</a>
+<a class="sourceLine" id="cb15-4" title="4"></a>
+<a class="sourceLine" id="cb15-5" title="5">ui &lt;-<span class="st"> </span><span class="kw">dashboardPage</span>(</a>
+<a class="sourceLine" id="cb15-6" title="6">    <span class="kw">dashboardHeader</span>()</a>
+<a class="sourceLine" id="cb15-7" title="7">    , <span class="kw">dashboardSidebar</span>()</a>
+<a class="sourceLine" id="cb15-8" title="8">    , <span class="kw">dashboardBody</span>(</a>
+<a class="sourceLine" id="cb15-9" title="9">        <span class="kw"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(</a>
+<a class="sourceLine" id="cb15-10" title="10">            <span class="dt">outputId =</span> <span class="st">'myMap'</span></a>
+<a class="sourceLine" id="cb15-11" title="11">            ),</a>
+<a class="sourceLine" id="cb15-12" title="12">        <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/sliderInput.html">sliderInput</a></span>(</a>
+<a class="sourceLine" id="cb15-13" title="13">            <span class="dt">inputId =</span> <span class="st">"longitudes"</span></a>
+<a class="sourceLine" id="cb15-14" title="14">            , <span class="dt">label =</span> <span class="st">"Longitudes"</span></a>
+<a class="sourceLine" id="cb15-15" title="15">            , <span class="dt">min =</span> <span class="dv">-180</span></a>
+<a class="sourceLine" id="cb15-16" title="16">            , <span class="dt">max =</span> <span class="dv">180</span></a>
+<a class="sourceLine" id="cb15-17" title="17">            , <span class="dt">value =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="dv">180</span>,<span class="op">-</span><span class="dv">90</span>)</a>
+<a class="sourceLine" id="cb15-18" title="18">        )</a>
+<a class="sourceLine" id="cb15-19" title="19">        , <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/verbatimTextOutput.html">verbatimTextOutput</a></span>(</a>
+<a class="sourceLine" id="cb15-20" title="20">            <span class="dt">outputId =</span> <span class="st">"observed_click"</span></a>
+<a class="sourceLine" id="cb15-21" title="21">        )</a>
+<a class="sourceLine" id="cb15-22" title="22">    )</a>
+<a class="sourceLine" id="cb15-23" title="23">)</a>
+<a class="sourceLine" id="cb15-24" title="24">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</a>
+<a class="sourceLine" id="cb15-25" title="25">    </a>
+<a class="sourceLine" id="cb15-26" title="26">    <span class="co">#set_token('abc') ## set your access token</span></a>
+<a class="sourceLine" id="cb15-27" title="27">    </a>
+<a class="sourceLine" id="cb15-28" title="28">    origin &lt;-<span class="st"> </span>capitals[capitals<span class="op">$</span>country <span class="op">==</span><span class="st"> "Australia"</span>, ]</a>
+<a class="sourceLine" id="cb15-29" title="29">    destination &lt;-<span class="st"> </span>capitals[capitals<span class="op">$</span>country <span class="op">!=</span><span class="st"> "Australia"</span>, ]</a>
+<a class="sourceLine" id="cb15-30" title="30">    origin<span class="op">$</span>key &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb15-31" title="31">    destination<span class="op">$</span>key &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb15-32" title="32">    </a>
+<a class="sourceLine" id="cb15-33" title="33">    df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/merge.html">merge</a></span>(origin, destination, <span class="dt">by =</span> <span class="st">'key'</span>, <span class="dt">all =</span> T)</a>
+<a class="sourceLine" id="cb15-34" title="34">    </a>
+<a class="sourceLine" id="cb15-35" title="35">    output<span class="op">$</span>myMap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mapdeck-shiny.html">renderMapdeck</a></span>({</a>
+<a class="sourceLine" id="cb15-36" title="36">        <span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) </a>
+<a class="sourceLine" id="cb15-37" title="37">    })</a>
+<a class="sourceLine" id="cb15-38" title="38">    </a>
+<a class="sourceLine" id="cb15-39" title="39">    <span class="co">## plot points &amp; lines according to the selected longitudes</span></a>
+<a class="sourceLine" id="cb15-40" title="40">    df_reactive &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span>({</a>
+<a class="sourceLine" id="cb15-41" title="41">        <span class="cf">if</span>(<span class="kw"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(input<span class="op">$</span>longitudes)) <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="ot">NULL</span>)</a>
+<a class="sourceLine" id="cb15-42" title="42">        lons &lt;-<span class="st"> </span>input<span class="op">$</span>longitudes</a>
+<a class="sourceLine" id="cb15-43" title="43">        <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(</a>
+<a class="sourceLine" id="cb15-44" title="44">            df[df<span class="op">$</span>lon.y <span class="op">&gt;=</span><span class="st"> </span>lons[<span class="dv">1</span>] <span class="op">&amp;</span><span class="st"> </span>df<span class="op">$</span>lon.y <span class="op">&lt;=</span><span class="st"> </span>lons[<span class="dv">2</span>], ]</a>
+<a class="sourceLine" id="cb15-45" title="45">        )</a>
+<a class="sourceLine" id="cb15-46" title="46">    })</a>
+<a class="sourceLine" id="cb15-47" title="47">    </a>
+<a class="sourceLine" id="cb15-48" title="48">    <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({input<span class="op">$</span>longitudes}, {</a>
+<a class="sourceLine" id="cb15-49" title="49">        <span class="cf">if</span>(<span class="kw"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(input<span class="op">$</span>longitudes)) <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>()</a>
+<a class="sourceLine" id="cb15-50" title="50">        </a>
+<a class="sourceLine" id="cb15-51" title="51">        <span class="kw"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="dt">map_id =</span> <span class="st">'myMap'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-52" title="52"><span class="st">            </span><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</a>
+<a class="sourceLine" id="cb15-53" title="53">                <span class="dt">data =</span> <span class="kw">df_reactive</span>()</a>
+<a class="sourceLine" id="cb15-54" title="54">                , <span class="dt">lon =</span> <span class="st">"lon.y"</span></a>
+<a class="sourceLine" id="cb15-55" title="55">                , <span class="dt">lat =</span> <span class="st">"lat.y"</span></a>
+<a class="sourceLine" id="cb15-56" title="56">                , <span class="dt">fill_colour =</span> <span class="st">"country.y"</span></a>
+<a class="sourceLine" id="cb15-57" title="57">                , <span class="dt">radius =</span> <span class="dv">100000</span></a>
+<a class="sourceLine" id="cb15-58" title="58">                , <span class="dt">layer_id =</span> <span class="st">"myScatterLayer"</span></a>
+<a class="sourceLine" id="cb15-59" title="59">                , <span class="dt">update_view =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb15-60" title="60">            ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-61" title="61"><span class="st">            </span><span class="kw"><a href="../reference/add_arc.html">add_arc</a></span>(</a>
+<a class="sourceLine" id="cb15-62" title="62">                <span class="dt">data =</span> <span class="kw">df_reactive</span>()</a>
+<a class="sourceLine" id="cb15-63" title="63">                , <span class="dt">origin =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lon.x"</span>, <span class="st">"lat.x"</span>)</a>
+<a class="sourceLine" id="cb15-64" title="64">                , <span class="dt">destination =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lon.y"</span>, <span class="st">"lat.y"</span>)</a>
+<a class="sourceLine" id="cb15-65" title="65">                , <span class="dt">stroke_from =</span> <span class="st">"country.x"</span></a>
+<a class="sourceLine" id="cb15-66" title="66">                , <span class="dt">stroke_to =</span> <span class="st">"country.y"</span></a>
+<a class="sourceLine" id="cb15-67" title="67">                , <span class="dt">layer_id =</span> <span class="st">"myArcLayer"</span></a>
+<a class="sourceLine" id="cb15-68" title="68">                , <span class="dt">id =</span> <span class="st">"country.x"</span></a>
+<a class="sourceLine" id="cb15-69" title="69">                , <span class="dt">stroke_width =</span> <span class="dv">4</span></a>
+<a class="sourceLine" id="cb15-70" title="70">                , <span class="dt">update_view =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb15-71" title="71">            )</a>
+<a class="sourceLine" id="cb15-72" title="72">    })</a>
+<a class="sourceLine" id="cb15-73" title="73">    </a>
+<a class="sourceLine" id="cb15-74" title="74">    <span class="co">## observe clicking on a line and return the text</span></a>
+<a class="sourceLine" id="cb15-75" title="75">    <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>(input<span class="op">$</span>myMap_arc_click, {</a>
+<a class="sourceLine" id="cb15-76" title="76">        </a>
+<a class="sourceLine" id="cb15-77" title="77">        event &lt;-<span class="st"> </span>input<span class="op">$</span>myMap_arc_click</a>
+<a class="sourceLine" id="cb15-78" title="78">        output<span class="op">$</span>observed_click &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/renderText.html">renderText</a></span>({</a>
+<a class="sourceLine" id="cb15-79" title="79">            jsonify<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/jsonify/man/pretty_json.html">pretty_json</a></span>( event )</a>
+<a class="sourceLine" id="cb15-80" title="80">        })</a>
+<a class="sourceLine" id="cb15-81" title="81">    })</a>
+<a class="sourceLine" id="cb15-82" title="82">}</a>
+<a class="sourceLine" id="cb15-83" title="83"></a>
+<a class="sourceLine" id="cb15-84" title="84"><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span>(ui, server)</a></code></pre></div>
 <div class="figure">
-<img src="img/articles/shiny.gif" alt=""><p class="caption">Shiny</p>
+<img src="img/articles/shiny.gif" alt="Shiny"><p class="caption">Shiny</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -518,6 +549,7 @@
       <li><a href="#geojson">GeoJSON</a></li>
       <li><a href="#great-circles">Great Circles</a></li>
       <li><a href="#grid">Grid</a></li>
+      <li><a href="#hexagons">Hexagons</a></li>
       <li><a href="#lines">Lines</a></li>
       <li><a href="#path">Path</a></li>
       <li><a href="#point-cloud">Point cloud</a></li>
@@ -536,17 +568,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by David Cooley.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
