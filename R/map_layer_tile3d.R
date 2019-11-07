@@ -35,6 +35,8 @@ add_tile3d <- function(
 	ion_token = NULL
 ) {
 
+	experimental_layer("tile3d")
+
 	layer_id <- layerId(map, layer_id, layer = "tile3d" )
 
 	map <- addDependency(map, mapdeckTile3DDependency())
