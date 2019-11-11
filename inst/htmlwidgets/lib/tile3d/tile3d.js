@@ -6,9 +6,9 @@ function add_tile3d( map_id, map_type, tile_data, layer_id, ion_token ) {
 	const tileLayer = new Tile3DLayer({
 		map_id: map_id,
 		id: 'tile3d-'+layer_id,
-		data: tile_data,
-		//_ionAssetId: 43978,
-		//_ionAccessToken: ion_token,
+		//data: tile_data,
+		_ionAssetId: 43978,
+		_ionAccessToken: ion_token,
 		pointSize: 2.0,
 		opacity: 1.0,
 		onTilesetLoad: (tileset) => {
