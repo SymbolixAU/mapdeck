@@ -63,7 +63,9 @@ HTMLWidgets.widget({
 			      //controller: myController
 			      //onLayerHover: setTooltip
 			      onViewStateChange: ({viewState}) => {
-
+			      	if (!HTMLWidgets.shinyMode) {
+						    return;
+						  }
 							// as per:
 							// https://github.com/uber/deck.gl/issues/3344
 							// https://github.com/SymbolixAU/mapdeck/issues/211
@@ -77,10 +79,6 @@ HTMLWidgets.widget({
   							south: se[1],
   							west:  nw[0]
   						};
-
-			      	if (!HTMLWidgets.shinyMode) {
-						    return;
-						  }
 						  Shiny.onInputChange(el.id + '_view_change', viewState);
 			      }
 			  });
