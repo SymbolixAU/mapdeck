@@ -70,7 +70,7 @@ It implements Gaussian Kernel Density Estimation to render the heatmaps." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
       </span>
     </div>
 
@@ -154,7 +154,7 @@ It implements Gaussian Kernel Density Estimation to render the heatmaps.</p>
   <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>radius_pixels</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>intensity</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
   <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>brush_radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -261,12 +261,13 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
 
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
 <span class='fu'>add_heatmap</span>(
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>[<span class='fl'>1</span>:<span class='fl'>10000</span>, ]
   , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
   , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"lng"</span>
   , <span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"weight"</span>,
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"heatmap_layer"</span>
-)</div><div class='output co'>#&gt; <span class='error'>Error in add_heatmap(., data = df, lat = "lat", lon = "lng", weight = "weight",     , layer_id = "heatmap_layer"): could not find function "add_heatmap"</span></div><div class='input'>
+)
+
 <span class='co'>## as an sf object</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sf</span>)
 <span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>( <span class='no'>df</span>, <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lng"</span>, <span class='st'>"lat"</span>))
@@ -275,10 +276,9 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sf</span>
   , <span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"weight"</span>,
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"heatmap_layer"</span>
-)</div><div class='output co'>#&gt; <span class='error'>Error in add_heatmap(., data = sf, weight = "weight", , layer_id = "heatmap_layer"): could not find function "add_heatmap"</span></div><div class='input'>
-# }
+)
 
-</div></pre>
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

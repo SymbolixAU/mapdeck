@@ -70,7 +70,7 @@ of source and target points, specified as longitude/latitude coordinates." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
       </span>
     </div>
 
@@ -342,7 +342,8 @@ you are clicking on</p>
   , <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
     <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>( <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Origin airport"</span> ),
     <span class='kw'>css</span> <span class='kw'>=</span> <span class='st'>"max-height: 100px;"</span>)
- )</div><div class='output co'>#&gt; <span class='error'>Error in add_greatcircle(., data = flights, layer_id = "greatcircle_layer",     origin = c("start_lon", "start_lat"), destination = c("end_lon",         "end_lat"), stroke_from = "airport1", stroke_to = "airport2",     stroke_width = "stroke", tooltip = "info", auto_highlight = TRUE,     legend = T, legend_options = list(stroke_from = list(title = "Origin airport"),         css = "max-height: 100px;")): could not find function "add_greatcircle"</span></div><div class='input'>
+ )
+
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_greatcircle</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>flights</span>
@@ -352,7 +353,8 @@ you are clicking on</p>
   , <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='st'>"airport1"</span>
   , <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='st'>"airport2"</span>
   , <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='st'>"stroke"</span>
-  )</div><div class='output co'>#&gt; <span class='error'>Error in add_greatcircle(., data = flights, layer_id = "greatcircle_layer",     origin = c("start_lon", "start_lat"), destination = c("end_lon",         "end_lat"), stroke_from = "airport1", stroke_to = "airport2",     stroke_width = "stroke"): could not find function "add_greatcircle"</span></div><div class='input'>
+  )
+
 <span class='co'>## Using a 2-sfc-column sf object</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sf</span>)
 
@@ -369,9 +371,8 @@ you are clicking on</p>
    , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>'greatcircles'</span>
    , <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='st'>"airport1"</span>
    , <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='st'>"airport2"</span>
-)</div><div class='output co'>#&gt; <span class='error'>Error in add_greatcircle(., data = sf_flights, origin = "geometry", destination = "geometry.1",     layer_id = "greatcircles", stroke_from = "airport1", stroke_to = "airport2"): could not find function "add_greatcircle"</span></div><div class='input'># }
-
-</div></pre>
+)
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

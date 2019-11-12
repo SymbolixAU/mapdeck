@@ -130,6 +130,28 @@ add_grid(
 
 **sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
+## Heatmap
+
+```{r}
+
+df <- read.csv(paste0(
+'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+'examples/3d-heatmap/heatmap-data.csv'
+))
+
+mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
+ add_heatmap(
+   data = df[1:30000, ]
+   , lat = "lat"
+   , lon = "lng"
+   , weight = "weight",
+   , colour_range = colourvalues::colour_values(1:6, palette = "inferno")
+)
+
+```
+
+![Heatmap](./img/articles/heatmap.gif)
+
 ## Hexagons
 
 ```{r}
