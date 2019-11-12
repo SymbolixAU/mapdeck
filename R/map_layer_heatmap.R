@@ -57,7 +57,7 @@ mapdeckHeatmapDependency <- function() {
 #'
 #' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_heatmap(
-#'   data = df
+#'   data = df[1:10000, ]
 #'   , lat = "lat"
 #'   , lon = "lng"
 #'   , weight = "weight",
@@ -95,8 +95,7 @@ add_heatmap <- function(
 	layer_id = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
-	digits = 6,
-	brush_radius = NULL
+	digits = 6
 ) {
 
 	#experimental_layer("heatmap")
@@ -157,7 +156,7 @@ add_heatmap <- function(
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, colour_range,
-		radius_pixels, intensity, threshold, bbox, update_view, focus_layer, brush_radius
+		radius_pixels, intensity, threshold, bbox, update_view, focus_layer
 	)
 }
 

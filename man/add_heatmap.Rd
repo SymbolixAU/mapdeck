@@ -8,7 +8,7 @@ add_heatmap(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, weight = NULL, colour_range = NULL,
   radius_pixels = 30, intensity = 1, threshold = 0.05,
   layer_id = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, brush_radius = NULL)
+  digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -88,7 +88,7 @@ df$weight <- sample(1:10, size = nrow(df), replace = T)
 
 mapdeck( style = mapdeck_style('dark'), pitch = 45 ) \%>\%
 add_heatmap(
-  data = df
+  data = df[1:10000, ]
   , lat = "lat"
   , lon = "lng"
   , weight = "weight",
