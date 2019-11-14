@@ -84,21 +84,23 @@ HTMLWidgets.widget({
 			      },
 			      onDragStart(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	if( info.layer !== null ) { return; }  // dragging a layer;
 			      	Shiny.onInputChange(el.id +'_drag_start', info);
 			      },
 			      onDrag(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	if( info.layer !== null ) { return; }  // dragging a layer;
 			      	Shiny.onInputChange(el.id +'_drag', info);
 			      },
 			      onDragEnd(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	if( info.layer !== null ) { return; }  // dragging a layer;
 			      	Shiny.onInputChange(el.id +'_drag_end', info);
 			      },
 			      onResize(size) {
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	Shiny.onInputChange(el.id +'_resize', size);
 			      }
-
 			  });
 
 			  window[el.id + 'map'] = deckgl;
