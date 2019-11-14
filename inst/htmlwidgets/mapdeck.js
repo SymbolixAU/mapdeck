@@ -84,17 +84,18 @@ HTMLWidgets.widget({
 			      },
 			      onDragStart(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
-			      	if( info.layer !== null ) { return; }  // dragging a layer;
+			      	if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	Shiny.onInputChange(el.id +'_drag_start', info);
 			      },
 			      onDrag(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
-			      	if( info.layer !== null ) { return; }  // dragging a layer;
+			      	//console.log( info );
+			      	if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	Shiny.onInputChange(el.id +'_drag', info);
 			      },
 			      onDragEnd(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
-			      	if( info.layer !== null ) { return; }  // dragging a layer;
+			      	if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	Shiny.onInputChange(el.id +'_drag_end', info);
 			      },
 			      onResize(size) {
