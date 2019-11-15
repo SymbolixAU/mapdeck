@@ -5,6 +5,7 @@ function md_setup_window( map_id ) {
 
   md_setup_legend( map_id );
   md_setup_title( map_id );
+  md_setup_view_state( map_id );
   md_setup_tooltip( map_id );
 }
 
@@ -31,12 +32,19 @@ function md_setup_legend( map_id ) {
 }
 
 function md_setup_title( map_id ) {
-	console.log( "setup_title" ) ;
 	var mapDiv = document.getElementById(map_id);
 	var mapTitle = document.createElement('div');
   mapTitle.className = "mapTitleContainer";
   mapTitle.id = "mapTitleContainer"+map_id;
   mapDiv.appendChild( mapTitle );
+}
+
+function md_setup_view_state( map_id ) {
+	var mapDiv = document.getElementById(map_id);
+	var mapViewState = document.createElement('div');
+  mapViewState.className = "mapViewStateContainer";
+  mapViewState.id = "mapViewStateContainer"+map_id;
+  mapDiv.appendChild( mapViewState );
 }
 
 function md_setup_tooltip( map_id ) {

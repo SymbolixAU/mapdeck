@@ -48,6 +48,7 @@ mapdeck <- function(
     , zoom = force( zoom )
     , location = force( as.numeric( location ) )
     , bearing = force( bearing )
+    , show_view_state = TRUE
   )
 
   # deps <- list(
@@ -85,6 +86,7 @@ mapdeck <- function(
   	, mapdeck_css()
   	, mapdeck_js()
   	, htmlwidgets_js()
+  	#, mapdeckViewStateDependency()
   	)
 
   return(mapdeckmap)
