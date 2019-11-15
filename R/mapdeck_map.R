@@ -150,9 +150,9 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' after the next time all of the outputs are updated; defaults to TRUE.
 #' @export
 mapdeck_update <- function(
+	data = NULL,
 	map_id,
 	session = shiny::getDefaultReactiveDomain(),
-	data = NULL,
 	deferUntilFlush = TRUE,
 	map_type = c("mapdeck_update", "google_map_update")
 	) {

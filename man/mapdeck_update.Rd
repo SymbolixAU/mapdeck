@@ -4,18 +4,18 @@
 \alias{mapdeck_update}
 \title{Mapdeck update}
 \usage{
-mapdeck_update(map_id, session = shiny::getDefaultReactiveDomain(),
-  data = NULL, deferUntilFlush = TRUE, map_type = c("mapdeck_update",
-  "google_map_update"))
+mapdeck_update(data = NULL, map_id,
+  session = shiny::getDefaultReactiveDomain(), deferUntilFlush = TRUE,
+  map_type = c("mapdeck_update", "google_map_update"))
 }
 \arguments{
+\item{data}{data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system}
+
 \item{map_id}{string containing the output ID of the map in a shiny application.}
 
 \item{session}{the Shiny session object to which the map belongs; usually the
 default value will suffice.}
-
-\item{data}{data to be used in the layer. All coordinates are expected to be
-EPSG:4326 (WGS 84) coordinate system}
 
 \item{deferUntilFlush}{indicates whether actions performed against this
 instance should be carried out right away, or whether they should be held until
