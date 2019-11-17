@@ -190,7 +190,7 @@ add_scatterplot <- function(
 	# 	jsfunc <- "add_scatterplot_brush_geo"
 	# 	map <- addDependency(map, mapdeckScatterplotBrushDependency())
 	# } else {
-		jsfunc <- "add_scatterplot_geo"
+		jsfunc <- "add_scatterplot_geo_binary"
 		map <- addDependency(map, mapdeckScatterplotDependency())
 	# }
 
@@ -199,7 +199,7 @@ add_scatterplot <- function(
 		shape <- rcpp_scatterplot_geojson( data, l, geometry_column, digits )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_scatterplot_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_scatterplot_geojson_df_binary( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- c( "polyline" )
 		shape <- rcpp_scatterplot_polyline( data, l, geometry_column )
@@ -218,7 +218,7 @@ add_scatterplot <- function(
 	}
 
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
+		map, jsfunc, map_type( map ), shape[["data"]], nrow(data) , layer_id, auto_highlight, highlight_colour,
 		shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
 		radius_min_pixels, radius_max_pixels, brush_radius
 		)

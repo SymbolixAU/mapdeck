@@ -17,6 +17,7 @@ Rcpp::List scatterplot_defaults(int n) {
 }
 
 
+
 // [[Rcpp::export]]
 Rcpp::List rcpp_scatterplot_geojson(
 		Rcpp::DataFrame data, Rcpp::List params,
@@ -61,6 +62,34 @@ Rcpp::List rcpp_scatterplot_geojson_df(
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	return spatialwidget::api::create_geojson(
+		data,
+		params,
+		lst_defaults,
+		scatterplot_colours,
+		scatterplot_legend,
+		data_rows,
+		parameter_exclusions,
+		geometry_columns,
+		true,  // jsonify legend
+		digits
+	);
+}
+
+// [[Rcpp::export]]
+Rcpp::List rcpp_scatterplot_geojson_df_binary(
+		Rcpp::DataFrame data, Rcpp::List params,
+		Rcpp::List geometry_columns, int digits
+) {
+
+	int data_rows = data.nrows();
+
+	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
+
+	std::unordered_map< std::string, std::string > scatterplot_colours = mapdeck::layer_colours::fill_stroke_colours;
+	Rcpp::StringVector scatterplot_legend = mapdeck::layer_colours::fill_stroke_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
+
+	return spatialwidget::api::create_binary(
 		data,
 		params,
 		lst_defaults,

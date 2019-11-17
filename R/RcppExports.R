@@ -133,6 +133,10 @@ rcpp_scatterplot_geojson_df <- function(data, params, geometry_columns, digits) 
     .Call(`_mapdeck_rcpp_scatterplot_geojson_df`, data, params, geometry_columns, digits)
 }
 
+rcpp_scatterplot_geojson_df_binary <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_scatterplot_geojson_df_binary`, data, params, geometry_columns, digits)
+}
+
 rcpp_scatterplot_polyline <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_scatterplot_polyline`, data, params, geometry_columns)
 }
