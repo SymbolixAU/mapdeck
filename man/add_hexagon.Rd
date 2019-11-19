@@ -122,6 +122,7 @@ add_hexagon(
 
 library( sf )
 sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_hexagon(
   data = sf

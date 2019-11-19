@@ -13,40 +13,8 @@ rcpp_aggregate_polyline <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_aggregate_polyline`, data, params, geometry_columns)
 }
 
-rcpp_arc_geojson <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_arc_geojson`, data, params, geometry_columns, digits)
-}
-
-rcpp_arc_geojson_df <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_arc_geojson_df`, data, params, geometry_columns, digits)
-}
-
-rcpp_arc_polyline <- function(data, params, geometry_columns) {
-    .Call(`_mapdeck_rcpp_arc_polyline`, data, params, geometry_columns)
-}
-
 rcpp_geojson_geojson <- function(data, params, geometry_column, digits) {
     .Call(`_mapdeck_rcpp_geojson_geojson`, data, params, geometry_column, digits)
-}
-
-rcpp_greatcircle_geojson <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_greatcircle_geojson`, data, params, geometry_columns, digits)
-}
-
-rcpp_greatcircle_geojson_df <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_greatcircle_geojson_df`, data, params, geometry_columns, digits)
-}
-
-rcpp_greatcircle_polyline <- function(data, params, geometry_columns) {
-    .Call(`_mapdeck_rcpp_greatcircle_polyline`, data, params, geometry_columns)
-}
-
-rcpp_line_geojson <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_line_geojson`, data, params, geometry_columns, digits)
-}
-
-rcpp_line_geojson_df <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_line_geojson_df`, data, params, geometry_columns, digits)
 }
 
 mesh_to_sf <- function(mesh, vertices) {
@@ -59,6 +27,18 @@ rcpp_mesh_geojson <- function(mesh, params, vertices, digits) {
 
 rcpp_mesh_geojson2 <- function(mesh, vertices) {
     .Call(`_mapdeck_rcpp_mesh_geojson2`, mesh, vertices)
+}
+
+rcpp_od_geojson <- function(data, params, geometry_columns, digits, layer_name) {
+    .Call(`_mapdeck_rcpp_od_geojson`, data, params, geometry_columns, digits, layer_name)
+}
+
+rcpp_od_geojson_df <- function(data, params, geometry_columns, digits, layer_name) {
+    .Call(`_mapdeck_rcpp_od_geojson_df`, data, params, geometry_columns, digits, layer_name)
+}
+
+rcpp_od_polyline <- function(data, params, geometry_columns, layer_name) {
+    .Call(`_mapdeck_rcpp_od_polyline`, data, params, geometry_columns, layer_name)
 }
 
 rcpp_path_geojson <- function(data, params, geometry_columns, digits) {
