@@ -5,8 +5,35 @@
 #include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 
-Rcpp::List aggregate_defaults(int n) {
+Rcpp::List grid_defaults(int n) {
 	return Rcpp::List::create();
+}
+
+Rcpp::List heatmap_defaults(int n) {
+	return Rcpp::List::create(
+		_["weight"] = mapdeck::defaults::default_weight(n)
+	);
+}
+
+Rcpp::List hexagon_defaults(int n) {
+	return Rcpp::List::create();
+}
+
+Rcpp::List screengrid_defaults(int n) {
+	return Rcpp::List::create(
+		_["weight"] = mapdeck::defaults::default_weight(n)
+	);
+}
+
+Rcpp::List get_aggregate_defaults( std::string layer_name, int data_rows ) {
+	if( layer_name == "heatmap" ) {
+		return heatmap_defaults( data_rows );
+	} else if ( layer_name == "grid" ) {
+		return grid_defaults( data_rows );
+	} else if ( layer_name == "hexagon" ) {
+		return hexagon_defaults( data_rows );
+	}
+	return screengrid_defaults( data_rows );
 }
 
 
@@ -15,12 +42,14 @@ Rcpp::List rcpp_aggregate_geojson(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
 		std::string geometry_column,
-		int digits
+		int digits,
+		std::string layer_name
 ) {
 
 	int data_rows = data.nrows();
 
-	Rcpp::List lst_defaults = aggregate_defaults( data_rows );  // initialise with defaults
+
+	Rcpp::List lst_defaults = get_aggregate_defaults( layer_name, data_rows );
 
 	std::unordered_map< std::string, std::string > aggregate_colours = mapdeck::layer_colours::no_colours;
 	Rcpp::StringVector aggregate_legend = mapdeck::layer_colours::no_legend;
@@ -45,12 +74,13 @@ Rcpp::List rcpp_aggregate_geojson_df(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
 		Rcpp::List geometry_columns,
-		int digits
+		int digits,
+		std::string layer_name
 ) {
 
 	int data_rows = data.nrows();
 
-	Rcpp::List lst_defaults = aggregate_defaults( data_rows );  // initialise with defaults
+	Rcpp::List lst_defaults = get_aggregate_defaults( layer_name, data_rows );
 
 	std::unordered_map< std::string, std::string > aggregate_colours = mapdeck::layer_colours::no_colours;
 	Rcpp::StringVector aggregate_legend = mapdeck::layer_colours::no_legend;
@@ -74,12 +104,13 @@ Rcpp::List rcpp_aggregate_geojson_df(
 Rcpp::List rcpp_aggregate_polyline(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
-		Rcpp::StringVector geometry_columns
+		Rcpp::StringVector geometry_columns,
+		std::string layer_name
 ) {
 
 	int data_rows = data.nrows();
 
-	Rcpp::List lst_defaults = aggregate_defaults( data_rows );  // initialise with defaults
+	Rcpp::List lst_defaults = get_aggregate_defaults( layer_name, data_rows );
 
 	std::unordered_map< std::string, std::string > aggregate_colours = mapdeck::layer_colours::no_colours;
 	Rcpp::StringVector aggregate_legend = mapdeck::layer_colours::no_legend;

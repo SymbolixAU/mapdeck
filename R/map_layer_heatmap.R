@@ -145,13 +145,13 @@ add_heatmap <- function(
 	jsfunc <- "add_heatmap_geo"
 	if( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits, "heatmap" )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_aggregate_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson_df( data, l, geometry_column, digits, "heatmap" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_aggregate_polyline( data, l, geometry_column )
+		shape <- rcpp_aggregate_polyline( data, l, geometry_column, "heatmap" )
 		jsfunc <- "add_heatmap_polyline"
 	}
 
