@@ -4,7 +4,7 @@
 #include "spatialwidget/spatialwidget.hpp"
 
 
-Rcpp::List point_defaults( int n ) {
+Rcpp::List column_defaults(int n) {
 	return Rcpp::List::create(
 		_["elevation"] = mapdeck::defaults::default_elevation(n),
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n),
@@ -12,11 +12,32 @@ Rcpp::List point_defaults( int n ) {
 	);
 }
 
-// Rcpp::List pointcloud_defaults(int n) {
-// 	return Rcpp::List::create(
-// 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n)
-// 	);
-// }
+Rcpp::List scatterplot_defaults(int n) {
+
+	Rcpp::NumericVector nv = Rcpp::NumericVector(n);  // initalised to 0
+
+	return Rcpp::List::create(
+		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n),
+		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour(n),
+		_["stroke_width"] = nv
+	);
+}
+
+Rcpp::List pointcloud_defaults(int n) {
+	return Rcpp::List::create(
+		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n)
+	);
+}
+
+Rcpp::List get_point_defaults( std::string layer_name, int data_rows ) {
+	if( layer_name == "column" ) {
+		return column_defaults( data_rows );
+	} else if ( layer_name == "scatterplot" ) {
+		return scatterplot_defaults( data_rows );
+	}
+	return pointcloud_defaults( data_rows );
+}
+
 
 Rcpp::StringVector get_point_legend_colours( std::string layer_name ) {
 
@@ -54,7 +75,7 @@ Rcpp::List rcpp_point_geojson(
 
 	int data_rows = data.nrows();
 
-	Rcpp::List lst_defaults = point_defaults( data_rows );  // initialise with defaults
+	Rcpp::List lst_defaults = get_point_defaults( layer_name, data_rows );
 
 	Rcpp::StringVector point_legend = get_point_legend_colours( layer_name );
 	std::unordered_map< std::string, std::string > point_colours = get_point_colours( layer_name );
@@ -86,7 +107,7 @@ Rcpp::List rcpp_point_geojson_df(
 
 	int data_rows = data.nrows();
 
-	Rcpp::List lst_defaults = point_defaults( data_rows );  // initialise with defaults
+	Rcpp::List lst_defaults = get_point_defaults( layer_name, data_rows );
 
 	Rcpp::StringVector point_legend = get_point_legend_colours( layer_name );
 	std::unordered_map< std::string, std::string > point_colours = get_point_colours( layer_name );
@@ -137,7 +158,7 @@ Rcpp::List rcpp_point_polyline(
 
 	int data_rows = data.nrows();
 
-	Rcpp::List lst_defaults = point_defaults( data_rows );  // initialise with defaults
+	Rcpp::List lst_defaults = get_point_defaults( layer_name, data_rows );
 
 	Rcpp::StringVector point_legend = get_point_legend_colours( layer_name );
 	std::unordered_map< std::string, std::string > point_colours = get_point_colours( layer_name );
