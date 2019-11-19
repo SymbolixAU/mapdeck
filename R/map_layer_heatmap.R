@@ -57,7 +57,7 @@ mapdeckHeatmapDependency <- function() {
 #'
 #' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_heatmap(
-#'   data = df[1:10000, ]
+#'   data = df
 #'   , lat = "lat"
 #'   , lon = "lng"
 #'   , weight = "weight",
@@ -67,7 +67,8 @@ mapdeckHeatmapDependency <- function() {
 #' ## as an sf object
 #' library(sf)
 #' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
-#' mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%
+#'
+#' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_heatmap(
 #'   data = sf
 #'   , weight = "weight",
@@ -144,13 +145,13 @@ add_heatmap <- function(
 	jsfunc <- "add_heatmap_geo"
 	if( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_heatmap_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_heatmap_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson_df( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_heatmap_polyline( data, l, geometry_column )
+		shape <- rcpp_aggregate_polyline( data, l, geometry_column )
 		jsfunc <- "add_heatmap_polyline"
 	}
 

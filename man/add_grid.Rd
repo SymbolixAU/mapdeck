@@ -100,7 +100,7 @@ df <- df[ !is.na(df$lng ), ]
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_grid(
-  data = df
+  data = df[1:1000, ]
   , lat = "lat"
   , lon = "lng"
   , cell_size = 5000
