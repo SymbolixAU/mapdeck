@@ -4,16 +4,42 @@
 #include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 
-Rcpp::List od_defaults(int n) {
+Rcpp::List line_defaults(int n) {
 	return Rcpp::List::create(
-		//_["stroke_from"] = mapdeck::defaults::default_stroke_colour(n),
-		//_["stroke_to"] = mapdeck::defaults::default_stroke_colour(n),
-		//_["tilt"] = mapdeck::defaults::default_arc_tilt(n),
-		//_["height"] = mapdeck::defaults::default_arc_height(n),
-		//_["stroke_colour"] = mapdeck::defaults::default_stroke_colour(n),
-		//_["stroke_width"] = mapdeck::defaults::default_stroke_width(n)
+		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour(n),
+		_["stroke_width"] = mapdeck::defaults::default_stroke_width(n)
 	);
 }
+
+Rcpp::List arc_defaults(int n) {
+	return Rcpp::List::create(
+		_["stroke_from"] = mapdeck::defaults::default_stroke_colour(n),
+		_["stroke_to"] = mapdeck::defaults::default_stroke_colour(n),
+		_["tilt"] = mapdeck::defaults::default_arc_tilt(n),
+		_["height"] = mapdeck::defaults::default_arc_height(n)
+	);
+}
+
+Rcpp::List greatcircle_defaults(int n) {
+	return Rcpp::List::create(
+		_["stroke_from"] = mapdeck::defaults::default_stroke_colour(n),
+		_["stroke_to"] = mapdeck::defaults::default_stroke_colour(n),
+		_["tilt"] = mapdeck::defaults::default_arc_tilt(n),
+		_["height"] = mapdeck::defaults::default_arc_height(n)
+	);
+}
+
+Rcpp::List get_od_defaults( std::string layer_name, int data_rows ) {
+	if( layer_name == "line" ) {
+		return line_defaults( data_rows );
+	} else if ( layer_name == "arc" ) {
+		return arc_defaults( data_rows );
+	}
+	return greatcircle_defaults( data_rows );
+}
+
+
+
 
 std::unordered_map< std::string, std::string > get_od_colours( std::string layer_name ) {
 
@@ -46,7 +72,7 @@ Rcpp::List rcpp_od_geojson(
 
 	int data_rows = data.nrows();
 
-	Rcpp::List lst_defaults = od_defaults( data_rows );  // initialise with defaults
+	Rcpp::List lst_defaults = get_od_defaults( layer_name, data_rows );
 
 	std::unordered_map< std::string, std::string > od_colours = get_od_colours( layer_name );
 	Rcpp::StringVector od_legend = get_od_legend( layer_name );
@@ -78,7 +104,7 @@ Rcpp::List rcpp_od_geojson_df(
 
 	int data_rows = data.nrows();
 
-	Rcpp::List lst_defaults = od_defaults( data_rows );  // initialise with defaults
+	Rcpp::List lst_defaults = get_od_defaults( layer_name, data_rows );
 
 	std::unordered_map< std::string, std::string > od_colours = get_od_colours( layer_name );
 	Rcpp::StringVector od_legend = get_od_legend( layer_name );
@@ -110,7 +136,7 @@ Rcpp::List rcpp_od_polyline(
 
 	int data_rows = data.nrows();
 
-	Rcpp::List lst_defaults = od_defaults( data_rows );  // initialise with defaults
+	Rcpp::List lst_defaults = get_od_defaults( layer_name, data_rows );
 
 	std::unordered_map< std::string, std::string > od_colours = get_od_colours( layer_name );
 	Rcpp::StringVector od_legend = get_od_legend( layer_name );
