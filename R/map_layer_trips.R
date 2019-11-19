@@ -106,7 +106,7 @@ add_trips <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		shape <- rcpp_path_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_path_geojson( data, l, geometry_column, digits, "trips" )
 		jsfunc <- "add_trips_geo"
 	} else {
 		stop("mapdeck - currently only sf objects are supported for the trips layer")
