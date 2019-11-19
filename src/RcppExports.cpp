@@ -46,47 +46,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_column_geojson
-Rcpp::List rcpp_column_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_columns, int digits);
-RcppExport SEXP _mapdeck_rcpp_column_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type geometry_columns(geometry_columnsSEXP);
-    Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_column_geojson(data, params, geometry_columns, digits));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_column_geojson_df
-Rcpp::List rcpp_column_geojson_df(Rcpp::DataFrame data, Rcpp::List params, Rcpp::List geometry_columns, int digits);
-RcppExport SEXP _mapdeck_rcpp_column_geojson_df(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type geometry_columns(geometry_columnsSEXP);
-    Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_column_geojson_df(data, params, geometry_columns, digits));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_column_polyline
-Rcpp::List rcpp_column_polyline(Rcpp::DataFrame data, Rcpp::List params, Rcpp::StringVector geometry_columns);
-RcppExport SEXP _mapdeck_rcpp_column_polyline(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    Rcpp::traits::input_parameter< Rcpp::StringVector >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_column_polyline(data, params, geometry_columns));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_geojson_geojson
 Rcpp::List rcpp_geojson_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_column, int digits);
 RcppExport SEXP _mapdeck_rcpp_geojson_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnSEXP, SEXP digitsSEXP) {
@@ -358,9 +317,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_pointcloud_geojson
-Rcpp::List rcpp_pointcloud_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_columns, int digits);
-RcppExport SEXP _mapdeck_rcpp_pointcloud_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
+// rcpp_point_geojson
+Rcpp::List rcpp_point_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_columns, int digits, std::string layer_name);
+RcppExport SEXP _mapdeck_rcpp_point_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP, SEXP layer_nameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -368,13 +327,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
     Rcpp::traits::input_parameter< std::string >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_pointcloud_geojson(data, params, geometry_columns, digits));
+    Rcpp::traits::input_parameter< std::string >::type layer_name(layer_nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_point_geojson(data, params, geometry_columns, digits, layer_name));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_pointcloud_geojson_df
-Rcpp::List rcpp_pointcloud_geojson_df(Rcpp::DataFrame data, Rcpp::List params, Rcpp::List geometry_columns, int digits);
-RcppExport SEXP _mapdeck_rcpp_pointcloud_geojson_df(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
+// rcpp_point_geojson_df
+Rcpp::List rcpp_point_geojson_df(Rcpp::DataFrame data, Rcpp::List params, Rcpp::List geometry_columns, int digits, std::string layer_name);
+RcppExport SEXP _mapdeck_rcpp_point_geojson_df(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP, SEXP layer_nameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -382,20 +342,22 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_pointcloud_geojson_df(data, params, geometry_columns, digits));
+    Rcpp::traits::input_parameter< std::string >::type layer_name(layer_nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_point_geojson_df(data, params, geometry_columns, digits, layer_name));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_pointcloud_polyline
-Rcpp::List rcpp_pointcloud_polyline(Rcpp::DataFrame data, Rcpp::List params, Rcpp::StringVector geometry_columns);
-RcppExport SEXP _mapdeck_rcpp_pointcloud_polyline(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP) {
+// rcpp_point_polyline
+Rcpp::List rcpp_point_polyline(Rcpp::DataFrame data, Rcpp::List params, Rcpp::StringVector geometry_columns, std::string layer_name);
+RcppExport SEXP _mapdeck_rcpp_point_polyline(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP layer_nameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
     Rcpp::traits::input_parameter< Rcpp::StringVector >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_pointcloud_polyline(data, params, geometry_columns));
+    Rcpp::traits::input_parameter< std::string >::type layer_name(layer_nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_point_polyline(data, params, geometry_columns, layer_name));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -423,47 +385,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
     Rcpp::traits::input_parameter< Rcpp::StringVector >::type geometry_columns(geometry_columnsSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_polygon_polyline(data, params, geometry_columns));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_scatterplot_geojson
-Rcpp::List rcpp_scatterplot_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_columns, int digits);
-RcppExport SEXP _mapdeck_rcpp_scatterplot_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type geometry_columns(geometry_columnsSEXP);
-    Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_scatterplot_geojson(data, params, geometry_columns, digits));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_scatterplot_geojson_df
-Rcpp::List rcpp_scatterplot_geojson_df(Rcpp::DataFrame data, Rcpp::List params, Rcpp::List geometry_columns, int digits);
-RcppExport SEXP _mapdeck_rcpp_scatterplot_geojson_df(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type geometry_columns(geometry_columnsSEXP);
-    Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_scatterplot_geojson_df(data, params, geometry_columns, digits));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_scatterplot_polyline
-Rcpp::List rcpp_scatterplot_polyline(Rcpp::DataFrame data, Rcpp::List params, Rcpp::StringVector geometry_columns);
-RcppExport SEXP _mapdeck_rcpp_scatterplot_polyline(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    Rcpp::traits::input_parameter< Rcpp::StringVector >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_scatterplot_polyline(data, params, geometry_columns));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -567,9 +488,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_arc_geojson", (DL_FUNC) &_mapdeck_rcpp_arc_geojson, 4},
     {"_mapdeck_rcpp_arc_geojson_df", (DL_FUNC) &_mapdeck_rcpp_arc_geojson_df, 4},
     {"_mapdeck_rcpp_arc_polyline", (DL_FUNC) &_mapdeck_rcpp_arc_polyline, 3},
-    {"_mapdeck_rcpp_column_geojson", (DL_FUNC) &_mapdeck_rcpp_column_geojson, 4},
-    {"_mapdeck_rcpp_column_geojson_df", (DL_FUNC) &_mapdeck_rcpp_column_geojson_df, 4},
-    {"_mapdeck_rcpp_column_polyline", (DL_FUNC) &_mapdeck_rcpp_column_polyline, 3},
     {"_mapdeck_rcpp_geojson_geojson", (DL_FUNC) &_mapdeck_rcpp_geojson_geojson, 4},
     {"_mapdeck_rcpp_greatcircle_geojson", (DL_FUNC) &_mapdeck_rcpp_greatcircle_geojson, 4},
     {"_mapdeck_rcpp_greatcircle_geojson_df", (DL_FUNC) &_mapdeck_rcpp_greatcircle_geojson_df, 4},
@@ -590,14 +508,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_mesh_geojson2", (DL_FUNC) &_mapdeck_rcpp_mesh_geojson2, 2},
     {"_mapdeck_rcpp_path_geojson", (DL_FUNC) &_mapdeck_rcpp_path_geojson, 4},
     {"_mapdeck_rcpp_path_polyline", (DL_FUNC) &_mapdeck_rcpp_path_polyline, 3},
-    {"_mapdeck_rcpp_pointcloud_geojson", (DL_FUNC) &_mapdeck_rcpp_pointcloud_geojson, 4},
-    {"_mapdeck_rcpp_pointcloud_geojson_df", (DL_FUNC) &_mapdeck_rcpp_pointcloud_geojson_df, 4},
-    {"_mapdeck_rcpp_pointcloud_polyline", (DL_FUNC) &_mapdeck_rcpp_pointcloud_polyline, 3},
+    {"_mapdeck_rcpp_point_geojson", (DL_FUNC) &_mapdeck_rcpp_point_geojson, 5},
+    {"_mapdeck_rcpp_point_geojson_df", (DL_FUNC) &_mapdeck_rcpp_point_geojson_df, 5},
+    {"_mapdeck_rcpp_point_polyline", (DL_FUNC) &_mapdeck_rcpp_point_polyline, 4},
     {"_mapdeck_rcpp_polygon_geojson", (DL_FUNC) &_mapdeck_rcpp_polygon_geojson, 4},
     {"_mapdeck_rcpp_polygon_polyline", (DL_FUNC) &_mapdeck_rcpp_polygon_polyline, 3},
-    {"_mapdeck_rcpp_scatterplot_geojson", (DL_FUNC) &_mapdeck_rcpp_scatterplot_geojson, 4},
-    {"_mapdeck_rcpp_scatterplot_geojson_df", (DL_FUNC) &_mapdeck_rcpp_scatterplot_geojson_df, 4},
-    {"_mapdeck_rcpp_scatterplot_polyline", (DL_FUNC) &_mapdeck_rcpp_scatterplot_polyline, 3},
     {"_mapdeck_rcpp_screengrid_geojson", (DL_FUNC) &_mapdeck_rcpp_screengrid_geojson, 4},
     {"_mapdeck_rcpp_screengrid_geojson_df", (DL_FUNC) &_mapdeck_rcpp_screengrid_geojson_df, 4},
     {"_mapdeck_rcpp_screengrid_polyline", (DL_FUNC) &_mapdeck_rcpp_screengrid_polyline, 3},

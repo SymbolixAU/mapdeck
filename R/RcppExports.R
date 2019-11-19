@@ -13,18 +13,6 @@ rcpp_arc_polyline <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_arc_polyline`, data, params, geometry_columns)
 }
 
-rcpp_column_geojson <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_column_geojson`, data, params, geometry_columns, digits)
-}
-
-rcpp_column_geojson_df <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_column_geojson_df`, data, params, geometry_columns, digits)
-}
-
-rcpp_column_polyline <- function(data, params, geometry_columns) {
-    .Call(`_mapdeck_rcpp_column_polyline`, data, params, geometry_columns)
-}
-
 rcpp_geojson_geojson <- function(data, params, geometry_column, digits) {
     .Call(`_mapdeck_rcpp_geojson_geojson`, data, params, geometry_column, digits)
 }
@@ -105,16 +93,16 @@ rcpp_path_polyline <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_path_polyline`, data, params, geometry_columns)
 }
 
-rcpp_pointcloud_geojson <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_pointcloud_geojson`, data, params, geometry_columns, digits)
+rcpp_point_geojson <- function(data, params, geometry_columns, digits, layer_name) {
+    .Call(`_mapdeck_rcpp_point_geojson`, data, params, geometry_columns, digits, layer_name)
 }
 
-rcpp_pointcloud_geojson_df <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_pointcloud_geojson_df`, data, params, geometry_columns, digits)
+rcpp_point_geojson_df <- function(data, params, geometry_columns, digits, layer_name) {
+    .Call(`_mapdeck_rcpp_point_geojson_df`, data, params, geometry_columns, digits, layer_name)
 }
 
-rcpp_pointcloud_polyline <- function(data, params, geometry_columns) {
-    .Call(`_mapdeck_rcpp_pointcloud_polyline`, data, params, geometry_columns)
+rcpp_point_polyline <- function(data, params, geometry_columns, layer_name) {
+    .Call(`_mapdeck_rcpp_point_polyline`, data, params, geometry_columns, layer_name)
 }
 
 rcpp_polygon_geojson <- function(data, params, geometry_columns, digits) {
@@ -123,18 +111,6 @@ rcpp_polygon_geojson <- function(data, params, geometry_columns, digits) {
 
 rcpp_polygon_polyline <- function(data, params, geometry_columns) {
     .Call(`_mapdeck_rcpp_polygon_polyline`, data, params, geometry_columns)
-}
-
-rcpp_scatterplot_geojson <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_scatterplot_geojson`, data, params, geometry_columns, digits)
-}
-
-rcpp_scatterplot_geojson_df <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_scatterplot_geojson_df`, data, params, geometry_columns, digits)
-}
-
-rcpp_scatterplot_polyline <- function(data, params, geometry_columns) {
-    .Call(`_mapdeck_rcpp_scatterplot_polyline`, data, params, geometry_columns)
 }
 
 rcpp_screengrid_geojson <- function(data, params, geometry_columns, digits) {
