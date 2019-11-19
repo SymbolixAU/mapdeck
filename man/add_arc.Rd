@@ -189,7 +189,7 @@ mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
     css = "max-height: 100px;")
  )
 
-mapdeck( token = key, style = mapdeck_style("dark")) \%>\%
+mapdeck( style = mapdeck_style("dark")) \%>\%
   add_arc(
   data = flights
   , layer_id = "arc_layer"

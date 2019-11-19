@@ -282,15 +282,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_trips_geojson
-Rcpp::List rcpp_trips_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_columns);
-RcppExport SEXP _mapdeck_rcpp_trips_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP) {
+Rcpp::List rcpp_trips_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_columns, int digits);
+RcppExport SEXP _mapdeck_rcpp_trips_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
     Rcpp::traits::input_parameter< std::string >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_trips_geojson(data, params, geometry_columns));
+    Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_trips_geojson(data, params, geometry_columns, digits));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -316,7 +317,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_text_geojson", (DL_FUNC) &_mapdeck_rcpp_text_geojson, 4},
     {"_mapdeck_rcpp_text_geojson_df", (DL_FUNC) &_mapdeck_rcpp_text_geojson_df, 4},
     {"_mapdeck_rcpp_text_polyline", (DL_FUNC) &_mapdeck_rcpp_text_polyline, 3},
-    {"_mapdeck_rcpp_trips_geojson", (DL_FUNC) &_mapdeck_rcpp_trips_geojson, 3},
+    {"_mapdeck_rcpp_trips_geojson", (DL_FUNC) &_mapdeck_rcpp_trips_geojson, 4},
     {NULL, NULL, 0}
 };
 

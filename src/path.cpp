@@ -15,8 +15,10 @@ Rcpp::List path_defaults(int n) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_path_geojson(
-		Rcpp::DataFrame data, Rcpp::List params,
-		std::string geometry_columns, int digits
+		Rcpp::DataFrame data,
+		Rcpp::List params,
+		std::string geometry_columns,
+		int digits
 	) {
 
 	int data_rows = data.nrows();
