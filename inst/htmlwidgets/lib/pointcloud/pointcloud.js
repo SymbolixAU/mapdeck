@@ -12,7 +12,6 @@ function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id
     id: 'pointcloud-'+layer_id,
     data: pointcloud_data,
     radiusPixels: radius,
-    //getPosition: d => d.geometry.geometry.coordinates,
     getPosition: d => md_get_point_coordinates( d ),
     getColor: d => md_hexToRGBA( d.properties.fill_colour ),
     lightSettings: light_settings,

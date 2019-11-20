@@ -55,7 +55,7 @@ mapdeckGridDependency <- function() {
 #' library(sf)
 #' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_grid(
 #'   data = sf
 #'   , cell_size = 5000
@@ -189,13 +189,13 @@ add_grid <- function(
 
 	if ( tp == "sf" ) {
 	  geometry_column <- c( "geometry" )
-	  shape <- rcpp_grid_geojson( data, l, geometry_column, digits )
+	  shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits, "grid" )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_grid_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson_df( data, l, geometry_column, digits, "grid" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_grid_polyline( data, l, geometry_column )
+		shape <- rcpp_aggregate_polyline( data, l, geometry_column, "grid" )
 		jsfunc <- "add_grid_polyline"
 	}
 

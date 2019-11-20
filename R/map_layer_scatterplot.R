@@ -196,13 +196,13 @@ add_scatterplot <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_scatterplot_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_point_geojson( data, l, geometry_column, digits, "scatterplot" )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
 		shape <- rcpp_scatterplot_geojson_df_binary( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- c( "polyline" )
-		shape <- rcpp_scatterplot_polyline( data, l, geometry_column )
+		shape <- rcpp_point_polyline( data, l, geometry_column, "scatterplot" )
 		# if(!is.null(brush_radius)) {
 		# 	jsfunc <- "add_scatterplot_brush_polyline"
 		# } else {

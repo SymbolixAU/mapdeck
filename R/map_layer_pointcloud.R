@@ -150,21 +150,21 @@ add_pointcloud <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_pointcloud_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_point_geojson( data, l, geometry_column, digits, "pointcloud" )
 
 	} else if ( tp == "df" ) {
 		## TODO( here or in rcpp? )
-		if( is.null(elevation) ){
+		if( is.null( elevation ) ){
 			l[["elevation"]] <- 0
 		}
 
 		geometry_column <- list( geometry = c("lon","lat","elevation") )
-	  shape <- rcpp_pointcloud_geojson_df( data, l, geometry_column, digits )
+	  shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "pointcloud" )
 
 	} else if ( tp == "sfencoded" ) {
 
 		geometry_column <- "polyline"
-		shape <- rcpp_pointcloud_polyline( data, l, geometry_column )
+		shape <- rcpp_point_polyline( data, l, geometry_column, "pointcloud" )
 		jsfunc <- "add_pointcloud_polyline"
 	}
 
@@ -176,6 +176,8 @@ add_pointcloud <- function(
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
+
+	# print( shape )
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], radius, layer_id, light_settings,

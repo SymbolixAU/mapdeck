@@ -167,13 +167,13 @@ add_column <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_column_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_point_geojson( data, l, geometry_column, digits, "column" )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_column_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "column" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_column_polyline( data, l, geometry_column )
+		shape <- rcpp_point_polyline( data, l, geometry_column, "column" )
 		jsfunc <- "add_column_polyline"
 	}
 

@@ -291,7 +291,12 @@ resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
 #' @export
 resolve_data.data.frame <- function( data, l, sf_geom ) {
 
-	if( !inherits(data, "sf") & !inherits(data, "sfencoded") & !inherits(data, "sfencodedLite" ) & is.null( l[["polyline"]] ) ) {
+	if( !inherits(data, "sf") &
+			!inherits(data, "sfencoded") &
+			!inherits(data, "sfencodedLite" ) &
+			is.null( l[["polyline"]] )
+		) {
+
 		if( is.null(l[["lon"]] ) ) {
 			l[["lon"]] <- find_lon_column( names( data ) )
 		}

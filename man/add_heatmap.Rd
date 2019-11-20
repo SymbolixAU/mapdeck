@@ -88,7 +88,7 @@ df$weight <- sample(1:10, size = nrow(df), replace = T)
 
 mapdeck( style = mapdeck_style('dark'), pitch = 45 ) \%>\%
 add_heatmap(
-  data = df[1:10000, ]
+  data = df
   , lat = "lat"
   , lon = "lng"
   , weight = "weight",
@@ -98,7 +98,8 @@ add_heatmap(
 ## as an sf object
 library(sf)
 sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
-mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) \%>\%
+
+mapdeck( style = mapdeck_style('dark'), pitch = 45 ) \%>\%
 add_heatmap(
   data = sf
   , weight = "weight",

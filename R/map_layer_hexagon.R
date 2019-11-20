@@ -73,6 +73,7 @@ mapdeckHexagonDependency <- function() {
 #'
 #' library( sf )
 #' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_hexagon(
 #'   data = sf
@@ -214,13 +215,13 @@ add_hexagon <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_hexagon_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits, "hexagon" )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_hexagon_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson_df( data, l, geometry_column, digits, "hexagon" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_hexagon_polyline( data, l, geometry_column )
+		shape <- rcpp_aggregate_polyline( data, l, geometry_column, "hexagon" )
 		jsfunc <- "add_hexagon_polyline"
 	}
 
