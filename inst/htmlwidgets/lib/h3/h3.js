@@ -11,11 +11,11 @@ function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_sett
     wireframe: false,
     extruded: is_extruded,
     lineWidthMinPixels: 0,
-    getHexagon: d => md_get_h3_hexagon_coordinates( d ),
-    getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
-    getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
-    getLineWidth: d => d.properties.stroke_width,
-    getElevation: d => d.properties.elevation,
+    getHexagon: d => d.polyline,
+    getLineColor: d => md_hexToRGBA( d.stroke_colour ),
+    getFillColor: d => md_hexToRGBA( d.fill_colour ),
+    getLineWidth: d => d.stroke_width,
+    getElevation: d => d.elevation,
     lightSettings: light_settings,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
@@ -25,10 +25,9 @@ function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_sett
   });
 
   if( map_type == "google_map") {
-    md_update_overlay( map_id, 'h3_hexagon-'+layer_id, h3_hexagonLayer );
+    md_update_overlay( map_id, 'h3_hexagon-'+layer_id, h3Layer );
   } else {
-
-	  md_update_layer( map_id, 'h3_hexagon-'+layer_id, h3_hexagonLayer );
+	  md_update_layer( map_id, 'h3_hexagon-'+layer_id, h3Layer );
   }
 
 	if (legend !== false) {

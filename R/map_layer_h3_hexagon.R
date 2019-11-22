@@ -55,76 +55,6 @@ mapdeckH3HexagonDependency <- function() {
 #' key <- 'abc'
 #' set_token( key )
 #'
-#' df <- read.csv(paste0(
-#' 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/'
-#' , '3d-heatmap/heatmap-data.csv'
-#' ))
-#'
-#' df <- df[!is.na(df$lng), ]
-#'
-#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
-#' add_hexagon(
-#'   data = df
-#'   , lat = "lat"
-#'   , lon = "lng"
-#'   , layer_id = "hex_layer"
-#'   , elevation_scale = 100
-#' )
-#'
-#' library( sf )
-#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
-#'
-#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
-#' add_hexagon(
-#'   data = sf
-#'   , layer_id = "hex_layer"
-#'   , elevation_scale = 100
-#' )
-#'
-#' ## Using elevation and colour
-#' df$colour <- rnorm(nrow(df))
-#' df$elevation <- rnorm(nrow(df))
-#'
-#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
-#' add_hexagon(
-#'   data = df
-#'   , lat = "lat"
-#'   , lon = "lng"
-#'   , layer_id = "hex_layer"
-#'   , elevation_scale = 100
-#'   , elevation = "weight"
-#'   , colour = "colour"
-#' )
-#'
-#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
-#' add_hexagon(
-#'   data = df
-#'   , lat = "lat"
-#'   , lon = "lng"
-#'   , layer_id = "hex_layer"
-#'   , elevation_scale = 100
-#'   , elevation = "weight"
-#'   , elevation_function = "mean"
-#'   , colour = "colour"
-#'   , colour_function = "mean"
-#' )
-#'
-#' ## with a legend
-#' df$val <- sample(1:10, size = nrow(df), replace = T)
-#'
-#' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
-#' add_hexagon(
-#' 	data = df
-#' 	, lat = "lat"
-#' 	, lon = "lng"
-#' 	, layer_id = "hex_layer"
-#' 	, elevation_scale = 100
-#' 	, legend = T
-#' 	, legend_options = list( digits = 0 )
-#' 	, colour_function = "mean"
-#' 	, colour = "val"
-#' )
-#'
 #' }
 #'
 #' @details
@@ -219,18 +149,9 @@ add_h3_hexagon <- function(
 
 	jsfunc <- "add_h3_hexagon_geo"
 
-	browser()
-	if ( tp == "sf" ) {
-		geometry_column <- c( "geometry" )
-		shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits, "hexagon" )
-	} else if ( tp == "df" ) {
-		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_aggregate_geojson_df( data, l, geometry_column, digits, "hexagon" )
-	} else if ( tp == "sfencoded" ) {
-		geometry_column <- "polyline"
-		shape <- rcpp_aggregate_polyline( data, l, geometry_column, "hexagon" )
-		jsfunc <- "add_hexagon_polyline"
-	}
+	geometry_column <- "polyline"
+	shape <- rcpp_point_polyline( data, l, geometry_column, "scatterplot")
+	jsfunc <- "add_h3_hexagon"
 
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
