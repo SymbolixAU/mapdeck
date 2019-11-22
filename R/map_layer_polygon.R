@@ -190,6 +190,7 @@ add_polygon <- function(
 
 	jsfunc <- "add_polygon_geo"
 
+	browser()
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
 		shape <- rcpp_polygon_geojson( data, l, geometry_column, digits )
