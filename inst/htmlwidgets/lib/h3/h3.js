@@ -11,7 +11,7 @@ function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_sett
     wireframe: false,
     extruded: is_extruded,
     lineWidthMinPixels: 0,
-    getHexagon: d => d.polyline,
+    getHexagon: d => d.hexagon,
     getLineColor: d => md_hexToRGBA( d.stroke_colour ),
     getFillColor: d => md_hexToRGBA( d.fill_colour ),
     getLineWidth: d => d.stroke_width,

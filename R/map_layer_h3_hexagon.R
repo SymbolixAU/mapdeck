@@ -92,7 +92,7 @@ add_h3_hexagon <- function(
 ) {
 
 	l <- list()
-	# l[["polyline"]] <- force( polyline )
+	l[["hexagon"]] <- force( hexagon )
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_width"]] <- force( stroke_width )
 	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
@@ -149,10 +149,9 @@ add_h3_hexagon <- function(
 
 	jsfunc <- "add_h3_hexagon_geo"
 
-	geometry_column <- "polyline"
+	geometry_column <- "hexagon"
 	shape <- rcpp_point_polyline( data, l, geometry_column, "scatterplot")
 	jsfunc <- "add_h3_hexagon"
-
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
 	js_transitions <- resolve_transitions( transitions, "polygon" )
