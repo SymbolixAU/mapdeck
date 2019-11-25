@@ -10,6 +10,17 @@ mapdeckH3HexagonDependency <- function() {
 	)
 }
 
+mapdeckH3JSDependency <- function() {
+	list(
+		createHtmlDependency(
+			name = "h3-js",
+			version = "3.6.2",
+			src = system.file("htmlwidgets/lib", package = "mapdeck"),
+			script = c("h3-js.umd.js"),
+			all_files = FALSE
+		)
+	)
+}
 
 #' Add hexagon
 #'
@@ -143,6 +154,7 @@ add_h3_hexagon <- function(
 	layer_id <- layerId(layer_id, "h3_hexagon")
 
 	map <- addDependency(map, mapdeckH3HexagonDependency())
+	map <- addDependency(map, mapdeckH3JSDependency())
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
