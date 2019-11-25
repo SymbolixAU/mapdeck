@@ -153,8 +153,8 @@ add_h3_hexagon <- function(
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "h3_hexagon")
 
+	map <- addDependency(map, mapdeckH3JSDependency(), priority = TRUE)
 	map <- addDependency(map, mapdeckH3HexagonDependency())
-	map <- addDependency(map, mapdeckH3JSDependency())
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
