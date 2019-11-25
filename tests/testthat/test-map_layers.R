@@ -9,6 +9,7 @@ test_that("layerId includes all layers", {
 		, "geojson"
 		, "greatcircle"
 		, "grid"
+		, "h3_hexagon"
 		, "heatmap"
 		, "hexagon"
 		, "line"
