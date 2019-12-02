@@ -49,8 +49,7 @@ install.packages("mapdeck")
 
 #### Development version
 
-To use the development version you need some other development dependant
-libraries
+During development cycles the main changes happen to the dependant libraries, so you'll need to update those too. 
 
 ``` r
 devtools::install_github("SymbolixAU/jsonify", force = TRUE)

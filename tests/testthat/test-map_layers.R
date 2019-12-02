@@ -12,6 +12,7 @@ test_that("layerId includes all layers", {
 		, "h3_hexagon"
 		, "heatmap"
 		, "hexagon"
+		, "icon"
 		, "line"
 		, "mesh"
 		, "path"
