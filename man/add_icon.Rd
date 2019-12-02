@@ -170,8 +170,21 @@ you are clicking on
 key <- 'abc'
 set_token( key )
 
-mapdeck( style = mapdeck_style("dark"), pitch = 45 )
-#TODO
+mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+  add_icon(
+    data.frame(
+      lon = 174.768, lat = -36.852,
+      icon = "https://www.r-project.org/logo/Rlogo.png",
+      width = 724, height = 561
+    ),
+    lat = "lat",
+    lon = "lon",
+    icon = "icon",
+    icon_width = "width",
+    icon_height = "height",
+    size = 100
+  )
+
 
 }
 
