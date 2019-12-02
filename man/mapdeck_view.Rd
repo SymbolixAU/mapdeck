@@ -4,8 +4,15 @@
 \alias{mapdeck_view}
 \title{Mapdeck view}
 \usage{
-mapdeck_view(map, location = NULL, zoom = NULL, pitch = NULL,
-  bearing = NULL, duration = NULL, transition = c("linear", "fly"))
+mapdeck_view(
+  map,
+  location = NULL,
+  zoom = NULL,
+  pitch = NULL,
+  bearing = NULL,
+  duration = NULL,
+  transition = c("linear", "fly")
+)
 }
 \arguments{
 \item{map}{a \code{mapdeck} map object}

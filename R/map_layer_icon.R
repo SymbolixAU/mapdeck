@@ -15,11 +15,17 @@ mapdeckIconDependency <- function() {
 #' The Icon Layer takes in coordinate points and renders them as icons
 #' with a certain size.
 #'
-#' @inheritParams add_icon
+#' @inheritParams add_scatterplot
+#' @inheritParams add_polygon
 #' @param size in pixels. Default 1
 #' @param size_min_pixels the minimum size in pixels.
 #' small for the given zoom level
 #' @param size_max_pixels the maximum size in pixels.
+#' @param icon The URL/path of the icon(s).
+#' @param icon_width The width of the icon in pixels.
+#' @param icon_height The height of the icon in pixels.
+#' @param colour column containing numeric values to colour by.
+#' @param colour column containing numeric values to colour by.
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
@@ -71,7 +77,6 @@ add_icon <- function(
 	size_min_pixels = 1,
 	size_max_pixels = NULL,
 	colour = NULL,
-	opacity = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
 	highlight_colour = "#AAFFFFFF",
@@ -97,7 +102,6 @@ add_icon <- function(
 	l[["icon_height"]] <- force(icon_height)
 	l[["size"]] <- force(size)
 	l[["colour"]] <- force(colour)
-	l[["opacity"]] <- resolve_opacity(opacity)
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)

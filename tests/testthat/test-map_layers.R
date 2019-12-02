@@ -11,6 +11,7 @@ test_that("layerId includes all layers", {
 		, "grid"
 		, "heatmap"
 		, "hexagon"
+		, "icon"
 		, "line"
 		, "mesh"
 		, "path"
