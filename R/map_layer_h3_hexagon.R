@@ -186,5 +186,5 @@ add_h3_hexagon <- function(
 #' @export
 clear_h3_hexagon <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "h3_hexagon")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "h3-hexagon" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "h3_hexagon" )
 }
