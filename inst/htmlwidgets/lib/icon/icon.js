@@ -21,8 +21,8 @@ function add_icon_geo( map_id, map_type, icon_data, layer_id, auto_highlight, hi
     getColor: d => md_hexToRGBA( d.properties.fill_colour ),
     getIcon: d => ({
       url: d.properties.icon,
-      width: d.properties.icon_width || 128,
-      height: d.properties.icon_height || 128
+      height: d.properties.icon_height,
+      width: d.properties.icon_width
     }),
 
     pickable: true,

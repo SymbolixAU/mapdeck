@@ -139,7 +139,7 @@ add_icon <- function(
 		shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "scatterplot" )
 	}
 
-	js_transitions <- resolve_transitions( transitions, "pointcloud" )
+	js_transitions <- resolve_transitions( transitions, "icon" )
 	if( inherits( legend, "json" ) ) {
 		shape[["legend"]] <- legend
 	} else {
