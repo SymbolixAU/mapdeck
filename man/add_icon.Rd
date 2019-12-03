@@ -12,6 +12,8 @@ add_icon(
   icon = NULL,
   icon_width = NULL,
   icon_height = NULL,
+  icon_anchorX = NULL,
+  icon_anchorY = NULL,
   size = NULL,
   size_min_pixels = 1,
   size_max_pixels = NULL,

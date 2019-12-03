@@ -86,6 +86,8 @@ add_icon <- function(
 	icon = NULL,
 	icon_width = NULL,
 	icon_height = NULL,
+	icon_anchorX = NULL,
+	icon_anchorY = NULL,
 	size = NULL,
 	size_min_pixels = 1,
 	size_max_pixels = NULL,
@@ -113,6 +115,8 @@ add_icon <- function(
 	l[["icon"]] <- force(icon)
 	l[["icon_width"]] <- force(icon_width)
 	l[["icon_height"]] <- force(icon_height)
+	l[["icon_anchorX"]] <- force(icon_anchorX)
+	l[["icon_anchorY"]] <- force(icon_anchorY)
 	l[["size"]] <- force(size)
 	l[["colour"]] <- force(colour)
 	l[["tooltip"]] <- force(tooltip)

@@ -22,7 +22,9 @@ function add_icon_geo( map_id, map_type, icon_data, layer_id, auto_highlight, hi
     getIcon: d => ({
       url: d.properties.icon,
       height: d.properties.icon_height,
-      width: d.properties.icon_width
+      width: d.properties.icon_width,
+      anchorX: d.properties.icon_anchorX || d.properties.icon_width / 2,
+      anchorY: d.properties.icon_anchorY || d.properties.icon_height / 2
     }),
 
     pickable: true,
