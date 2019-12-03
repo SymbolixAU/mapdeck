@@ -14,6 +14,7 @@ resolve_transitions <- function( transitions, layer ) {
 		"greatcircle" = transitions_greatcircle( transitions ),
 		"grid" = transitions_grid( transitions ),
 		"hexagon" = transitions_hexagon( transitions ),
+		"icon" = transitions_icon( transitions ),
 		"line" = transitions_line( transitions ),
 		"path" = transitions_path( transitions ),
 		"pointcloud" = transitions_pointcloud( transitions ),
@@ -71,6 +72,13 @@ transitions_hexagon <- function( transitions ) {
 	transitions <- replace_name( transitions, "elevation", "getElevationWeight" )
 	transitions <- replace_name( transitions, "colour", "getColorWeight" )
 	return( transitions )
+}
+
+transitions_icon <- function( transitions ) {
+	transitions <- replace_name( transitions, "position", "getPosition" )
+	transitions <- replace_name( transitions, "size", "getSize" )
+	transitions <- replace_name( transitions, "colour", "getColor" )
+	transitions <- replace_name( transitions, "angle", "getAngle" )
 }
 
 transitions_line <- function( transitions ) {

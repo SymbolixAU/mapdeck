@@ -2,10 +2,10 @@
 % Please edit documentation in R/map_layer_arc.R, R/map_layer_bitmap.R,
 %   R/map_layer_column.R, R/map_layer_geojson.R, R/map_layer_greatcircle.R,
 %   R/map_layer_grid.R, R/map_layer_heatmap.R, R/map_layer_hexagon.R,
-%   R/map_layer_line.R, R/map_layer_mesh.R, R/map_layer_path.R,
-%   R/map_layer_pointcloud.R, R/map_layer_polygon.R, R/map_layer_scatterplot.R,
-%   R/map_layer_screengrid.R, R/map_layer_text.R, R/map_layer_title.R,
-%   R/map_layer_trips.R
+%   R/map_layer_icon.R, R/map_layer_line.R, R/map_layer_mesh.R,
+%   R/map_layer_path.R, R/map_layer_pointcloud.R, R/map_layer_polygon.R,
+%   R/map_layer_scatterplot.R, R/map_layer_screengrid.R, R/map_layer_text.R,
+%   R/map_layer_title.R, R/map_layer_trips.R
 \name{clear_arc}
 \alias{clear_arc}
 \alias{clear_bitmap}
@@ -15,6 +15,7 @@
 \alias{clear_grid}
 \alias{clear_heatmap}
 \alias{clear_hexagon}
+\alias{clear_icon}
 \alias{clear_line}
 \alias{clear_mesh}
 \alias{clear_path}
@@ -43,6 +44,8 @@ clear_heatmap(map, layer_id = NULL)
 
 clear_hexagon(map, layer_id = NULL)
 
+clear_icon(map, layer_id = NULL)
+
 clear_line(map, layer_id = NULL)
 
 clear_mesh(map, layer_id = NULL)
@@ -64,10 +67,6 @@ clear_title(map, layer_id = NULL)
 clear_trips(map, layer_id = NULL)
 }
 \arguments{
-\item{map}{a mapdeck map object}
-
-\item{layer_id}{the layer_id of the layer you want to clear}
-
 \item{map}{a mapdeck map object}
 
 \item{layer_id}{the layer_id of the layer you want to clear}
