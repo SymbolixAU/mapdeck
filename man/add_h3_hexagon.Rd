@@ -4,15 +4,32 @@
 \alias{add_h3_hexagon}
 \title{Add hexagon}
 \usage{
-add_h3_hexagon(map, data = get_map_data(map), hexagon = NULL,
-  stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
-  fill_colour = NULL, fill_opacity = NULL, elevation = NULL,
-  tooltip = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", light_settings = list(),
-  layer_id = NULL, id = NULL, palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
-  legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL)
+add_h3_hexagon(
+  map,
+  data = get_map_data(map),
+  hexagon = NULL,
+  stroke_colour = NULL,
+  stroke_width = NULL,
+  stroke_opacity = NULL,
+  fill_colour = NULL,
+  fill_opacity = NULL,
+  elevation = NULL,
+  tooltip = NULL,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  light_settings = list(),
+  layer_id = NULL,
+  id = NULL,
+  palette = "viridis",
+  na_colour = "#808080FF",
+  legend = FALSE,
+  legend_options = NULL,
+  legend_format = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -64,7 +81,7 @@ palette for different colour options (where available),
 
 \item{radius}{in metres. Default 1000}
 
-\item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
+\item{elevation_scale}{value to scale the elevations of the hexagons. Default 1}
 
 \item{colour_range}{vector of 6 hex colours}
 

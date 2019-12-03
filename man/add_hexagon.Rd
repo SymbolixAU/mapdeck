@@ -4,14 +4,30 @@
 \alias{add_hexagon}
 \title{Add hexagon}
 \usage{
-add_hexagon(map, data = get_map_data(map), polyline = NULL,
-  lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
-  elevation = NULL, elevation_function = c("sum", "mean", "min",
-  "max"), colour = NULL, colour_function = c("sum", "mean", "min",
-  "max"), legend = FALSE, legend_options = NULL, elevation_scale = 1,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL, brush_radius = NULL)
+add_hexagon(
+  map,
+  data = get_map_data(map),
+  polyline = NULL,
+  lon = NULL,
+  lat = NULL,
+  layer_id = NULL,
+  radius = 1000,
+  elevation = NULL,
+  elevation_function = c("sum", "mean", "min", "max"),
+  colour = NULL,
+  colour_function = c("sum", "mean", "min", "max"),
+  legend = FALSE,
+  legend_options = NULL,
+  elevation_scale = 1,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  colour_range = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL,
+  brush_radius = NULL
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -45,7 +61,7 @@ If supplied it specifies how the colour values are calculated. Defaults to sum.}
 
 \item{legend_options}{A list of options for controlling the legend.}
 
-\item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
+\item{elevation_scale}{value to scale the elevations of the hexagons. Default 1}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
