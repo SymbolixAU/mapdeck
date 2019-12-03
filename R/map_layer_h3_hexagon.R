@@ -114,9 +114,6 @@ add_h3_hexagon <- function(
 	l[["id"]] <- force( id )
 	l[["na_colour"]] <- force( na_colour )
 
-	legend <- force( legend )
-	legend <- aggregation_legend( legend, legend_options )
-
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
