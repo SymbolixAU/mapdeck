@@ -1,4 +1,4 @@
-function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, js_transition, is_extruded ) {
+function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_settings, elevation_scale, auto_highlight, highlight_colour, legend, js_transition, is_extruded ) {
 //bbox, update_view, focus_layer,
 
   const h3Layer = new H3HexagonLayer({
@@ -16,6 +16,7 @@ function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_sett
     getFillColor: d => md_hexToRGBA( d.fill_colour ),
     getLineWidth: d => d.stroke_width,
     getElevation: d => d.elevation,
+    elevationScale: elevation_scale,
     lightSettings: light_settings,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),

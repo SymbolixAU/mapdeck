@@ -87,6 +87,7 @@ add_h3_hexagon <- function(
 	elevation = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
+	elevation_scale = 1,
 	highlight_colour = "#AAFFFFFF",
 	light_settings = list(),
 	layer_id = NULL,
@@ -173,8 +174,8 @@ add_h3_hexagon <- function(
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, light_settings,
-		auto_highlight, highlight_colour, shape[["legend"]], js_transitions,
-		is_extruded
+		elevation_scale, auto_highlight, highlight_colour, shape[["legend"]],
+		js_transitions, is_extruded
 	)
 }
 
