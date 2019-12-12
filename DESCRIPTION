@@ -22,7 +22,7 @@ Imports:
     googlePolylines (>= 0.7.2),
     htmltools,
     htmlwidgets,
-    jsonify (>= 1.0.0002),
+    jsonify (>= 1.0.0003),
     magrittr,
     Rcpp,
     shiny
