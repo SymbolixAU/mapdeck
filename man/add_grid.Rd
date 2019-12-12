@@ -41,7 +41,7 @@ IF supplied it specifies how the elevation values are calcualted. Defaults to su
 \item{colour_function}{one of 'min', 'mean', 'max', 'sum'.
 If supplied it specifies how the colour values are calculated. Defaults to sum.}
 
-\item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
+\item{elevation_scale}{elevation multiplier.}
 
 \item{colour_range}{vector of 6 hex colours}
 
