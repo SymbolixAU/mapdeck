@@ -3,8 +3,8 @@ function md_setup_window( map_id ) {
 	md_setup_window_objects( map_id );
   md_setup_mapdeck_div( map_id );
 
-  md_setup_legend( map_id );
-  md_setup_title( map_id );
+  //md_setup_legend( map_id );
+  //md_setup_title( map_id );
   md_setup_tooltip( map_id );
 }
 
