@@ -10,8 +10,9 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
 
-        //console.log( "getting mapbox map??" );
-        //console.log( mapboxgl );
+      	console.log("renderValue");
+      	console.log("isShiny mode??");
+      	console.log(HTMLWidgets.shinyMode);
 
       	md_setup_window( el.id );
 
@@ -124,7 +125,8 @@ HTMLWidgets.widget({
 			  window[el.id + 'map'] = deckgl;
 
        }
-			    md_initialise_map(el, x);
+      console.log("initialise_map");
+			md_initialise_map(el, x);
       },
 
       resize: function(width, height) {
