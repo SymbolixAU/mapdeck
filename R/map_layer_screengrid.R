@@ -57,7 +57,8 @@ mapdeckScreengridDependency <- function() {
 #' ## as an sf object
 #' library(sf)
 #' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
-#' mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%
+#'
+#' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_screengrid(
 #'   data = sf
 #'   , weight = "weight",
@@ -89,6 +90,7 @@ add_screengrid <- function(
 	focus_layer = FALSE,
 	digits = 6
 ) {
+	brush_radius = NULL
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["weight"]] <- force( weight )
@@ -138,19 +140,19 @@ add_screengrid <- function(
 	jsfunc <- "add_screengrid_geo"
 	if( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_screengrid_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits, "screengrid" )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_screengrid_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson_df( data, l, geometry_column, digits, "screengrid" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_screengrid_polyline( data, l, geometry_column )
+		shape <- rcpp_aggregate_polyline( data, l, geometry_column, "screengrid" )
 		jsfunc <- "add_screengrid_polyline"
 	}
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, opacity, cell_size, colour_range,
-		bbox, update_view, focus_layer, aggregation
+		bbox, update_view, focus_layer, aggregation, brush_radius
 		)
 }
 

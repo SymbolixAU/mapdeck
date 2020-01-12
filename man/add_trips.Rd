@@ -9,7 +9,7 @@ add_trips(map, data = get_map_data(map), stroke_colour = NULL,
   trail_length = 180, start_time = get_m_range_start(data),
   end_time = get_m_range_end(data), animation_speed = 30,
   layer_id = NULL, legend = FALSE, legend_options = NULL,
-  legend_format = NULL)
+  legend_format = NULL, digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}

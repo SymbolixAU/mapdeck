@@ -12,7 +12,7 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   legend_options = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", layer_id = NULL,
   update_view = TRUE, focus_layer = FALSE, digits = 6,
-  transitions = NULL)
+  transitions = NULL, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -41,7 +41,7 @@ IF supplied it specifies how the elevation values are calcualted. Defaults to su
 \item{colour_function}{one of 'min', 'mean', 'max', 'sum'.
 If supplied it specifies how the colour values are calculated. Defaults to sum.}
 
-\item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
+\item{elevation_scale}{elevation multiplier.}
 
 \item{colour_range}{vector of 6 hex colours}
 
@@ -63,6 +63,10 @@ to conflict and not plot correctly}
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed}
 }
 \description{
 The Grid Layer renders a grid heatmap based on an array of points.
@@ -109,7 +113,7 @@ add_grid(
 library(sf)
 sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
 
-mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_grid(
   data = sf
   , cell_size = 5000

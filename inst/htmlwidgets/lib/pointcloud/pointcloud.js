@@ -1,12 +1,17 @@
 
-function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
+
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
 
   const pointcloudLayer = new deck.PointCloudLayer({
   	map_id: map_id,
     id: 'pointcloud-'+layer_id,
     data: pointcloud_data,
     radiusPixels: radius,
-    //getPosition: d => d.geometry.geometry.coordinates,
     getPosition: d => md_get_point_coordinates( d ),
     getColor: d => md_hexToRGBA( d.properties.fill_colour ),
     lightSettings: light_settings,
@@ -15,7 +20,9 @@ function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "pointcloud", info ),
     onHover: md_update_tooltip,
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -30,7 +37,13 @@ function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_pointcloud_polyline( map_id, map_type, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_pointcloud_polyline( map_id, map_type, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
+
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
 
   const pointcloudLayer = new deck.PointCloudLayer({
     map_id: map_id,
@@ -45,7 +58,9 @@ function add_pointcloud_polyline( map_id, map_type, pointcloud_data, radius, lay
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "pointcloud", info ),
     onHover: md_update_tooltip,
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {

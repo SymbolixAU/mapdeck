@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>mapdeck • mapdeck</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="mapdeck">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -94,13 +95,14 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>mapdeck</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-08-16</h4>
+            <h4 class="date">2019-11-12</h4>
       
       
       <div class="hidden name"><code>mapdeck.Rmd</code></div>
@@ -109,7 +111,7 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mapdeck)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mapdeck)</a></code></pre></div>
 <div id="what-is-mapdeck" class="section level1">
 <h1 class="hasAnchor">
 <a href="#what-is-mapdeck" class="anchor"></a>What is Mapdeck?</h1>
@@ -124,23 +126,23 @@
 <h1 class="hasAnchor">
 <a href="#the-basics" class="anchor"></a>The basics</h1>
 <p>You need a <a href="https://www.mapbox.com/help/how-access-tokens-work/">Mapbox Access Token</a> to load a map. Then call <code><a href="../reference/mapdeck.html">mapdeck(token = token)</a></code> to give you a map</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>key &lt;-<span class="st"> 'abc'</span>    <span class="co">## put your own token here</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">key &lt;-<span class="st"> 'abc'</span>    <span class="co">## put your own token here</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key)</a></code></pre></div>
 <p>You can make your token available ‘globally’ to all <code><a href="../reference/mapdeck.html">mapdeck()</a></code> calls by either</p>
 <ol style="list-style-type: decimal">
 <li>using <code><a href="../reference/set_token.html">set_token()</a></code>, which sets the token as an <code>option</code>
 </li>
-<li>having the token in your environment (e.g., using <code><a href="https://www.rdocumentation.org/packages/base/topics/Sys.setenv">Sys.setenv()</a></code> ) with the key one of “MAPBOX_TOKEN”,“MAPBOX_KEY”,“MAPBOX_API_TOKEN”, “MAPBOX_API_KEY”, “MAPBOX”, “MAPDECK”</li>
+<li>having the token in your environment (e.g., using <code><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv()</a></code> ) with the key one of “MAPBOX_TOKEN”,“MAPBOX_KEY”,“MAPBOX_API_TOKEN”, “MAPBOX_API_KEY”, “MAPBOX”, “MAPDECK”</li>
 </ol>
 <p>Here’s an example using <code><a href="../reference/set_token.html">set_token()</a></code></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="../reference/set_token.html">set_token</a></span>(<span class="st">'abc'</span>)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="kw"><a href="../reference/mapdeck_tokens.html">mapdeck_tokens</a></span>()</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#  Mapdeck tokens</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#   -  mapbox : abc</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/set_token.html">set_token</a></span>(<span class="st">'abc'</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="../reference/mapdeck_tokens.html">mapdeck_tokens</a></span>()</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#  Mapdeck tokens</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#   -  mapbox : abc</span></a></code></pre></div>
 <p>You can style the map using any <a href="https://www.mapbox.com/api-documentation/#styles">mapbox style</a> template styles, or you can <a href="https://www.mapbox.com/help/studio-manual-styles/">create one of your own</a></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="st">'mapbox://styles/mapbox/dark-v9'</span>)</a></code></pre></div>
 <p>I’ve provided a convenience function to select one of the mapbox defined styles</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="dt">style =</span> <span class="st">'dark'</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="dt">style =</span> <span class="st">'dark'</span>)</a></code></pre></div>
 <p>Once you have a map you can start adding layers through the various <code>add_*()</code> functions (there is an example of each one in this vignette).</p>
 <p>All details about layers, colours, tips &amp; triks, etc, are here</p>
 <ul>
@@ -155,6 +157,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -169,17 +172,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by David Cooley.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

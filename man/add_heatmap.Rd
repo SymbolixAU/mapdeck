@@ -62,6 +62,24 @@ The current version of this layer is supported only for WebGL2 enabled browswers
 So you may find it doesn't render in the RStudio viewer.
 }
 
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny)
+and on WebGL-2 supported browsers and hardware.
+
+The time is in milliseconds
+
+Available transitions for heatmap
+
+list(
+intensity = 0,
+threshold = 0,
+radius_pixels = 0
+)
+}
+
 \section{data}{
 
 
@@ -98,7 +116,8 @@ add_heatmap(
 ## as an sf object
 library(sf)
 sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
-mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) \%>\%
+
+mapdeck( style = mapdeck_style('dark'), pitch = 45 ) \%>\%
 add_heatmap(
   data = sf
   , weight = "weight",

@@ -130,6 +130,58 @@ add_grid(
 
 **sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
+## Heatmap
+
+```{r}
+
+df <- read.csv(paste0(
+'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+'examples/3d-heatmap/heatmap-data.csv'
+))
+
+mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
+ add_heatmap(
+   data = df[1:30000, ]
+   , lat = "lat"
+   , lon = "lng"
+   , weight = "weight",
+   , colour_range = colourvalues::colour_values(1:6, palette = "inferno")
+)
+
+```
+
+![Heatmap](./img/articles/heatmap.gif)
+
+## Hexagons
+
+```{r}
+
+
+library(mapdeck)
+
+set_token( read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
+df <- read.csv(paste0(
+  'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/'
+  , '3d-heatmap/heatmap-data.csv'
+))
+
+df <- df[!is.na(df$lng), ]
+
+mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
+  add_hexagon(
+    data = df[ df$lat > 54.5, ]
+    , lat = "lat"
+    , lon = "lng"
+    , layer_id = "hex_layer"
+    , elevation_scale = 100
+    , colour_range = colourvalues::colour_values(1:6, palette = colourvalues::get_palette("viridis")[70:256,])
+  )
+
+
+```
+
+![Hexagons](./img/articles/hexagons.png)
+
 ## Lines
 
 ```{r}

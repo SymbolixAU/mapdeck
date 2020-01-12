@@ -1,4 +1,10 @@
-function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
+
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
 
   const arcLayer = new ArcLayer({
   	map_id: map_id,
@@ -16,7 +22,9 @@ function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, high
     onHover: md_update_tooltip,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -32,7 +40,13 @@ function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, high
 }
 
 
-function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
+
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
 
   const arcLayer = new ArcLayer({
     map_id: map_id,
@@ -50,7 +64,9 @@ function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onHover: md_update_tooltip,
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {

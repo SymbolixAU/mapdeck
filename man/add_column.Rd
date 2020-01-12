@@ -13,7 +13,7 @@ add_column(map, data = get_map_data(map), polyline = NULL,
   layer_id = NULL, id = NULL, palette = "viridis",
   na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
   legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL)
+  digits = 6, transitions = NULL, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -27,7 +27,8 @@ EPSG:4326 (WGS 84) coordinate system}
 
 \item{lat}{column containing latitude values}
 
-\item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour.
+If using a hex colour, use either a single value, or a vector the same length as \code{data}}
 
 \item{fill_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
@@ -35,7 +36,8 @@ to be applied to all the shapes. Default 255. If a hex-string is used as the
 colour, this argument is ignored and you should include the alpha on the hex string}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
-\code{elevation} is ignored.}
+\code{elevation} is ignored.
+If using a hex colour, use either a single value, or a vector the same length as \code{data}}
 
 \item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
 

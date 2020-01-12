@@ -107,7 +107,8 @@ add_column <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -166,13 +167,13 @@ add_column <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_column_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_point_geojson( data, l, geometry_column, digits, "column" )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_column_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "column" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_column_polyline( data, l, geometry_column )
+		shape <- rcpp_point_polyline( data, l, geometry_column, "column" )
 		jsfunc <- "add_column_polyline"
 	}
 
@@ -186,7 +187,7 @@ add_column <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
 		radius, elevation_scale, disk_resolution, angle, coverage, shape[["legend"]], bbox, update_view,
-		focus_layer, js_transitions, is_extruded
+		focus_layer, js_transitions, is_extruded, brush_radius
 	)
 }
 

@@ -67,6 +67,13 @@ transitions_grid <- function( transitions ) {
 	return( transitions )
 }
 
+transitions_heatmap <- function( transitions ) {
+	transitions <- replace_name( transitions, "intensity", "intensity" )
+	transitions <- replace_name( transitions, "threshold", "threshold")
+	transitions <- replace_name( transitions, "radius_pixels", "radiusPixels")
+	return( transitions )
+}
+
 transitions_hexagon <- function( transitions ) {
 	transitions <- replace_name( transitions, "elevation", "getElevationWeight" )
 	transitions <- replace_name( transitions, "colour", "getColorWeight" )

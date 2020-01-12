@@ -58,7 +58,6 @@ mapdeckPointcloudDependency <- function() {
 #'   , layer_id = 'point'
 #'   , fill_colour = "country"
 #'   , tooltip = "country"
-#'   , update_view = FALSE
 #' )
 #'
 #' ## as an sf object wtih a Z attribute
@@ -105,7 +104,8 @@ add_pointcloud <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -150,21 +150,21 @@ add_pointcloud <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_pointcloud_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_point_geojson( data, l, geometry_column, digits, "pointcloud" )
 
 	} else if ( tp == "df" ) {
 		## TODO( here or in rcpp? )
-		if( is.null(elevation) ){
+		if( is.null( elevation ) ){
 			l[["elevation"]] <- 0
 		}
 
 		geometry_column <- list( geometry = c("lon","lat","elevation") )
-	  shape <- rcpp_pointcloud_geojson_df( data, l, geometry_column, digits )
+	  shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "pointcloud" )
 
 	} else if ( tp == "sfencoded" ) {
 
 		geometry_column <- "polyline"
-		shape <- rcpp_pointcloud_polyline( data, l, geometry_column )
+		shape <- rcpp_point_polyline( data, l, geometry_column, "pointcloud" )
 		jsfunc <- "add_pointcloud_polyline"
 	}
 
@@ -177,10 +177,12 @@ add_pointcloud <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
+	# print( shape )
+
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], radius, layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions
+		js_transitions, brush_radius
 		)
 }
 

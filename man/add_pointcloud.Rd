@@ -11,7 +11,8 @@ add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
   light_settings = list(), layer_id = NULL, id = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, digits = 6, transitions = NULL)
+  focus_layer = FALSE, digits = 6, transitions = NULL,
+  brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -29,7 +30,8 @@ EPSG:4326 (WGS 84) coordinate system}
 
 \item{radius}{value in pixels of each point. Default 10.}
 
-\item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour.
+If using a hex colour, use either a single value, or a vector the same length as \code{data}}
 
 \item{fill_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
@@ -159,7 +161,6 @@ add_pointcloud(
   , layer_id = 'point'
   , fill_colour = "country"
   , tooltip = "country"
-  , update_view = FALSE
 )
 
 ## as an sf object wtih a Z attribute

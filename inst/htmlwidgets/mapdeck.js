@@ -79,8 +79,9 @@ HTMLWidgets.widget({
 			      layers: [],
 			      //controller: myController
 			      //onLayerHover: setTooltip
-			      onViewStateChange: ({viewState}) => {
+			      onViewStateChange: ({viewState, interactionState}) => {
 
+			      	if (!HTMLWidgets.shinyMode) { return; }
 							// as per:
 							// https://github.com/uber/deck.gl/issues/3344
 							// https://github.com/SymbolixAU/mapdeck/issues/211
@@ -88,17 +89,52 @@ HTMLWidgets.widget({
   						const nw = viewport.unproject([0, 0]);
   						const se = viewport.unproject([viewport.width, viewport.height]);
 
-  						viewState.viewBounds = {
-  							north: nw[1],
-  							east:  se[0],
-  							south: se[1],
-  							west:  nw[0]
-  						};
+  						const w = nw[0] < -180 ? -180 : ( nw[0] > 180 ? 180 : nw[0] );
+  						const n = nw[1] < -90 ? -90 : ( nw[1] > 90 ? 90 : nw[1] );
 
-			      	if (!HTMLWidgets.shinyMode) {
-						    return;
-						  }
+  						const e = se[0] < -180 ? -180 : ( se[0] > 180 ? 180 : se[0] );
+  						const s = se[1] < -90 ? -90 : ( se[1] > 90 ? 90 : se[1] );
+
+							/*
+  						console.log(nw);
+  						console.log(se);
+
+  						console.log(w);
+  						console.log(e);
+  						*/
+
+  						viewState.viewBounds = {
+  							north: n, //nw[1],
+  							east:  e, //se[0],
+  							south: s, //se[1],
+  							west:  w //nw[0]
+  						};
+  						viewState.interactionState = interactionState;
+
+
 						  Shiny.onInputChange(el.id + '_view_change', viewState);
+			      },
+			      onDragStart(info, event){
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
+			      	info.layer = undefined; // in case of dragging a layer
+			      	Shiny.onInputChange(el.id +'_drag_start', info);
+			      },
+			      onDrag(info, event){
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
+			      	info.layer = undefined; // in case of dragging a layer
+			      	Shiny.onInputChange(el.id +'_drag', info);
+			      },
+			      onDragEnd(info, event){
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
+			      	info.layer = undefined; // in case of dragging a layer
+			      	Shiny.onInputChange(el.id +'_drag_end', info);
+			      },
+			      onResize(size) {
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	Shiny.onInputChange(el.id +'_resize', size);
 			      }
 			  });
 

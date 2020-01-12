@@ -5,11 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Why isn’t it working? • mapdeck</title>
+<title>Why isn't it working? • mapdeck</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Why isn’t it working?">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Why isn't it working?">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -94,13 +95,14 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Why isn’t it working?</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-06-14</h4>
+            <h4 class="date">2019-11-12</h4>
       
       
       <div class="hidden name"><code>issues.Rmd</code></div>
@@ -123,7 +125,7 @@
 <div id="map-doesnt-zoom-to-the-layer" class="section level2">
 <h2 class="hasAnchor">
 <a href="#map-doesnt-zoom-to-the-layer" class="anchor"></a>Map doesn’t zoom to the layer</h2>
-<p>Are you subsetting an <code>sf</code> object without the <code>sf</code> library loaded? <a href="file:///Users/dave/Documents/github/mapdeck/docs/articles/tips_tricks.html#sf">See here</a></p>
+<p>Are you subsetting an <code>sf</code> object without the <code>sf</code> library loaded? <a href="https://symbolixau.github.io/mapdeck/articles/tips_tricks.html#sf">See here</a></p>
 <p>Or are you plotting GeoJSON or an <code>sfencodedLite</code> object? The bounding box is not calculated for either of these, so the map doesn’t know where to focus</p>
 </div>
 <div id="map-loads-but-the-layer-data-doesnt" class="section level2">
@@ -131,9 +133,17 @@
 <a href="#map-loads-but-the-layer-data-doesnt" class="anchor"></a>Map loads but the layer / data doesn’t</h2>
 <p>Do you have <code>NA</code>s in your data? Mapdeck will have issues plotting if there are, so it’s worth checking.</p>
 </div>
+<div id="some-maps-in-a-document-rmd-shiny-load-some-dont" class="section level2">
+<h2 class="hasAnchor">
+<a href="#some-maps-in-a-document-rmd-shiny-load-some-dont" class="anchor"></a>Some maps in a document (Rmd, shiny) load, some don’t</h2>
+<p>Maybe you have too many maps loaded. There is a <a href="https://github.com/mapbox/mapbox-gl-js/issues/7332">known issue with Mapbox</a> where browsers don’t support enough WebGL contexts.</p>
+<p>If you inspect your document you may see this error. This indicates you have too many maps.</p>
+<p><img src="img/articles/too_many_contexts.png"></p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -142,6 +152,7 @@
       <li><a href="#browser-is-blank">Browser is blank</a></li>
       <li><a href="#map-doesnt-zoom-to-the-layer">Map doesn’t zoom to the layer</a></li>
       <li><a href="#map-loads-but-the-layer-data-doesnt">Map loads but the layer / data doesn’t</a></li>
+      <li><a href="#some-maps-in-a-document-rmd-shiny-load-some-dont">Some maps in a document (Rmd, shiny) load, some don’t</a></li>
       </ul>
 </div>
       </div>
@@ -149,17 +160,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by David Cooley.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

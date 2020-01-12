@@ -118,6 +118,7 @@ add_greatcircle <- function(
 	transitions = NULL,
 	digits = 6
 ) {
+	brush_radius = NULL
 
 	l <- list()
 	l[["origin"]] <- force(origin)
@@ -163,13 +164,13 @@ add_greatcircle <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
-		shape <- rcpp_greatcircle_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_od_geojson( data, l, geometry_column, digits, "greatcircle" )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
-		shape <- rcpp_greatcircle_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_od_geojson_df( data, l, geometry_column, digits, "greatcircle" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- c("origin", "destination")
-		shape <- rcpp_greatcircle_polyline( data, l, geometry_column )
+		shape <- rcpp_od_polyline( data, l, geometry_column, "greatcircle" )
 		jsfunc <- "add_greatcircle_polyline"
 	}
 
@@ -183,7 +184,7 @@ add_greatcircle <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition,
-		wrap_longitude
+		wrap_longitude, brush_radius
 	)
 }
 

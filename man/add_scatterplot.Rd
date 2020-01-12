@@ -37,7 +37,8 @@ small for the given zoom level}
 \item{radius_max_pixels}{the maximum radius in pixels. Can prevent the circle from
 getting too big when zoomed in}
 
-\item{fill_colour}{column of \code{data} or hex colour for the fill colour.}
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour.
+If using a hex colour, use either a single value, or a vector the same length as \code{data}}
 
 \item{fill_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
@@ -45,7 +46,8 @@ to be applied to all the shapes. Default 255. If a hex-string is used as the
 colour, this argument is ignored and you should include the alpha on the hex string}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
-\code{elevation} is ignored.}
+\code{elevation} is ignored.
+If using a hex colour, use either a single value, or a vector the same length as \code{data}}
 
 \item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
 
@@ -194,7 +196,7 @@ df <- read.csv(paste0(
 
 df <- df[ !is.na(df$lng), ]
 
-mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+mapdeck(style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_scatterplot(
   data = df
   , lat = "lat"
@@ -206,7 +208,7 @@ add_scatterplot(
 library(sf)
 sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
 
-mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) \%>\%
+mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_scatterplot(
   data = sf
   , radius = 100000

@@ -19,16 +19,19 @@ mapdeckPolygonDependency <- function() {
 #'
 #' @param polyline optional column of \code{data} containing the polylines, if using encoded polylines
 #' @param fill_colour column of \code{data} or hex colour for the fill colour.
+#' If using a hex colour, use either a single value, or a vector the same length as \code{data}
 #' @param fill_opacity Either a string specifying the column of \code{data}
 #' containing the opacity of each shape, or a single value in [0,255], or [0, 1),
 #' to be applied to all the shapes. Default 255. If a hex-string is used as the
 #' colour, this argument is ignored and you should include the alpha on the hex string
 #' @param stroke_colour variable of \code{data} or hex colour for the stroke. If used,
 #' \code{elevation} is ignored.
+#' If using a hex colour, use either a single value, or a vector the same length as \code{data}
 #' @param stroke_width width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param elevation the height the polygon extrudes from the map. Only available if neither
 #' \code{stroke_colour} or \code{stroke_width} are supplied. Default 0
+#' @param elevation_scale elevation multiplier.
 #'
 #' @section data:
 #'
@@ -118,6 +121,7 @@ add_polygon <- function(
 	elevation = NULL,
 	tooltip = NULL,
 	auto_highlight = FALSE,
+	elevation_scale = 1,
 	highlight_colour = "#AAFFFFFF",
 	light_settings = list(),
 	layer_id = NULL,
@@ -155,6 +159,7 @@ add_polygon <- function(
 	bbox <- init_bbox()
 	update_view <- force( update_view )
 	focus_layer <- force( focus_layer )
+	elevation_scale <- force( elevation_scale )
 
 	is_extruded <- TRUE
 	if( !is.null( l[["stroke_width"]] ) | !is.null( l[["stroke_colour"]] ) ) {
@@ -213,7 +218,7 @@ add_polygon <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions, is_extruded
+		js_transitions, is_extruded, elevation_scale
 		)
 }
 

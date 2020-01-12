@@ -18,8 +18,10 @@ Rcpp::List geojson_defaults(int n) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_geojson_geojson(
-		Rcpp::DataFrame data, Rcpp::List params,
-		std::string geometry_column, int digits
+		Rcpp::DataFrame data,
+		Rcpp::List params,
+		std::string geometry_column,
+		int digits
 	) {
 
 	int data_rows = data.nrows();

@@ -1,5 +1,5 @@
 
-function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
+function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, elevation_scale ) {
 
   const polygonLayer = new PolygonLayer({
   	map_id: map_id,
@@ -11,6 +11,7 @@ function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settin
     wireframe: false,
     extruded: is_extruded,
     lineWidthMinPixels: 0,
+    elevationScale: elevation_scale,
     getPolygon: d => md_get_polygon_coordinates( d ),
     getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
     getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
@@ -38,7 +39,7 @@ function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settin
 }
 
 
-function add_polygon_polyline( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded ) {
+function add_polygon_polyline( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, elevation_scale ) {
 
   const polygonLayer = new PolygonLayer({
     map_id: map_id,
@@ -50,6 +51,7 @@ function add_polygon_polyline( map_id, map_type, polygon_data, layer_id, light_s
     wireframe: false,
     extruded: is_extruded,
     lineWidthMinPixels: 0,
+    elevationScale: elevation_scale,
     getPolygon: d => decode_polygons( d.polyline ),
     getLineColor: d => md_hexToRGBA( d.stroke_colour ),
     getFillColor: d => md_hexToRGBA( d.fill_colour ),
@@ -76,6 +78,7 @@ function add_polygon_polyline( map_id, map_type, polygon_data, layer_id, light_s
 }
 
 function decode_polygons( polylines ) {
+
   var i, j, p;
   var coordinates = [];
   var lines = [];
@@ -83,11 +86,15 @@ function decode_polygons( polylines ) {
   for (i = 0; i < polylines.length; i++ ) {
     lines = polylines[i];
 
-    for (j = 0; j < lines.length; j++ ) {
-    	p = lines[j];
-	    if ( p != "-") {
-	      coordinates.push( md_decode_polyline( p ) );
+    if ( Array.isArray( lines ) ) {
+	    for (j = 0; j < lines.length; j++ ) {
+	    	p = lines[j];
+		    if ( p != "-") {
+		      coordinates.push( md_decode_polyline( p ) );
+		    }
 	    }
+    } else {
+    	coordinates.push( md_decode_polyline( lines ) );
     }
   }
   return coordinates;
