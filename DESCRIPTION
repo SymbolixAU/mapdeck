@@ -1,7 +1,7 @@
 Package: mapdeck
 Type: Package
 Title: Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'
-Version: 0.2.1007
+Version: 0.2.1008
 Date: 2019-04-01
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
@@ -22,7 +22,7 @@ Imports:
     googlePolylines (>= 0.7.2),
     htmltools,
     htmlwidgets,
-    jsonify (>= 1.0.0002),
+    jsonify (>= 1.0.0003),
     magrittr,
     Rcpp,
     shiny

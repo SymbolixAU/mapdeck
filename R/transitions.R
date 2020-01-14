@@ -109,6 +109,7 @@ transitions_polygon <- function( transitions ) {
 	transitions <- replace_name( transitions, "stroke_colour", "getLineColor" )
 	transitions <- replace_name( transitions, "stroke_width", "getLineWidth" )
 	transitions <- replace_name( transitions, "elevation", "getElevation" )
+	transitions <- replace_name( transitions, "elevation_scale", "elevationScale")
 	return( transitions )
 }
 
