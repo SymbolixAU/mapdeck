@@ -10,7 +10,6 @@ mapdeckHeatmapDependency <- function() {
 	)
 }
 
-
 #' Add Heatmap
 #'
 #' The Heatmap Layer can be used to visualise spatial distribution of data.
@@ -39,6 +38,22 @@ mapdeckHeatmapDependency <- function() {
 #' For example, 0.1 affects all pixels with weight under 10\% of the max.
 #'
 #' @inheritSection add_polygon data
+#'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny)
+#' and on WebGL-2 supported browsers and hardware.
+#'
+#' The time is in milliseconds
+#'
+#' Available transitions for heatmap
+#'
+#' list(
+#' intensity = 0,
+#' threshold = 0,
+#' radius_pixels = 0
+#' )
 #'
 #' @examples
 #' \donttest{
@@ -96,7 +111,8 @@ add_heatmap <- function(
 	layer_id = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
-	digits = 6
+	digits = 6,
+	transitions = NULL
 ) {
 
 	#experimental_layer("heatmap")
@@ -155,9 +171,11 @@ add_heatmap <- function(
 		jsfunc <- "add_heatmap_polyline"
 	}
 
+	js_transitions <- resolve_transitions( transitions, "heatmap" )
+
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, colour_range,
-		radius_pixels, intensity, threshold, bbox, update_view, focus_layer
+		radius_pixels, intensity, threshold, bbox, update_view, focus_layer, js_transitions
 	)
 }
 
@@ -168,4 +186,3 @@ clear_heatmap <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "heatmap")
 	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "heatmap" )
 }
-

@@ -13,6 +13,7 @@ resolve_transitions <- function( transitions, layer ) {
 		"geojson" = transitions_geojson( transitions ),
 		"greatcircle" = transitions_greatcircle( transitions ),
 		"grid" = transitions_grid( transitions ),
+		"heatmap" = transitions_heatmap( transitions ),
 		"hexagon" = transitions_hexagon( transitions ),
 		"line" = transitions_line( transitions ),
 		"path" = transitions_path( transitions ),
@@ -64,6 +65,14 @@ transitions_greatcircle <- function( transitions ) {
 transitions_grid <- function( transitions ) {
 	transitions <- replace_name( transitions, "elevation", "getElevationValue" )
 	transitions <- replace_name( transitions, "colour", "getColorValue" )
+	return( transitions )
+}
+
+transitions_heatmap <- function( transitions ) {
+	transitions <- replace_name( transitions, "intensity", "intensity" )
+	transitions <- replace_name( transitions, "threshold", "threshold" )
+	transitions <- replace_name( transitions, "weight", "getWeight")
+	transitions <- replace_name( transitions, "radius_pixels", "radiusPixels" )
 	return( transitions )
 }
 
