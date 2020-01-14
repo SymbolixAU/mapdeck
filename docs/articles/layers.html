@@ -195,15 +195,17 @@
 <a class="sourceLine" id="cb5-3" title="3"><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></a>
 <a class="sourceLine" id="cb5-4" title="4">))</a>
 <a class="sourceLine" id="cb5-5" title="5"></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="kw"><a href="../reference/add_grid.html">add_grid</a></span>(</a>
-<a class="sourceLine" id="cb5-8" title="8">  <span class="dt">data =</span> df</a>
-<a class="sourceLine" id="cb5-9" title="9">  , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
-<a class="sourceLine" id="cb5-10" title="10">  , <span class="dt">lon =</span> <span class="st">"lng"</span></a>
-<a class="sourceLine" id="cb5-11" title="11">  , <span class="dt">cell_size =</span> <span class="dv">5000</span></a>
-<a class="sourceLine" id="cb5-12" title="12">  , <span class="dt">elevation_scale =</span> <span class="dv">50</span></a>
-<a class="sourceLine" id="cb5-13" title="13">  , <span class="dt">layer_id =</span> <span class="st">"grid_layer"</span></a>
-<a class="sourceLine" id="cb5-14" title="14">)</a></code></pre></div>
+<a class="sourceLine" id="cb5-6" title="6">df &lt;-<span class="st"> </span>df[<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(df<span class="op">$</span>lng), ]</a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="kw"><a href="../reference/add_grid.html">add_grid</a></span>(</a>
+<a class="sourceLine" id="cb5-10" title="10">  <span class="dt">data =</span> df</a>
+<a class="sourceLine" id="cb5-11" title="11">  , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
+<a class="sourceLine" id="cb5-12" title="12">  , <span class="dt">lon =</span> <span class="st">"lng"</span></a>
+<a class="sourceLine" id="cb5-13" title="13">  , <span class="dt">cell_size =</span> <span class="dv">5000</span></a>
+<a class="sourceLine" id="cb5-14" title="14">  , <span class="dt">elevation_scale =</span> <span class="dv">50</span></a>
+<a class="sourceLine" id="cb5-15" title="15">  , <span class="dt">layer_id =</span> <span class="st">"grid_layer"</span></a>
+<a class="sourceLine" id="cb5-16" title="16">)</a></code></pre></div>
 <div class="figure">
 <img src="img/articles/grid.gif" alt="Grid"><p class="caption">Grid</p>
 </div>
@@ -218,14 +220,16 @@
 <a class="sourceLine" id="cb6-4" title="4"><span class="st">'examples/3d-heatmap/heatmap-data.csv'</span></a>
 <a class="sourceLine" id="cb6-5" title="5">))</a>
 <a class="sourceLine" id="cb6-6" title="6"></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="st"> </span><span class="kw"><a href="../reference/add_heatmap.html">add_heatmap</a></span>(</a>
-<a class="sourceLine" id="cb6-9" title="9">   <span class="dt">data =</span> df[<span class="dv">1</span><span class="op">:</span><span class="dv">30000</span>, ]</a>
-<a class="sourceLine" id="cb6-10" title="10">   , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
-<a class="sourceLine" id="cb6-11" title="11">   , <span class="dt">lon =</span> <span class="st">"lng"</span></a>
-<a class="sourceLine" id="cb6-12" title="12">   , <span class="dt">weight =</span> <span class="st">"weight"</span>,</a>
-<a class="sourceLine" id="cb6-13" title="13">   , <span class="dt">colour_range =</span> colourvalues<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/colourvalues/man/colour_values.html">colour_values</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">palette =</span> <span class="st">"inferno"</span>)</a>
-<a class="sourceLine" id="cb6-14" title="14">)</a></code></pre></div>
+<a class="sourceLine" id="cb6-7" title="7">df &lt;-<span class="st"> </span>df[<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(df<span class="op">$</span>lng), ]</a>
+<a class="sourceLine" id="cb6-8" title="8"></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>), <span class="dt">pitch =</span> <span class="dv">45</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="st"> </span><span class="kw"><a href="../reference/add_heatmap.html">add_heatmap</a></span>(</a>
+<a class="sourceLine" id="cb6-11" title="11">   <span class="dt">data =</span> df[<span class="dv">1</span><span class="op">:</span><span class="dv">30000</span>, ]</a>
+<a class="sourceLine" id="cb6-12" title="12">   , <span class="dt">lat =</span> <span class="st">"lat"</span></a>
+<a class="sourceLine" id="cb6-13" title="13">   , <span class="dt">lon =</span> <span class="st">"lng"</span></a>
+<a class="sourceLine" id="cb6-14" title="14">   , <span class="dt">weight =</span> <span class="st">"weight"</span>,</a>
+<a class="sourceLine" id="cb6-15" title="15">   , <span class="dt">colour_range =</span> colourvalues<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/colourvalues/man/colour_values.html">colour_values</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">palette =</span> <span class="st">"inferno"</span>)</a>
+<a class="sourceLine" id="cb6-16" title="16">)</a></code></pre></div>
 <div class="figure">
 <img src="img/articles/heatmap.gif" alt="Heatmap"><p class="caption">Heatmap</p>
 </div>

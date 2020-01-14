@@ -115,6 +115,8 @@ df <- read.csv(paste0(
 'examples/3d-heatmap/heatmap-data.csv'
 ))
 
+df <- df[!is.na(df$lng), ]
+
 mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
 add_grid(
   data = df
@@ -138,6 +140,8 @@ df <- read.csv(paste0(
 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
 'examples/3d-heatmap/heatmap-data.csv'
 ))
+
+df <- df[!is.na(df$lng), ]
 
 mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
  add_heatmap(

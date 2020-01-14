@@ -31,7 +31,7 @@ function add_title(map_id, map_type, layer_id, title_data) {
     }
 
     if (isUpdating === false) {
-        md_placeTitle(map_id, map_type, window[map_id + 'mapTitle' + layer_id], title_data.position);
+        md_placeTitle(map_id, map_type, window[map_id + 'mapTitle' + layer_id] );
     }
 }
 
@@ -64,35 +64,10 @@ function clear_title( map_id, map_type, layer_id ) {
 }
 
 
-function md_placeTitle( map_id, map_type, object, position ) {
+function md_placeTitle( map_id, map_type, object ) {
 
     var mapbox_ctrl = document.getElementById( "mapTitleContainer"+map_id);
     mapbox_ctrl.appendChild( object );
-
-/*
-    console.log("md_placeTitle");
-    console.log(map_type);
-    console.log(mapbox_ctrl);
-*/
-
-/*
-    if( map_type == "google_map" ) {
-    	// if the titleContainer already exists on the element, we don't need to push it to the map
-    	window[map_id + 'map'].controls[google.maps.ControlPosition.TOP_CENTER].push( mapbox_ctrl );
-    }
-*?
-
-/*
-    var title = {};
-    var position = "TOP_LEFT";
-
-    title = {
-        id: object.getAttribute('id'),
-        position: position
-    };
-
-    window[map_id + 'mapTitlePositions'].push( title );
-*/
 }
 
 

@@ -3,7 +3,7 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
   var currentLon, currentLat, currentPitch, currentBearing, currentZoom;
 
   if( map_type == "google_map" ) {
-  	console.log( location );
+  	//console.log( location );
   	window[map_id + 'map'].setCenter( { lat: location[1], lng: location[0] } );
   	window[map_id + 'map'].setZoom( zoom );
   } else {

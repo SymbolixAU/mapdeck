@@ -1,6 +1,6 @@
 # mapdeck 0.3
 
-
+* `add_view_state()` overlays the current View State [issue238](https://github.com/SymbolixAU/mapdeck/issues/238)
 * performance improvements for dates and factors [issue235](https://github.com/SymbolixAU/mapdeck/issues/235)
 * `add_bitmap()` to add a bitmap / image to the map
 * input$map_view_change now observed [issue211](https://github.com/SymbolixAU/mapdeck/issues/211) - thanks @zacdav
