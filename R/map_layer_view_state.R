@@ -13,7 +13,19 @@ mapdeckViewStateDependency <- function() {
 
 #' Add View State
 #'
-#' Adds the View State to a map
+#' Adds the current View State to a map. The view state consists of
+#' \itemize{
+#'   \item{width}
+#'   \item{height}
+#'   \item{latitude & longitude}
+#'   \item{zoom}
+#'   \item{bearing}
+#'   \item{pitch}
+#'   \item{altitude}
+#'   \item{viewBounds}
+#'   \item{interactionState}
+#' }
+#'
 #'
 #' @inheritParams add_arc
 #'
@@ -24,6 +36,7 @@ mapdeckViewStateDependency <- function() {
 #'   add_view_state()
 #' }
 #'
+#' @export
 add_view_state <- function(map, layer_id = NULL) {
 
 	layer_id <- layerId( layer_id, layer = "view_state" )

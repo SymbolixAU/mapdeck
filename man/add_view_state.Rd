@@ -14,7 +14,18 @@ distinguish between shape layers of the same type. Layers with the same id are l
 to conflict and not plot correctly}
 }
 \description{
-Adds the View State to a map
+Adds the current View State to a map. The view state consists of
+\itemize{
+  \item{width}
+  \item{height}
+  \item{latitude & longitude}
+  \item{zoom}
+  \item{bearing}
+  \item{pitch}
+  \item{altitude}
+  \item{viewBounds}
+  \item{interactionState}
+}
 }
 \examples{
 \donttest{
