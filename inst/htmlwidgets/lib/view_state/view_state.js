@@ -1,6 +1,8 @@
 function add_view_state( map_id, viewState ) {
 	'use strict';
 
+  console.log( "add_view_state" );
+
 	if( !md_div_exists( 'mapViewStateContainer'+map_id) ) {
 		md_setup_view_state( map_id );
 	}
@@ -31,7 +33,7 @@ function md_placeViewState( map_id, object ) {
     mapbox_ctrl.appendChild( object );
 }
 
-/*
+
 function clear_view_state( map_id ) {
 
 	var element = document.getElementById( map_id + 'mapViewState' );
@@ -41,4 +43,4 @@ function clear_view_state( map_id ) {
 	}
 
 }
-*/
+

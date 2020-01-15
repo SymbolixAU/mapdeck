@@ -97,7 +97,7 @@ HTMLWidgets.widget({
 
   						if( x.show_view_state ) {
   							var vs = JSON.stringify( viewState );
-  							console.log( vs );
+  							//console.log( vs );
   							window[el.id + 'mapViewState'].innerHTML = vs;
   						}
 
