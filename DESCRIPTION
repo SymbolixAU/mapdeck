@@ -43,10 +43,11 @@ LinkingTo:
     jsonify,
     rapidjsonr,
     Rcpp,
-    sfheaders,
+    sfheaders (>= 0.1.0),
     spatialwidget (>= 0.2.1007)
 Remotes:
     github::SymbolixAU/jsonify,
-    github::SymbolixAU/spatialwidget
+    github::SymbolixAU/spatialwidget,
+    github::dcooley/sfheaders
     
     
