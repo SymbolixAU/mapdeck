@@ -3,17 +3,17 @@ function add_tile3d( map_id, map_type, tile_data, layer_id, ion_token ) {
 
   console.log( ion_token );
 
-	const tileLayer = new Tile3DLayer({
+	const tileLayer = new deck.Tile3DLayer({
 		map_id: map_id,
 		id: 'tile3d-'+layer_id,
-		//data: tile_data,
-		_ionAssetId: 43978,
-		_ionAccessToken: ion_token,
+		data: tile_data,
+		//_ionAssetId: 43978,
+		//_ionAccessToken: ion_token,
 		pointSize: 2.0,
 		opacity: 1.0,
-		onTilesetLoad: (tileset) => {
-			console.log( "loaded tileset" );
-			console.log( tileset );
+		//onTilesetLoad: (tileset) => {
+		//	console.log( "loaded tileset" );
+		//	console.log( tileset );
 		//	// recenter
 			//const {cartographicCenter, zoom} = tileset;
 			//this.setState({
@@ -24,13 +24,13 @@ function add_tile3d( map_id, map_type, tile_data, layer_id, ion_token ) {
 			//		zoom
 			//	}
 			//});
-		},
-		onTileLoadFail: (tileHeader, url, message ) => {
-			console.log( "load failed" );
-			console.log( tileHeader );
-			console.log( url );
-			console.log( message );
-		}
+		//},
+		//onTileError: (tileHeader, url, message ) => {
+		//	console.log( "load failed" );
+		//	console.log( tileHeader );
+		//	console.log( url );
+		//	console.log( message );
+		//}
 	});
 
 	console.log( tileLayer );

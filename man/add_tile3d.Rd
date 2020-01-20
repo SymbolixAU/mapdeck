@@ -4,8 +4,7 @@
 \alias{add_tile3d}
 \title{Add Tile3D}
 \usage{
-add_tile3d(map, data = get_map_data(map), layer_id = NULL,
-  ion_token = NULL)
+add_tile3d(map, data = get_map_data(map), layer_id = NULL, ion_token = NULL)
 }
 \description{
 Add Tile3D

@@ -17,11 +17,13 @@ mapdeckTile3DDependency <- function() {
 #' \donttest{
 #'
 #' canary_warf <- 'https://raw.githubusercontent.com/AnalyticalGraphicsInc/3d-tiles/master/examples/tileset.json'
+#' tl <- "https://raw.githubusercontent.com/AnalyticalGraphicsInc/3d-tiles-samples/master/tilesets/TilesetWithDiscreteLOD/tileset.json"
 #' mapdeck(
-#'   style = mapdeck_style("dark")
+#'   location = c(0, 0)
+#'   , zoom = 6
 #'   ) %>%
 #'   add_tile3d(
-#'     data = canary_warf
+#'     data = tl
 #'   )
 #'
 #'
