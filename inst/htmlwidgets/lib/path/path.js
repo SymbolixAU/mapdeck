@@ -3,7 +3,12 @@
 function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour,
 legend, bbox, update_view, focus_layer, js_transition, billboard ) {
 
-  const pathLayer = new PathLayer({
+  var extensions = [];
+  extensions.push(
+  	new deck.PathStyleExtension({dash: true})
+  );
+
+  const pathLayer = new deck.PathLayer({
     map_id: map_id,
     id: 'path-'+layer_id,
     data: path_data,
@@ -23,7 +28,8 @@ legend, bbox, update_view, focus_layer, js_transition, billboard ) {
     onHover: md_update_tooltip,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -40,7 +46,12 @@ legend, bbox, update_view, focus_layer, js_transition, billboard ) {
 
 function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard ) {
 
-  const pathLayer = new PathLayer({
+  var extensions = [];
+  extensions.push(
+  	new deck.PathStyleExtension({dash: true})
+  );
+
+  const pathLayer = new deck.PathLayer({
     map_id: map_id,
     id: 'path-'+layer_id,
     data: path_data,

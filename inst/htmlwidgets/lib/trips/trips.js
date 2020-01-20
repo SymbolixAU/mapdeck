@@ -2,7 +2,7 @@
 function add_trips_geo( map_id, map_type, trips_data, opacity, layer_id,
 trail_length, start_time, end_time, animation_speed, legend ) {
 
-  var tripsLayer = new TripsLayer({
+  var tripsLayer = new deck.TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
     parameters: {
@@ -45,7 +45,7 @@ trail_length, start_time, end_time, animation_speed, legend) {
 
     var time = ((timestamp % loopTime) / loopTime) * loopLength;
 
-		var tripsLayer = new TripsLayer({
+		var tripsLayer = new deck.TripsLayer({
 		    id: 'trips-'+layer_id,
 		    data: trips_data,
 		    parameters: {

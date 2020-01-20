@@ -4,11 +4,23 @@
 \alias{add_heatmap}
 \title{Add Heatmap}
 \usage{
-add_heatmap(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, weight = NULL, colour_range = NULL,
-  radius_pixels = 30, intensity = 1, threshold = 0.05,
-  layer_id = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL)
+add_heatmap(
+  map,
+  data = get_map_data(map),
+  lon = NULL,
+  lat = NULL,
+  polyline = NULL,
+  weight = NULL,
+  colour_range = NULL,
+  radius_pixels = 30,
+  intensity = 1,
+  threshold = 0.05,
+  layer_id = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}

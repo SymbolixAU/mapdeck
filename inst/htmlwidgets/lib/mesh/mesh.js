@@ -35,7 +35,7 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
   */
 
 
-  const meshLayer = new PolygonLayer({
+  const meshLayer = new deck.PolygonLayer({
   	map_id: map_id,
     id: 'polygon-'+layer_id,
     data: polygon_data,

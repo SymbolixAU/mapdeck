@@ -286,7 +286,7 @@ add_arc <- function(
 		geometry_column <- c( "origin", "destination" )
 		shape <- rcpp_od_geojson( data, l, geometry_column, digits, "arc" )
   } else if ( tp == "df" ) {
-  	geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
+  	geometry_column <- list( origin = c("start_lon", "start_lat", "start_elev"), destination = c("end_lon", "end_lat", "end_elev") )
   	shape <- rcpp_od_geojson_df( data, l, geometry_column, digits, "arc" )
   } else if ( tp == "sfencoded" ) {
   	geometry_column <- c("origin", "destination")

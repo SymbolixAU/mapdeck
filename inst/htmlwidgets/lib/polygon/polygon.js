@@ -1,7 +1,7 @@
 
 function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, elevation_scale ) {
 
-  const polygonLayer = new PolygonLayer({
+  const polygonLayer = new deck.PolygonLayer({
   	map_id: map_id,
     id: 'polygon-'+layer_id,
     data: polygon_data,
@@ -41,7 +41,7 @@ function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settin
 
 function add_polygon_polyline( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, elevation_scale ) {
 
-  const polygonLayer = new PolygonLayer({
+  const polygonLayer = new deck.PolygonLayer({
     map_id: map_id,
     id: 'polygon-'+layer_id,
     data: polygon_data,

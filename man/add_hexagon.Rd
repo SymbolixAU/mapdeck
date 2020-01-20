@@ -4,14 +4,30 @@
 \alias{add_hexagon}
 \title{Add hexagon}
 \usage{
-add_hexagon(map, data = get_map_data(map), polyline = NULL,
-  lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
-  elevation = NULL, elevation_function = c("sum", "mean", "min",
-  "max"), colour = NULL, colour_function = c("sum", "mean", "min",
-  "max"), legend = FALSE, legend_options = NULL, elevation_scale = 1,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL, brush_radius = NULL)
+add_hexagon(
+  map,
+  data = get_map_data(map),
+  polyline = NULL,
+  lon = NULL,
+  lat = NULL,
+  layer_id = NULL,
+  radius = 1000,
+  elevation = NULL,
+  elevation_function = c("sum", "mean", "min", "max"),
+  colour = NULL,
+  colour_function = c("sum", "mean", "min", "max"),
+  legend = FALSE,
+  legend_options = NULL,
+  elevation_scale = 1,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  colour_range = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL,
+  brush_radius = NULL
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}

@@ -54,9 +54,10 @@ HTMLWidgets.widget({
        	 const deckgl = new deck.DeckGL({
        	 	  map: false,
 			      container: el.id,
-			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      //viewState: window[el.id + 'INITIAL_VIEW_STATE'], // no longer supported - deck.gl v8.0.0
 			      layers: [],
+			      controller: true
 			      //onLayerHover: setTooltip
 			   });
 			   window[el.id + 'map'] = deckgl;
@@ -66,10 +67,10 @@ HTMLWidgets.widget({
           	//map: mapboxgl,
 			      container: el.id,
 			      mapStyle: x.style,
-			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      //viewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
-			      //controller: myController
+			      controller: true,
 			      //onLayerHover: setTooltip
 			      onViewStateChange: ({viewState, interactionState}) => {
 
