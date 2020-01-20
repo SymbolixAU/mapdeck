@@ -136,12 +136,12 @@ add_path <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		shape <- rcpp_path_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_path_geojson( data, l, geometry_column, digits, "path" )
 		jsfunc <- "add_path_geo"
 	} else if ( tp == "sfencoded" ) {
 		jsfunc <- "add_path_polyline"
 		geometry_column <- "polyline"
-		shape <- rcpp_path_polyline( data, l, geometry_column )
+		shape <- rcpp_path_polyline( data, l, geometry_column, "path" )
 	}
 
 	js_transitions <- resolve_transitions( transitions, "path" )

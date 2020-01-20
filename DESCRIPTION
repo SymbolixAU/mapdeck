@@ -1,7 +1,7 @@
 Package: mapdeck
 Type: Package
 Title: Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'
-Version: 0.2.1006
+Version: 0.2.1008
 Date: 2019-04-01
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
@@ -22,11 +22,11 @@ Imports:
     googlePolylines (>= 0.7.2),
     htmltools,
     htmlwidgets,
-    jsonify (>= 0.2.10001),
+    jsonify (>= 1.0.0003),
     magrittr,
     Rcpp,
     shiny
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Suggests: 
     covr,
     jsonlite,
@@ -43,5 +43,9 @@ LinkingTo:
     jsonify,
     rapidjsonr,
     Rcpp,
-    sfheaders,
-    spatialwidget (>= 0.2.1005)
+    sfheaders (>= 0.1.0),
+    spatialwidget (>= 0.2.1007)
+Remotes:
+    github::SymbolixAU/jsonify,
+    github::SymbolixAU/spatialwidget,
+    github::dcooley/sfheaders

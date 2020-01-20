@@ -59,17 +59,41 @@ resolve_od_data.data.frame <- function( data, l, origin, destination ) {
 		stop("mapdeck - origin and destination columns required")
 	}
 
-	if( length(origin) != 2 | length(destination) != 2 ) {
-		stop("mapdeck - origin and destination columns should both contain lon & lat values")
+	if( length( origin ) == 2 ) {
+		l[["start_lon"]] <- origin[1]
+		l[["start_lat"]] <- origin[2]
+		l[["start_elev"]] <- 0
+	} else if ( length( origin ) == 3 ) {
+		l[["start_lon"]] <- origin[1]
+		l[["start_lat"]] <- origin[2]
+		l[["start_elev"]] <- origin[3]
+	} else {
+		stop("mapdeck - origin and destination columns should contain lon & lat, and optionally elevation columns")
 	}
+
+	if( length( destination ) == 2 ) {
+		l[["end_lon"]] <- destination[1]
+		l[["end_lat"]] <- destination[2]
+		l[["end_elev"]] <- 0
+	} else if ( length( destination ) == 3 ) {
+		l[["end_lon"]] <- destination[1]
+		l[["end_lat"]] <- destination[2]
+		l[["end_elev"]] <- destination[3]
+	} else {
+		stop("mapdeck - origin and destination columns should contain lon & lat, and optionally elevation columns")
+	}
+
+	# if( length(origin) != 2 | length(destination) != 2 ) {
+	# 	stop("mapdeck - origin and destination columns should both contain lon & lat values")
+	# }
 
 	l[["data_type"]] <- "df"
 	l[["bbox"]] <- get_od_box( data, l )
 
-	l[["start_lon"]] <- origin[1]
-	l[["start_lat"]] <- origin[2]
-	l[["end_lon"]] <- destination[1]
-	l[["end_lat"]] <- destination[2]
+	# l[["start_lon"]] <- origin[1]
+	# l[["start_lat"]] <- origin[2]
+	# l[["end_lon"]] <- destination[1]
+	# l[["end_lat"]] <- destination[2]
 
 	l[["origin"]] <- NULL
 	l[["destination"]] <- NULL

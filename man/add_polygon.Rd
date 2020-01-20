@@ -4,15 +4,33 @@
 \alias{add_polygon}
 \title{Add Polygon}
 \usage{
-add_polygon(map, data = get_map_data(map), polyline = NULL,
-  stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
-  fill_colour = NULL, fill_opacity = NULL, elevation = NULL,
-  tooltip = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", light_settings = list(),
-  layer_id = NULL, id = NULL, palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
-  legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL)
+add_polygon(
+  map,
+  data = get_map_data(map),
+  polyline = NULL,
+  stroke_colour = NULL,
+  stroke_width = NULL,
+  stroke_opacity = NULL,
+  fill_colour = NULL,
+  fill_opacity = NULL,
+  elevation = NULL,
+  tooltip = NULL,
+  auto_highlight = FALSE,
+  elevation_scale = 1,
+  highlight_colour = "#AAFFFFFF",
+  light_settings = list(),
+  layer_id = NULL,
+  id = NULL,
+  palette = "viridis",
+  na_colour = "#808080FF",
+  legend = FALSE,
+  legend_options = NULL,
+  legend_format = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -42,6 +60,8 @@ colour, this argument is ignored and you should include the alpha on the hex str
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
+
+\item{elevation_scale}{elevation multiplier.}
 
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 

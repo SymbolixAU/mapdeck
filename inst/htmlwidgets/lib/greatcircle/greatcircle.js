@@ -8,7 +8,7 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
   	extensions.push( new BrushingExtension() );
   }
 
-  const greatcircleLayer = new GreatCircleLayer({
+  const greatcircleLayer = new deck.GreatCircleLayer({
   	map_id: map_id,
     id: 'greatcircle-'+layer_id,
     data: greatcircle_data,
@@ -53,7 +53,7 @@ function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id,
   	extensions.push( new BrushingExtension() );
   }
 
-  const greatcircleLayer = new GreatCircleLayer({
+  const greatcircleLayer = new deck.GreatCircleLayer({
     map_id: map_id,
     id: 'greatcircle-'+layer_id,
     data: greatcircle_data,

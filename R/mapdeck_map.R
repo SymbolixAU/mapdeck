@@ -15,7 +15,19 @@
 #' @param zoom zoom level of the map
 #' @param bearing bearing of the map between 0 and 360
 #' @param location unnamed vector of lon and lat coordinates (in that order)
-#'
+#' @param show_view_state logical, indicating whether to add the current View State to the map.
+#' When \code{TRUE}, the following is added as an overlay to the map
+#' \itemize{
+#'   \item{width}
+#'   \item{height}
+#'   \item{latitude & longitude}
+#'   \item{zoom}
+#'   \item{bearing}
+#'   \item{pitch}
+#'   \item{altitude}
+#'   \item{viewBounds}
+#'   \item{interactionState}
+#' }
 #' @section Access Tokens:
 #'
 #' If the \code{token} argument is not used, the map will search for the token, firstly by
@@ -37,7 +49,8 @@ mapdeck <- function(
 	pitch = 0,
 	zoom = 0,
 	bearing = 0,
-	location = c(0, 0)
+	location = c(0, 0),
+	show_view_state = FALSE
 	) {
 
   # forward options using x
@@ -48,6 +61,7 @@ mapdeck <- function(
     , zoom = force( zoom )
     , location = force( as.numeric( location ) )
     , bearing = force( bearing )
+    , show_view_state = show_view_state
   )
 
   # deps <- list(
@@ -85,6 +99,7 @@ mapdeck <- function(
   	, mapdeck_css()
   	, mapdeck_js()
   	, htmlwidgets_js()
+  	#, mapdeckViewStateDependency()
   	)
 
   return(mapdeckmap)
@@ -150,9 +165,9 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' after the next time all of the outputs are updated; defaults to TRUE.
 #' @export
 mapdeck_update <- function(
+	data = NULL,
 	map_id,
 	session = shiny::getDefaultReactiveDomain(),
-	data = NULL,
 	deferUntilFlush = TRUE,
 	map_type = c("mapdeck_update", "google_map_update")
 	) {

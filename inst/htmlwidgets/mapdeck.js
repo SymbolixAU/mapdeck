@@ -15,6 +15,15 @@ HTMLWidgets.widget({
 
       	md_setup_window( el.id );
 
+				if( x.show_view_state ) {
+      	  md_setup_view_state( el.id );
+      	  window[el.id + 'mapViewState'] = document.createElement("div");
+      	  window[el.id + 'mapViewState'].setAttribute('id', el.id + 'mapViewState');
+      	  window[el.id + 'mapViewState'].setAttribute('class', 'mapViewState');
+      	  var mapbox_ctrl = document.getElementById( "mapViewStateContainer"+el.id);
+    			mapbox_ctrl.appendChild( window[el.id + 'mapViewState'] );
+				}
+
         /*
         // controller with events
         const myController = new deck.Controller({
@@ -45,9 +54,10 @@ HTMLWidgets.widget({
        	 const deckgl = new deck.DeckGL({
        	 	  map: false,
 			      container: el.id,
-			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      //viewState: window[el.id + 'INITIAL_VIEW_STATE'], // no longer supported - deck.gl v8.0.0
 			      layers: [],
+			      controller: true
 			      //onLayerHover: setTooltip
 			   });
 			   window[el.id + 'map'] = deckgl;
@@ -57,13 +67,14 @@ HTMLWidgets.widget({
           	//map: mapboxgl,
 			      container: el.id,
 			      mapStyle: x.style,
-			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      //viewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
-			      //controller: myController
+			      controller: true,
 			      //onLayerHover: setTooltip
-			      onViewStateChange: ({viewState}) => {
+			      onViewStateChange: ({viewState, interactionState}) => {
 
+			      	if (!HTMLWidgets.shinyMode && !x.show_view_state ) { return; }
 							// as per:
 							// https://github.com/uber/deck.gl/issues/3344
 							// https://github.com/SymbolixAU/mapdeck/issues/211
@@ -71,17 +82,51 @@ HTMLWidgets.widget({
   						const nw = viewport.unproject([0, 0]);
   						const se = viewport.unproject([viewport.width, viewport.height]);
 
-  						viewState.viewBounds = {
-  							north: nw[1],
-  							east:  se[0],
-  							south: se[1],
-  							west:  nw[0]
-  						};
+  						const w = nw[0] < -180 ? -180 : ( nw[0] > 180 ? 180 : nw[0] );
+  						const n = nw[1] < -90 ? -90 : ( nw[1] > 90 ? 90 : nw[1] );
 
-			      	if (!HTMLWidgets.shinyMode) {
-						    return;
-						  }
+  						const e = se[0] < -180 ? -180 : ( se[0] > 180 ? 180 : se[0] );
+  						const s = se[1] < -90 ? -90 : ( se[1] > 90 ? 90 : se[1] );
+
+  						viewState.viewBounds = {
+  							north: n, //nw[1],
+  							east:  e, //se[0],
+  							south: s, //se[1],
+  							west:  w //nw[0]
+  						};
+  						viewState.interactionState = interactionState;
+
+  						if( x.show_view_state ) {
+  							var vs = JSON.stringify( viewState );
+  							//console.log( vs );
+  							window[el.id + 'mapViewState'].innerHTML = vs;
+  						}
+
+  						if (!HTMLWidgets.shinyMode ) { return; }
+
 						  Shiny.onInputChange(el.id + '_view_change', viewState);
+			      },
+			      onDragStart(info, event){
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
+			      	info.layer = undefined; // in case of dragging a layer
+			      	Shiny.onInputChange(el.id +'_drag_start', info);
+			      },
+			      onDrag(info, event){
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
+			      	info.layer = undefined; // in case of dragging a layer
+			      	Shiny.onInputChange(el.id +'_drag', info);
+			      },
+			      onDragEnd(info, event){
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
+			      	info.layer = undefined; // in case of dragging a layer
+			      	Shiny.onInputChange(el.id +'_drag_end', info);
+			      },
+			      onResize(size) {
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	Shiny.onInputChange(el.id +'_resize', size);
 			      }
 			  });
 

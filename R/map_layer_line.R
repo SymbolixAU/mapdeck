@@ -74,9 +74,7 @@ mapdeckLineDependency <- function() {
 #'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
 #' )
 #'
-#' mapdeck(
-#'   token = key
-#' ) %>%
+#' mapdeck() %>%
 #'  add_line(
 #'    data = sf_flights
 #'    , origin = 'geometry'
@@ -161,14 +159,14 @@ add_line <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
-		shape <- rcpp_line_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_od_geojson( data, l, geometry_column, digits, "line" )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
-		shape <- rcpp_line_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_od_geojson_df( data, l, geometry_column, digits, "line" )
 	}
 	# } else if ( tp == "sfencoded" ) {
 	# 	geometry_column <- "geometry"
-	# 	shape <- rcpp_line_polyline( data, l, geometry_column )
+	# 	shape <- rcpp_od_polyline( data, l, geometry_column )
 	# }
 
 	js_transitions <- resolve_transitions( transitions, "line" )

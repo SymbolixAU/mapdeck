@@ -145,7 +145,7 @@ mapdeckArcDependency <- function() {
 #'     css = "max-height: 100px;")
 #'  )
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark")) %>%
+#' mapdeck( style = mapdeck_style("dark")) %>%
 #'   add_arc(
 #'   data = flights
 #'   , layer_id = "arc_layer"
@@ -284,13 +284,13 @@ add_arc <- function(
 
   if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
-		shape <- rcpp_arc_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_od_geojson( data, l, geometry_column, digits, "arc" )
   } else if ( tp == "df" ) {
-  	geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
-  	shape <- rcpp_arc_geojson_df( data, l, geometry_column, digits )
+  	geometry_column <- list( origin = c("start_lon", "start_lat", "start_elev"), destination = c("end_lon", "end_lat", "end_elev") )
+  	shape <- rcpp_od_geojson_df( data, l, geometry_column, digits, "arc" )
   } else if ( tp == "sfencoded" ) {
   	geometry_column <- c("origin", "destination")
-  	shape <- rcpp_arc_polyline( data, l, geometry_column )
+  	shape <- rcpp_od_polyline( data, l, geometry_column, "arc" )
   	# if(!is.null(brush_radius)) {
   	# 	jsfunc <- "add_arc_brush_polyline"
   	# } else {

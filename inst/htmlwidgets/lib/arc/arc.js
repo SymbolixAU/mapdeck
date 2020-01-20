@@ -6,7 +6,7 @@ function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, high
   	extensions.push( new BrushingExtension() );
   }
 
-  const arcLayer = new ArcLayer({
+  const arcLayer = new deck.ArcLayer({
   	map_id: map_id,
     id: 'arc-'+layer_id,
     data: arc_data,
@@ -48,7 +48,7 @@ function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight,
   	extensions.push( new BrushingExtension() );
   }
 
-  const arcLayer = new ArcLayer({
+  const arcLayer = new deck.ArcLayer({
     map_id: map_id,
     id: 'arc-'+layer_id,
     data: arc_data,

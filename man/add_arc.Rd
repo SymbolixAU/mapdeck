@@ -4,15 +4,34 @@
 \alias{add_arc}
 \title{Add arc}
 \usage{
-add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
-  destination, id = NULL, stroke_from = NULL,
-  stroke_from_opacity = NULL, stroke_to = NULL,
-  stroke_to_opacity = NULL, stroke_width = NULL, tilt = NULL,
-  height = NULL, tooltip = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", legend = F, legend_options = NULL,
-  legend_format = NULL, palette = "viridis", na_colour = "#808080FF",
-  update_view = TRUE, focus_layer = FALSE, transitions = NULL,
-  digits = 6, brush_radius = NULL)
+add_arc(
+  map,
+  data = get_map_data(map),
+  layer_id = NULL,
+  origin,
+  destination,
+  id = NULL,
+  stroke_from = NULL,
+  stroke_from_opacity = NULL,
+  stroke_to = NULL,
+  stroke_to_opacity = NULL,
+  stroke_width = NULL,
+  tilt = NULL,
+  height = NULL,
+  tooltip = NULL,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  legend = F,
+  legend_options = NULL,
+  legend_format = NULL,
+  palette = "viridis",
+  na_colour = "#808080FF",
+  update_view = TRUE,
+  focus_layer = FALSE,
+  transitions = NULL,
+  digits = 6,
+  brush_radius = NULL
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -189,7 +208,7 @@ mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
     css = "max-height: 100px;")
  )
 
-mapdeck( token = key, style = mapdeck_style("dark")) \%>\%
+mapdeck( style = mapdeck_style("dark")) \%>\%
   add_arc(
   data = flights
   , layer_id = "arc_layer"
