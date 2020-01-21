@@ -4,10 +4,19 @@
 \alias{mapdeck}
 \title{mapdeck}
 \usage{
-mapdeck(data = NULL, token = get_access_token(api = "mapbox"),
-  width = NULL, height = NULL, padding = 0,
-  style = "mapbox://styles/mapbox/streets-v9", pitch = 0, zoom = 0,
-  bearing = 0, location = c(0, 0))
+mapdeck(
+  data = NULL,
+  token = get_access_token(api = "mapbox"),
+  width = NULL,
+  height = NULL,
+  padding = 0,
+  style = "mapbox://styles/mapbox/streets-v9",
+  pitch = 0,
+  zoom = 0,
+  bearing = 0,
+  location = c(0, 0),
+  libraries = NULL
+)
 }
 \arguments{
 \item{data}{data to be used in the layer. All coordinates are expected to be
@@ -32,6 +41,9 @@ If left empty layers will still be plotted, but without a Mapbox map.}
 \item{bearing}{bearing of the map between 0 and 360}
 
 \item{location}{unnamed vector of lon and lat coordinates (in that order)}
+
+\item{libraries}{additional libraries required by some layers. Currently
+'h3-js' is required for \link{add_h3_hexagon}.}
 }
 \description{
 mapdeck

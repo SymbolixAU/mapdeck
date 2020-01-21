@@ -4,9 +4,17 @@
 \alias{add_bitmap}
 \title{Add bitmap}
 \usage{
-add_bitmap(map, image, bounds, desaturate = 0,
-  transparent_colour = "#000000", tint_colour = "#FFFFFF",
-  layer_id = NULL, update_view = TRUE, focus_layer = FALSE)
+add_bitmap(
+  map,
+  image,
+  bounds,
+  desaturate = 0,
+  transparent_colour = "#000000",
+  tint_colour = "#FFFFFF",
+  layer_id = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}

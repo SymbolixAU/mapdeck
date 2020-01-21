@@ -18,13 +18,13 @@ createHtmlDependency <- function(name, version, src, script = NULL, stylesheet =
 }
 
 
-addDependency <- function(map, dependencyFunction) {
+addDependency <- function(map, dependencyFunction, priority = FALSE) {
 
 	existingDeps <- sapply(map$dependencies, function(x) x[['name']])
 	addingDependency <- sapply(dependencyFunction, function(x) x[['name']])
 
 	if(!addingDependency %in% existingDeps)
-		map$dependencies <- c(map$dependencies, dependencyFunction)
+		map$dependencies <- if(priority) c(dependencyFunction, map$dependencies) else c(map$dependencies, dependencyFunction)
 
 	return(map)
 }

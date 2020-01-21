@@ -15,6 +15,8 @@
 #' @param zoom zoom level of the map
 #' @param bearing bearing of the map between 0 and 360
 #' @param location unnamed vector of lon and lat coordinates (in that order)
+#' @param libraries additional libraries required by some layers. Currently
+#' 'h3-js' is required for \link{add_h3_hexagon}.
 #'
 #' @section Access Tokens:
 #'
@@ -37,7 +39,8 @@ mapdeck <- function(
 	pitch = 0,
 	zoom = 0,
 	bearing = 0,
-	location = c(0, 0)
+	location = c(0, 0),
+	libraries = NULL
 	) {
 
   # forward options using x
@@ -79,7 +82,9 @@ mapdeck <- function(
   )
 
   mapdeckmap <- add_dependencies( mapdeckmap )
+
   mapdeckmap$dependencies <- c(
+  	if ('h3-js' %in% libraries) mapdeckH3JSDependency() else NULL,
   	mapdeckmap$dependencies
   	, mapboxgl()
   	, mapdeck_css()

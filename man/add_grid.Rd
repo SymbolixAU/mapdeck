@@ -4,15 +4,31 @@
 \alias{add_grid}
 \title{Add Grid}
 \usage{
-add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, cell_size = 1000, extruded = TRUE,
-  elevation = NULL, elevation_function = c("sum", "mean", "min",
-  "max"), colour = NULL, colour_function = c("sum", "mean", "min",
-  "max"), elevation_scale = 1, colour_range = NULL, legend = FALSE,
-  legend_options = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", layer_id = NULL,
-  update_view = TRUE, focus_layer = FALSE, digits = 6,
-  transitions = NULL, brush_radius = NULL)
+add_grid(
+  map,
+  data = get_map_data(map),
+  lon = NULL,
+  lat = NULL,
+  polyline = NULL,
+  cell_size = 1000,
+  extruded = TRUE,
+  elevation = NULL,
+  elevation_function = c("sum", "mean", "min", "max"),
+  colour = NULL,
+  colour_function = c("sum", "mean", "min", "max"),
+  elevation_scale = 1,
+  colour_range = NULL,
+  legend = FALSE,
+  legend_options = NULL,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  layer_id = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL,
+  brush_radius = NULL
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -41,7 +57,7 @@ IF supplied it specifies how the elevation values are calcualted. Defaults to su
 \item{colour_function}{one of 'min', 'mean', 'max', 'sum'.
 If supplied it specifies how the colour values are calculated. Defaults to sum.}
 
-\item{elevation_scale}{value to sacle the elevations of the hexagons. Default 1}
+\item{elevation_scale}{value to scale the elevations of the hexagons. Default 1}
 
 \item{colour_range}{vector of 6 hex colours}
 
