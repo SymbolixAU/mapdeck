@@ -66,6 +66,22 @@ mapdeckH3JSDependency <- function() {
 #' key <- 'abc'
 #' set_token( key )
 #'
+#' # TODO: Move to file somewhere.
+#' road_safety <- read_csv("https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv")
+#' road_safety_h3 <- road_safety %>%
+#' 	transmute(h3 = h3js::h3_geo_to_h3(lat, lng, 7)) %>%
+#' 	count(h3)
+#'
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
+#'   add_h3_hexagon(
+#'   data = road_safety_h3
+#'   , layer_id = "h3_layer"
+#'   , hexagon = "h3"
+#'   , tooltip = "n"
+#'   , auto_highlight = TRUE
+#'   , legend = TRUE
+#'  )
+#'
 #' }
 #'
 #' @details
