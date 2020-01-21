@@ -43,9 +43,11 @@ EPSG:4326 (WGS 84) coordinate system}
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{origin}{vector of longitude and latitude columns, or an \code{sfc} column}
+\item{origin}{vector of longitude and latitude columns, and optionally an elevation column,
+or an \code{sfc} column}
 
-\item{destination}{vector of longitude and latitude columns, or an \code{sfc} column}
+\item{destination}{vector of longitude and latitude columns, and optionally an elevatino column,
+or an \code{sfc} column}
 
 \item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 

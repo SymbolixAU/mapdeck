@@ -72,15 +72,63 @@ HTMLWidgets.widget({
 			      layers: [],
 			      controller: true,
 			      //onLayerHover: setTooltip
-			      onViewStateChange: ({viewState, interactionState}) => {
+			      onViewStateChange: ({viewId, viewState, interactionState}) => {
+
+			      	//console.log("view");
+			      	//console.log(view);
+
+							//var lngLat = [144, -37];
+							//var pos = [5,2];
+							//console.log( deck.WebMercatorViewport.getMapCenterByLngLatPosition({ lngLat, pos }) );
+			      	//console.log( deck.getMapCenterByLngLatPosition( viewState ) );
+			      	//var vp = new deck.WebMercatorViewport({viewState});
+			      	//console.log( vp );
+			      	//console.log( deck.WebMercatorViewport );
+			      	//console.log( viewId );
+			      	//console.log( viewState );
+			      	//console.log( interactionState );
+			      	//return;
 
 			      	if (!HTMLWidgets.shinyMode && !x.show_view_state ) { return; }
 							// as per:
 							// https://github.com/uber/deck.gl/issues/3344
 							// https://github.com/SymbolixAU/mapdeck/issues/211
-			      	const viewport = new WebMercatorViewport(viewState);
-  						const nw = viewport.unproject([0, 0]);
-  						const se = viewport.unproject([viewport.width, viewport.height]);
+							console.log("viewState");
+							console.log( viewState );
+			      	const viewport = new deck.WebMercatorViewport({viewState});
+			      	console.log("viewport");
+			      	console.log( viewport );
+
+			      	//console.log("initialViewState");
+			      	//console.log(initialViewState);
+
+			      	//console.log("dimensions: " );
+			      	//console.log( getDimensions( 800, 900 ) );
+
+			      	// 'project()' functions take lon/lat inputs
+			      	// 'unproject()' functions take x/y (screen) inputs
+			      	var center = [ viewState.longitude, viewState.latitude ];
+			      	var projected_center = viewport.projectFlat( center );
+
+			      	//var minX = projected_center[0] - viewport.width;
+			      	//var minY = projected_center[1] - viewport.height;
+
+			      	//var projXY = viewport.unprojectFlat( [minX, minY] );
+
+							var unprojected_wh = viewport.unprojectFlat( [viewState.width, viewState.height, viewState.zoom ]);
+
+
+							var maxY = unprojected_wh[1] - projected_center[1];
+							var minY = projected_center[1] - maxY;
+
+  						//const nw = viewport.unproject([0, 0]);
+  						//const se = viewport.unproject([viewport.width, viewport.height]);
+
+  						const nw = viewport.unprojectFlat([0, 0]);
+  						const se = viewport.unprojectFlat([viewState.width, viewState.height]);
+
+  						//console.log( nw );
+  						//console.log( se );
 
   						const w = nw[0] < -180 ? -180 : ( nw[0] > 180 ? 180 : nw[0] );
   						const n = nw[1] < -90 ? -90 : ( nw[1] > 90 ? 90 : nw[1] );
@@ -88,6 +136,23 @@ HTMLWidgets.widget({
   						const e = se[0] < -180 ? -180 : ( se[0] > 180 ? 180 : se[0] );
   						const s = se[1] < -90 ? -90 : ( se[1] > 90 ? 90 : se[1] );
 
+							var val;
+
+							val = {
+								center: center,
+								projected_center: viewport.projectFlat( center ),
+								wh: [ viewState.width, viewState.height ],
+								unprojected_wh: unprojected_wh,
+								maxY: maxY,
+								minY: minY
+							};
+
+  						var vs = JSON.stringify( val );
+  						window[el.id + 'mapViewState'].innerHTML = vs;
+
+  						return;
+
+/*
   						viewState.viewBounds = {
   							north: n, //nw[1],
   							east:  e, //se[0],
@@ -95,7 +160,7 @@ HTMLWidgets.widget({
   							west:  w //nw[0]
   						};
   						viewState.interactionState = interactionState;
-
+*/
   						if( x.show_view_state ) {
   							var vs = JSON.stringify( viewState );
   							//console.log( vs );
