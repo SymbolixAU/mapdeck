@@ -93,11 +93,11 @@ HTMLWidgets.widget({
 							// as per:
 							// https://github.com/uber/deck.gl/issues/3344
 							// https://github.com/SymbolixAU/mapdeck/issues/211
-							console.log("viewState");
-							console.log( viewState );
+							//console.log("viewState");
+							//console.log( viewState );
 			      	const viewport = new deck.WebMercatorViewport({viewState});
-			      	console.log("viewport");
-			      	console.log( viewport );
+			      	//console.log("viewport");
+			      	//console.log( viewport );
 
 			      	//console.log("initialViewState");
 			      	//console.log(initialViewState);
@@ -107,47 +107,62 @@ HTMLWidgets.widget({
 
 			      	// 'project()' functions take lon/lat inputs
 			      	// 'unproject()' functions take x/y (screen) inputs
-			      	var center = [ viewState.longitude, viewState.latitude ];
-			      	var projected_center = viewport.projectFlat( center );
+			      	var lonlat_center = [ viewState.longitude, viewState.latitude ];
+			      	var xy_center = viewport.projectFlat( lonlat_center );
 
+							var xy_wh = [ viewState.width, viewState.height ];
+							var lonlat_wh = viewport.unprojectFlat( [ viewState.width, viewState.height ] );
 			      	//var minX = projected_center[0] - viewport.width;
 			      	//var minY = projected_center[1] - viewport.height;
 
 			      	//var projXY = viewport.unprojectFlat( [minX, minY] );
 
-							var unprojected_wh = viewport.unprojectFlat( [viewState.width, viewState.height, viewState.zoom ]);
+							//var lonlat_wh = viewport.unprojectFlat( [viewState.width, viewState.height, viewState.zoom ]);
 
 
-							var maxY = unprojected_wh[1] - projected_center[1];
-							var minY = projected_center[1] - maxY;
+							//var maxY = lonlat_wh[1] - xy_center[1];
+							//var minY = projected_center[1] - maxY;
 
   						//const nw = viewport.unproject([0, 0]);
   						//const se = viewport.unproject([viewport.width, viewport.height]);
 
-  						const nw = viewport.unprojectFlat([0, 0]);
-  						const se = viewport.unprojectFlat([viewState.width, viewState.height]);
+  						//const nw = viewport.unprojectFlat([0, 0]);
+  						//const se = viewport.unprojectFlat([viewState.width, viewState.height]);
 
   						//console.log( nw );
   						//console.log( se );
 
-  						const w = nw[0] < -180 ? -180 : ( nw[0] > 180 ? 180 : nw[0] );
-  						const n = nw[1] < -90 ? -90 : ( nw[1] > 90 ? 90 : nw[1] );
+  						//const w = nw[0] < -180 ? -180 : ( nw[0] > 180 ? 180 : nw[0] );
+  						//const n = nw[1] < -90 ? -90 : ( nw[1] > 90 ? 90 : nw[1] );
 
-  						const e = se[0] < -180 ? -180 : ( se[0] > 180 ? 180 : se[0] );
-  						const s = se[1] < -90 ? -90 : ( se[1] > 90 ? 90 : se[1] );
+  						//const e = se[0] < -180 ? -180 : ( se[0] > 180 ? 180 : se[0] );
+  						//const s = se[1] < -90 ? -90 : ( se[1] > 90 ? 90 : se[1] );
+
+							var east = viewState.width - xy_center[0];
+							var rightEdgeY = xy_center[1];
+							var rigthEdgeLonLat = viewport.unprojectFlat( [rightEdgeX, rightEdgeY] );
 
 							var val;
 
 							val = {
-								center: center,
-								projected_center: viewport.projectFlat( center ),
-								wh: [ viewState.width, viewState.height ],
-								unprojected_wh: unprojected_wh,
-								maxY: maxY,
-								minY: minY
+								//lonlat_center: lonlat_center,
+								//xy_center: viewport.projectFlat( lonlat_center ),
+								//xy_wh: xy_wh,
+								//lonlat_wh: lonlat_wh,
+								//viewPort: viewport,
+								viewState: viewState,
+								xyz: viewport.projectFlat( [viewState.longitude, viewState.latitude ]),
+								rightEdge: [rightEdgeX, rightEdgeY],
+								rigthEdgeLonLat: rigthEdgeLonLat
+								//getDistanceScales: viewport.getDistanceScales()
+								//getCameraPosition: viewport.getCameraPosition(),
+								//getCameraDirection: viewport.getCameraDirection(),
+								//getCameraUp: viewport.getCameraUp()
+								//maxY: maxY,
+								//minY: minY
 							};
 
-  						var vs = JSON.stringify( val );
+  						var vs = JSON.stringify( val, null, 2 );
   						window[el.id + 'mapViewState'].innerHTML = vs;
 
   						return;
