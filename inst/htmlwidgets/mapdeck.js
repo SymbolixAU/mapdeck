@@ -5,13 +5,9 @@ HTMLWidgets.widget({
 
   factory: function(el, width, height) {
 
-    // TODO: define shared variables for this instance
     return {
 
       renderValue: function(x) {
-
-        //console.log( "getting mapbox map??" );
-        //console.log( mapboxgl );
 
       	md_setup_window( el.id );
 
@@ -23,23 +19,6 @@ HTMLWidgets.widget({
       	  var mapbox_ctrl = document.getElementById( "mapViewStateContainer"+el.id);
     			mapbox_ctrl.appendChild( window[el.id + 'mapViewState'] );
 				}
-
-        /*
-        // controller with events
-        const myController = new deck.Controller({
-
-
-        	handleEvent(event) {
-        		console.log( "event" );
-        		console.log( event );
-        		if( event.type == "zoom") {
-        			console.log("zooming");
-        		}
-        	}
-        });
-
-        console.log( myController );
-        */
 
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
@@ -55,7 +34,6 @@ HTMLWidgets.widget({
        	 	  map: false,
 			      container: el.id,
 			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      //viewState: window[el.id + 'INITIAL_VIEW_STATE'], // no longer supported - deck.gl v8.0.0
 			      layers: [],
 			      controller: true
 			      //onLayerHover: setTooltip
@@ -64,11 +42,9 @@ HTMLWidgets.widget({
        } else {
         const deckgl = new deck.DeckGL({
           	mapboxApiAccessToken: x.access_token,
-          	//map: mapboxgl,
 			      container: el.id,
 			      mapStyle: x.style,
 			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      //viewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
 			      controller: true,
 			      //onLayerHover: setTooltip
