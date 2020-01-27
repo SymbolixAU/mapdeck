@@ -27,50 +27,67 @@
 \alias{clear_trips}
 \title{Clear Arc}
 \usage{
-clear_arc(map, layer_id = NULL)
+clear_arc(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
 clear_bitmap(map, layer_id = NULL)
 
-clear_column(map, layer_id = NULL)
+clear_column(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_geojson(map, layer_id = NULL)
+clear_geojson(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_greatcircle(map, layer_id = NULL)
+clear_greatcircle(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_grid(map, layer_id = NULL)
+clear_grid(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_heatmap(map, layer_id = NULL)
+clear_heatmap(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_hexagon(map, layer_id = NULL)
+clear_hexagon(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_line(map, layer_id = NULL)
+clear_line(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_mesh(map, layer_id = NULL)
+clear_mesh(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_path(map, layer_id = NULL)
+clear_path(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_pointcloud(map, layer_id = NULL)
+clear_pointcloud(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_polygon(map, layer_id = NULL)
+clear_polygon(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_scatterplot(map, layer_id = NULL)
+clear_scatterplot(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_screengrid(map, layer_id = NULL)
+clear_screengrid(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
-clear_text(map, layer_id = NULL)
+clear_text(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 
 clear_title(map, layer_id = NULL)
 
-clear_trips(map, layer_id = NULL)
+clear_trips(map, layer_id = NULL, clear_legend = TRUE,
+  clear_view = TRUE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
 \item{layer_id}{the layer_id of the layer you want to clear}
 
-\item{map}{a mapdeck map object}
+\item{clear_legend}{logical indicating if the legend should be removed}
 
-\item{layer_id}{the layer_id of the layer you want to clear}
+\item{clear_view}{logical indicating if the view should update (TRUE) or not (FALSE)
+when the data is cleared}
 }
 \description{
 Clears elements from a map

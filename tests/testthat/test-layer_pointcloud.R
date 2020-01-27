@@ -61,3 +61,10 @@ test_that("pointcloud reads elevation from sf Z attribute", {
 	js <- '[{"type":"Feature","properties":{"fill_colour":"#440154FF"},"geometry":{"geometry":{"type":"Point","coordinates":[0.0,0.0,1.0]}}},{"type":"Feature","properties":{"fill_colour":"#440154FF"},"geometry":{"geometry":{"type":"Point","coordinates":[0.0,0.0,2.0]}}}]'
 	expect_equal(as.character( shape$data ), js)
 })
+
+test_that("empty data doesn't crash",{
+	## issue 252
+	m <- mapdeck()
+	res <- mapdeck::add_pointcloud(map = m, data = data.frame())
+	expect_true( res$x$calls[[1]]$functions == "md_layer_clear" )
+})

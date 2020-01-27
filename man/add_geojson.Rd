@@ -16,7 +16,7 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
   line_width_scale = 1, line_width_min_pixels = 0,
   elevation_scale = 1, point_radius_scale = 1,
   point_radius_min_pixels = 1, update_view = TRUE,
-  focus_layer = FALSE, digits = 6, transitions = NULL)
+  focus_layer = FALSE, digits = 6, transitions = NULL, ...)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -95,6 +95,8 @@ all polygon elevation without updating the data}
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
 }
 \description{
 The GeoJson Layer takes in GeoJson formatted data and renders it as interactive polygons,

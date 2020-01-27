@@ -116,12 +116,13 @@ add_greatcircle <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL,
-	digits = 6
+	digits = 6,
+	...
 ) {
 	brush_radius = NULL
 
 	if( nrow( data ) == 0 ) {
-		return( clear_greatcircle( map, layer_id ) )
+		return( clear_greatcircle( map, layer_id, ... ) )
 	}
 
 	l <- list()
@@ -197,10 +198,8 @@ add_greatcircle <- function(
 #' Clear greatcircle
 #'
 #' @rdname clear
-#' @param map a mapdeck map object
-#' @param layer_id the layer_id of the layer you want to clear
 #' @export
-clear_greatcircle <- function( map, layer_id = NULL ) {
+clear_greatcircle <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE ) {
 	layer_id <- layerId(layer_id, "greatcircle")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "greatcircle" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "greatcircle", clear_legend, clear_view )
 }

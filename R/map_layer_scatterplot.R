@@ -142,11 +142,12 @@ add_scatterplot <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL,
-	brush_radius = NULL
+	brush_radius = NULL,
+	...
 ) {
 
 	if( nrow( data ) == 0 ) {
-		return( clear_scatterplot( map, layer_id ) )
+		return( clear_scatterplot( map, layer_id, ... ) )
 	}
 
 	l <- list()
@@ -230,7 +231,7 @@ add_scatterplot <- function(
 
 #' @rdname clear
 #' @export
-clear_scatterplot <- function( map, layer_id = NULL) {
+clear_scatterplot <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE ) {
 	layer_id <- layerId(layer_id, "scatterplot")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "scatterplot" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "scatterplot", clear_legend, clear_view )
 }

@@ -93,11 +93,12 @@ add_path <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	...
 ) {
 
 	if( nrow( data ) == 0 ) {
-		return( clear_path( map, layer_id ) )
+		return( clear_path( map, layer_id, ... ) )
 	}
 
 	l <- list()
@@ -165,9 +166,9 @@ add_path <- function(
 
 #' @rdname clear
 #' @export
-clear_path <- function( map, layer_id = NULL) {
+clear_path <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE) {
 	layer_id <- layerId(layer_id, "path")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "path" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "path", clear_legend, clear_view )
 }
 
 

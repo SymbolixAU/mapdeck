@@ -12,7 +12,7 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   legend_options = NULL, auto_highlight = FALSE,
   highlight_colour = "#AAFFFFFF", layer_id = NULL,
   update_view = TRUE, focus_layer = FALSE, digits = 6,
-  transitions = NULL, brush_radius = NULL)
+  transitions = NULL, brush_radius = NULL, ...)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -67,6 +67,8 @@ to conflict and not plot correctly}
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
+
+\item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
 }
 \description{
 The Grid Layer renders a grid heatmap based on an array of points.

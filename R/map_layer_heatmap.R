@@ -112,11 +112,12 @@ add_heatmap <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	...
 ) {
 
 	if( nrow( data ) == 0 ) {
-		return( clear_heatmap( map, layer_id ) )
+		return( clear_heatmap( map, layer_id, ...) )
 	}
 
 	l <- list()
@@ -184,7 +185,7 @@ add_heatmap <- function(
 
 #' @rdname clear
 #' @export
-clear_heatmap <- function( map, layer_id = NULL) {
+clear_heatmap <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE) {
 	layer_id <- layerId(layer_id, "heatmap")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "heatmap" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "heatmap", clear_legend, clear_view )
 }

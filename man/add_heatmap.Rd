@@ -8,7 +8,7 @@ add_heatmap(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, weight = NULL, colour_range = NULL,
   radius_pixels = 30, intensity = 1, threshold = 0.05,
   layer_id = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL)
+  digits = 6, transitions = NULL, ...)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -49,6 +49,8 @@ to conflict and not plot correctly}
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
 }
 \description{
 The Heatmap Layer can be used to visualise spatial distribution of data.

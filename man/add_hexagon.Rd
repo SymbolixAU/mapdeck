@@ -11,7 +11,7 @@ add_hexagon(map, data = get_map_data(map), polyline = NULL,
   "max"), legend = FALSE, legend_options = NULL, elevation_scale = 1,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL, brush_radius = NULL)
+  digits = 6, transitions = NULL, brush_radius = NULL, ...)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -62,6 +62,8 @@ If supplied it specifies how the colour values are calculated. Defaults to sum.}
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
+
+\item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
 }
 \description{
 The Hexagon Layer renders a hexagon heatmap based on an array of points.

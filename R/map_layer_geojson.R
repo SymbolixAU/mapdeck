@@ -228,7 +228,8 @@ add_geojson <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	...
 	) {
 
 	l <- list()
@@ -292,7 +293,7 @@ add_geojson <- function(
 	if( tp == "sf" ) {
 
 		if( nrow( data ) == 0 ) {
-			return( clear_geojson( map, layer_id ) )
+			return( clear_geojson( map, layer_id, ...) )
 		}
 
 	  shape <- rcpp_geojson_geojson( data, l, "geometry", digits)
@@ -325,7 +326,7 @@ add_geojson <- function(
 
 #' @rdname clear
 #' @export
-clear_geojson <- function( map, layer_id = NULL) {
+clear_geojson <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE) {
 	layer_id <- layerId(layer_id, "geojson")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "geojson" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "geojson", clear_legend, clear_view )
 }

@@ -12,7 +12,7 @@ add_greatcircle(map, data = get_map_data(map), layer_id = NULL, origin,
   highlight_colour = "#AAFFFFFF", legend = F, legend_options = NULL,
   legend_format = NULL, palette = "viridis", na_colour = "#808080FF",
   update_view = TRUE, focus_layer = FALSE, transitions = NULL,
-  digits = 6)
+  digits = 6, ...)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -77,6 +77,8 @@ palette for different colour options (where available),
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
 }
 \description{
 Renders flat arcs along the great circle joining pairs

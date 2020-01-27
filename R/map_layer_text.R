@@ -108,11 +108,12 @@ add_text <- function(
 	focus_layer = FALSE,
 	digits = 6,
 	transitions = NULL,
-	brush_radius = NULL
+	brush_radius = NULL,
+	...
 ) {
 
 	if( nrow( data ) == 0 ) {
-		return( clear_text( map, layer_id ) )
+		return( clear_text( map, layer_id, ... ) )
 	}
 
 	l <- list()
@@ -190,8 +191,8 @@ add_text <- function(
 
 #' @rdname clear
 #' @export
-clear_text <- function( map, layer_id = NULL) {
+clear_text <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE ) {
 	layer_id <- layerId(layer_id, "text")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "text" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "text", clear_legend, clear_view )
 }
 

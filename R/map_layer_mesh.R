@@ -59,7 +59,6 @@ add_mesh <- function(
 	transitions = NULL
 ) {
 
-	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
 	experimental_layer( "mesh" )
 
 	if(!inherits(data, "mesh3d")) {
@@ -182,14 +181,14 @@ add_mesh2 <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	...
 ) {
 
-	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
 	experimental_layer( "mesh" )
 
 	if( nrow( data ) == 0 ) {
-		return( clear_mesh( map, layer_id ) )
+		return( clear_mesh( map, layer_id, ... ) )
 	}
 
 	if(!inherits(data, "mesh3d")) {
@@ -296,9 +295,9 @@ add_mesh2 <- function(
 
 #' @rdname clear
 #' @export
-clear_mesh <- function( map, layer_id = NULL) {
+clear_mesh <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE) {
 	layer_id <- layerId(layer_id, "mesh")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "mesh" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "mesh", clear_legend, clear_view )
 }
 
 

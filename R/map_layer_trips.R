@@ -68,13 +68,14 @@ add_trips <- function(
 	legend = FALSE,
 	legend_options = NULL,
 	legend_format = NULL,
-	digits = 6
+	digits = 6,
+	...
 ) {
 
 	experimental_layer("trips")
 
 	if( nrow( data ) == 0 ) {
-		return( clear_trips( map, layer_id ) )
+		return( clear_trips( map, layer_id, ... ) )
 	}
 
 	l <- list()
@@ -128,9 +129,9 @@ add_trips <- function(
 
 #' @rdname clear
 #' @export
-clear_trips <- function( map, layer_id = NULL) {
+clear_trips <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE ) {
 	layer_id <- layerId(layer_id, "trips")
-	invoke_method(map, "md_layer_clear", layer_id, "trips" )
+	invoke_method(map, "md_layer_clear", layer_id, "trips", clear_legend, clear_view )
 }
 
 

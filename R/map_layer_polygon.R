@@ -134,11 +134,12 @@ add_polygon <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	...
 ) {
 
 	if( nrow( data ) == 0 ) {
-		return( clear_polygon( map, layer_id ) )
+		return( clear_polygon( map, layer_id, ... ) )
 	}
 
 	l <- list()
@@ -228,9 +229,9 @@ add_polygon <- function(
 
 #' @rdname clear
 #' @export
-clear_polygon <- function( map, layer_id = NULL) {
+clear_polygon <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE) {
 	layer_id <- layerId(layer_id, "polygon")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "polygon" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "polygon", clear_legend, clear_view )
 }
 
 

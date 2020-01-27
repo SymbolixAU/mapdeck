@@ -105,11 +105,12 @@ add_pointcloud <- function(
 	focus_layer = FALSE,
 	digits = 6,
 	transitions = NULL,
-	brush_radius = NULL
+	brush_radius = NULL,
+	...
 ) {
 
 	if( nrow( data ) == 0 ) {
-		return( clear_pointcloud( map, layer_id ) )
+		return( clear_pointcloud( map, layer_id, ...) )
 	}
 
 	l <- list()
@@ -193,8 +194,8 @@ add_pointcloud <- function(
 
 #' @rdname clear
 #' @export
-clear_pointcloud <- function( map, layer_id = NULL) {
+clear_pointcloud <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE) {
 	layer_id <- layerId( layer_id, "pointcloud" )
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "pointcloud" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "pointcloud", clear_legend, clear_view )
 }
 
