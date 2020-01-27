@@ -32,6 +32,20 @@ find_mesh_index <- function( data ) {
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'
+#' @examples
+#'
+#' x <- structure(list(vb = structure(c(0, 0, 0, 1, 100, 0, 0, 1, 0,
+#' -42, 0, 1), .Dim = 4:3), it = structure(1:3, .Dim = c(3L, 1L)),
+#' material = list(), normals = NULL, texcoords = NULL, meshColor = "vertices"),
+#'  class = c("mesh3d", "shape3d"))
+#'
+#' set_token("MAPBOX_API_TOKEN")
+#'
+#' mapdeck() %>%
+#'   add_mesh(
+#' 	  data = x
+#'   )
+#'
 #' @details
 #'
 #' \code{add_mesh} supports quadmesh objects
