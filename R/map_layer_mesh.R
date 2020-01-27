@@ -188,6 +188,10 @@ add_mesh2 <- function(
 	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
 	experimental_layer( "mesh" )
 
+	if( nrow( data ) == 0 ) {
+		return( clear_mesh( map, layer_id ) )
+	}
+
 	if(!inherits(data, "mesh3d")) {
 		stop("mapdeck - expecting mesh3d object")
 	}

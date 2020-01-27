@@ -290,6 +290,11 @@ add_geojson <- function(
 	l[["data_type"]] <- NULL
 
 	if( tp == "sf" ) {
+
+		if( nrow( data ) == 0 ) {
+			return( clear_geojson( map, layer_id ) )
+		}
+
 	  shape <- rcpp_geojson_geojson( data, l, "geometry", digits)
 	  jsfunc <- "add_geojson_sf"
 	} else if ( tp == "geojson" ) {

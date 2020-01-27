@@ -126,6 +126,10 @@ add_grid <- function(
 	brush_radius = NULL
 ) {
 
+	if( nrow( data ) == 0 ) {
+		return( clear_grid( map, layer_id ) )
+	}
+
 	l <- list()
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )

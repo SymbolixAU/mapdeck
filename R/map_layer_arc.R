@@ -235,6 +235,10 @@ add_arc <- function(
 	brush_radius = NULL
 ) {
 
+	if( nrow( data ) == 0 ) {
+		return( clear_arc( map, layer_id ) )
+	}
+
 	l <- list()
 	l[["origin"]] <- force(origin)
 	l[["destination"]] <- force(destination)

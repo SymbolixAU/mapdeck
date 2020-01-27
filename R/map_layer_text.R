@@ -111,6 +111,10 @@ add_text <- function(
 	brush_radius = NULL
 ) {
 
+	if( nrow( data ) == 0 ) {
+		return( clear_text( map, layer_id ) )
+	}
+
 	l <- list()
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )

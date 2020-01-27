@@ -120,6 +120,10 @@ add_greatcircle <- function(
 ) {
 	brush_radius = NULL
 
+	if( nrow( data ) == 0 ) {
+		return( clear_greatcircle( map, layer_id ) )
+	}
+
 	l <- list()
 	l[["origin"]] <- force(origin)
 	l[["destination"]] <- force(destination)

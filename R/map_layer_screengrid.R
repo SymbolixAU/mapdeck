@@ -90,6 +90,11 @@ add_screengrid <- function(
 	focus_layer = FALSE,
 	digits = 6
 ) {
+
+	if( nrow( data ) == 0 ) {
+		return( clear_screengrid( map, layer_id ) )
+	}
+
 	brush_radius = NULL
 	l <- list()
 	l[["polyline"]] <- force( polyline )

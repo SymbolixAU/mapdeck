@@ -137,7 +137,9 @@ add_polygon <- function(
 	transitions = NULL
 ) {
 
-	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
+	if( nrow( data ) == 0 ) {
+		return( clear_polygon( map, layer_id ) )
+	}
 
 	l <- list()
 	l[["polyline"]] <- force( polyline )

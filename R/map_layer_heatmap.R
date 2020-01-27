@@ -115,7 +115,9 @@ add_heatmap <- function(
 	transitions = NULL
 ) {
 
-	#experimental_layer("heatmap")
+	if( nrow( data ) == 0 ) {
+		return( clear_heatmap( map, layer_id ) )
+	}
 
 	l <- list()
 	l[["polyline"]] <- force( polyline )

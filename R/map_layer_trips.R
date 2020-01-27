@@ -73,6 +73,10 @@ add_trips <- function(
 
 	experimental_layer("trips")
 
+	if( nrow( data ) == 0 ) {
+		return( clear_trips( map, layer_id ) )
+	}
+
 	l <- list()
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_width"]] <- force( stroke_width )

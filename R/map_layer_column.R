@@ -111,6 +111,10 @@ add_column <- function(
 	brush_radius = NULL
 ) {
 
+	if( nrow( data ) == 0 ) {
+		return( clear_column( map, layer_id ) )
+	}
+
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["lon"]] <- force( lon )

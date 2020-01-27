@@ -96,6 +96,10 @@ add_path <- function(
 	transitions = NULL
 ) {
 
+	if( nrow( data ) == 0 ) {
+		return( clear_path( map, layer_id ) )
+	}
+
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["stroke_colour"]] <- force( stroke_colour)

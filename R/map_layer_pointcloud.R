@@ -108,6 +108,10 @@ add_pointcloud <- function(
 	brush_radius = NULL
 ) {
 
+	if( nrow( data ) == 0 ) {
+		return( clear_pointcloud( map, layer_id ) )
+	}
+
 	l <- list()
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )

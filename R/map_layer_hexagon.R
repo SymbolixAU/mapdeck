@@ -158,6 +158,10 @@ add_hexagon <- function(
 	brush_radius = NULL
 ) {
 
+	if( nrow( data ) == 0 ) {
+		return( clear_hexagon( map, layer_id ) )
+	}
+
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["lon"]] <- force( lon )
