@@ -5,12 +5,9 @@
 \alias{invoke_method}
 \title{mapdeck dispatch}
 \usage{
-mapdeck_dispatch(
-  map,
-  funcName,
-  mapdeck = stop(paste(funcName, "requires a map update object")),
-  mapdeck_update = stop(paste(funcName, "does not support map update objects"))
-)
+mapdeck_dispatch(map, funcName, mapdeck = stop(paste(funcName,
+  "requires a map update object")), mapdeck_update = stop(paste(funcName,
+  "does not support map update objects")))
 
 invoke_method(map, method, ...)
 }

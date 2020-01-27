@@ -50,7 +50,8 @@ mapdeck <- function(
 	zoom = 0,
 	bearing = 0,
 	location = c(0, 0),
-	show_view_state = FALSE
+	show_view_state = FALSE,
+	view_id = "default_view"
 	) {
 
   # forward options using x
@@ -61,7 +62,8 @@ mapdeck <- function(
     , zoom = force( zoom )
     , location = force( as.numeric( location ) )
     , bearing = force( bearing )
-    , show_view_state = show_view_state
+    , show_view_state = force( show_view_state )
+    , view_id = view_id
   )
 
   # deps <- list(

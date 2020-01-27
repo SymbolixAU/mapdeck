@@ -4,33 +4,15 @@
 \alias{add_pointcloud}
 \title{Add Pointcloud}
 \usage{
-add_pointcloud(
-  map,
-  data = get_map_data(map),
-  lon = NULL,
-  lat = NULL,
-  elevation = NULL,
-  polyline = NULL,
-  radius = 10,
-  fill_colour = NULL,
-  fill_opacity = NULL,
-  tooltip = NULL,
-  auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF",
-  light_settings = list(),
-  layer_id = NULL,
-  id = NULL,
-  palette = "viridis",
-  na_colour = "#808080FF",
-  legend = FALSE,
-  legend_options = NULL,
-  legend_format = NULL,
-  update_view = TRUE,
-  focus_layer = FALSE,
-  digits = 6,
-  transitions = NULL,
-  brush_radius = NULL
-)
+add_pointcloud(map, data = get_map_data(map), lon = NULL, lat = NULL,
+  elevation = NULL, polyline = NULL, radius = 10,
+  fill_colour = NULL, fill_opacity = NULL, tooltip = NULL,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  light_settings = list(), layer_id = NULL, id = NULL,
+  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
+  legend_options = NULL, legend_format = NULL, update_view = TRUE,
+  focus_layer = FALSE, digits = 6, transitions = NULL,
+  brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}

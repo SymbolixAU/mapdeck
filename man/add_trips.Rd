@@ -4,23 +4,12 @@
 \alias{add_trips}
 \title{Add Trips}
 \usage{
-add_trips(
-  map,
-  data = get_map_data(map),
-  stroke_colour = NULL,
-  stroke_width = NULL,
-  opacity = 0.3,
-  palette = "viridis",
-  trail_length = 180,
-  start_time = get_m_range_start(data),
-  end_time = get_m_range_end(data),
-  animation_speed = 30,
-  layer_id = NULL,
-  legend = FALSE,
-  legend_options = NULL,
-  legend_format = NULL,
-  digits = 6
-)
+add_trips(map, data = get_map_data(map), stroke_colour = NULL,
+  stroke_width = NULL, opacity = 0.3, palette = "viridis",
+  trail_length = 180, start_time = get_m_range_start(data),
+  end_time = get_m_range_end(data), animation_speed = 30,
+  layer_id = NULL, legend = FALSE, legend_options = NULL,
+  legend_format = NULL, digits = 6)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -120,6 +109,6 @@ mapdeck(
 
 }
 
-\code{add_trips} supports LINESTRING and MULTILINESTRING sf objects
+\\code{add_trips} supports LINESTRING and MULTILINESTRING sf objects
 
 }

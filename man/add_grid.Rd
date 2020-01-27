@@ -4,31 +4,15 @@
 \alias{add_grid}
 \title{Add Grid}
 \usage{
-add_grid(
-  map,
-  data = get_map_data(map),
-  lon = NULL,
-  lat = NULL,
-  polyline = NULL,
-  cell_size = 1000,
-  extruded = TRUE,
-  elevation = NULL,
-  elevation_function = c("sum", "mean", "min", "max"),
-  colour = NULL,
-  colour_function = c("sum", "mean", "min", "max"),
-  elevation_scale = 1,
-  colour_range = NULL,
-  legend = FALSE,
-  legend_options = NULL,
-  auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF",
-  layer_id = NULL,
-  update_view = TRUE,
-  focus_layer = FALSE,
-  digits = 6,
-  transitions = NULL,
-  brush_radius = NULL
-)
+add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
+  polyline = NULL, cell_size = 1000, extruded = TRUE,
+  elevation = NULL, elevation_function = c("sum", "mean", "min",
+  "max"), colour = NULL, colour_function = c("sum", "mean", "min",
+  "max"), elevation_scale = 1, colour_range = NULL, legend = FALSE,
+  legend_options = NULL, auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF", layer_id = NULL,
+  update_view = TRUE, focus_layer = FALSE, digits = 6,
+  transitions = NULL, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}

@@ -4,39 +4,16 @@
 \alias{add_column}
 \title{Add column}
 \usage{
-add_column(
-  map,
-  data = get_map_data(map),
-  polyline = NULL,
-  lon = NULL,
-  lat = NULL,
-  fill_colour = NULL,
-  fill_opacity = NULL,
-  stroke_colour = NULL,
-  stroke_opacity = NULL,
-  stroke_width = NULL,
-  radius = 1000,
-  elevation = NULL,
-  elevation_scale = 1,
-  coverage = 1,
-  angle = 0,
-  disk_resolution = 20,
-  tooltip = NULL,
-  auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF",
-  layer_id = NULL,
-  id = NULL,
-  palette = "viridis",
-  na_colour = "#808080FF",
-  legend = FALSE,
-  legend_options = NULL,
-  legend_format = NULL,
-  update_view = TRUE,
-  focus_layer = FALSE,
-  digits = 6,
-  transitions = NULL,
-  brush_radius = NULL
-)
+add_column(map, data = get_map_data(map), polyline = NULL,
+  lon = NULL, lat = NULL, fill_colour = NULL, fill_opacity = NULL,
+  stroke_colour = NULL, stroke_opacity = NULL, stroke_width = NULL,
+  radius = 1000, elevation = NULL, elevation_scale = 1,
+  coverage = 1, angle = 0, disk_resolution = 20, tooltip = NULL,
+  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
+  layer_id = NULL, id = NULL, palette = "viridis",
+  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
+  legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
+  digits = 6, transitions = NULL, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}

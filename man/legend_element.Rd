@@ -4,14 +4,8 @@
 \alias{legend_element}
 \title{Legend Element}
 \usage{
-legend_element(
-  variables,
-  colours,
-  colour_type = c("fill", "stroke"),
-  variable_type = c("category", "gradient"),
-  title = "",
-  css = ""
-)
+legend_element(variables, colours, colour_type = c("fill", "stroke"),
+  variable_type = c("category", "gradient"), title = "", css = "")
 }
 \arguments{
 \item{variables}{variables assigned to colours}

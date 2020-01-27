@@ -4,13 +4,9 @@
 \alias{mapdeck_update}
 \title{Mapdeck update}
 \usage{
-mapdeck_update(
-  data = NULL,
-  map_id,
-  session = shiny::getDefaultReactiveDomain(),
-  deferUntilFlush = TRUE,
-  map_type = c("mapdeck_update", "google_map_update")
-)
+mapdeck_update(data = NULL, map_id,
+  session = shiny::getDefaultReactiveDomain(), deferUntilFlush = TRUE,
+  map_type = c("mapdeck_update", "google_map_update"))
 }
 \arguments{
 \item{data}{data to be used in the layer. All coordinates are expected to be
