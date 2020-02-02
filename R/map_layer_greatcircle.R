@@ -117,6 +117,7 @@ add_greatcircle <- function(
 	focus_layer = FALSE,
 	transitions = NULL,
 	digits = 6
+	#brush_radius = NULL
 ) {
 	brush_radius = NULL
 

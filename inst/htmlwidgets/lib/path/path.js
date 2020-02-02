@@ -1,7 +1,12 @@
 
 
-function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour,
-legend, bbox, update_view, focus_layer, js_transition, billboard ) {
+function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius ) {
+
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
 
   const pathLayer = new PathLayer({
     map_id: map_id,
@@ -23,7 +28,9 @@ legend, bbox, update_view, focus_layer, js_transition, billboard ) {
     onHover: md_update_tooltip,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -38,7 +45,13 @@ legend, bbox, update_view, focus_layer, js_transition, billboard ) {
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard ) {
+function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius ) {
+
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new BrushingExtension() );
+  }
 
   const pathLayer = new PathLayer({
     map_id: map_id,
@@ -60,7 +73,9 @@ function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highligh
     onHover: md_update_tooltip,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
