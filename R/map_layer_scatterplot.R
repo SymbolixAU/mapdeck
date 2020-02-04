@@ -199,7 +199,7 @@ add_scatterplot <- function(
 		shape <- rcpp_point_geojson( data, l, geometry_column, digits, "scatterplot" )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_scatterplot_geojson_df_binary( data, l, geometry_column, digits )
+		shape <- rcpp_scatterplot_geojson_df_columnar( data, l, geometry_column, digits )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- c( "polyline" )
 		shape <- rcpp_point_polyline( data, l, geometry_column, "scatterplot" )

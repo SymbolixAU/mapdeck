@@ -64,9 +64,11 @@ std::unordered_map< std::string, std::string > get_point_colours( std::string la
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_scatterplot_geojson_df_binary(
-		Rcpp::DataFrame data, Rcpp::List params,
-		Rcpp::List geometry_columns, int digits
+Rcpp::List rcpp_scatterplot_geojson_df_columnar(
+		Rcpp::DataFrame data,
+		Rcpp::List params,
+		Rcpp::List geometry_columns,
+		int digits
 ) {
 
 	int data_rows = data.nrows();
@@ -77,7 +79,7 @@ Rcpp::List rcpp_scatterplot_geojson_df_binary(
 	Rcpp::StringVector scatterplot_legend = mapdeck::layer_colours::fill_stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
-	return spatialwidget::api::create_binary(
+	return spatialwidget::api::create_columnar(
 		data,
 		params,
 		lst_defaults,
