@@ -175,8 +175,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_scatterplot_geojson_df_columnar
-Rcpp::List rcpp_scatterplot_geojson_df_columnar(Rcpp::DataFrame data, Rcpp::List params, Rcpp::List geometry_columns, int digits);
-RcppExport SEXP _mapdeck_rcpp_scatterplot_geojson_df_columnar(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
+Rcpp::List rcpp_scatterplot_geojson_df_columnar(Rcpp::DataFrame data, Rcpp::List params, Rcpp::List geometry_columns, int digits, bool leave_early);
+RcppExport SEXP _mapdeck_rcpp_scatterplot_geojson_df_columnar(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP, SEXP leave_earlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -184,7 +184,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_scatterplot_geojson_df_columnar(data, params, geometry_columns, digits));
+    Rcpp::traits::input_parameter< bool >::type leave_early(leave_earlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_scatterplot_geojson_df_columnar(data, params, geometry_columns, digits, leave_early));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -314,7 +315,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_od_polyline", (DL_FUNC) &_mapdeck_rcpp_od_polyline, 4},
     {"_mapdeck_rcpp_path_geojson", (DL_FUNC) &_mapdeck_rcpp_path_geojson, 5},
     {"_mapdeck_rcpp_path_polyline", (DL_FUNC) &_mapdeck_rcpp_path_polyline, 4},
-    {"_mapdeck_rcpp_scatterplot_geojson_df_columnar", (DL_FUNC) &_mapdeck_rcpp_scatterplot_geojson_df_columnar, 4},
+    {"_mapdeck_rcpp_scatterplot_geojson_df_columnar", (DL_FUNC) &_mapdeck_rcpp_scatterplot_geojson_df_columnar, 5},
     {"_mapdeck_rcpp_point_geojson", (DL_FUNC) &_mapdeck_rcpp_point_geojson, 5},
     {"_mapdeck_rcpp_point_geojson_df", (DL_FUNC) &_mapdeck_rcpp_point_geojson_df, 5},
     {"_mapdeck_rcpp_point_polyline", (DL_FUNC) &_mapdeck_rcpp_point_polyline, 4},

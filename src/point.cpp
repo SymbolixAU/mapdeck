@@ -19,7 +19,8 @@ Rcpp::List scatterplot_defaults(int n) {
 	return Rcpp::List::create(
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n),
 		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour(n),
-		_["stroke_width"] = nv
+		_["stroke_width"] = nv,
+		_["radius"] = mapdeck::defaults::default_radius(n)
 	);
 }
 
@@ -68,7 +69,8 @@ Rcpp::List rcpp_scatterplot_geojson_df_columnar(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
 		Rcpp::List geometry_columns,
-		int digits
+		int digits,
+		bool leave_early
 ) {
 
 	int data_rows = data.nrows();
@@ -79,6 +81,7 @@ Rcpp::List rcpp_scatterplot_geojson_df_columnar(
 	Rcpp::StringVector scatterplot_legend = mapdeck::layer_colours::fill_stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
+	std::string format = "rgb";
 	return spatialwidget::api::create_columnar(
 		data,
 		params,
@@ -89,7 +92,9 @@ Rcpp::List rcpp_scatterplot_geojson_df_columnar(
 		parameter_exclusions,
 		geometry_columns,
 		true,  // jsonify legend
-		digits
+		digits,
+		format,
+		leave_early
 	);
 }
 

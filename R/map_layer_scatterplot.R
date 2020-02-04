@@ -142,7 +142,9 @@ add_scatterplot <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL,
-	brush_radius = NULL
+	brush_radius = NULL,
+	debug_cpp,
+	leave_early
 ) {
 
 	l <- list()
@@ -198,8 +200,16 @@ add_scatterplot <- function(
 		geometry_column <- c( "geometry" )
 		shape <- rcpp_point_geojson( data, l, geometry_column, digits, "scatterplot" )
 	} else if ( tp == "df" ) {
-		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_scatterplot_geojson_df_columnar( data, l, geometry_column, digits )
+		if( debug_cpp == "columnar") {
+		  geometry_column <- list( geometry = c("lon", "lat") )
+		  shape <- rcpp_scatterplot_geojson_df_columnar( data, l, geometry_column, digits, leave_early )
+
+		} else if ( debug_cpp == "geo" ) {
+
+			geometry_column <- list( geometry = c("lon", "lat") )
+			shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "scatterplot" )
+
+		}
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- c( "polyline" )
 		shape <- rcpp_point_polyline( data, l, geometry_column, "scatterplot" )
@@ -210,8 +220,6 @@ add_scatterplot <- function(
 		# }
 	}
 
-		print( shape )
-
 	js_transitions <- resolve_transitions( transitions, "scatterplot" )
 
 
@@ -221,11 +229,21 @@ add_scatterplot <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
-	invoke_method(
-		map, jsfunc, map_type( map ), shape[["data"]], nrow(data) , layer_id, auto_highlight, highlight_colour,
-		shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
-		radius_min_pixels, radius_max_pixels, brush_radius
+	if( debug_cpp == "columnar" ) {
+		print("binary data")
+		invoke_method(
+			map, jsfunc, map_type( map ), shape[["data"]], nrow(data) , layer_id, auto_highlight, highlight_colour,
+			shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
+			radius_min_pixels, radius_max_pixels, brush_radius
+			)
+	} else {
+		print("geojson data")
+		invoke_method(
+			map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
+			shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
+			radius_min_pixels, radius_max_pixels, brush_radius
 		)
+	}
 }
 
 #' @rdname clear
