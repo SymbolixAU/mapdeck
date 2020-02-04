@@ -190,7 +190,7 @@ add_scatterplot <- function(
 	# 	jsfunc <- "add_scatterplot_brush_geo"
 	# 	map <- addDependency(map, mapdeckScatterplotBrushDependency())
 	# } else {
-		jsfunc <- "add_scatterplot_geo_binary"
+		jsfunc <- "add_scatterplot_geo_columnar"
 		map <- addDependency(map, mapdeckScatterplotDependency())
 	# }
 
@@ -210,7 +210,11 @@ add_scatterplot <- function(
 		# }
 	}
 
+		print( shape )
+
 	js_transitions <- resolve_transitions( transitions, "scatterplot" )
+
+
 	if( inherits( legend, "json" ) ) {
 		shape[["legend"]] <- legend
 	} else {

@@ -8,6 +8,7 @@ namespace defaults {
 
 	inline Rcpp::NumericVector default_arc_height( int n ) {
 		Rcpp::NumericVector nv(n, 1.0);
+		int x;
 		return nv;
 	}
 

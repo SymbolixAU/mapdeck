@@ -1,6 +1,7 @@
-function add_scatterplot_geo_binary( map_id, map_type, scatter_data, data_count, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
+function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_count, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
 
-  console.log( "data_count - " + data_count );
+  //console.log( "data_count - " + data_count );
+  console.log( scatter_data );
 
   var extensions = [];
 
@@ -8,17 +9,42 @@ function add_scatterplot_geo_binary( map_id, map_type, scatter_data, data_count,
   	extensions.push( new BrushingExtension() );
   }
 
-  const scatterLayer = new ScatterplotLayer({
+  const binaryLocation = new Float32Array(scatter_data.geometry);
+  const binaryRadius = new Float32Array(scatter_data.radius);
+  const binaryFillColour = new Float32Array(scatter_data.fill_colour);
+  const binaryLineColour = new Float32Array(scatter_data.stroke_colour);
+  const binaryLineWidth = new Float32Array(scatter_data.stroke_width);
+
+  console.log( binaryLocation );
+
+  //const data_count = scatter_data.radius.count;
+
+/*
+  const scatter = new deck.ScatterplotLayer({
+    data: {
+      length: 3,
+      attributes: {
+        getPosition: {value: binaryLocation, size: 2},
+        getRadius: {value: binaryRadius, size: 1},
+        getFillColor: {value: binaryFillColour, size: 4},
+        getLineColor: {value: binaryLineColour, size: 4}
+      }
+    }
+  })
+*/
+  const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
 
     data: {
-    	length: data_count,
-    	attributes: {
-    		instancePositions: scatter_data.geometries.positions,
-    		instanceFillColors: scatter_data.fill_colour,
-    		instanceLineColors: scatter_data.line_colour,
-    	}
+      length: data_count,
+      attributes: {
+        getPosition: {value: binaryLocation, size: 2},
+        getRadius: {value: binaryRadius, size: 1},
+        getFillColor: {value: binaryFillColour, size: 4},
+        getLineColor: {value: binaryLineColour, size: 4},
+        getLineWidth: {value: binaryLineWidth, size: 1}
+      }
     },
 
 
