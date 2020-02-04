@@ -1,7 +1,7 @@
 
 function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
-  const lineLayer = new LineLayer({
+  const lineLayer = new deck.LineLayer({
   	map_id: map_id,
     id: 'line-'+layer_id,
     data: line_data,
@@ -35,7 +35,7 @@ function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, hi
 
 function add_line_polyline( map_id, map_type, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
 
-  const lineLayer = new LineLayer({
+  const lineLayer = new deck.LineLayer({
     map_id: map_id,
     id: 'line-'+layer_id,
     data: line_data,

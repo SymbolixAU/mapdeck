@@ -1,8 +1,10 @@
 
 
-function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, line_width_units, line_width_scale, line_width_min_pixels, elevation_scale, point_radius_scale, point_radius_min_pixels ) {
+function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, line_width_units, line_width_scale, line_width_min_pixels, elevation_scale, point_radius_scale, point_radius_min_pixels, extruded ) {
 
   geojson = geojson.features;
+
+  console.log( geojson );
 
   const geojsonLayer = new deck.GeoJsonLayer({
     map_id: map_id,
@@ -11,7 +13,7 @@ function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, au
     pickable: true,
     stroked: true,
     filled: true,
-    extruded: true,
+    extruded: extruded,
     wireframe: false,
 
     pointRadiusMinPixels: point_radius_min_pixels,
@@ -50,7 +52,7 @@ function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, au
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, line_width_units, line_width_scale, line_width_min_pixels, elevation_scale, point_radius_scale, point_radius_min_pixels) {
+function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, line_width_units, line_width_scale, line_width_min_pixels, elevation_scale, point_radius_scale, point_radius_min_pixels, extruded ) {
 
   const geojsonLayer = new deck.GeoJsonLayer({
     map_id: map_id,
@@ -59,7 +61,7 @@ function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_
     pickable: true,
     stroked: true,
     filled: true,
-    extruded: true,
+    extruded: extruded,
     wireframe: false,
 
     pointRadiusMinPixels: point_radius_min_pixels,

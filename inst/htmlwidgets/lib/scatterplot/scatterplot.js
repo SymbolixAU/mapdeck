@@ -95,7 +95,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
   	extensions.push( new BrushingExtension() );
   }
 
-  const scatterLayer = new ScatterplotLayer({
+  const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
     data: scatter_data,
@@ -143,7 +143,7 @@ function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, aut
   if ( brush_radius > 0 ) {
   	extensions.push( new BrushingExtension() );
   }
-  const scatterLayer = new ScatterplotLayer({
+  const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,
     data: scatter_data,

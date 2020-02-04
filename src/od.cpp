@@ -121,6 +121,7 @@ Rcpp::List rcpp_od_geojson_df(
 		parameter_exclusions,
 		geometry_columns,
 		true,  // jsonify legend
+		true,  // elegation
 		digits
 	);
 }

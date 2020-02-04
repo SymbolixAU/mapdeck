@@ -5,6 +5,7 @@ function md_setup_window( map_id ) {
 
   md_setup_legend( map_id );
   md_setup_title( map_id );
+  md_setup_view_state( map_id );
   md_setup_tooltip( map_id );
 }
 
@@ -31,12 +32,19 @@ function md_setup_legend( map_id ) {
 }
 
 function md_setup_title( map_id ) {
-	console.log( "setup_title" ) ;
 	var mapDiv = document.getElementById(map_id);
 	var mapTitle = document.createElement('div');
   mapTitle.className = "mapTitleContainer";
   mapTitle.id = "mapTitleContainer"+map_id;
   mapDiv.appendChild( mapTitle );
+}
+
+function md_setup_view_state( map_id ) {
+	var mapDiv = document.getElementById(map_id);
+	var mapViewState = document.createElement('div');
+  mapViewState.className = "mapViewStateContainer";
+  mapViewState.id = "mapViewStateContainer"+map_id;
+  mapDiv.appendChild( mapViewState );
 }
 
 function md_setup_tooltip( map_id ) {
@@ -151,11 +159,11 @@ function md_update_layer( map_id, layer_id, layer ) {
   }
 
   // ## issue 137
-  var vs = window[ map_id + 'map'].viewState;
+  //var vs = window[ map_id + 'map'].viewState;
 
   window[map_id + 'map'].setProps({
-  	layers: [...window[map_id + 'layers'] ],
-  	viewState: vs
+  	layers: [...window[map_id + 'layers'] ]
+  	//viewState: vs                           // issue 239 - viewState no longer supported in deck.gl v8.0.8
   });
 }
 

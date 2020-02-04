@@ -7,7 +7,7 @@ function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, hi
   	extensions.push( new BrushingExtension() );
   }
 
-  const textLayer = new TextLayer({
+  const textLayer = new deck.TextLayer({
   	map_id: map_id,
     id: 'text-'+layer_id,
     data: text_data,
@@ -58,7 +58,7 @@ function add_text_polyline( map_id, map_type, text_data, layer_id, auto_highligh
   	extensions.push( new BrushingExtension() );
   }
 
-  const textLayer = new TextLayer({
+  const textLayer = new deck.TextLayer({
     map_id: map_id,
     id: 'text-'+layer_id,
     data: text_data,
