@@ -201,10 +201,15 @@ add_scatterplot <- function(
 		shape <- rcpp_point_geojson( data, l, geometry_column, digits, "scatterplot" )
 	} else if ( tp == "df" ) {
 		if( debug_cpp == "columnar") {
+
+			jsfunc <- "add_scatterplot_geo_columnar"
+
 		  geometry_column <- list( geometry = c("lon", "lat") )
 		  shape <- rcpp_scatterplot_geojson_df_columnar( data, l, geometry_column, digits, leave_early )
 
 		} else if ( debug_cpp == "geo" ) {
+
+			jsfunc <- "add_scatterplot_geo"
 
 			geometry_column <- list( geometry = c("lon", "lat") )
 			shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "scatterplot" )

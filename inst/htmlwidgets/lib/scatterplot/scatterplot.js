@@ -1,8 +1,5 @@
 function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_count, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
 
-  //console.log( "data_count - " + data_count );
-  console.log( scatter_data );
-
   var extensions = [];
 
   if ( brush_radius > 0 ) {
@@ -15,23 +12,6 @@ function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_coun
   const binaryLineColour = new Float32Array(scatter_data.stroke_colour);
   const binaryLineWidth = new Float32Array(scatter_data.stroke_width);
 
-  console.log( binaryLocation );
-
-  //const data_count = scatter_data.radius.count;
-
-/*
-  const scatter = new deck.ScatterplotLayer({
-    data: {
-      length: 3,
-      attributes: {
-        getPosition: {value: binaryLocation, size: 2},
-        getRadius: {value: binaryRadius, size: 1},
-        getFillColor: {value: binaryFillColour, size: 4},
-        getLineColor: {value: binaryLineColour, size: 4}
-      }
-    }
-  })
-*/
   const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
     id: 'scatterplot-'+layer_id,

@@ -1,21 +1,145 @@
+#
+#
+# library(Rcpp)
+#
+# ## extract list vectors, mame matrix, transpose, remove matrix attributes
+# cppFunction(
+# 	code = '
+# 	  Rcpp::NumericVector list_to_vec1( Rcpp::List lst, R_xlen_t n_row ) {
+#
+# 	    R_xlen_t dimension = lst.size();
+# 	    R_xlen_t j;
+#
+# 	    Rcpp::NumericMatrix mat( n_row, dimension );
+#
+# 	    for( j = 0; j < dimension; ++j ) {
+# 	      mat( Rcpp::_, j ) = Rcpp::as< Rcpp::NumericVector >( lst[ j ] );
+# 	    }
+#
+# 	    Rcpp::NumericMatrix mat2 = Rcpp::transpose( mat );
+# 	    mat2.attr("dim") = R_NilValue;
+#
+# 	    Rcpp::NumericVector coordinates = Rcpp::as< Rcpp::NumericVector >( mat2 );
+# 	    return coordinates;
+# 	  }
+# 	'
+# )
+#
+# ## iterate the list elements and populate the vector
+# cppFunction(
+# 	code = '
+# 	  Rcpp::NumericVector list_to_vec2( Rcpp::List lst, R_xlen_t n_row ) {
+#
+# 	    R_xlen_t dimension = lst.size();
+# 	    R_xlen_t j, k;
+#
+# 	    Rcpp::NumericVector coords( n_row * dimension );
+# 	    R_xlen_t idx = 0;
+#
+# 	    for( j = 0; j < dimension; ++j ) {
+# 	      Rcpp::NumericVector nv = lst[ j ];
+#
+# 	      for( k = 0; k < n_row; ++k ) {
+# 	        idx = k * dimension + j;
+# 	        coords( idx ) = nv[ k ];
+# 	      }
+# 	    }
+# 	    return coords;
+# 	  }
+# 	'
+# )
+#
+# n <- 1e6
+# lons <- rnorm(n)
+# lats <- rnorm(n)
+#
+# lst <- list(lons, lats)
+# coords1 <- list_to_vec1( lst, n )
+# coords2 <- list_to_vec2( lst, n )
+#
+# all.equal( coords1, coords2 )
+#
+# library(microbenchmark)
+#
+# microbenchmark(
+# 	one = { list_to_vec1( lst, n ) },
+# 	two = { list_to_vec2( lst, n ) }
+# )
+
+# library(jsonify)
+# library(microbenchmark)
+#
+# df <- data.frame(
+# 	x = rnorm(1e6)
+# 	, y = rnorm(1e6)
+# 	, val = sample(letters, size = 1e6, replace = T)
+# )
+#
+# microbenchmark(
+#
+# 	json = {
+# 		js <- jsonify::to_json(
+# 			x = df
+# 			, unbox = TRUE
+# 			, digits = 6
+# 			, numeric_dates = FALSE
+# 			, factors_as_string = TRUE
+# 			, by = "column"
+# 		)
+# 	},
+# 	times = 10
+# )
 
 
-library(sf)
-library(mapdeck)
+# library(sf)
+# library(mapdeck)
+#
+# df <- data.frame(
+# 	x = rnorm(1e6)
+# 	, y = rnorm(1e6)
+# 	, val = sample(letters, size = 1e6, replace = T)
+# )
 
-nc <- sf::st_read( system.file( "shape/nc.shp", package = "sf"))
-
-mapdeck() %>%
-	add_polygon(
-		data = nc
-	)
-
-df <- data.frame(
-	x = rnorm(1e6)
-	, y = rnorm(1e6)
-	, val = sample(letters, size = 1e6, replace = T)
-)
-
+## It is the jsonify::api::to_json() which is slow
+## needs to be increased
+# library(microbenchmark)
+#
+# microbenchmark::microbenchmark(
+#
+# 	columnar = {
+# 		res1 <- mapdeck() %>%
+# 			add_scatterplot(
+# 				data = df
+# 				, lon = "x"
+# 				, lat = "y"
+# 				, fill_colour = "val"
+# 				, debug_cpp = "columnar"
+# 				, leave_early = FALSE
+# 				)
+# 	},
+# 	geo = {
+# 		res2 <- mapdeck() %>%
+# 			add_scatterplot(
+# 				data = df
+# 				, lon = "x"
+# 				, lat = "y"
+# 				, fill_colour = "val"
+# 				, debug_cpp = "geo"
+# 				, leave_early = FALSE
+# 				)
+# 	},
+# 	times = 2
+# )
+#
+#
+#
+#
+# df <- data.frame(
+# 	x = rnorm(1e6)
+# 	, y = rnorm(1e6)
+# 	, val = sample(letters, size = 1e6, replace = T)
+# )
+#
 # mapdeck() %>%
 # 	add_scatterplot(
 # 		data = df
@@ -23,39 +147,31 @@ df <- data.frame(
 # 		, lat = "y"
 # 		, fill_colour = "val"
 # 		, debug_cpp = "columnar"
+# 		, leave_early = FALSE
 # 	)
+#
+# mapdeck() %>%
+# 	add_scatterplot(
+# 		data = df
+# 		, lon = "x"
+# 		, lat = "y"
+# 		, fill_colour = "val"
+# 		, debug_cpp = "geo"
+# 		, leave_early = FALSE
+# 	)
+#
+
+#
 
 
-## IT IS THE GENERATING OF THE 'COORDINATES' which is slow
-## needs to be increased
-library(microbenchmark)
 
-microbenchmark::microbenchmark(
 
-	left = {
-		mapdeck() %>%
-			add_scatterplot(
-				data = df
-				, lon = "x"
-				, lat = "y"
-				, fill_colour = "val"
-				, debug_cpp = "columnar"
-				, leave_early = TRUE
-				)
-	},
-	coloured = {
-		mapdeck() %>%
-			add_scatterplot(
-				data = df
-				, lon = "x"
-				, lat = "y"
-				, fill_colour = "val"
-				, debug_cpp = "columnar"
-				, leave_early = FALSE
-				)
-	},
-	times = 2
-)
+
+
+
+
+
+
 
 
 #
