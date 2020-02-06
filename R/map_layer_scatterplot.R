@@ -142,9 +142,7 @@ add_scatterplot <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL,
-	brush_radius = NULL,
-	debug_cpp,
-	leave_early
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -196,33 +194,24 @@ add_scatterplot <- function(
 		map <- addDependency(map, mapdeckScatterplotDependency())
 	# }
 
+	print( l )
+
 	if ( tp == "sf" ) {
-		geometry_column <- c( "geometry" )
-		shape <- rcpp_point_geojson( data, l, geometry_column, digits, "scatterplot" )
+		geometry_column <- list( geometry = c() )  ## using columnar structure, the 'sf' is converted to a data.frame
+		## so the geometry columns are obtained after sfheaders::sf_to_df()
+		l[["geometry"]] <- NULL
+		shape <- rcpp_scaterplot_sf_columnar( data, l, geometry_column, digits )
+
 	} else if ( tp == "df" ) {
-		if( debug_cpp == "columnar") {
 
-			jsfunc <- "add_scatterplot_geo_columnar"
+		jsfunc <- "add_scatterplot_geo_columnar"
 
-		  geometry_column <- list( geometry = c("lon", "lat") )
-		  shape <- rcpp_scatterplot_geojson_df_columnar( data, l, geometry_column, digits, leave_early )
+	  geometry_column <- list( geometry = c("lon", "lat") )
+	  shape <- rcpp_scatterplot_df_columnar( data, l, geometry_column, digits )
 
-		} else if ( debug_cpp == "geo" ) {
-
-			jsfunc <- "add_scatterplot_geo"
-
-			geometry_column <- list( geometry = c("lon", "lat") )
-			shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "scatterplot" )
-
-		}
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- c( "polyline" )
 		shape <- rcpp_point_polyline( data, l, geometry_column, "scatterplot" )
-		# if(!is.null(brush_radius)) {
-		# 	jsfunc <- "add_scatterplot_brush_polyline"
-		# } else {
-		# 	jsfunc <- "add_scatterplot_polyline"
-		# }
 	}
 
 	js_transitions <- resolve_transitions( transitions, "scatterplot" )
@@ -234,21 +223,11 @@ add_scatterplot <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
-	if( debug_cpp == "columnar" ) {
-		print("binary data")
-		invoke_method(
-			map, jsfunc, map_type( map ), shape[["data"]], nrow(data) , layer_id, auto_highlight, highlight_colour,
-			shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
-			radius_min_pixels, radius_max_pixels, brush_radius
-			)
-	} else {
-		print("geojson data")
-		invoke_method(
-			map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
-			shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
-			radius_min_pixels, radius_max_pixels, brush_radius
+	invoke_method(
+		map, jsfunc, map_type( map ), shape[["data"]], nrow(data) , layer_id, auto_highlight, highlight_colour,
+		shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
+		radius_min_pixels, radius_max_pixels, brush_radius
 		)
-	}
 }
 
 #' @rdname clear

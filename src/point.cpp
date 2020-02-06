@@ -2,6 +2,7 @@
 #include "mapdeck_defaults.hpp"
 #include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
+#include "sfheaders/df/sf.hpp"
 
 
 Rcpp::List column_defaults(int n) {
@@ -65,12 +66,11 @@ std::unordered_map< std::string, std::string > get_point_colours( std::string la
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_scatterplot_geojson_df_columnar(
+Rcpp::List rcpp_scatterplot_df_columnar(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
 		Rcpp::List geometry_columns,
-		int digits,
-		bool leave_early
+		int digits
 ) {
 
 	int data_rows = data.nrows();
@@ -82,6 +82,15 @@ Rcpp::List rcpp_scatterplot_geojson_df_columnar(
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	std::string format = "rgb";
+
+	Rcpp::StringVector param_names = params.names();
+	Rcpp::Rcout << "param_names: " << param_names << std::endl;
+
+	Rcpp::StringVector g = geometry_columns["geometry"];
+	Rcpp::Rcout << "g: " << g << std::endl;
+
+	Rcpp::Rcout << "df done" << std::endl;
+
 	return spatialwidget::api::create_columnar(
 		data,
 		params,
@@ -93,9 +102,43 @@ Rcpp::List rcpp_scatterplot_geojson_df_columnar(
 		geometry_columns,
 		true,  // jsonify legend
 		digits,
-		format,
-		leave_early
+		format
 	);
+}
+
+// [[Rcpp::export]]
+Rcpp::List rcpp_scaterplot_sf_columnar(
+		Rcpp::DataFrame data,
+		Rcpp::List params,
+		Rcpp::List geometry_columns,
+		int digits
+	){
+
+	Rcpp::DataFrame df = sfheaders::df::sf_to_df( data, true );
+	Rcpp::StringVector n = df.names();
+	Rcpp::Rcout << "names: " << n << std::endl;
+	Rcpp::CharacterVector geometry_cols = df.attr("sfc_columns");
+	Rcpp::Rcout << "geometry_cols: " << geometry_cols << std::endl;
+	geometry_columns[ "geometry" ] = geometry_cols;
+
+	//params["geometry"] = R_NilValue;
+
+	// remove 'geometry' from params
+
+	// hhmmmmm....??? why 'x' and 'y' and not 'lon' and 'lat'..?
+	params["x"] = geometry_cols[0];
+	params["y"] = geometry_cols[1];
+
+	Rcpp::StringVector param_names = params.names();
+	Rcpp::Rcout << "param_names: " << param_names << std::endl;
+
+
+	Rcpp::StringVector g = geometry_columns["geometry"];
+	Rcpp::Rcout << "g: " << g << std::endl;
+
+	Rcpp::Rcout << "params done" << std::endl;
+
+	return rcpp_scatterplot_df_columnar(df, params, geometry_columns, digits);
 }
 
 

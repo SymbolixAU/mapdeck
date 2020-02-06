@@ -27,7 +27,6 @@ function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_coun
       }
     },
 
-
     //data: scatter_data,
     radiusScale: 1,
     radiusMinPixels: radius_min_pixels || 1,
@@ -38,11 +37,6 @@ function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_coun
     parameters: {
 	    depthTest: false
 	  },
-    //getRadius: d => d.properties.radius,
-    //getPosition: d => md_get_point_coordinates( d ),
-    //getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
-    //getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
-    //getLineWidth: d => d.properties.stroke_width,
     pickable: true,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),

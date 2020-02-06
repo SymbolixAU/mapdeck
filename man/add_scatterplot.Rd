@@ -13,8 +13,7 @@ add_scatterplot(map, data = get_map_data(map), lon = NULL,
   layer_id = NULL, id = NULL, palette = "viridis",
   na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
   legend_format = NULL, digits = 6, update_view = TRUE,
-  focus_layer = FALSE, transitions = NULL, brush_radius = NULL,
-  debug_cpp, leave_early)
+  focus_layer = FALSE, transitions = NULL, brush_radius = NULL)
 }
 \arguments{
 \item{map}{a mapdeck map object}

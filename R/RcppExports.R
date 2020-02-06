@@ -49,8 +49,12 @@ rcpp_path_polyline <- function(data, params, geometry_columns, layer_name) {
     .Call(`_mapdeck_rcpp_path_polyline`, data, params, geometry_columns, layer_name)
 }
 
-rcpp_scatterplot_geojson_df_columnar <- function(data, params, geometry_columns, digits, leave_early) {
-    .Call(`_mapdeck_rcpp_scatterplot_geojson_df_columnar`, data, params, geometry_columns, digits, leave_early)
+rcpp_scatterplot_df_columnar <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_scatterplot_df_columnar`, data, params, geometry_columns, digits)
+}
+
+rcpp_scaterplot_sf_columnar <- function(data, params, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_scaterplot_sf_columnar`, data, params, geometry_columns, digits)
 }
 
 rcpp_point_geojson <- function(data, params, geometry_columns, digits, layer_name) {
