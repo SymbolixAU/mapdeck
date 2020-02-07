@@ -83,13 +83,18 @@ Rcpp::List rcpp_scatterplot_df_columnar(
 
 	std::string format = "rgb";
 
+	Rcpp::StringVector n = data.names();
+	// Rcpp::Rcout << "df_names: " << n << std::endl;
+
 	Rcpp::StringVector param_names = params.names();
-	Rcpp::Rcout << "param_names: " << param_names << std::endl;
+	// Rcpp::Rcout << "param_names: " << param_names << std::endl;
 
 	Rcpp::StringVector g = geometry_columns["geometry"];
-	Rcpp::Rcout << "g: " << g << std::endl;
+	// Rcpp::Rcout << "geometry_columns: " << g << std::endl;
 
-	Rcpp::Rcout << "df done" << std::endl;
+	// Rcpp::Rcout << "df done" << std::endl;
+
+	//return data;
 
 	return spatialwidget::api::create_columnar(
 		data,
@@ -115,28 +120,15 @@ Rcpp::List rcpp_scaterplot_sf_columnar(
 	){
 
 	Rcpp::DataFrame df = sfheaders::df::sf_to_df( data, true );
-	Rcpp::StringVector n = df.names();
-	Rcpp::Rcout << "names: " << n << std::endl;
 	Rcpp::CharacterVector geometry_cols = df.attr("sfc_columns");
-	Rcpp::Rcout << "geometry_cols: " << geometry_cols << std::endl;
-	geometry_columns[ "geometry" ] = geometry_cols;
 
-	//params["geometry"] = R_NilValue;
+	// can't directly use `geometry_cols[0]; because it's a CHARSXP,
+	// but in spatialwidget it looks for STRSXP
+	Rcpp::String lon = geometry_cols[0];
+	Rcpp::String lat = geometry_cols[1];
 
-	// remove 'geometry' from params
-
-	// hhmmmmm....??? why 'x' and 'y' and not 'lon' and 'lat'..?
-	params["x"] = geometry_cols[0];
-	params["y"] = geometry_cols[1];
-
-	Rcpp::StringVector param_names = params.names();
-	Rcpp::Rcout << "param_names: " << param_names << std::endl;
-
-
-	Rcpp::StringVector g = geometry_columns["geometry"];
-	Rcpp::Rcout << "g: " << g << std::endl;
-
-	Rcpp::Rcout << "params done" << std::endl;
+	params["lon"] = lon;
+	params["lat"] = lat;
 
 	return rcpp_scatterplot_df_columnar(df, params, geometry_columns, digits);
 }

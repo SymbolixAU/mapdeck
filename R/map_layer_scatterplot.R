@@ -194,10 +194,12 @@ add_scatterplot <- function(
 		map <- addDependency(map, mapdeckScatterplotDependency())
 	# }
 
-	print( l )
+	# print( l )
+	# l[["lon"]] <- "x"
+	# l[["lat"]] <- "y"
 
 	if ( tp == "sf" ) {
-		geometry_column <- list( geometry = c() )  ## using columnar structure, the 'sf' is converted to a data.frame
+		geometry_column <- list( geometry = c("lon","lat") )  ## using columnar structure, the 'sf' is converted to a data.frame
 		## so the geometry columns are obtained after sfheaders::sf_to_df()
 		l[["geometry"]] <- NULL
 		shape <- rcpp_scaterplot_sf_columnar( data, l, geometry_column, digits )
@@ -222,6 +224,8 @@ add_scatterplot <- function(
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
+
+	# return( shape )
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], nrow(data) , layer_id, auto_highlight, highlight_colour,
