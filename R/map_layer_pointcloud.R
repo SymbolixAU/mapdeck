@@ -146,7 +146,7 @@ add_pointcloud <- function(
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
-	jsfunc <- "add_pointcloud_geo"
+	jsfunc <- "add_pointcloud_geo_columnar"
 
 	if ( tp == "sf" ) {
 

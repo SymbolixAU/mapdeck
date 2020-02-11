@@ -163,18 +163,32 @@ add_column <- function(
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
-	jsfunc <- "add_column_geo"
+	jsfunc <- "add_column_geo_columnar"
+
 
 	if ( tp == "sf" ) {
-		geometry_column <- c( "geometry" )
-		shape <- rcpp_point_geojson( data, l, geometry_column, digits, "column" )
+
+		geometry_column <- list( geometry = c("lon","lat") )  ## using columnar structure, the 'sf' is converted to a data.frame
+		## so the geometry columns are obtained after sfheaders::sf_to_df()
+		l[["geometry"]] <- NULL
+		shape <- rcpp_point_sf_columnar( data, l, geometry_column, digits, "column" )
+
+		# geometry_column <- c( "geometry" )
+		# shape <- rcpp_point_geojson( data, l, geometry_column, digits, "column" )
+
 	} else if ( tp == "df" ) {
+
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "column" )
+		shape <- rcpp_point_df_columnar( data, l, geometry_column, digits, "column" )
+
+		# geometry_column <- list( geometry = c("lon", "lat") )
+		# shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "column" )
+
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
 		shape <- rcpp_point_polyline( data, l, geometry_column, "column" )
 		jsfunc <- "add_column_polyline"
+
 	}
 
 	js_transitions <- resolve_transitions( transitions, "column" )
@@ -185,7 +199,7 @@ add_column <- function(
 	}
 
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
+		map, jsfunc, map_type( map ), shape[["data"]], nrow(data), layer_id, auto_highlight, highlight_colour,
 		radius, elevation_scale, disk_resolution, angle, coverage, shape[["legend"]], bbox, update_view,
 		focus_layer, js_transitions, is_extruded, brush_radius
 	)

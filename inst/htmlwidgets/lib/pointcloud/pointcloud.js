@@ -1,5 +1,5 @@
 
-function add_pointcloud_geo( map_id, map_type, pointcloud_data, data_count, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
+function add_pointcloud_geo_columnar( map_id, map_type, pointcloud_data, data_count, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
 
   var extensions = [];
 
