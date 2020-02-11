@@ -186,32 +186,22 @@ add_scatterplot <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
-	# if(!is.null(brush_radius)) {
-	# 	jsfunc <- "add_scatterplot_brush_geo"
-	# 	map <- addDependency(map, mapdeckScatterplotBrushDependency())
-	# } else {
-		jsfunc <- "add_scatterplot_geo_columnar"
-		map <- addDependency(map, mapdeckScatterplotDependency())
-	# }
-
-	# print( l )
-	# l[["lon"]] <- "x"
-	# l[["lat"]] <- "y"
+	jsfunc <- "add_scatterplot_geo_columnar"
+	map <- addDependency(map, mapdeckScatterplotDependency())
 
 	if ( tp == "sf" ) {
 		geometry_column <- list( geometry = c("lon","lat") )  ## using columnar structure, the 'sf' is converted to a data.frame
 		## so the geometry columns are obtained after sfheaders::sf_to_df()
 		l[["geometry"]] <- NULL
-		shape <- rcpp_scaterplot_sf_columnar( data, l, geometry_column, digits )
+		shape <- rcpp_point_sf_columnar( data, l, geometry_column, digits, "scatterplot" )
 
 	} else if ( tp == "df" ) {
 
-		jsfunc <- "add_scatterplot_geo_columnar"
-
 	  geometry_column <- list( geometry = c("lon", "lat") )
-	  shape <- rcpp_scatterplot_df_columnar( data, l, geometry_column, digits )
+	  shape <- rcpp_point_df_columnar( data, l, geometry_column, digits, "scatterplot" )
 
 	} else if ( tp == "sfencoded" ) {
+
 		geometry_column <- c( "polyline" )
 		shape <- rcpp_point_polyline( data, l, geometry_column, "scatterplot" )
 	}

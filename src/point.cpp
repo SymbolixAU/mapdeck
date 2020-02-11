@@ -27,6 +27,7 @@ Rcpp::List scatterplot_defaults(int n) {
 
 Rcpp::List pointcloud_defaults(int n) {
 	return Rcpp::List::create(
+		_["elevation"] = mapdeck::defaults::default_elevation(n),
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n)
 	);
 }
@@ -66,42 +67,31 @@ std::unordered_map< std::string, std::string > get_point_colours( std::string la
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_scatterplot_df_columnar(
+Rcpp::List rcpp_point_df_columnar(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
 		Rcpp::List geometry_columns,
-		int digits
+		int digits,
+		std::string layer_name
 ) {
 
 	int data_rows = data.nrows();
 
-	Rcpp::List lst_defaults = scatterplot_defaults( data_rows );  // initialise with defaults
 
-	std::unordered_map< std::string, std::string > scatterplot_colours = mapdeck::layer_colours::fill_stroke_colours;
-	Rcpp::StringVector scatterplot_legend = mapdeck::layer_colours::fill_stroke_legend;
+	Rcpp::List lst_defaults = get_point_defaults( layer_name, data_rows );
+
+	Rcpp::StringVector point_legend = get_point_legend_colours( layer_name );
+	std::unordered_map< std::string, std::string > point_colours = get_point_colours( layer_name );
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	std::string format = "rgb";
-
-	Rcpp::StringVector n = data.names();
-	// Rcpp::Rcout << "df_names: " << n << std::endl;
-
-	Rcpp::StringVector param_names = params.names();
-	// Rcpp::Rcout << "param_names: " << param_names << std::endl;
-
-	Rcpp::StringVector g = geometry_columns["geometry"];
-	// Rcpp::Rcout << "geometry_columns: " << g << std::endl;
-
-	// Rcpp::Rcout << "df done" << std::endl;
-
-	//return data;
 
 	return spatialwidget::api::create_columnar(
 		data,
 		params,
 		lst_defaults,
-		scatterplot_colours,
-		scatterplot_legend,
+		point_colours,
+		point_legend,
 		data_rows,
 		parameter_exclusions,
 		geometry_columns,
@@ -112,11 +102,12 @@ Rcpp::List rcpp_scatterplot_df_columnar(
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_scaterplot_sf_columnar(
+Rcpp::List rcpp_point_sf_columnar(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
 		Rcpp::List geometry_columns,
-		int digits
+		int digits,
+		std::string layer_name
 	){
 
 	Rcpp::DataFrame df = sfheaders::df::sf_to_df( data, true );
@@ -124,47 +115,59 @@ Rcpp::List rcpp_scaterplot_sf_columnar(
 
 	// can't directly use `geometry_cols[0]; because it's a CHARSXP,
 	// but in spatialwidget it looks for STRSXP
-	Rcpp::String lon = geometry_cols[0];
-	Rcpp::String lat = geometry_cols[1];
+	// TODO:
+	// this needs to loop over the geometry_cols, because there may be elevation and time as well, right?
 
-	params["lon"] = lon;
-	params["lat"] = lat;
+	int n_cols = geometry_cols.length();
+	int i;
+	Rcpp::StringVector param_names({"lon","lat","elevation","time"});
+	for( i = 0; i < n_cols; ++i ) {
+		Rcpp::String this_geom = geometry_cols[i];
+		Rcpp::String this_param = param_names[i];
+		params[ this_param ] = this_geom;
+	}
 
-	return rcpp_scatterplot_df_columnar(df, params, geometry_columns, digits);
+	// Rcpp::String lon = geometry_cols[0];
+	// Rcpp::String lat = geometry_cols[1];
+	//
+	// params["lon"] = lon;
+	// params["lat"] = lat;
+
+	return rcpp_point_df_columnar(df, params, geometry_columns, digits, layer_name );
 }
 
 
-// [[Rcpp::export]]
-Rcpp::List rcpp_point_geojson(
-		Rcpp::DataFrame data,
-		Rcpp::List params,
-		std::string geometry_columns,
-		int digits,
-		std::string layer_name
-) {
-
-	int data_rows = data.nrows();
-
-	Rcpp::List lst_defaults = get_point_defaults( layer_name, data_rows );
-
-	Rcpp::StringVector point_legend = get_point_legend_colours( layer_name );
-	std::unordered_map< std::string, std::string > point_colours = get_point_colours( layer_name );
-
-	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
-
-	return spatialwidget::api::create_geojson_downcast(
-		data,
-		params,
-		lst_defaults,
-		point_colours,
-		point_legend,
-		data_rows,
-		parameter_exclusions,
-		geometry_columns,
-		true,  // jsonify legend
-		digits
-	);
-}
+// // [[Rcpp::export]]
+// Rcpp::List rcpp_point_geojson(
+// 		Rcpp::DataFrame data,
+// 		Rcpp::List params,
+// 		std::string geometry_columns,
+// 		int digits,
+// 		std::string layer_name
+// ) {
+//
+// 	int data_rows = data.nrows();
+//
+// 	Rcpp::List lst_defaults = get_point_defaults( layer_name, data_rows );
+//
+// 	Rcpp::StringVector point_legend = get_point_legend_colours( layer_name );
+// 	std::unordered_map< std::string, std::string > point_colours = get_point_colours( layer_name );
+//
+// 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
+//
+// 	return spatialwidget::api::create_geojson_downcast(
+// 		data,
+// 		params,
+// 		lst_defaults,
+// 		point_colours,
+// 		point_legend,
+// 		data_rows,
+// 		parameter_exclusions,
+// 		geometry_columns,
+// 		true,  // jsonify legend
+// 		digits
+// 	);
+// }
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_point_geojson_df(

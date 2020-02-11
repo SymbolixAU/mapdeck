@@ -60,7 +60,7 @@ function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_coun
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-
+/*
 function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
 
   var extensions = [];
@@ -109,6 +109,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
 
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
+*/
 
 function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
 

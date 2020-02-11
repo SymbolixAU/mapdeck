@@ -1,5 +1,5 @@
 
-function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
+function add_pointcloud_geo( map_id, map_type, pointcloud_data, data_count, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
 
   var extensions = [];
 
@@ -7,13 +7,29 @@ function add_pointcloud_geo( map_id, map_type, pointcloud_data, radius, layer_id
   	extensions.push( new BrushingExtension() );
   }
 
+  console.log( pointcloud_data );
+
+  const binaryLocation = new Float32Array(pointcloud_data.geometry);
+  const binaryRadius = new Float32Array(pointcloud_data.radius);
+  const binaryFillColour = new Float32Array(pointcloud_data.fill_colour);
+
   const pointcloudLayer = new deck.PointCloudLayer({
   	map_id: map_id,
     id: 'pointcloud-'+layer_id,
-    data: pointcloud_data,
+    //data: pointcloud_data,
+    //getPosition: d => md_get_point_coordinates( d ),
+    //getColor: d => md_hexToRGBA( d.properties.fill_colour ),
+
+    data: {
+      length: data_count,
+      attributes: {
+        getPosition: {value: binaryLocation, size: 3},
+        getRadius: {value: binaryRadius, size: 1},
+        getColor: {value: binaryFillColour, size: 4},
+      }
+    },
+
     radiusPixels: radius,
-    getPosition: d => md_get_point_coordinates( d ),
-    getColor: d => md_hexToRGBA( d.properties.fill_colour ),
     lightSettings: light_settings,
     pickable: true,
     autoHighlight: auto_highlight,
