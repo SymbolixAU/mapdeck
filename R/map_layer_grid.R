@@ -69,13 +69,13 @@ mapdeckGridDependency <- function() {
 #'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
 #' add_grid(
-#' 	data = df
+#' 	data = df[1:10000, ]
 #' 	, lat = "lat"
 #' 	, lon = "lng"
 #' 	, layer_id = "hex_layer"
 #' 	, elevation_scale = 100
 #' 	, legend = T
-#' 	, colour_function = "mean"
+#' 	, colour_function = "max"
 #' 	, colour = "val"
 #' )
 #'
@@ -185,14 +185,24 @@ add_grid <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
-	jsfunc <- "add_grid_geo"
+	jsfunc <- "add_grid_geo_columnar"
 
 	if ( tp == "sf" ) {
-	  geometry_column <- c( "geometry" )
-	  shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits, "grid" )
+
+		geometry_column <- list( geometry = c("lon","lat") )  ## using columnar structure, the 'sf' is converted to a data.frame
+		## so the geometry columns are obtained after sfheaders::sf_to_df()
+		l[["geometry"]] <- NULL
+		shape <- rcpp_point_sf_columnar( data, l, geometry_column, digits, "grid" )
+
+	  # geometry_column <- c( "geometry" )
+	  # shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits, "grid" )
 	} else if ( tp == "df" ) {
+
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_aggregate_geojson_df( data, l, geometry_column, digits, "grid" )
+		shape <- rcpp_point_df_columnar( data, l, geometry_column, digits, "grid" )
+
+		# geometry_column <- list( geometry = c("lon", "lat") )
+		# shape <- rcpp_aggregate_geojson_df( data, l, geometry_column, digits, "grid" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
 		shape <- rcpp_aggregate_polyline( data, l, geometry_column, "grid" )
@@ -202,7 +212,7 @@ add_grid <- function(
 	js_transitions <- resolve_transitions( transitions, "grid" )
 
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["data"]], layer_id, cell_size,
+		map, jsfunc, map_type( map ), shape[["data"]], nrow( data ), layer_id, cell_size,
 		jsonify::to_json(extruded, unbox = TRUE), elevation_scale,
 		colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer,
 		js_transitions, use_weight, use_colour, elevation_function, colour_function, legend,

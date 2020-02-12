@@ -127,13 +127,13 @@ df$val <- sample(1:10, size = nrow(df), replace = T)
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_grid(
-	data = df
+	data = df[1:10000, ]
 	, lat = "lat"
 	, lon = "lng"
 	, layer_id = "hex_layer"
 	, elevation_scale = 100
 	, legend = T
-	, colour_function = "mean"
+	, colour_function = "max"
 	, colour = "val"
 )
 

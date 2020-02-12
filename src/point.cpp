@@ -35,11 +35,18 @@ Rcpp::List pointcloud_defaults(int n) {
 	);
 }
 
+Rcpp::List grid_defaults(int n) {
+	return Rcpp::List::create();
+}
+
+
 Rcpp::List get_point_defaults( std::string layer_name, int data_rows ) {
 	if( layer_name == "column" ) {
 		return column_defaults( data_rows );
 	} else if ( layer_name == "scatterplot" ) {
 		return scatterplot_defaults( data_rows );
+	} else if (layer_name == "grid" ) {
+		return grid_defaults( data_rows );
 	}
 	return pointcloud_defaults( data_rows );
 }
@@ -53,6 +60,8 @@ Rcpp::StringVector get_point_legend_colours( std::string layer_name ) {
 		point_legend = mapdeck::layer_colours::fill_stroke_legend;
 	} else if ( layer_name == "pointcloud" ) {
 		point_legend = mapdeck::layer_colours::fill_legend;
+	} else if ( layer_name == "grid" ) {
+		point_legend = mapdeck::layer_colours::no_legend;
 	}
 	return point_legend;
 }
@@ -65,6 +74,8 @@ std::unordered_map< std::string, std::string > get_point_colours( std::string la
 		point_colours = mapdeck::layer_colours::fill_stroke_colours;
 	} else if ( layer_name == "pointcloud" ) {
 		point_colours = mapdeck::layer_colours::fill_colours;
+	} else if ( layer_name == "grid" ) {
+		point_colours = mapdeck::layer_colours::no_colours;
 	}
 	return point_colours;
 }
