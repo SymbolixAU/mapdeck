@@ -4,11 +4,20 @@
 \alias{mapdeck}
 \title{mapdeck}
 \usage{
-mapdeck(data = NULL, token = get_access_token(api = "mapbox"),
-  width = NULL, height = NULL, padding = 0,
-  style = "mapbox://styles/mapbox/streets-v9", pitch = 0, zoom = 0,
-  bearing = 0, location = c(0, 0), show_view_state = FALSE,
-  view_id = "default_view")
+mapdeck(
+  data = NULL,
+  token = get_access_token(api = "mapbox"),
+  width = NULL,
+  height = NULL,
+  padding = 0,
+  style = "mapbox://styles/mapbox/streets-v9",
+  pitch = 0,
+  zoom = 0,
+  bearing = 0,
+  location = c(0, 0),
+  show_view_state = FALSE,
+  view_id = "default_view"
+)
 }
 \arguments{
 \item{data}{data to be used in the layer. All coordinates are expected to be
