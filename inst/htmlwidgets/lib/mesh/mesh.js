@@ -34,6 +34,8 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
   MeshLayer.layerName = 'MeshLayer';
   */
 
+  console.log( polygon_data );
+
   var extensions = [];
 
   if ( brush_radius > 0 ) {

@@ -50,12 +50,12 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 			a_polygon(j, _) = vb(_, this_index);
 			z_values[ j ] = a_polygon(j, 2);
 		}
-		//avg_z[i] = Rcpp::mean( z_values );
+		avg_z[i] = Rcpp::mean( z_values );
 
 		sfg[0] = a_polygon;
 		sfg.attr("class") = Rcpp::CharacterVector::create("XYZM", "POLYGON", "sfg");
 		sfc[i] = sfg;
-		z[i] = z_values;
+		//z[i] = z_values;
 	}
 
 
@@ -80,8 +80,8 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 
 	Rcpp::List sf = Rcpp::List::create(
 		_["geometry"] = sfc,
-		_["z"] = z
-		//_["average_z"] = avg_z
+		//_["z"] = z
+		_["average_z"] = avg_z
 	);
 
 	sf.attr("class") = Rcpp::CharacterVector::create("sf","data.frame");
