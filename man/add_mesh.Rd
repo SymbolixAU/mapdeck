@@ -4,13 +4,28 @@
 \alias{add_mesh}
 \title{Add Mesh}
 \usage{
-add_mesh(map, data = get_map_data(map), fill_opacity = NULL,
-  elevation = NULL, tooltip = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", light_settings = list(),
-  layer_id = NULL, id = NULL, palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
-  legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL, brush_radius = NULL)
+add_mesh(
+  map,
+  data = get_map_data(map),
+  fill_opacity = NULL,
+  elevation = NULL,
+  tooltip = NULL,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  light_settings = list(),
+  layer_id = NULL,
+  id = NULL,
+  palette = "viridis",
+  na_colour = "#808080FF",
+  legend = FALSE,
+  legend_options = NULL,
+  legend_format = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL,
+  brush_radius = NULL
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}

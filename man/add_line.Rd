@@ -4,13 +4,30 @@
 \alias{add_line}
 \title{Add line}
 \usage{
-add_line(map, data = get_map_data(map), layer_id = NULL, origin,
-  destination, id = NULL, stroke_colour = NULL, stroke_width = NULL,
-  stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
-  legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL, brush_radius = NULL)
+add_line(
+  map,
+  data = get_map_data(map),
+  layer_id = NULL,
+  origin,
+  destination,
+  id = NULL,
+  stroke_colour = NULL,
+  stroke_width = NULL,
+  stroke_opacity = NULL,
+  tooltip = NULL,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  palette = "viridis",
+  na_colour = "#808080FF",
+  legend = FALSE,
+  legend_options = NULL,
+  legend_format = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL,
+  brush_radius = NULL
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}
