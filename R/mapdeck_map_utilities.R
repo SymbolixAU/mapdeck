@@ -122,7 +122,7 @@ doResolveFormula.data.frame = function(data, f) {
 # @param layer_id
 layerId <- function(
 	layer_id,
-	layer = mapdeck_layers()
+	layer = mapdeck:::mapdeck_layers()
 	) {
 
 	layer <- match.arg( layer )
@@ -136,10 +136,9 @@ layerId <- function(
 	}
 }
 
+
 mapdeck_layers <- function() {
 	c("arc", "bitmap", "column", "geojson", "greatcircle","grid","heatmap","hexagon",
 		"line", "mesh", "path","pointcloud", "polygon","scatterplot", "screengrid",
 		"text", "title","trips")
 }
-
-
