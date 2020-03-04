@@ -137,6 +137,3 @@ layerId <- function(
 		return(layer_id)
 	}
 }
-
-
-

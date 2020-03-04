@@ -145,6 +145,7 @@ add_scatterplot <- function(
 	brush_radius = NULL
 ) {
 
+
 	l <- list()
 	l[["lon"]] <- force(lon)
 	l[["lat"]] <- force(lat)
