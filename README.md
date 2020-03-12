@@ -52,7 +52,7 @@ install.packages("mapdeck")
 During development cycles the main changes happen to the dependant libraries, so you'll need to update those too. 
 
 ``` r
-devtools::install_github("SymbolixAU/jsonify", ref = "75974a00c7f2dd88959aed55a0ded340fa81fe38")  ## must be this commit until I fix a bug
+devtools::install_github("SymbolixAU/jsonify", force = TRUE)
 devtools::install_github("dcooley/sfheaders", force = TRUE)
 devtools::install_github("SymbolixAU/geojsonsf", force = TRUE)
 devtools::install_github("SymbolixAU/colourvalues", force = TRUE)
