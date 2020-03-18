@@ -4,7 +4,7 @@ function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, au
 
   geojson = geojson.features;
 
-  console.log( geojson );
+  //console.log( geojson );
 
   const geojsonLayer = new deck.GeoJsonLayer({
     map_id: map_id,

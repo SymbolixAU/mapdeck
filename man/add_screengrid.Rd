@@ -51,6 +51,8 @@ to conflict and not plot correctly}
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{digits}{number of digits for rounding coordinates}
 }
 \description{
 The Screen Grid Layer takes in an array of latitude and longitude coordinated points,

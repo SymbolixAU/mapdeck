@@ -33,6 +33,8 @@ addDependency <- function(map, dependencyFunction) {
 #'
 #' Adds the required mapdeck javascript dependencies to a map when not using a mapdeck map.
 #'
+#' @param map the map object to which dependencies will be added
+#'
 #' @examples
 #' \donttest{
 #'
@@ -85,7 +87,7 @@ htmlwidgets_js <- function() {
 	list(
 		createHtmlDependency(
 			name = "htmlwidgets",
-			version = as.character( packageVersion("htmlwidgets") ),
+			version = as.character( utils::packageVersion("htmlwidgets") ),
 			src = system.file("www", package = "htmlwidgets"),
 			script = c("htmlwidgets.js"),
 			all_files = FALSE
@@ -97,7 +99,7 @@ mapdeck_js <- function() {
 	list(
 		createHtmlDependency(
 			name = "mpadeck-binding",
-			version = as.character( packageVersion("mapdeck") ),
+			version = as.character( utils::packageVersion("mapdeck") ),
 			src = system.file("htmlwidgets/", package = "mapdeck"),
 			script = c("mapdeck.js"),
 			all_files = FALSE

@@ -60,6 +60,8 @@ to conflict and not plot correctly}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{transitions}{list specifying the duration of transitions.}
 }
 \description{

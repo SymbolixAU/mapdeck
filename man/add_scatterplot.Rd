@@ -70,6 +70,11 @@ If using a hex colour, use either a single value, or a vector the same length as
 
 \item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
 
+\item{stroke_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
+
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
@@ -96,6 +101,8 @@ a named list indicating which colour attributes should be included in the legend
 \item{legend_options}{A list of options for controlling the legend.}
 
 \item{legend_format}{A list containing functions to apply to legend values. See section legend}
+
+\item{digits}{number of digits for rounding coordinates}
 
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 

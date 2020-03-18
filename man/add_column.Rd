@@ -62,6 +62,11 @@ colour, this argument is ignored and you should include the alpha on the hex str
 \code{elevation} is ignored.
 If using a hex colour, use either a single value, or a vector the same length as \code{data}}
 
+\item{stroke_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
+
 \item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
 
 \item{radius}{in metres. Default 1000}
@@ -110,6 +115,8 @@ a named list indicating which colour attributes should be included in the legend
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{digits}{number of digits for rounding coordinates}
 
 \item{transitions}{list specifying the duration of transitions.}
 

@@ -34,7 +34,7 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
   MeshLayer.layerName = 'MeshLayer';
   */
 
-  console.log( polygon_data );
+  //console.log( polygon_data );
 
   var extensions = [];
 
@@ -67,7 +67,7 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
     extensions: extensions
   });
 
-  console.log( meshLayer );
+  //console.log( meshLayer );
 
   if( map_type == "google_map") {
     md_update_overlay( map_id, 'mesh-'+layer_id, meshLayer );

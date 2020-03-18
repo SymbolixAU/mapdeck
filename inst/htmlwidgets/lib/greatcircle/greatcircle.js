@@ -2,7 +2,7 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
 
  var extensions = [];
 
-  console.log( brush_radius ) ;
+  //console.log( brush_radius ) ;
 
   if ( brush_radius > 0 ) {
   	extensions.push( new BrushingExtension() );

@@ -16,6 +16,7 @@ mapdeckPolygonDependency <- function() {
 #' The Polygon Layer renders filled and/or stroked polygons.
 #'
 #' @inheritParams add_arc
+#' @inheritParams add_line
 #'
 #' @param polyline optional column of \code{data} containing the polylines, if using encoded polylines
 #' @param fill_colour column of \code{data} or hex colour for the fill colour.

@@ -98,6 +98,8 @@ palette for different colour options (where available),
 
 \item{transitions}{list specifying the duration of transitions.}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}

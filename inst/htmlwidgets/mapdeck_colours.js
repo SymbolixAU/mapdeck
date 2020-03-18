@@ -25,7 +25,7 @@ function md_hexToRGBA( hex ) {
  */
 function md_to_rgba( colour_range ) {
 
-	console.log( "md_to_rgba" );
+	//console.log( "md_to_rgba" );
 
 	var arr = [],
 	i,
@@ -34,6 +34,6 @@ function md_to_rgba( colour_range ) {
 	for (i = 0; i < n; i++) {
 		arr.push( md_hexToRGBA( colour_range[i]) );
 	}
-	console.log( arr );
+	//console.log( arr );
   return arr;
 }

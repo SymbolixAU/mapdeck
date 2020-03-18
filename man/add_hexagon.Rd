@@ -73,6 +73,8 @@ If supplied it specifies how the colour values are calculated. Defaults to sum.}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{transitions}{list specifying the duration of transitions.}
 
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,

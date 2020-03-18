@@ -148,7 +148,7 @@ if (HTMLWidgets.shinyMode) {
 
   Shiny.addCustomMessageHandler("mapdeckmap-calls", function (data) {
 
-  	console.log( "mapdeckmap-calls" );
+  	//console.log( "mapdeckmap-calls" );
 
     var id = data.id,   // the div id of the map
       el = document.getElementById(id),

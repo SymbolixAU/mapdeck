@@ -2,6 +2,10 @@
 function add_trips_geo( map_id, map_type, trips_data, opacity, layer_id,
 trail_length, start_time, end_time, animation_speed, legend ) {
 
+  //console.log( start_time );
+  //console.log( end_time );
+  //console.log( animation_speed );
+
   var tripsLayer = new TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
@@ -106,6 +110,7 @@ function md_trip_timestamp( coords, start_time ) {
 	for( i = 0; i < coords.length; i++ ) {
 		inner = coords[i];
 		x = inner[3] - start_time;
+		//console.log( x );
 		res[i] = [x];
 	}
 	return res;

@@ -94,6 +94,8 @@ palette for different colour options (where available),
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{digits}{number of digits for rounding coordinates}
 }
 \description{
 Renders flat arcs along the great circle joining pairs

@@ -57,6 +57,7 @@ mapdeckArcDependency <- function() {
 #' @param brush_radius radius of the brush in metres. Default NULL. If supplied,
 #' the arcs will only show if the origin or destination are within the radius of the mouse.
 #' If NULL, all arcs are displayed
+#' @param digits number of digits for rounding coordinates
 #'
 #' @section data:
 #'
