@@ -29,6 +29,7 @@ Imports:
 RoxygenNote: 7.0.2
 Suggests: 
     covr,
+    googleway,
     jsonlite,
     knitr,
     rmarkdown,
