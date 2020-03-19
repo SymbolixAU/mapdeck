@@ -1,6 +1,6 @@
 # mapdeck 0.3
 
-* you can now use most `sfc` geometries in any layer (using `sfheaders::sf_cast()`)
+* you can now use most `sfc` geometry types in any plotting layer
 * performance boost for `add_scatterplot()`, `add_column()` and `add_pointcloud()`
 * v8.* of Deck.gl
 	- Arc layer supports 3D positions

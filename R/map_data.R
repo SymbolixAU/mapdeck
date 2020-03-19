@@ -14,6 +14,16 @@ resolve_od_data.sf <- function( data, l, origin, destination ) {
 		stop("mapdeck - origin and destination columns required")
 	}
 
+	## downcast each side of the sf object to POINT
+	attr( data, "sf_column" ) <- origin
+	data <- sfheaders::sf_cast( data, "POINT" )
+
+	attr( data, "sf_column" ) <- destination
+	data <- sfheaders::sf_cast( data, "POINT" )
+
+	l[["data"]] <- data
+
+
 	l[["data_type"]] <- "sf"
 	l[["bbox"]] <- get_od_box( data, l )
 	return( l )
