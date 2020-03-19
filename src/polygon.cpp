@@ -36,7 +36,7 @@ Rcpp::List rcpp_polygon_sf_columnar(
 Rcpp::List rcpp_polygon_geojson(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
-		std::string geometry_columns,
+		Rcpp::StringVector geometry_columns,
 		int digits
 	) {
 
