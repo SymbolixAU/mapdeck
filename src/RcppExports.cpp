@@ -146,14 +146,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_path_geojson
-Rcpp::List rcpp_path_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_columns, int digits, std::string layer_name);
+Rcpp::List rcpp_path_geojson(Rcpp::DataFrame data, Rcpp::List params, Rcpp::StringVector geometry_columns, int digits, std::string layer_name);
 RcppExport SEXP _mapdeck_rcpp_path_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP, SEXP layer_nameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type geometry_columns(geometry_columnsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
     Rcpp::traits::input_parameter< std::string >::type layer_name(layer_nameSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_path_geojson(data, params, geometry_columns, digits, layer_name));

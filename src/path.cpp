@@ -32,7 +32,7 @@ Rcpp::List get_path_defaults( std::string layer_name, int data_rows ) {
 Rcpp::List rcpp_path_geojson(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
-		std::string geometry_columns,
+		Rcpp::StringVector geometry_columns,
 		int digits,
 		std::string layer_name
 	) {
