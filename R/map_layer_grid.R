@@ -189,7 +189,7 @@ add_grid <- function(
 
 	if ( tp == "sf" ) {
 
-		geometry_column <- list( geometry = c("lon","lat") )  ## using columnar structure, the 'sf' is converted to a data.frame
+		# geometry_column <- list( geometry = c("lon","lat") )  ## using columnar structure, the 'sf' is converted to a data.frame
 		## so the geometry columns are obtained after sfheaders::sf_to_df()
 		# l[["geometry"]] <- NULL
 		# shape <- rcpp_point_sf_columnar( data, l, geometry_column, digits, "grid" )

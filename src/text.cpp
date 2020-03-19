@@ -17,8 +17,10 @@ Rcpp::List text_defaults(int n) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_text_geojson(
-		Rcpp::DataFrame data, Rcpp::List params,
-		std::string geometry_columns, int digits
+		Rcpp::DataFrame data,
+		Rcpp::List params,
+		Rcpp::StringVector geometry_columns,
+		int digits
 	) {
 
 	int data_rows = data.nrows();
@@ -45,8 +47,10 @@ Rcpp::List rcpp_text_geojson(
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_text_geojson_df(
-		Rcpp::DataFrame data, Rcpp::List params,
-		Rcpp::List geometry_columns, int digits
+		Rcpp::DataFrame data,
+		Rcpp::List params,
+		Rcpp::List geometry_columns,
+		int digits
 	) {
 
 	int data_rows = data.nrows();

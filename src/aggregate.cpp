@@ -41,7 +41,7 @@ Rcpp::List get_aggregate_defaults( std::string layer_name, int data_rows ) {
 Rcpp::List rcpp_aggregate_geojson(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
-		std::string geometry_column,
+		Rcpp::StringVector geometry_column,
 		int digits,
 		std::string layer_name
 ) {

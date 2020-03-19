@@ -23,6 +23,7 @@ test_that("add_arc accepts multiple objects", {
 	sf_to <- setNames( object = sf_to, c("country_to", "geometry.1"))
 
 	sf <- cbind( sf_from, sf_to )
+	attr( sf, "class" ) <- c("sf", "data.frame")
 
 	geo <- '[{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15]},"destination":{"type":"Point","coordinates":[-0.05,51.36]}}}]'
 

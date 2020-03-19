@@ -11,7 +11,7 @@ test_that("add_text accepts multiple objects", {
 	set_token("abc")
 	m <- mapdeck(style = mapdeck_style("dark"))
 
-	sf <- sfheaders::sf_point( capitals[1, ], x = "lon", y = "lat" )
+	sf <- sfheaders::sf_point( capitals[1, ], x = "lon", y = "lat", keep = T )
 	p <- add_text(map = m, data = sf, text = "capital")
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 

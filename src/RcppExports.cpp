@@ -6,14 +6,14 @@
 using namespace Rcpp;
 
 // rcpp_aggregate_geojson
-Rcpp::List rcpp_aggregate_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_column, int digits, std::string layer_name);
+Rcpp::List rcpp_aggregate_geojson(Rcpp::DataFrame data, Rcpp::List params, Rcpp::StringVector geometry_column, int digits, std::string layer_name);
 RcppExport SEXP _mapdeck_rcpp_aggregate_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnSEXP, SEXP digitsSEXP, SEXP layer_nameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type geometry_column(geometry_columnSEXP);
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type geometry_column(geometry_columnSEXP);
     Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
     Rcpp::traits::input_parameter< std::string >::type layer_name(layer_nameSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_aggregate_geojson(data, params, geometry_column, digits, layer_name));
@@ -289,14 +289,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_text_geojson
-Rcpp::List rcpp_text_geojson(Rcpp::DataFrame data, Rcpp::List params, std::string geometry_columns, int digits);
+Rcpp::List rcpp_text_geojson(Rcpp::DataFrame data, Rcpp::List params, Rcpp::StringVector geometry_columns, int digits);
 RcppExport SEXP _mapdeck_rcpp_text_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type geometry_columns(geometry_columnsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_text_geojson(data, params, geometry_columns, digits));
     return rcpp_result_gen;

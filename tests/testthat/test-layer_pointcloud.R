@@ -4,7 +4,7 @@ test_that("add_pointcloud accepts multiple objects", {
 
 	library(sfheaders)
 
-	geo <- '{"elevation":12345.0,"fill_colour":[0.266667,0.003922,0.329412,1.0],"lat":34.28,"lon":69.11,"geometry":[69.11,34.28,12345.0]}'
+	geo <- '{"elevation":12345.0,"fill_colour":[0.266667,0.003922,0.329412,1.0],"lon":69.11,"lat":34.28,"geometry":[69.11,34.28,12345.0]}'
 	poly <- '[{\"elevation\":123.0,\"fill_colour\":\"#440154FF\",\"polyline\":\"_ifpEo`ydL\"}]'
 
 	## sf
@@ -38,7 +38,7 @@ test_that("add_pointcloud accepts multiple objects", {
 	## data.frame
 	df <- capitals[1, ]
 	df$z <- 12345
-	geo <- '{"elevation":12345.0,"fill_colour":[0.266667,0.003922,0.329412,1.0],"lat":34.28,"lon":69.11,"geometry":[69.11,34.28,12345.0]}'
+	geo <- '{"elevation":12345.0,"fill_colour":[0.266667,0.003922,0.329412,1.0],"lon":69.11,"lat":34.28,"geometry":[69.11,34.28,12345.0]}'
 	p <- add_pointcloud( map = m, data = df, lon = "lon", lat = "lat", elevation = "z" )
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 
