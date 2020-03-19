@@ -2,20 +2,18 @@ context("pointcloud")
 
 test_that("add_pointcloud accepts multiple objects", {
 
-	testthat::skip_on_cran()
-	testthat::skip_on_travis()
+	library(sfheaders)
 
-	geo <- '[{"type":"Feature","properties":{"fill_colour":"#440154FF"},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28,12345.0]}}}]'
-	poly1 <- '[{"fill_colour":"#440154FF","polyline":"_ifpEo`ydL","elevation":123.0}]'
-	poly2 <- '[{"fill_colour":"#440154FF","elevation":123.0,"polyline":"_ifpEo`ydL"}]'
+	geo <- '{"elevation":12345.0,"fill_colour":[0.266667,0.003922,0.329412,1.0],"lat":34.28,"lon":69.11,"geometry":[69.11,34.28,12345.0]}'
+	poly <- '[{\"elevation\":123.0,\"fill_colour\":\"#440154FF\",\"polyline\":\"_ifpEo`ydL\"}]'
 
 	## sf
 	set_token("abc")
 	m <- mapdeck()
 
-	sf <- capitals[1, ]
-	sf$elev <- 12345
-	sf <- sf::st_as_sf( sf, coords = c("lon", "lat", "elev") )
+	df <- capitals[1, ]
+	df$elev <- 12345
+	sf <- sfheaders::sf_point( df[1, ], x = "lon", y = "lat", z = "elev" )
 	p <- add_pointcloud(map = m, data = sf)
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 
@@ -23,24 +21,24 @@ test_that("add_pointcloud accepts multiple objects", {
 	enc <- googlePolylines::encode( sf )
 	enc$z <- 123
 	p <- add_pointcloud( map = m, data = enc, elevation = "z" )
-	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly1 )
+	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly )
 
 	## sfencodedLite
 	enc <- googlePolylines::encode( sf, strip = T )
 	enc$z <- 123
 	p <- add_pointcloud( map = m, data = enc, elevation = "z" )
-	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly1 )
+	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly )
 
 	## data.frame with polyline
 	df <- as.data.frame( enc )
 	df$geometry <- unlist( df$geometry )
 	p <- add_pointcloud( map = m, data = df, elevation = "z", polyline = "geometry")
-	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly2 )
+	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly )
 
 	## data.frame
 	df <- capitals[1, ]
 	df$z <- 12345
-	geo <- '[{"type":"Feature","properties":{"fill_colour":"#440154FF"},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28,12345.0]}}}]'
+	geo <- '{"elevation":12345.0,"fill_colour":[0.266667,0.003922,0.329412,1.0],"lat":34.28,"lon":69.11,"geometry":[69.11,34.28,12345.0]}'
 	p <- add_pointcloud( map = m, data = df, lon = "lon", lat = "lat", elevation = "z" )
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 
@@ -56,8 +54,8 @@ test_that("pointcloud reads elevation from sf Z attribute", {
 	l[["palette"]] <- "viridis"
 	l[["legend"]] <- FALSE
 	l[["geometry"]] <- "geometry"
-	geometry_column <- "geometry"
-	shape <- mapdeck:::rcpp_point_geojson( sf, l, geometry_column, digits = 6, "pointcloud" )
-	js <- '[{"type":"Feature","properties":{"fill_colour":"#440154FF"},"geometry":{"geometry":{"type":"Point","coordinates":[0.0,0.0,1.0]}}},{"type":"Feature","properties":{"fill_colour":"#440154FF"},"geometry":{"geometry":{"type":"Point","coordinates":[0.0,0.0,2.0]}}}]'
+	geometry_column <- list( geometry = c("lon","lat","elevation") )
+	shape <- mapdeck:::rcpp_point_sf_columnar( sf, l, geometry_column, digits = 6, "pointcloud" )
+	js <- '{"elevation":[1.0,2.0],"fill_colour":[0.266667,0.003922,0.329412,1.0,0.266667,0.003922,0.329412,1.0],"lat":[0.0,0.0],"lon":[0.0,0.0],"geometry":[0.0,0.0,1.0,0.0,0.0,2.0]}'
 	expect_equal(as.character( shape$data ), js)
 })

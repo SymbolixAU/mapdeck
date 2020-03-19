@@ -43,9 +43,11 @@ EPSG:4326 (WGS 84) coordinate system}
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{origin}{vector of longitude and latitude columns, or an \code{sfc} column}
+\item{origin}{vector of longitude and latitude columns, and optionally an elevation column,
+or an \code{sfc} column}
 
-\item{destination}{vector of longitude and latitude columns, or an \code{sfc} column}
+\item{destination}{vector of longitude and latitude columns, and optionally an elevatino column,
+or an \code{sfc} column}
 
 \item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
@@ -222,11 +224,11 @@ mapdeck( style = mapdeck_style("dark")) \%>\%
   )
 
 ## Using a 2-sfc-column sf object
-library(sf)
+library(sfheaders)
 
 sf_flights <- cbind(
-  sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
-  , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
+  sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = T )
+  , sfheaders::sf_point( flights, x = "end_lon", y = "end_lat", keep = FALSE )
 )
 
 mapdeck(

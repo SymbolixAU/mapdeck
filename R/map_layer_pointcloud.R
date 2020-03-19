@@ -61,10 +61,10 @@ mapdeckPointcloudDependency <- function() {
 #' )
 #'
 #' ## as an sf object wtih a Z attribute
-#' library(sf)
-#' sf <- sf::st_as_sf( df , coords = c("lon","lat","z"))
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lon", y = "lat", z = "z" )
 #'
-#' mapdeck(token = key, style = mapdeck_style("dark")) %>%
+#' mapdeck(style = mapdeck_style("dark")) %>%
 #' add_pointcloud(
 #'   data = sf
 #'   , layer_id = 'point'
@@ -122,7 +122,7 @@ add_pointcloud <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_elevation_data( data, l, elevation, c("POINT","MULTIPOINT") )
+	l <- resolve_elevation_data( data, l, elevation, c("POINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -146,11 +146,17 @@ add_pointcloud <- function(
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
-	jsfunc <- "add_pointcloud_geo"
+	jsfunc <- "add_pointcloud_geo_columnar"
 
 	if ( tp == "sf" ) {
-		geometry_column <- c( "geometry" )
-		shape <- rcpp_point_geojson( data, l, geometry_column, digits, "pointcloud" )
+
+		geometry_column <- list( geometry = c("lon","lat","elevation") )  ## using columnar structure, the 'sf' is converted to a data.frame
+		## so the geometry columns are obtained after sfheaders::sf_to_df()
+		l[["geometry"]] <- NULL
+		shape <- rcpp_point_sf_columnar( data, l, geometry_column, digits, "pointcloud" )
+
+		# geometry_column <- c( "geometry" )
+		# shape <- rcpp_point_geojson( data, l, geometry_column, digits, "pointcloud" )
 
 	} else if ( tp == "df" ) {
 		## TODO( here or in rcpp? )
@@ -158,8 +164,12 @@ add_pointcloud <- function(
 			l[["elevation"]] <- 0
 		}
 
-		geometry_column <- list( geometry = c("lon","lat","elevation") )
-	  shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "pointcloud" )
+		#print( head( data )  )
+		geometry_column <- list( geometry = c("lon", "lat","elevation") )
+		shape <- rcpp_point_df_columnar( data, l, geometry_column, digits, "pointcloud" )
+
+	# 	geometry_column <- list( geometry = c("lon","lat","elevation") )
+	#   shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "pointcloud" )
 
 	} else if ( tp == "sfencoded" ) {
 
@@ -180,7 +190,7 @@ add_pointcloud <- function(
 	# print( shape )
 
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["data"]], radius, layer_id, light_settings,
+		map, jsfunc, map_type( map ), shape[["data"]], nrow(data), radius, layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
 		js_transitions, brush_radius
 		)

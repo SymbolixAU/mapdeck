@@ -200,9 +200,11 @@ add_column(
   , tooltip = "capital"
 )
 
-library( sf )
-sf <- sf::st_as_sf( df, coords = c("lon", "lat"))
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lon", y = "lat" )
+
 sf$elev <- df$elev
+
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_column(
   data = sf

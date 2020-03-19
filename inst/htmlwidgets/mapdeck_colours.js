@@ -16,7 +16,6 @@ function md_hexToRGBA( hex ) {
   const a = parseInt(parseString.slice(6, 8), 16);
   if (isNaN(r) || isNaN(g) || isNaN(b)) {return null;}
   return [r, g, b, a];
-  //return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
 
@@ -25,8 +24,6 @@ function md_hexToRGBA( hex ) {
  */
 function md_to_rgba( colour_range ) {
 
-	//console.log( "md_to_rgba" );
-
 	var arr = [],
 	i,
 	n = colour_range.length;
@@ -34,6 +31,37 @@ function md_to_rgba( colour_range ) {
 	for (i = 0; i < n; i++) {
 		arr.push( md_hexToRGBA( colour_range[i]) );
 	}
-	//console.log( arr );
   return arr;
+}
+
+/*
+ * converts a [R, G, B, A] array
+ * to hex string
+ */
+function md_RGBToHex( rgba ) {
+	r = rgba[0];
+	g = rgba[1];
+	b = rgba[2];
+	//a = rgba[3];
+
+	r = r.toString(16);
+	g = g.toString(16);
+	b = b.toString(16);
+	//a = a.toString(16);
+
+	if (r.length == 1) {
+    r = "0" + r;
+	}
+  if (g.length == 1) {
+    g = "0" + g;
+  }
+  if (b.length == 1) {
+    b = "0" + b;
+  }
+  //if (a.length == 1) {
+  //  a = "0" + a;
+  //}
+
+  return "#" + r + g + b;
+
 }

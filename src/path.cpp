@@ -45,7 +45,7 @@ Rcpp::List rcpp_path_geojson(
 	Rcpp::StringVector path_legend = mapdeck::layer_colours::stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
-	return spatialwidget::api::create_geojson_downcast(
+	return spatialwidget::api::create_geojson(
 		data,
 		params,
 		lst_defaults,

@@ -4,7 +4,7 @@ function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elev
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
   const hexagonLayer = new deck.HexagonLayer({
@@ -32,7 +32,7 @@ function add_hexagon_geo( map_id, map_type, hexagon_data, layer_id, radius, elev
     transitions: js_transition || {},
     brushingRadius: brush_radius,
     extensions: extensions,
-    onSetColorDomain: d => md_colour_domain( d, colour_range, map_id, map_type, layer_id, legend )
+    onSetColorDomain: d => md_colour_domain( d, colour_range, map_id, map_type, layer_id, legend, "hex" )
   });
 
 
@@ -52,7 +52,7 @@ function add_hexagon_polyline( map_id, map_type, hexagon_data, layer_id, radius,
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
   const hexagonLayer = new deck.HexagonLayer({
@@ -79,7 +79,7 @@ function add_hexagon_polyline( map_id, map_type, hexagon_data, layer_id, radius,
     transitions: js_transition || {},
     brushingRadius: brush_radius,
     extensions: extensions,
-    onSetColorDomain: d => md_colour_domain( d, colour_range, map_id, map_type, layer_id, legend )
+    onSetColorDomain: d => md_colour_domain( d, colour_range, map_id, map_type, layer_id, legend, "hex" )
   });
 
   if( map_type == "google_map") {

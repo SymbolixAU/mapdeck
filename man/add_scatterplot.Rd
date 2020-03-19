@@ -235,13 +235,13 @@ add_scatterplot(
 )
 
 ## as an sf object
-library(sf)
-sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_scatterplot(
   data = sf
-  , radius = 100000
+  , radius = 100
   , fill_colour = "country"
   , layer_id = "scatter_layer"
   , tooltip = "capital"

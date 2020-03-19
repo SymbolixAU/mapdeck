@@ -119,7 +119,7 @@ Rcpp::List rcpp_mesh_geojson(
 	Rcpp::StringVector mesh_legend = mapdeck::layer_colours::fill_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
-	return spatialwidget::api::create_geojson_downcast(
+	return spatialwidget::api::create_geojson(
 		data,
 		params,
 		lst_defaults,

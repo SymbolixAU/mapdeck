@@ -25,7 +25,8 @@ Imports:
     jsonify (>= 1.1.1),
     magrittr,
     Rcpp,
-    shiny
+    shiny,
+    sfheaders (>= 0.2.1)
 RoxygenNote: 7.0.2
 Suggests: 
     covr,
@@ -33,7 +34,6 @@ Suggests:
     jsonlite,
     knitr,
     rmarkdown,
-    sf,
     spatialwidget,
     testthat
 VignetteBuilder: knitr
@@ -44,5 +44,5 @@ LinkingTo:
     jsonify (>= 1.1.1),
     rapidjsonr,
     Rcpp,
-    sfheaders (>= 0.1.0),
+    sfheaders (>= 0.2.1),
     spatialwidget (>= 0.2.2)

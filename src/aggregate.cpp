@@ -5,9 +5,9 @@
 #include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 
-Rcpp::List grid_defaults(int n) {
-	return Rcpp::List::create();
-}
+// Rcpp::List grid_defaults(int n) {
+// 	return Rcpp::List::create();
+// }
 
 Rcpp::List heatmap_defaults(int n) {
 	return Rcpp::List::create(
@@ -28,8 +28,8 @@ Rcpp::List screengrid_defaults(int n) {
 Rcpp::List get_aggregate_defaults( std::string layer_name, int data_rows ) {
 	if( layer_name == "heatmap" ) {
 		return heatmap_defaults( data_rows );
-	} else if ( layer_name == "grid" ) {
-		return grid_defaults( data_rows );
+	// } else if ( layer_name == "grid" ) {
+	// 	return grid_defaults( data_rows );
 	} else if ( layer_name == "hexagon" ) {
 		return hexagon_defaults( data_rows );
 	}
@@ -55,7 +55,7 @@ Rcpp::List rcpp_aggregate_geojson(
 	Rcpp::StringVector aggregate_legend = mapdeck::layer_colours::no_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
-	return spatialwidget::api::create_geojson_downcast(
+	return spatialwidget::api::create_geojson(
 		data,
 		params,
 		lst_defaults,

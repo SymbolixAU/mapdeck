@@ -47,7 +47,7 @@ function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, au
 
   //console.log( legend );
 	if (legend !== false && legend !== null ) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
@@ -95,7 +95,7 @@ function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_
 
   //console.log( legend );
 	if (legend !== false && legend !== null ) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, "hex");
 	}
 
 }

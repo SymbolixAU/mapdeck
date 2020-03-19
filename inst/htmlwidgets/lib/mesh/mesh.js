@@ -39,10 +39,10 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
-  const meshLayer = new PolygonLayer({
+  const meshLayer = new deck.PolygonLayer({
   	map_id: map_id,
     id: 'polygon-'+layer_id,
     data: polygon_data,
@@ -77,7 +77,7 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
   }
 
 	if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

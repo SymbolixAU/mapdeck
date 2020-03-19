@@ -80,8 +80,8 @@ mapdeckHeatmapDependency <- function() {
 #' )
 #'
 #' ## as an sf object
-#' library(sf)
-#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 #'
 #' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_heatmap(
@@ -123,7 +123,7 @@ add_heatmap <- function(
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
 
-	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+	l <- resolve_data( data, l, c("POINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )

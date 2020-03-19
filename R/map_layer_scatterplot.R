@@ -95,13 +95,13 @@ mapdeckScatterplotDependency <- function() {
 #' )
 #'
 #' ## as an sf object
-#' library(sf)
-#' sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 #'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = sf
-#'   , radius = 100000
+#'   , radius = 100
 #'   , fill_colour = "country"
 #'   , layer_id = "scatter_layer"
 #'   , tooltip = "capital"
@@ -163,7 +163,7 @@ add_scatterplot <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, c( "POINT", "MULTIPOINT") )
+	l <- resolve_data( data, l, c( "POINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -187,39 +187,40 @@ add_scatterplot <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
-	# if(!is.null(brush_radius)) {
-	# 	jsfunc <- "add_scatterplot_brush_geo"
-	# 	map <- addDependency(map, mapdeckScatterplotBrushDependency())
-	# } else {
-		jsfunc <- "add_scatterplot_geo"
-		map <- addDependency(map, mapdeckScatterplotDependency())
-	# }
+	jsfunc <- "add_scatterplot_geo_columnar"
+	map <- addDependency(map, mapdeckScatterplotDependency())
 
 	if ( tp == "sf" ) {
-		geometry_column <- c( "geometry" )
-		shape <- rcpp_point_geojson( data, l, geometry_column, digits, "scatterplot" )
+		geometry_column <- list( geometry = c("lon","lat") )  ## using columnar structure, the 'sf' is converted to a data.frame
+		## so the geometry columns are obtained after sfheaders::sf_to_df()
+		l[["geometry"]] <- NULL
+		shape <- rcpp_point_sf_columnar( data, l, geometry_column, digits, "scatterplot" )
+
 	} else if ( tp == "df" ) {
-		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "scatterplot" )
+
+	  geometry_column <- list( geometry = c("lon", "lat") )
+	  shape <- rcpp_point_df_columnar( data, l, geometry_column, digits, "scatterplot" )
+
 	} else if ( tp == "sfencoded" ) {
+
 		geometry_column <- c( "polyline" )
 		shape <- rcpp_point_polyline( data, l, geometry_column, "scatterplot" )
-		# if(!is.null(brush_radius)) {
-		# 	jsfunc <- "add_scatterplot_brush_polyline"
-		# } else {
-		# 	jsfunc <- "add_scatterplot_polyline"
-		# }
 	}
 
 	js_transitions <- resolve_transitions( transitions, "scatterplot" )
+
+
 	if( inherits( legend, "json" ) ) {
 		shape[["legend"]] <- legend
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
+
+	# return( shape )
+
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
+		map, jsfunc, map_type( map ), shape[["data"]], nrow(data) , layer_id, auto_highlight, highlight_colour,
 		shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
 		radius_min_pixels, radius_max_pixels, brush_radius
 		)

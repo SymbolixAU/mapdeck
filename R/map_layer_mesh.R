@@ -105,7 +105,7 @@ add_mesh <- function(
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
 
-	l <- resolve_data( data, l, c("POLYGON","MULTIPOLYGON") )
+	l <- resolve_data( data, l, c("POLYGON") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -230,7 +230,7 @@ add_mesh <- function(
 # 	l <- resolve_legend( l, legend )
 # 	l <- resolve_legend_options( l, legend_options )
 #
-# 	l <- resolve_data( data, l, c("POLYGON","MULTIPOLYGON") )
+# 	l <- resolve_data( data, l, c("POLYGON") )
 #
 # 	bbox <- init_bbox()
 # 	update_view <- force( update_view )

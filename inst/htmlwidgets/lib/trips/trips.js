@@ -30,7 +30,7 @@ trail_length, start_time, end_time, animation_speed, legend ) {
 	}
 
 	if (legend !== false) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
 
 	//md_layer_view( map_id, map_type, layer_id, true, bbox, true );
@@ -49,7 +49,7 @@ trail_length, start_time, end_time, animation_speed, legend) {
 
     var time = ((timestamp % loopTime) / loopTime) * loopLength;
 
-		var tripsLayer = new TripsLayer({
+		var tripsLayer = new deck.TripsLayer({
 		    id: 'trips-'+layer_id,
 		    data: trips_data,
 		    parameters: {
@@ -74,7 +74,7 @@ trail_length, start_time, end_time, animation_speed, legend) {
 		}
 
    if (legend !== false) {
-	   md_add_legend( map_id, map_type, layer_id, legend );
+	   md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	 }
 
 	 //md_layer_view( map_id, map_type, layer_id, false, bbox, false );

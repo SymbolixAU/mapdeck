@@ -1,6 +1,9 @@
 # mapdeck 0.3
 
-
+* you can now use most `sfc` geometry types in any plotting layer
+* performance boost for `add_scatterplot()`, `add_column()` and `add_pointcloud()`
+* v8.* of Deck.gl
+	- Arc layer supports 3D positions
 * More lays get `brush_radius` - [issue164](https://github.com/SymbolixAU/mapdeck/issues/164)
 * `show_view_state` option to overlay the current View State [issue238](https://github.com/SymbolixAU/mapdeck/issues/238)
 * performance improvements for dates and factors [issue235](https://github.com/SymbolixAU/mapdeck/issues/235)

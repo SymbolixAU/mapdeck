@@ -185,7 +185,6 @@ you are clicking on
 key <- 'abc'
 set_token( key )
 
-library(sf)
 library(geojsonsf)
 
 sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")

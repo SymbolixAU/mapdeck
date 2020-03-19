@@ -20,8 +20,10 @@ mapdeckArcDependency <- function() {
 #' @param layer_id single value specifying an id for the layer. Use this value to
 #' distinguish between shape layers of the same type. Layers with the same id are likely
 #' to conflict and not plot correctly
-#' @param origin vector of longitude and latitude columns, or an \code{sfc} column
-#' @param destination vector of longitude and latitude columns, or an \code{sfc} column
+#' @param origin vector of longitude and latitude columns, and optionally an elevation column,
+#' or an \code{sfc} column
+#' @param destination vector of longitude and latitude columns, and optionally an elevatino column,
+#' or an \code{sfc} column
 #' @param id an id value in \code{data} to identify layers when interacting in Shiny apps.
 #' @param stroke_from column of \code{data} or hex colour to use as the staring stroke colour.
 #' If using a hex colour, use either a single value, or a vector the same length as \code{data}
@@ -158,11 +160,11 @@ mapdeckArcDependency <- function() {
 #'   )
 #'
 #' ## Using a 2-sfc-column sf object
-#' library(sf)
+#' library(sfheaders)
 #'
 #' sf_flights <- cbind(
-#'   sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
-#'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
+#'   sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = T )
+#'   , sfheaders::sf_point( flights, x = "end_lon", y = "end_lat", keep = FALSE )
 #' )
 #'
 #' mapdeck(
@@ -287,7 +289,7 @@ add_arc <- function(
 		geometry_column <- c( "origin", "destination" )
 		shape <- rcpp_od_geojson( data, l, geometry_column, digits, "arc" )
   } else if ( tp == "df" ) {
-  	geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
+  	geometry_column <- list( origin = c("start_lon", "start_lat", "start_elev"), destination = c("end_lon", "end_lat", "end_elev") )
   	shape <- rcpp_od_geojson_df( data, l, geometry_column, digits, "arc" )
   } else if ( tp == "sfencoded" ) {
   	geometry_column <- c("origin", "destination")

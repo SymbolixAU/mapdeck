@@ -138,8 +138,8 @@ add_hexagon(
   , elevation_scale = 100
 )
 
-library( sf )
-sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lng", y = "lat" )
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_hexagon(

@@ -128,8 +128,8 @@ add_grid(
 )
 
 ## using sf object
-library(sf)
-sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_grid(
@@ -151,7 +151,7 @@ add_grid(
 	, layer_id = "hex_layer"
 	, elevation_scale = 100
 	, legend = T
-	, colour_function = "mean"
+	, colour_function = "max"
 	, colour = "val"
 )
 
@@ -161,7 +161,7 @@ add_grid(
 	, lat = "lat"
 	, lon = "lng"
 	, layer_id = "hex_layer"
-	, elevation_scale = 100
+	, elevation_scale = 10
 	, legend = T
 	, elevation_function = "mean"
 	, elevation = "val"

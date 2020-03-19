@@ -3,7 +3,7 @@ function add_screengrid_geo( map_id, map_type, screengrid_data, layer_id, opacit
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
   const screengridLayer = new deck.ScreenGridLayer({
@@ -36,7 +36,7 @@ function add_screengrid_polyline( map_id, map_type, screengrid_data, layer_id, o
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
   const screengridLayer = new deck.ScreenGridLayer({

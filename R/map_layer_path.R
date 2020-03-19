@@ -111,7 +111,7 @@ add_path <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, c("LINESTRING","MULTILINESTRING") )
+	l <- resolve_data( data, l, c("LINESTRING") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
