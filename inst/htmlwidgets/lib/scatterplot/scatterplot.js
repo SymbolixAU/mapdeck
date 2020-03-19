@@ -3,7 +3,7 @@ function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_coun
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
   const binaryLocation = new Float32Array(scatter_data.geometry);
@@ -54,7 +54,7 @@ function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_coun
 	}
 
 	if (legend !== false) {
-    md_add_legend(map_id, map_type, layer_id, legend);
+    md_add_legend(map_id, map_type, layer_id, legend, "rgb" );
   }
 
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
@@ -66,7 +66,7 @@ function add_scatterplot_geo( map_id, map_type, scatter_data, layer_id, auto_hig
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
   const scatterLayer = new deck.ScatterplotLayer({
@@ -116,7 +116,7 @@ function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, aut
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
   const scatterLayer = new deck.ScatterplotLayer({
     map_id: map_id,
@@ -153,7 +153,7 @@ function add_scatterplot_polyline( map_id, map_type, scatter_data, layer_id, aut
 	}
 
 	if (legend !== false) {
-    md_add_legend(map_id, map_type, layer_id, legend);
+    md_add_legend(map_id, map_type, layer_id, legend, "hex");
   }
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

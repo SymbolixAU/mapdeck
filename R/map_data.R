@@ -1,10 +1,10 @@
 
 init_bbox <- function() return(  list(c(-180,-90),c(180,90)) )
 
-sfrow <- function( sf , sfc_type ) {
-	geom_column <- attr(sf, "sf_column")
-	return( which(vapply(sf[[geom_column]], function(x) attr(x, "class")[[2]], "") %in% sfc_type ) )
-}
+# sfrow <- function( sf , sfc_type ) {
+# 	geom_column <- attr(sf, "sf_column")
+# 	return( which(vapply(sf[[geom_column]], function(x) attr(x, "class")[[2]], "") %in% sfc_type ) )
+# }
 
 resolve_od_data <- function( data, l, origin, destination ) UseMethod("resolve_od_data")
 
@@ -158,15 +158,15 @@ resolve_elevation_data.sfencodedLite <- function( data, l, elevation, sf_geom ) 
 ## data using a single geometry ()
 resolve_data <- function( data, l, sf_geom ) UseMethod( "resolve_data" )
 
-sfc_type <- function( sf, sfc_col ) {
-	cls <- attr(sf[[sfc_col]], "class")
-	return( gsub("sfc_", "", cls[1] ) )
-}
+# sfc_type <- function( sf, sfc_col ) {
+# 	cls <- attr(sf[[sfc_col]], "class")
+# 	return( gsub("sfc_", "", cls[1] ) )
+# }
 
 ##
-sf_needs_subsetting <- function( data, sfc_col, sf_geom ) {
-	return( !sfc_type( data, sfc_col ) %in% toupper( sf_geom ) )
-}
+# sf_needs_subsetting <- function( data, sfc_col, sf_geom ) {
+# 	return( !sfc_type( data, sfc_col ) %in% toupper( sf_geom ) )
+# }
 
 
 #' @export
@@ -193,8 +193,21 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 	sfc_col <- attr( data, "sf_column" )
 	l[["geometry"]] <- sfc_col
 
-	if( sf_needs_subsetting( data, sfc_col, sf_geom ) ) {
-		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
+	# if( sf_needs_subsetting( data, sfc_col, sf_geom ) ) {
+	# 	l[["data"]] <- data[ sfrow(data, sf_geom) , ]
+	# }
+
+	## TODO: move to c++
+	## only cast if it's needed
+	cls <- attr( data[[ sfc_col ]], "class" )
+
+	if( is.null( cls ) ) {
+		stop("mapdeck - invalid sf object; have you loaded library(sf)?")
+	}
+
+	cls <- gsub("sfc_", "", cls[1])
+	if( cls != sf_geom ) {
+		l[["data"]] <- sfheaders::sf_cast( data, sf_geom )
 	}
 
 	l[["bbox"]] <- get_box( data, l )

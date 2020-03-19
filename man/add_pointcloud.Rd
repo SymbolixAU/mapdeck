@@ -89,7 +89,13 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed}
 }
 \description{
 The Pointcloud Layer takes in coordinate points and renders them as circles
@@ -182,10 +188,10 @@ add_pointcloud(
 )
 
 ## as an sf object wtih a Z attribute
-library(sf)
-sf <- sf::st_as_sf( df , coords = c("lon","lat","z"))
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lon", y = "lat", z = "z" )
 
-mapdeck(token = key, style = mapdeck_style("dark")) \%>\%
+mapdeck(style = mapdeck_style("dark")) \%>\%
 add_pointcloud(
   data = sf
   , layer_id = 'point'

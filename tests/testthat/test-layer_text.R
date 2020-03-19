@@ -2,8 +2,7 @@ context("text")
 
 test_that("add_text accepts multiple objects", {
 
-	testthat::skip_on_cran()
-	testthat::skip_on_travis()
+	library(sfheaders)
 
 	geo <- '[{"type":"Feature","properties":{"fill_colour":"#440154FF","anchor":"middle","angle":0.0,"alignment_baseline":"center","size":32.0,"text":"Kabul"},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
 	poly <- '[{"fill_colour":"#440154FF","anchor":"middle","angle":0.0,"alignment_baseline":"center","size":32.0,"polyline":"_ifpEo`ydL","text":"Kabul"}]'
@@ -12,7 +11,7 @@ test_that("add_text accepts multiple objects", {
 	set_token("abc")
 	m <- mapdeck(style = mapdeck_style("dark"))
 
-	sf <- sf::st_as_sf( capitals[1,], coords = c("lon", "lat") )
+	sf <- sfheaders::sf_point( capitals[1, ], x = "lon", y = "lat" )
 	p <- add_text(map = m, data = sf, text = "capital")
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 

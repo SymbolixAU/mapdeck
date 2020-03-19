@@ -23,7 +23,8 @@ add_mesh(
   update_view = TRUE,
   focus_layer = FALSE,
   digits = 6,
-  transitions = NULL
+  transitions = NULL,
+  brush_radius = NULL
 )
 }
 \arguments{
@@ -73,13 +74,19 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed}
 }
 \description{
-Adds polygons to the map from a \code{quadmesh} object
+Adds polygons to the map from a \code{mesh3d} object
 }
 \details{
-\code{add_mesh} supports quadmesh objects
+\code{add_mesh} supports mesh3d objects
 }
 \section{legend}{
 
@@ -118,3 +125,18 @@ where 'map' is the map_id supplied to \code{mapdeckOutput()}, and 'arc' is the l
 you are clicking on
 }
 
+\examples{
+
+x <- structure(list(vb = structure(c(0, 0, 0, 1, 100, 0, 0, 1, 0,
+-42, 0, 1), .Dim = 4:3), it = structure(1:3, .Dim = c(3L, 1L)),
+material = list(), normals = NULL, texcoords = NULL, meshColor = "vertices"),
+ class = c("mesh3d", "shape3d"))
+
+set_token("MAPBOX_API_TOKEN")
+
+mapdeck() \%>\%
+  add_mesh(
+	  data = x
+  )
+
+}

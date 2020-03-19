@@ -1,13 +1,15 @@
 # mapdeck 0.3
 
-
+* you can now use most `sfc` geometries in any layer (using `sfheaders::sf_cast()`)
+* performance boost for `add_scatterplot()`, `add_column()` and `add_pointcloud()`
 * v8.* of Deck.gl
 	- Arc layer supports 3D positions
+* More lays get `brush_radius` - [issue164](https://github.com/SymbolixAU/mapdeck/issues/164)
 * `show_view_state` option to overlay the current View State [issue238](https://github.com/SymbolixAU/mapdeck/issues/238)
 * performance improvements for dates and factors [issue235](https://github.com/SymbolixAU/mapdeck/issues/235)
 * `add_bitmap()` to add a bitmap / image to the map
 * input$map_view_change now observed [issue211](https://github.com/SymbolixAU/mapdeck/issues/211) - thanks @zacdav
-* `update_stype()` function
+* `update_style()` function
 * `add_path()` accepts dashed lines
 * mapbox tokens are searched for in environement variables if one isn't provided [issue209](https://github.com/SymbolixAU/mapdeck/issues/209)
 * z-fighting [issue 199](https://github.com/SymbolixAU/mapdeck/issues/199)
@@ -17,7 +19,7 @@
 * Fix for legends in GeoJSON layer - [issue #190](https://github.com/SymbolixAU/mapdeck/issues/190)
 * `add_hexagon` now supports GPU aggregation for colour and elevation
 * `radius_min_pixels` and `radius_max_pixels` arguemnts for scatterplots
-* `add_mesh()` for quadmesh objects
+* `add_mesh()` for mesh3d objects
 * Google Map supported
 * `mapdeck_legend` and `legend_element` for manually creating legends
 * `add_column()` to draw columns (as any polygon shape)

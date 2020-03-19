@@ -95,13 +95,13 @@ mapdeckScatterplotDependency <- function() {
 #' )
 #'
 #' ## as an sf object
-#' library(sf)
-#' sf <- sf::st_as_sf( capitals, coords = c("lon", "lat") )
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 #'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_scatterplot(
 #'   data = sf
-#'   , radius = 100000
+#'   , radius = 100
 #'   , fill_colour = "country"
 #'   , layer_id = "scatter_layer"
 #'   , tooltip = "capital"
@@ -145,6 +145,7 @@ add_scatterplot <- function(
 	brush_radius = NULL
 ) {
 
+
 	l <- list()
 	l[["lon"]] <- force(lon)
 	l[["lat"]] <- force(lat)
@@ -162,7 +163,7 @@ add_scatterplot <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, c( "POINT", "MULTIPOINT") )
+	l <- resolve_data( data, l, c( "POINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -214,6 +215,7 @@ add_scatterplot <- function(
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
+
 
 	# return( shape )
 

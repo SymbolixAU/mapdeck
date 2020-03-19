@@ -56,9 +56,11 @@ mapdeckColumnDependency <- function() {
 #'   , tooltip = "capital"
 #' )
 #'
-#' library( sf )
-#' sf <- sf::st_as_sf( df, coords = c("lon", "lat"))
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lon", y = "lat" )
+#'
 #' sf$elev <- df$elev
+#'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_column(
 #'   data = sf
@@ -129,7 +131,7 @@ add_column <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_elevation_data( data, l, elevation, c("POINT","MULTIPOINT") )
+	l <- resolve_elevation_data( data, l, elevation, c("POINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )

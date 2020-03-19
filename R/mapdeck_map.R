@@ -165,6 +165,7 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param deferUntilFlush indicates whether actions performed against this
 #' instance should be carried out right away, or whether they should be held until
 #' after the next time all of the outputs are updated; defaults to TRUE.
+#' @param map_type either mapdeck_update or google_map_update
 #' @export
 mapdeck_update <- function(
 	data = NULL,

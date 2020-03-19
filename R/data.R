@@ -38,8 +38,15 @@
 #' @format a 'json' object
 "geojson"
 
-#' garmin
+#' Melbourne Mesh
 #'
-#' An sf object of my cycling activities from my Garmin
+#' A mesh3d object of Melbourne
 #'
-"garmin"
+"melbourne_mesh"
+
+#' #' garmin
+#' #'
+#' #' An sf object of my cycling activities from my Garmin
+#' #'
+#' "garmin"
+

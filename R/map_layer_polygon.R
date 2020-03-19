@@ -16,6 +16,7 @@ mapdeckPolygonDependency <- function() {
 #' The Polygon Layer renders filled and/or stroked polygons.
 #'
 #' @inheritParams add_arc
+#' @inheritParams add_line
 #'
 #' @param polyline optional column of \code{data} containing the polylines, if using encoded polylines
 #' @param fill_colour column of \code{data} or hex colour for the fill colour.
@@ -69,7 +70,6 @@ mapdeckPolygonDependency <- function() {
 #' key <- 'abc'
 #' set_token( key )
 #'
-#' library(sf)
 #' library(geojsonsf)
 #'
 #' sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
@@ -134,7 +134,8 @@ add_polygon <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
@@ -154,7 +155,7 @@ add_polygon <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, c("POLYGON","MULTIPOLYGON") )
+	l <- resolve_data( data, l, c("POLYGON") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -218,7 +219,7 @@ add_polygon <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions, is_extruded, elevation_scale
+		js_transitions, is_extruded, elevation_scale, brush_radius
 		)
 }
 

@@ -2,7 +2,7 @@
 library(googleway)
 library(mapdeck)
 
-set_key( read.dcf("~/Documents/.googleAPI", fields = "GOOGLE_MAP_KEY") )
+set_key( read.dcf("~/.googleAPI", fields = "GOOGLE_MAP_KEY") )
 
 ## Arc
 

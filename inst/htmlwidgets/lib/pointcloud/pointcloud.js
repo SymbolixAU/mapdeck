@@ -4,7 +4,7 @@ function add_pointcloud_geo_columnar( map_id, map_type, pointcloud_data, data_co
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
   console.log( pointcloud_data );
@@ -48,7 +48,7 @@ function add_pointcloud_geo_columnar( map_id, map_type, pointcloud_data, data_co
 	}
 
 	if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, "rgb" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
@@ -58,7 +58,7 @@ function add_pointcloud_polyline( map_id, map_type, pointcloud_data, radius, lay
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
   const pointcloudLayer = new deck.PointCloudLayer({
@@ -86,7 +86,7 @@ function add_pointcloud_polyline( map_id, map_type, pointcloud_data, radius, lay
 	}
 
 	if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

@@ -60,6 +60,8 @@ to conflict and not plot correctly}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{transitions}{list specifying the duration of transitions.}
 }
 \description{
@@ -128,8 +130,8 @@ add_heatmap(
 )
 
 ## as an sf object
-library(sf)
-sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 
 mapdeck( style = mapdeck_style('dark'), pitch = 45 ) \%>\%
 add_heatmap(

@@ -2,7 +2,11 @@
 function add_trips_geo( map_id, map_type, trips_data, opacity, layer_id,
 trail_length, start_time, end_time, animation_speed, legend ) {
 
-  var tripsLayer = new deck.TripsLayer({
+  //console.log( start_time );
+  //console.log( end_time );
+  //console.log( animation_speed );
+
+  var tripsLayer = new TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
     parameters: {
@@ -26,7 +30,7 @@ trail_length, start_time, end_time, animation_speed, legend ) {
 	}
 
 	if (legend !== false) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
 
 	//md_layer_view( map_id, map_type, layer_id, true, bbox, true );
@@ -70,7 +74,7 @@ trail_length, start_time, end_time, animation_speed, legend) {
 		}
 
    if (legend !== false) {
-	   md_add_legend( map_id, map_type, layer_id, legend );
+	   md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	 }
 
 	 //md_layer_view( map_id, map_type, layer_id, false, bbox, false );
@@ -106,6 +110,7 @@ function md_trip_timestamp( coords, start_time ) {
 	for( i = 0; i < coords.length; i++ ) {
 		inner = coords[i];
 		x = inner[3] - start_time;
+		//console.log( x );
 		res[i] = [x];
 	}
 	return res;

@@ -1,7 +1,12 @@
 
 
-function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour,
-legend, bbox, update_view, focus_layer, js_transition, billboard ) {
+function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius ) {
+
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new deck.BrushingExtension() );
+  }
 
   var extensions = [];
   extensions.push(
@@ -29,6 +34,7 @@ legend, bbox, update_view, focus_layer, js_transition, billboard ) {
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {},
+    brushingRadius: brush_radius,
     extensions: extensions
   });
 
@@ -39,12 +45,18 @@ legend, bbox, update_view, focus_layer, js_transition, billboard ) {
 	}
 
 	if ( legend !== false ) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard ) {
+function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius ) {
+
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new deck.BrushingExtension() );
+  }
 
   var extensions = [];
   extensions.push(
@@ -71,7 +83,9 @@ function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highligh
     onHover: md_update_tooltip,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -81,7 +95,7 @@ function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highligh
 	}
 
 	if ( legend !== false ) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

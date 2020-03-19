@@ -67,11 +67,11 @@ mapdeckLineDependency <- function() {
 #'  )
 #'
 #' ## Using a 2-sfc-column sf object
-#' library(sf)
+#' library(sfheaders)
 #'
 #' sf_flights <- cbind(
-#'   sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
-#'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
+#'   sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = T )
+#'   , sfheaders::sf_point( flights, x = "end_lon", y = "end_lat", keep = FALSE )
 #' )
 #'
 #' mapdeck() %>%
@@ -117,7 +117,8 @@ add_line <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -179,7 +180,7 @@ add_line <- function(
 	invoke_method(
 		map, "add_line_geo", map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions
+		js_transitions, brush_radius
 		)
 }
 

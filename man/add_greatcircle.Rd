@@ -96,6 +96,8 @@ palette for different colour options (where available),
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{digits}{number of digits for rounding coordinates}
 }
 \description{
 Renders flat arcs along the great circle joining pairs
@@ -188,11 +190,11 @@ mapdeck( style = mapdeck_style("dark")) \%>\%
   )
 
 ## Using a 2-sfc-column sf object
-library(sf)
+library(sfheaders)
 
 sf_flights <- cbind(
-  sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
-  , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
+  sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = T )
+  , sfheaders::sf_point( flights, x = "end_lon", y = "end_lat", keep = FALSE )
 )
 
 mapdeck() \%>\%

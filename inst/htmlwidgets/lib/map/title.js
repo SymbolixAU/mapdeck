@@ -48,10 +48,10 @@ function clear_title( map_id, map_type, layer_id ) {
 	  window[id] = null;
 	}
 	*/
-  console.log( "clering title element" );
+  //console.log( "clering title element" );
 
 	var element = document.getElementById( map_id + 'mapTitle' + layer_id );
-	console.log( element );
+	//console.log( element );
 
 	if( element !== null ) {
 	  element.parentNode.removeChild( element );
@@ -73,14 +73,14 @@ function md_placeTitle( map_id, map_type, object ) {
 
 function md_clear_title_control(control, layer_id) {
 
-  console.log("clearing title control");
-  console.log( control );
+  //console.log("clearing title control");
+  //console.log( control );
 
   if (control !== undefined ) {
     control.forEach(function (item, index) {
       if (item !== undefined ) {
         if (item.getAttribute('id') === layer_id) {
-        	console.log( "removing control at index: " + index);
+        	//console.log( "removing control at index: " + index);
           control.removeAt(index);
         }
       }

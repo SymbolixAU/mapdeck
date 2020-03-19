@@ -119,13 +119,13 @@ Rcpp::List rcpp_point_df_columnar(
 Rcpp::List rcpp_point_sf_columnar(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
-		Rcpp::List geometry_columns,
+		Rcpp::List geometry_columns,  // passed in from R; the geometry columns used by the plotting layer (e.g., scatter = x,y, pointcloud = x,y,z)
 		int digits,
 		std::string layer_name
 	){
 
 	Rcpp::DataFrame df = sfheaders::df::sf_to_df( data, true );
-	Rcpp::CharacterVector geometry_cols = df.attr("sfc_columns");
+	Rcpp::StringVector geometry_cols = df.attr("sfc_columns");  // will be x, y, (z), (m)
 
 	// can't directly use `geometry_cols[0]; because it's a CHARSXP,
 	// but in spatialwidget it looks for STRSXP
@@ -134,18 +134,13 @@ Rcpp::List rcpp_point_sf_columnar(
 
 	int n_cols = geometry_cols.length();
 	int i;
-	Rcpp::StringVector param_names({"lon","lat","elevation","time"});
+	Rcpp::StringVector param_names({"lon","lat","elevation","time"});  // need to match those incoming from R
+
 	for( i = 0; i < n_cols; ++i ) {
 		Rcpp::String this_geom = geometry_cols[i];
 		Rcpp::String this_param = param_names[i];
 		params[ this_param ] = this_geom;
 	}
-
-	// Rcpp::String lon = geometry_cols[0];
-	// Rcpp::String lat = geometry_cols[1];
-	//
-	// params["lon"] = lon;
-	// params["lat"] = lat;
 
 	return rcpp_point_df_columnar(df, params, geometry_columns, digits, layer_name );
 }

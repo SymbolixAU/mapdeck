@@ -4,7 +4,7 @@ function add_column_geo_columnar( map_id, map_type, column_data, data_count, lay
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
   console.log( column_data );
@@ -68,7 +68,7 @@ function add_column_geo_columnar( map_id, map_type, column_data, data_count, lay
 	}
 
   if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, "rgb");
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
@@ -79,7 +79,7 @@ function add_column_polyline( map_id, map_type, column_data, layer_id, auto_high
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
   const columnLayer = new deck.ColumnLayer({
@@ -118,7 +118,7 @@ function add_column_polyline( map_id, map_type, column_data, layer_id, auto_high
 	}
 
 	if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, "hex");
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

@@ -2,10 +2,8 @@ context("arc")
 
 test_that("add_arc accepts multiple objects", {
 
-	testthat::skip_on_cran()
-	testthat::skip_on_travis()
+	library(sfheaders)
 
-	geo <- '[{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15]},"destination":{"type":"Point","coordinates":[-0.05,51.36]}}}]'
 	# poly <- '[{"radius":1000,"fill_colour":"#440154FF","polyline":"_ifpEo`ydL"}]'
 
 	## sf
@@ -20,10 +18,13 @@ test_that("add_arc accepts multiple objects", {
 
 	df <- cbind( df_from, df_to)
 
-	sf_from <- sf::st_as_sf( df_from, coords = c("lon_from", "lat_from") )
-	sf_to <- sf::st_as_sf( df_to, coords = c("lon_to", "lat_to") )
+	sf_from <- sfheaders::sf_point( df_from, x = "lon_from", y = "lat_from", keep = T)
+	sf_to <- sfheaders::sf_point( df_to, x = "lon_to", y = "lat_to", keep = T)
+	sf_to <- setNames( object = sf_to, c("country_to", "geometry.1"))
 
 	sf <- cbind( sf_from, sf_to )
+
+	geo <- '[{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15]},"destination":{"type":"Point","coordinates":[-0.05,51.36]}}}]'
 
 	p <- add_arc(map = m, data = sf, origin = "geometry", destination = "geometry.1")
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
@@ -49,7 +50,9 @@ test_that("add_arc accepts multiple objects", {
 	# p <- add_arc( map = m, data = df, polyline = "geometry" )
 	# expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), poly )
 
-	## data.frame
+	## data.frame - gets 0.0 elevation as a default
+	geo <- '[{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15,0.0]},"destination":{"type":"Point","coordinates":[-0.05,51.36,0.0]}}}]'
+
 	p <- add_arc( map = m, data = df, origin = c("lon_from", "lat_from"), destination = c("lon_to", "lat_to") )
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 

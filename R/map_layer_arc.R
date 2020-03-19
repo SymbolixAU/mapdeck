@@ -59,6 +59,7 @@ mapdeckArcDependency <- function() {
 #' @param brush_radius radius of the brush in metres. Default NULL. If supplied,
 #' the arcs will only show if the origin or destination are within the radius of the mouse.
 #' If NULL, all arcs are displayed
+#' @param digits number of digits for rounding coordinates
 #'
 #' @section data:
 #'
@@ -159,11 +160,11 @@ mapdeckArcDependency <- function() {
 #'   )
 #'
 #' ## Using a 2-sfc-column sf object
-#' library(sf)
+#' library(sfheaders)
 #'
 #' sf_flights <- cbind(
-#'   sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
-#'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
+#'   sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = T )
+#'   , sfheaders::sf_point( flights, x = "end_lon", y = "end_lat", keep = FALSE )
 #' )
 #'
 #' mapdeck(

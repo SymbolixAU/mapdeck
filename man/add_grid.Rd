@@ -78,6 +78,8 @@ to conflict and not plot correctly}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{transitions}{list specifying the duration of transitions.}
 
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
@@ -126,8 +128,8 @@ add_grid(
 )
 
 ## using sf object
-library(sf)
-sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_grid(
@@ -143,7 +145,7 @@ df$val <- sample(1:10, size = nrow(df), replace = T)
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_grid(
-	data = df[1:10000, ]
+	data = df
 	, lat = "lat"
 	, lon = "lng"
 	, layer_id = "hex_layer"
@@ -159,7 +161,7 @@ add_grid(
 	, lat = "lat"
 	, lon = "lng"
 	, layer_id = "hex_layer"
-	, elevation_scale = 100
+	, elevation_scale = 10
 	, legend = T
 	, elevation_function = "mean"
 	, elevation = "val"
