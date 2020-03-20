@@ -4,7 +4,7 @@ test_that("add_line accepts multiple objects", {
 
 	library(sfheaders)
 
-	geo <- '[{"type":"Feature","properties":{"stroke_colour":"#440154FF","stroke_width":1.0},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15]},"destination":{"type":"Point","coordinates":[-0.05,51.36]}}}]'
+	geo <- '[{"type":"Feature","properties":{"stroke_colour":"#440154FF","stroke_width":1.0,"height":1.0},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15]},"destination":{"type":"Point","coordinates":[-0.05,51.36]}}}]'
 	# poly <- '[{"radius":1000,"fill_colour":"#440154FF","polyline":"_ifpEo`ydL"}]'
 
 	## sf
@@ -50,6 +50,7 @@ test_that("add_line accepts multiple objects", {
 	# expect_equal( as.character( p$x$calls[[1]]$args[[1]] ), poly )
 
 	## data.frame
+	geo <- '[{"type":"Feature","properties":{"stroke_colour":"#440154FF","stroke_width":1.0,"height":1.0},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15,0.0]},"destination":{"type":"Point","coordinates":[-0.05,51.36,0.0]}}}]'
 	p <- add_line( map = m, data = df, origin = c("lon_from", "lat_from"), destination = c("lon_to", "lat_to") )
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 

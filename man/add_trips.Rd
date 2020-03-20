@@ -109,20 +109,19 @@ you are clicking on
 \donttest{
 
 set_token( "MAPBOX_TOKEN")
-#sf <- mapdeck::garmin
+sf <- city_trail
 
 mapdeck(
-	style = mapdeck_style("dark")
-	, location = c(145, -37.9)
-	, zoom = 8
+location = c(145, -37.8)
+, zoom = 10
+, style = mapdeck_style("dark")
+) \%>\%
+	add_trips(
+		data = sf
+		, animation_speed = 2000
+		, trail_length = 1000
+		, stroke_colour = "#FFFFFF"
 )
-#\%>\%
-#	add_trips(
-#		data = sf
-#		, trail_length = 2000
-#		, animation_speed = 1000
-#		, stroke_colour = "#FFFFFF"
-#	)
 
 }
 

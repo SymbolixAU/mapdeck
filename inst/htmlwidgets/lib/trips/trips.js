@@ -6,7 +6,7 @@ trail_length, start_time, end_time, animation_speed, legend ) {
   //console.log( end_time );
   //console.log( animation_speed );
 
-  var tripsLayer = new TripsLayer({
+  var tripsLayer = new deck.TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
     parameters: {

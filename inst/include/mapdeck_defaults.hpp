@@ -38,7 +38,7 @@ namespace defaults {
 	}
 
 	inline Rcpp::IntegerVector default_radius( int n ) {
-		Rcpp::IntegerVector iv(n, 1000);
+		Rcpp::IntegerVector iv(n, 1.0);
 		return iv;
 	}
 
