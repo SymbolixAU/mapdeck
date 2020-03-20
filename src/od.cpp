@@ -7,7 +7,8 @@
 Rcpp::List line_defaults(int n) {
 	return Rcpp::List::create(
 		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour(n),
-		_["stroke_width"] = mapdeck::defaults::default_stroke_width(n)
+		_["stroke_width"] = mapdeck::defaults::default_stroke_width(n),
+		_["height"] = mapdeck::defaults::default_arc_height(n)
 	);
 }
 
@@ -121,7 +122,7 @@ Rcpp::List rcpp_od_geojson_df(
 		parameter_exclusions,
 		geometry_columns,
 		true,  // jsonify legend
-		true,  // elegation
+		true,  // elevation
 		digits
 	);
 }

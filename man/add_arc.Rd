@@ -223,20 +223,34 @@ mapdeck( style = mapdeck_style("dark")) \%>\%
   , stroke_width = "stroke"
   )
 
+## Arcs can have an elevated start & destination
+flights$start_elev <- sample(100000:1000000, size = nrow(flights), replace = TRUE )
+
+mapdeck( style = mapdeck_style("dark")) \%>\%
+  add_arc(
+  data = flights
+  , layer_id = "arc_layer"
+  , origin = c("start_lon", "start_lat", "start_elev")
+  , destination = c("end_lon", "end_lat", "start_elev")
+  , stroke_from = "airport1"
+  , stroke_to = "airport2"
+  , stroke_width = "stroke"
+  )
+
 ## Using a 2-sfc-column sf object
 library(sfheaders)
 
-sf_flights <- cbind(
-  sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = T )
-  , sfheaders::sf_point( flights, x = "end_lon", y = "end_lat", keep = FALSE )
-)
+sf_flights <- sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", z = "start_elev", keep = TRUE )
+destination <- sfheaders::sfc_point( flights, x = "end_lon", y = "end_lat", z = "start_elev" )
+
+sf_flights$destination <- destination
 
 mapdeck(
 ) \%>\%
  add_arc(
    data = sf_flights
    , origin = 'geometry'
-   , destination = 'geometry.1'
+   , destination = 'destination'
    , layer_id = 'arcs'
    , stroke_from = "airport1"
    , stroke_to = "airport2"
@@ -250,7 +264,7 @@ mapdeck(
  add_arc(
    data = sf_flights
    , origin = 'geometry'
-   , destination = 'geometry.1'
+   , destination = 'destination'
    , layer_id = 'arcs'
    , stroke_from = "airport1"
    , stroke_to = "airport2"

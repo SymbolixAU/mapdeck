@@ -192,16 +192,16 @@ mapdeck( style = mapdeck_style("dark")) \%>\%
 ## Using a 2-sfc-column sf object
 library(sfheaders)
 
-sf_flights <- cbind(
-  sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = T )
-  , sfheaders::sf_point( flights, x = "end_lon", y = "end_lat", keep = FALSE )
-)
+sf_flights <- sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = TRUE )
+destination <- sfheaders::sfc_point( flights, x = "end_lon", y = "end_lat" )
+
+sf_flights$destination <- destination
 
 mapdeck() \%>\%
  add_greatcircle(
    data = sf_flights
    , origin = 'geometry'
-   , destination = 'geometry.1'
+   , destination = 'destination'
    , layer_id = 'greatcircles'
    , stroke_from = "airport1"
    , stroke_to = "airport2"
