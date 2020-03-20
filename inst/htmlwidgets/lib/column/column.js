@@ -11,8 +11,8 @@ function add_column_geo_columnar( map_id, map_type, column_data, data_count, lay
 
   const binaryLocation = new Float32Array(column_data.geometry);
   //const binaryRadius = new Float32Array(column_data.radius);
-  const binaryFillColour = new Float32Array(column_data.fill_colour);
-  const binaryLineColour = new Float32Array(column_data.stroke_colour);
+  const binaryFillColour = new Uint8Array(column_data.fill_colour);
+  const binaryLineColour = new Uint8Array(column_data.stroke_colour);
   const binaryLineWidth = new Float32Array(column_data.stroke_width);
   const binaryElevation = new Float32Array(column_data.elevation);
 

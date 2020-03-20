@@ -44,6 +44,8 @@ Rcpp::List rcpp_path_geojson(
 	Rcpp::List sfc = data[ sfc_column ];
 	Rcpp::NumericMatrix sfc_coordinates = sfheaders::df::sfc_n_coordinates( sfc );
 
+	//Rcpp::Rcout << sfc_coordinates << std::endl;
+
 	Rcpp::DataFrame df = sfheaders::df::sf_to_df( data, sfc, sfc_column, sfc_coordinates, true );
 	Rcpp::List geometry_cols(1);
 	Rcpp::StringVector s = df.attr("sfc_columns");
@@ -52,16 +54,16 @@ Rcpp::List rcpp_path_geojson(
 	Rcpp::StringVector geom_names = {"geometry"};
 	geometry_cols.names() = geom_names;
 
+	int stride = s.length();
 
 	Rcpp::NumericVector start_indices = sfc_coordinates( Rcpp::_, 0 );
-	start_indices = start_indices * s.size();
 
+	start_indices = ( start_indices * stride );
 
-	int n_cols = s.length();
 	int i;
 	Rcpp::StringVector param_names({"x","y","z","m"});
 
-	for( i = 0; i < n_cols; ++i ) {
+	for( i = 0; i < stride; ++i ) {
 		Rcpp::String this_geom = s[i];
 		Rcpp::String this_param = param_names[i];
 		params[ this_param ] = this_geom;
@@ -89,9 +91,10 @@ Rcpp::List rcpp_path_geojson(
 		format
 	);
 
-	Rcpp::List res(2);
+	Rcpp::List res(3);
 	res[0] = shape;
 	res[1] = start_indices;
+	res[2] = stride;
 
 	return res;
 

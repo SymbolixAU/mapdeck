@@ -1,10 +1,11 @@
 
 
-function add_path_geo( map_id, map_type, path_data, data_count, start_indices, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius ) {
+function add_path_geo( map_id, map_type, path_data, data_count, start_indices, stride, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius ) {
 
   console.log( path_data );
   console.log( data_count );
   console.log( start_indices );
+  console.log( stride );
 
   var extensions = [];
 
@@ -39,7 +40,7 @@ function add_path_geo( map_id, map_type, path_data, data_count, start_indices, l
       length: data_count,
       startIndices: start_indices,
       attributes: {
-        getPath: {value: binaryLocation, size: 2},  // TODO - needs 3 / default 0 elevation
+        getPath: {value: binaryLocation, size: stride},
         //getDashArray: {value: binaryDash, size: 1},
         //getFillColor: {value: binaryFillColour, size: 4},
         getColor: {value: binaryLineColour, size: 4},

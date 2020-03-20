@@ -11,7 +11,7 @@ function add_pointcloud_geo_columnar( map_id, map_type, pointcloud_data, data_co
 
   const binaryLocation = new Float32Array(pointcloud_data.geometry);
   const binaryRadius = new Float32Array(pointcloud_data.radius);
-  const binaryFillColour = new Float32Array(pointcloud_data.fill_colour);
+  const binaryFillColour = new Uint8Array(pointcloud_data.fill_colour);
 
   const pointcloudLayer = new deck.PointCloudLayer({
   	map_id: map_id,

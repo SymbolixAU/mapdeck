@@ -155,8 +155,10 @@ add_path <- function(
 
 	# return( shape )
 
+	start_indices <- jsonify::to_json(  as.integer( shape[[2]] ) )
+
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[[1]][["data"]], nrow(data), shape[[2]], layer_id, auto_highlight,
+		map, jsfunc, map_type( map ), shape[[1]][["data"]], nrow(data), start_indices, shape[[3]], layer_id, auto_highlight,
 		highlight_colour, shape[[1]][["legend"]], bbox, update_view, focus_layer,
 		js_transitions, billboard, brush_radius
 		)

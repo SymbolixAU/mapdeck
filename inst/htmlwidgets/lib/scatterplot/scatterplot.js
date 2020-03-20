@@ -8,8 +8,8 @@ function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_coun
 
   const binaryLocation = new Float32Array(scatter_data.geometry);
   const binaryRadius = new Float32Array(scatter_data.radius);
-  const binaryFillColour = new Float32Array(scatter_data.fill_colour);
-  const binaryLineColour = new Float32Array(scatter_data.stroke_colour);
+  const binaryFillColour = new Uint8Array(scatter_data.fill_colour);
+  const binaryLineColour = new Uint8Array(scatter_data.stroke_colour);
   const binaryLineWidth = new Float32Array(scatter_data.stroke_width);
 
   const scatterLayer = new deck.ScatterplotLayer({
