@@ -136,8 +136,9 @@ add_path <- function(
 	l[["data_type"]] <- NULL
 
 	if ( tp == "sf" ) {
-		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		shape <- rcpp_path_geojson( data, l, geometry_column, digits, "path" )
+		# geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
+		l[["geometry"]] <- NULL
+		shape <- rcpp_path_geojson( data, l, digits, "path" )
 		jsfunc <- "add_path_geo"
 	} else if ( tp == "sfencoded" ) {
 		jsfunc <- "add_path_polyline"
@@ -152,9 +153,11 @@ add_path <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
+	# return( shape )
+
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
-		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		map, jsfunc, map_type( map ), shape[[1]][["data"]], nrow(data), shape[[2]], layer_id, auto_highlight,
+		highlight_colour, shape[[1]][["legend"]], bbox, update_view, focus_layer,
 		js_transitions, billboard, brush_radius
 		)
 }

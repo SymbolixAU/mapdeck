@@ -1,6 +1,10 @@
 
 
-function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius ) {
+function add_path_geo( map_id, map_type, path_data, data_count, start_indices, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius ) {
+
+  console.log( path_data );
+  console.log( data_count );
+  console.log( start_indices );
 
   var extensions = [];
 
@@ -9,14 +13,19 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
   }
 
   var extensions = [];
-  extensions.push(
-  	new deck.PathStyleExtension({dash: true})
-  );
+  //extensions.push(
+  //	new deck.PathStyleExtension({dash: true})
+  //);
+
+  const binaryLocation = new Float32Array(path_data.geometry);
+  const binaryDash = new Float32Array(path_data.dash_gap);
+  const binaryLineColour = new Uint8Array(path_data.stroke_colour);
+  const binaryLineWidth = new Uint8Array(path_data.stroke_width);
 
   const pathLayer = new deck.PathLayer({
     map_id: map_id,
     id: 'path-'+layer_id,
-    data: path_data,
+    //data: path_data,
     pickable: true,
     widthScale: 1,
     widthMinPixels: 1,
@@ -25,10 +34,26 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
     parameters: {
 	    depthTest: false
 	  },
+
+	  data: {
+      length: data_count,
+      startIndices: start_indices,
+      attributes: {
+        getPath: {value: binaryLocation, size: 2},  // TODO - needs 3 / default 0 elevation
+        //getDashArray: {value: binaryDash, size: 1},
+        //getFillColor: {value: binaryFillColour, size: 4},
+        getColor: {value: binaryLineColour, size: 4},
+        getWidth: {value: binaryLineWidth, size: 1}
+      }
+    },
+    _pathType: 'open',
+
+	  /*
     getPath: d => md_get_line_coordinates( d ),
     getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
     getWidth: d => d.properties.stroke_width,
     getDashArray: d => [ d.properties.dash_size, d.properties.dash_gap ],
+    */
     onClick: info => md_layer_click( map_id, "path", info ),
     onHover: md_update_tooltip,
     autoHighlight: auto_highlight,
