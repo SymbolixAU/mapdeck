@@ -92,6 +92,7 @@ mapdeckScatterplotDependency <- function() {
 #'   , lat = "lat"
 #'   , lon = "lng"
 #'   , layer_id = "scatter_layer"
+#'   , stroke_colour = "lng"
 #' )
 #'
 #' ## as an sf object
