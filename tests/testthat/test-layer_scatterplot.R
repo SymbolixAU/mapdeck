@@ -4,8 +4,8 @@ test_that("add_scatterplot accepts multiple objects", {
 
 	library(sfheaders)
 
-	geo <- '{"fill_colour":[0.266667,0.003922,0.329412,1.0],"stroke_colour":[0.266667,0.003922,0.329412,1.0],"stroke_width":0.0,"radius":1000,"lat":34.28,"lon":69.11,"geometry":[69.11,34.28]}'
-	poly <- '[{"fill_colour":"#440154FF","stroke_colour":"#440154FF","stroke_width":0.0,"radius":1000,"polyline":"_ifpEo`ydL"}]'
+	geo <- '{"fill_colour":[0.266667,0.003922,0.329412,1.0],"stroke_colour":[0.266667,0.003922,0.329412,1.0],"stroke_width":0.0,"radius":1,"lon":69.11,"lat":34.28,"geometry":[69.11,34.28]}'
+	poly <- '[{"fill_colour":"#440154FF","stroke_colour":"#440154FF","stroke_width":0.0,"radius":1,"polyline":"_ifpEo`ydL"}]'
 
 	## sf
 	set_token("abc")
