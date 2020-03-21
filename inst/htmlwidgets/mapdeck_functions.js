@@ -190,7 +190,7 @@ function md_update_overlay( map_id, layer_id, layer ) {
   }
 
   if ( window[ map_id + 'GoogleMapsOverlay'] == null ) {
-  	window[ map_id + 'GoogleMapsOverlay'] = new GoogleMapsOverlay();
+  	window[ map_id + 'GoogleMapsOverlay'] = new deck.GoogleMapsOverlay();
   }
 
 	var elem = md_findObjectElementByKey( window[map_id + 'layers'], 'id', layer_id );

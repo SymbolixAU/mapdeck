@@ -240,8 +240,19 @@ mapdeck( style = mapdeck_style("dark")) \%>\%
 ## Using a 2-sfc-column sf object
 library(sfheaders)
 
-sf_flights <- sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", z = "start_elev", keep = TRUE )
-destination <- sfheaders::sfc_point( flights, x = "end_lon", y = "end_lat", z = "start_elev" )
+sf_flights <- sfheaders::sf_point(
+  flights
+  , x = "start_lon"
+  , y = "start_lat"
+  , z = "start_elev"
+  , keep = TRUE
+  )
+destination <- sfheaders::sfc_point(
+  flights
+  , x = "end_lon"
+  , y = "end_lat"
+  , z = "start_elev"
+  )
 
 sf_flights$destination <- destination
 

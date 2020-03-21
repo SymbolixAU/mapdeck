@@ -9,7 +9,10 @@ test_that("add_path accepts multiple objects", {
 	set_token("abc")
 	m <- mapdeck()
 
-	sf <- roads[1:2, ]
+	df <- sfheaders::sf_to_df( roads )
+	df <- df[ df$linestring_id %in% c(1,2), ]
+	sf <- sfheaders::sf_linestring( df, linestring_id = "linestring_id", x = "x", y = "y")
+
 	p <- add_path(map = m, data = sf)
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 

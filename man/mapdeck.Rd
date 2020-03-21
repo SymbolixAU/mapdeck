@@ -15,8 +15,7 @@ mapdeck(
   zoom = 0,
   bearing = 0,
   location = c(0, 0),
-  show_view_state = FALSE,
-  view_id = "default_view"
+  show_view_state = FALSE
 )
 }
 \arguments{

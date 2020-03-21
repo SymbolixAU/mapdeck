@@ -16,6 +16,12 @@ test_that("add_polygon accepts multiple objects", {
 	m <- mapdeck()
 
 	sf <- spatialwidget::widget_melbourne[ spatialwidget::widget_melbourne$SA2_NAME == "South Yarra - West", ]
+	attr( sf, "class" ) <- c("sf", "data.frame")
+
+	df <- sfheaders::sf_to_df( spatialwidget::widget_melbourne, fill = T )
+	df <- df[ df$SA2_NAME == "South Yarra - West", ]
+	sf <- sfheaders::sf_polygon( df, polygon_id = "polygon_id", linestring_id = "linestring_id", x = "x", y = "y")
+
 	p <- add_polygon(map = m, data = sf, digits = 7)
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 
