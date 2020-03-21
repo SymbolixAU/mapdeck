@@ -113,15 +113,23 @@ add_column <- function(
 	brush_radius = NULL
 ) {
 
+	## using binary data requires hex-colorus to include teh alpha
+	if( !is.null( fill_colour ) ) {
+		fill_colour <- appendAlpha( fill_colour )
+	}
+	if( !is.null( stroke_colour ) ) {
+		stroke_colour <- appendAlpha( stroke_colour )
+	}
+
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
-	l[["fill_colour"]] <- force( fill_colour )
+	l[["fill_colour"]] <- fill_colour
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
-	l[["stroke_colour"]] <- force( stroke_colour )
+	l[["stroke_colour"]] <- if(!is.null( stroke_colour ) ) { stroke_colour } else { fill_colour }
 	l[["stroke_width"]] <- force( stroke_width )
-	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
+	l[["stroke_opacity"]] <-  if(!is.null( stroke_opacity ) ) { resolve_opacity( stroke_opacity ) } else { resolve_opacity( fill_opacity ) }
 	l[["elevation"]] <- force( elevation )
 	l[["tooltip"]] <- force( tooltip )
 	l[["id"]] <- force( id )
