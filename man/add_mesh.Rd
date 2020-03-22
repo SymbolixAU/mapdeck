@@ -126,17 +126,17 @@ you are clicking on
 }
 
 \examples{
+\donttest{
 
-x <- structure(list(vb = structure(c(0, 0, 0, 1, 100, 0, 0, 1, 0,
--42, 0, 1), .Dim = 4:3), it = structure(1:3, .Dim = c(3L, 1L)),
-material = list(), normals = NULL, texcoords = NULL, meshColor = "vertices"),
- class = c("mesh3d", "shape3d"))
-
-set_token("MAPBOX_API_TOKEN")
+## exaggerate the elevation slightly
+m <- melbourne_mesh
+m$vb[3, ] <- m$vb[3, ] * 50
 
 mapdeck() \%>\%
-  add_mesh(
-	  data = x
-  )
+ add_mesh(
+ data = m
+ )
+
+}
 
 }

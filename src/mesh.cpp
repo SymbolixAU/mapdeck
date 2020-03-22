@@ -99,8 +99,10 @@ Rcpp::List mesh_to_sf( Rcpp::List& mesh, Rcpp::StringVector vertices ) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_mesh_geojson(
-		Rcpp::List mesh, Rcpp::List params,
-		Rcpp::StringVector vertices, int digits
+		Rcpp::List mesh,
+		Rcpp::List params,
+		Rcpp::StringVector vertices,
+		int digits
 	) {
 
 	Rcpp::DataFrame data = mesh_to_sf( mesh, vertices );
@@ -112,7 +114,7 @@ Rcpp::List rcpp_mesh_geojson(
 
 	int data_rows = data.nrows();
 
-	std::string geometry_columns = "geometry";
+	Rcpp::StringVector geometry_columns({"geometry"});
 
 	Rcpp::List lst_defaults = mesh_defaults( data_rows );  // initialise with defaults
 	std::unordered_map< std::string, std::string > mesh_colours = mapdeck::layer_colours::fill_colours;
