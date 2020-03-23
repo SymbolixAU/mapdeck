@@ -2,7 +2,7 @@ context("hexagon")
 
 
 test_that("add_hexagon accepts multiple objects", {
-
+	testthat::skip_on_cran()
 	library(sfheaders)
 
 	geo <- '[{"type":"Feature","properties":{},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'

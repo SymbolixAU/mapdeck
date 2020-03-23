@@ -1,7 +1,7 @@
 context("scatterplot")
 
 test_that("add_scatterplot accepts multiple objects", {
-
+	testthat::skip_on_cran()
 	library(sfheaders)
 
 	geo <- '{"fill_colour":[68.0,1.0,84.0,255.0],"stroke_colour":[68.0,1.0,84.0,255.0],"stroke_width":0.0,"radius":1,"lon":69.11,"lat":34.28,"geometry":[69.11,34.28]}'
