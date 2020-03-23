@@ -6,7 +6,7 @@
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/mapdeck)
 [![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/mapdeck)](http://cran.r-project.org/web/packages/mapdeck/index.html)
+downloads](http://cranlogs.r-pkg.org/badges/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
 [![Github
 Stars](https://img.shields.io/github/stars/SymbolixAU/mapdeck.svg?style=social&label=Github)](https://github.com/SymbolixAU/mapdeck)
 
