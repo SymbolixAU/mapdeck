@@ -3,14 +3,12 @@
 
 # mapdeck
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mapdeck)](http://cran.r-project.org/package=mapdeck)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mapdeck)](http://cran.r-project.org/web/packages/mapdeck/index.html)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/mapdeck)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/mapdeck)](http://cran.r-project.org/web/packages/mapdeck/index.html)
 [![Github
 Stars](https://img.shields.io/github/stars/SymbolixAU/mapdeck.svg?style=social&label=Github)](https://github.com/SymbolixAU/mapdeck)
-[![Build
-Status](https://travis-ci.org/SymbolixAU/mapdeck.svg?branch=master)](https://travis-ci.org/SymbolixAU/mapdeck)
 
 ## What is mapdeck?
 
@@ -47,9 +45,14 @@ install.packages("mapdeck")
 
 #### Development version
 
-During development cycles the main changes happen to the dependant libraries, so you'll need to update those too. 
+To use the development version you need some other development dependant
+libraries
 
 ``` r
+devtools::install_github("SymbolixAU/jsonify", force = TRUE)
+devtools::install_github("dcooley/sfheaders", force = TRUE)
+devtools::install_github("SymbolixAU/geojsonsf", force = TRUE)
+devtools::install_github("SymbolixAU/colourvalues", force = TRUE)
 devtools::install_github("SymbolixAU/spatialwidget", force = TRUE)
 devtools::install_github("SymbolixAU/mapdeck")
 ```

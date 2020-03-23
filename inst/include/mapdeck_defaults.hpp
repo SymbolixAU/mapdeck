@@ -16,7 +16,6 @@ namespace defaults {
 		return nv;
 	}
 
-  // dont' necessarily need polyline anymore
 	inline Rcpp::StringVector default_polyline( int n ) {
 		Rcpp::StringVector sv(n);
 		return sv;

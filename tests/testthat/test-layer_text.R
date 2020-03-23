@@ -2,6 +2,8 @@ context("text")
 
 test_that("add_text accepts multiple objects", {
 
+	testthat::skip_on_cran()
+
 	library(sfheaders)
 
 	geo <- '[{"type":"Feature","properties":{"fill_colour":"#440154FF","anchor":"middle","angle":0.0,"alignment_baseline":"center","size":32.0,"text":"Kabul"},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
