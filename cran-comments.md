@@ -4,3 +4,7 @@
 * updated to correctly link to geojsonsf and spatialwidget
 * various updates to functions
 
+## Tests
+
+* rhub - check for cran
+* rhub - check with sanitizers

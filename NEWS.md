@@ -28,7 +28,7 @@
 * `add_arc` gets `tilt` and `height` arguments
 * `add_arc` gets `brush_radius` argument for brushing
 * opacity values can be in [0,1) OR [0,255]
-* layeres work without an access token
+* layers work without an access token
 * `add_title()` for adding titles to map
 * `add_scatterplot` gets `stroke_colour` and `stroke_width` arguments
 * `add_hexagon` gets transitions

@@ -7,7 +7,7 @@ function add_column_geo_columnar( map_id, map_type, column_data, data_count, lay
   	extensions.push( new deck.BrushingExtension() );
   }
 
-  console.log( column_data );
+  //console.log( column_data );
 
   const binaryLocation = new Float32Array(column_data.geometry);
   //const binaryRadius = new Float32Array(column_data.radius);

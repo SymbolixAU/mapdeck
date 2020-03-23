@@ -44,9 +44,9 @@
 #'
 "melbourne_mesh"
 
-#' #' garmin
-#' #'
-#' #' An sf object of my cycling activities from my Garmin
-#' #'
-#' "garmin"
+#' city_trail
+#'
+#' An sf object of a cyclist cycling around Melbourne's Capital City Trail
+#'
+"city_trail"
 

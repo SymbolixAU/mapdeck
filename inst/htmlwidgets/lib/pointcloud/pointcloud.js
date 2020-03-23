@@ -7,7 +7,7 @@ function add_pointcloud_geo_columnar( map_id, map_type, pointcloud_data, data_co
   	extensions.push( new deck.BrushingExtension() );
   }
 
-  console.log( pointcloud_data );
+  //console.log( pointcloud_data );
 
   const binaryLocation = new Float32Array(pointcloud_data.geometry);
   const binaryRadius = new Float32Array(pointcloud_data.radius);

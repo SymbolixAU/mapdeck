@@ -62,8 +62,8 @@ function add_grid_geo_columnar( map_id, map_type, grid_data, data_count, layer_i
 
 function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend, brush_radius  ) {
 
-  console.log( grid_data );
-  console.log( highlight_colour );
+  //console.log( grid_data );
+  //console.log( highlight_colour );
 
   var extensions = [];
 

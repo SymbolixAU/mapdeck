@@ -108,6 +108,11 @@ add_pointcloud <- function(
 	brush_radius = NULL
 ) {
 
+	## using binary data requires hex-colorus to include teh alpha
+	if( !is.null( fill_colour ) ) {
+	  fill_colour <- appendAlpha( fill_colour )
+	}
+
 	l <- list()
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
@@ -186,8 +191,6 @@ add_pointcloud <- function(
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
-
-	# print( shape )
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], nrow(data), radius, layer_id, light_settings,

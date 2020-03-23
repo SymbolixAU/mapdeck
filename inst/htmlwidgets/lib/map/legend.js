@@ -7,7 +7,7 @@ function md_colour_domain( x, colour_range, map_id, map_type, layer_id, legend, 
 		//console.log( x );
 		var cd = md_make_legend_range(x[0], x[1], colour_range.length, legend.digits );
 
-		console.log( cd );
+		//console.log( cd );
 
 		var ledge = {
   	fill_colour: {
@@ -114,7 +114,7 @@ function md_add_legend_gradient(map_id, map_type, layer_id, legendValues, format
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('style', legendValues.css);
     }
 
-    console.log( legendValues.colour );
+    //console.log( legendValues.colour );
 
     if( format === "hex") {
 	    for (i = 0; i < legendValues.colour.length; i++) {
@@ -318,7 +318,7 @@ function md_placeControl( map_id, map_type, object ) {
     var ledge = {};
     var position = "BOTTOM_RIGHT";
 
-    if( map_type == "google_map" ) {
+    if( map_type == "google_map") {
     	window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT].push( object );
     }
 

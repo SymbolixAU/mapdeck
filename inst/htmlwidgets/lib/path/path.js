@@ -22,6 +22,7 @@ function add_path_geo( map_id, map_type, path_data, data_count, start_indices, s
   const binaryDash = new Float32Array(path_data.dash_gap);
   const binaryLineColour = new Uint8Array(path_data.stroke_colour);
   const binaryLineWidth = new Uint8Array(path_data.stroke_width);
+  const binaryStartIndices = new Uint16Array( start_indices );
 
   const pathLayer = new deck.PathLayer({
     map_id: map_id,
@@ -38,7 +39,7 @@ function add_path_geo( map_id, map_type, path_data, data_count, start_indices, s
 
 	  data: {
       length: data_count,
-      startIndices: start_indices,
+      startIndices: binaryStartIndices,
       attributes: {
         getPath: {value: binaryLocation, size: stride},
         //getDashArray: {value: binaryDash, size: 1},

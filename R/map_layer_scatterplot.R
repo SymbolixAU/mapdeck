@@ -146,6 +146,13 @@ add_scatterplot <- function(
 	brush_radius = NULL
 ) {
 
+	## using binary data requires hex-colorus to include teh alpha
+	if( !is.null( fill_colour ) ) {
+		fill_colour <- appendAlpha( fill_colour )
+	}
+	if( !is.null( stroke_colour ) ) {
+		stroke_colour <- appendAlpha( stroke_colour )
+	}
 
 	l <- list()
 	l[["lon"]] <- force(lon)
@@ -154,8 +161,8 @@ add_scatterplot <- function(
 	l[["radius"]] <- force(radius)
 	l[["fill_colour"]] <- force(fill_colour)
 	l[["fill_opacity"]] <- resolve_opacity(fill_opacity)
-	l[["stroke_colour"]] <- force( stroke_colour )
-	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
+	l[["stroke_colour"]] <- if(!is.null( stroke_colour ) ) { force(stroke_colour) } else { force( fill_colour ) }
+	l[["stroke_opacity"]] <- if(!is.null( stroke_opacity ) ) { resolve_opacity( stroke_opacity ) } else { resolve_opacity( fill_opacity ) }
 	l[["stroke_width"]] <- force( stroke_width )
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
@@ -217,9 +224,6 @@ add_scatterplot <- function(
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
-
-
-	# return( shape )
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], nrow(data) , layer_id, auto_highlight, highlight_colour,

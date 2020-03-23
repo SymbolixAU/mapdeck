@@ -24,6 +24,7 @@ test_that("add_line accepts multiple objects", {
 	sf_to <- setNames( object = sf_to, c("country_to", "geometry.1"))
 
 	sf <- cbind( sf_from, sf_to )
+	attr( sf, "class" ) <- c("sf", "data.frame")
 
 	p <- add_line(map = m, data = sf, origin = "geometry", destination = "geometry.1")
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )

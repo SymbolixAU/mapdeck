@@ -6,6 +6,8 @@ function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_coun
   	extensions.push( new deck.BrushingExtension() );
   }
 
+  //console.log( scatter_data );
+
   const binaryLocation = new Float32Array(scatter_data.geometry);
   const binaryRadius = new Float32Array(scatter_data.radius);
   const binaryFillColour = new Uint8Array(scatter_data.fill_colour);

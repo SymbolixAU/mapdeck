@@ -13,8 +13,8 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
 	     for (const object of data) {
 	       const polygon = getPolygon(object);
 
-	       console.log( "const polygon " );
-	       console.log( polygon );
+	       //console.log( "const polygon " );
+	       //console.log( polygon );
 
 	       // iterate through vertices
 	       polygon.forEach(ring => {
