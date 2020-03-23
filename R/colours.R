@@ -6,7 +6,19 @@ isHexColour <- function(cols){
 
 appendAlpha <- function( col ) {
 	if( isHexColour( col ) ) {
-		col <- unname( vapply(col, function(x) ifelse(nchar(x==4), paste0(x,"F") , paste0(x,"FF")),"" ) )
+		col <- unname(
+			vapply(col, function(x) {
+				ifelse(
+					nchar(x) == 4
+					, paste0(x, "F")
+					, ifelse(
+						nchar(x) == 7
+						, paste0(x, "FF")
+						, x
+						)
+					)
+				},"" )
+		)
 	}
 	return( col )
 }
