@@ -1,5 +1,6 @@
 # v0.3.2
 
+* mapbox dependencies udpated to 1.9.0
 * tooltip for binary layers fixed [issue280](https://github.com/SymbolixAU/mapdeck/issues/280)
 
 # v0.3
