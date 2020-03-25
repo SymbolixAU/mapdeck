@@ -6,7 +6,7 @@ function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_coun
   	extensions.push( new deck.BrushingExtension() );
   }
 
-  //console.log( scatter_data );
+  let hasTooltip = scatter_data.tooltip !== undefined;
 
   const binaryLocation = new Float32Array(scatter_data.geometry);
   const binaryRadius = new Float32Array(scatter_data.radius);
@@ -26,10 +26,10 @@ function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_coun
         getFillColor: {value: binaryFillColour, size: 4},
         getLineColor: {value: binaryLineColour, size: 4},
         getLineWidth: {value: binaryLineWidth, size: 1}
-      }
+      },
+      tooltip: scatter_data.tooltip
     },
 
-    //data: scatter_data,
     radiusScale: 1,
     radiusMinPixels: radius_min_pixels || 1,
     radiusMaxPixels: radius_max_pixels || Number.MAX_SAFE_INTEGER,
@@ -43,7 +43,7 @@ function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_coun
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "scatterplot", info ),
-    onHover: md_update_tooltip,
+    onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
     transitions: js_transition || {},
     brushingRadius: brush_radius,
     extensions: extensions
