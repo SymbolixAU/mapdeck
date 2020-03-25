@@ -1,4 +1,8 @@
-# mapdeck 0.3
+# v0.3.2
+
+* tooltip for binary layers fixed [issue280](https://github.com/SymbolixAU/mapdeck/issues/280)
+
+# v0.3
 
 * you can now use most `sfc` geometry types in any plotting layer
 * performance boost for `add_scatterplot()`, `add_column()` and `add_pointcloud()`
@@ -35,7 +39,7 @@
 * `add_hexagon` gets `weight` and `colour_value` arguments for defining height and colour
 * `stroke_width` units defined in help files
 
-# mapdeck 0.2
+# v0.2
 
 * different palettes for both stroke & fill options
 * `stroke_colour` fix for polygons
