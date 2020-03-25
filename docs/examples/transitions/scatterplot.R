@@ -10,7 +10,7 @@ ui <- dashboardPage(
 	, dashboardBody(
 		mapdeckOutput(
 			outputId = "map"
-			, height = "600"
+			 #, height = "600"
 		)
 		, actionButton(
 			inputId = "btn"

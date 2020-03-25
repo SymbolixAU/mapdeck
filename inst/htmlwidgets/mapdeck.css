@@ -1,3 +1,15 @@
+/*
+.mapboxgl-map {
+  height: 100%;
+}
+*/
+
+/*
+.mapdeckmap {
+     height: 100%; !important;
+}
+*/
+
 .mapViewStateContainer {
 /*	  background: #fff; */
     position: absolute;
