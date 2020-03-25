@@ -10,14 +10,14 @@ downloads](http://cranlogs.r-pkg.org/badges/mapdeck)](https://CRAN.R-project.org
 [![Github
 Stars](https://img.shields.io/github/stars/SymbolixAU/mapdeck.svg?style=social&label=Github)](https://github.com/SymbolixAU/mapdeck)
 
-![](./vignettes/img/hexagons.png)
+![](./vignettes/img/articles/hexagons.png)
 
 ## What is mapdeck?
 
 An R library which lets you plot large data sets (as much as your GPU &
 browser can handle), on interactive maps using Mapbox GL and Deck.gl
 
-![](./vignettes/img/polygon_transitions.gif)
+![](./docs/articles/img/articles/polygon_transitions.gif)
 
 ## What is mapbox?
 
@@ -36,27 +36,22 @@ browser can handle), on interactive maps using Mapbox GL and Deck.gl
 
 ## How do I use it?
 
-Everything you need to know to get you started is on the [home
-page](https://symbolixau.github.io/mapdeck/articles/mapdeck.html)
-
-## Installation
-
-#### From cran
+First you need to install it, either from CRAN
 
 ``` r
 install.packages("mapdeck")
 ```
 
-#### Development version
-
-To use the development version you need some other development dependant
-libraries
+Or from github (to get the latest development version)
 
 ``` r
 devtools::install_github("SymbolixAU/mapdeck")
 ```
 
-## Getting Started
+Then everything you need to know to get you started is on the [home
+page](https://symbolixau.github.io/mapdeck/articles/mapdeck.html)
+
+## Quick Start
 
 Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox
 you need an [access
