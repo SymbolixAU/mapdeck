@@ -74,10 +74,6 @@ function md_update_tooltip({x, y, object, layer, index}) {
   const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
   var tt;
 
-  //console.log( tooltip );
-  //console.log( object );
-  //console.log( x, ", ", y );
-
   if (object) {
   	if( object.properties !== undefined ) {
 	  	if ( object.properties.tooltip !== undefined ) {
@@ -99,6 +95,28 @@ function md_update_tooltip({x, y, object, layer, index}) {
   	tooltip.style.display = 'none';
     tooltip.innerHTML = '';
   }
+}
+
+function md_update_binary_tooltip(layer, idx, x, y) {
+
+	if( !md_div_exists( 'mapdecktooltip'+ layer.props.map_id ) ) {
+  	md_setup_tooltip( layer.props.map_id );
+  }
+
+  const tooltip = document.getElementById( 'mapdecktooltip'+layer.props.map_id );
+  var tt;
+
+	  if( layer.props.data.tooltip && idx >= 0 ) {
+	  	tt = layer.props.data.tooltip[ idx ];
+	  	tooltip.style.display = 'block';
+	    tooltip.style.top = `${y}px`;
+	    tooltip.style.left = `${x}px`;
+	    tooltip.innerHTML = `<div>${tt}</div>`;
+	  } else {
+    	tooltip.style.display = 'none';
+	    tooltip.innerHTML = '';
+  }
+
 }
 
 

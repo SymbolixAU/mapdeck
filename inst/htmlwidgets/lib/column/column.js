@@ -7,7 +7,7 @@ function add_column_geo_columnar( map_id, map_type, column_data, data_count, lay
   	extensions.push( new deck.BrushingExtension() );
   }
 
-  //console.log( column_data );
+  let hasTooltip = column_data.tooltip !== undefined;
 
   const binaryLocation = new Float32Array(column_data.geometry);
   //const binaryRadius = new Float32Array(column_data.radius);
@@ -19,7 +19,6 @@ function add_column_geo_columnar( map_id, map_type, column_data, data_count, lay
   const columnLayer = new deck.ColumnLayer({
     map_id: map_id,
     id: 'column-'+layer_id,
-    //data: column_data,
 
     data: {
       length: data_count,
@@ -30,7 +29,8 @@ function add_column_geo_columnar( map_id, map_type, column_data, data_count, lay
         getLineColor: {value: binaryLineColour, size: 4},
         getLineWidth: {value: binaryLineWidth, size: 1},
         getElevation: {value: binaryElevation, size: 1}
-      }
+      },
+      tooltip: column_data.tooltip
     },
 
 
@@ -40,13 +40,6 @@ function add_column_geo_columnar( map_id, map_type, column_data, data_count, lay
     wireframe: false,
     extruded: is_extruded,
 
-/*
-    getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
-    getLineColor: d => md_hexToRGBA( d.properties.stroke_colour ),
-    getLineWidth: d => d.properties.stroke_width,
-    getElevation: d => d.properties.elevation,
-    getPosition: d => md_get_point_coordinates( d ),
-*/
     elevationScale: elevation_scale,
     radius: radius,
     diskResolution: disk_resolution,
@@ -55,7 +48,7 @@ function add_column_geo_columnar( map_id, map_type, column_data, data_count, lay
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "column", info ),
-    onHover: md_update_tooltip,
+    onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
     transitions: js_transition || {},
     brushingRadius: brush_radius,
     extensions: extensions
