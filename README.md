@@ -10,10 +10,14 @@ downloads](http://cranlogs.r-pkg.org/badges/mapdeck)](https://CRAN.R-project.org
 [![Github
 Stars](https://img.shields.io/github/stars/SymbolixAU/mapdeck.svg?style=social&label=Github)](https://github.com/SymbolixAU/mapdeck)
 
+![](./vignettes/img/hexagons.png)
+
 ## What is mapdeck?
 
 An R library which lets you plot large data sets (as much as your GPU &
 browser can handle), on interactive maps using Mapbox GL and Deck.gl
+
+![](./vignettes/img/polygon_transitions.gif)
 
 ## What is mapbox?
 
