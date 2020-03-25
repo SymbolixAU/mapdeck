@@ -49,11 +49,6 @@ To use the development version you need some other development dependant
 libraries
 
 ``` r
-devtools::install_github("SymbolixAU/jsonify", force = TRUE)
-devtools::install_github("dcooley/sfheaders", force = TRUE)
-devtools::install_github("SymbolixAU/geojsonsf", force = TRUE)
-devtools::install_github("SymbolixAU/colourvalues", force = TRUE)
-devtools::install_github("SymbolixAU/spatialwidget", force = TRUE)
 devtools::install_github("SymbolixAU/mapdeck")
 ```
 
