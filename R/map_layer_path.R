@@ -56,7 +56,7 @@ mapdeckPathDependency <- function() {
 #'   , location = c(145, -37.8)
 #'   , zoom = 10) %>%
 #'   add_path(
-#'     data = roads[1:2, ]
+#'     data = roads
 #'     , stroke_colour = "RIGHT_LOC"
 #'     , layer_id = "path_layer"
 #'     , tooltip = "ROAD_NAME"
@@ -138,7 +138,11 @@ add_path <- function(
 	if ( tp == "sf" ) {
 		# geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
 		l[["geometry"]] <- NULL
-		shape <- rcpp_path_geojson( data, l, digits, "path" )
+
+		## which of the columns of data need to be unlist?
+		print( l )
+
+		shape <- rcpp_path_geojson( data, l, "val", digits, "path" )
 		jsfunc <- "add_path_geo"
 	} else if ( tp == "sfencoded" ) {
 		jsfunc <- "add_path_polyline"
