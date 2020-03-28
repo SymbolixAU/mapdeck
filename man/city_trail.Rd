@@ -4,7 +4,9 @@
 \name{city_trail}
 \alias{city_trail}
 \title{city_trail}
-\format{An object of class \code{sf} (inherits from \code{data.frame}) with 1 rows and 3 columns.}
+\format{
+An object of class \code{sf} (inherits from \code{data.frame}) with 1 rows and 3 columns.
+}
 \usage{
 city_trail
 }

@@ -4,7 +4,9 @@
 \name{melbourne_mesh}
 \alias{melbourne_mesh}
 \title{Melbourne Mesh}
-\format{An object of class \code{mesh3d} (inherits from \code{shape3d}) of length 6.}
+\format{
+An object of class \code{mesh3d} (inherits from \code{shape3d}) of length 6.
+}
 \usage{
 melbourne_mesh
 }

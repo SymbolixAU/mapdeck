@@ -4,7 +4,9 @@
 \name{geojson}
 \alias{geojson}
 \title{Geojson}
-\format{a 'json' object}
+\format{
+a 'json' object
+}
 \usage{
 geojson
 }

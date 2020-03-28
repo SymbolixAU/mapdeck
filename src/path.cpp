@@ -58,7 +58,7 @@ Rcpp::List rcpp_path_geojson(
 
 	Rcpp::NumericVector start_indices = sfc_coordinates( Rcpp::_, 0 );
 
-	start_indices = ( start_indices * stride );
+	//start_indices = ( start_indices * stride );
 
 	int i;
 	Rcpp::StringVector param_names({"x","y","z","m"});
