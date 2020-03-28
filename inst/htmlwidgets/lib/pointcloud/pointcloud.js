@@ -7,6 +7,8 @@ function add_pointcloud_geo_columnar( map_id, map_type, pointcloud_data, data_co
   	extensions.push( new deck.BrushingExtension() );
   }
 
+  let hasTooltip = pointcloud_data.tooltip !== undefined;
+
   //console.log( pointcloud_data );
 
   const binaryLocation = new Float32Array(pointcloud_data.geometry);
@@ -16,9 +18,6 @@ function add_pointcloud_geo_columnar( map_id, map_type, pointcloud_data, data_co
   const pointcloudLayer = new deck.PointCloudLayer({
   	map_id: map_id,
     id: 'pointcloud-'+layer_id,
-    //data: pointcloud_data,
-    //getPosition: d => md_get_point_coordinates( d ),
-    //getColor: d => md_hexToRGBA( d.properties.fill_colour ),
 
     data: {
       length: data_count,
@@ -26,16 +25,17 @@ function add_pointcloud_geo_columnar( map_id, map_type, pointcloud_data, data_co
         getPosition: {value: binaryLocation, size: 3},
         getRadius: {value: binaryRadius, size: 1},
         getColor: {value: binaryFillColour, size: 4},
-      }
+      },
+      tooltip: pointcloud_data.tooltip
     },
 
-    radiusPixels: radius,
+    pointSize: radius,
     lightSettings: light_settings,
     pickable: true,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "pointcloud", info ),
-    onHover: md_update_tooltip,
+    onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
     transitions: js_transition || {},
     brushingRadius: brush_radius,
     extensions: extensions
@@ -65,7 +65,7 @@ function add_pointcloud_polyline( map_id, map_type, pointcloud_data, radius, lay
     map_id: map_id,
     id: 'pointcloud-'+layer_id,
     data: pointcloud_data,
-    radiusPixels: radius,
+    pointSize: radius,
     getPosition: d => decode_pointcloud( d.polyline, d.elevation ),
     getColor: d => md_hexToRGBA( d.fill_colour ),
     lightSettings: light_settings,

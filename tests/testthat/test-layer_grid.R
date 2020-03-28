@@ -3,6 +3,8 @@ context("grid")
 
 test_that("add_grid accepts multiple objects", {
 
+	testthat::skip_on_cran()
+
 	library(sfheaders)
 
 	geo <- '[{"type":"Feature","properties":{"weight":1.0},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'

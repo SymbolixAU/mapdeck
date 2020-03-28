@@ -1,7 +1,7 @@
 context("arc")
 
 test_that("add_arc accepts multiple objects", {
-
+	testthat::skip_on_cran()
 	library(sfheaders)
 
 	# poly <- '[{"radius":1000,"fill_colour":"#440154FF","polyline":"_ifpEo`ydL"}]'

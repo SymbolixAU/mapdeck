@@ -12,7 +12,7 @@ roads
 A simple feature \code{sf} object of roads in central Melbourne
 }
 \details{
-Obtained from \url{www.data.gov.au} and distributed under the Creative Commons 4 License
+Obtained from \url{https://www.data.gov.au} and distributed under the Creative Commons 4 License
 \url{https://creativecommons.org/licenses/by/4.0/}
 }
 \keyword{datasets}

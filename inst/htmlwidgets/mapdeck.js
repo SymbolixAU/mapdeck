@@ -31,7 +31,7 @@ HTMLWidgets.widget({
 
        if( x.access_token === null ) {
        	 const deckgl = new deck.DeckGL({
-       	 	  views: [ new deck.MapView({ id: el.id }) ],
+       	 	  views: [ new deck.MapView({ id: el.id, repeat: x.repeat_view }) ],
        	 	  map: false,
 			      container: el.id,
 			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
@@ -42,7 +42,7 @@ HTMLWidgets.widget({
 			   window[el.id + 'map'] = deckgl;
        } else {
         const deckgl = new deck.DeckGL({
-        	  views: [ new deck.MapView({ id: el.id }) ],
+        	  views: [ new deck.MapView({ id: el.id, repeat: x.repeat_view }) ],
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,

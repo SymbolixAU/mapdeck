@@ -1,7 +1,7 @@
 context("line")
 
 test_that("add_line accepts multiple objects", {
-
+	testthat::skip_on_cran()
 	library(sfheaders)
 
 	geo <- '[{"type":"Feature","properties":{"stroke_colour":"#440154FF","stroke_width":1.0,"height":1.0},"geometry":{"origin":{"type":"Point","coordinates":[149.08,-35.15]},"destination":{"type":"Point","coordinates":[-0.05,51.36]}}}]'
