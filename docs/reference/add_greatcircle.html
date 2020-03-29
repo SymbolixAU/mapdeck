@@ -70,7 +70,7 @@ of source and target points, specified as longitude/latitude coordinates." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -150,15 +150,32 @@ of source and target points, specified as longitude/latitude coordinates." />
 of source and target points, specified as longitude/latitude coordinates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_greatcircle</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>origin</span>,
-  <span class='no'>destination</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stroke_from_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stroke_to_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>wrap_longitude</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>, <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>,
-  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>)</pre>
+    <pre class="usage"><span class='fu'>add_greatcircle</span>(
+  <span class='no'>map</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>),
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>origin</span>,
+  <span class='no'>destination</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_from_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_to_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>wrap_longitude</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>F</span>,
+  <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>,
+  <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>,
+  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,11 +197,13 @@ to conflict and not plot correctly</p></td>
     </tr>
     <tr>
       <th>origin</th>
-      <td><p>vector of longitude and latitude columns, or an <code>sfc</code> column</p></td>
+      <td><p>vector of longitude and latitude columns, and optionally an elevation column,
+or an <code>sfc</code> column</p></td>
     </tr>
     <tr>
       <th>destination</th>
-      <td><p>vector of longitude and latitude columns, or an <code>sfc</code> column</p></td>
+      <td><p>vector of longitude and latitude columns, and optionally an elevatino column,
+or an <code>sfc</code> column</p></td>
     </tr>
     <tr>
       <th>id</th>
@@ -193,7 +212,7 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>stroke_from</th>
       <td><p>column of <code>data</code> or hex colour to use as the staring stroke colour.
-If using a hex colour, use either a single value, or a vector the same length as <code>data</code></p></td>
+IIf using a hex colour, use either a single value, or a column of hex colours  on <code>data</code></p></td>
     </tr>
     <tr>
       <th>stroke_from_opacity</th>
@@ -205,7 +224,7 @@ colour, this argument is ignored and you should include the alpha on the hex str
     <tr>
       <th>stroke_to</th>
       <td><p>column of <code>data</code> or hex colour to use as the ending stroke colour.
-If using a hex colour, use either a single value, or a vector the same length as <code>data</code></p></td>
+If using a hex colour, use either a single value, or a column of hex colours  on <code>data</code></p></td>
     </tr>
     <tr>
       <th>stroke_to_opacity</th>
@@ -271,6 +290,10 @@ palette for different colour options (where available),
     <tr>
       <th>transitions</th>
       <td><p>list specifying the duration of transitions.</p></td>
+    </tr>
+    <tr>
+      <th>digits</th>
+      <td><p>number of digits for rounding coordinates</p></td>
     </tr>
     </table>
 
@@ -356,18 +379,18 @@ you are clicking on</p>
   )
 
 <span class='co'>## Using a 2-sfc-column sf object</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sf</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sfheaders</span>)
 
-<span class='no'>sf_flights</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(
-  <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(<span class='no'>flights</span>, <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"start_lon"</span>, <span class='st'>"start_lat"</span>))
-  , <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(<span class='no'>flights</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"end_lon"</span>,<span class='st'>"end_lat"</span>)], <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"end_lon"</span>, <span class='st'>"end_lat"</span>))
-)
+<span class='no'>sf_flights</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sfheaders</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sfheaders/man/sf_point.html'>sf_point</a></span>( <span class='no'>flights</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"start_lon"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"start_lat"</span>, <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )
+<span class='no'>destination</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sfheaders</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sfheaders/man/sfc_point.html'>sfc_point</a></span>( <span class='no'>flights</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"end_lon"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"end_lat"</span> )
+
+<span class='no'>sf_flights</span>$<span class='no'>destination</span> <span class='kw'>&lt;-</span> <span class='no'>destination</span>
 
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>() <span class='kw'>%&gt;%</span>
  <span class='fu'>add_greatcircle</span>(
    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sf_flights</span>
    , <span class='kw'>origin</span> <span class='kw'>=</span> <span class='st'>'geometry'</span>
-   , <span class='kw'>destination</span> <span class='kw'>=</span> <span class='st'>'geometry.1'</span>
+   , <span class='kw'>destination</span> <span class='kw'>=</span> <span class='st'>'destination'</span>
    , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>'greatcircles'</span>
    , <span class='kw'>stroke_from</span> <span class='kw'>=</span> <span class='st'>"airport1"</span>
    , <span class='kw'>stroke_to</span> <span class='kw'>=</span> <span class='st'>"airport2"</span>

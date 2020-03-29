@@ -37,7 +37,9 @@ Each layer requires a `layer_id` value. If you don't supply one, it will create 
 
 The `layer_id` is the ID that `deck.gl` uses to 'shallow-compare' layers to see if they need updating. Which comes in handy when working in Shiny. If you update data, for example when using a `reactive()` function, and use the same `layer_id`, `deck.gl` knows it should update the layer rather than re-draw it completely. 
 
-**However**, if two of your layers have the same `layer_id`, then `deck.gl` will get confused and start updating the wrong thing. So while I've made the `layer_id` argument optional, you should still set it manually when using it in Shiny apps. 
+**However**, if two of your layers of the same type have the same `layer_id`, then `deck.gl` will get confused and will only show the last layer drawn. 
+
+For example, if you have to scatterplot layers, both with the same `layer_id`, only the second one will be shown. 
 
 ## Arcs
 

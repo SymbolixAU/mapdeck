@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -141,109 +141,12 @@
       
     </div>
 
-    <div id="mapdeck-03" class="section level1">
-<h1 class="page-header">
-<a href="#mapdeck-03" class="anchor"></a>mapdeck 0.3<small> Unreleased </small>
-</h1>
-<ul>
-<li>
-<code><a href="../reference/add_bitmap.html">add_bitmap()</a></code> to add a bitmap / image to the map</li>
-<li>input$map_view_change now observed <a href="https://github.com/SymbolixAU/mapdeck/issues/211">issue211</a> - thanks <a href='https://github.com/zacdav'>@zacdav</a></li>
-<li>
-<code>update_stype()</code> function</li>
-<li>
-<code><a href="../reference/add_path.html">add_path()</a></code> accepts dashed lines</li>
-<li>mapbox tokens are searched for in environement variables if one isn’t provided <a href="https://github.com/SymbolixAU/mapdeck/issues/209">issue209</a>
-</li>
-<li>z-fighting <a href="https://github.com/SymbolixAU/mapdeck/issues/199">issue 199</a>
-</li>
-<li>factors correctly used in legends <a href="https://github.com/SymbolixAU/mapdeck/issues/138">issue #138</a>
-</li>
-<li>
-<code><a href="../reference/add_trips.html">add_trips()</a></code> for adding animated trips to the map</li>
-<li>
-<code>add_path</code> gets <code>billboard</code> argument so the path always faces the ‘camera’</li>
-<li>Fix for legends in GeoJSON layer - <a href="https://github.com/SymbolixAU/mapdeck/issues/190">issue #190</a>
-</li>
-<li>
-<code>add_hexagon</code> now supports GPU aggregation for colour and elevation</li>
-<li>
-<code>radius_min_pixels</code> and <code>radius_max_pixels</code> arguemnts for scatterplots</li>
-<li>
-<code><a href="../reference/add_mesh.html">add_mesh()</a></code> for quadmesh objects</li>
-<li>Google Map supported</li>
-<li>
-<code>mapdeck_legend</code> and <code>legend_element</code> for manually creating legends</li>
-<li>
-<code><a href="../reference/add_column.html">add_column()</a></code> to draw columns (as any polygon shape)</li>
-<li>
-<code><a href="../reference/add_text.html">add_text()</a></code> gets <code>billbaord</code>, <code>font_family</code>, <code>font_weight</code>
-</li>
-<li>
-<code>add_greatcircles()</code> to draw flat great circles</li>
-<li>
-<code>add_line</code> width docs updated to say ‘metres’</li>
-<li>
-<code>add_arc</code> gets <code>tilt</code> and <code>height</code> arguments</li>
-<li>
-<code>add_arc</code> gets <code>brush_radius</code> argument for brushing</li>
-<li>opacity values can be in [0,1) OR [0,255]</li>
-<li>layeres work without an access token</li>
-<li>
-<code><a href="../reference/add_title.html">add_title()</a></code> for adding titles to map</li>
-<li>
-<code>add_scatterplot</code> gets <code>stroke_colour</code> and <code>stroke_width</code> arguments</li>
-<li>
-<code>add_hexagon</code> gets transitions</li>
-<li>
-<code>add_hexagon</code> gets <code>weight</code> and <code>colour_value</code> arguments for defining height and colour</li>
-<li>
-<code>stroke_width</code> units defined in help files</li>
-</ul>
-</div>
-    <div id="mapdeck-02" class="section level1">
-<h1 class="page-header">
-<a href="#mapdeck-02" class="anchor"></a>mapdeck 0.2<small> Unreleased </small>
-</h1>
-<ul>
-<li>different palettes for both stroke &amp; fill options</li>
-<li>
-<code>stroke_colour</code> fix for polygons</li>
-<li>
-<code>transitions</code> argument for most layers</li>
-<li>
-<code><a href="../reference/mapdeck.html">mapdeck()</a></code> argument order changed so <code>data</code> is first ( to work better with pipes )</li>
-<li>
-<code>update_view</code> and <code>focus_layer</code> added to focus layers on data</li>
-<li>bearing and pitch maintained on data layer updates</li>
-<li>
-<code>bearing</code> argument to <code><a href="../reference/mapdeck.html">mapdeck()</a></code>
-</li>
-<li>
-<code><a href="../reference/add_geojson.html">add_geojson()</a></code> fully supported</li>
-<li>
-<code><a href="../reference/add_sf.html">add_sf()</a></code> convenience function</li>
-<li>Z attributes supported</li>
-<li>
-<code>MULTI</code>-geometry sf objects supported</li>
-<li>can use variables in place of string arguments</li>
-<li>
-<code>highlight_colour</code> argument</li>
-<li>all <code>add_*()</code> functions migrated to c++</li>
-<li>
-<code>layer_id</code> is optional to the user</li>
-<li>
-<code>auto_highlight</code> argument</li>
-</ul>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#mapdeck-03">0.3</a></li>
-        <li><a href="#mapdeck-02">0.2</a></li>
       </ul>
     </div>
   </div>

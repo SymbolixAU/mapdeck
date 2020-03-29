@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -148,10 +148,20 @@
     <p>mapdeck</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mapdeck</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'>get_access_token</span>(<span class='kw'>api</span> <span class='kw'>=</span> <span class='st'>"mapbox"</span>),
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>padding</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"mapbox://styles/mapbox/streets-v9"</span>, <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>bearing</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>))</pre>
+    <pre class="usage"><span class='fu'>mapdeck</span>(
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'>get_access_token</span>(<span class='kw'>api</span> <span class='kw'>=</span> <span class='st'>"mapbox"</span>),
+  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>padding</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"mapbox://styles/mapbox/streets-v9"</span>,
+  <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>bearing</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>),
+  <span class='kw'>show_view_state</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>repeat_view</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,6 +208,25 @@ If left empty layers will still be plotted, but without a Mapbox map.</p></td>
     <tr>
       <th>location</th>
       <td><p>unnamed vector of lon and lat coordinates (in that order)</p></td>
+    </tr>
+    <tr>
+      <th>show_view_state</th>
+      <td><p>logical, indicating whether to add the current View State to the map.
+When <code>TRUE</code>, the following is added as an overlay to the map</p><ul>
+<li><p>width</p></li>
+<li><p>height</p></li>
+<li><p>latitude &amp; longitude</p></li>
+<li><p>zoom</p></li>
+<li><p>bearing</p></li>
+<li><p>pitch</p></li>
+<li><p>altitude</p></li>
+<li><p>viewBounds</p></li>
+<li><p>interactionState</p></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>repeat_view</th>
+      <td><p>Logical indicating if the layers should repeat at low zoom levels</p></td>
     </tr>
     </table>
 

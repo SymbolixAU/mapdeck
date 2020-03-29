@@ -36,7 +36,7 @@
 
 
 <meta property="og:title" content="Add Mesh — add_mesh" />
-<meta property="og:description" content="Adds polygons to the map from a quadmesh object" />
+<meta property="og:description" content="Adds polygons to the map from a mesh3d object" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -145,16 +145,31 @@
     </div>
 
     <div class="ref-description">
-    <p>Adds polygons to the map from a <code>quadmesh</code> object</p>
+    <p>Adds polygons to the map from a <code>mesh3d</code> object</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_mesh</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>fill_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>light_settings</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>,
-  <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>add_mesh</span>(
+  <span class='no'>map</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>),
+  <span class='kw'>fill_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
+  <span class='kw'>light_settings</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>,
+  <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>,
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>,
+  <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>brush_radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -240,14 +255,24 @@ a named list indicating which colour attributes should be included in the legend
       <td><p>logical indicating if the map should update the bounds to only include this layer</p></td>
     </tr>
     <tr>
+      <th>digits</th>
+      <td><p>number of digits for rounding coordinates</p></td>
+    </tr>
+    <tr>
       <th>transitions</th>
       <td><p>list specifying the duration of transitions.</p></td>
+    </tr>
+    <tr>
+      <th>brush_radius</th>
+      <td><p>radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>add_mesh</code> supports quadmesh objects</p>
+    <p><code>add_mesh</code> supports mesh3d objects</p>
     <h2 class="hasAnchor" id="legend"><a class="anchor" href="#legend"></a>legend</h2>
 
     
@@ -281,6 +306,20 @@ cliked shape.</p>
 where 'map' is the map_id supplied to <code><a href='mapdeck-shiny.html'>mapdeckOutput()</a></code>, and 'arc' is the layer
 you are clicking on</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+
+<span class='co'>## exaggerate the elevation slightly</span>
+<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='no'>melbourne_mesh</span>
+<span class='no'>m</span>$<span class='no'>vb</span>[<span class='fl'>3</span>, ] <span class='kw'>&lt;-</span> <span class='no'>m</span>$<span class='no'>vb</span>[<span class='fl'>3</span>, ] * <span class='fl'>50</span>
+
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>() <span class='kw'>%&gt;%</span>
+ <span class='fu'>add_mesh</span>(
+ <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>m</span>
+ )</div><div class='output co'>#&gt; <span class='message'>mesh is an experimental layer and the function may change without warning</span></div><div class='input'>
+# }
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -289,6 +328,7 @@ you are clicking on</p>
       <li><a href="#details">Details</a></li>
       <li><a href="#legend">legend</a></li>
       <li><a href="#id">id</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

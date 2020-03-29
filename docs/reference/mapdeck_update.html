@@ -70,7 +70,7 @@ to respond to reactive content." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -150,13 +150,22 @@ to respond to reactive content." />
 to respond to reactive content.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mapdeck_update</span>(<span class='no'>map_id</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/domains.html'>getDefaultReactiveDomain</a></span>(),
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>deferUntilFlush</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>map_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mapdeck_update"</span>,
-  <span class='st'>"google_map_update"</span>))</pre>
+    <pre class="usage"><span class='fu'>mapdeck_update</span>(
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>map_id</span>,
+  <span class='kw'>session</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/domains.html'>getDefaultReactiveDomain</a></span>(),
+  <span class='kw'>deferUntilFlush</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>map_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mapdeck_update"</span>, <span class='st'>"google_map_update"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system</p></td>
+    </tr>
     <tr>
       <th>map_id</th>
       <td><p>string containing the output ID of the map in a shiny application.</p></td>
@@ -167,15 +176,14 @@ to respond to reactive content.</p>
 default value will suffice.</p></td>
     </tr>
     <tr>
-      <th>data</th>
-      <td><p>data to be used in the layer. All coordinates are expected to be
-EPSG:4326 (WGS 84) coordinate system</p></td>
-    </tr>
-    <tr>
       <th>deferUntilFlush</th>
       <td><p>indicates whether actions performed against this
 instance should be carried out right away, or whether they should be held until
 after the next time all of the outputs are updated; defaults to TRUE.</p></td>
+    </tr>
+    <tr>
+      <th>map_type</th>
+      <td><p>either mapdeck_update or google_map_update</p></td>
     </tr>
     </table>
 

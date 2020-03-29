@@ -70,7 +70,7 @@ It implements Gaussian Kernel Density Estimation to render the heatmaps." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -150,11 +150,23 @@ It implements Gaussian Kernel Density Estimation to render the heatmaps." />
 It implements Gaussian Kernel Density Estimation to render the heatmaps.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_heatmap</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>radius_pixels</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>intensity</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>)</pre>
+    <pre class="usage"><span class='fu'>add_heatmap</span>(
+  <span class='no'>map</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>),
+  <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>radius_pixels</span> <span class='kw'>=</span> <span class='fl'>30</span>,
+  <span class='kw'>intensity</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>,
+  <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -222,6 +234,14 @@ to conflict and not plot correctly</p></td>
       <th>focus_layer</th>
       <td><p>logical indicating if the map should update the bounds to only include this layer</p></td>
     </tr>
+    <tr>
+      <th>digits</th>
+      <td><p>number of digits for rounding coordinates</p></td>
+    </tr>
+    <tr>
+      <th>transitions</th>
+      <td><p>list specifying the duration of transitions.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -234,6 +254,21 @@ to conflict and not plot correctly</p></td>
 
 <p>The current version of this layer is supported only for WebGL2 enabled browswers
 So you may find it doesn't render in the RStudio viewer.</p>
+    <h2 class="hasAnchor" id="transitions"><a class="anchor" href="#transitions"></a>transitions</h2>
+
+    
+
+
+<p>The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny)
+and on WebGL-2 supported browsers and hardware.</p>
+<p>The time is in milliseconds</p>
+<p>Available transitions for heatmap</p>
+<p>list(
+intensity = 0,
+threshold = 0,
+radius_pixels = 0
+)</p>
     <h2 class="hasAnchor" id="data"><a class="anchor" href="#data"></a>data</h2>
 
     
@@ -261,24 +296,25 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
 
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
 <span class='fu'>add_heatmap</span>(
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>[<span class='fl'>1</span>:<span class='fl'>10000</span>, ]
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>
   , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
   , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"lng"</span>
   , <span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"weight"</span>,
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"heatmap_layer"</span>
-)
-
+)</div><div class='output co'>#&gt; <span class='error'>Error in google_dispatch(map, method, google_map = {    x = map$x$calls    if (is.null(x))         x = list()    n = length(x)    x[[n + 1]] = list(functions = method, args = args)    map$x$calls = x    map}, google_map_update = {    invoke_remote(map, method, args)}): Invalid map parameter</span></div><div class='input'>
 <span class='co'>## as an sf object</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sf</span>)
-<span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>( <span class='no'>df</span>, <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lng"</span>, <span class='st'>"lat"</span>))
-<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sfheaders</span>)
+<span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sfheaders</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sfheaders/man/sf_point.html'>sf_point</a></span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"lng"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"lat"</span>)
+
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
 <span class='fu'>add_heatmap</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sf</span>
   , <span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"weight"</span>,
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"heatmap_layer"</span>
-)
+)</div><div class='output co'>#&gt; <span class='error'>Error in find_lat_column(dataNames, layer_call, TRUE): Couldn't infer latitude column for add_heatmap</span></div><div class='input'>
+# }
 
-<span class='co'># }</span></div></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -286,6 +322,7 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#details">Details</a></li>
       <li><a href="#note">note</a></li>
+      <li><a href="#transitions">transitions</a></li>
       <li><a href="#data">data</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -148,9 +148,17 @@
     <p>Adds an image to a map</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_bitmap</span>(<span class='no'>map</span>, <span class='no'>image</span>, <span class='no'>bounds</span>, <span class='kw'>desaturate</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>transparent_colour</span> <span class='kw'>=</span> <span class='st'>"#000000"</span>, <span class='kw'>tint_colour</span> <span class='kw'>=</span> <span class='st'>"#FFFFFF"</span>,
-  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>add_bitmap</span>(
+  <span class='no'>map</span>,
+  <span class='no'>image</span>,
+  <span class='no'>bounds</span>,
+  <span class='kw'>desaturate</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>transparent_colour</span> <span class='kw'>=</span> <span class='st'>"#000000"</span>,
+  <span class='kw'>tint_colour</span> <span class='kw'>=</span> <span class='st'>"#FFFFFF"</span>,
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,26 +210,28 @@ to conflict and not plot correctly</p></td>
 
 <span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='st'>"MAPBOX_TOKEN"</span> )
 
-<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>() <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(<span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>122.3</span>, <span class='fl'>37.8</span>), <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'>add_bitmap</span>(
-   <span class='kw'>image</span> <span class='kw'>=</span> <span class='st'>'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/website/sf-districts.png'</span>
+   <span class='kw'>image</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(
+   <span class='st'>'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,
+   <span class='st'>'website/sf-districts.png'</span>)
    , <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>122.519</span>, <span class='fl'>37.7045</span>, -<span class='fl'>122.355</span>, <span class='fl'>37.829</span>)
  )
 
-<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>() <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(<span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>75.9</span>, <span class='fl'>40.9</span>), <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_bitmap</span>(
     <span class='kw'>image</span> <span class='kw'>=</span> <span class='st'>'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'</span>
     , <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>80.425</span>, <span class='fl'>37.936</span>, -<span class='fl'>71.516</span>, <span class='fl'>46.437</span>)
   )
 
-<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>() <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(<span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>75.9</span>, <span class='fl'>40.9</span>), <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_bitmap</span>(
     <span class='kw'>image</span> <span class='kw'>=</span> <span class='st'>'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'</span>
     , <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>80.425</span>, <span class='fl'>37.936</span>, -<span class='fl'>71.516</span>, <span class='fl'>46.437</span>)
     , <span class='kw'>tint_colour</span> <span class='kw'>=</span> <span class='st'>"#FF0000"</span>
   )
 
-<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>() <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(<span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>75.9</span>, <span class='fl'>40.9</span>), <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_bitmap</span>(
     <span class='kw'>image</span> <span class='kw'>=</span> <span class='st'>'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'</span>
     , <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>80.425</span>, <span class='fl'>37.936</span>, -<span class='fl'>71.516</span>, <span class='fl'>46.437</span>)

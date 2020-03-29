@@ -70,7 +70,7 @@ lines and points" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -150,18 +150,40 @@ lines and points" />
 lines and points</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_geojson</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dash_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dash_gap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fill_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>light_settings</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>,
-  <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>line_width_units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"metres"</span>, <span class='st'>"pixels"</span>),
-  <span class='kw'>line_width_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>line_width_min_pixels</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>point_radius_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>point_radius_min_pixels</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>add_geojson</span>(
+  <span class='no'>map</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>),
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dash_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dash_gap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fill_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>extruded</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>light_settings</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>F</span>,
+  <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
+  <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>,
+  <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>,
+  <span class='kw'>line_width_units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"metres"</span>, <span class='st'>"pixels"</span>),
+  <span class='kw'>line_width_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>line_width_min_pixels</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>elevation_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>point_radius_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>point_radius_min_pixels</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>,
+  <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -215,6 +237,11 @@ to conflict and not plot correctly</p></td>
     <tr>
       <th>elevation</th>
       <td><p>elevation of polygons. Default 0. See details</p></td>
+    </tr>
+    <tr>
+      <th>extruded</th>
+      <td><p>logical indicating if polygons should extrude from the map.
+If <code>TRUE</code>, <code>stroke_colour</code> for polygons is ignored</p></td>
     </tr>
     <tr>
       <th>light_settings</th>
@@ -295,6 +322,10 @@ all polygon elevation without updating the data</p></td>
     <tr>
       <th>focus_layer</th>
       <td><p>logical indicating if the map should update the bounds to only include this layer</p></td>
+    </tr>
+    <tr>
+      <th>digits</th>
+      <td><p>number of digits for rounding coordinates</p></td>
     </tr>
     <tr>
       <th>transitions</th>
@@ -413,8 +444,7 @@ This should be a named list, where the names are one of</p><ul>
  <span class='fu'>add_geojson</span>(
    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geojson</span>
    , <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
- )
-
+ )</div><div class='output co'>#&gt; <span class='error'>Error in add_geojson(., data = geojson, auto_highlight = TRUE): unused argument (auto_highlight = TRUE)</span></div><div class='input'>
 <span class='co'>## only supplying values to use for fill, the stroke will be default</span>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
  , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.9</span>)
@@ -425,8 +455,7 @@ This should be a named list, where the names are one of</p><ul>
  <span class='fu'>add_geojson</span>(
    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geojson</span>
    , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"random"</span>
- )
-
+ )</div><div class='output co'>#&gt; <span class='error'>Error in add_geojson(., data = geojson, fill_colour = "random"): unused argument (fill_colour = "random")</span></div><div class='input'>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
  , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.9</span>)
  , <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>8</span>
@@ -437,8 +466,7 @@ This should be a named list, where the names are one of</p><ul>
    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geojson</span>
    , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"random"</span>
    , <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='st'>"random"</span>
- )
-
+ )</div><div class='output co'>#&gt; <span class='error'>Error in add_geojson(., data = geojson, fill_colour = "random", stroke_colour = "random"): unused arguments (fill_colour = "random", stroke_colour = "random")</span></div><div class='input'>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
  , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.9</span>)
  , <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>8</span>
@@ -450,11 +478,12 @@ This should be a named list, where the names are one of</p><ul>
    , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"random"</span>
    , <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='st'>"random"</span>
    , <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='fl'>300</span>
- )
-
+ )</div><div class='output co'>#&gt; <span class='error'>Error in add_geojson(., data = geojson, fill_colour = "random", stroke_colour = "random",     elevation = 300): unused arguments (fill_colour = "random", stroke_colour = "random", elevation = 300)</span></div><div class='input'>
 <span class='co'>## putting elevation and width values onto raw GeoJSON</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>geojsonsf</span>)
-<span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/geojsonsf/man/geojson_sf.html'>geojson_sf</a></span>( <span class='no'>geojson</span> )
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>geojsonsf</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘geojsonsf’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:googleway’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    geo_melbourne</span></div><div class='input'><span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/geojsonsf/man/geojson_sf.html'>geojson_sf</a></span>( <span class='no'>geojson</span> )
 <span class='no'>sf</span>$<span class='no'>width</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>100</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>sf</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>sf</span>$<span class='no'>elevation</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>100</span>:<span class='fl'>1000</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>sf</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='no'>T</span>)
 <span class='no'>geo</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/geojsonsf/man/sf_geojson.html'>sf_geojson</a></span>( <span class='no'>sf</span> )
@@ -467,9 +496,11 @@ This should be a named list, where the names are one of</p><ul>
 ) <span class='kw'>%&gt;%</span>
  <span class='fu'>add_geojson</span>(
    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geo</span>
- )
+ )</div><div class='output co'>#&gt; <span class='error'>Error in google_dispatch(map, method, google_map = {    x = map$x$calls    if (is.null(x))         x = list()    n = length(x)    x[[n + 1]] = list(functions = method, args = args)    map$x$calls = x    map}, google_map_update = {    invoke_remote(map, method, args)}): Invalid map parameter</span></div><div class='input'>
+# }
 
-<span class='co'># }</span></div></pre>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

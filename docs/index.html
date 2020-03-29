@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -104,11 +104,13 @@
 <div id="mapdeck" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#mapdeck" class="anchor"></a>mapdeck</h1></div>
-<p><a href="http://cran.r-project.org/package=mapdeck"><img src="http://www.r-pkg.org/badges/version/mapdeck" alt="CRAN_Status_Badge"></a> <img src="http://cranlogs.r-pkg.org/badges/grand-total/mapdeck" alt="downloads"><a href="http://cran.r-project.org/web/packages/mapdeck/index.html"><img src="http://cranlogs.r-pkg.org/badges/mapdeck" alt="CRAN RStudio mirror downloads"></a> <a href="https://github.com/SymbolixAU/mapdeck"><img src="https://img.shields.io/github/stars/SymbolixAU/mapdeck.svg?style=social&amp;label=Github" alt="Github Stars"></a> <a href="https://travis-ci.org/SymbolixAU/mapdeck"><img src="https://travis-ci.org/SymbolixAU/mapdeck.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/github/SymbolixAU/mapdeck?branch=master"><img src="https://codecov.io/github/SymbolixAU/mapdeck/coverage.svg?branch=master" alt="Coverage Status"></a></p>
+<p><a href="https://CRAN.R-project.org/package=mapdeck"><img src="http://www.r-pkg.org/badges/version/mapdeck" alt="CRAN_Status_Badge"></a> <img src="http://cranlogs.r-pkg.org/badges/grand-total/mapdeck" alt="downloads"><a href="https://CRAN.R-project.org/package=mapdeck"><img src="http://cranlogs.r-pkg.org/badges/mapdeck" alt="CRAN RStudio mirror downloads"></a> <a href="https://github.com/SymbolixAU/mapdeck"><img src="https://img.shields.io/github/stars/SymbolixAU/mapdeck.svg?style=social&amp;label=Github" alt="Github Stars"></a></p>
+<p><img src="./vignettes/img/articles/hexagons.png"></p>
 <div id="what-is-mapdeck" class="section level2">
 <h2 class="hasAnchor">
 <a href="#what-is-mapdeck" class="anchor"></a>What is mapdeck?</h2>
 <p>An R library which lets you plot large data sets (as much as your GPU &amp; browser can handle), on interactive maps using Mapbox GL and Deck.gl</p>
+<p><img src="./docs/articles/img/articles/polygon_transitions.gif"></p>
 </div>
 <div id="what-is-mapbox" class="section level2">
 <h2 class="hasAnchor">
@@ -133,48 +135,32 @@
 <div id="how-do-i-use-it" class="section level2">
 <h2 class="hasAnchor">
 <a href="#how-do-i-use-it" class="anchor"></a>How do I use it?</h2>
-<p>Everything you need to know to get you started is on the <a href="https://symbolixau.github.io/mapdeck/articles/mapdeck.html">home page</a></p>
+<p>First you need to install it, either from CRAN</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"mapdeck"</span>)</span></code></pre></div>
+<p>Or from github (to get the latest development version)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"SymbolixAU/mapdeck"</span>)</span></code></pre></div>
+<p>Then everything you need to know to get you started is on the <a href="https://symbolixau.github.io/mapdeck/articles/mapdeck.html">home page</a></p>
 </div>
-<div id="installation" class="section level2">
+<div id="quick-start" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<div id="from-cran" class="section level4">
-<h4 class="hasAnchor">
-<a href="#from-cran" class="anchor"></a>From cran</h4>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"mapdeck"</span>)</a></code></pre></div>
-</div>
-<div id="development-version" class="section level4">
-<h4 class="hasAnchor">
-<a href="#development-version" class="anchor"></a>Development version</h4>
-<p>To use the development version you need some other development dependant libraries</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"SymbolixAU/jsonify"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"dcooley/sfheaders"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-3" title="3">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"SymbolixAU/geojsonsf"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-4" title="4">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"SymbolixAU/colourvalues"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-5" title="5">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"SymbolixAU/spatialwidget"</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-6" title="6">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"SymbolixAU/mapdeck"</span>)</a></code></pre></div>
-</div>
-</div>
-<div id="getting-started" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-started" class="anchor"></a>Getting Started</h2>
+<a href="#quick-start" class="anchor"></a>Quick Start</h2>
 <p>Mapdeck uses <a href="https://www.mapbox.com/">Mapbox maps</a>, and to use Mapbox you need an <a href="https://www.mapbox.com/help/how-access-tokens-work/">access token</a>.</p>
 <p>Once you’ve generate a token you can use their maps.</p>
 <p>Call <code><a href="reference/mapdeck.html">mapdeck(token = 'your_token')</a></code> to generate a basic map. Then start adding layers by using one of the various <code>add_*()</code> functions.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></a>
-<a class="sourceLine" id="cb3-2" title="2">flights &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(url)</a>
-<a class="sourceLine" id="cb3-3" title="3">flights<span class="op">$</span>info &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"&lt;b&gt;"</span>,flights<span class="op">$</span>airport1, <span class="st">" - "</span>, flights<span class="op">$</span>airport2, <span class="st">"&lt;/b&gt;"</span>)</a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="st">  </span><span class="kw"><a href="reference/add_arc.html">add_arc</a></span>(</a>
-<a class="sourceLine" id="cb3-7" title="7">    <span class="dt">data =</span> flights</a>
-<a class="sourceLine" id="cb3-8" title="8">    , <span class="dt">origin =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"start_lon"</span>, <span class="st">"start_lat"</span>)</a>
-<a class="sourceLine" id="cb3-9" title="9">    , <span class="dt">destination =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"end_lon"</span>, <span class="st">"end_lat"</span>)</a>
-<a class="sourceLine" id="cb3-10" title="10">    , <span class="dt">stroke_from =</span> <span class="st">"airport1"</span></a>
-<a class="sourceLine" id="cb3-11" title="11">    , <span class="dt">stroke_to =</span> <span class="st">"airport2"</span></a>
-<a class="sourceLine" id="cb3-12" title="12">    , <span class="dt">tooltip =</span> <span class="st">"info"</span></a>
-<a class="sourceLine" id="cb3-13" title="13">    , <span class="dt">layer_id =</span> <span class="st">'arclayer'</span></a>
-<a class="sourceLine" id="cb3-14" title="14">  )</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>url &lt;-<span class="st"> 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>flights &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(url)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>flights<span class="op">$</span>info &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"&lt;b&gt;"</span>,flights<span class="op">$</span>airport1, <span class="st">" - "</span>, flights<span class="op">$</span>airport2, <span class="st">"&lt;/b&gt;"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="kw"><a href="reference/mapdeck.html">mapdeck</a></span>(<span class="dt">token =</span> key, <span class="dt">style =</span> <span class="kw"><a href="reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">'dark'</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="st">  </span><span class="kw"><a href="reference/add_arc.html">add_arc</a></span>(</span>
+<span id="cb3-7"><a href="#cb3-7"></a>    <span class="dt">data =</span> flights</span>
+<span id="cb3-8"><a href="#cb3-8"></a>    , <span class="dt">origin =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"start_lon"</span>, <span class="st">"start_lat"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a>    , <span class="dt">destination =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"end_lon"</span>, <span class="st">"end_lat"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10"></a>    , <span class="dt">stroke_from =</span> <span class="st">"airport1"</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>    , <span class="dt">stroke_to =</span> <span class="st">"airport2"</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>    , <span class="dt">tooltip =</span> <span class="st">"info"</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>    , <span class="dt">layer_id =</span> <span class="st">'arclayer'</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a>  )</span></code></pre></div>
 <p><img src="./vignettes/img/readme_arcs_small.gif" alt="Arcs"></p>
 <p>See the <a href="https://symbolixau.github.io/mapdeck/articles/layers.html">Layers</a> page for more examples</p>
 </div>
