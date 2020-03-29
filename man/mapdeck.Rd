@@ -56,6 +56,8 @@ When \code{TRUE}, the following is added as an overlay to the map
   \item{viewBounds}
   \item{interactionState}
 }}
+
+\item{repeat_view}{Logical indicating if the layers should repeat at low zoom levels}
 }
 \description{
 mapdeck
