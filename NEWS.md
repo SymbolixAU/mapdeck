@@ -4,7 +4,7 @@
 * mapbox dependencies udpated to 1.9.0
 * tooltip for binary layers fixed [issue280](https://github.com/SymbolixAU/mapdeck/issues/280)
 
-# v0.3
+# v0.3.1
 
 * you can now use most `sfc` geometry types in any plotting layer
 * performance boost for `add_scatterplot()`, `add_column()` and `add_pointcloud()`
