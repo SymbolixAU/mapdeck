@@ -46,3 +46,5 @@ LinkingTo:
     Rcpp,
     sfheaders (>= 0.2.1002),
     spatialwidget (>= 0.2.2)
+remotes:
+    github::dcooley/sfheaders
