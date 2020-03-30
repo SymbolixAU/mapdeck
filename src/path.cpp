@@ -33,21 +33,27 @@ Rcpp::List get_path_defaults( std::string layer_name, int data_rows ) {
 Rcpp::List rcpp_path_geojson(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
-		Rcpp::StringVector unlist,
+		SEXP unlist,
 		int digits,
 		std::string layer_name
 	) {
-
-	int data_rows = data.nrows();
 
 	std::string sfc_column = data.attr("sf_column");
 
 	Rcpp::List sfc = data[ sfc_column ];
 	Rcpp::NumericMatrix sfc_coordinates = sfheaders::df::sfc_n_coordinates( sfc );
 
+	Rcpp::StringVector unlist_cols;
+	if( !Rf_isNull( unlist ) ) {
+		unlist_cols = Rcpp::as< Rcpp::StringVector >( unlist );
+	}
+
 	Rcpp::DataFrame df = sfheaders::df::sf_to_df(
-		data, sfc, sfc_column, sfc_coordinates, unlist, true
+		data, sfc, sfc_column, sfc_coordinates, unlist_cols, true
 		);
+
+	int data_rows = df.nrows();
+
 	Rcpp::List geometry_cols(1);
 	Rcpp::StringVector s = df.attr("sfc_columns");
 

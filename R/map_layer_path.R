@@ -140,9 +140,32 @@ add_path <- function(
 		l[["geometry"]] <- NULL
 
 		## which of the columns of data need to be unlist?
+		unlist_column <- function( data, l, var ) {
+			if( is.null( l[[ var ]] ) ) {
+				return( NULL )
+			}
+			if( l[[ var ]] %in% names( data ) ) {
+				if( is.list( data[[ l[[ var ]] ]] ) ) {
+				  return( l[[ var ]] )
+				}
+			}
+			return( NULL )
+		}
+
+		unlist <- NULL
+		unlist <- append( unlist, unlist_column( data, l, "stroke_colour" ) )
+		unlist <- append( unlist, unlist_column( data, l, "stroke_width" ) )
+
+		print( unlist )
+
+		if( length( unlist ) == 0 ) {
+			unlist <- NULL
+		}
+
+		print( unlist )
 		print( l )
 
-		shape <- rcpp_path_geojson( data, l, "val", digits, "path" )
+		shape <- rcpp_path_geojson( data, l, unlist, digits, "path" )
 		jsfunc <- "add_path_geo"
 	} else if ( tp == "sfencoded" ) {
 		jsfunc <- "add_path_polyline"
