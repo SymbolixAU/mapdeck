@@ -5,6 +5,7 @@ function add_path_geo( map_id, map_type, path_data, data_count, start_indices, s
   var extensions = [];
 
   console.log( path_data );
+  console.log( data_count );
 
   if ( brush_radius > 0 ) {
   	extensions.push( new deck.BrushingExtension() );
@@ -19,7 +20,7 @@ function add_path_geo( map_id, map_type, path_data, data_count, start_indices, s
   const binaryLocation = new Float32Array( path_data.geometry );
   const binaryLineColour = new Uint8Array( path_data.stroke_colour );
   const binaryLineWidth = new Float32Array( path_data.stroke_width );
-  const binaryStartIndices = new Uint16Array( start_indices );
+  const binaryStartIndices = new Uint32Array( start_indices );
 
   //const binaryDash = new Float32Array( path_data.dash_array );
   var binaryDash;
