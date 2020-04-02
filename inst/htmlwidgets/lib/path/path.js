@@ -4,9 +4,6 @@ function add_path_geo( map_id, map_type, path_data, data_count, start_indices, s
 
   var extensions = [];
 
-  console.log( path_data );
-  console.log( data_count );
-
   if ( brush_radius > 0 ) {
   	extensions.push( new deck.BrushingExtension() );
   }
