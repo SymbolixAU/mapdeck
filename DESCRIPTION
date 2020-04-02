@@ -26,7 +26,7 @@ Imports:
     magrittr,
     Rcpp,
     shiny,
-    sfheaders (>= 0.2.1)
+    sfheaders (>= 0.2.1004)
 RoxygenNote: 7.1.0
 Suggests: 
     covr,
@@ -44,5 +44,5 @@ LinkingTo:
     jsonify (>= 1.1.1),
     rapidjsonr,
     Rcpp,
-    sfheaders (>= 0.2.1),
+    sfheaders (>= 0.2.1004),
     spatialwidget (>= 0.2.2)
