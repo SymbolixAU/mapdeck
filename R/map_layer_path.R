@@ -98,15 +98,18 @@ add_path <- function(
 ) {
 
 	l <- list()
+
+	use_dashes <- !is.null( dash_size ) | !is.null( dash_gap )
+
 	l[["polyline"]] <- force( polyline )
 	l[["stroke_colour"]] <- force( stroke_colour)
 	l[["stroke_width"]] <- force( stroke_width )
 	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
-	l[["dash_size"]] <- force(dash_size)
-	l[["dash_gap"]] <- force(dash_gap)
-	l[["tooltip"]] <- force(tooltip)
-	l[["id"]] <- force(id)
-	l[["na_colour"]] <- force(na_colour)
+	l[["dash_size"]] <- force( dash_size )
+	l[["dash_gap"]] <- force( dash_gap )
+	l[["tooltip"]] <- force( tooltip )
+	l[["id"]] <- force( id )
+	l[["na_colour"]] <- force( na_colour )
 
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
@@ -156,17 +159,13 @@ add_path <- function(
 		unlist <- append( unlist, unlist_column( data, l, "stroke_colour" ) )
 		unlist <- append( unlist, unlist_column( data, l, "stroke_width" ) )
 
-		print( unlist )
-
 		if( length( unlist ) == 0 ) {
 			unlist <- NULL
 		}
 
-		print( unlist )
-		print( l )
-
 		shape <- rcpp_path_geojson( data, l, unlist, digits, "path" )
 		jsfunc <- "add_path_geo"
+
 	} else if ( tp == "sfencoded" ) {
 		jsfunc <- "add_path_polyline"
 		geometry_column <- "polyline"
@@ -180,14 +179,12 @@ add_path <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
-	# return( shape )
-
 	start_indices <- jsonify::to_json(  as.integer( shape[[2]] ) )
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[[1]][["data"]], nrow(data), start_indices, shape[[3]], layer_id, auto_highlight,
 		highlight_colour, shape[[1]][["legend"]], bbox, update_view, focus_layer,
-		js_transitions, billboard, brush_radius
+		js_transitions, billboard, brush_radius, use_dashes
 		)
 }
 

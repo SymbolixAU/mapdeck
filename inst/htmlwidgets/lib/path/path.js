@@ -1,28 +1,46 @@
 
 
-function add_path_geo( map_id, map_type, path_data, data_count, start_indices, stride, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius ) {
-
-  console.log( path_data );
-  console.log( data_count );
-  console.log( start_indices );
-  console.log( stride );
+function add_path_geo( map_id, map_type, path_data, data_count, start_indices, stride, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, use_dashes ) {
 
   var extensions = [];
+
+  console.log( path_data );
 
   if ( brush_radius > 0 ) {
   	extensions.push( new deck.BrushingExtension() );
   }
 
-  var extensions = [];
-  //extensions.push(
-  //	new deck.PathStyleExtension({dash: true})
-  //);
+  let hasTooltip = path_data.tooltip !== undefined;
 
-  const binaryLocation = new Float32Array(path_data.geometry);
-  //const binaryDash = new Float32Array(path_data.dash_gap);
-  const binaryLineColour = new Uint8Array(path_data.stroke_colour);
-  const binaryLineWidth = new Float32Array(path_data.stroke_width);
+  extensions.push(
+  	new deck.PathStyleExtension({dash: true})
+  );
+
+  const binaryLocation = new Float32Array( path_data.geometry );
+  const binaryLineColour = new Uint8Array( path_data.stroke_colour );
+  const binaryLineWidth = new Float32Array( path_data.stroke_width );
   const binaryStartIndices = new Uint16Array( start_indices );
+
+  //const binaryDash = new Float32Array( path_data.dash_array );
+  var binaryDash;
+
+  if( use_dashes ) {
+  	const n = path_data.dash_size.length * 2;
+  	var dashes = [ n ];
+  	var counter = 0;
+  	for( i = 0; i < n; i++ ) {
+  		dashes[ counter ] = path_data.dash_size[ i ];
+  		counter = counter + 1;
+  		dashes[ counter ] = path_data.dash_gap[ i ];
+  		counter = counter + 1;
+  	}
+  	console.log( dashes );
+  	binaryDash = new Float32Array( dashes );
+  	//const binaryDash = new Float32Array( dashes );
+  } else {
+  	//const binaryDash = new Float32Array();
+  }
+
 
   const pathLayer = new deck.PathLayer({
     map_id: map_id,
@@ -43,8 +61,10 @@ function add_path_geo( map_id, map_type, path_data, data_count, start_indices, s
       attributes: {
         getPath: {value: binaryLocation, size: stride},
         getColor: {value: binaryLineColour, size: 4},
-        getWidth: {value: binaryLineWidth, size: 1}
-      }
+        getWidth: {value: binaryLineWidth, size: 1},
+        getDashArray: {value: binaryDash, size: 2}
+      },
+      tooltip: path_data.tooltip
     },
     _pathType: 'open',
 
@@ -55,7 +75,7 @@ function add_path_geo( map_id, map_type, path_data, data_count, start_indices, s
     getDashArray: d => [ d.properties.dash_size, d.properties.dash_gap ],
     */
     onClick: info => md_layer_click( map_id, "path", info ),
-    onHover: md_update_tooltip,
+    onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {},
@@ -75,7 +95,8 @@ function add_path_geo( map_id, map_type, path_data, data_count, start_indices, s
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius ) {
+
+function add_path_polyline( map_id, map_type, path_data, data_count, start_indices, stride, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius ) {
 
   var extensions = [];
 

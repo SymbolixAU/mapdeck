@@ -96,25 +96,30 @@ Rcpp::List rcpp_path_geojson(
 		format
 	);
 
+	// TODO:
+	// move this somewhere else?
+	// fix up the dash into a single array
+	// Rcpp::NumericVector dash_size = shape[ "dash_size" ];
+	// Rcpp::NumericVector dash_gap = shape[ "dash_gap" ];
+	// R_xlen_t n_dash = data_rows * 2;
+	// Rcpp::NumericVector dash_array( n_dash );
+	//
+	// int counter = 0;
+	// for( i = 0; i < n_dash; ++i ) {
+	// 	dash_array[ counter ] = dash_size[ i ];
+	// 	++counter;
+	// 	dash_array[ counter ] = dash_gap[ i ];
+	// 	++counter;
+	// }
+	// shape["dash_array"] = dash_array;
+
+
 	Rcpp::List res(3);
 	res[0] = shape;
 	res[1] = start_indices;
 	res[2] = stride;
 
 	return res;
-
-	// return spatialwidget::api::create_geojson(
-	// 	data,
-	// 	params,
-	// 	lst_defaults,
-	// 	path_colours,
-	// 	path_legend,
-	// 	data_rows,
-	// 	parameter_exclusions,
-	// 	geometry_columns,
-	// 	true,   // jsonify legend
-	// 	digits
-	// );
 }
 
 // [[Rcpp::export]]
