@@ -51,7 +51,7 @@ EPSG:4326 (WGS 84) coordinate system}
 \item{lat}{column containing latitude values}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.
-If using a hex colour, use either a single value, or a vector the same length as \code{data}}
+If using a hex colour, use either a single value, or a column of hex colours  on \code{data}}
 
 \item{fill_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
@@ -60,7 +60,7 @@ colour, this argument is ignored and you should include the alpha on the hex str
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
 \code{elevation} is ignored.
-If using a hex colour, use either a single value, or a vector the same length as \code{data}}
+If using a hex colour, use either a single value, or a column of hex colours  on \code{data}}
 
 \item{stroke_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),

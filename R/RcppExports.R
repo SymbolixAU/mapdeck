@@ -45,6 +45,10 @@ rcpp_path_geojson <- function(data, params, unlist, digits, layer_name) {
     .Call(`_mapdeck_rcpp_path_geojson`, data, params, unlist, digits, layer_name)
 }
 
+rcpp_path_geojson_binary <- function(data, params, unlist, digits, layer_name) {
+    .Call(`_mapdeck_rcpp_path_geojson_binary`, data, params, unlist, digits, layer_name)
+}
+
 rcpp_path_polyline <- function(data, params, geometry_columns, layer_name) {
     .Call(`_mapdeck_rcpp_path_polyline`, data, params, geometry_columns, layer_name)
 }

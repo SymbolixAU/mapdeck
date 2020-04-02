@@ -70,7 +70,7 @@ extruded lines with mitering." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -150,14 +150,32 @@ extruded lines with mitering." />
 extruded lines with mitering.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_path</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stroke_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dash_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dash_gap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>billboard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
-  <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>, <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>add_path</span>(
+  <span class='no'>map</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>),
+  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dash_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dash_gap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>billboard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>auto_highlight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>highlight_colour</span> <span class='kw'>=</span> <span class='st'>"#AAFFFFFF"</span>,
+  <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>,
+  <span class='kw'>na_colour</span> <span class='kw'>=</span> <span class='st'>"#808080FF"</span>,
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>,
+  <span class='kw'>transitions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>brush_radius</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,11 +197,18 @@ EPSG:4326 (WGS 84) coordinate system</p></td>
       <th>stroke_colour</th>
       <td><p>variable of <code>data</code> or hex colour for the stroke. If used,
 <code>elevation</code> is ignored.
-If using a hex colour, use either a single value, or a vector the same length as <code>data</code></p></td>
+If using a hex colour, use either a single value, or a column of hex colours  on <code>data</code></p></td>
     </tr>
     <tr>
       <th>stroke_width</th>
       <td><p>width of the stroke in meters. Default 1.</p></td>
+    </tr>
+    <tr>
+      <th>stroke_opacity</th>
+      <td><p>Either a string specifying the column of <code>data</code>
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string</p></td>
     </tr>
     <tr>
       <th>dash_size</th>
@@ -254,8 +279,18 @@ a named list indicating which colour attributes should be included in the legend
       <td><p>logical indicating if the map should update the bounds to only include this layer</p></td>
     </tr>
     <tr>
+      <th>digits</th>
+      <td><p>number of digits for rounding coordinates</p></td>
+    </tr>
+    <tr>
       <th>transitions</th>
       <td><p>list specifying the duration of transitions.</p></td>
+    </tr>
+    <tr>
+      <th>brush_radius</th>
+      <td><p>radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed</p></td>
     </tr>
     </table>
 

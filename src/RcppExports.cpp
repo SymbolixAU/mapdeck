@@ -160,6 +160,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_path_geojson_binary
+Rcpp::List rcpp_path_geojson_binary(Rcpp::DataFrame& data, Rcpp::List& params, SEXP unlist, int digits, std::string layer_name);
+RcppExport SEXP _mapdeck_rcpp_path_geojson_binary(SEXP dataSEXP, SEXP paramsSEXP, SEXP unlistSEXP, SEXP digitsSEXP, SEXP layer_nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame& >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type params(paramsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type unlist(unlistSEXP);
+    Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
+    Rcpp::traits::input_parameter< std::string >::type layer_name(layer_nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_path_geojson_binary(data, params, unlist, digits, layer_name));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_path_polyline
 Rcpp::List rcpp_path_polyline(Rcpp::DataFrame data, Rcpp::List params, Rcpp::StringVector geometry_columns, std::string layer_name);
 RcppExport SEXP _mapdeck_rcpp_path_polyline(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP layer_nameSEXP) {
@@ -314,6 +329,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_od_geojson_df", (DL_FUNC) &_mapdeck_rcpp_od_geojson_df, 5},
     {"_mapdeck_rcpp_od_polyline", (DL_FUNC) &_mapdeck_rcpp_od_polyline, 4},
     {"_mapdeck_rcpp_path_geojson", (DL_FUNC) &_mapdeck_rcpp_path_geojson, 5},
+    {"_mapdeck_rcpp_path_geojson_binary", (DL_FUNC) &_mapdeck_rcpp_path_geojson_binary, 5},
     {"_mapdeck_rcpp_path_polyline", (DL_FUNC) &_mapdeck_rcpp_path_polyline, 4},
     {"_mapdeck_rcpp_point_df_columnar", (DL_FUNC) &_mapdeck_rcpp_point_df_columnar, 5},
     {"_mapdeck_rcpp_point_sf_columnar", (DL_FUNC) &_mapdeck_rcpp_point_sf_columnar, 5},

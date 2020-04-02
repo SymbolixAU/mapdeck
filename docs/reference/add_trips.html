@@ -36,7 +36,7 @@
 
 
 <meta property="og:title" content="Add Trips — add_trips" />
-<meta property="og:description" content="The Trips Layer takes an sf object with Z and M attributes and renders
+<meta property="og:description" content="The Trips Layer takes an sf object with Z (elevation) and M (time) attributes and renders
 it as animated trips" />
 <meta name="twitter:card" content="summary" />
 
@@ -70,7 +70,7 @@ it as animated trips" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -146,16 +146,27 @@ it as animated trips" />
     </div>
 
     <div class="ref-description">
-    <p>The Trips Layer takes an sf object with Z and M attributes and renders
+    <p>The Trips Layer takes an sf object with Z (elevation) and M (time) attributes and renders
 it as animated trips</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_trips</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opacity</span> <span class='kw'>=</span> <span class='fl'>0.3</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>,
-  <span class='kw'>trail_length</span> <span class='kw'>=</span> <span class='fl'>180</span>, <span class='kw'>start_time</span> <span class='kw'>=</span> <span class='fu'>get_m_range_start</span>(<span class='no'>data</span>),
-  <span class='kw'>end_time</span> <span class='kw'>=</span> <span class='fu'>get_m_range_end</span>(<span class='no'>data</span>), <span class='kw'>animation_speed</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>add_trips</span>(
+  <span class='no'>map</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>),
+  <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stroke_width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>opacity</span> <span class='kw'>=</span> <span class='fl'>0.3</span>,
+  <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>,
+  <span class='kw'>trail_length</span> <span class='kw'>=</span> <span class='fl'>180</span>,
+  <span class='kw'>start_time</span> <span class='kw'>=</span> <span class='fu'>get_m_range_start</span>(<span class='no'>data</span>),
+  <span class='kw'>end_time</span> <span class='kw'>=</span> <span class='fu'>get_m_range_end</span>(<span class='no'>data</span>),
+  <span class='kw'>animation_speed</span> <span class='kw'>=</span> <span class='fl'>30</span>,
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,6 +213,10 @@ palette for different colour options (where available),
       <td><p>the maximum timestamp</p></td>
     </tr>
     <tr>
+      <th>animation_speed</th>
+      <td><p>speed of animation</p></td>
+    </tr>
+    <tr>
       <th>layer_id</th>
       <td><p>single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
@@ -220,8 +235,15 @@ a named list indicating which colour attributes should be included in the legend
       <th>legend_format</th>
       <td><p>A list containing functions to apply to legend values. See section legend</p></td>
     </tr>
+    <tr>
+      <th>digits</th>
+      <td><p>number of digits for rounding coordinates</p></td>
+    </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>add_trips</code> supports LINESTRING and MULTILINESTRING sf objects</p>
     <h2 class="hasAnchor" id="legend"><a class="anchor" href="#legend"></a>legend</h2>
 
     
@@ -256,12 +278,31 @@ where 'map' is the map_id supplied to <code><a href='mapdeck-shiny.html'>mapdeck
 you are clicking on</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+
+<span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='st'>"MAPBOX_TOKEN"</span>)
+<span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='no'>city_trail</span>
+
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
+<span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.8</span>)
+, <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>10</span>
+, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>)
+) <span class='kw'>%&gt;%</span>
+ <span class='fu'>add_trips</span>(
+   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sf</span>
+   , <span class='kw'>animation_speed</span> <span class='kw'>=</span> <span class='fl'>2000</span>
+   , <span class='kw'>trail_length</span> <span class='kw'>=</span> <span class='fl'>1000</span>
+   , <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='st'>"#FFFFFF"</span>
+)</div><div class='output co'>#&gt; <span class='message'>trips is an experimental layer and the function may change without warning</span></div><div class='input'>
+# }
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#legend">legend</a></li>
       <li><a href="#id">id</a></li>
       <li><a href="#examples">Examples</a></li>

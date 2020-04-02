@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@
       <h1>Tips &amp; Tricks</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-11-12</h4>
+            <h4 class="date">2020-03-29</h4>
       
       
       <div class="hidden name"><code>tips_tricks.Rmd</code></div>
@@ -116,32 +116,32 @@
 <a href="#multiple-layers" class="anchor"></a>Multiple layers</h1>
 <p>If you add multiple layers of the same type to a map, you need to supply a unique <code>layer_id</code> for each layer. If you don’t, Deck.gl will get conflicted and will assume the last layer you plotted contains the most recent data you want to plot.</p>
 <p>In this example, the first <code><a href="../reference/add_path.html">add_path()</a></code> is setting roads of type “STREET” to green (#00FF00FF), and the second layer is setting those of type “ROAD” to white. However, notice only the white layer is plotted.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>) ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>( </a>
-<a class="sourceLine" id="cb1-4" title="4">    <span class="dt">data =</span> roads[ roads<span class="op">$</span>ROAD_TYPE <span class="op">%in%</span><span class="st"> "STREET"</span>,]</a>
-<a class="sourceLine" id="cb1-5" title="5">    , <span class="dt">stroke_colour =</span> <span class="st">"#00FF00FF"</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>( </a>
-<a class="sourceLine" id="cb1-7" title="7">    <span class="dt">data =</span> roads[ roads<span class="op">$</span>ROAD_TYPE <span class="op">%in%</span><span class="st"> "ROAD"</span>,]</a>
-<a class="sourceLine" id="cb1-8" title="8">    , <span class="dt">stroke_colour =</span> <span class="st">"#FFFFFFFF"</span> )</a>
-<a class="sourceLine" id="cb1-9" title="9">  </a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>) ) <span class="op">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="st">  </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>( </span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="dt">data =</span> roads[ roads<span class="op">$</span>ROAD_TYPE <span class="op">%in%</span><span class="st"> "STREET"</span>,]</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    , <span class="dt">stroke_colour =</span> <span class="st">"#00FF00FF"</span> ) <span class="op">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="st">  </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>( </span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="dt">data =</span> roads[ roads<span class="op">$</span>ROAD_TYPE <span class="op">%in%</span><span class="st"> "ROAD"</span>,]</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    , <span class="dt">stroke_colour =</span> <span class="st">"#FFFFFFFF"</span> )</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  </span></code></pre></div>
 <div class="figure">
-<img src="img/articles/roads_white.png" alt="white roads"><p class="caption">white roads</p>
+<img src="img/articles/roads_white.png" alt=""><p class="caption">white roads</p>
 </div>
 <p>Setting a <code>layer_id</code> (on one or both layers) solves this</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>) ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>( </a>
-<a class="sourceLine" id="cb2-4" title="4">    <span class="dt">data =</span> roads[ roads<span class="op">$</span>ROAD_TYPE <span class="op">%in%</span><span class="st"> "STREET"</span>,]</a>
-<a class="sourceLine" id="cb2-5" title="5">    , <span class="dt">stroke_colour =</span> <span class="st">"#00FF00FF"</span></a>
-<a class="sourceLine" id="cb2-6" title="6">    , <span class="dt">layer_id =</span> <span class="st">"green"</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>( </a>
-<a class="sourceLine" id="cb2-8" title="8">    <span class="dt">data =</span> roads[ roads<span class="op">$</span>ROAD_TYPE <span class="op">%in%</span><span class="st"> "ROAD"</span>,]</a>
-<a class="sourceLine" id="cb2-9" title="9">    , <span class="dt">stroke_colour =</span> <span class="st">"#FFFFFFFF"</span></a>
-<a class="sourceLine" id="cb2-10" title="10">    )</a>
-<a class="sourceLine" id="cb2-11" title="11">  </a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">style =</span> <span class="kw"><a href="../reference/mapdeck_style.html">mapdeck_style</a></span>(<span class="st">"dark"</span>) ) <span class="op">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="st">  </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>( </span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="dt">data =</span> roads[ roads<span class="op">$</span>ROAD_TYPE <span class="op">%in%</span><span class="st"> "STREET"</span>,]</span>
+<span id="cb2-5"><a href="#cb2-5"></a>    , <span class="dt">stroke_colour =</span> <span class="st">"#00FF00FF"</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>    , <span class="dt">layer_id =</span> <span class="st">"green"</span> ) <span class="op">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="st">  </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>( </span>
+<span id="cb2-8"><a href="#cb2-8"></a>    <span class="dt">data =</span> roads[ roads<span class="op">$</span>ROAD_TYPE <span class="op">%in%</span><span class="st"> "ROAD"</span>,]</span>
+<span id="cb2-9"><a href="#cb2-9"></a>    , <span class="dt">stroke_colour =</span> <span class="st">"#FFFFFFFF"</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    )</span>
+<span id="cb2-11"><a href="#cb2-11"></a>  </span></code></pre></div>
 <div class="figure">
-<img src="img/articles/roads_white_green.png" alt="white and green roads"><p class="caption">white and green roads</p>
+<img src="img/articles/roads_white_green.png" alt=""><p class="caption">white and green roads</p>
 </div>
 </div>
 <div id="shiny" class="section level1">
@@ -158,47 +158,47 @@
 <code><a href="../reference/mapdeck_update.html">mapdeck_update()</a></code> inside an <code><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent()</a></code> (or similar) function to add &amp; remove layers to the initial map.</li>
 </ul>
 <p>If you only use <code><a href="../reference/mapdeck.html">mapdeck()</a></code> inside a reactive / observe function the map gets re-draw every call. The <code><a href="../reference/mapdeck_update.html">mapdeck_update()</a></code> will only udpate the data on the map, and not re-draw the map.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shiny)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shinydashboard)</a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mapdeck)</a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5">ui &lt;-<span class="st"> </span><span class="kw">dashboardPage</span>(</a>
-<a class="sourceLine" id="cb3-6" title="6">    <span class="kw">dashboardHeader</span>()</a>
-<a class="sourceLine" id="cb3-7" title="7">    , <span class="kw">dashboardSidebar</span>(</a>
-<a class="sourceLine" id="cb3-8" title="8">        <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span>(<span class="dt">inputId =</span> <span class="st">"roads"</span>, <span class="dt">label =</span> <span class="st">"roads"</span>)</a>
-<a class="sourceLine" id="cb3-9" title="9">    )</a>
-<a class="sourceLine" id="cb3-10" title="10">    , <span class="kw">dashboardBody</span>(</a>
-<a class="sourceLine" id="cb3-11" title="11">        <span class="kw"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(<span class="dt">outputId =</span> <span class="st">"map"</span>)</a>
-<a class="sourceLine" id="cb3-12" title="12">    )</a>
-<a class="sourceLine" id="cb3-13" title="13">)</a>
-<a class="sourceLine" id="cb3-14" title="14"></a>
-<a class="sourceLine" id="cb3-15" title="15">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</a>
-<a class="sourceLine" id="cb3-16" title="16">    </a>
-<a class="sourceLine" id="cb3-17" title="17">    <span class="co">## initialise a map</span></a>
-<a class="sourceLine" id="cb3-18" title="18">    output<span class="op">$</span>map &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mapdeck-shiny.html">renderMapdeck</a></span>({</a>
-<a class="sourceLine" id="cb3-19" title="19">        <span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>()</a>
-<a class="sourceLine" id="cb3-20" title="20">    })</a>
-<a class="sourceLine" id="cb3-21" title="21">    </a>
-<a class="sourceLine" id="cb3-22" title="22">    <span class="co">## use an observer to add and remove layers</span></a>
-<a class="sourceLine" id="cb3-23" title="23">    <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({input<span class="op">$</span>roads},{</a>
-<a class="sourceLine" id="cb3-24" title="24">        </a>
-<a class="sourceLine" id="cb3-25" title="25">        <span class="cf">if</span> ( input<span class="op">$</span>roads <span class="op">%%</span><span class="st"> </span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> ) {</a>
-<a class="sourceLine" id="cb3-26" title="26">            </a>
-<a class="sourceLine" id="cb3-27" title="27">            <span class="kw"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="dt">map_id =</span> <span class="st">"map"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-28" title="28"><span class="st">                </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>(</a>
-<a class="sourceLine" id="cb3-29" title="29">                    <span class="dt">data =</span> roads</a>
-<a class="sourceLine" id="cb3-30" title="30">                    , <span class="dt">layer_id =</span> <span class="st">"myRoads"</span></a>
-<a class="sourceLine" id="cb3-31" title="31">                    , <span class="dt">stroke_colour =</span> <span class="st">"RIGHT_LOC"</span></a>
-<a class="sourceLine" id="cb3-32" title="32">                    , <span class="dt">update_view =</span> <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb3-33" title="33">                    )</a>
-<a class="sourceLine" id="cb3-34" title="34">        } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb3-35" title="35">          <span class="kw"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="dt">map_id =</span> <span class="st">"map"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-36" title="36"><span class="st">                </span><span class="kw"><a href="../reference/clear.html">clear_path</a></span>(<span class="dt">layer_id =</span> <span class="st">"myRoads"</span>)</a>
-<a class="sourceLine" id="cb3-37" title="37">        }</a>
-<a class="sourceLine" id="cb3-38" title="38">    })</a>
-<a class="sourceLine" id="cb3-39" title="39">}</a>
-<a class="sourceLine" id="cb3-40" title="40"></a>
-<a class="sourceLine" id="cb3-41" title="41"><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span>(ui, server)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shiny)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shinydashboard)</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mapdeck)</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>ui &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardPage.html">dashboardPage</a></span>(</span>
+<span id="cb3-6"><a href="#cb3-6"></a>    <span class="kw"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardHeader.html">dashboardHeader</a></span>()</span>
+<span id="cb3-7"><a href="#cb3-7"></a>    , <span class="kw"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardSidebar.html">dashboardSidebar</a></span>(</span>
+<span id="cb3-8"><a href="#cb3-8"></a>        <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span>(<span class="dt">inputId =</span> <span class="st">"roads"</span>, <span class="dt">label =</span> <span class="st">"roads"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a>    )</span>
+<span id="cb3-10"><a href="#cb3-10"></a>    , <span class="kw"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardBody.html">dashboardBody</a></span>(</span>
+<span id="cb3-11"><a href="#cb3-11"></a>        <span class="kw"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(<span class="dt">outputId =</span> <span class="st">"map"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12"></a>    )</span>
+<span id="cb3-13"><a href="#cb3-13"></a>)</span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
+<span id="cb3-16"><a href="#cb3-16"></a>    </span>
+<span id="cb3-17"><a href="#cb3-17"></a>    <span class="co">## initialise a map</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a>    output<span class="op">$</span>map &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mapdeck-shiny.html">renderMapdeck</a></span>({</span>
+<span id="cb3-19"><a href="#cb3-19"></a>        <span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>()</span>
+<span id="cb3-20"><a href="#cb3-20"></a>    })</span>
+<span id="cb3-21"><a href="#cb3-21"></a>    </span>
+<span id="cb3-22"><a href="#cb3-22"></a>    <span class="co">## use an observer to add and remove layers</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>    <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({input<span class="op">$</span>roads},{</span>
+<span id="cb3-24"><a href="#cb3-24"></a>        </span>
+<span id="cb3-25"><a href="#cb3-25"></a>        <span class="cf">if</span> ( input<span class="op">$</span>roads <span class="op">%%</span><span class="st"> </span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> ) {</span>
+<span id="cb3-26"><a href="#cb3-26"></a>            </span>
+<span id="cb3-27"><a href="#cb3-27"></a>            <span class="kw"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="dt">map_id =</span> <span class="st">"map"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="st">                </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>(</span>
+<span id="cb3-29"><a href="#cb3-29"></a>                    <span class="dt">data =</span> roads</span>
+<span id="cb3-30"><a href="#cb3-30"></a>                    , <span class="dt">layer_id =</span> <span class="st">"myRoads"</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a>                    , <span class="dt">stroke_colour =</span> <span class="st">"RIGHT_LOC"</span></span>
+<span id="cb3-32"><a href="#cb3-32"></a>                    , <span class="dt">update_view =</span> <span class="ot">TRUE</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a>                    )</span>
+<span id="cb3-34"><a href="#cb3-34"></a>        } <span class="cf">else</span> {</span>
+<span id="cb3-35"><a href="#cb3-35"></a>          <span class="kw"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="dt">map_id =</span> <span class="st">"map"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb3-36"><a href="#cb3-36"></a><span class="st">                </span><span class="kw"><a href="../reference/clear.html">clear_path</a></span>(<span class="dt">layer_id =</span> <span class="st">"myRoads"</span>)</span>
+<span id="cb3-37"><a href="#cb3-37"></a>        }</span>
+<span id="cb3-38"><a href="#cb3-38"></a>    })</span>
+<span id="cb3-39"><a href="#cb3-39"></a>}</span>
+<span id="cb3-40"><a href="#cb3-40"></a></span>
+<span id="cb3-41"><a href="#cb3-41"></a><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span>(ui, server)</span></code></pre></div>
 <p>You will have noticed I’m using <code>update_view = TRUE</code> (the default) inside the layer methods. This will cause the map to re-focus on the layer being added.</p>
 </div>
 <div id="update_view" class="section level2">
@@ -206,61 +206,61 @@
 <a href="#update_view" class="anchor"></a>update_view</h2>
 <p>Setting <code>update_view = TRUE</code> has a cumulative effect. Every layer which has <code>update_view = TRUE</code> will expand the map view to accomodate each layer. If you want to focus on a specific layer you can use <code>focus_layer = TRUE</code></p>
 <p>If you don’t want the map to change focus when adding a new layer set <code>update_view = FALSE</code>. However, if you start with a map without any data you may want to use the <code>location</code> argument to set the default position of the map.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shiny)</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shinydashboard)</a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mapdeck)</a>
-<a class="sourceLine" id="cb4-4" title="4"></a>
-<a class="sourceLine" id="cb4-5" title="5">ui &lt;-<span class="st"> </span><span class="kw">dashboardPage</span>(</a>
-<a class="sourceLine" id="cb4-6" title="6">    <span class="kw">dashboardHeader</span>()</a>
-<a class="sourceLine" id="cb4-7" title="7">    , <span class="kw">dashboardSidebar</span>(</a>
-<a class="sourceLine" id="cb4-8" title="8">        <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span>(<span class="dt">inputId =</span> <span class="st">"roads"</span>, <span class="dt">label =</span> <span class="st">"roads"</span>)</a>
-<a class="sourceLine" id="cb4-9" title="9">    )</a>
-<a class="sourceLine" id="cb4-10" title="10">    , <span class="kw">dashboardBody</span>(</a>
-<a class="sourceLine" id="cb4-11" title="11">        <span class="kw"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(<span class="dt">outputId =</span> <span class="st">"map"</span>)</a>
-<a class="sourceLine" id="cb4-12" title="12">    )</a>
-<a class="sourceLine" id="cb4-13" title="13">)</a>
-<a class="sourceLine" id="cb4-14" title="14"></a>
-<a class="sourceLine" id="cb4-15" title="15">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</a>
-<a class="sourceLine" id="cb4-16" title="16">    </a>
-<a class="sourceLine" id="cb4-17" title="17">    <span class="co">## initialise a map</span></a>
-<a class="sourceLine" id="cb4-18" title="18">    output<span class="op">$</span>map &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mapdeck-shiny.html">renderMapdeck</a></span>({</a>
-<a class="sourceLine" id="cb4-19" title="19">        <span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">location =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">144.9</span>, <span class="dv">-37</span>), <span class="dt">zoom =</span> <span class="dv">5</span> )</a>
-<a class="sourceLine" id="cb4-20" title="20">    })</a>
-<a class="sourceLine" id="cb4-21" title="21">    </a>
-<a class="sourceLine" id="cb4-22" title="22">    <span class="co">## use an observer to add and remove layers</span></a>
-<a class="sourceLine" id="cb4-23" title="23">    <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({input<span class="op">$</span>roads},{</a>
-<a class="sourceLine" id="cb4-24" title="24">        </a>
-<a class="sourceLine" id="cb4-25" title="25">        <span class="cf">if</span> ( input<span class="op">$</span>roads <span class="op">%%</span><span class="st"> </span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> ) {</a>
-<a class="sourceLine" id="cb4-26" title="26">            </a>
-<a class="sourceLine" id="cb4-27" title="27">            <span class="kw"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="dt">map_id =</span> <span class="st">"map"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-28" title="28"><span class="st">                </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>(</a>
-<a class="sourceLine" id="cb4-29" title="29">                    <span class="dt">data =</span> roads</a>
-<a class="sourceLine" id="cb4-30" title="30">                    , <span class="dt">layer_id =</span> <span class="st">"myRoads"</span></a>
-<a class="sourceLine" id="cb4-31" title="31">                    , <span class="dt">stroke_colour =</span> <span class="st">"RIGHT_LOC"</span></a>
-<a class="sourceLine" id="cb4-32" title="32">                    , <span class="dt">update_view =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb4-33" title="33">                    )</a>
-<a class="sourceLine" id="cb4-34" title="34">        } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb4-35" title="35">          <span class="kw"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="dt">map_id =</span> <span class="st">"map"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-36" title="36"><span class="st">                </span><span class="kw"><a href="../reference/clear.html">clear_path</a></span>(<span class="dt">layer_id =</span> <span class="st">"myRoads"</span>)</a>
-<a class="sourceLine" id="cb4-37" title="37">        }</a>
-<a class="sourceLine" id="cb4-38" title="38">    })</a>
-<a class="sourceLine" id="cb4-39" title="39">}</a>
-<a class="sourceLine" id="cb4-40" title="40"></a>
-<a class="sourceLine" id="cb4-41" title="41"><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span>(ui, server)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shiny)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shinydashboard)</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mapdeck)</span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a>ui &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardPage.html">dashboardPage</a></span>(</span>
+<span id="cb4-6"><a href="#cb4-6"></a>    <span class="kw"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardHeader.html">dashboardHeader</a></span>()</span>
+<span id="cb4-7"><a href="#cb4-7"></a>    , <span class="kw"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardSidebar.html">dashboardSidebar</a></span>(</span>
+<span id="cb4-8"><a href="#cb4-8"></a>        <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span>(<span class="dt">inputId =</span> <span class="st">"roads"</span>, <span class="dt">label =</span> <span class="st">"roads"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9"></a>    )</span>
+<span id="cb4-10"><a href="#cb4-10"></a>    , <span class="kw"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardBody.html">dashboardBody</a></span>(</span>
+<span id="cb4-11"><a href="#cb4-11"></a>        <span class="kw"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(<span class="dt">outputId =</span> <span class="st">"map"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12"></a>    )</span>
+<span id="cb4-13"><a href="#cb4-13"></a>)</span>
+<span id="cb4-14"><a href="#cb4-14"></a></span>
+<span id="cb4-15"><a href="#cb4-15"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
+<span id="cb4-16"><a href="#cb4-16"></a>    </span>
+<span id="cb4-17"><a href="#cb4-17"></a>    <span class="co">## initialise a map</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a>    output<span class="op">$</span>map &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mapdeck-shiny.html">renderMapdeck</a></span>({</span>
+<span id="cb4-19"><a href="#cb4-19"></a>        <span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>( <span class="dt">location =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">144.9</span>, <span class="dv">-37</span>), <span class="dt">zoom =</span> <span class="dv">5</span> )</span>
+<span id="cb4-20"><a href="#cb4-20"></a>    })</span>
+<span id="cb4-21"><a href="#cb4-21"></a>    </span>
+<span id="cb4-22"><a href="#cb4-22"></a>    <span class="co">## use an observer to add and remove layers</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a>    <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({input<span class="op">$</span>roads},{</span>
+<span id="cb4-24"><a href="#cb4-24"></a>        </span>
+<span id="cb4-25"><a href="#cb4-25"></a>        <span class="cf">if</span> ( input<span class="op">$</span>roads <span class="op">%%</span><span class="st"> </span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> ) {</span>
+<span id="cb4-26"><a href="#cb4-26"></a>            </span>
+<span id="cb4-27"><a href="#cb4-27"></a>            <span class="kw"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="dt">map_id =</span> <span class="st">"map"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="st">                </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>(</span>
+<span id="cb4-29"><a href="#cb4-29"></a>                    <span class="dt">data =</span> roads</span>
+<span id="cb4-30"><a href="#cb4-30"></a>                    , <span class="dt">layer_id =</span> <span class="st">"myRoads"</span></span>
+<span id="cb4-31"><a href="#cb4-31"></a>                    , <span class="dt">stroke_colour =</span> <span class="st">"RIGHT_LOC"</span></span>
+<span id="cb4-32"><a href="#cb4-32"></a>                    , <span class="dt">update_view =</span> <span class="ot">FALSE</span></span>
+<span id="cb4-33"><a href="#cb4-33"></a>                    )</span>
+<span id="cb4-34"><a href="#cb4-34"></a>        } <span class="cf">else</span> {</span>
+<span id="cb4-35"><a href="#cb4-35"></a>          <span class="kw"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="dt">map_id =</span> <span class="st">"map"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb4-36"><a href="#cb4-36"></a><span class="st">                </span><span class="kw"><a href="../reference/clear.html">clear_path</a></span>(<span class="dt">layer_id =</span> <span class="st">"myRoads"</span>)</span>
+<span id="cb4-37"><a href="#cb4-37"></a>        }</span>
+<span id="cb4-38"><a href="#cb4-38"></a>    })</span>
+<span id="cb4-39"><a href="#cb4-39"></a>}</span>
+<span id="cb4-40"><a href="#cb4-40"></a></span>
+<span id="cb4-41"><a href="#cb4-41"></a><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span>(ui, server)</span></code></pre></div>
 </div>
 <div id="focus_layer" class="section level2">
 <h2 class="hasAnchor">
 <a href="#focus_layer" class="anchor"></a>focus_layer</h2>
 <p>In this example, even though the <code>scatterplot</code> data uses <code>update_view = TRUE</code>, the next layer has <code>focus_layer = TRUE</code>, so the map bounds will focus on this layer.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="st"> </span><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</a>
-<a class="sourceLine" id="cb5-3" title="3">   <span class="dt">data =</span> capitals</a>
-<a class="sourceLine" id="cb5-4" title="4">   , <span class="dt">lon =</span> <span class="st">"lon"</span>, <span class="dt">lat =</span> <span class="st">"lat"</span></a>
-<a class="sourceLine" id="cb5-5" title="5">   , <span class="dt">fill_colour =</span> <span class="st">"country"</span></a>
-<a class="sourceLine" id="cb5-6" title="6">   , <span class="dt">radius =</span> <span class="dv">100000</span></a>
-<a class="sourceLine" id="cb5-7" title="7">   , <span class="dt">update_view =</span> <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb5-8" title="8">   ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="st"> </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>( roads, <span class="dt">focus_layer =</span> <span class="ot">TRUE</span> )</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="st"> </span><span class="kw"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>(</span>
+<span id="cb5-3"><a href="#cb5-3"></a>   <span class="dt">data =</span> capitals</span>
+<span id="cb5-4"><a href="#cb5-4"></a>   , <span class="dt">lon =</span> <span class="st">"lon"</span>, <span class="dt">lat =</span> <span class="st">"lat"</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>   , <span class="dt">fill_colour =</span> <span class="st">"country"</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>   , <span class="dt">radius =</span> <span class="dv">100000</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>   , <span class="dt">update_view =</span> <span class="ot">TRUE</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>   ) <span class="op">%&gt;%</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="st"> </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>( roads, <span class="dt">focus_layer =</span> <span class="ot">TRUE</span> )</span></code></pre></div>
 </div>
 </div>
 <div id="returning-data" class="section level1">
@@ -273,45 +273,45 @@
 <p>If this value refers to a column of your data, this value is returned to your shiny session when you click on the layer in a shiny app. This way you know which row of data refers to the object you clicked on.</p>
 <p>You can observe click events using the syntax <code>input$&lt;map_id&gt;&lt;layer&gt;click</code></p>
 <p>So to observe clicks on the path layer on a map you’ve called ‘map’, you would use</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({input<span class="op">$</span>map_path_click})</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({input<span class="op">$</span>map_path_click})</span></code></pre></div>
 <p>To see this in action, here’s an example shiny for you</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shiny)</a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shinydashboard)</a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mapdeck)</a>
-<a class="sourceLine" id="cb7-4" title="4"></a>
-<a class="sourceLine" id="cb7-5" title="5">ui &lt;-<span class="st"> </span><span class="kw">dashboardPage</span>(</a>
-<a class="sourceLine" id="cb7-6" title="6">    <span class="kw">dashboardHeader</span>()</a>
-<a class="sourceLine" id="cb7-7" title="7">    , <span class="kw">dashboardSidebar</span>(</a>
-<a class="sourceLine" id="cb7-8" title="8">        <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span>(<span class="dt">inputId =</span> <span class="st">"roads"</span>, <span class="dt">label =</span> <span class="st">"roads"</span>)</a>
-<a class="sourceLine" id="cb7-9" title="9">    )</a>
-<a class="sourceLine" id="cb7-10" title="10">    , <span class="kw">dashboardBody</span>(</a>
-<a class="sourceLine" id="cb7-11" title="11">        <span class="kw"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(<span class="dt">outputId =</span> <span class="st">"map"</span>)</a>
-<a class="sourceLine" id="cb7-12" title="12">    )</a>
-<a class="sourceLine" id="cb7-13" title="13">)</a>
-<a class="sourceLine" id="cb7-14" title="14"></a>
-<a class="sourceLine" id="cb7-15" title="15">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</a>
-<a class="sourceLine" id="cb7-16" title="16">    </a>
-<a class="sourceLine" id="cb7-17" title="17">    <span class="co">## initialise a map</span></a>
-<a class="sourceLine" id="cb7-18" title="18">    output<span class="op">$</span>map &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mapdeck-shiny.html">renderMapdeck</a></span>({</a>
-<a class="sourceLine" id="cb7-19" title="19">        <span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-20" title="20"><span class="st">                </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>(</a>
-<a class="sourceLine" id="cb7-21" title="21">                    <span class="dt">data =</span> roads[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, ]</a>
-<a class="sourceLine" id="cb7-22" title="22">                    , <span class="dt">stroke_width =</span> <span class="dv">5</span></a>
-<a class="sourceLine" id="cb7-23" title="23">                    , <span class="dt">id =</span> <span class="st">"FQID"</span></a>
-<a class="sourceLine" id="cb7-24" title="24">                    )</a>
-<a class="sourceLine" id="cb7-25" title="25">    })</a>
-<a class="sourceLine" id="cb7-26" title="26">    </a>
-<a class="sourceLine" id="cb7-27" title="27">    <span class="co">## use an observer to respond to the click event.</span></a>
-<a class="sourceLine" id="cb7-28" title="28">    <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({input<span class="op">$</span>map_path_click},{</a>
-<a class="sourceLine" id="cb7-29" title="29">        <span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>( input<span class="op">$</span>map_path_click )</a>
-<a class="sourceLine" id="cb7-30" title="30">        </a>
-<a class="sourceLine" id="cb7-31" title="31">        js &lt;-<span class="st"> </span>input<span class="op">$</span>map_path_click</a>
-<a class="sourceLine" id="cb7-32" title="32">        lst &lt;-<span class="st"> </span>jsonlite<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">fromJSON</a></span>( js )</a>
-<a class="sourceLine" id="cb7-33" title="33">        <span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>( lst )</a>
-<a class="sourceLine" id="cb7-34" title="34">    })</a>
-<a class="sourceLine" id="cb7-35" title="35">}</a>
-<a class="sourceLine" id="cb7-36" title="36"></a>
-<a class="sourceLine" id="cb7-37" title="37"><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span>(ui, server)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shiny)</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(shinydashboard)</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mapdeck)</span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a>ui &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardPage.html">dashboardPage</a></span>(</span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="kw"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardHeader.html">dashboardHeader</a></span>()</span>
+<span id="cb7-7"><a href="#cb7-7"></a>    , <span class="kw"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardSidebar.html">dashboardSidebar</a></span>(</span>
+<span id="cb7-8"><a href="#cb7-8"></a>        <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span>(<span class="dt">inputId =</span> <span class="st">"roads"</span>, <span class="dt">label =</span> <span class="st">"roads"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>    )</span>
+<span id="cb7-10"><a href="#cb7-10"></a>    , <span class="kw"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardBody.html">dashboardBody</a></span>(</span>
+<span id="cb7-11"><a href="#cb7-11"></a>        <span class="kw"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(<span class="dt">outputId =</span> <span class="st">"map"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12"></a>    )</span>
+<span id="cb7-13"><a href="#cb7-13"></a>)</span>
+<span id="cb7-14"><a href="#cb7-14"></a></span>
+<span id="cb7-15"><a href="#cb7-15"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
+<span id="cb7-16"><a href="#cb7-16"></a>    </span>
+<span id="cb7-17"><a href="#cb7-17"></a>    <span class="co">## initialise a map</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a>    output<span class="op">$</span>map &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mapdeck-shiny.html">renderMapdeck</a></span>({</span>
+<span id="cb7-19"><a href="#cb7-19"></a>        <span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a><span class="st">                </span><span class="kw"><a href="../reference/add_path.html">add_path</a></span>(</span>
+<span id="cb7-21"><a href="#cb7-21"></a>                    <span class="dt">data =</span> roads[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, ]</span>
+<span id="cb7-22"><a href="#cb7-22"></a>                    , <span class="dt">stroke_width =</span> <span class="dv">5</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a>                    , <span class="dt">id =</span> <span class="st">"FQID"</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a>                    )</span>
+<span id="cb7-25"><a href="#cb7-25"></a>    })</span>
+<span id="cb7-26"><a href="#cb7-26"></a>    </span>
+<span id="cb7-27"><a href="#cb7-27"></a>    <span class="co">## use an observer to respond to the click event.</span></span>
+<span id="cb7-28"><a href="#cb7-28"></a>    <span class="kw"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({input<span class="op">$</span>map_path_click},{</span>
+<span id="cb7-29"><a href="#cb7-29"></a>        <span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>( input<span class="op">$</span>map_path_click )</span>
+<span id="cb7-30"><a href="#cb7-30"></a>        </span>
+<span id="cb7-31"><a href="#cb7-31"></a>        js &lt;-<span class="st"> </span>input<span class="op">$</span>map_path_click</span>
+<span id="cb7-32"><a href="#cb7-32"></a>        lst &lt;-<span class="st"> </span>jsonlite<span class="op">::</span><span class="kw"><a href="https://jeroen.cran.dev/jsonlite/reference/fromJSON.html">fromJSON</a></span>( js )</span>
+<span id="cb7-33"><a href="#cb7-33"></a>        <span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>( lst )</span>
+<span id="cb7-34"><a href="#cb7-34"></a>    })</span>
+<span id="cb7-35"><a href="#cb7-35"></a>}</span>
+<span id="cb7-36"><a href="#cb7-36"></a></span>
+<span id="cb7-37"><a href="#cb7-37"></a><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span>(ui, server)</span></code></pre></div>
 <p>This doesn’t work for geojson, or layers where the data is aggregated</p>
 <ul>
 <li>add_geojson()</li>
@@ -325,27 +325,27 @@
 <h1 class="hasAnchor">
 <a href="#chaining" class="anchor"></a>Chaining</h1>
 <p>Mapdeck plots can be included in a chain of commands, if that’s your thing</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">roads <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>( ROAD_TYPE <span class="op">==</span><span class="st"> "STREET"</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="st">    </span><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="st">    </span><span class="kw"><a href="../reference/add_sf.html">add_sf</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>roads <span class="op">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>( ROAD_TYPE <span class="op">==</span><span class="st"> "STREET"</span> ) <span class="op">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="st">    </span><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="st">    </span><span class="kw"><a href="../reference/add_sf.html">add_sf</a></span>()</span></code></pre></div>
 </div>
 <div id="sf" class="section level1">
 <h1 class="hasAnchor">
 <a href="#sf" class="anchor"></a>sf</h1>
 <p>If you have issues plotting a subset of rows of an <code>sf</code> object, it may be because you haven’t loaded <code><a href="https://rdrr.io/r/base/library.html">library(sf)</a></code>.</p>
 <p>To see what I mean, restart your R session, then run these commands.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mapdeck)</a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="../reference/set_token.html">set_token</a></span>( <span class="st">"MAPBOX_TOKEN"</span> )</a>
-<a class="sourceLine" id="cb9-3" title="3"></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/add_sf.html">add_sf</a></span>( <span class="dt">data =</span> roads[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ] )</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(mapdeck)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="kw"><a href="../reference/set_token.html">set_token</a></span>( <span class="st">"MAPBOX_TOKEN"</span> )</span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="kw"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="op">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="st">  </span><span class="kw"><a href="../reference/add_sf.html">add_sf</a></span>( <span class="dt">data =</span> roads[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ] )</span></code></pre></div>
 <p>You should see the map fully zoomed out. This is because it can’t find the bounding box of the subset object.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>( roads[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ][[<span class="st">"geometry"</span>]], <span class="st">"bbox"</span>)</a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="co"># NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>( roads[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ][[<span class="st">"geometry"</span>]], <span class="st">"bbox"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co"># NULL</span></span></code></pre></div>
 <p>Whereas if you load the <code>sf</code> library, you use its subsetting method, which gives you the bounding box</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(sf)</a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>( roads[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ][[<span class="st">"geometry"</span>]], <span class="st">"bbox"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(sf)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>( roads[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ][[<span class="st">"geometry"</span>]], <span class="st">"bbox"</span>)</span></code></pre></div>
 </div>
   </div>
 
@@ -357,7 +357,8 @@
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#multiple-layers">Multiple layers</a></li>
       <li>
-<a href="#shiny">Shiny</a><ul class="nav nav-pills nav-stacked">
+<a href="#shiny">Shiny</a>
+      <ul class="nav nav-pills nav-stacked">
 <li><a href="#updating-the-map">Updating the map</a></li>
       <li><a href="#update_view">update_view</a></li>
       <li><a href="#focus_layer">focus_layer</a></li>

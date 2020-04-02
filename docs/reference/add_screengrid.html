@@ -70,7 +70,7 @@ aggregates them into histogram bins and renders as a grid" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -150,11 +150,22 @@ aggregates them into histogram bins and renders as a grid" />
 aggregates them into histogram bins and renders as a grid</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_screengrid</span>(<span class='no'>map</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>), <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>aggregation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sum"</span>, <span class='st'>"mean"</span>,
-  <span class='st'>"min"</span>, <span class='st'>"max"</span>), <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opacity</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>cell_size</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>)</pre>
+    <pre class="usage"><span class='fu'>add_screengrid</span>(
+  <span class='no'>map</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>get_map_data</span>(<span class='no'>map</span>),
+  <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>polyline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>aggregation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sum"</span>, <span class='st'>"mean"</span>, <span class='st'>"min"</span>, <span class='st'>"max"</span>),
+  <span class='kw'>colour_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>opacity</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+  <span class='kw'>cell_size</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>6</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -215,6 +226,10 @@ to conflict and not plot correctly</p></td>
       <th>focus_layer</th>
       <td><p>logical indicating if the map should update the bounds to only include this layer</p></td>
     </tr>
+    <tr>
+      <th>digits</th>
+      <td><p>number of digits for rounding coordinates</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -247,7 +262,7 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
 
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
 <span class='fu'>add_screengrid</span>(
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>[<span class='fl'>1</span>:<span class='fl'>12000</span>, ]
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>df</span>
   , <span class='kw'>lat</span> <span class='kw'>=</span> <span class='st'>"lat"</span>
   , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"lng"</span>
   , <span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"weight"</span>,
@@ -257,9 +272,10 @@ where <code>"your_column"</code> is the name of the column you're activating. Se
 )
 
 <span class='co'>## as an sf object</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sf</span>)
-<span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>( <span class='no'>df</span>, <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lng"</span>, <span class='st'>"lat"</span>))
-<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>key</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sfheaders</span>)
+<span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sfheaders</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sfheaders/man/sf_point.html'>sf_point</a></span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"lng"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"lat"</span>)
+
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
 <span class='fu'>add_screengrid</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sf</span>
   , <span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"weight"</span>,

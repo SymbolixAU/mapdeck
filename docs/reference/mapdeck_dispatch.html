@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1001</span>
       </span>
     </div>
 
@@ -148,9 +148,12 @@
     <p>Extension points for plugins</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mapdeck_dispatch</span>(<span class='no'>map</span>, <span class='no'>funcName</span>, <span class='kw'>mapdeck</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>funcName</span>,
-  <span class='st'>"requires a map update object"</span>)), <span class='kw'>mapdeck_update</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>funcName</span>,
-  <span class='st'>"does not support map update objects"</span>)))
+    <pre class="usage"><span class='fu'>mapdeck_dispatch</span>(
+  <span class='no'>map</span>,
+  <span class='no'>funcName</span>,
+  <span class='kw'>mapdeck</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>funcName</span>, <span class='st'>"requires a map update object"</span>)),
+  <span class='kw'>mapdeck_update</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>funcName</span>, <span class='st'>"does not support map update objects"</span>))
+)
 
 <span class='fu'>invoke_method</span>(<span class='no'>map</span>, <span class='no'>method</span>, <span class='no'>...</span>)</pre>
 

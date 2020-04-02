@@ -41,7 +41,7 @@ EPSG:4326 (WGS 84) coordinate system}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
 \code{elevation} is ignored.
-If using a hex colour, use either a single value, or a vector the same length as \code{data}}
+If using a hex colour, use either a single value, or a column of hex colours  on \code{data}}
 
 \item{stroke_width}{width of the stroke in meters. Default 1.}
 
