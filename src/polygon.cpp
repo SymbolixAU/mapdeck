@@ -8,7 +8,8 @@ Rcpp::List polygon_defaults(int n) {
 	return Rcpp::List::create(
 		_["elevation"] = mapdeck::defaults::default_elevation(n),
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n),
-		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour(n)
+		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour(n),
+		_["stroke_width"] = mapdeck::defaults::default_stroke_width(n)
 	);
 }
 

@@ -162,7 +162,11 @@ add_polygon <- function(
 	focus_layer <- force( focus_layer )
 	elevation_scale <- force( elevation_scale )
 
-	is_extruded <- TRUE
+	is_extruded <- FALSE
+	## issue 287
+	if( !is.null( elevation ) ) {
+		is_extruded <- TRUE
+	}
 	if( !is.null( l[["stroke_width"]] ) | !is.null( l[["stroke_colour"]] ) ) {
 		is_extruded <- FALSE
 		if( !is.null( elevation ) ) {
