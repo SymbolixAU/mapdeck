@@ -21,15 +21,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r packages, eval = TRUE, message = FALSE}
+```{r packages, eval = TRUE, message = FALSE, echo = FALSE}
 library(mapdeck)
 ```
 
 # Layers
-
-
-
-All layers support Simple Feature (from `library(sf)`) objects. 
 
 ## layer_id
 
@@ -50,7 +46,7 @@ flights <- read.csv(url)
 flights$id <- seq_len(nrow(flights))
 flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
 
-mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
   add_arc(
     data = flights
     , layer_id = "arc_layer"
@@ -64,8 +60,23 @@ mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
 
 ![Arcs](./img/articles/arcs.gif)
 
-**sf** : supports `sf` objects with two POINT or MULTIPOINT geometry columns.
+## Animated Arcs
 
+```{r}
+mapdeck( token = key, style = 'mapbox://styles/mapbox/dark-v9', pitch = 45 ) %>%
+  add_animated_arc(
+    data = flights
+    , layer_id = "arc_layer"
+    , origin = c("start_lon", "start_lat")
+    , destination = c("end_lon", "end_lat")
+    , stroke_from = "airport1"
+    , stroke_to = "airport2"
+    , stroke_width = "stroke"
+  )
+
+```
+
+![Arcs](./img/articles/animated_arcs.mp4){width="80%"}
 
 ## GeoJSON
 
@@ -81,8 +92,6 @@ mapdeck(
 ```
 
 ![GeoJSON](./img/articles/geojson.png)
-
-**sf** : supports all `sf` geometry types. Converted to geojson using `geojsonsf::sf_geojson()`. Useful if your `sf` object contains different geometry types.
 
 ## Great Circles
 
@@ -107,7 +116,6 @@ mapdeck( style = 'mapbox://styles/mapbox/dark-v9') %>%
 
 ![Great Circles](./img/articles/greatcircles.png)
 
-**sf** : supports `sf` objects with two POINT or MULTIPOINT geometry columns.
 
 ## Grid
 
@@ -132,7 +140,6 @@ add_grid(
 
 ![Grid](./img/articles/grid.gif)
 
-**sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
 ## Heatmap
 
@@ -209,7 +216,6 @@ mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
 
 ![Lines](./img/articles/lines.png)
 
-**sf** : supports `sf` objects with two POINT and MULTIPOINT geometry columns.
 
 ## Path
 
@@ -228,7 +234,6 @@ mapdeck(
 
 ![Path](./img/articles/path.gif)
 
-**sf** : supports `sf` objects with LINESTRING and MULTILINESTRING geometries
 
 ## Point cloud
 
@@ -248,8 +253,6 @@ add_pointcloud(
 ```
 
 ![Pointcloud](./img/articles/pointcloud.gif)
-
-**sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
 ## Polygons
 
@@ -271,8 +274,6 @@ mapdeck(token = key, style = mapdeck_style("dark")) %>%
 
 ![Polygons](./img/articles/polygons.gif)
 
-**sf** : supports `sf` objects with POLYGON and MULTIPOLYGON geometries
-
 ## Scatter
 
 ```{r}
@@ -291,8 +292,6 @@ add_scatterplot(
 ```
 
 ![Scatter](./img/articles/scatter.png)
-
-**sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
 ## Screen grid
 
@@ -321,7 +320,6 @@ add_screengrid(
 
 ![Screengrid](./img/articles/screengrid_small.gif)
 
-**sf** : supports `sf` objects with POINT and MULTIPOINT geometries
 
 ## Text
 
@@ -339,8 +337,6 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
 ```
 
 ![Text](./img/articles/text.png)
-
-**sf** : supports `sf` objects with POINT and MULTIPIONT geometries
 
 ## Multiple layers
 
