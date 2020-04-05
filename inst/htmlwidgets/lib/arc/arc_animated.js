@@ -129,7 +129,7 @@ function add_arc_animated_geo( map_id, map_type, arc_data, layer_id, auto_highli
     animationSpeed: animation_speed,
     tailLength: trail_length,
 
-    onClick: info => md_layer_click( map_id, "arc", info ),
+    onClick: info => md_layer_click( map_id, "animated_arc", info ),
     onHover: md_update_tooltip,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
@@ -139,9 +139,9 @@ function add_arc_animated_geo( map_id, map_type, arc_data, layer_id, auto_highli
   });
 
   if( map_type == "google_map") {
-	  md_update_overlay( map_id, 'arc-'+layer_id, arcLayer );
+	  md_update_overlay( map_id, 'animated_arc-'+layer_id, arcLayer );
 	} else {
-	  md_update_layer( map_id, 'arc-'+layer_id, arcLayer );
+	  md_update_layer( map_id, 'animated_arc-'+layer_id, arcLayer );
 	}
 
 	if (legend !== false) {

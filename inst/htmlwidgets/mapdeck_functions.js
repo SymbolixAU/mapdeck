@@ -188,6 +188,7 @@ function md_update_layer( map_id, layer_id, layer ) {
 function md_clear_layer( map_id, layer_id ) {
 
   var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
+
   if ( elem != -1 ) {
   	window[ map_id + 'layers'].splice( elem, 1 );
   }

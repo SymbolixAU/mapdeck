@@ -188,17 +188,14 @@ add_animated_arc <- function(
 	)
 }
 
-## TODO
-## can't clear it yet - need to stop the animation frame
+#' Clear Animated Arc
 #'
-#' #' Clear Animated Arc
-#' #'
-#' #' Clears elements from a map
-#' #' @rdname clear
-#' #' @param map a mapdeck map object
-#' #' @param layer_id the layer_id of the layer you want to clear
-#' #' @export
-#' clear_animated_arc <- function( map, layer_id = NULL ) {
-#' 	layer_id <- layerId(layer_id, "animated_arc")
-#' 	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "animated_arc" )
-#' }
+#' Clears elements from a map
+#' @rdname clear
+#' @param map a mapdeck map object
+#' @param layer_id the layer_id of the layer you want to clear
+#' @export
+clear_animated_arc <- function( map, layer_id = NULL ) {
+	layer_id <- layerId(layer_id, "animated_arc")
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "animated_arc" )
+}
