@@ -20,7 +20,6 @@ Imports:
     colourvalues (>= 0.3.4),
     googlePolylines (>= 0.7.2),
     geojsonsf (>= 1.3.3),
-    htmltools,
     htmlwidgets,
     jsonify (>= 1.1.1),
     magrittr,
