@@ -1,6 +1,4 @@
-function add_arc_animated_geo( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
-
-  console.log( "animated arcs" );
+function add_arc_animated_geo( map_id, map_type, arc_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius, animation_speed, trail_length ) {
 
   var extensions = [];
 
@@ -91,7 +89,7 @@ function add_arc_animated_geo( map_id, map_type, arc_data, layer_id, auto_highli
   		this.state.model.setUniforms({
   			tailLength: this.props.tailLength,
   			animationSpeed: this.props.animationSpeed,
-  			timestamp: Date.now() % 86400000
+  			timestamp: (Date.now() / 1000) % 86400
   		});
   		super.draw(opts);
   		// By default, the needsRedraw flag is cleared at each render. We want the layer to continue
@@ -115,7 +113,7 @@ function add_arc_animated_geo( map_id, map_type, arc_data, layer_id, auto_highli
 
   const arcLayer = new AnimatedArcLayer({
   	map_id: map_id,
-    id: 'arc-'+layer_id,
+    id: 'animated_arc-'+layer_id,
     data: arc_data,
     pickable: true,
 
@@ -126,10 +124,10 @@ function add_arc_animated_geo( map_id, map_type, arc_data, layer_id, auto_highli
     getTargetColor: d => md_hexToRGBA( d.properties.stroke_to ),
     getTilt: d => d.properties.tilt,
     getHeight: d => d.properties.height,
-    getFrequency: 1, //d.properties.frequency,
-    animationSpeed: 0.005,
-    tailLength: 15,
+    getFrequency: d => d.properties.frequency, //d.properties.frequency,
 
+    animationSpeed: animation_speed,
+    tailLength: trail_length,
 
     onClick: info => md_layer_click( map_id, "arc", info ),
     onHover: md_update_tooltip,
@@ -149,5 +147,5 @@ function add_arc_animated_geo( map_id, map_type, arc_data, layer_id, auto_highli
 	if (legend !== false) {
 	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
-	//md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
+	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

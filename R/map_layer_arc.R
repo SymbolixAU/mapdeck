@@ -10,17 +10,6 @@ mapdeckArcDependency <- function() {
 	)
 }
 
-mapdeckAnimatedArcDependency <- function() {
-	list(
-		createHtmlDependency(
-			name = "arc_animated",
-			version = "1.0.0",
-			src = system.file("htmlwidgets/lib/arc", package = "mapdeck"),
-			script = c("arc_animated.js"),
-			all_files = FALSE
-		)
-	)
-}
 
 #' Add arc
 #'
@@ -318,9 +307,8 @@ add_arc <- function(
 	# 	jsfunc <- "add_arc_brush_geo"
 	# 	map <- addDependency(map, mapdeckArcBrushDependency())
 	# } else {
-		jsfunc <- "add_arc_animated_geo"
+		jsfunc <- "add_arc_geo"
 		map <- addDependency(map, mapdeckArcDependency())
-		map <- addDependency(map, mapdeckAnimatedArcDependency())
 	# }
 
   if ( tp == "sf" ) {
