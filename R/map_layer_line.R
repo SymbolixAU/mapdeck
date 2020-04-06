@@ -67,20 +67,18 @@ mapdeckLineDependency <- function() {
 #'  )
 #'
 #' ## Using a 2-sfc-column sf object
-#' library(sf)
+#' library(sfheaders)
 #'
-#' sf_flights <- cbind(
-#'   sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
-#'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
-#' )
+#' sf_flights <- sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = TRUE )
+#' destination <- sfheaders::sfc_point( flights, x = "end_lon", y = "end_lat" )
 #'
-#' mapdeck(
-#'   token = key
-#' ) %>%
+#' sf_flights$destination <- destination
+#'
+#' mapdeck() %>%
 #'  add_line(
 #'    data = sf_flights
 #'    , origin = 'geometry'
-#'    , destination = 'geometry.1'
+#'    , destination = 'destination'
 #'    , layer_id = 'arcs'
 #'    , stroke_colour = "airport1"
 #' )
@@ -120,7 +118,8 @@ add_line <- function(
 	focus_layer = FALSE,
 	digits = 6,
 	transitions = NULL,
-	visible = TRUE
+	visible = TRUE,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -162,14 +161,14 @@ add_line <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
-		shape <- rcpp_line_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_od_geojson( data, l, geometry_column, digits, "line" )
 	} else if ( tp == "df" ) {
-		geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
-		shape <- rcpp_line_geojson_df( data, l, geometry_column, digits )
+		geometry_column <- list( origin = c("start_lon", "start_lat","start_elev"), destination = c("end_lon", "end_lat","end_elev") )
+		shape <- rcpp_od_geojson_df( data, l, geometry_column, digits, "line" )
 	}
 	# } else if ( tp == "sfencoded" ) {
 	# 	geometry_column <- "geometry"
-	# 	shape <- rcpp_line_polyline( data, l, geometry_column )
+	# 	shape <- rcpp_od_polyline( data, l, geometry_column )
 	# }
 
 	js_transitions <- resolve_transitions( transitions, "line" )
@@ -182,7 +181,7 @@ add_line <- function(
 	invoke_method(
 		map, "add_line_geo", map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions, visible
+		js_transitions, brush_radius, visible
 		)
 }
 

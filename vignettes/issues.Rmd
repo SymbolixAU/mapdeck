@@ -25,7 +25,7 @@ Look at the javascript console for any errors. [Issue 95](https://github.com/Sym
 
 ## Map doesn't zoom to the layer
 
-Are you subsetting an `sf` object without the `sf` library loaded? [See here](file:///Users/dave/Documents/github/mapdeck/docs/articles/tips_tricks.html#sf)
+Are you subsetting an `sf` object without the `sf` library loaded? [See here](https://symbolixau.github.io/mapdeck/articles/tips_tricks.html#sf)
 
 Or are you plotting GeoJSON or an `sfencodedLite` object? The bounding box is not calculated for either of these, so the map doesn't know where to focus
 
@@ -34,4 +34,10 @@ Or are you plotting GeoJSON or an `sfencodedLite` object? The bounding box is no
 
 Do you have `NA`s in your data? Mapdeck will have issues plotting if there are, so it's worth checking.
 
+## Some maps in a document (Rmd, shiny) load, some don't
 
+Maybe you have too many maps loaded. There is a [known issue with Mapbox](https://github.com/mapbox/mapbox-gl-js/issues/7332) where browsers don't support enough WebGL contexts. 
+
+If you inspect your document you may see this error. This indicates you have too many maps. 
+
+![](./img/articles/too_many_contexts.png)

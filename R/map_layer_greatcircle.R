@@ -63,18 +63,18 @@ mapdeckGreatCircleDependency <- function() {
 #'   )
 #'
 #' ## Using a 2-sfc-column sf object
-#' library(sf)
+#' library(sfheaders)
 #'
-#' sf_flights <- cbind(
-#'   sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
-#'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
-#' )
+#' sf_flights <- sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = TRUE )
+#' destination <- sfheaders::sfc_point( flights, x = "end_lon", y = "end_lat" )
+#'
+#' sf_flights$destination <- destination
 #'
 #' mapdeck() %>%
 #'  add_greatcircle(
 #'    data = sf_flights
 #'    , origin = 'geometry'
-#'    , destination = 'geometry.1'
+#'    , destination = 'destination'
 #'    , layer_id = 'greatcircles'
 #'    , stroke_from = "airport1"
 #'    , stroke_to = "airport2"
@@ -117,7 +117,8 @@ add_greatcircle <- function(
 	focus_layer = FALSE,
 	transitions = NULL,
 	digits = 6,
-	visible = TRUE
+	visible = TRUE,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -164,13 +165,13 @@ add_greatcircle <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
-		shape <- rcpp_greatcircle_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_od_geojson( data, l, geometry_column, digits, "greatcircle" )
 	} else if ( tp == "df" ) {
-		geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
-		shape <- rcpp_greatcircle_geojson_df( data, l, geometry_column, digits )
+		geometry_column <- list( origin = c("start_lon", "start_lat","start_elev"), destination = c("end_lon", "end_lat","end_elev") )
+		shape <- rcpp_od_geojson_df( data, l, geometry_column, digits, "greatcircle" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- c("origin", "destination")
-		shape <- rcpp_greatcircle_polyline( data, l, geometry_column )
+		shape <- rcpp_od_polyline( data, l, geometry_column, "greatcircle" )
 		jsfunc <- "add_greatcircle_polyline"
 	}
 
@@ -184,7 +185,7 @@ add_greatcircle <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer, js_transition,
-		wrap_longitude, visible
+		wrap_longitude, brush_radius, visible
 	)
 }
 

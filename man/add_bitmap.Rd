@@ -4,10 +4,24 @@
 \alias{add_bitmap}
 \title{Add bitmap}
 \usage{
+<<<<<<< HEAD
 add_bitmap(map, image, bounds, desaturate = 0,
   transparent_colour = "#000000", tint_colour = "#FFFFFF",
   layer_id = NULL, update_view = TRUE, focus_layer = FALSE,
   visible = TRUE)
+=======
+add_bitmap(
+  map,
+  image,
+  bounds,
+  desaturate = 0,
+  transparent_colour = "#000000",
+  tint_colour = "#FFFFFF",
+  layer_id = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE
+)
+>>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -35,33 +49,35 @@ to conflict and not plot correctly}
 using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
 }
 \description{
-Add bitmap
+Adds an image to a map
 }
 \examples{
 \donttest{
 
 set_token( "MAPBOX_TOKEN" )
 
-mapdeck() \%>\%
+mapdeck(location = c(-122.3, 37.8), zoom = 10) \%>\%
  add_bitmap(
-   image = 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/website/sf-districts.png'
+   image = paste0(
+   'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+   'website/sf-districts.png')
    , bounds = c(-122.519, 37.7045, -122.355, 37.829)
  )
 
-mapdeck() \%>\%
+mapdeck(location = c(-75.9, 40.9), zoom = 4) \%>\%
   add_bitmap(
     image = 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'
     , bounds = c(-80.425, 37.936, -71.516, 46.437)
   )
 
-mapdeck() \%>\%
+mapdeck(location = c(-75.9, 40.9), zoom = 4) \%>\%
   add_bitmap(
     image = 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'
     , bounds = c(-80.425, 37.936, -71.516, 46.437)
     , tint_colour = "#FF0000"
   )
 
-mapdeck() \%>\%
+mapdeck(location = c(-75.9, 40.9), zoom = 4) \%>\%
   add_bitmap(
     image = 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'
     , bounds = c(-80.425, 37.936, -71.516, 46.437)

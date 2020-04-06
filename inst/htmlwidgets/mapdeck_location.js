@@ -1,13 +1,14 @@
 
 function md_change_location( map_id, map_type, location, zoom, pitch, bearing, duration, transition ) {
-
   var currentLon, currentLat, currentPitch, currentBearing, currentZoom;
 
   if( map_type == "google_map" ) {
-  	console.log( location );
+  	//console.log( location );
   	window[map_id + 'map'].setCenter( { lat: location[1], lng: location[0] } );
   	window[map_id + 'map'].setZoom( zoom );
   } else {
+
+  	//console.log( window[ map_id + 'map' ].viewState );
 
 	  if ( window[ map_id + 'map'].viewState["default-view"] !== undefined ) {
 	  	currentLon = location === null ? window[ map_id + 'map'].viewState["default-view"].longitude : location[0];
@@ -23,29 +24,38 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 	    currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
 	  }
 
+	  //console.log( currentLon );
+
 		window[map_id + 'map'].setProps({
-	    viewState: {
+	    initialViewState: {
 	      longitude: currentLon,
 	      latitude: currentLat,
 	      zoom: currentZoom,
 	      pitch: currentPitch,
 	      bearing: currentBearing,
 	      transitionInterpolator: transition === "fly" ? new deck.FlyToInterpolator() : new deck.LinearInterpolator(),
-	      transitionDuration: duration
-	    },
+	      transitionDuration: duration,
+	      controller: true
+	    }
 	  });
-
-
-	  //window[ map_id + 'map' ].setProps({
-	  //	viewState: null
-	  //});
 
   }
 }
 
+function md_update_style( map_id, style ) {
+
+  var vs = window[ map_id + 'map'].viewState;
+	var map = window[ map_id + 'map'].getMapboxMap();
+	map.setStyle( style );
+
+  window[ map_id + 'map' ].setProps({
+  	layers: [...window[map_id + 'layers'] ],
+  	map: map,
+  	viewState: vs
+  });
+}
 
 function md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view ) {
-
 
 	if( focus_layer ) {
   	md_clear_bounds( map_id );

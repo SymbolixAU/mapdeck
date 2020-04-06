@@ -1,6 +1,5 @@
 
-function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, visible ) {
-
+function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, brush_radius, visible ) {
 
   	/*
   class MeshLayer extends PolygonLayer({
@@ -13,8 +12,8 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
 	     for (const object of data) {
 	       const polygon = getPolygon(object);
 
-	       console.log( "const polygon " );
-	       console.log( polygon );
+	       //console.log( "const polygon " );
+	       //console.log( polygon );
 
 	       // iterate through vertices
 	       polygon.forEach(ring => {
@@ -34,8 +33,15 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
   MeshLayer.layerName = 'MeshLayer';
   */
 
+  //console.log( polygon_data );
 
-  const meshLayer = new PolygonLayer({
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new deck.BrushingExtension() );
+  }
+
+  const meshLayer = new deck.PolygonLayer({
   	map_id: map_id,
     id: 'polygon-'+layer_id,
     data: polygon_data,
@@ -43,7 +49,9 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
     stroked: true,
     filled: true,
     wireframe: false,
+
     visible: visible,
+
     extruded: is_extruded,
     lineWidthMinPixels: 0,
     getPolygon: d => md_get_polygon_coordinates( d ),
@@ -51,15 +59,18 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
     getFillColor: d => md_hexToRGBA( d.properties.fill_colour ),
     //getLineWidth: d => d.properties.stroke_width,
     getElevation: d => d.properties.elevation,
+
     lightSettings: light_settings,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onHover: md_update_tooltip,
     onClick: info => md_layer_click( map_id, "mesh", info ),
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
-  console.log( meshLayer );
+  //console.log( meshLayer );
 
   if( map_type == "google_map") {
     md_update_overlay( map_id, 'mesh-'+layer_id, meshLayer );
@@ -69,7 +80,7 @@ function add_mesh( map_id, map_type, polygon_data, layer_id, light_settings, aut
   }
 
 	if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

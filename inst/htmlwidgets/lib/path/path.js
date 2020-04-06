@@ -1,9 +1,19 @@
 
 
-function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour,
-legend, bbox, update_view, focus_layer, js_transition, billboard, visible ) {
+function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, visible) {
 
-  const pathLayer = new PathLayer({
+
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new deck.BrushingExtension() );
+  }
+
+  extensions.push(
+  	new deck.PathStyleExtension({dash: true})
+  );
+
+  const pathLayer = new deck.PathLayer({
     map_id: map_id,
     id: 'path-'+layer_id,
     data: path_data,
@@ -15,15 +25,20 @@ legend, bbox, update_view, focus_layer, js_transition, billboard, visible ) {
     parameters: {
 	    depthTest: false
 	  },
+
 	  visible: visible,
+
     getPath: d => md_get_line_coordinates( d ),
     getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
     getWidth: d => d.properties.stroke_width,
+    getDashArray: d => [ d.properties.dash_size, d.properties.dash_gap ],
     onClick: info => md_layer_click( map_id, "path", info ),
     onHover: md_update_tooltip,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -33,14 +48,25 @@ legend, bbox, update_view, focus_layer, js_transition, billboard, visible ) {
 	}
 
 	if ( legend !== false ) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
-function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, visible ) {
+function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, visible ) {
 
-  const pathLayer = new PathLayer({
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new deck.BrushingExtension() );
+  }
+
+  var extensions = [];
+  extensions.push(
+  	new deck.PathStyleExtension({dash: true})
+  );
+
+  const pathLayer = new deck.PathLayer({
     map_id: map_id,
     id: 'path-'+layer_id,
     data: path_data,
@@ -52,15 +78,20 @@ function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highligh
 	    depthTest: false
 	  },
     billboard: billboard,
+
     visible: visible,
+
     getPath: d => md_decode_polyline( d.polyline ),  // needs to be one row per polyline
     getColor: d => md_hexToRGBA( d.stroke_colour ),
     getWidth: d => d.stroke_width,
+    getDashArray: d => [ d.dash_size, d.dash_gap ],
     onClick: info => md_layer_click( map_id, "path", info ),
     onHover: md_update_tooltip,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -70,7 +101,7 @@ function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highligh
 	}
 
 	if ( legend !== false ) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

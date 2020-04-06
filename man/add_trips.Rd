@@ -4,12 +4,32 @@
 \alias{add_trips}
 \title{Add Trips}
 \usage{
+<<<<<<< HEAD
 add_trips(map, data = get_map_data(map), stroke_colour = NULL,
   stroke_width = NULL, opacity = 0.3, palette = "viridis",
   trail_length = 180, start_time = get_m_range_start(data),
   end_time = get_m_range_end(data), animation_speed = 30,
   layer_id = NULL, legend = FALSE, legend_options = NULL,
   legend_format = NULL, visible = TRUE)
+=======
+add_trips(
+  map,
+  data = get_map_data(map),
+  stroke_colour = NULL,
+  stroke_width = NULL,
+  opacity = 0.3,
+  palette = "viridis",
+  trail_length = 180,
+  start_time = get_m_range_start(data),
+  end_time = get_m_range_end(data),
+  animation_speed = 30,
+  layer_id = NULL,
+  legend = FALSE,
+  legend_options = NULL,
+  legend_format = NULL,
+  digits = 6
+)
+>>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -28,11 +48,14 @@ where the 4th column represents the alpha. You can use a named list to specify a
 palette for different colour options (where available),
  e.g. list(fill_colour = "viridis", stroke_colour = "inferno")}
 
-\item{trail_length}{length in metres of the trail}
+\item{trail_length}{how long it takes for the trail to completely fade out
+(in same units as timestamps )}
 
 \item{start_time}{the minimum timestamp}
 
 \item{end_time}{the maximum timestamp}
+
+\item{animation_speed}{speed of animation}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
@@ -45,12 +68,19 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{legend_format}{A list containing functions to apply to legend values. See section legend}
 
+<<<<<<< HEAD
 \item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
 using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
+=======
+\item{digits}{number of digits for rounding coordinates}
+>>>>>>> master
 }
 \description{
-The Trips Layer takes an sf object with Z and M attributes and renders
+The Trips Layer takes an sf object with Z (elevation) and M (time) attributes and renders
 it as animated trips
+}
+\details{
+\code{add_trips} supports LINESTRING and MULTILINESTRING sf objects
 }
 \section{legend}{
 
@@ -92,25 +122,21 @@ you are clicking on
 \examples{
 \donttest{
 
-
-library(gpx)
-gpx <- system.file("gpx/city_trail.gpx", package = "gpx")
-sf <- gpx::gpx_sf( gpx, time = "counter" )
+set_token( "MAPBOX_TOKEN")
+sf <- city_trail
 
 mapdeck(
-	style = mapdeck_style("dark")
-	, location = c(145, -37.9)
-	, zoom = 8
+location = c(145, -37.8)
+, zoom = 10
+, style = mapdeck_style("dark")
 ) \%>\%
-	add_trips(
-		data = sf
-		, trail_length = 2000
-		, animation_speed = 50
-		, stroke_colour = "#FFFFFF"
-	)
+ add_trips(
+   data = sf
+   , animation_speed = 2000
+   , trail_length = 1000
+   , stroke_colour = "#FFFFFF"
+)
 
 }
-
-\\code{add_trips} supports LINESTRING and MULTILINESTRING sf objects
 
 }

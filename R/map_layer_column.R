@@ -24,6 +24,7 @@ mapdeckColumnDependency <- function() {
 #' The disk is a regular polygon that fits inside the given radius.
 #' A higher resolution will yield a smoother look close-up, but also requires more resources to render.
 #' @param radius in metres. Default 1000
+#' @param angle disk rotation, counter-clockwise, in degrees
 #' @param coverage radius multiplier, in range [0,1]. The radius of the disk is calcualted
 #' by coverage * radius
 #' @param elevation_scale value to scale the elevations of the columns Default 1
@@ -55,9 +56,11 @@ mapdeckColumnDependency <- function() {
 #'   , tooltip = "capital"
 #' )
 #'
-#' library( sf )
-#' sf <- sf::st_as_sf( df, coords = c("lon", "lat"))
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lon", y = "lat" )
+#'
 #' sf$elev <- df$elev
+#'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_column(
 #'   data = sf
@@ -107,18 +110,27 @@ add_column <- function(
 	focus_layer = FALSE,
 	digits = 6,
 	transitions = NULL,
-	visible = TRUE
+	visible = TRUE,
+	brush_radius = NULL
 ) {
+
+	## using binary data requires hex-colorus to include teh alpha
+	if( !is.null( fill_colour ) ) {
+		fill_colour <- appendAlpha( fill_colour )
+	}
+	if( !is.null( stroke_colour ) ) {
+		stroke_colour <- appendAlpha( stroke_colour )
+	}
 
 	l <- list()
 	l[["polyline"]] <- force( polyline )
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
-	l[["fill_colour"]] <- force( fill_colour )
+	l[["fill_colour"]] <- fill_colour
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
-	l[["stroke_colour"]] <- force( stroke_colour )
+	l[["stroke_colour"]] <- if(!is.null( stroke_colour ) ) { stroke_colour } else { fill_colour }
 	l[["stroke_width"]] <- force( stroke_width )
-	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
+	l[["stroke_opacity"]] <-  if(!is.null( stroke_opacity ) ) { resolve_opacity( stroke_opacity ) } else { resolve_opacity( fill_opacity ) }
 	l[["elevation"]] <- force( elevation )
 	l[["tooltip"]] <- force( tooltip )
 	l[["id"]] <- force( id )
@@ -128,7 +140,7 @@ add_column <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_elevation_data( data, l, elevation, c("POINT","MULTIPOINT") )
+	l <- resolve_elevation_data( data, l, elevation, c("POINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -162,18 +174,32 @@ add_column <- function(
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
-	jsfunc <- "add_column_geo"
+	jsfunc <- "add_column_geo_columnar"
+
 
 	if ( tp == "sf" ) {
-		geometry_column <- c( "geometry" )
-		shape <- rcpp_column_geojson( data, l, geometry_column, digits )
+
+		geometry_column <- list( geometry = c("lon","lat") )  ## using columnar structure, the 'sf' is converted to a data.frame
+		## so the geometry columns are obtained after sfheaders::sf_to_df()
+		l[["geometry"]] <- NULL
+		shape <- rcpp_point_sf_columnar( data, l, geometry_column, digits, "column" )
+
+		# geometry_column <- c( "geometry" )
+		# shape <- rcpp_point_geojson( data, l, geometry_column, digits, "column" )
+
 	} else if ( tp == "df" ) {
+
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_column_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_point_df_columnar( data, l, geometry_column, digits, "column" )
+
+		# geometry_column <- list( geometry = c("lon", "lat") )
+		# shape <- rcpp_point_geojson_df( data, l, geometry_column, digits, "column" )
+
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_column_polyline( data, l, geometry_column )
+		shape <- rcpp_point_polyline( data, l, geometry_column, "column" )
 		jsfunc <- "add_column_polyline"
+
 	}
 
 	js_transitions <- resolve_transitions( transitions, "column" )
@@ -184,9 +210,9 @@ add_column <- function(
 	}
 
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
+		map, jsfunc, map_type( map ), shape[["data"]], nrow(data), layer_id, auto_highlight, highlight_colour,
 		radius, elevation_scale, disk_resolution, angle, coverage, shape[["legend"]], bbox, update_view,
-		focus_layer, js_transitions, is_extruded, visible
+		focus_layer, js_transitions, is_extruded, brush_radius, visible
 	)
 }
 

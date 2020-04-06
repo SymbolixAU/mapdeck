@@ -10,17 +10,6 @@ mapdeckArcDependency <- function() {
 	)
 }
 
-mapdeckArcBrushDependency <- function() {
-	list(
-		createHtmlDependency(
-			name = "arc_brush",
-			version = "1.0.0",
-			src = system.file("htmlwidgets/lib/arc_brush", package = "mapdeck"),
-			script = c("arc_brush.js"),
-			all_files = FALSE
-		)
-	)
-}
 
 #' Add arc
 #'
@@ -32,15 +21,19 @@ mapdeckArcBrushDependency <- function() {
 #' @param layer_id single value specifying an id for the layer. Use this value to
 #' distinguish between shape layers of the same type. Layers with the same id are likely
 #' to conflict and not plot correctly
-#' @param origin vector of longitude and latitude columns, or an \code{sfc} column
-#' @param destination vector of longitude and latitude columns, or an \code{sfc} column
+#' @param origin vector of longitude and latitude columns, and optionally an elevation column,
+#' or an \code{sfc} column
+#' @param destination vector of longitude and latitude columns, and optionally an elevatino column,
+#' or an \code{sfc} column
 #' @param id an id value in \code{data} to identify layers when interacting in Shiny apps.
-#' @param stroke_from variable or hex colour to use as the staring stroke colour
+#' @param stroke_from column of \code{data} or hex colour to use as the staring stroke colour.
+#' IIf using a hex colour, use either a single value, or a column of hex colours  on \code{data}
 #' @param stroke_from_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes. If a hex-string is used as the
 #' colour, this argument is ignored and you should include the alpha on the hex string
-#' @param stroke_to variable or hex colour to use as the ending stroke colour
+#' @param stroke_to column of \code{data} or hex colour to use as the ending stroke colour.
+#' If using a hex colour, use either a single value, or a column of hex colours  on \code{data}
 #' @param stroke_to_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes. If a hex-string is used as the
@@ -69,6 +62,7 @@ mapdeckArcBrushDependency <- function() {
 #' If NULL, all arcs are displayed
 #' @param visible logical indicating if the layer is shown on the map. Can be quicker than
 #' using \code{clear_} functions to remove the layer if you will be re-plotting the layer again
+#' @param digits number of digits for rounding coordinates
 #'
 #' @section data:
 #'
@@ -157,7 +151,7 @@ mapdeckArcBrushDependency <- function() {
 #'     css = "max-height: 100px;")
 #'  )
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark")) %>%
+#' mapdeck( style = mapdeck_style("dark")) %>%
 #'   add_arc(
 #'   data = flights
 #'   , layer_id = "arc_layer"
@@ -168,21 +162,45 @@ mapdeckArcBrushDependency <- function() {
 #'   , stroke_width = "stroke"
 #'   )
 #'
-#' ## Using a 2-sfc-column sf object
-#' library(sf)
+#' ## Arcs can have an elevated start & destination
+#' flights$start_elev <- sample(100000:1000000, size = nrow(flights), replace = TRUE )
 #'
-#' sf_flights <- cbind(
-#'   sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
-#'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
-#' )
+#' mapdeck( style = mapdeck_style("dark")) %>%
+#'   add_arc(
+#'   data = flights
+#'   , layer_id = "arc_layer"
+#'   , origin = c("start_lon", "start_lat", "start_elev")
+#'   , destination = c("end_lon", "end_lat", "start_elev")
+#'   , stroke_from = "airport1"
+#'   , stroke_to = "airport2"
+#'   , stroke_width = "stroke"
+#'   )
+#'
+#' ## Using a 2-sfc-column sf object
+#' library(sfheaders)
+#'
+#' sf_flights <- sfheaders::sf_point(
+#'   flights
+#'   , x = "start_lon"
+#'   , y = "start_lat"
+#'   , z = "start_elev"
+#'   , keep = TRUE
+#'   )
+#' destination <- sfheaders::sfc_point(
+#'   flights
+#'   , x = "end_lon"
+#'   , y = "end_lat"
+#'   , z = "start_elev"
+#'   )
+#'
+#' sf_flights$destination <- destination
 #'
 #' mapdeck(
-#'   token = key
 #' ) %>%
 #'  add_arc(
 #'    data = sf_flights
 #'    , origin = 'geometry'
-#'    , destination = 'geometry.1'
+#'    , destination = 'destination'
 #'    , layer_id = 'arcs'
 #'    , stroke_from = "airport1"
 #'    , stroke_to = "airport2"
@@ -191,13 +209,12 @@ mapdeckArcBrushDependency <- function() {
 #' ## using a brush
 #'
 #' mapdeck(
-#'   token = key
 #'   , style = mapdeck_style("light")
 #' ) %>%
 #'  add_arc(
 #'    data = sf_flights
 #'    , origin = 'geometry'
-#'    , destination = 'geometry.1'
+#'    , destination = 'destination'
 #'    , layer_id = 'arcs'
 #'    , stroke_from = "airport1"
 #'    , stroke_to = "airport2"
@@ -290,28 +307,28 @@ add_arc <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
-	if(!is.null(brush_radius)) {
-		jsfunc <- "add_arc_brush_geo"
-		map <- addDependency(map, mapdeckArcBrushDependency())
-	} else {
+	# if(!is.null(brush_radius)) {
+	# 	jsfunc <- "add_arc_brush_geo"
+	# 	map <- addDependency(map, mapdeckArcBrushDependency())
+	# } else {
 		jsfunc <- "add_arc_geo"
 		map <- addDependency(map, mapdeckArcDependency())
-	}
+	# }
 
   if ( tp == "sf" ) {
 		geometry_column <- c( "origin", "destination" )
-		shape <- rcpp_arc_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_od_geojson( data, l, geometry_column, digits, "arc" )
   } else if ( tp == "df" ) {
-  	geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
-  	shape <- rcpp_arc_geojson_df( data, l, geometry_column, digits )
+  	geometry_column <- list( origin = c("start_lon", "start_lat", "start_elev"), destination = c("end_lon", "end_lat", "end_elev") )
+  	shape <- rcpp_od_geojson_df( data, l, geometry_column, digits, "arc" )
   } else if ( tp == "sfencoded" ) {
   	geometry_column <- c("origin", "destination")
-  	shape <- rcpp_arc_polyline( data, l, geometry_column )
-  	if(!is.null(brush_radius)) {
-  		jsfunc <- "add_arc_brush_polyline"
-  	} else {
-  	  jsfunc <- "add_arc_polyline"
-  	}
+  	shape <- rcpp_od_polyline( data, l, geometry_column, "arc" )
+  	# if(!is.null(brush_radius)) {
+  	# 	jsfunc <- "add_arc_brush_polyline"
+  	# } else {
+  	#   jsfunc <- "add_arc_polyline"
+  	# }
   }
 
 	js_transition <- resolve_transitions( transitions, "arc" )

@@ -4,6 +4,7 @@
 \alias{add_hexagon}
 \title{Add hexagon}
 \usage{
+<<<<<<< HEAD
 add_hexagon(map, data = get_map_data(map), polyline = NULL,
   lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
   elevation = NULL, elevation_function = c("sum", "mean", "min",
@@ -12,6 +13,32 @@ add_hexagon(map, data = get_map_data(map), polyline = NULL,
   auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
   colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
   digits = 6, transitions = NULL, visible = TRUE)
+=======
+add_hexagon(
+  map,
+  data = get_map_data(map),
+  polyline = NULL,
+  lon = NULL,
+  lat = NULL,
+  layer_id = NULL,
+  radius = 1000,
+  elevation = NULL,
+  elevation_function = c("sum", "mean", "min", "max"),
+  colour = NULL,
+  colour_function = c("sum", "mean", "min", "max"),
+  legend = FALSE,
+  legend_options = NULL,
+  elevation_scale = 1,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  colour_range = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL,
+  brush_radius = NULL
+)
+>>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -57,10 +84,18 @@ If supplied it specifies how the colour values are calculated. Defaults to sum.}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{transitions}{list specifying the duration of transitions.}
 
+<<<<<<< HEAD
 \item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
 using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
+=======
+\item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed}
+>>>>>>> master
 }
 \description{
 The Hexagon Layer renders a hexagon heatmap based on an array of points.
@@ -119,8 +154,9 @@ add_hexagon(
   , elevation_scale = 100
 )
 
-library( sf )
-sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lng", y = "lat" )
+
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_hexagon(
   data = sf

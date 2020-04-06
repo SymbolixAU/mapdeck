@@ -1,6 +1,16 @@
-function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude, visible ) {
 
-  const greatcircleLayer = new GreatCircleLayer({
+function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude, brush_radius, visible ) {
+
+
+ var extensions = [];
+
+  //console.log( brush_radius ) ;
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new deck.BrushingExtension() );
+  }
+
+  const greatcircleLayer = new deck.GreatCircleLayer({
   	map_id: map_id,
     id: 'greatcircle-'+layer_id,
     data: greatcircle_data,
@@ -8,7 +18,9 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
     parameters: {
 	    depthTest: false
 	  },
+
 	  visible: visible,
+
     getWidth: d => d.properties.stroke_width,
     getSourcePosition: d => md_get_origin_coordinates( d ),
     getTargetPosition: d => md_get_destination_coordinates( d ),
@@ -21,7 +33,9 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
     wrapLongitude: wrap_longitude,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -30,15 +44,21 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
 	  md_update_layer( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
 	}
 	if (legend !== false) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 
-function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude, visible ) {
+function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, wrap_longitude, brush_radius, visible ) {
 
-  const greatcircleLayer = new GreatCircleLayer({
+ var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new deck.BrushingExtension() );
+  }
+
+  const greatcircleLayer = new deck.GreatCircleLayer({
     map_id: map_id,
     id: 'greatcircle-'+layer_id,
     data: greatcircle_data,
@@ -46,7 +66,9 @@ function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id,
     parameters: {
 	    depthTest: false
 	  },
+
 	  visible: visible,
+
     getWidth: d => d.stroke_width,
     getSourcePosition: d => md_decode_points( d.origin ),
     getTargetPosition: d => md_decode_points( d.destination ),
@@ -59,7 +81,9 @@ function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onHover: md_update_tooltip,
     wrapLongitude: wrap_longitude,
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -68,7 +92,7 @@ function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id,
 	  md_update_layer( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
 	}
 	if (legend !== false) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

@@ -13,6 +13,8 @@ mapdeckBitmapDependency <- function() {
 
 #' Add bitmap
 #'
+#' Adds an image to a map
+#'
 #' @inheritParams add_arc
 #' @param image url to an image to use on the map
 #' @param bounds coordinates of the bounding box of the image [left, bottom, right, top]
@@ -26,26 +28,28 @@ mapdeckBitmapDependency <- function() {
 #'
 #' set_token( "MAPBOX_TOKEN" )
 #'
-#' mapdeck() %>%
+#' mapdeck(location = c(-122.3, 37.8), zoom = 10) %>%
 #'  add_bitmap(
-#'    image = 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/website/sf-districts.png'
+#'    image = paste0(
+#'    'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+#'    'website/sf-districts.png')
 #'    , bounds = c(-122.519, 37.7045, -122.355, 37.829)
 #'  )
 #'
-#' mapdeck() %>%
+#' mapdeck(location = c(-75.9, 40.9), zoom = 4) %>%
 #'   add_bitmap(
 #'     image = 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'
 #'     , bounds = c(-80.425, 37.936, -71.516, 46.437)
 #'   )
 #'
-#' mapdeck() %>%
+#' mapdeck(location = c(-75.9, 40.9), zoom = 4) %>%
 #'   add_bitmap(
 #'     image = 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'
 #'     , bounds = c(-80.425, 37.936, -71.516, 46.437)
 #'     , tint_colour = "#FF0000"
 #'   )
 #'
-#' mapdeck() %>%
+#' mapdeck(location = c(-75.9, 40.9), zoom = 4) %>%
 #'   add_bitmap(
 #'     image = 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'
 #'     , bounds = c(-80.425, 37.936, -71.516, 46.437)
@@ -76,7 +80,7 @@ add_bitmap <- function(
 	focus_layer <- force( focus_layer )
 
 	transparent_colour <- force( transparent_colour )
-	tin_colour <- force( tint_colour )
+	tint_colour <- force( tint_colour )
 
 	transparent_colour <- colourvalues::convert_colour( transparent_colour )
 	tint_colour <- colourvalues::convert_colour( tint_colour )

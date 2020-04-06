@@ -71,8 +71,9 @@ mapdeckHexagonDependency <- function() {
 #'   , elevation_scale = 100
 #' )
 #'
-#' library( sf )
-#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lng", y = "lat" )
+#'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_hexagon(
 #'   data = sf
@@ -154,7 +155,8 @@ add_hexagon <- function(
 	focus_layer = FALSE,
 	digits = 6,
 	transitions = NULL,
-	visible = TRUE
+	visible = TRUE,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -179,7 +181,7 @@ add_hexagon <- function(
 	use_colour <- FALSE
 	if(!is.null(colour)) use_colour <- TRUE
 
-	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+	l <- resolve_data( data, l, c("POINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -214,13 +216,13 @@ add_hexagon <- function(
 
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_hexagon_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits, "hexagon" )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_hexagon_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson_df( data, l, geometry_column, digits, "hexagon" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_hexagon_polyline( data, l, geometry_column )
+		shape <- rcpp_aggregate_polyline( data, l, geometry_column, "hexagon" )
 		jsfunc <- "add_hexagon_polyline"
 	}
 
@@ -229,7 +231,8 @@ add_hexagon <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, radius, elevation_scale,
 		auto_highlight, highlight_colour, colour_range, bbox, update_view, focus_layer,
-		js_transitions, use_weight, use_colour, elevation_function, colour_function, legend, visible
+		js_transitions, use_weight, use_colour, elevation_function, colour_function, legend,
+		brush_radius, visible
 		)
 }
 

@@ -52,10 +52,10 @@ mapdeckGridDependency <- function() {
 #' )
 #'
 #' ## using sf object
-#' library(sf)
-#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 #'
-#' mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_grid(
 #'   data = sf
 #'   , cell_size = 5000
@@ -75,7 +75,7 @@ mapdeckGridDependency <- function() {
 #' 	, layer_id = "hex_layer"
 #' 	, elevation_scale = 100
 #' 	, legend = T
-#' 	, colour_function = "mean"
+#' 	, colour_function = "max"
 #' 	, colour = "val"
 #' )
 #'
@@ -85,7 +85,7 @@ mapdeckGridDependency <- function() {
 #' 	, lat = "lat"
 #' 	, lon = "lng"
 #' 	, layer_id = "hex_layer"
-#' 	, elevation_scale = 100
+#' 	, elevation_scale = 10
 #' 	, legend = T
 #' 	, elevation_function = "mean"
 #' 	, elevation = "val"
@@ -123,7 +123,8 @@ add_grid <- function(
 	focus_layer = FALSE,
 	digits = 6,
 	transitions = NULL,
-	visible = TRUE
+	visible = TRUE,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -148,7 +149,7 @@ add_grid <- function(
 	use_colour <- FALSE
 	if(!is.null(colour)) use_colour <- TRUE
 
-	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+	l <- resolve_data( data, l, c("POINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -188,14 +189,24 @@ add_grid <- function(
 	jsfunc <- "add_grid_geo"
 
 	if ( tp == "sf" ) {
+
+		# geometry_column <- list( geometry = c("lon","lat") )  ## using columnar structure, the 'sf' is converted to a data.frame
+		## so the geometry columns are obtained after sfheaders::sf_to_df()
+		# l[["geometry"]] <- NULL
+		# shape <- rcpp_point_sf_columnar( data, l, geometry_column, digits, "grid" )
+
 	  geometry_column <- c( "geometry" )
-	  shape <- rcpp_grid_geojson( data, l, geometry_column, digits )
+	  shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits, "grid" )
 	} else if ( tp == "df" ) {
+
+		# geometry_column <- list( geometry = c("lon", "lat") )
+		# shape <- rcpp_point_df_columnar( data, l, geometry_column, digits, "grid" )
+
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_grid_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson_df( data, l, geometry_column, digits, "grid" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_grid_polyline( data, l, geometry_column )
+		shape <- rcpp_aggregate_polyline( data, l, geometry_column, "grid" )
 		jsfunc <- "add_grid_polyline"
 	}
 
@@ -205,7 +216,8 @@ add_grid <- function(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, cell_size,
 		jsonify::to_json(extruded, unbox = TRUE), elevation_scale,
 		colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer,
-		js_transitions, use_weight, use_colour, elevation_function, colour_function, legend, visible
+		js_transitions, use_weight, use_colour, elevation_function, colour_function, legend,
+		brush_radius, visible
 		)
 }
 

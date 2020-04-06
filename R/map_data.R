@@ -1,10 +1,10 @@
 
 init_bbox <- function() return(  list(c(-180,-90),c(180,90)) )
 
-sfrow <- function( sf , sfc_type ) {
-	geom_column <- attr(sf, "sf_column")
-	return( which(vapply(sf[[geom_column]], function(x) attr(x, "class")[[2]], "") %in% sfc_type ) )
-}
+# sfrow <- function( sf , sfc_type ) {
+# 	geom_column <- attr(sf, "sf_column")
+# 	return( which(vapply(sf[[geom_column]], function(x) attr(x, "class")[[2]], "") %in% sfc_type ) )
+# }
 
 resolve_od_data <- function( data, l, origin, destination ) UseMethod("resolve_od_data")
 
@@ -13,6 +13,16 @@ resolve_od_data.sf <- function( data, l, origin, destination ) {
 	if ( is.null( l[["origin"]] ) || is.null( l[["destination"]] ) ) {
 		stop("mapdeck - origin and destination columns required")
 	}
+
+	## downcast each side of the sf object to POINT
+	attr( data, "sf_column" ) <- origin
+	data <- sfheaders::sf_cast( data, "POINT" )
+
+	attr( data, "sf_column" ) <- destination
+	data <- sfheaders::sf_cast( data, "POINT" )
+
+	l[["data"]] <- data
+
 
 	l[["data_type"]] <- "sf"
 	l[["bbox"]] <- get_od_box( data, l )
@@ -59,17 +69,41 @@ resolve_od_data.data.frame <- function( data, l, origin, destination ) {
 		stop("mapdeck - origin and destination columns required")
 	}
 
-	if( length(origin) != 2 | length(destination) != 2 ) {
-		stop("mapdeck - origin and destination columns should both contain lon & lat values")
+	if( length( origin ) == 2 ) {
+		l[["start_lon"]] <- origin[1]
+		l[["start_lat"]] <- origin[2]
+		l[["start_elev"]] <- 0
+	} else if ( length( origin ) == 3 ) {
+		l[["start_lon"]] <- origin[1]
+		l[["start_lat"]] <- origin[2]
+		l[["start_elev"]] <- origin[3]
+	} else {
+		stop("mapdeck - origin and destination columns should contain lon & lat, and optionally elevation columns")
 	}
+
+	if( length( destination ) == 2 ) {
+		l[["end_lon"]] <- destination[1]
+		l[["end_lat"]] <- destination[2]
+		l[["end_elev"]] <- 0
+	} else if ( length( destination ) == 3 ) {
+		l[["end_lon"]] <- destination[1]
+		l[["end_lat"]] <- destination[2]
+		l[["end_elev"]] <- destination[3]
+	} else {
+		stop("mapdeck - origin and destination columns should contain lon & lat, and optionally elevation columns")
+	}
+
+	# if( length(origin) != 2 | length(destination) != 2 ) {
+	# 	stop("mapdeck - origin and destination columns should both contain lon & lat values")
+	# }
 
 	l[["data_type"]] <- "df"
 	l[["bbox"]] <- get_od_box( data, l )
 
-	l[["start_lon"]] <- origin[1]
-	l[["start_lat"]] <- origin[2]
-	l[["end_lon"]] <- destination[1]
-	l[["end_lat"]] <- destination[2]
+	# l[["start_lon"]] <- origin[1]
+	# l[["start_lat"]] <- origin[2]
+	# l[["end_lon"]] <- destination[1]
+	# l[["end_lat"]] <- destination[2]
 
 	l[["origin"]] <- NULL
 	l[["destination"]] <- NULL
@@ -134,15 +168,15 @@ resolve_elevation_data.sfencodedLite <- function( data, l, elevation, sf_geom ) 
 ## data using a single geometry ()
 resolve_data <- function( data, l, sf_geom ) UseMethod( "resolve_data" )
 
-sfc_type <- function( sf, sfc_col ) {
-	cls <- attr(sf[[sfc_col]], "class")
-	return( gsub("sfc_", "", cls[1] ) )
-}
+# sfc_type <- function( sf, sfc_col ) {
+# 	cls <- attr(sf[[sfc_col]], "class")
+# 	return( gsub("sfc_", "", cls[1] ) )
+# }
 
 ##
-sf_needs_subsetting <- function( data, sfc_col, sf_geom ) {
-	return( !sfc_type( data, sfc_col ) %in% toupper( sf_geom ) )
-}
+# sf_needs_subsetting <- function( data, sfc_col, sf_geom ) {
+# 	return( !sfc_type( data, sfc_col ) %in% toupper( sf_geom ) )
+# }
 
 
 #' @export
@@ -169,8 +203,21 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 	sfc_col <- attr( data, "sf_column" )
 	l[["geometry"]] <- sfc_col
 
-	if( sf_needs_subsetting( data, sfc_col, sf_geom ) ) {
-		l[["data"]] <- data[ sfrow(data, sf_geom) , ]
+	# if( sf_needs_subsetting( data, sfc_col, sf_geom ) ) {
+	# 	l[["data"]] <- data[ sfrow(data, sf_geom) , ]
+	# }
+
+	## TODO: move to c++
+	## only cast if it's needed
+	cls <- attr( data[[ sfc_col ]], "class" )
+
+	if( is.null( cls ) ) {
+		stop("mapdeck - invalid sf object; have you loaded library(sf)?")
+	}
+
+	cls <- gsub("sfc_", "", cls[1])
+	if( cls != sf_geom ) {
+		l[["data"]] <- sfheaders::sf_cast( data, sf_geom )
 	}
 
 	l[["bbox"]] <- get_box( data, l )
@@ -291,7 +338,12 @@ resolve_data.sfencodedLite <- function( data, l, sf_geom ) {
 #' @export
 resolve_data.data.frame <- function( data, l, sf_geom ) {
 
-	if( !inherits(data, "sf") & !inherits(data, "sfencoded") & !inherits(data, "sfencodedLite" ) & is.null( l[["polyline"]] ) ) {
+	if( !inherits(data, "sf") &
+			!inherits(data, "sfencoded") &
+			!inherits(data, "sfencodedLite" ) &
+			is.null( l[["polyline"]] )
+		) {
+
 		if( is.null(l[["lon"]] ) ) {
 			l[["lon"]] <- find_lon_column( names( data ) )
 		}

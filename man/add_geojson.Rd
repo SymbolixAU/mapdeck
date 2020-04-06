@@ -4,6 +4,7 @@
 \alias{add_geojson}
 \title{Add Geojson}
 \usage{
+<<<<<<< HEAD
 add_geojson(map, data = get_map_data(map), layer_id = NULL,
   stroke_colour = NULL, stroke_opacity = NULL, stroke_width = NULL,
   fill_colour = NULL, fill_opacity = NULL, radius = NULL,
@@ -13,6 +14,42 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
   highlight_colour = "#AAFFFFFF", palette = "viridis",
   na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
   digits = 6, transitions = NULL, visible = TRUE)
+=======
+add_geojson(
+  map,
+  data = get_map_data(map),
+  layer_id = NULL,
+  stroke_colour = NULL,
+  stroke_opacity = NULL,
+  stroke_width = NULL,
+  dash_size = NULL,
+  dash_gap = NULL,
+  fill_colour = NULL,
+  fill_opacity = NULL,
+  radius = NULL,
+  elevation = NULL,
+  extruded = FALSE,
+  light_settings = list(),
+  legend = F,
+  legend_options = NULL,
+  legend_format = NULL,
+  auto_highlight = FALSE,
+  tooltip = NULL,
+  highlight_colour = "#AAFFFFFF",
+  palette = "viridis",
+  na_colour = "#808080FF",
+  line_width_units = c("metres", "pixels"),
+  line_width_scale = 1,
+  line_width_min_pixels = 0,
+  elevation_scale = 1,
+  point_radius_scale = 1,
+  point_radius_min_pixels = 1,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL
+)
+>>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -29,6 +66,10 @@ to conflict and not plot correctly}
 
 \item{stroke_width}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for width (in meters)}
 
+\item{dash_size}{size of each dash, relative to the width of the stroke}
+
+\item{dash_gap}{size of the gap between dashes, relative to the width of the stroke}
+
 \item{fill_colour}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for colour}
 
 \item{fill_opacity}{column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for opacity}
@@ -36,6 +77,9 @@ to conflict and not plot correctly}
 \item{radius}{radius of points in meters. Default 1. See details}
 
 \item{elevation}{elevation of polygons. Default 0. See details}
+
+\item{extruded}{logical indicating if polygons should extrude from the map.
+If \code{TRUE}, \code{stroke_colour} for polygons is ignored}
 
 \item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
@@ -62,9 +106,28 @@ palette for different colour options (where available),
 
 \item{na_colour}{hex string colour to use for NA values}
 
+\item{line_width_units}{The units of the line width, one of 'meters', 'pixels'.
+When zooming in and out, meter sizes scale with the base map, and pixel sizes remain the same on screen.}
+
+\item{line_width_scale}{The line width multiplier that multiplied to all lines,
+including the LineString and MultiLineString features and also the outline for
+Polygon and MultiPolygon features if the stroked attribute is true}
+
+\item{line_width_min_pixels}{The minimum line width in pixels.}
+
+\item{elevation_scale}{Elevation multiplier. The final elevation is calculated by
+elevationScale * getElevation(d). elevationScale is a handy property to scale
+all polygon elevation without updating the data}
+
+\item{point_radius_scale}{A global radius multiplier for all points.}
+
+\item{point_radius_min_pixels}{The minimum radius in pixels.}
+
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{digits}{number of digits for rounding coordinates}
 
 \item{transitions}{list specifying the duration of transitions.}
 
