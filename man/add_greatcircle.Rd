@@ -4,17 +4,6 @@
 \alias{add_greatcircle}
 \title{Add greatcircle}
 \usage{
-<<<<<<< HEAD
-add_greatcircle(map, data = get_map_data(map), layer_id = NULL, origin,
-  destination, id = NULL, stroke_from = NULL,
-  stroke_from_opacity = NULL, stroke_to = NULL,
-  stroke_to_opacity = NULL, stroke_width = NULL,
-  wrap_longitude = FALSE, tooltip = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", legend = F, legend_options = NULL,
-  legend_format = NULL, palette = "viridis", na_colour = "#808080FF",
-  update_view = TRUE, focus_layer = FALSE, transitions = NULL,
-  digits = 6, visible = TRUE)
-=======
 add_greatcircle(
   map,
   data = get_map_data(map),
@@ -39,9 +28,10 @@ add_greatcircle(
   update_view = TRUE,
   focus_layer = FALSE,
   transitions = NULL,
-  digits = 6
+  digits = 6,
+  visible = TRUE,
+  brush_radius = NULL
 )
->>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -109,12 +99,14 @@ palette for different colour options (where available),
 
 \item{transitions}{list specifying the duration of transitions.}
 
-<<<<<<< HEAD
+\item{digits}{number of digits for rounding coordinates}
+
 \item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
 using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
-=======
-\item{digits}{number of digits for rounding coordinates}
->>>>>>> master
+
+\item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed}
 }
 \description{
 Renders flat arcs along the great circle joining pairs

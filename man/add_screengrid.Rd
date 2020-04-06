@@ -4,13 +4,6 @@
 \alias{add_screengrid}
 \title{Add Screengrid}
 \usage{
-<<<<<<< HEAD
-add_screengrid(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, weight = NULL, aggregation = c("sum", "mean",
-  "min", "max"), colour_range = NULL, opacity = 0.8, cell_size = 50,
-  layer_id = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, visible = TRUE)
-=======
 add_screengrid(
   map,
   data = get_map_data(map),
@@ -25,9 +18,9 @@ add_screengrid(
   layer_id = NULL,
   update_view = TRUE,
   focus_layer = FALSE,
-  digits = 6
+  digits = 6,
+  visible = TRUE
 )
->>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -60,12 +53,10 @@ to conflict and not plot correctly}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
-<<<<<<< HEAD
+\item{digits}{number of digits for rounding coordinates}
+
 \item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
 using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
-=======
-\item{digits}{number of digits for rounding coordinates}
->>>>>>> master
 }
 \description{
 The Screen Grid Layer takes in an array of latitude and longitude coordinated points,

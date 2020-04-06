@@ -4,16 +4,6 @@
 \alias{add_path}
 \title{Add Path}
 \usage{
-<<<<<<< HEAD
-add_path(map, data = get_map_data(map), polyline = NULL,
-  stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
-  tooltip = NULL, billboard = FALSE, layer_id = NULL, id = NULL,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, digits = 6, transitions = NULL,
-  visible = TRUE)
-=======
 add_path(
   map,
   data = get_map_data(map),
@@ -38,9 +28,9 @@ add_path(
   focus_layer = FALSE,
   digits = 6,
   transitions = NULL,
+  visible = TRUE,
   brush_radius = NULL
 )
->>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -103,14 +93,12 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{transitions}{list specifying the duration of transitions.}
 
-<<<<<<< HEAD
 \item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
 using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
-=======
+
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
->>>>>>> master
 }
 \description{
 The Path Layer takes in lists of coordinate points and renders them as
@@ -191,7 +179,7 @@ key <- 'abc'
 set_token( key )
 
 mapdeck(
-  style = 'mapbox://styles/mapbox/dark-v9'
+  style = mapdeck_style("dark")
   , location = c(145, -37.8)
   , zoom = 10) \%>\%
   add_path(

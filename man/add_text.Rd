@@ -4,19 +4,6 @@
 \alias{add_text}
 \title{Add Text}
 \usage{
-<<<<<<< HEAD
-add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
-  polyline = NULL, fill_colour = NULL, fill_opacity = NULL,
-  size = NULL, angle = NULL, anchor = NULL,
-  alignment_baseline = NULL, billboard = TRUE,
-  font_family = "Monaco, monospace", font_weight = "normal",
-  tooltip = NULL, layer_id = NULL, id = NULL,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, digits = 6, transitions = NULL,
-  visible = TRUE)
-=======
 add_text(
   map,
   data = get_map_data(map),
@@ -47,9 +34,9 @@ add_text(
   focus_layer = FALSE,
   digits = 6,
   transitions = NULL,
+  visible = TRUE,
   brush_radius = NULL
 )
->>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -128,14 +115,12 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{transitions}{list specifying the duration of transitions.}
 
-<<<<<<< HEAD
 \item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
 using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
-=======
+
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
->>>>>>> master
 }
 \description{
 The Text Layer renders text labels on the map

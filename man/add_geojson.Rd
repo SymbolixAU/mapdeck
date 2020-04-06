@@ -4,17 +4,6 @@
 \alias{add_geojson}
 \title{Add Geojson}
 \usage{
-<<<<<<< HEAD
-add_geojson(map, data = get_map_data(map), layer_id = NULL,
-  stroke_colour = NULL, stroke_opacity = NULL, stroke_width = NULL,
-  fill_colour = NULL, fill_opacity = NULL, radius = NULL,
-  elevation = NULL, light_settings = list(), legend = F,
-  legend_options = NULL, legend_format = NULL,
-  auto_highlight = FALSE, tooltip = NULL,
-  highlight_colour = "#AAFFFFFF", palette = "viridis",
-  na_colour = "#808080FF", update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL, visible = TRUE)
-=======
 add_geojson(
   map,
   data = get_map_data(map),
@@ -47,9 +36,9 @@ add_geojson(
   update_view = TRUE,
   focus_layer = FALSE,
   digits = 6,
-  transitions = NULL
+  transitions = NULL,
+  visible = TRUE
 )
->>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}

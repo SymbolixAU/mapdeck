@@ -4,14 +4,6 @@
 \alias{add_trips}
 \title{Add Trips}
 \usage{
-<<<<<<< HEAD
-add_trips(map, data = get_map_data(map), stroke_colour = NULL,
-  stroke_width = NULL, opacity = 0.3, palette = "viridis",
-  trail_length = 180, start_time = get_m_range_start(data),
-  end_time = get_m_range_end(data), animation_speed = 30,
-  layer_id = NULL, legend = FALSE, legend_options = NULL,
-  legend_format = NULL, visible = TRUE)
-=======
 add_trips(
   map,
   data = get_map_data(map),
@@ -27,9 +19,9 @@ add_trips(
   legend = FALSE,
   legend_options = NULL,
   legend_format = NULL,
+  visible = TRUE,
   digits = 6
 )
->>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -68,12 +60,10 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{legend_format}{A list containing functions to apply to legend values. See section legend}
 
-<<<<<<< HEAD
 \item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
 using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
-=======
+
 \item{digits}{number of digits for rounding coordinates}
->>>>>>> master
 }
 \description{
 The Trips Layer takes an sf object with Z (elevation) and M (time) attributes and renders

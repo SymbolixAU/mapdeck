@@ -4,17 +4,6 @@
 \alias{add_grid}
 \title{Add Grid}
 \usage{
-<<<<<<< HEAD
-add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, cell_size = 1000, extruded = TRUE,
-  elevation = NULL, elevation_function = c("sum", "mean", "min",
-  "max"), colour = NULL, colour_function = c("sum", "mean", "min",
-  "max"), elevation_scale = 1, colour_range = NULL, legend = FALSE,
-  legend_options = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", layer_id = NULL,
-  update_view = TRUE, focus_layer = FALSE, digits = 6,
-  transitions = NULL, visible = TRUE)
-=======
 add_grid(
   map,
   data = get_map_data(map),
@@ -38,9 +27,9 @@ add_grid(
   focus_layer = FALSE,
   digits = 6,
   transitions = NULL,
+  visible = TRUE,
   brush_radius = NULL
 )
->>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -94,14 +83,12 @@ to conflict and not plot correctly}
 
 \item{transitions}{list specifying the duration of transitions.}
 
-<<<<<<< HEAD
 \item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
 using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
-=======
+
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
->>>>>>> master
 }
 \description{
 The Grid Layer renders a grid heatmap based on an array of points.

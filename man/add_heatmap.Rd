@@ -19,6 +19,7 @@ add_heatmap(
   update_view = TRUE,
   focus_layer = FALSE,
   digits = 6,
+  visible = TRUE,
   transitions = NULL
 )
 }
@@ -61,6 +62,9 @@ to conflict and not plot correctly}
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{digits}{number of digits for rounding coordinates}
+
+\item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
+using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
 
 \item{transitions}{list specifying the duration of transitions.}
 }

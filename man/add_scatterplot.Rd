@@ -4,19 +4,6 @@
 \alias{add_scatterplot}
 \title{Add Scatterplot}
 \usage{
-<<<<<<< HEAD
-add_scatterplot(map, data = get_map_data(map), lon = NULL,
-  lat = NULL, polyline = NULL, radius = NULL,
-  radius_min_pixels = 1, radius_max_pixels = NULL,
-  fill_colour = NULL, fill_opacity = NULL, stroke_colour = NULL,
-  stroke_width = NULL, stroke_opacity = NULL, tooltip = NULL,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  layer_id = NULL, id = NULL, palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
-  legend_format = NULL, digits = 6, update_view = TRUE,
-  focus_layer = FALSE, transitions = NULL, brush_radius = NULL,
-  visible = TRUE)
-=======
 add_scatterplot(
   map,
   data = get_map_data(map),
@@ -45,9 +32,9 @@ add_scatterplot(
   update_view = TRUE,
   focus_layer = FALSE,
   transitions = NULL,
-  brush_radius = NULL
+  brush_radius = NULL,
+  visible = TRUE
 )
->>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -124,14 +111,12 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{transitions}{list specifying the duration of transitions.}
 
-<<<<<<< HEAD
-\item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
-using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
-=======
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
->>>>>>> master
+
+\item{visible}{logical indicating if the layer is shown on the map. Can be quicker than
+using \code{clear_} functions to remove the layer if you will be re-plotting the layer again}
 }
 \description{
 The Scatterplot Layer takes in coordinate points and renders them as circles

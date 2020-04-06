@@ -4,17 +4,6 @@
 \alias{add_arc}
 \title{Add arc}
 \usage{
-<<<<<<< HEAD
-add_arc(map, data = get_map_data(map), layer_id = NULL, origin,
-  destination, id = NULL, stroke_from = NULL,
-  stroke_from_opacity = NULL, stroke_to = NULL,
-  stroke_to_opacity = NULL, stroke_width = NULL, tilt = NULL,
-  height = NULL, tooltip = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", legend = F, legend_options = NULL,
-  legend_format = NULL, palette = "viridis", na_colour = "#808080FF",
-  update_view = TRUE, focus_layer = FALSE, transitions = NULL,
-  digits = 6, brush_radius = NULL, visible = TRUE)
-=======
 add_arc(
   map,
   data = get_map_data(map),
@@ -41,9 +30,9 @@ add_arc(
   focus_layer = FALSE,
   transitions = NULL,
   digits = 6,
-  brush_radius = NULL
+  brush_radius = NULL,
+  visible = TRUE
 )
->>>>>>> master
 }
 \arguments{
 \item{map}{a mapdeck map object}
