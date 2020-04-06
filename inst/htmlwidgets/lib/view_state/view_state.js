@@ -1,7 +1,7 @@
 function add_view_state( map_id, viewState ) {
 	'use strict';
 
-  console.log( "add_view_state" );
+  //console.log( "add_view_state" );
 
 	if( !md_div_exists( 'mapViewStateContainer'+map_id) ) {
 		md_setup_view_state( map_id );

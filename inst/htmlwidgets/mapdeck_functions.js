@@ -74,10 +74,6 @@ function md_update_tooltip({x, y, object, layer, index}) {
   const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
   var tt;
 
-  //console.log( tooltip );
-  //console.log( object );
-  //console.log( x, ", ", y );
-
   if (object) {
   	if( object.properties !== undefined ) {
 	  	if ( object.properties.tooltip !== undefined ) {
@@ -99,6 +95,28 @@ function md_update_tooltip({x, y, object, layer, index}) {
   	tooltip.style.display = 'none';
     tooltip.innerHTML = '';
   }
+}
+
+function md_update_binary_tooltip(layer, idx, x, y) {
+
+	if( !md_div_exists( 'mapdecktooltip'+ layer.props.map_id ) ) {
+  	md_setup_tooltip( layer.props.map_id );
+  }
+
+  const tooltip = document.getElementById( 'mapdecktooltip'+layer.props.map_id );
+  var tt;
+
+	  if( layer.props.data.tooltip && idx >= 0 ) {
+	  	tt = layer.props.data.tooltip[ idx ];
+	  	tooltip.style.display = 'block';
+	    tooltip.style.top = `${y}px`;
+	    tooltip.style.left = `${x}px`;
+	    tooltip.innerHTML = `<div>${tt}</div>`;
+	  } else {
+    	tooltip.style.display = 'none';
+	    tooltip.innerHTML = '';
+  }
+
 }
 
 
@@ -170,15 +188,16 @@ function md_update_layer( map_id, layer_id, layer ) {
 function md_clear_layer( map_id, layer_id ) {
 
   var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
+
   if ( elem != -1 ) {
   	window[ map_id + 'layers'].splice( elem, 1 );
   }
 
   // ## issue 137
-  var vs = window[ map_id + 'map'].viewState;
+  //var vs = window[ map_id + 'map'].viewState;
   window[map_id + 'map'].setProps({
-  	layers: [...window[map_id + 'layers'] ],
-  	viewState: vs
+  	layers: [...window[map_id + 'layers'] ]
+  	//viewState: vs                            // issue 239 & 286
   });
 }
 
@@ -190,7 +209,7 @@ function md_update_overlay( map_id, layer_id, layer ) {
   }
 
   if ( window[ map_id + 'GoogleMapsOverlay'] == null ) {
-  	window[ map_id + 'GoogleMapsOverlay'] = new GoogleMapsOverlay();
+  	window[ map_id + 'GoogleMapsOverlay'] = new deck.GoogleMapsOverlay();
   }
 
 	var elem = md_findObjectElementByKey( window[map_id + 'layers'], 'id', layer_id );

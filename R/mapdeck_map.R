@@ -28,6 +28,9 @@
 #'   \item{viewBounds}
 #'   \item{interactionState}
 #' }
+#'
+#' @param repeat_view Logical indicating if the layers should repeat at low zoom levels
+#'
 #' @section Access Tokens:
 #'
 #' If the \code{token} argument is not used, the map will search for the token, firstly by
@@ -50,7 +53,8 @@ mapdeck <- function(
 	zoom = 0,
 	bearing = 0,
 	location = c(0, 0),
-	show_view_state = FALSE
+	show_view_state = FALSE,
+	repeat_view = FALSE
 	) {
 
   # forward options using x
@@ -61,7 +65,8 @@ mapdeck <- function(
     , zoom = force( zoom )
     , location = force( as.numeric( location ) )
     , bearing = force( bearing )
-    , show_view_state = show_view_state
+    , show_view_state = force( show_view_state )
+    , repeat_view = force( repeat_view )
   )
 
   # deps <- list(
@@ -163,6 +168,7 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param deferUntilFlush indicates whether actions performed against this
 #' instance should be carried out right away, or whether they should be held until
 #' after the next time all of the outputs are updated; defaults to TRUE.
+#' @param map_type either mapdeck_update or google_map_update
 #' @export
 mapdeck_update <- function(
 	data = NULL,

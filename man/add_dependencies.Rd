@@ -6,6 +6,9 @@
 \usage{
 add_dependencies(map)
 }
+\arguments{
+\item{map}{the map object to which dependencies will be added}
+}
 \description{
 Adds the required mapdeck javascript dependencies to a map when not using a mapdeck map.
 }

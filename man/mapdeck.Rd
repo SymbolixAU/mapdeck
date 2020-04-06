@@ -15,7 +15,8 @@ mapdeck(
   zoom = 0,
   bearing = 0,
   location = c(0, 0),
-  show_view_state = FALSE
+  show_view_state = FALSE,
+  repeat_view = FALSE
 )
 }
 \arguments{
@@ -55,6 +56,8 @@ When \code{TRUE}, the following is added as an overlay to the map
   \item{viewBounds}
   \item{interactionState}
 }}
+
+\item{repeat_view}{Logical indicating if the layers should repeat at low zoom levels}
 }
 \description{
 mapdeck
