@@ -52,7 +52,7 @@ mapdeckPathDependency <- function() {
 #' set_token( key )
 #'
 #' mapdeck(
-#'   style = 'mapbox://styles/mapbox/dark-v9'
+#'   style = mapdeck_style("dark")
 #'   , location = c(145, -37.8)
 #'   , zoom = 10) %>%
 #'   add_path(
@@ -186,112 +186,6 @@ add_path <- function(
 		highlight_colour, shape[[1]][["legend"]], bbox, update_view, focus_layer,
 		js_transitions, billboard, brush_radius, use_dashes
 		)
-}
-
-add_path_binary <- function(
-	map,
-	data = get_map_data(map),
-	polyline = NULL,
-	stroke_colour = NULL,
-	stroke_width = NULL,
-	stroke_opacity = NULL,
-	dash_size = NULL,
-	dash_gap = NULL,
-	tooltip = NULL,
-	billboard = FALSE,
-	layer_id = NULL,
-	id = NULL,
-	auto_highlight = FALSE,
-	highlight_colour = "#AAFFFFFF",
-	palette = "viridis",
-	na_colour = "#808080FF",
-	legend = FALSE,
-	legend_options = NULL,
-	legend_format = NULL,
-	update_view = TRUE,
-	focus_layer = FALSE,
-	digits = 6,
-	transitions = NULL,
-	brush_radius = NULL
-) {
-
-	l <- list()
-
-	use_dashes <- !is.null( dash_size ) | !is.null( dash_gap )
-
-	l[["polyline"]] <- force( polyline )
-	l[["stroke_colour"]] <- force( stroke_colour)
-	l[["stroke_width"]] <- force( stroke_width )
-	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
-	l[["dash_size"]] <- force( dash_size )
-	l[["dash_gap"]] <- force( dash_gap )
-	l[["tooltip"]] <- force( tooltip )
-	l[["id"]] <- force( id )
-	l[["na_colour"]] <- force( na_colour )
-
-	l <- resolve_palette( l, palette )
-	l <- resolve_legend( l, legend )
-	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, c("LINESTRING") )
-
-	bbox <- init_bbox()
-	update_view <- force( update_view )
-	focus_layer <- force( focus_layer )
-
-	if ( !is.null(l[["data"]]) ) {
-		data <- l[["data"]]
-		l[["data"]] <- NULL
-	}
-
-	if( !is.null(l[["bbox"]] ) ) {
-		bbox <- l[["bbox"]]
-		l[["bbox"]] <- NULL
-	}
-
-	layer_id <- layerId(layer_id, "path")
-	checkHexAlpha( highlight_colour )
-
-	map <- addDependency(map, mapdeckPathDependency())
-
-	tp <- l[["data_type"]]
-	l[["data_type"]] <- NULL
-
-	if ( tp == "sf" ) {
-		# geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		l[["geometry"]] <- NULL
-
-		## sfheaders v0.2.1004 - it will ignore any 'unlist' columns which arn't actual lists
-		unlist <- c( l[["stroke_colour"]], l[["stroke_width"]] )
-
-		if( length( unlist ) == 0 ) {
-			unlist <- NULL
-		}
-
-		shape <- rcpp_path_geojson_binary( data, l, unlist, digits, "path" )
-		jsfunc <- "add_path_bin"
-
-	} else if ( tp == "sfencoded" ) {
-		jsfunc <- "add_path_polyline"
-		geometry_column <- "polyline"
-		shape <- rcpp_path_polyline( data, l, geometry_column, "path" )
-	}
-
-	js_transitions <- resolve_transitions( transitions, "path" )
-	if( inherits( legend, "json" ) ) {
-		shape[["legend"]] <- legend
-	} else {
-		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
-	}
-
-	start_indices <- jsonify::to_json(  as.integer( shape[[2]] ) )
-
-	return( shape )
-
-	invoke_method(
-		map, jsfunc, map_type( map ), shape[[1]][["data"]], nrow(data), start_indices, shape[[3]], layer_id, auto_highlight,
-		highlight_colour, shape[[1]][["legend"]], bbox, update_view, focus_layer,
-		js_transitions, billboard, brush_radius, use_dashes
-	)
 }
 
 

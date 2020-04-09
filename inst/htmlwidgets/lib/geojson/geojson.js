@@ -2,9 +2,12 @@
 
 function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, line_width_units, line_width_scale, line_width_min_pixels, elevation_scale, point_radius_scale, point_radius_min_pixels, extruded ) {
 
-  geojson = geojson.features;
+  var extensions = [];
+  extensions.push(
+  	new deck.PathStyleExtension({dash: true})
+  );
 
-  //console.log( geojson );
+  geojson = geojson.features;
 
   const geojsonLayer = new deck.GeoJsonLayer({
     map_id: map_id,
@@ -29,14 +32,15 @@ function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, au
     getRadius: g => g.properties.radius,
     getLineWidth: g => g.properties.stroke_width,
     getElevation: g => g.properties.elevation,
-    getLineDashArray: d => [ d.properties.dash_size, d.properties.dash_gap ],
+    getDashArray: d => [ d.properties.dash_size, d.properties.dash_gap ],
 
     lightSettings: light_settings,
     onClick: info => md_layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onHover: md_update_tooltip,
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    extension: extensions
   });
 
   if( map_type == "google_map") {
@@ -53,6 +57,11 @@ function add_geojson_sf( map_id, map_type, geojson, layer_id, light_settings, au
 }
 
 function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, line_width_units, line_width_scale, line_width_min_pixels, elevation_scale, point_radius_scale, point_radius_min_pixels, extruded ) {
+
+  var extensions = [];
+  extensions.push(
+  	new deck.PathStyleExtension({dash: true})
+  );
 
   const geojsonLayer = new deck.GeoJsonLayer({
     map_id: map_id,
@@ -77,14 +86,15 @@ function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_
     getRadius: g => geojson_radius( g ),
     getLineWidth: g => geojson_line_width( g ),
     getElevation: g => geojson_elevation( g ),
-    getLineDashArray: d => [ d.dash_size, d.dash_gap ],
+    getDashArray: d => [ d.dash_size, d.dash_gap ],
 
     lightSettings: light_settings,
     onClick: info => md_layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onHover: md_update_tooltip,
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    extension: extensions
   });
 
   if( map_type == "google_map") {

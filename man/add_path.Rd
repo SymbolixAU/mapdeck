@@ -175,7 +175,7 @@ key <- 'abc'
 set_token( key )
 
 mapdeck(
-  style = 'mapbox://styles/mapbox/dark-v9'
+  style = mapdeck_style("dark")
   , location = c(145, -37.8)
   , zoom = 10) \%>\%
   add_path(
