@@ -133,6 +133,8 @@ mapdeck(style = mapdeck_style("dark"), pitch = 45 ) \%>\%
     , stroke_colour = "airport1"
     , stroke_width = "stroke"
     , auto_highlight = TRUE
+    , trail_length = 1
+    , animation_speed = 1
  )
 
 ## Using a 2-sfc-column sf object
@@ -144,12 +146,14 @@ destination <- sfheaders::sfc_point( flights, x = "end_lon", y = "end_lat" )
 sf_flights$destination <- destination
 
 mapdeck() \%>\%
- add_line(
+ add_animated_line(
    data = sf_flights
    , origin = 'geometry'
    , destination = 'destination'
    , layer_id = 'arcs'
    , stroke_colour = "airport1"
+   , trail_length = 1
+   , animation_speed = 2
 )
 }
 

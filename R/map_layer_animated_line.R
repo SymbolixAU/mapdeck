@@ -40,6 +40,8 @@ mapdeckAnimatedLineDependency <- function() {
 #'     , stroke_colour = "airport1"
 #'     , stroke_width = "stroke"
 #'     , auto_highlight = TRUE
+#'     , trail_length = 1
+#'     , animation_speed = 1
 #'  )
 #'
 #' ## Using a 2-sfc-column sf object
@@ -51,12 +53,14 @@ mapdeckAnimatedLineDependency <- function() {
 #' sf_flights$destination <- destination
 #'
 #' mapdeck() %>%
-#'  add_line(
+#'  add_animated_line(
 #'    data = sf_flights
 #'    , origin = 'geometry'
 #'    , destination = 'destination'
 #'    , layer_id = 'arcs'
 #'    , stroke_colour = "airport1"
+#'    , trail_length = 1
+#'    , animation_speed = 2
 #' )
 #' }
 #'
