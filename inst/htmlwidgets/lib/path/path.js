@@ -8,7 +8,6 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
   	extensions.push( new deck.BrushingExtension() );
   }
 
-  var extensions = [];
   extensions.push(
   	new deck.PathStyleExtension({dash: true})
   );

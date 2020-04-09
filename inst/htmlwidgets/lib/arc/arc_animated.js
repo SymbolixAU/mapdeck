@@ -43,23 +43,6 @@ function add_arc_animated_geo( map_id, map_type, arc_data, layer_id, auto_highli
 	color.a *= alpha;
 	`
 
-	fsColorFilter = `
-	float tripDuration = vArcLength / animationSpeed;
-	float flightInterval = 1.0 / vFrequency;
-	float r = mod(geometry.uv.x, flightInterval);
-
-	// Head of the trip (alpha = 1.0)
-	float rMax = mod(fract(timestamp / tripDuration), flightInterval);
-	// Tail of the trip (alpha = 0.0)
-	float rMin = rMax - tailLength / vArcLength;
-	// Two consecutive trips can overlap
-	float alpha = (r > rMax ? 0.0 : smoothstep(rMin, rMax, r)) + smoothstep(rMin + flightInterval, rMax + flightInterval, r);
-	if (alpha == 0.0) {
-	  discard;
-	}
-	color.a *= alpha;
-	`
-
 	class AnimatedArcLayer extends deck.ArcLayer {
 
 		getShaders() {
