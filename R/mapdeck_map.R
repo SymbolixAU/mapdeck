@@ -69,15 +69,6 @@ mapdeck <- function(
     , repeat_view = force( repeat_view )
   )
 
-  # deps <- list(
-  # 	createHtmlDependency(
-  # 		name = "map",
-  # 		version = "1.0.0",
-  # 		src = system.file("htmlwidgets/lib/map", package = "mapdeck"),
-  # 		script = c("legend.js", "title.js", "location.js", "coordinates.js", "colours.js")
-  # 	)
-  # )
-
   # create widget
   mapdeckmap <- htmlwidgets::createWidget(
     name = 'mapdeck',

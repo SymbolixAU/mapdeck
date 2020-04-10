@@ -39,6 +39,15 @@ function md_setup_title( map_id ) {
   mapDiv.appendChild( mapTitle );
 }
 
+function md_setup_screenshot( map_id ) {
+	var mapDiv = document.getElementById(map_id);
+	var mapScreenshot = document.createElement('div');
+  mapScreenshot.className = "mapScreenshotButtonContainer";
+  mapScreenshot.id = "mapScreenshotButtonContainer"+map_id;
+  mapDiv.appendChild( mapScreenshot );
+
+}
+
 function md_setup_view_state( map_id ) {
 	var mapDiv = document.getElementById(map_id);
 	var mapViewState = document.createElement('div');
