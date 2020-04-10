@@ -15,6 +15,21 @@
 #' @param zoom zoom level of the map
 #' @param bearing bearing of the map between 0 and 360
 #' @param location unnamed vector of lon and lat coordinates (in that order)
+#' @param show_view_state logical, indicating whether to add the current View State to the map.
+#' When \code{TRUE}, the following is added as an overlay to the map
+#' \itemize{
+#'   \item{width}
+#'   \item{height}
+#'   \item{latitude & longitude}
+#'   \item{zoom}
+#'   \item{bearing}
+#'   \item{pitch}
+#'   \item{altitude}
+#'   \item{viewBounds}
+#'   \item{interactionState}
+#' }
+#'
+#' @param repeat_view Logical indicating if the layers should repeat at low zoom levels
 #'
 #' @section Access Tokens:
 #'
@@ -37,7 +52,9 @@ mapdeck <- function(
 	pitch = 0,
 	zoom = 0,
 	bearing = 0,
-	location = c(0, 0)
+	location = c(0, 0),
+	show_view_state = FALSE,
+	repeat_view = FALSE
 	) {
 
   # forward options using x
@@ -48,6 +65,8 @@ mapdeck <- function(
     , zoom = force( zoom )
     , location = force( as.numeric( location ) )
     , bearing = force( bearing )
+    , show_view_state = force( show_view_state )
+    , repeat_view = force( repeat_view )
   )
 
   # deps <- list(
@@ -85,6 +104,7 @@ mapdeck <- function(
   	, mapdeck_css()
   	, mapdeck_js()
   	, htmlwidgets_js()
+  	#, mapdeckViewStateDependency()
   	)
 
   return(mapdeckmap)
@@ -148,11 +168,12 @@ renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param deferUntilFlush indicates whether actions performed against this
 #' instance should be carried out right away, or whether they should be held until
 #' after the next time all of the outputs are updated; defaults to TRUE.
+#' @param map_type either mapdeck_update or google_map_update
 #' @export
 mapdeck_update <- function(
+	data = NULL,
 	map_id,
 	session = shiny::getDefaultReactiveDomain(),
-	data = NULL,
 	deferUntilFlush = TRUE,
 	map_type = c("mapdeck_update", "google_map_update")
 	) {

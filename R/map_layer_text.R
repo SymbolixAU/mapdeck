@@ -107,7 +107,8 @@ add_text <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -128,7 +129,7 @@ add_text <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, c("POINT","MULTIPOINT"))
+	l <- resolve_data( data, l, c("POINT"))
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -179,7 +180,7 @@ add_text <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
 		shape[["legend"]], bbox, update_view, focus_layer, js_transitions, billboard,
-		font_family, font_weight
+		font_family, font_weight, brush_radius
 		)
 }
 

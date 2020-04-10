@@ -2,13 +2,12 @@
 function add_trips_geo( map_id, map_type, trips_data, opacity, layer_id,
 trail_length, start_time, end_time, animation_speed, legend ) {
 
-  var tripsLayer = new TripsLayer({
+  var tripsLayer = new deck.TripsLayer({
     id: 'trips-'+layer_id,
     data: trips_data,
     parameters: {
 	    depthTest: false
 	  },
-
     getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
     getTimestamps: d => md_trip_timestamp( d.geometry.geometry.coordinates, start_time ),
     getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
@@ -26,7 +25,7 @@ trail_length, start_time, end_time, animation_speed, legend ) {
 	}
 
 	if (legend !== false) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
 
 	//md_layer_view( map_id, map_type, layer_id, true, bbox, true );
@@ -45,7 +44,7 @@ trail_length, start_time, end_time, animation_speed, legend) {
 
     var time = ((timestamp % loopTime) / loopTime) * loopLength;
 
-		var tripsLayer = new TripsLayer({
+		var tripsLayer = new deck.TripsLayer({
 		    id: 'trips-'+layer_id,
 		    data: trips_data,
 		    parameters: {
@@ -62,7 +61,6 @@ trail_length, start_time, end_time, animation_speed, legend) {
 		    currentTime: time
 		  });
 
-
 	  if( map_type == "google_map") {
 		   md_update_overlay( map_id, 'trips-'+layer_id, tripsLayer );
 		} else {
@@ -70,10 +68,8 @@ trail_length, start_time, end_time, animation_speed, legend) {
 		}
 
    if (legend !== false) {
-	   md_add_legend( map_id, map_type, layer_id, legend );
+	   md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	 }
-
-	 //md_layer_view( map_id, map_type, layer_id, false, bbox, false );
 
    window.requestAnimationFrame( function() {
    	  animate_trips( map_id, map_type, trips_data, opacity, layer_id, trail_length,
@@ -106,6 +102,7 @@ function md_trip_timestamp( coords, start_time ) {
 	for( i = 0; i < coords.length; i++ ) {
 		inner = coords[i];
 		x = inner[3] - start_time;
+		//console.log( x );
 		res[i] = [x];
 	}
 	return res;

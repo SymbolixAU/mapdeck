@@ -5,32 +5,20 @@ HTMLWidgets.widget({
 
   factory: function(el, width, height) {
 
-    // TODO: define shared variables for this instance
     return {
 
       renderValue: function(x) {
 
-        //console.log( "getting mapbox map??" );
-        //console.log( mapboxgl );
-
       	md_setup_window( el.id );
 
-        /*
-        // controller with events
-        const myController = new deck.Controller({
-
-
-        	handleEvent(event) {
-        		console.log( "event" );
-        		console.log( event );
-        		if( event.type == "zoom") {
-        			console.log("zooming");
-        		}
-        	}
-        });
-
-        console.log( myController );
-        */
+				if( x.show_view_state ) {
+      	  md_setup_view_state( el.id );
+      	  window[el.id + 'mapViewState'] = document.createElement("div");
+      	  window[el.id + 'mapViewState'].setAttribute('id', el.id + 'mapViewState');
+      	  window[el.id + 'mapViewState'].setAttribute('class', 'mapViewState');
+      	  var mapbox_ctrl = document.getElementById( "mapViewStateContainer"+el.id);
+    			mapbox_ctrl.appendChild( window[el.id + 'mapViewState'] );
+				}
 
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
@@ -43,45 +31,82 @@ HTMLWidgets.widget({
 
        if( x.access_token === null ) {
        	 const deckgl = new deck.DeckGL({
+       	 	  views: [ new deck.MapView({ id: el.id, repeat: x.repeat_view }) ],
        	 	  map: false,
 			      container: el.id,
-			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
+			      controller: true
 			      //onLayerHover: setTooltip
 			   });
 			   window[el.id + 'map'] = deckgl;
        } else {
         const deckgl = new deck.DeckGL({
+        	  views: [ new deck.MapView({ id: el.id, repeat: x.repeat_view }) ],
           	mapboxApiAccessToken: x.access_token,
-          	//map: mapboxgl,
 			      container: el.id,
 			      mapStyle: x.style,
-			      //initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
-			      //controller: myController
+			      controller: true,
 			      //onLayerHover: setTooltip
-			      onViewStateChange: ({viewState}) => {
+			      onViewStateChange: ({viewId, viewState, interactionState}) => {
 
+			      	if (!HTMLWidgets.shinyMode && !x.show_view_state ) { return; }
 							// as per:
 							// https://github.com/uber/deck.gl/issues/3344
 							// https://github.com/SymbolixAU/mapdeck/issues/211
-			      	const viewport = new WebMercatorViewport(viewState);
+			      	const viewport = new deck.WebMercatorViewport(viewState);
   						const nw = viewport.unproject([0, 0]);
   						const se = viewport.unproject([viewport.width, viewport.height]);
 
-  						viewState.viewBounds = {
-  							north: nw[1],
-  							east:  se[0],
-  							south: se[1],
-  							west:  nw[0]
-  						};
+  						const w = nw[0] < -180 ? -180 : ( nw[0] > 180 ? 180 : nw[0] );
+  						const n = nw[1] < -90 ? -90 : ( nw[1] > 90 ? 90 : nw[1] );
 
-			      	if (!HTMLWidgets.shinyMode) {
-						    return;
-						  }
+  						const e = se[0] < -180 ? -180 : ( se[0] > 180 ? 180 : se[0] );
+  						const s = se[1] < -90 ? -90 : ( se[1] > 90 ? 90 : se[1] );
+
+  						viewState.viewId = viewId;
+
+							viewState.viewBounds = {
+  							north: n, //nw[1],
+  							east:  e, //se[0],
+  							south: s, //se[1],
+  							west:  w //nw[0]
+  						};
+  						viewState.interactionState = interactionState;
+
+  						if( x.show_view_state ) {
+  							var vs = JSON.stringify( viewState );
+  							//console.log( vs );
+  							window[el.id + 'mapViewState'].innerHTML = vs;
+  						}
+
+  						if (!HTMLWidgets.shinyMode ) { return; }
+
 						  Shiny.onInputChange(el.id + '_view_change', viewState);
+			      },
+			      onDragStart(info, event){
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
+			      	info.layer = undefined; // in case of dragging a layer
+			      	Shiny.onInputChange(el.id +'_drag_start', info);
+			      },
+			      onDrag(info, event){
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
+			      	info.layer = undefined; // in case of dragging a layer
+			      	Shiny.onInputChange(el.id +'_drag', info);
+			      },
+			      onDragEnd(info, event){
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
+			      	info.layer = undefined; // in case of dragging a layer
+			      	Shiny.onInputChange(el.id +'_drag_end', info);
+			      },
+			      onResize(size) {
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	Shiny.onInputChange(el.id +'_resize', size);
 			      }
 			  });
 
@@ -104,7 +129,7 @@ if (HTMLWidgets.shinyMode) {
 
   Shiny.addCustomMessageHandler("mapdeckmap-calls", function (data) {
 
-  	console.log( "mapdeckmap-calls" );
+  	//console.log( "mapdeckmap-calls" );
 
     var id = data.id,   // the div id of the map
       el = document.getElementById(id),

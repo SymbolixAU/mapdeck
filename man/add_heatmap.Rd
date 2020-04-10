@@ -4,11 +4,23 @@
 \alias{add_heatmap}
 \title{Add Heatmap}
 \usage{
-add_heatmap(map, data = get_map_data(map), lon = NULL, lat = NULL,
-  polyline = NULL, weight = NULL, colour_range = NULL,
-  radius_pixels = 30, intensity = 1, threshold = 0.05,
-  layer_id = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6)
+add_heatmap(
+  map,
+  data = get_map_data(map),
+  lon = NULL,
+  lat = NULL,
+  polyline = NULL,
+  weight = NULL,
+  colour_range = NULL,
+  radius_pixels = 30,
+  intensity = 1,
+  threshold = 0.05,
+  layer_id = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -47,6 +59,10 @@ to conflict and not plot correctly}
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{digits}{number of digits for rounding coordinates}
+
+\item{transitions}{list specifying the duration of transitions.}
 }
 \description{
 The Heatmap Layer can be used to visualise spatial distribution of data.
@@ -60,6 +76,24 @@ It implements Gaussian Kernel Density Estimation to render the heatmaps.
 
 The current version of this layer is supported only for WebGL2 enabled browswers
 So you may find it doesn't render in the RStudio viewer.
+}
+
+\section{transitions}{
+
+
+The transitions argument lets you specify the time it will take for the shapes to transition
+from one state to the next. Only works in an interactive environment (Shiny)
+and on WebGL-2 supported browsers and hardware.
+
+The time is in milliseconds
+
+Available transitions for heatmap
+
+list(
+intensity = 0,
+threshold = 0,
+radius_pixels = 0
+)
 }
 
 \section{data}{
@@ -96,9 +130,10 @@ add_heatmap(
 )
 
 ## as an sf object
-library(sf)
-sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
-mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) \%>\%
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
+
+mapdeck( style = mapdeck_style('dark'), pitch = 45 ) \%>\%
 add_heatmap(
   data = sf
   , weight = "weight",

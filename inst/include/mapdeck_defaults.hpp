@@ -16,7 +16,6 @@ namespace defaults {
 		return nv;
 	}
 
-  // dont' necessarily need polyline anymore
 	inline Rcpp::StringVector default_polyline( int n ) {
 		Rcpp::StringVector sv(n);
 		return sv;
@@ -38,7 +37,7 @@ namespace defaults {
 	}
 
 	inline Rcpp::IntegerVector default_radius( int n ) {
-		Rcpp::IntegerVector iv(n, 1000);
+		Rcpp::IntegerVector iv(n, 1.0);
 		return iv;
 	}
 

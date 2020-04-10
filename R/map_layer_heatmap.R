@@ -10,7 +10,6 @@ mapdeckHeatmapDependency <- function() {
 	)
 }
 
-
 #' Add Heatmap
 #'
 #' The Heatmap Layer can be used to visualise spatial distribution of data.
@@ -40,6 +39,22 @@ mapdeckHeatmapDependency <- function() {
 #'
 #' @inheritSection add_polygon data
 #'
+#' @section transitions:
+#'
+#' The transitions argument lets you specify the time it will take for the shapes to transition
+#' from one state to the next. Only works in an interactive environment (Shiny)
+#' and on WebGL-2 supported browsers and hardware.
+#'
+#' The time is in milliseconds
+#'
+#' Available transitions for heatmap
+#'
+#' list(
+#' intensity = 0,
+#' threshold = 0,
+#' radius_pixels = 0
+#' )
+#'
 #' @examples
 #' \donttest{
 #'
@@ -65,9 +80,10 @@ mapdeckHeatmapDependency <- function() {
 #' )
 #'
 #' ## as an sf object
-#' library(sf)
-#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
-#' mapdeck( token = key, style = mapdeck_style('dark'), pitch = 45 ) %>%
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
+#'
+#' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_heatmap(
 #'   data = sf
 #'   , weight = "weight",
@@ -95,10 +111,11 @@ add_heatmap <- function(
 	layer_id = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
-	digits = 6
+	digits = 6,
+	transitions = NULL
 ) {
 
-	experimental_layer("heatmap")
+	#experimental_layer("heatmap")
 
 	l <- list()
 	l[["polyline"]] <- force( polyline )
@@ -106,7 +123,7 @@ add_heatmap <- function(
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
 
-	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+	l <- resolve_data( data, l, c("POINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -144,19 +161,21 @@ add_heatmap <- function(
 	jsfunc <- "add_heatmap_geo"
 	if( tp == "sf" ) {
 		geometry_column <- c( "geometry" )
-		shape <- rcpp_heatmap_geojson( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits, "heatmap" )
 	} else if ( tp == "df" ) {
 		geometry_column <- list( geometry = c("lon", "lat") )
-		shape <- rcpp_heatmap_geojson_df( data, l, geometry_column, digits )
+		shape <- rcpp_aggregate_geojson_df( data, l, geometry_column, digits, "heatmap" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- "polyline"
-		shape <- rcpp_heatmap_polyline( data, l, geometry_column )
+		shape <- rcpp_aggregate_polyline( data, l, geometry_column, "heatmap" )
 		jsfunc <- "add_heatmap_polyline"
 	}
 
+	js_transitions <- resolve_transitions( transitions, "heatmap" )
+
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, colour_range,
-		radius_pixels, intensity, threshold, bbox, update_view, focus_layer
+		radius_pixels, intensity, threshold, bbox, update_view, focus_layer, js_transitions
 	)
 }
 
@@ -167,4 +186,3 @@ clear_heatmap <- function( map, layer_id = NULL) {
 	layer_id <- layerId(layer_id, "heatmap")
 	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "heatmap" )
 }
-
