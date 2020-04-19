@@ -57,15 +57,8 @@ add_terrain <- function(
 	map <- addDependency( map, mapdeckTerrainDependency() )
 	layer_id <- layerId( layer_id, "terrain" )
 
-	print(elevation_data)
-	print(texture)
-	print(update_view)
-	print(bounds)
-	print(bbox)
-	print(focus_layer)
-
 	invoke_method(
-		map, "add_terrain", layer_id, elevation_data, texture, update_view, bounds, bbox, focus_layer
+		map, "add_terrain", map_type( map ), layer_id, elevation_data, texture, update_view, bounds, bbox, focus_layer
 	)
 }
 
