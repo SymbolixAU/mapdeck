@@ -4,7 +4,15 @@
 \alias{add_terrain}
 \title{Add terrain}
 \usage{
-add_terrain(map, layer_id = NULL, elevation_data, texture = NULL, bounds)
+add_terrain(
+  map,
+  layer_id = NULL,
+  elevation_data,
+  texture = NULL,
+  bounds,
+  update_view = TRUE,
+  focus_layer = FALSE
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -17,6 +25,10 @@ to conflict and not plot correctly}
 
 \item{texture}{Image URL to use as the texture}
 
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
 \item{elevation_decoder}{Numeric vector giving parameters to use to convert a
 pixel to elevation in metres.}
 }
@@ -27,11 +39,12 @@ Adds mesh surfaces from height map images
 \donttest{
 
 set_token( "MAPBOX_TOKEN" )
+## Digital elevation model from https://www.usgs.gov/
 elevation <- 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/terrain.png'
 texture <- 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/terrain-mask.png'
 bounds <- c(-122.5233, 37.6493, -122.3566, 37.8159)
 
-mapdeck( location = bounds[1:2], zoom = 10) \%>\%
+mapdeck() \%>\%
   add_terrain(
     elevation_data = elevation,
     texture = texture,
