@@ -53,6 +53,8 @@ HTMLWidgets.widget({
 			      onViewStateChange: ({viewId, viewState, interactionState}) => {
 
 			      	if (!HTMLWidgets.shinyMode && !x.show_view_state ) { return; }
+
+
 							// as per:
 							// https://github.com/uber/deck.gl/issues/3344
 							// https://github.com/SymbolixAU/mapdeck/issues/211

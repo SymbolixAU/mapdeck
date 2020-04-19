@@ -22,7 +22,8 @@ function add_screenshot( map_id, map_type ) {
   mapScreenshotButton.addEventListener("click", function() {
   	//alert("button");
 
-  	let deckCanvas = document.getElementById( 'deckgl-overlay');
+  	let deckCanvas = window[ map_id + 'map'].canvas;
+  	console.log( deckCanvas );
   	let a = document.createElement('a');
   	a.href = deckCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
   	a.download = 'screenshot.png';
