@@ -5,8 +5,8 @@
 %   R/map_layer_grid.R, R/map_layer_heatmap.R, R/map_layer_hexagon.R,
 %   R/map_layer_line.R, R/map_layer_mesh.R, R/map_layer_path.R,
 %   R/map_layer_pointcloud.R, R/map_layer_polygon.R, R/map_layer_scatterplot.R,
-%   R/map_layer_screengrid.R, R/map_layer_text.R, R/map_layer_title.R,
-%   R/map_layer_trips.R
+%   R/map_layer_screengrid.R, R/map_layer_terrain.R, R/map_layer_text.R,
+%   R/map_layer_title.R, R/map_layer_trips.R
 \name{clear_animated_arc}
 \alias{clear_animated_arc}
 \alias{clear_line}
@@ -24,6 +24,7 @@
 \alias{clear_polygon}
 \alias{clear_scatterplot}
 \alias{clear_screengrid}
+\alias{clear_terrain}
 \alias{clear_text}
 \alias{clear_title}
 \alias{clear_trips}
@@ -62,6 +63,8 @@ clear_polygon(map, layer_id = NULL)
 clear_scatterplot(map, layer_id = NULL)
 
 clear_screengrid(map, layer_id = NULL)
+
+clear_terrain(map, layer_id = NULL)
 
 clear_text(map, layer_id = NULL)
 
