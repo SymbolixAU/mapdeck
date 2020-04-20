@@ -74,6 +74,7 @@ mapdeck() \%>\%
     , elevation_decoder = c(1,0,0,0)
     , texture = texture
     , bounds = bounds
+    , max_error = 1
   )
 
 }
