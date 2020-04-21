@@ -1,3 +1,8 @@
+# v0.3.3
+
+* min and max pitch and zoom options [issue 295](https://github.com/SymbolixAU/mapdeck/issues/295)
+
+
 # v0.3.2
 
 * `add_animated_arc()` layer

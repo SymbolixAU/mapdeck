@@ -26,12 +26,19 @@ HTMLWidgets.widget({
         	latitude: x.location[1],
         	zoom: x.zoom,
         	pitch: x.pitch,
-        	bearing: x.bearing
+        	bearing: x.bearing,
+        	maxZoom: x.max_zoom,
+       	 	minZoom: x.min_zoom,
+       	 	maxPitch: x.max_pitch,
+       	 	minPitch: x.min_pitch
         };
 
        if( x.access_token === null ) {
        	 const deckgl = new deck.DeckGL({
-       	 	  views: [ new deck.MapView({ id: el.id, repeat: x.repeat_view }) ],
+       	 	  views: [ new deck.MapView({
+       	 	  	id: el.id,
+       	 	  	repeat: x.repeat_view
+       	 	  	}) ],
        	 	  map: false,
 			      container: el.id,
 			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
@@ -42,7 +49,10 @@ HTMLWidgets.widget({
 			   window[el.id + 'map'] = deckgl;
        } else {
         const deckgl = new deck.DeckGL({
-        	  views: [ new deck.MapView({ id: el.id, repeat: x.repeat_view }) ],
+        	  views: [ new deck.MapView({
+        	  	id: el.id,
+        	  	repeat: x.repeat_view
+        	  	}) ],
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
