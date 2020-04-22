@@ -63,19 +63,19 @@ function add_path_geo( map_id, map_type, path_data, data_count, layer_id, auto_h
       attributes: {
         getPath: {value: binaryLocation, size: stride},
         getColor: {value: binaryLineColour, size: 4},
-        getWidth: {value: binaryLineWidth, size: 1}
+        //getWidth: {value: binaryLineWidth, size: 1}
         //getDashArray: {value: binaryDash, size: 2}
       },
-      tooltip: path_data.data.tooltip
+      //tooltip: path_data.data.tooltip
     },
-    _pathType: 'open',
-    onClick: info => md_layer_click( map_id, "path", info ),
-    onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
-    autoHighlight: auto_highlight,
-    highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {},
-    brushingRadius: brush_radius,
-    extensions: extensions
+    _pathType: 'open'
+//    onClick: info => md_layer_click( map_id, "path", info ),
+//    onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
+//    autoHighlight: auto_highlight,
+//    highlightColor: md_hexToRGBA( highlight_colour ),
+//    transitions: js_transition || {},
+//    brushingRadius: brush_radius,
+//    extensions: extensions
   });
 
   if( map_type == "google_map") {

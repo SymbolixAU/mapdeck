@@ -34,21 +34,23 @@ Rcpp::List get_path_defaults( std::string layer_name, int data_rows ) {
 Rcpp::List rcpp_path_geojson(
 		Rcpp::DataFrame data,  // sf object
 		Rcpp::List params,
+		SEXP unlist,
 		int digits,
 		std::string layer_name
 	) {
 
-	// interleave the geometry
-	// turn the rest of the data into params and stuff
-
-	R_xlen_t i;
-
 	std::string sfc_column = data.attr("sf_column");
 
-	Rcpp::List sfc = data[ sfc_column ];
-	Rcpp::List interleaved = sfheaders::interleave::interleave( sfc );
+	Rcpp::StringVector unlist_cols;
+	if( !Rf_isNull( unlist ) ) {
+		unlist_cols = Rcpp::as< Rcpp::StringVector >( unlist );
+	}
 
-	int data_rows = data.nrow();
+	Rcpp::List interleaved = sfheaders::interleave::interleave( data, unlist_cols );
+
+	// these defaults need to be the length of the interleaved data, not hte original.
+	//
+	int data_rows = interleaved["n_coordinates"];
 	Rcpp::List lst_defaults = get_path_defaults( layer_name, data_rows );
 
 	std::unordered_map< std::string, std::string > path_colours = mapdeck::layer_colours::stroke_colours;
@@ -57,27 +59,7 @@ Rcpp::List rcpp_path_geojson(
 
 	std::string format = "rgb";
 
-	// make a new data object, and exclude the geometry
-	R_xlen_t n_col = data.ncol();
-	Rcpp::List new_df( n_col - 1 );
-	Rcpp::StringVector new_names( n_col - 1 );
-
-	Rcpp::StringVector df_names = data.names();
-	R_xlen_t col_counter = 0;
-
-	for( i = 0; i < n_col; ++i ) {
-		const char* this_name = df_names[ i ];
-		if( this_name != sfc_column ) {
-			new_df[ col_counter ] = data[ this_name ];
-			new_names[ col_counter ] = this_name;
-		  col_counter = col_counter + 1;
-		}
-	}
-
-	new_df.names() = new_names;
-
-	R_xlen_t new_data_rows = data.nrow();
-	Rcpp::DataFrame df = sfheaders::utils::make_dataframe( new_df, new_data_rows, new_names );
+	Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( interleaved["data"] );
 
 	Rcpp::List lst = spatialwidget::api::format_data(
 		df, params, lst_defaults, path_colours, path_legend, data_rows, parameter_exclusions, digits, format

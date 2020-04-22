@@ -142,28 +142,28 @@ add_path <- function(
 		# geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
 		# l[["geometry"]] <- NULL
 		#
-		# ## which of the columns of data need to be unlist?
-		# unlist_column <- function( data, l, var ) {
-		# 	if( is.null( l[[ var ]] ) ) {
-		# 		return( NULL )
-		# 	}
-		# 	if( l[[ var ]] %in% names( data ) ) {
-		# 		if( is.list( data[[ l[[ var ]] ]] ) ) {
-		# 		  return( l[[ var ]] )
-		# 		}
-		# 	}
-		# 	return( NULL )
-		# }
-		#
-		# unlist <- NULL
-		# unlist <- append( unlist, unlist_column( data, l, "stroke_colour" ) )
-		# unlist <- append( unlist, unlist_column( data, l, "stroke_width" ) )
-		#
-		# if( length( unlist ) == 0 ) {
-		# 	unlist <- NULL
-		# }
+		## which of the columns of data need to be unlist?
+		unlist_column <- function( data, l, var ) {
+			if( is.null( l[[ var ]] ) ) {
+				return( NULL )
+			}
+			if( l[[ var ]] %in% names( data ) ) {
+				if( is.list( data[[ l[[ var ]] ]] ) ) {
+				  return( l[[ var ]] )
+				}
+			}
+			return( NULL )
+		}
 
-		shape <- rcpp_path_geojson( data, l, digits, "path" )
+		unlist <- NULL
+		unlist <- append( unlist, unlist_column( data, l, "stroke_colour" ) )
+		unlist <- append( unlist, unlist_column( data, l, "stroke_width" ) )
+
+		if( length( unlist ) == 0 ) {
+			unlist <- NULL
+		}
+
+		shape <- rcpp_path_geojson( data, l, unlist, digits, "path" )
 		jsfunc <- "add_path_geo"
 
 	} else if ( tp == "sfencoded" ) {

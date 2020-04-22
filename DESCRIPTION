@@ -25,7 +25,7 @@ Imports:
     magrittr,
     Rcpp,
     shiny,
-    sfheaders (>= 0.2.1)
+    sfheaders (>= 0.2.1005)
 RoxygenNote: 7.1.0
 Suggests: 
     covr,
@@ -45,5 +45,6 @@ LinkingTo:
     Rcpp,
     sfheaders (>= 0.2.1),
     spatialwidget (>= 0.2.2002)
-remotes:
+Remotes:
     github::dcooley/sfheaders
+    github::dcooley/spatialwidget
