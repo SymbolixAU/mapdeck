@@ -122,8 +122,8 @@ doResolveFormula.data.frame = function(data, f) {
 # @param layer_id
 layerId <- function(
 	layer_id,
-	layer = c("animated_arc", "arc", "bitmap", "column", "geojson", "greatcircle","grid","heatmap","hexagon",
-						"line", "mesh", "path","pointcloud", "polygon","scatterplot", "screengrid",
+	layer = c("animated_arc", "animated_line", "arc", "bitmap", "column", "geojson", "greatcircle","grid","heatmap","hexagon",
+						"line", "mesh", "path","pointcloud", "polygon","scatterplot", "screengrid", "terrain",
 						"text", "title","trips")
 	) {
 

@@ -14,6 +14,10 @@ mapdeck(
   pitch = 0,
   zoom = 0,
   bearing = 0,
+  max_zoom = 20,
+  min_zoom = 0,
+  max_pitch = 60,
+  min_pitch = 0,
   location = c(0, 0),
   show_view_state = FALSE,
   repeat_view = FALSE

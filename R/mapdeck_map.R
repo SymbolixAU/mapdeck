@@ -52,6 +52,10 @@ mapdeck <- function(
 	pitch = 0,
 	zoom = 0,
 	bearing = 0,
+	max_zoom = 20,
+	min_zoom = 0,
+	max_pitch = 60,
+	min_pitch = 0,
 	location = c(0, 0),
 	show_view_state = FALSE,
 	repeat_view = FALSE
@@ -65,6 +69,10 @@ mapdeck <- function(
     , zoom = force( zoom )
     , location = force( as.numeric( location ) )
     , bearing = force( bearing )
+    , max_zoom = force( max_zoom )
+    , min_zoom = force( min_zoom )
+    , max_pitch = force( max_pitch )
+    , min_pitch = force( min_pitch )
     , show_view_state = force( show_view_state )
     , repeat_view = force( repeat_view )
   )
