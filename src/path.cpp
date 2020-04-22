@@ -3,7 +3,8 @@
 #include "mapdeck_defaults.hpp"
 #include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
-#include "sfheaders/df/sf.hpp"
+//#include "sfheaders/df/sf.hpp"
+#include "sfheaders/interleave/interleave.hpp"
 
 Rcpp::List path_defaults(int n) {
 	return Rcpp::List::create(
@@ -31,50 +32,24 @@ Rcpp::List get_path_defaults( std::string layer_name, int data_rows ) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_path_geojson(
-		Rcpp::DataFrame data,
+		Rcpp::DataFrame data,  // sf object
 		Rcpp::List params,
-		SEXP unlist,
 		int digits,
 		std::string layer_name
 	) {
 
+	// interleave the geometry
+	// turn the rest of the data into params and stuff
+
+	R_xlen_t i;
+
 	std::string sfc_column = data.attr("sf_column");
 
 	Rcpp::List sfc = data[ sfc_column ];
-	Rcpp::NumericMatrix sfc_coordinates = sfheaders::df::sfc_n_coordinates( sfc );
+	Rcpp::List interleaved = sfheaders::interleave::interleave( sfc );
 
-	Rcpp::StringVector unlist_cols;
-	if( !Rf_isNull( unlist ) ) {
-		unlist_cols = Rcpp::as< Rcpp::StringVector >( unlist );
-	}
-
-	Rcpp::DataFrame df = sfheaders::df::sf_to_df(
-		data, sfc, sfc_column, sfc_coordinates, unlist_cols, true
-		);
-
-	int data_rows = df.nrows();
-
-	Rcpp::List geometry_cols(1);
-	Rcpp::StringVector s = df.attr("sfc_columns");
-
-	geometry_cols[0] = s;
-	Rcpp::StringVector geom_names = {"geometry"};
-	geometry_cols.names() = geom_names;
-
-	int stride = s.length();
-
-	Rcpp::NumericVector start_indices = sfc_coordinates( Rcpp::_, 0 );
-
-	int i;
-	Rcpp::StringVector param_names({"x","y","z","m"});
-
-	for( i = 0; i < stride; ++i ) {
-		Rcpp::String this_geom = s[i];
-		Rcpp::String this_param = param_names[i];
-		params[ this_param ] = this_geom;
-	}
-
-	Rcpp::List lst_defaults = get_path_defaults( layer_name, df.nrow() );
+	int data_rows = data.nrow();
+	Rcpp::List lst_defaults = get_path_defaults( layer_name, data_rows );
 
 	std::unordered_map< std::string, std::string > path_colours = mapdeck::layer_colours::stroke_colours;
 	Rcpp::StringVector path_legend = mapdeck::layer_colours::stroke_legend;
@@ -82,44 +57,41 @@ Rcpp::List rcpp_path_geojson(
 
 	std::string format = "rgb";
 
-	Rcpp::List shape = spatialwidget::api::create_columnar(
-		df,
-		params,
-		lst_defaults,
-		path_colours,
-		path_legend,
-		data_rows,
-		parameter_exclusions,
-		geometry_cols,
-		true,  // jsonify legend
-		digits,
-		format
+	// make a new data object, and exclude the geometry
+	R_xlen_t n_col = data.ncol();
+	Rcpp::List new_df( n_col - 1 );
+	Rcpp::StringVector new_names( n_col - 1 );
+
+	Rcpp::StringVector df_names = data.names();
+	R_xlen_t col_counter = 0;
+
+	for( i = 0; i < n_col; ++i ) {
+		const char* this_name = df_names[ i ];
+		if( this_name != sfc_column ) {
+			new_df[ col_counter ] = data[ this_name ];
+			new_names[ col_counter ] = this_name;
+		  col_counter = col_counter + 1;
+		}
+	}
+
+	new_df.names() = new_names;
+
+	R_xlen_t new_data_rows = data.nrow();
+	Rcpp::DataFrame df = sfheaders::utils::make_dataframe( new_df, new_data_rows, new_names );
+
+	Rcpp::List lst = spatialwidget::api::format_data(
+		df, params, lst_defaults, path_colours, path_legend, data_rows, parameter_exclusions, digits, format
 	);
 
-	// TODO:
-	// move this somewhere else?
-	// fix up the dash into a single array
-	// Rcpp::NumericVector dash_size = shape[ "dash_size" ];
-	// Rcpp::NumericVector dash_gap = shape[ "dash_gap" ];
-	// R_xlen_t n_dash = data_rows * 2;
-	// Rcpp::NumericVector dash_array( n_dash );
-	//
-	// int counter = 0;
-	// for( i = 0; i < n_dash; ++i ) {
-	// 	dash_array[ counter ] = dash_size[ i ];
-	// 	++counter;
-	// 	dash_array[ counter ] = dash_gap[ i ];
-	// 	++counter;
-	// }
-	// shape["dash_array"] = dash_array;
+	// TODO: jsonify this list
+	return Rcpp::List::create(
+		Rcpp::_["coordinates"] = interleaved["coordinates"],
+    Rcpp::_["start_indices"] = interleaved["start_indices"],
+    Rcpp::_["stride"] = interleaved["stride"],
+    Rcpp::_["data"] = lst["data"],
+    Rcpp::_["legend"] = lst["legend"]
+	);
 
-
-	Rcpp::List res(3);
-	res[0] = shape;
-	res[1] = start_indices;
-	res[2] = stride;
-
-	return res;
 }
 
 // [[Rcpp::export]]

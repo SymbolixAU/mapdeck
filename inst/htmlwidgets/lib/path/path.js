@@ -1,6 +1,8 @@
 
 
-function add_path_geo( map_id, map_type, path_data, data_count, start_indices, stride, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, use_dashes ) {
+function add_path_geo( map_id, map_type, path_data, data_count, layer_id, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, use_dashes ) {
+
+  console.log( path_data );
 
   var extensions = [];
 
@@ -10,26 +12,30 @@ function add_path_geo( map_id, map_type, path_data, data_count, start_indices, s
 
   let hasTooltip = path_data.tooltip !== undefined;
 
-  extensions.push(
-  	new deck.PathStyleExtension({dash: true})
-  );
+  //extensions.push(
+  //	new deck.PathStyleExtension({dash: true})
+  //);
 
-  const binaryLocation = new Float32Array( path_data.geometry );
-  const binaryLineColour = new Uint8Array( path_data.stroke_colour );
-  const binaryLineWidth = new Float32Array( path_data.stroke_width );
-  const binaryStartIndices = new Uint32Array( start_indices );
+  const binaryLocation = new Float32Array( path_data.coordinates );
+  const binaryStartIndices = new Uint32Array( path_data.start_indices );
+
+  const binaryLineColour = new Uint8Array( path_data.data.stroke_colour );
+  const binaryLineWidth = new Float32Array( path_data.data.stroke_width );
+
+  let legend = path_data.legend;
+  let stride = path_data.stride;
 
   //const binaryDash = new Float32Array( path_data.dash_array );
   var binaryDash;
 
   if( use_dashes ) {
-  	const n = path_data.dash_size.length * 2;
+  	const n = path_data.data.dash_size.length * 2;
   	var dashes = [ n ];
   	var counter = 0;
   	for( i = 0; i < n; i++ ) {
-  		dashes[ counter ] = path_data.dash_size[ i ];
+  		dashes[ counter ] = path_data.data.dash_size[ i ];
   		counter = counter + 1;
-  		dashes[ counter ] = path_data.dash_gap[ i ];
+  		dashes[ counter ] = path_data.data.dash_gap[ i ];
   		counter = counter + 1;
   	}
   	console.log( dashes );
@@ -39,35 +45,9 @@ function add_path_geo( map_id, map_type, path_data, data_count, start_indices, s
   	//const binaryDash = new Float32Array();
   }
 
-
-  class XYPathLayer extends deck.PathLayer {
-
-
-   initializeState(params) {
-  		super.initializeState(params);
-
-  		this.getAttributeManager().addInstanced({
-  			positionX: {
-  				size: 1,
-  				accessor: 'getX',
-  				type: 0x140a,   // GL.DOUBLE
-  				//vertexOffset: 1,
-  				fp64: this.use64bitPositions()
-  			}
-  		});
-  	}
-  }
-
-  const defaultProps = {
-  	getY: {type: 'accesor'},
-  	getX: {type: 'accesor'},
-  	getZ: {type: 'accesor'}
-  };
-
   const pathLayer = new deck.PathLayer({
     map_id: map_id,
     id: 'path-'+layer_id,
-    //data: path_data,
     pickable: true,
     widthScale: 1,
     widthMinPixels: 1,
@@ -83,19 +63,12 @@ function add_path_geo( map_id, map_type, path_data, data_count, start_indices, s
       attributes: {
         getPath: {value: binaryLocation, size: stride},
         getColor: {value: binaryLineColour, size: 4},
-        getWidth: {value: binaryLineWidth, size: 1},
-        getDashArray: {value: binaryDash, size: 2}
+        getWidth: {value: binaryLineWidth, size: 1}
+        //getDashArray: {value: binaryDash, size: 2}
       },
-      tooltip: path_data.tooltip
+      tooltip: path_data.data.tooltip
     },
     _pathType: 'open',
-
-	  /*
-    getPath: d => md_get_line_coordinates( d ),
-    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
-    getWidth: d => d.properties.stroke_width,
-    getDashArray: d => [ d.properties.dash_size, d.properties.dash_gap ],
-    */
     onClick: info => md_layer_click( map_id, "path", info ),
     onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
     autoHighlight: auto_highlight,

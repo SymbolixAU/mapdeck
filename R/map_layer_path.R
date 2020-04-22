@@ -140,30 +140,30 @@ add_path <- function(
 
 	if ( tp == "sf" ) {
 		# geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		l[["geometry"]] <- NULL
+		# l[["geometry"]] <- NULL
+		#
+		# ## which of the columns of data need to be unlist?
+		# unlist_column <- function( data, l, var ) {
+		# 	if( is.null( l[[ var ]] ) ) {
+		# 		return( NULL )
+		# 	}
+		# 	if( l[[ var ]] %in% names( data ) ) {
+		# 		if( is.list( data[[ l[[ var ]] ]] ) ) {
+		# 		  return( l[[ var ]] )
+		# 		}
+		# 	}
+		# 	return( NULL )
+		# }
+		#
+		# unlist <- NULL
+		# unlist <- append( unlist, unlist_column( data, l, "stroke_colour" ) )
+		# unlist <- append( unlist, unlist_column( data, l, "stroke_width" ) )
+		#
+		# if( length( unlist ) == 0 ) {
+		# 	unlist <- NULL
+		# }
 
-		## which of the columns of data need to be unlist?
-		unlist_column <- function( data, l, var ) {
-			if( is.null( l[[ var ]] ) ) {
-				return( NULL )
-			}
-			if( l[[ var ]] %in% names( data ) ) {
-				if( is.list( data[[ l[[ var ]] ]] ) ) {
-				  return( l[[ var ]] )
-				}
-			}
-			return( NULL )
-		}
-
-		unlist <- NULL
-		unlist <- append( unlist, unlist_column( data, l, "stroke_colour" ) )
-		unlist <- append( unlist, unlist_column( data, l, "stroke_width" ) )
-
-		if( length( unlist ) == 0 ) {
-			unlist <- NULL
-		}
-
-		shape <- rcpp_path_geojson( data, l, unlist, digits, "path" )
+		shape <- rcpp_path_geojson( data, l, digits, "path" )
 		jsfunc <- "add_path_geo"
 
 	} else if ( tp == "sfencoded" ) {
@@ -179,11 +179,11 @@ add_path <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
-	start_indices <- jsonify::to_json(  as.integer( shape[[2]] ) )
+	# return( shape )
 
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[[1]][["data"]], nrow(data), start_indices, shape[[3]], layer_id, auto_highlight,
-		highlight_colour, shape[[1]][["legend"]], bbox, update_view, focus_layer,
+		map, jsfunc, map_type( map ), shape, nrow( data ), layer_id, auto_highlight,
+		highlight_colour, bbox, update_view, focus_layer,
 		js_transitions, billboard, brush_radius, use_dashes
 		)
 }
