@@ -146,7 +146,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_path_geojson
-Rcpp::List rcpp_path_geojson(Rcpp::DataFrame data, Rcpp::List params, int digits, std::string layer_name);
+SEXP rcpp_path_geojson(Rcpp::DataFrame data, Rcpp::List params, int digits, std::string layer_name);
 RcppExport SEXP _mapdeck_rcpp_path_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP digitsSEXP, SEXP layer_nameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

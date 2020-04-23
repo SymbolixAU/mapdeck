@@ -4,6 +4,7 @@
 #include "layers/layer_colours.hpp"
 #include "spatialwidget/spatialwidget.hpp"
 //#include "sfheaders/df/sf.hpp"
+#include "sfheaders/utils/lists/list.hpp"
 #include "sfheaders/interleave/interleave.hpp"
 
 Rcpp::List path_defaults(int n) {
@@ -31,26 +32,28 @@ Rcpp::List get_path_defaults( std::string layer_name, int data_rows ) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_path_geojson(
+SEXP rcpp_path_geojson(
 		Rcpp::DataFrame data,  // sf object
 		Rcpp::List params,
-		SEXP unlist,
 		int digits,
 		std::string layer_name
 	) {
 
 	std::string sfc_column = data.attr("sf_column");
 
-	Rcpp::StringVector unlist_cols;
-	if( !Rf_isNull( unlist ) ) {
-		unlist_cols = Rcpp::as< Rcpp::StringVector >( unlist );
-	}
+	// Rcpp::StringVector unlist_cols;
+	// if( !Rf_isNull( unlist ) ) {
+	// 	unlist_cols = Rcpp::as< Rcpp::StringVector >( unlist );
+	// }
 
-	Rcpp::List interleaved = sfheaders::interleave::interleave( data, unlist_cols );
+	// TODO
+	// do I subset before interleaving, so I don't operate on all the columns?
 
-	// these defaults need to be the length of the interleaved data, not hte original.
-	//
-	int data_rows = interleaved["n_coordinates"];
+	Rcpp::List interleaved = sfheaders::interleave::interleave( data );
+
+	// these defaults need to be the length of the interleaved data, not the original.
+	int data_rows = interleaved["total_coordinates"];
+
 	Rcpp::List lst_defaults = get_path_defaults( layer_name, data_rows );
 
 	std::unordered_map< std::string, std::string > path_colours = mapdeck::layer_colours::stroke_colours;
@@ -64,6 +67,18 @@ Rcpp::List rcpp_path_geojson(
 	Rcpp::List lst = spatialwidget::api::format_data(
 		df, params, lst_defaults, path_colours, path_legend, data_rows, parameter_exclusions, digits, format
 	);
+
+	// unlist-colours
+	Rcpp::List res_data = lst["data"];
+	Rcpp::NumericMatrix colour_mat = res_data[ "stroke_colour" ];
+	Rcpp::NumericMatrix t_colour_mat = Rcpp::transpose( colour_mat );
+	t_colour_mat.attr("dim") = R_NilValue;
+
+	res_data["stroke_colour"] = t_colour_mat;
+
+	// Rcpp::StringVector js_data = jsonify::api::to_json( lst["data"] );
+	// Rcpp::StringVector js_interleaved = jsonify::api::to_json( interleaved );
+
 
 	// TODO: jsonify this list
 	return Rcpp::List::create(
