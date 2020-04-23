@@ -12,9 +12,9 @@ function add_path_geo( map_id, map_type, path_data, data_count, layer_id, auto_h
 
   let hasTooltip = path_data.data.tooltip !== undefined;
 
-  extensions.push(
-  	new deck.PathStyleExtension({dash: true})
-  );
+//  extensions.push(
+//  	new deck.PathStyleExtension({dash: true})
+//  );
 
   const binaryLocation = new Float32Array( path_data.coordinates );
   const binaryStartIndices = new Uint32Array( path_data.start_indices );
@@ -24,7 +24,7 @@ function add_path_geo( map_id, map_type, path_data, data_count, layer_id, auto_h
 
   let legend = path_data.legend;
   let stride = path_data.stride[0];
-
+/*
   //const binaryDash = new Float32Array( path_data.dash_array );
   var binaryDash;
 
@@ -44,7 +44,7 @@ function add_path_geo( map_id, map_type, path_data, data_count, layer_id, auto_h
   } else {
   	//const binaryDash = new Float32Array();
   }
-
+*/
   const pathLayer = new deck.PathLayer({
     map_id: map_id,
     id: 'path-'+layer_id,
@@ -63,8 +63,8 @@ function add_path_geo( map_id, map_type, path_data, data_count, layer_id, auto_h
       attributes: {
         getPath: {value: binaryLocation, size: stride},
         getColor: {value: binaryLineColour, size: 4},
-        getWidth: {value: binaryLineWidth, size: 1},
-        getDashArray: {value: binaryDash, size: 2}
+        getWidth: {value: binaryLineWidth, size: 1}
+        //getDashArray: {value: binaryDash, size: 2}
       },
       tooltip: path_data.data.tooltip
     },
