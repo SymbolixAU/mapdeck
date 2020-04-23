@@ -179,8 +179,6 @@ add_path <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
-	return( shape )
-
 	js <- jsonify::to_json( shape, digits = digits, by = "col" )
 
 	invoke_method(
