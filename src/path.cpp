@@ -42,9 +42,6 @@ SEXP rcpp_path_geojson(
 
 	Rcpp::List interleaved = sfheaders::interleave::interleave( data );
 
-	Rcpp::IntegerVector n_coordinates = interleaved["n_coordinates"];
-	R_xlen_t total_coordinates = interleaved["total_coordinates"];
-
 	// these defaults need to be the length of the interleaved data, not the original.
 	int data_rows = data.nrow();
 
@@ -54,54 +51,37 @@ SEXP rcpp_path_geojson(
 	Rcpp::StringVector path_legend = mapdeck::layer_colours::stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
-	std::string format = "rgb";
+	std::string format = "interleaved";
 
-	Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( interleaved["data"] );
-
-	Rcpp::List lst = spatialwidget::api::format_data(
-		df, params, lst_defaults, path_colours, path_legend, data_rows, parameter_exclusions, digits, format
+	Rcpp::List lst = spatialwidget::api::create_interleaved(
+		interleaved,
+		params,
+		lst_defaults,
+		path_colours,
+		path_legend,
+		data_rows,
+		parameter_exclusions,
+		true, // jsonify legend
+		digits,
+		format
 	);
 
-	// after formatting the data, the colour columns are named "stroke_colour" (and "fill_colour")
-	// so I can do the interleaving of the colour matrices here
+	// now expand the other binary attribute columns
+	// only IFF they are not already the correct lenght
+	// (need a way of passing list columns)
+	// stroke_width
+	//
+	Rcpp::List new_df = lst[ "data" ];
 
-	Rcpp::DataFrame new_df = Rcpp::as< Rcpp::DataFrame >( lst["data"] );
+	Rcpp::NumericVector stroke_width = new_df["stroke_width"];
 
-	Rcpp::NumericMatrix stroke_mat = Rcpp::as< Rcpp::NumericMatrix >( new_df["stroke_colour"] );
-
-	R_xlen_t n_geometries = new_df.nrow();
-
-	new_df.attr("class") = R_NilValue;
-	new_df.attr("row.names") = R_NilValue;
-	// TODO
-	// expand the vector and interleave
-	// can't use sfheaders::utils::expand_vector()
-	// because that only works on vectors.
-	// --------
-	R_xlen_t i, j;
-	Rcpp::NumericVector colour_vec( total_coordinates * 4 );
-
-	R_xlen_t geometry_counter = 0;
-	for( i = 0; i < data_rows; ++i ) {
-		R_xlen_t reps = n_coordinates[ i ];
-		for( j = 0; j < reps; ++j ) {
-			colour_vec[ geometry_counter ] = stroke_mat( i, 0 );
-			colour_vec[ geometry_counter + 1] = stroke_mat( i, 1 );
-			colour_vec[ geometry_counter + 2 ] = stroke_mat( i, 2 );
-			colour_vec[ geometry_counter + 3 ] = stroke_mat( i, 3 );
-			geometry_counter = geometry_counter + 4;
-		}
-	}
-
-	new_df["stroke_colour"] = colour_vec;
-
-	// other binary attributes need to be 'expanded'
-	Rcpp::StringVector binary_columns = {"stroke_width","dash_size","dash_gap"};
-
-
+	R_xlen_t total_coordinates = interleaved[ "total_coordinates" ];
+	Rcpp::IntegerVector n_coordinates = interleaved["n_coordinates"];
 	Rcpp::NumericVector expanded_index( total_coordinates );
 	R_xlen_t counter = 0;
 
+	R_xlen_t n_geometries = n_coordinates.length();
+	R_xlen_t i, j;
 
 	for( i = 0; i < n_geometries; ++i ) {
 		R_xlen_t expand_by = n_coordinates[ i ];
@@ -112,11 +92,9 @@ SEXP rcpp_path_geojson(
 		counter = counter + expand_by;
 	}
 
+	Rcpp::StringVector binary_columns = {"stroke_width","dash_size","dash_gap"};
 	R_xlen_t n_col = binary_columns.length();
-	//Rcpp::List res( n_col - 1 );
-	//Rcpp::StringVector res_names( n_col - 1 );
 
-	//R_xlen_t name_position = 0;
 	Rcpp::StringVector binary_names = new_df.names();
 
 	for( i = 0; i < n_col; ++i ) {
@@ -128,18 +106,10 @@ SEXP rcpp_path_geojson(
 
 	}
 
-	// Rcpp::StringVector js_data = jsonify::api::to_json( lst["data"] );
-	// Rcpp::StringVector js_interleaved = jsonify::api::to_json( interleaved );
+	interleaved["data"] = new_df;
+	interleaved["legend"] = lst["legend"];
 
-	// TODO: jsonify this list
-	return Rcpp::List::create(
-		Rcpp::_["coordinates"] = interleaved["coordinates"],
-    Rcpp::_["start_indices"] = interleaved["start_indices"],
-    Rcpp::_["stride"] = interleaved["stride"],
-    Rcpp::_["data"] = lst["data"],
-    Rcpp::_["legend"] = lst["legend"]
-	);
-
+	return interleaved;
 }
 
 // [[Rcpp::export]]

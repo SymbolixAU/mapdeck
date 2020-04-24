@@ -179,10 +179,8 @@ add_path <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
-	js <- jsonify::to_json( shape, digits = digits, by = "col" )
-
 	invoke_method(
-		map, jsfunc, map_type( map ), js, nrow( data ), layer_id, auto_highlight,
+		map, jsfunc, map_type( map ), shape, layer_id, auto_highlight,
 		highlight_colour, bbox, update_view, focus_layer,
 		js_transitions, billboard, brush_radius, use_dashes
 		)

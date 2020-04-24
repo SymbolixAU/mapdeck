@@ -1,8 +1,9 @@
 
 
-function add_path_geo( map_id, map_type, path_data, data_count, layer_id, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, use_dashes ) {
+function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, use_dashes ) {
 
   console.log( path_data );
+
 
   var extensions = [];
 
@@ -23,7 +24,9 @@ function add_path_geo( map_id, map_type, path_data, data_count, layer_id, auto_h
   const binaryLineWidth = new Float32Array( path_data.data.stroke_width );
 
   let legend = path_data.legend;
-  let stride = path_data.stride[0];
+  let stride = path_data.stride;
+  let data_count = path_data.n_coordinates.length;
+
 /*
   //const binaryDash = new Float32Array( path_data.dash_array );
   var binaryDash;
