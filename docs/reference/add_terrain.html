@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mapdeck update — mapdeck_update • mapdeck</title>
+<title>Add terrain — add_terrain • mapdeck</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Mapdeck update — mapdeck_update" />
-<meta property="og:description" content="Update a Mapdeck map in a shiny app. Use this function whenever the map needs
-to respond to reactive content." />
+<meta property="og:title" content="Add terrain — add_terrain" />
+<meta property="og:description" content="Adds mesh surfaces from height map images" />
 
 
 
@@ -148,54 +147,109 @@ to respond to reactive content." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mapdeck update</h1>
-    <small class="dont-index">Source: <a href='https://github.com/SymbolixAU/mapdeck/blob/master/R/mapdeck_map.R'><code>R/mapdeck_map.R</code></a></small>
-    <div class="hidden name"><code>mapdeck_update.Rd</code></div>
+    <h1>Add terrain</h1>
+    <small class="dont-index">Source: <a href='https://github.com/SymbolixAU/mapdeck/blob/master/R/map_layer_terrain.R'><code>R/map_layer_terrain.R</code></a></small>
+    <div class="hidden name"><code>add_terrain.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Update a Mapdeck map in a shiny app. Use this function whenever the map needs
-to respond to reactive content.</p>
+    <p>Adds mesh surfaces from height map images</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mapdeck_update</span>(
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>map_id</span>,
-  <span class='kw'>session</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/domains.html'>getDefaultReactiveDomain</a></span>(),
-  <span class='kw'>deferUntilFlush</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>map_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mapdeck_update"</span>, <span class='st'>"google_map_update"</span>)
+    <pre class="usage"><span class='fu'>add_terrain</span>(
+  <span class='no'>map</span>,
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>elevation_data</span>,
+  <span class='kw'>texture</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>elevation_decoder</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
+  <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>max_error</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>data to be used in the layer. All coordinates are expected to be
-EPSG:4326 (WGS 84) coordinate system</p></td>
+      <th>map</th>
+      <td><p>a mapdeck map object</p></td>
     </tr>
     <tr>
-      <th>map_id</th>
-      <td><p>string containing the output ID of the map in a shiny application.</p></td>
+      <th>layer_id</th>
+      <td><p>single value specifying an id for the layer. Use this value to
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly</p></td>
     </tr>
     <tr>
-      <th>session</th>
-      <td><p>the Shiny session object to which the map belongs; usually the
-default value will suffice.</p></td>
+      <th>elevation_data</th>
+      <td><p>Image URL that encodes height data. When <code>elevation_data</code>
+is a URL template, i.e. a string containing 'x' and 'y', it loads terrain tiles on demand
+and renders a mesh for each tile. If <code>elevation_data</code> is an absolute URL, as ingle mesh is used,
+and the <code>bounds</code> argument is required to position it into the world space.</p></td>
     </tr>
     <tr>
-      <th>deferUntilFlush</th>
-      <td><p>indicates whether actions performed against this
-instance should be carried out right away, or whether they should be held until
-after the next time all of the outputs are updated; defaults to TRUE.</p></td>
+      <th>texture</th>
+      <td><p>Image URL to use as the texture</p></td>
     </tr>
     <tr>
-      <th>map_type</th>
-      <td><p>either mapdeck_update or google_map_update</p></td>
+      <th>elevation_decoder</th>
+      <td><p>Four value used to convert a pixel to elevation in metres. The
+values correspond to rScale, gScale, bScale, offset. See details</p></td>
+    </tr>
+    <tr>
+      <th>bounds</th>
+      <td><p>Four values (<code><a href='https://rdrr.io/r/base/c.html'> c(left, bottom, right, top) </a></code>. bounds of the
+image to fit in x,y coordinates into. <code>left</code> and <code>right</code> referes to the world
+longitude/x at the corresponding side of the image. <code>top</code> and <code>bottom</code> refers to
+the world latitude/y at the corresponding side of the image. Must be supplied when using
+non-tiled <code>elevation_data</code></p></td>
+    </tr>
+    <tr>
+      <th>max_error</th>
+      <td><p>Martini error tolerance in metres, smaller number results in more detailed mesh.</p></td>
+    </tr>
+    <tr>
+      <th>update_view</th>
+      <td><p>logical indicating if the map should update the bounds to include this layer</p></td>
+    </tr>
+    <tr>
+      <th>focus_layer</th>
+      <td><p>logical indicating if the map should update the bounds to only include this layer</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>The <code>elevation_decoder</code> contains four values representing</p><ul>
+<li><p>rScale - Multiplier of the red channel</p></li>
+<li><p>gScale - Multiplier of the green channel</p></li>
+<li><p>bScale - Multiplier of the blue channel</p></li>
+<li><p>offset - translation of the sum</p></li>
+</ul>
+
+<p>Each colour channel is a number between [0, 255].</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+
+<span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='st'>"MAPBOX_TOKEN"</span> )
+<span class='co'>## Digital elevation model from https://www.usgs.gov/</span>
+<span class='no'>elevation</span> <span class='kw'>&lt;-</span> <span class='st'>'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/terrain.png'</span>
+<span class='no'>texture</span> <span class='kw'>&lt;-</span> <span class='st'>'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/terrain-mask.png'</span>
+<span class='no'>bounds</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>122.5233</span>, <span class='fl'>37.6493</span>, -<span class='fl'>122.3566</span>, <span class='fl'>37.8159</span>)
+
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>add_terrain</span>(
+    , <span class='kw'>elevation_data</span> <span class='kw'>=</span> <span class='no'>elevation</span>
+    , <span class='kw'>elevation_decoder</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)
+    , <span class='kw'>texture</span> <span class='kw'>=</span> <span class='no'>texture</span>
+    , <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='no'>bounds</span>
+    , <span class='kw'>max_error</span> <span class='kw'>=</span> <span class='fl'>1</span>
+  )</div><div class='output co'>#&gt; <span class='message'>terrain is an experimental layer and the function may change without warning</span></div><div class='input'>
+# }
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
