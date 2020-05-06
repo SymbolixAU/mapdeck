@@ -25,6 +25,10 @@ mapdeckPathDependency <- function() {
 #' 0 extrudes the path so that it is centered at the specified coordinates.
 #' @param billboard logical indicating if the path always faces the camera (TRUE) or
 #' if it always faces up (FALSE)
+#' @param width_units
+#' @param width_scale
+#' @param width_min_pixels
+#' @param width_max_pixels
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
@@ -83,6 +87,10 @@ add_path <- function(
 	dash_size = NULL,
 	dash_gap = NULL,
 	offset = NULL,
+	width_units = c("meters","pixels"),
+	width_min_pixels = NULL,
+	width_max_pixels = NULL,
+	width_scale = 1,
 	tooltip = NULL,
 	billboard = FALSE,
 	layer_id = NULL,
@@ -160,7 +168,7 @@ add_path <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions, billboard, brush_radius
+		js_transitions, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels
 		)
 }
 

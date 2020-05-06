@@ -1,6 +1,6 @@
 
 
-function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius ) {
+function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels ) {
 
   var extensions = [];
 
@@ -17,8 +17,10 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
     id: 'path-'+layer_id,
     data: path_data,
     pickable: true,
-    widthScale: 1,
-    widthMinPixels: 1,
+    widthScale: width_scale,
+    widthUnits: width_units,
+    widthMinPixels: width_min_pixels || 1,
+    widthMaxPixels: width_max_pixels || Number.MAX_SAFE_INTEGER,
     rounded: true,
     billboard: billboard,
     parameters: {

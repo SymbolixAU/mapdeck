@@ -14,6 +14,10 @@ add_path(
   dash_size = NULL,
   dash_gap = NULL,
   offset = NULL,
+  width_units = c("meters", "pixels"),
+  width_min_pixels = NULL,
+  width_max_pixels = NULL,
+  width_scale = 1,
   tooltip = NULL,
   billboard = FALSE,
   layer_id = NULL,
@@ -54,6 +58,8 @@ colour, this argument is ignored and you should include the alpha on the hex str
 \item{dash_size}{size of each dash, relative to the width of the stroke}
 
 \item{dash_gap}{size of the gap between dashes, relative to the width of the stroke}
+
+\item{width_max_pixels}{}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
