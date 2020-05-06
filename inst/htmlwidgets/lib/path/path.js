@@ -9,7 +9,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
   }
 
   extensions.push(
-  	new deck.PathStyleExtension({dash: true})
+  	new deck.PathStyleExtension({dash: true, offset: true})
   );
 
   const pathLayer = new deck.PathLayer({
@@ -28,6 +28,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
     getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
     getWidth: d => d.properties.stroke_width,
     getDashArray: d => [ d.properties.dash_size, d.properties.dash_gap ],
+    getOffset: d => d.properties.offset,
     onClick: info => md_layer_click( map_id, "path", info ),
     onHover: md_update_tooltip,
     autoHighlight: auto_highlight,

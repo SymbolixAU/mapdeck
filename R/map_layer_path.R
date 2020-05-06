@@ -20,6 +20,9 @@ mapdeckPathDependency <- function() {
 #' @param stroke_width width of the stroke in meters. Default 1.
 #' @param dash_size size of each dash, relative to the width of the stroke
 #' @param dash_gap size of the gap between dashes, relative to the width of the stroke
+#' @param offest The offset to draw each path with, relative to the width of the path.
+#' Negative offset is to the left hand side, and positive offset is to the right hand side.
+#' 0 extrudes the path so that it is centered at the specified coordinates.
 #' @param billboard logical indicating if the path always faces the camera (TRUE) or
 #' if it always faces up (FALSE)
 #'
@@ -79,6 +82,7 @@ add_path <- function(
 	stroke_opacity = NULL,
 	dash_size = NULL,
 	dash_gap = NULL,
+	offset = NULL,
 	tooltip = NULL,
 	billboard = FALSE,
 	layer_id = NULL,
@@ -104,6 +108,7 @@ add_path <- function(
 	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
 	l[["dash_size"]] <- force(dash_size)
 	l[["dash_gap"]] <- force(dash_gap)
+	l[["offset"]] <- force(offset)
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)

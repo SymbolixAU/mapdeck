@@ -13,6 +13,7 @@ add_path(
   stroke_opacity = NULL,
   dash_size = NULL,
   dash_gap = NULL,
+  offset = NULL,
   tooltip = NULL,
   billboard = FALSE,
   layer_id = NULL,
@@ -95,6 +96,10 @@ a named list indicating which colour attributes should be included in the legend
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
+
+\item{offest}{The offset to draw each path with, relative to the width of the path.
+Negative offset is to the left hand side, and positive offset is to the right hand side.
+0 extrudes the path so that it is centered at the specified coordinates.}
 }
 \description{
 The Path Layer takes in lists of coordinate points and renders them as
