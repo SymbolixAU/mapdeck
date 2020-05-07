@@ -1,6 +1,6 @@
 
 
-function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels ) {
+function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels, use_offset, use_dash ) {
 
   var extensions = [];
 
@@ -9,7 +9,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
   }
 
   extensions.push(
-  	new deck.PathStyleExtension({dash: true, offset: true})
+  	new deck.PathStyleExtension({dash: use_dash, offset: use_offset})
   );
 
   const pathLayer = new deck.PathLayer({
