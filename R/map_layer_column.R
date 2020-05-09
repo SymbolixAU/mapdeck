@@ -127,9 +127,9 @@ add_column <- function(
 	l[["lat"]] <- force( lat )
 	l[["fill_colour"]] <- fill_colour
 	l[["fill_opacity"]] <- resolve_opacity( fill_opacity )
-	l[["stroke_colour"]] <- if(!is.null( stroke_colour ) ) { stroke_colour } else { fill_colour }
+	l[["stroke_colour"]] <-force( stroke_colour )
 	l[["stroke_width"]] <- force( stroke_width )
-	l[["stroke_opacity"]] <-  if(!is.null( stroke_opacity ) ) { resolve_opacity( stroke_opacity ) } else { resolve_opacity( fill_opacity ) }
+	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
 	l[["elevation"]] <- force( elevation )
 	l[["tooltip"]] <- force( tooltip )
 	l[["id"]] <- force( id )
@@ -145,7 +145,11 @@ add_column <- function(
 	update_view <- force( update_view )
 	focus_layer <- force( focus_layer )
 
-	is_extruded <- TRUE
+	is_extruded <- FALSE
+	## issue 287 & 296
+	if( !is.null( elevation ) ) {
+		is_extruded <- TRUE
+	}
 	if( !is.null( l[["stroke_width"]] ) | !is.null( l[["stroke_colour"]] ) ) {
 		is_extruded <- FALSE
 		if( !is.null( elevation ) ) {
@@ -202,16 +206,19 @@ add_column <- function(
 	}
 
 	js_transitions <- resolve_transitions( transitions, "column" )
+
 	if( inherits( legend, "json" ) ) {
 		shape[["legend"]] <- legend
+		legend_format <- "hex"
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+		legend_format <- "rgb"
 	}
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], nrow(data), layer_id, auto_highlight, highlight_colour,
-		radius, elevation_scale, disk_resolution, angle, coverage, shape[["legend"]], bbox, update_view,
-		focus_layer, js_transitions, is_extruded, brush_radius
+		radius, elevation_scale, disk_resolution, angle, coverage, shape[["legend"]], legend_format,
+		bbox, update_view, focus_layer, js_transitions, is_extruded, brush_radius
 	)
 }
 

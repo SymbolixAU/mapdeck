@@ -1,5 +1,5 @@
 
-function add_pointcloud_geo_columnar( map_id, map_type, pointcloud_data, data_count, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
+function add_pointcloud_geo_columnar( map_id, map_type, pointcloud_data, data_count, radius, layer_id, light_settings, auto_highlight, highlight_colour, legend, legend_format, bbox, update_view, focus_layer, js_transition, brush_radius ) {
 
   var extensions = [];
 
@@ -48,7 +48,7 @@ function add_pointcloud_geo_columnar( map_id, map_type, pointcloud_data, data_co
 	}
 
 	if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend, "rgb" );
+	  md_add_legend(map_id, map_type, layer_id, legend, legend_format );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

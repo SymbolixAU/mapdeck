@@ -221,13 +221,15 @@ add_scatterplot <- function(
 
 	if( inherits( legend, "json" ) ) {
 		shape[["legend"]] <- legend
+		legend_format <- "hex"
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+		legend_format <- "rgb"
 	}
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], nrow(data) , layer_id, auto_highlight, highlight_colour,
-		shape[["legend"]], bbox, update_view, focus_layer, js_transitions,
+		shape[["legend"]], legend_format, bbox, update_view, focus_layer, js_transitions,
 		radius_min_pixels, radius_max_pixels, brush_radius
 		)
 }

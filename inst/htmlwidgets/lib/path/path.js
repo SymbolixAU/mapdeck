@@ -1,9 +1,5 @@
 
-
-function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, use_dashes ) {
-
-  console.log( path_data );
-
+function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels, use_offset, use_dash ) {
 
   var extensions = [];
 
@@ -11,19 +7,18 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
   	extensions.push( new deck.BrushingExtension() );
   }
 
-  let hasTooltip = path_data.data.tooltip !== undefined;
-
 //  extensions.push(
-//  	new deck.PathStyleExtension({dash: true})
+//  	new deck.PathStyleExtension({dash: use_dash, offset: use_offset})
 //  );
+
+  let hasTooltip = path_data.data.tooltip !== undefined;
 
   const binaryLocation = new Float32Array( path_data.coordinates );
   const binaryStartIndices = new Uint32Array( path_data.start_indices );
-
   const binaryLineColour = new Uint8Array( path_data.data.stroke_colour );
   const binaryLineWidth = new Float32Array( path_data.data.stroke_width );
 
-  let legend = path_data.legend;
+  //let legend = path_data.legend;
   let stride = path_data.stride;
   let data_count = path_data.n_coordinates.length;
 
@@ -52,14 +47,15 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
     map_id: map_id,
     id: 'path-'+layer_id,
     pickable: true,
-    widthScale: 1,
-    widthMinPixels: 1,
+    widthScale: width_scale,
+    widthUnits: width_units,
+    widthMinPixels: width_min_pixels || 1,
+    widthMaxPixels: width_max_pixels || Number.MAX_SAFE_INTEGER,
     rounded: true,
     billboard: billboard,
     parameters: {
 	    depthTest: false
 	  },
-
 		data: {
       length: data_count,
       startIndices: binaryStartIndices,
@@ -68,6 +64,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
         getColor: {value: binaryLineColour, size: 4},
         getWidth: {value: binaryLineWidth, size: 1}
         //getDashArray: {value: binaryDash, size: 2}
+        //getOffset: d => d.properties.offset,
       },
       tooltip: path_data.data.tooltip
     },
