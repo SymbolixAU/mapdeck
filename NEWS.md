@@ -1,5 +1,6 @@
 # v0.3.3
 
+* fixed bug in polygon layer when using `sfheaders::sf_cast()`
 * fixed bug in manual legend for point layers [issue 301](https://github.com/SymbolixAU/mapdeck/issues/301)
 * path width options [issue 300](https://github.com/SymbolixAU/mapdeck/issues/300)
 * min and max pitch and zoom options [issue 295](https://github.com/SymbolixAU/mapdeck/issues/295)
