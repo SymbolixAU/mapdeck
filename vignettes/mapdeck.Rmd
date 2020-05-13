@@ -30,7 +30,7 @@ library(mapdeck)
 ```
 
 
-![](./img/articles/hexagons.png)
+![](./img/hexagons.png)
 
 # What is Mapdeck?
 
