@@ -138,7 +138,7 @@ function add_line_animated_geo( map_id, map_type, line_data, layer_id, auto_high
     extensions: extensions
   });
 
-  console.log( lineLayer );
+  //console.log( lineLayer );
 
   if( map_type == "google_map") {
 	  md_update_overlay( map_id, 'animated_line-'+layer_id, lineLayer );

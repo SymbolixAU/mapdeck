@@ -169,8 +169,6 @@ function md_layer_clear( map_id, map_type, layer_id, layer ) {
 
 function md_update_layer( map_id, layer_id, layer ) {
 
-	console.log( layer_id );
-
   var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id );
   if ( elem != -1 ) {
   	window[ map_id + 'layers'][elem] = layer;
