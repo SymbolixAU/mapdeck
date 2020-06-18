@@ -20,8 +20,19 @@ mapdeckPathDependency <- function() {
 #' @param stroke_width width of the stroke in meters. Default 1.
 #' @param dash_size size of each dash, relative to the width of the stroke
 #' @param dash_gap size of the gap between dashes, relative to the width of the stroke
+#' @param offset The offset to draw each path with, relative to the width of the path.
+#' Negative offset is to the left hand side, and positive offset is to the right hand side.
+#' 0 extrudes the path so that it is centered at the specified coordinates.
 #' @param billboard logical indicating if the path always faces the camera (TRUE) or
 #' if it always faces up (FALSE)
+#' @param width_units The units of the line width, one of 'meters', 'pixels'.
+#' When zooming in and out, meter sizes scale with the base map, and pixel sizes
+#' remain the same on screen.
+#' @param width_scale The path width multiplier that multiplied to all paths.
+#' @param width_min_pixels The minimum path width in pixels.
+#' This can be used to prevent the path from getting too thin when zoomed out.
+#' @param width_max_pixels The maximum path width in pixels.
+#' his prop can be used to prevent the path from getting too thick when zoomed in.
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend
@@ -52,7 +63,7 @@ mapdeckPathDependency <- function() {
 #' set_token( key )
 #'
 #' mapdeck(
-#'   style = 'mapbox://styles/mapbox/dark-v9'
+#'   style = mapdeck_style("dark")
 #'   , location = c(145, -37.8)
 #'   , zoom = 10) %>%
 #'   add_path(
@@ -79,6 +90,11 @@ add_path <- function(
 	stroke_opacity = NULL,
 	dash_size = NULL,
 	dash_gap = NULL,
+	offset = NULL,
+	width_units = c("meters","pixels"),
+	width_min_pixels = NULL,
+	width_max_pixels = NULL,
+	width_scale = 1,
 	tooltip = NULL,
 	billboard = FALSE,
 	layer_id = NULL,
@@ -93,7 +109,8 @@ add_path <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -103,6 +120,7 @@ add_path <- function(
 	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
 	l[["dash_size"]] <- force(dash_size)
 	l[["dash_gap"]] <- force(dash_gap)
+	l[["offset"]] <- force(offset)
 	l[["tooltip"]] <- force(tooltip)
 	l[["id"]] <- force(id)
 	l[["na_colour"]] <- force(na_colour)
@@ -110,7 +128,7 @@ add_path <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, c("LINESTRING","MULTILINESTRING") )
+	l <- resolve_data( data, l, c("LINESTRING") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -125,6 +143,9 @@ add_path <- function(
 		bbox <- l[["bbox"]]
 		l[["bbox"]] <- NULL
 	}
+
+	use_offset <- !is.null( offset )
+	use_dash <- !is.null( dash_size ) | !is.null( dash_gap )
 
 	layer_id <- layerId(layer_id, "path")
 	checkHexAlpha( highlight_colour )
@@ -154,7 +175,8 @@ add_path <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions, billboard
+		js_transitions, billboard, brush_radius, width_units, width_scale, width_min_pixels,
+		width_max_pixels, use_offset, use_dash
 		)
 }
 

@@ -9,7 +9,8 @@ Rcpp::List path_defaults(int n) {
 		_["stroke_colour"] = mapdeck::defaults::default_stroke_colour( n ),
 		_["stroke_width"] = mapdeck::defaults::default_stroke_width( n ),
 		_["dash_size"] = mapdeck::defaults::default_dash( n ),
-		_["dash_gap"] = mapdeck::defaults::default_dash( n )
+		_["dash_gap"] = mapdeck::defaults::default_dash( n ),
+		_["offset"] = mapdeck::defaults::default_offset( n )
 	);
 }
 
@@ -32,7 +33,7 @@ Rcpp::List get_path_defaults( std::string layer_name, int data_rows ) {
 Rcpp::List rcpp_path_geojson(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
-		std::string geometry_columns,
+		Rcpp::StringVector geometry_columns,
 		int digits,
 		std::string layer_name
 	) {
@@ -45,7 +46,7 @@ Rcpp::List rcpp_path_geojson(
 	Rcpp::StringVector path_legend = mapdeck::layer_colours::stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
-	return spatialwidget::api::create_geojson_downcast(
+	return spatialwidget::api::create_geojson(
 		data,
 		params,
 		lst_defaults,

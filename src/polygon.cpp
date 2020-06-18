@@ -14,8 +14,10 @@ Rcpp::List polygon_defaults(int n) {
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_polygon_geojson(
-		Rcpp::DataFrame data, Rcpp::List params,
-		std::string geometry_columns, int digits
+		Rcpp::DataFrame data,
+		Rcpp::List params,
+		Rcpp::StringVector geometry_columns,
+		int digits
 	) {
 
 	int data_rows = data.nrows();
@@ -26,7 +28,7 @@ Rcpp::List rcpp_polygon_geojson(
 	Rcpp::StringVector polygon_legend = mapdeck::layer_colours::fill_stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
-	return spatialwidget::api::create_geojson_downcast(
+	return spatialwidget::api::create_geojson(
 		data,
 		params,
 		lst_defaults,
@@ -70,7 +72,8 @@ Rcpp::List rcpp_polygon_geojson(
 // [[Rcpp::export]]
 Rcpp::List rcpp_polygon_polyline(
 		Rcpp::DataFrame data,
-		Rcpp::List params, Rcpp::StringVector geometry_columns
+		Rcpp::List params,
+		Rcpp::StringVector geometry_columns
 	) {
 
 	int data_rows = data.nrows();

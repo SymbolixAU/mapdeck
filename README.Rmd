@@ -14,16 +14,19 @@ knitr::opts_chunk$set(
 ```
 # mapdeck
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/mapdeck)](http://cran.r-project.org/package=mapdeck)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/mapdeck)
-[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/mapdeck)](http://cran.r-project.org/web/packages/mapdeck/index.html)
+[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
 [![Github Stars](https://img.shields.io/github/stars/SymbolixAU/mapdeck.svg?style=social&label=Github)](https://github.com/SymbolixAU/mapdeck)
-[![Build Status](https://travis-ci.org/SymbolixAU/mapdeck.svg?branch=master)](https://travis-ci.org/SymbolixAU/mapdeck)
-[![Coverage Status](https://codecov.io/github/SymbolixAU/mapdeck/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/mapdeck?branch=master)
+
+![](./docs/articles/img/articles/hexagons.png)
 
 ## What is mapdeck?
 
-An R library which lets you plot large data sets (as much as your GPU & browser can handle), on interactive maps using Mapbox GL and Deck.gl
+An R library which lets you plot large data sets (as much as your GPU &
+browser can handle), on interactive maps using Mapbox GL and Deck.gl
+
+![](./docs/articles/img/articles/polygon_transitions.gif)
 
 ## What is mapbox?
 
@@ -39,31 +42,23 @@ An R library which lets you plot large data sets (as much as your GPU & browser 
 
 ## How do I use it? 
 
-Everything you need to know to get you started is on the [home page](https://symbolixau.github.io/mapdeck/articles/mapdeck.html)
-
-## Installation
-
-#### From cran
+First you need to install it, either from CRAN
 
 ```r
 install.packages("mapdeck")
 ```
 
-#### Development version
-
-
-To use the development version you need some other development dependant libraries
+Or from github (to get the latest development version)
 
 ```r
-devtools::install_github("SymbolixAU/jsonify", force = TRUE)
-devtools::install_github("dcooley/sfheaders", force = TRUE)
-devtools::install_github("SymbolixAU/geojsonsf", force = TRUE)
-devtools::install_github("SymbolixAU/colourvalues", force = TRUE)
-devtools::install_github("SymbolixAU/spatialwidget", force = TRUE)
 devtools::install_github("SymbolixAU/mapdeck")
 ```
 
-## Getting Started
+Then everything you need to know to get you started is on the [home page](https://symbolixau.github.io/mapdeck/articles/mapdeck.html)
+
+
+
+## Quick Start
 
 Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox you need an [access token](https://www.mapbox.com/help/how-access-tokens-work/).
 

@@ -4,17 +4,38 @@
 \alias{add_text}
 \title{Add Text}
 \usage{
-add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
-  polyline = NULL, fill_colour = NULL, fill_opacity = NULL,
-  size = NULL, angle = NULL, anchor = NULL,
-  alignment_baseline = NULL, billboard = TRUE,
-  font_family = "Monaco, monospace", font_weight = "normal",
-  tooltip = NULL, layer_id = NULL, id = NULL,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, digits = 6, transitions = NULL,
-  brush_radius = NULL)
+add_text(
+  map,
+  data = get_map_data(map),
+  text,
+  lon = NULL,
+  lat = NULL,
+  polyline = NULL,
+  fill_colour = NULL,
+  fill_opacity = NULL,
+  size = NULL,
+  angle = NULL,
+  anchor = NULL,
+  alignment_baseline = NULL,
+  billboard = TRUE,
+  font_family = "Monaco, monospace",
+  font_weight = "normal",
+  tooltip = NULL,
+  layer_id = NULL,
+  id = NULL,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  palette = "viridis",
+  na_colour = "#808080FF",
+  legend = FALSE,
+  legend_options = NULL,
+  legend_format = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL,
+  brush_radius = NULL
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -31,7 +52,7 @@ EPSG:4326 (WGS 84) coordinate system}
 \item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.
-If using a hex colour, use either a single value, or a vector the same length as \code{data}}
+If using a hex colour, use either a single value, or a column of hex colours  on \code{data}}
 
 \item{fill_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
@@ -89,7 +110,13 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed}
 }
 \description{
 The Text Layer renders text labels on the map

@@ -4,10 +4,10 @@ function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, hi
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
-  const textLayer = new TextLayer({
+  const textLayer = new deck.TextLayer({
   	map_id: map_id,
     id: 'text-'+layer_id,
     data: text_data,
@@ -45,7 +45,7 @@ function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, hi
 	}
 
 	if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
@@ -55,10 +55,10 @@ function add_text_polyline( map_id, map_type, text_data, layer_id, auto_highligh
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
-  const textLayer = new TextLayer({
+  const textLayer = new deck.TextLayer({
     map_id: map_id,
     id: 'text-'+layer_id,
     data: text_data,
@@ -95,7 +95,7 @@ function add_text_polyline( map_id, map_type, text_data, layer_id, auto_highligh
 	}
 
 	if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

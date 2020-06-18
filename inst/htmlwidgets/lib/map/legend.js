@@ -1,9 +1,13 @@
 
 //https://stackoverflow.com/a/40475362/5977215
-function md_colour_domain( x, colour_range, map_id, map_type, layer_id, legend  ) {
+function md_colour_domain( x, colour_range, map_id, map_type, layer_id, legend, format ) {
 	if( legend.legend ) {
 
+		//console.log( "md_colour_domain" );
+		//console.log( x );
 		var cd = md_make_legend_range(x[0], x[1], colour_range.length, legend.digits );
+
+		//console.log( cd );
 
 		var ledge = {
   	fill_colour: {
@@ -15,7 +19,7 @@ function md_colour_domain( x, colour_range, map_id, map_type, layer_id, legend  
   		css: legend.css
   	}
   };
-  md_add_legend( map_id, map_type, layer_id, ledge );
+  md_add_legend( map_id, map_type, layer_id, ledge, format );
 	}
 
 }
@@ -33,7 +37,7 @@ function md_make_legend_range(startValue, stopValue, cardinality, digits ) {
 }
 
 
-function md_add_legend(map_id, map_type, layer_id, legendValues) {
+function md_add_legend(map_id, map_type, layer_id, legendValues, format ) {
 
   if( !md_div_exists( 'legendContainer'+map_id ) ) {
   	md_setup_legend( map_id );
@@ -48,15 +52,15 @@ function md_add_legend(map_id, map_type, layer_id, legendValues) {
 
         if ( this_legend.colour !== undefined ) {
             if ( this_legend.type[0] === "category" || this_legend.colour.length == 1 ) {
-                md_add_legend_category( map_id, map_type, layer_id, this_legend );
+                md_add_legend_category( map_id, map_type, layer_id, this_legend, format );
             } else {
-                md_add_legend_gradient( map_id, map_type, layer_id, this_legend);
+                md_add_legend_gradient( map_id, map_type, layer_id, this_legend, format );
             }
         }
     });
 }
 
-function md_add_legend_gradient(map_id, map_type, layer_id, legendValues) {
+function md_add_legend_gradient(map_id, map_type, layer_id, legendValues, format ) {
     // fill gradient
     // numeric values; format numbers according to legendValues.digits
 
@@ -109,8 +113,19 @@ function md_add_legend_gradient(map_id, map_type, layer_id, legendValues) {
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('style', legendValues.css);
     }
 
-    for (i = 0; i < legendValues.colour.length; i++) {
-      jsColours.push( legendValues.colour[i].substring(0,7) );
+    //console.log( legendValues.colour );
+
+    if( format === "hex") {
+	    for (i = 0; i < legendValues.colour.length; i++) {
+	      jsColours.push( legendValues.colour[i].substring(0,7) );
+	    }
+    } else {
+    	for (i = 0; i < legendValues.colour.length; i++) {
+
+    		var hex = md_RGBToHex( legendValues.colour[i] );
+
+	      jsColours.push( hex );
+	    }
     }
 
     colours = '(' + jsColours.join() + ')';
@@ -161,7 +176,7 @@ function md_generateColourBox(colourType, colour) {
     }
 }
 
-function md_add_legend_category(map_id, map_type, layer_id, legendValues) {
+function md_add_legend_category(map_id, map_type, layer_id, legendValues, format ) {
 
     'use strict';
 
@@ -228,7 +243,12 @@ function md_add_legend_category(map_id, map_type, layer_id, legendValues) {
             divVal = document.createElement('div');
 
         //colourBox = 'height: 20px; width: 15px; background: ' + legendValues.legend.colour[i];
-        colourBox = md_generateColourBox(legendValues.colourType, legendValues.colour[i].substring(0,7) );
+        if( format === "hex" ) {
+        	colourBox = md_generateColourBox(legendValues.colourType, legendValues.colour[i].substring(0,7) );
+        } else {
+        	var hex = md_RGBToHex( legendValues.colour[i] );
+        	colourBox = md_generateColourBox(legendValues.colourType, hex );
+        }
         divCol.setAttribute('style', colourBox);
         colourContainer.appendChild(divCol);
 
@@ -297,7 +317,7 @@ function md_placeControl( map_id, map_type, object ) {
     var ledge = {};
     var position = "BOTTOM_RIGHT";
 
-    if( map_type == "google_map" ) {
+    if( map_type == "google_map") {
     	window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT].push( object );
     }
 

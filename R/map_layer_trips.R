@@ -12,7 +12,7 @@ mapdeckTripsDependency <- function() {
 
 #' Add Trips
 #'
-#' The Trips Layer takes an sf object with Z and M attributes and renders
+#' The Trips Layer takes an sf object with Z (elevation) and M (time) attributes and renders
 #' it as animated trips
 #'
 #' @inheritParams add_path
@@ -23,7 +23,7 @@ mapdeckTripsDependency <- function() {
 #' @param opacity single value in [0,1]
 #' @param start_time the minimum timestamp
 #' @param end_time the maximum timestamp
-#' @param animation_speed
+#' @param animation_speed speed of animation
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'
@@ -31,24 +31,24 @@ mapdeckTripsDependency <- function() {
 #' @examples
 #' \donttest{
 #'
-#'
-#' library(gpx)
-#' gpx <- system.file("gpx/city_trail.gpx", package = "gpx")
-#' sf <- gpx::gpx_sf( gpx, time = "counter" )
+#' set_token( "MAPBOX_TOKEN")
+#' sf <- city_trail
 #'
 #' mapdeck(
-#' 	style = mapdeck_style("dark")
-#' 	#, location = c(145, -37.9)
-#' 	#, zoom = 8
+#' location = c(145, -37.8)
+#' , zoom = 10
+#' , style = mapdeck_style("dark")
 #' ) %>%
-#' 	add_trips(
-#' 		data = sf
-#' 		, trail_length = 2000
-#' 		, animation_speed = 50
-#' 		, stroke_colour = "#FFFFFF"
-#' 	)
+#'  add_trips(
+#'    data = sf
+#'    , animation_speed = 2000
+#'    , trail_length = 1000
+#'    , stroke_colour = "#FFFFFF"
+#' )
 #'
 #' }
+#'
+#' @details
 #'
 #' \code{add_trips} supports LINESTRING and MULTILINESTRING sf objects
 #'
@@ -80,7 +80,7 @@ add_trips <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, c("LINESTRING","MULTILINESTRING") )
+	l <- resolve_data( data, l, c("LINESTRING") )
 
 	# bbox <- init_bbox()
 	#update_view <- force( update_view )

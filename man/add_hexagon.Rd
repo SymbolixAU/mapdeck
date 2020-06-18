@@ -4,14 +4,30 @@
 \alias{add_hexagon}
 \title{Add hexagon}
 \usage{
-add_hexagon(map, data = get_map_data(map), polyline = NULL,
-  lon = NULL, lat = NULL, layer_id = NULL, radius = 1000,
-  elevation = NULL, elevation_function = c("sum", "mean", "min",
-  "max"), colour = NULL, colour_function = c("sum", "mean", "min",
-  "max"), legend = FALSE, legend_options = NULL, elevation_scale = 1,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  colour_range = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL, brush_radius = NULL)
+add_hexagon(
+  map,
+  data = get_map_data(map),
+  polyline = NULL,
+  lon = NULL,
+  lat = NULL,
+  layer_id = NULL,
+  radius = 1000,
+  elevation = NULL,
+  elevation_function = c("sum", "mean", "min", "max"),
+  colour = NULL,
+  colour_function = c("sum", "mean", "min", "max"),
+  legend = FALSE,
+  legend_options = NULL,
+  elevation_scale = 1,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  colour_range = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL,
+  brush_radius = NULL
+)
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -56,6 +72,8 @@ If supplied it specifies how the colour values are calculated. Defaults to sum.}
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{digits}{number of digits for rounding coordinates}
 
 \item{transitions}{list specifying the duration of transitions.}
 
@@ -120,8 +138,8 @@ add_hexagon(
   , elevation_scale = 100
 )
 
-library( sf )
-sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lng", y = "lat" )
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_hexagon(

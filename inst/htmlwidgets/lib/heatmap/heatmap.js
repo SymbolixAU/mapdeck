@@ -47,3 +47,6 @@ function add_heatmap_polyline( map_id, map_type, heatmap_data, layer_id, colour_
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
+
+
+
