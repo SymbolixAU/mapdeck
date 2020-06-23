@@ -13,6 +13,11 @@ add_path(
   stroke_opacity = NULL,
   dash_size = NULL,
   dash_gap = NULL,
+  offset = NULL,
+  width_units = c("meters", "pixels"),
+  width_min_pixels = NULL,
+  width_max_pixels = NULL,
+  width_scale = 1,
   tooltip = NULL,
   billboard = FALSE,
   layer_id = NULL,
@@ -53,6 +58,22 @@ colour, this argument is ignored and you should include the alpha on the hex str
 \item{dash_size}{size of each dash, relative to the width of the stroke}
 
 \item{dash_gap}{size of the gap between dashes, relative to the width of the stroke}
+
+\item{offset}{The offset to draw each path with, relative to the width of the path.
+Negative offset is to the left hand side, and positive offset is to the right hand side.
+0 extrudes the path so that it is centered at the specified coordinates.}
+
+\item{width_units}{The units of the line width, one of 'meters', 'pixels'.
+When zooming in and out, meter sizes scale with the base map, and pixel sizes
+remain the same on screen.}
+
+\item{width_min_pixels}{The minimum path width in pixels.
+This can be used to prevent the path from getting too thin when zoomed out.}
+
+\item{width_max_pixels}{The maximum path width in pixels.
+his prop can be used to prevent the path from getting too thick when zoomed in.}
+
+\item{width_scale}{The path width multiplier that multiplied to all paths.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Clear Legend — clear_legend • mapdeck</title>
+<title>Add terrain — add_terrain • mapdeck</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Clear Legend — clear_legend" />
-<meta property="og:description" content="Clears the legend for a given layer_id" />
+<meta property="og:title" content="Add terrain — add_terrain" />
+<meta property="og:description" content="Adds mesh surfaces from height map images" />
 
 
 
@@ -147,23 +147,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Clear Legend</h1>
-    <small class="dont-index">Source: <a href='https://github.com/SymbolixAU/mapdeck/blob/master/R/legend.R'><code>R/legend.R</code></a></small>
-    <div class="hidden name"><code>clear_legend.Rd</code></div>
+    <h1>Add terrain</h1>
+    <small class="dont-index">Source: <a href='https://github.com/SymbolixAU/mapdeck/blob/master/R/map_layer_terrain.R'><code>R/map_layer_terrain.R</code></a></small>
+    <div class="hidden name"><code>add_terrain.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Clears the legend for a given layer_id</p>
+    <p>Adds mesh surfaces from height map images</p>
     </div>
 
-    <pre class="usage"><span class='fu'>clear_legend</span>(<span class='no'>map_id</span>, <span class='no'>layer_id</span>)</pre>
+    <pre class="usage"><span class='fu'>add_terrain</span>(
+  <span class='no'>map</span>,
+  <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>elevation_data</span>,
+  <span class='kw'>texture</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>elevation_decoder</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
+  <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>max_error</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+  <span class='kw'>update_view</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>focus_layer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>map_id</th>
-      <td><p>the id of the map you want to clear the legend from.</p></td>
+      <th>map</th>
+      <td><p>a mapdeck map object</p></td>
     </tr>
     <tr>
       <th>layer_id</th>
@@ -171,9 +181,75 @@
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly</p></td>
     </tr>
+    <tr>
+      <th>elevation_data</th>
+      <td><p>Image URL that encodes height data. When <code>elevation_data</code>
+is a URL template, i.e. a string containing 'x' and 'y', it loads terrain tiles on demand
+and renders a mesh for each tile. If <code>elevation_data</code> is an absolute URL, as ingle mesh is used,
+and the <code>bounds</code> argument is required to position it into the world space.</p></td>
+    </tr>
+    <tr>
+      <th>texture</th>
+      <td><p>Image URL to use as the texture</p></td>
+    </tr>
+    <tr>
+      <th>elevation_decoder</th>
+      <td><p>Four value used to convert a pixel to elevation in metres. The
+values correspond to rScale, gScale, bScale, offset. See details</p></td>
+    </tr>
+    <tr>
+      <th>bounds</th>
+      <td><p>Four values (<code><a href='https://rdrr.io/r/base/c.html'> c(left, bottom, right, top) </a></code>. bounds of the
+image to fit in x,y coordinates into. <code>left</code> and <code>right</code> referes to the world
+longitude/x at the corresponding side of the image. <code>top</code> and <code>bottom</code> refers to
+the world latitude/y at the corresponding side of the image. Must be supplied when using
+non-tiled <code>elevation_data</code></p></td>
+    </tr>
+    <tr>
+      <th>max_error</th>
+      <td><p>Martini error tolerance in metres, smaller number results in more detailed mesh.</p></td>
+    </tr>
+    <tr>
+      <th>update_view</th>
+      <td><p>logical indicating if the map should update the bounds to include this layer</p></td>
+    </tr>
+    <tr>
+      <th>focus_layer</th>
+      <td><p>logical indicating if the map should update the bounds to only include this layer</p></td>
+    </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>The <code>elevation_decoder</code> contains four values representing</p><ul>
+<li><p>rScale - Multiplier of the red channel</p></li>
+<li><p>gScale - Multiplier of the green channel</p></li>
+<li><p>bScale - Multiplier of the blue channel</p></li>
+<li><p>offset - translation of the sum</p></li>
+</ul>
+
+<p>Each colour channel is a number between [0, 255].</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+
+<span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='st'>"MAPBOX_TOKEN"</span> )
+<span class='co'>## Digital elevation model from https://www.usgs.gov/</span>
+<span class='no'>elevation</span> <span class='kw'>&lt;-</span> <span class='st'>'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/terrain.png'</span>
+<span class='no'>texture</span> <span class='kw'>&lt;-</span> <span class='st'>'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/terrain-mask.png'</span>
+<span class='no'>bounds</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>122.5233</span>, <span class='fl'>37.6493</span>, -<span class='fl'>122.3566</span>, <span class='fl'>37.8159</span>)
+
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>add_terrain</span>(
+    , <span class='kw'>elevation_data</span> <span class='kw'>=</span> <span class='no'>elevation</span>
+    , <span class='kw'>elevation_decoder</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)
+    , <span class='kw'>texture</span> <span class='kw'>=</span> <span class='no'>texture</span>
+    , <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='no'>bounds</span>
+    , <span class='kw'>max_error</span> <span class='kw'>=</span> <span class='fl'>1</span>
+  )</div><div class='output co'>#&gt; <span class='message'>terrain is an experimental layer and the function may change without warning</span></div><div class='input'>
+# }
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

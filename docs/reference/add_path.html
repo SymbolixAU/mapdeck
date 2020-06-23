@@ -73,7 +73,7 @@ extruded lines with mitering." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -167,6 +167,11 @@ extruded lines with mitering.</p>
   <span class='kw'>stroke_opacity</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>dash_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>dash_gap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>offset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>width_units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"meters"</span>, <span class='st'>"pixels"</span>),
+  <span class='kw'>width_min_pixels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>width_max_pixels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>width_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>billboard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -225,6 +230,32 @@ colour, this argument is ignored and you should include the alpha on the hex str
     <tr>
       <th>dash_gap</th>
       <td><p>size of the gap between dashes, relative to the width of the stroke</p></td>
+    </tr>
+    <tr>
+      <th>offset</th>
+      <td><p>The offset to draw each path with, relative to the width of the path.
+Negative offset is to the left hand side, and positive offset is to the right hand side.
+0 extrudes the path so that it is centered at the specified coordinates.</p></td>
+    </tr>
+    <tr>
+      <th>width_units</th>
+      <td><p>The units of the line width, one of 'meters', 'pixels'.
+When zooming in and out, meter sizes scale with the base map, and pixel sizes
+remain the same on screen.</p></td>
+    </tr>
+    <tr>
+      <th>width_min_pixels</th>
+      <td><p>The minimum path width in pixels.
+This can be used to prevent the path from getting too thin when zoomed out.</p></td>
+    </tr>
+    <tr>
+      <th>width_max_pixels</th>
+      <td><p>The maximum path width in pixels.
+his prop can be used to prevent the path from getting too thick when zoomed in.</p></td>
+    </tr>
+    <tr>
+      <th>width_scale</th>
+      <td><p>The path width multiplier that multiplied to all paths.</p></td>
     </tr>
     <tr>
       <th>tooltip</th>
@@ -370,7 +401,7 @@ you are clicking on</p>
 <span class='fu'><a href='set_token.html'>set_token</a></span>( <span class='no'>key</span> )
 
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
-  <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>'mapbox://styles/mapbox/dark-v9'</span>
+  <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>)
   , <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>145</span>, -<span class='fl'>37.8</span>)
   , <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_path</span>(

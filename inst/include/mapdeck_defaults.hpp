@@ -96,6 +96,11 @@ namespace defaults {
   	return nv;
   }
 
+	inline Rcpp::NumericVector default_offset( int n ) {
+		Rcpp::NumericVector nv(n, 0.0);
+		return nv;
+	}
+
 } // namespace defaults
 } // namespace mapdeck
 

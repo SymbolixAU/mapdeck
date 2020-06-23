@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@
       <h1 data-toc-skip>Benchmarks</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2020-04-06</h4>
+            <h4 class="date">2020-05-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SymbolixAU/mapdeck/blob/master/vignettes/benchmarks.Rmd"><code>vignettes/benchmarks.Rmd</code></a></small>
       <div class="hidden name"><code>benchmarks.Rmd</code></div>
@@ -162,7 +162,7 @@
 <span class="no">sf</span>$<span class="no">fill_colour</span> <span class="kw">&lt;-</span> <span class="kw pkg">colourvalues</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/colourvalues/man/colour_values.html">colour_values</a></span>(<span class="no">sf</span>$<span class="no">val</span>)
 <span class="no">geo</span> <span class="kw">&lt;-</span> <span class="kw pkg">geojsonsf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/geojsonsf/man/sf_geojson.html">sf_geojson</a></span>( <span class="no">sf</span>, <span class="kw">simplify</span> <span class="kw">=</span> <span class="fl">FALSE</span> )
 
-<span class="fu">microbenchmark</span>(
+<span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html">microbenchmark</a></span>(
     <span class="kw">df</span> <span class="kw">=</span> {
         <span class="fu"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="kw">%&gt;%</span>
           <span class="fu"><a href="../reference/add_scatterplot.html">add_scatterplot</a></span>( <span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>, <span class="kw">lon</span> <span class="kw">=</span> <span class="st">"lon"</span>, <span class="kw">lat</span> <span class="kw">=</span> <span class="st">"lat"</span>, <span class="kw">fill_colour</span> <span class="kw">=</span> <span class="st">"val"</span>)
@@ -221,7 +221,7 @@
 <span class="no">geo</span> <span class="kw">&lt;-</span> <span class="kw pkg">geojsonsf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/geojsonsf/man/sf_geojson.html">sf_geojson</a></span>( <span class="no">sf</span>, <span class="kw">simplify</span> <span class="kw">=</span> <span class="fl">FALSE</span> )
 
 
-<span class="fu">microbenchmark</span>(
+<span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html">microbenchmark</a></span>(
     <span class="kw">sf</span> <span class="kw">=</span> {
         <span class="fu"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/add_path.html">add_path</a></span>( <span class="kw">data</span> <span class="kw">=</span> <span class="no">sf</span>, <span class="kw">stroke_colour</span> <span class="kw">=</span> <span class="st">"RIGHT_LOC"</span> )
     },
@@ -279,7 +279,7 @@
 <span class="no">geo</span> <span class="kw">&lt;-</span> <span class="kw pkg">geojsonsf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/geojsonsf/man/sf_geojson.html">sf_geojson</a></span>( <span class="no">sf</span>, <span class="kw">simplify</span> <span class="kw">=</span> <span class="fl">FALSE</span> )
 
 
-<span class="fu">microbenchmark</span>(
+<span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html">microbenchmark</a></span>(
     <span class="kw">sf</span> <span class="kw">=</span> {
         <span class="fu"><a href="../reference/mapdeck.html">mapdeck</a></span>() <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/add_polygon.html">add_polygon</a></span>( <span class="kw">data</span> <span class="kw">=</span> <span class="no">sf</span>, <span class="kw">fill_colour</span> <span class="kw">=</span> <span class="st">"AREA"</span> )
     },

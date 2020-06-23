@@ -14,6 +14,10 @@ mapdeck(
   pitch = 0,
   zoom = 0,
   bearing = 0,
+  max_zoom = 20,
+  min_zoom = 0,
+  max_pitch = 60,
+  min_pitch = 0,
   location = c(0, 0),
   show_view_state = FALSE,
   repeat_view = FALSE
@@ -40,6 +44,14 @@ If left empty layers will still be plotted, but without a Mapbox map.}
 \item{zoom}{zoom level of the map}
 
 \item{bearing}{bearing of the map between 0 and 360}
+
+\item{max_zoom}{sets the maximum zoom level}
+
+\item{min_zoom}{sets the minimum zoom level}
+
+\item{max_pitch}{sets the maximum pitch}
+
+\item{min_pitch}{sets the minimum pitch}
 
 \item{location}{unnamed vector of lon and lat coordinates (in that order)}
 

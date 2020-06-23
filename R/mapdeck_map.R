@@ -14,6 +14,10 @@
 #' @param pitch the pitch angle of the map
 #' @param zoom zoom level of the map
 #' @param bearing bearing of the map between 0 and 360
+#' @param max_zoom sets the maximum zoom level
+#' @param min_zoom sets the minimum zoom level
+#' @param max_pitch sets the maximum pitch
+#' @param min_pitch sets the minimum pitch
 #' @param location unnamed vector of lon and lat coordinates (in that order)
 #' @param show_view_state logical, indicating whether to add the current View State to the map.
 #' When \code{TRUE}, the following is added as an overlay to the map
@@ -52,6 +56,10 @@ mapdeck <- function(
 	pitch = 0,
 	zoom = 0,
 	bearing = 0,
+	max_zoom = 20,
+	min_zoom = 0,
+	max_pitch = 60,
+	min_pitch = 0,
 	location = c(0, 0),
 	show_view_state = FALSE,
 	repeat_view = FALSE
@@ -65,6 +73,10 @@ mapdeck <- function(
     , zoom = force( zoom )
     , location = force( as.numeric( location ) )
     , bearing = force( bearing )
+    , max_zoom = force( max_zoom )
+    , min_zoom = force( min_zoom )
+    , max_pitch = force( max_pitch )
+    , min_pitch = force( min_pitch )
     , show_view_state = force( show_view_state )
     , repeat_view = force( repeat_view )
   )

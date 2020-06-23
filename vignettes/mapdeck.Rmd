@@ -29,6 +29,9 @@ knitr::opts_chunk$set(
 library(mapdeck)
 ```
 
+
+![](./img/hexagons.png)
+
 # What is Mapdeck?
 
 Mapdeck is a combination of [Mabox](https://www.mapbox.com/help/define-mapbox-gl/) and [Deck.gl](http://deck.gl/#/)

@@ -1,6 +1,6 @@
 ## Comments
 
-* Updates v0.3.1 to v0.3.2
+* Updates v0.3.2 to v0.3.3
 * two bug fixes
 
 ## Tests
