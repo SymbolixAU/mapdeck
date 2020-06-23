@@ -23,6 +23,7 @@ mapdeckTile3DDependency <- function() {
 	)
 }
 
+
 #' Add Tile3D
 #'
 #' @examples
@@ -38,6 +39,12 @@ mapdeckTile3DDependency <- function() {
 #'     data = tl
 #'   )
 #'
+#' ## Melbourne point cloud
+#' mapdeck() %>%
+#'  add_tile3d(
+#'    ion_token = secret::get_secret("ion")
+#'    , ion_asset = 43978
+#'  )
 #'
 #' }
 #'
@@ -46,7 +53,8 @@ add_tile3d <- function(
 	map,
 	data = get_map_data(map),
 	layer_id = NULL,
-	ion_token = NULL
+	ion_token = NULL,
+	ion_asset = NULL
 ) {
 
 	experimental_layer("tile3d")
@@ -59,6 +67,6 @@ add_tile3d <- function(
 	jsfunc <- "add_tile3d"
 
 	invoke_method(
-		map, jsfunc, map_type( map ), data, layer_id, ion_token
+		map, jsfunc, map_type( map ), data, layer_id, ion_token, ion_asset
 	)
 }

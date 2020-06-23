@@ -4,7 +4,13 @@
 \alias{add_tile3d}
 \title{Add Tile3D}
 \usage{
-add_tile3d(map, data = get_map_data(map), layer_id = NULL, ion_token = NULL)
+add_tile3d(
+  map,
+  data = get_map_data(map),
+  layer_id = NULL,
+  ion_token = NULL,
+  ion_asset = NULL
+)
 }
 \description{
 Add Tile3D
@@ -22,6 +28,12 @@ mapdeck(
     data = tl
   )
 
+## Melbourne point cloud
+mapdeck() \%>\%
+ add_tile3d(
+   ion_token = secret::get_secret("ion")
+   , ion_asset = 43978
+ )
 
 }
 
