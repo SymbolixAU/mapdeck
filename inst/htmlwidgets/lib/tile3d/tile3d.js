@@ -12,38 +12,24 @@ function add_tile3d( map_id, map_type, tile_data, layer_id, ion_token ) {
   console.log( loaders );
   console.log( loaders.CesiumIonLoader );
 
-  loaders.registerLoaders([ CesiumIonLoader ]);
+  //loaders.registerLoaders([ CesiumIonLoader ]);
 
 	const tileLayer = new deck.Tile3DLayer({
 		map_id: map_id,
 		id: 'tile3d-'+layer_id,
 		data: TILESET_URL,
+		pointSize: 2,
 		loader: loaders.CesiumIonLoader,
-		loadOptions: {'cesium-ion': {accessToken: ION_TOKEN}},
-		//_ionAssetId: 43978,
-		//_ionAccessToken: ion_token,
-		//pointSize: 2.0,
-		//opacity: 1.0,
-		//onTilesetLoad: (tileset) => {
-		//	console.log( "loaded tileset" );
-		//	console.log( tileset );
-		//	// recenter
-			//const {cartographicCenter, zoom} = tileset;
-			//this.setState({
-			//	viewState: {
-			//		...this.state.viewState,
-			//		longitude: cartographicCenter[0],
-			//		latitude: cartographicCenter[1],
-			//		zoom
-			//	}
-			//});
-		//},
-		//onTileError: (tileHeader, url, message ) => {
-		//	console.log( "load failed" );
-		//	console.log( tileHeader );
-		//	console.log( url );
-		//	console.log( message );
-		//}
+		loadOptions: {
+			tileset: {
+				throttleRequests: false,
+			},
+			'cesium-ion': {accessToken: ION_TOKEN}
+		},
+		// override scenegraph subLayer prop
+    _subLayerProps: {
+      scenegraph: {_lighting: 'flat'}
+    }
 	});
 
 	console.log( tileLayer );

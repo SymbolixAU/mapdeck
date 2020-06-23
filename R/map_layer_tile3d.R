@@ -1,3 +1,16 @@
+mapdeckLoadersDependency <- function() {
+	list(
+		## https://unpkg.com/@loaders.gl/3d-tiles@2.2.3/dist/dist.min.js
+		createHtmlDependency(
+			name = "3d-tiles",
+			version = "2.2.3",
+			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
+			script = c("3d-tiles.min.js"),
+			all_files =  FALSE
+		)
+	)
+}
+
 mapdeckTile3DDependency <- function() {
 	list(
 		createHtmlDependency(
@@ -9,7 +22,6 @@ mapdeckTile3DDependency <- function() {
 		)
 	)
 }
-
 
 #' Add Tile3D
 #'
@@ -41,7 +53,8 @@ add_tile3d <- function(
 
 	layer_id <- layerId(map, layer_id, layer = "tile3d" )
 
-	map <- addDependency(map, mapdeckTile3DDependency())
+	map <- addDependency(map, mapdeckTile3DDependency() )
+	map <- addDependency(map, mapdeckLoadersDependency() )
 
 	jsfunc <- "add_tile3d"
 
