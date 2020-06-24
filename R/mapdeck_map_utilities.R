@@ -123,9 +123,10 @@ doResolveFormula.data.frame = function(data, f) {
 layerId <- function(
 	map,
 	layer_id,
-	layer = c("animated_arc", "animated_line", "arc", "bitmap", "column", "geojson", "greatcircle","grid","heatmap","hexagon",
+	layer = c("animated_arc", "animated_line", "arc", "bitmap", "cesium", "column",
+						"geojson", "greatcircle","grid","heatmap","hexagon", "i3s",
 						"line", "mesh", "path","pointcloud", "polygon","scatterplot", "screengrid", "terrain",
-						"text", "tile3d", "title","trips")
+						"text", "title","trips")
 	) {
 
 	layer <- match.arg( layer )

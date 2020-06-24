@@ -1,11 +1,24 @@
-mapdeckLoadersDependency <- function() {
+mapdeckLoader3dTilesDependency <- function() {
 	list(
 		## https://unpkg.com/@loaders.gl/3d-tiles@2.2.3/dist/dist.min.js
 		createHtmlDependency(
-			name = "3d-tiles",
+			name = "loader_3dtiles",
 			version = "2.2.3",
 			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
-			script = c("3d-tiles.min.js"),
+			script = c("loader_3dtiles.min.js"),
+			all_files =  FALSE
+		)
+	)
+}
+
+mapdeckLoaderIS3Dependency <- function() {
+	list(
+		## https://unpkg.com/@loaders.gl/i3s@2.2.3/dist/dist.min.js
+		createHtmlDependency(
+			name = "loader_i3s",
+			version = "2.2.3",
+			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
+			script = c("loader_i3s.min.js"),
 			all_files =  FALSE
 		)
 	)
@@ -24,49 +37,88 @@ mapdeckTile3DDependency <- function() {
 }
 
 
-#' Add Tile3D
+#' Add Cesium
 #'
 #' @examples
 #' \donttest{
 #'
-#' canary_warf <- 'https://raw.githubusercontent.com/AnalyticalGraphicsInc/3d-tiles/master/examples/tileset.json'
-#' tl <- "https://raw.githubusercontent.com/AnalyticalGraphicsInc/3d-tiles-samples/master/tilesets/TilesetWithDiscreteLOD/tileset.json"
-#' mapdeck(
-#'   location = c(0, 0)
-#'   , zoom = 6
-#'   ) %>%
-#'   add_tile3d(
-#'     data = tl
-#'   )
-#'
 #' ## Melbourne point cloud
+#' ion_asset <- 43978
+#' tile_data <- paste0("https://assets.cesium.com/",ion_asset,"/tileset.json")
+#'
 #' mapdeck() %>%
-#'  add_tile3d(
-#'    ion_token = secret::get_secret("ion")
-#'    , ion_asset = 43978
+#'  add_cesium(
+#'    data = tile_data
+#'    , ion_token = secret::get_secret("ion")
 #'  )
 #'
 #' }
 #'
 #' @export
-add_tile3d <- function(
+add_cesium <- function(
 	map,
-	data = get_map_data(map),
+	data,
 	layer_id = NULL,
-	ion_token = NULL,
-	ion_asset = NULL
+	ion_token = NULL
 ) {
 
-	experimental_layer("tile3d")
+	experimental_layer("cesium")
 
-	layer_id <- layerId(map, layer_id, layer = "tile3d" )
+	layer_id <- layerId(map, layer_id, layer = "cesium" )
 
 	map <- addDependency(map, mapdeckTile3DDependency() )
-	map <- addDependency(map, mapdeckLoadersDependency() )
+	map <- addDependency(map, mapdeckLoader3dTilesDependency() )
 
-	jsfunc <- "add_tile3d"
+	jsfunc <- "add_cesium"
 
 	invoke_method(
-		map, jsfunc, map_type( map ), data, layer_id, ion_token, ion_asset
+		map, jsfunc, map_type( map ), data, layer_id, ion_token
 	)
 }
+
+
+
+#' Add I3S
+#'
+#' @examples
+#' \donttest{
+#'
+#' ## San Francisco buildings
+#' i3s <- 'https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer/layers/0'
+#' mapdeck() %>%
+#'   add_i3s(
+#'     data = i3s
+#'   )
+#' }
+#'
+#' @export
+add_i3s <- function(
+	map,
+	data,
+	layer_id = NULL
+) {
+
+	experimental_layer("i3s")
+
+	layer_id <- layerId(map, layer_id, layer = "i3s" )
+
+	map <- addDependency(map, mapdeckTile3DDependency() )
+	map <- addDependency(map, mapdeckLoaderIS3Dependency() )
+
+	jsfunc <- "add_i3s"
+
+	invoke_method(
+		map, jsfunc, map_type( map ), data, layer_id
+	)
+}
+
+# ## canary_warf <- 'https://raw.githubusercontent.com/AnalyticalGraphicsInc/3d-tiles/master/examples/tileset.json'
+# tl <- "https://raw.githubusercontent.com/AnalyticalGraphicsInc/3d-tiles-samples/master/tilesets/TilesetWithDiscreteLOD/tileset.json"
+# mapdeck(
+#   location = c(0, 0)
+#   , zoom = 6
+#   ) %>%
+#   add_cesium(
+#     data = tl
+#   )
+
