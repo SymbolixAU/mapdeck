@@ -121,8 +121,10 @@ doResolveFormula.data.frame = function(data, f) {
 # Checks the layer_id parameter, and provides a default one if NULL
 # @param layer_id
 layerId <- function(
+	map,
 	layer_id,
-	layer = c("animated_arc", "animated_line", "arc", "bitmap", "column", "geojson", "greatcircle","grid","heatmap","hexagon",
+	layer = c("animated_arc", "animated_line", "arc", "bitmap", "cesium", "column",
+						"geojson", "greatcircle","grid","heatmap","hexagon", "i3s",
 						"line", "mesh", "path","pointcloud", "polygon","scatterplot", "screengrid", "terrain",
 						"text", "title","trips")
 	) {
