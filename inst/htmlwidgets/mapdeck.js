@@ -11,6 +11,9 @@ HTMLWidgets.widget({
 
       	md_setup_window( el.id );
 
+      	const v = new deck.GlobeView({id:'globe', controller: true});
+      	console.log( v );
+
 				if( x.show_view_state ) {
       	  md_setup_view_state( el.id );
       	  window[el.id + 'mapViewState'] = document.createElement("div");
