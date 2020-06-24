@@ -1,3 +1,7 @@
+# v0.3.4
+
+* add_cesium and add_i3s layers
+
 # v0.3.3
 
 * fixed bug in polygon layer when using `sfheaders::sf_cast()`
