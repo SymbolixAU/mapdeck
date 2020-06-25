@@ -15,7 +15,7 @@ function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settin
     stroked: true,
     filled: true,
     parameters: {
-	    depthTest: false
+	    depthTest: true
 	  },
     wireframe: false,
     extruded: is_extruded,
