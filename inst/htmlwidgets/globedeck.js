@@ -1,6 +1,6 @@
 HTMLWidgets.widget({
 
-  name: 'mapdeck',
+  name: 'globedeck',
   type: 'output',
 
   factory: function(el, width, height) {
@@ -11,6 +11,9 @@ HTMLWidgets.widget({
 
       	md_setup_window( el.id );
 
+      	console.log("globedeck");
+
+/*
 				if( x.show_view_state ) {
       	  md_setup_view_state( el.id );
       	  window[el.id + 'mapViewState'] = document.createElement("div");
@@ -19,46 +22,30 @@ HTMLWidgets.widget({
       	  var mapbox_ctrl = document.getElementById( "mapViewStateContainer"+el.id);
     			mapbox_ctrl.appendChild( window[el.id + 'mapViewState'] );
 				}
-
+*/
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
         	longitude: x.location[0],
         	latitude: x.location[1],
         	zoom: x.zoom,
-        	pitch: x.pitch,
-        	bearing: x.bearing,
         	maxZoom: x.max_zoom,
        	 	minZoom: x.min_zoom,
-       	 	maxPitch: x.max_pitch,
-       	 	minPitch: x.min_pitch
+       	 	resolution: x.resolution
         };
 
-       if( x.access_token === null ) {
-       	 const deckgl = new deck.DeckGL({
-       	 	  views: [ new deck.MapView({
-       	 	  	id: el.id,
-       	 	  	repeat: x.repeat_view
-       	 	  	}) ],
-       	 	  map: false,
-			      container: el.id,
-			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      layers: [],
-			      controller: true
-			      //onLayerHover: setTooltip
-			   });
-			   window[el.id + 'map'] = deckgl;
-       } else {
         const deckgl = new deck.DeckGL({
-        	  views: [ new deck.MapView({
+        	  views: [ new deck._GlobeView({
         	  	id: el.id,
-        	  	repeat: x.repeat_view
+        	  	controller: true
         	  	}) ],
-          	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
-			      mapStyle: x.style,
 			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
-			      controller: true,
+			      parameters: {
+			      	cull: true
+			      }
+			      //controller: true
+			      /*
 			      //onLayerHover: setTooltip
 			      onViewStateChange: ({viewId, viewState, interactionState}) => {
 
@@ -118,12 +105,14 @@ HTMLWidgets.widget({
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	Shiny.onInputChange(el.id +'_resize', size);
 			      }
+			      */
 			  });
 
+				console.log( deckgl );
 			  window[el.id + 'map'] = deckgl;
 
-       }
-			    md_initialise_map(el, x);
+			  md_initialise_map(el, x);
+			  console.log("initialised");
       },
 
       resize: function(width, height) {
@@ -137,7 +126,7 @@ HTMLWidgets.widget({
 
 if (HTMLWidgets.shinyMode) {
 
-  Shiny.addCustomMessageHandler("mapdeckmap-calls", function (data) {
+  Shiny.addCustomMessageHandler("globedeckmap-calls", function (data) {
 
   	//console.log( "mapdeckmap-calls" );
 

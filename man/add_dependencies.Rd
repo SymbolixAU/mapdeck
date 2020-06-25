@@ -4,7 +4,7 @@
 \alias{add_dependencies}
 \title{Add Dependencies}
 \usage{
-add_dependencies(map)
+add_dependencies(map, deps = c("mapdeck", "globedeck"))
 }
 \arguments{
 \item{map}{the map object to which dependencies will be added}

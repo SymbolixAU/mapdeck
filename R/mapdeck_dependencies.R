@@ -58,10 +58,11 @@ addDependency <- function(map, dependencyFunction) {
 #'
 #'
 #' @export
-add_dependencies <- function( map ) {
+add_dependencies <- function( map, deps = c("mapdeck","globedeck") ) {
 	map$dependencies <- unique( c( map$dependencies, mapdeck_dependencies() ) )
 	return( map )
 }
+
 
 #' Mapdeck Dependencies
 #'
@@ -102,6 +103,18 @@ mapdeck_js <- function() {
 			version = as.character( utils::packageVersion("mapdeck") ),
 			src = system.file("htmlwidgets/", package = "mapdeck"),
 			script = c("mapdeck.js"),
+			all_files = FALSE
+		)
+	)
+}
+
+globedeck_js <- function() {
+	list(
+		createHtmlDependency(
+			name = "globedeck-binding",
+			version = as.character( utils::packageVersion("mapdeck") ),
+			src = system.file("htmlwidgets/", package = "mapdeck"),
+			script = c("globedeck.js"),
 			all_files = FALSE
 		)
 	)

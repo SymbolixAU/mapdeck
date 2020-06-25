@@ -123,6 +123,66 @@ mapdeck <- function(
 }
 
 
+#' @export
+globedeck <- function(
+	data = NULL,
+	width = NULL,
+	height = NULL,
+	padding = 0,
+	##style = 'mapbox://styles/mapbox/streets-v9',
+	zoom = 0,
+	max_zoom = 20,
+	min_zoom = 0,
+	resolution = 10,
+	location = c(0, 0),
+	show_view_state = FALSE
+) {
+
+	experimental_layer("globeview")
+
+	# forward options using x
+	x = list(
+		zoom = force( zoom )
+		, location = force( as.numeric( location ) )
+		, max_zoom = force( max_zoom )
+		, min_zoom = force( min_zoom )
+		, resolution = force( resolution )
+		, show_view_state = force( show_view_state )
+	)
+
+	# create widget
+	globedeckmap <- htmlwidgets::createWidget(
+		name = 'globedeck',
+		x = structure(
+			x,
+			mapdeck_data = data
+		),
+		width = width,
+		height = height,
+		package = 'mapdeck',
+		#dependencies = deps,
+		sizingPolicy = htmlwidgets::sizingPolicy(
+			defaultWidth = '100%',
+			defaultHeight = 800,
+			padding = padding,
+			browser.fill = FALSE
+		)
+	)
+
+	globedeckmap <- add_dependencies( globedeckmap )
+	globedeckmap$dependencies <- c(
+		globedeckmap$dependencies
+		##, mapboxgl()
+		, mapdeck_css()
+		, globedeck_js()
+		, htmlwidgets_js()
+		#, mapdeckViewStateDependency()
+	)
+
+	return(globedeckmap)
+}
+
+
 #' update style
 #'
 #' @param map a mapdeck map object
@@ -158,11 +218,23 @@ mapdeckOutput <- function(outputId, width = '100%', height = '400px'){
 }
 
 
+#' @export
+globedeckOutput <- function(outputId, width = '100%', height = '400px'){
+	htmlwidgets::shinyWidgetOutput(outputId, 'globedeck', width, height, package = 'mapdeck')
+}
+
+
 #' @rdname mapdeck-shiny
 #' @export
 renderMapdeck <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   htmlwidgets::shinyRenderWidget(expr, mapdeckOutput, env, quoted = TRUE)
+}
+
+#' @export
+renderGlobedeck <- function(expr, env = parent.frame(), quoted = FALSE) {
+	if (!quoted) { expr <- substitute(expr) } # force quoted
+	htmlwidgets::shinyRenderWidget(expr, globedeckOutput, env, quoted = TRUE)
 }
 
 
@@ -255,6 +327,8 @@ map_type <- function( map ) {
 
 	map_type <- attr( map, "class")
 	if( any( c("mapdeck", "mapdeck_update") %in% map_type ) ) return( "mapdeck" )
+
+	if( any( c("globedeck", "globedeck_update" ) %in% map_type ) ) return( "globedeck" )
 
 	if( any( c("google_map", "google_map_update") %in% map_type ) ) return( "google_map" )
 
