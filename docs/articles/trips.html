@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3001</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@
       <h1 data-toc-skip>Trips</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2020-05-14</h4>
+            <h4 class="date">2020-06-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SymbolixAU/mapdeck/blob/master/vignettes/trips.Rmd"><code>vignettes/trips.Rmd</code></a></small>
       <div class="hidden name"><code>trips.Rmd</code></div>
@@ -122,19 +122,20 @@
 <p>In this example I’m taking the <code><a href="../reference/roads.html">mapdeck::roads</a></code> data, and assigning a random timestamp to each coordinate point in the lines.</p>
 <p>The timestamps have to be positive, and in sequential order.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sf</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sfheaders</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">data.table</span>)
 
 <span class="fu"><a href="../reference/set_token.html">set_token</a></span>( <span class="st">"MAPBOX_TOKEN"</span> )
-<span class="no">coords</span> <span class="kw">&lt;-</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_coordinates.html">st_coordinates</a></span>( <span class="no">roads</span> )
-<span class="no">dt</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table</a></span>( <span class="no">coords</span> )
+<span class="no">dt</span> <span class="kw">&lt;-</span> <span class="kw pkg">sfheaders</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sfheaders/man/sf_to_df.html">sf_to_df</a></span>( <span class="kw pkg">mapdeck</span><span class="kw ns">::</span><span class="no"><a href="../reference/roads.html">roads</a></span> )
+<span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setDT.html">setDT</a></span>( <span class="no">dt</span> )
 
-<span class="no">dt</span>[, <span class="no">elev</span> <span class="kw">:=</span> <span class="fl">0</span>]
-<span class="no">dt</span>[, <span class="no">seq</span> <span class="kw">:=</span> <span class="fl">1</span>:<span class="no">.N</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="no">L1</span> ]
+<span class="no">dt</span>[, <span class="no">elev</span> <span class="kw">:=</span> <span class="fl">0</span> ]
+<span class="no">dt</span>[, <span class="no">seq</span> <span class="kw">:=</span> <span class="fl">1</span>:<span class="no">.N</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="no">linestring_id</span> ]
 <span class="no">dt1</span> <span class="kw">&lt;-</span> <span class="no">dt</span>[ <span class="no">seq</span> <span class="kw">==</span> <span class="fl">1</span>]
 <span class="no">dt1</span>[, <span class="no">start_time</span> <span class="kw">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">1</span>:<span class="fl">100</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="no">.N</span>, <span class="kw">replace</span> <span class="kw">=</span> <span class="no">T</span>)]
 <span class="no">dt</span>[
-    <span class="no">dt1</span>[, <span class="fu">.</span>(<span class="no">L1</span>, <span class="no">start_time</span>)]
-    , <span class="kw">on</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"L1"</span>)
+    <span class="no">dt1</span>[, <span class="fu">.</span>(<span class="no">linestring_id</span>, <span class="no">start_time</span>)]
+    , <span class="kw">on</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"linestring_id"</span>)
     , <span class="no">start_time</span> <span class="kw">:=</span> <span class="no">i.start_time</span>
     ]
 
@@ -142,15 +143,16 @@
 <span class="no">s</span> <span class="kw">&lt;-</span> <span class="no">dt</span>[, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>( <span class="no">time</span> )]
 <span class="no">e</span> <span class="kw">&lt;-</span> <span class="no">dt</span>[, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>( <span class="no">time</span> )]
 
-<span class="no">dt</span> <span class="kw">&lt;-</span> <span class="no">dt</span>[
-    , {
-        <span class="no">geometry</span> <span class="kw">&lt;-</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st.html">st_linestring</a></span>( <span class="kw">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>( <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">X</span>,<span class="no">Y</span>,<span class="no">elev</span>,<span class="no">time</span>), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span> ))
-        <span class="no">geometry</span> <span class="kw">&lt;-</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/sf.html">st_sf</a></span>( <span class="kw">geometry</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/sfc.html">st_sfc</a></span>( <span class="no">geometry</span> ) )
-    }
-    , <span class="kw">by</span> <span class="kw">=</span> <span class="no">L1</span>
-    ]
+<span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">setorder</a></span>( <span class="no">dt</span>, <span class="no">linestring_id</span> )
+<span class="no">sfc</span> <span class="kw">&lt;-</span> <span class="kw pkg">sfheaders</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sfheaders/man/sfc_linestring.html">sfc_linestring</a></span>(
+    <span class="kw">obj</span> <span class="kw">=</span> <span class="no">dt</span>
+    , <span class="kw">x</span> <span class="kw">=</span> <span class="st">"x"</span>
+    , <span class="kw">y</span> <span class="kw">=</span> <span class="st">"y"</span>
+    , <span class="kw">z</span> <span class="kw">=</span> <span class="st">"elev"</span>
+    , <span class="kw">m</span> <span class="kw">=</span> <span class="st">"time"</span>
+    , <span class="kw">linestring_id</span> <span class="kw">=</span> <span class="st">"linestring_id"</span>
+)
 
-<span class="no">sfc</span> <span class="kw">&lt;-</span> <span class="no">dt</span>$<span class="no">geometry</span>
 <span class="no">sf</span> <span class="kw">&lt;-</span> <span class="no">roads</span>
 <span class="no">sf</span>$<span class="no">geometry</span> <span class="kw">&lt;-</span> <span class="no">sfc</span></pre></body></html></div>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../reference/mapdeck.html">mapdeck</a></span>(
@@ -183,7 +185,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

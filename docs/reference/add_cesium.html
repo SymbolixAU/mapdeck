@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • mapdeck</title>
+<title>Add Cesium — add_cesium • mapdeck</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Add Cesium — add_cesium" />
+<meta property="og:description" content="Add Cesium" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -146,34 +147,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Add Cesium</h1>
+    <small class="dont-index">Source: <a href='https://github.com/SymbolixAU/mapdeck/blob/master/R/map_layer_tile3d.R'><code>R/map_layer_tile3d.R</code></a></small>
+    <div class="hidden name"><code>add_cesium.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <dl>
-        <dt><a href="benchmarks.html">Benchmarks</a></dt>
-        <dd></dt>
-        <dt><a href="colours.html">Colours</a></dt>
-        <dd></dt>
-        <dt><a href="google_map.html">Google Map</a></dt>
-        <dd></dt>
-        <dt><a href="issues.html">Why isn't it working?</a></dt>
-        <dd></dt>
-        <dt><a href="layers.html">Layers</a></dt>
-        <dd></dt>
-        <dt><a href="legends.html">Legends</a></dt>
-        <dd></dt>
-        <dt><a href="mapdeck.html">mapdeck</a></dt>
-        <dd></dt>
-        <dt><a href="tips_tricks.html">Tips &amp; Tricks</a></dt>
-        <dd></dt>
-        <dt><a href="trips.html">Trips</a></dt>
-        <dd></dt>
-      </dl>
+    <div class="ref-description">
+    <p>Add Cesium</p>
     </div>
+
+    <pre class="usage"><span class='fu'>add_cesium</span>(<span class='no'>map</span>, <span class='no'>data</span>, <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ion_token</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+
+
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+
+<span class='co'>## Melbourne point cloud</span>
+<span class='no'>ion_asset</span> <span class='kw'>&lt;-</span> <span class='fl'>43978</span>
+<span class='no'>tile_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"https://assets.cesium.com/"</span>,<span class='no'>ion_asset</span>,<span class='st'>"/tileset.json"</span>)
+
+<span class='fu'><a href='mapdeck.html'>mapdeck</a></span>() <span class='kw'>%&gt;%</span>
+ <span class='fu'>add_cesium</span>(
+   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>tile_data</span>
+   , <span class='kw'>ion_token</span> <span class='kw'>=</span> <span class='kw pkg'>secret</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/secret/man/get_secret.html'>get_secret</a></span>(<span class='st'>"ion"</span>)
+ )</div><div class='output co'>#&gt; <span class='message'>cesium is an experimental layer and the function may change without warning</span></div><div class='input'>
+# }
+
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
