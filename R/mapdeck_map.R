@@ -135,7 +135,8 @@ globedeck <- function(
 	min_zoom = 0,
 	resolution = 10,
 	location = c(0, 0),
-	show_view_state = FALSE
+	show_view_state = FALSE,
+	cull = FALSE
 ) {
 
 	experimental_layer("globeview")
@@ -148,6 +149,7 @@ globedeck <- function(
 		, min_zoom = force( min_zoom )
 		, resolution = force( resolution )
 		, show_view_state = force( show_view_state )
+		, cull = force( cull )
 	)
 
 	# create widget

@@ -1,5 +1,6 @@
 # v0.3.4
 
+* experimental `globedeck()` function, for viewing layers on a globe
 * add_cesium and add_i3s layers
 
 # v0.3.3

@@ -40,10 +40,10 @@ HTMLWidgets.widget({
         	  	}) ],
 			      container: el.id,
 			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
-			      layers: []
-			      //parameters: {
-			      //	cull: true
-			      //}
+			      layers: [],
+			      parameters: {
+			      	cull: x.cull
+			      }
 			      //controller: true
 			      /*
 			      //onLayerHover: setTooltip
