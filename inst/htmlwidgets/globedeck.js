@@ -11,18 +11,11 @@ HTMLWidgets.widget({
 
       	md_setup_window( el.id );
 
-      	console.log("globedeck");
+      	var mapDiv = document.getElementById( el.id );
+  			mapDiv.className = 'mapdeckmap';
+  			mapDiv.style.backgroundColor = "#FF000080";
 
-/*
-				if( x.show_view_state ) {
-      	  md_setup_view_state( el.id );
-      	  window[el.id + 'mapViewState'] = document.createElement("div");
-      	  window[el.id + 'mapViewState'].setAttribute('id', el.id + 'mapViewState');
-      	  window[el.id + 'mapViewState'].setAttribute('class', 'mapViewState');
-      	  var mapbox_ctrl = document.getElementById( "mapViewStateContainer"+el.id);
-    			mapbox_ctrl.appendChild( window[el.id + 'mapViewState'] );
-				}
-*/
+
         // INITIAL VIEW
         window[el.id + 'INITIAL_VIEW_STATE'] = {
         	longitude: x.location[0],
@@ -36,7 +29,8 @@ HTMLWidgets.widget({
         const deckgl = new deck.DeckGL({
         	  views: [ new deck._GlobeView({
         	  	id: el.id,
-        	  	controller: true
+        	  	controller: true,
+        	  	farZMultiplier: 2
         	  	}) ],
 			      container: el.id,
 			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
@@ -108,11 +102,9 @@ HTMLWidgets.widget({
 			      */
 			  });
 
-				console.log( deckgl );
 			  window[el.id + 'map'] = deckgl;
 
 			  md_initialise_map(el, x);
-			  console.log("initialised");
       },
 
       resize: function(width, height) {

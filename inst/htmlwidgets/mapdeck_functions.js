@@ -19,7 +19,7 @@ function md_setup_window_objects( map_id ) {
 }
 
 function md_setup_mapdeck_div( map_id ) {
-	var mapDiv = document.getElementById(map_id);
+	var mapDiv = document.getElementById( map_id );
   mapDiv.className = 'mapdeckmap';
 }
 

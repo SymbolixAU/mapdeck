@@ -24,9 +24,6 @@
 # 	, by = "key"
 # )
 #
-#
-#
-#
 # globedeck() %>%
 # 	add_geojson(
 # 		data = geo_earth
