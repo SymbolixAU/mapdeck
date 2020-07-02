@@ -64,7 +64,7 @@ add_cesium <- function(
 
 	experimental_layer("cesium")
 
-	layer_id <- layerId(map, layer_id, layer = "cesium" )
+	layer_id <- layerId(layer_id, layer = "cesium" )
 
 	map <- addDependency(map, mapdeckTile3DDependency() )
 	map <- addDependency(map, mapdeckLoader3dTilesDependency() )
@@ -100,7 +100,7 @@ add_i3s <- function(
 
 	experimental_layer("i3s")
 
-	layer_id <- layerId(map, layer_id, layer = "i3s" )
+	layer_id <- layerId(layer_id, layer = "i3s" )
 
 	map <- addDependency(map, mapdeckTile3DDependency() )
 	map <- addDependency(map, mapdeckLoaderIS3Dependency() )
