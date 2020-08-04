@@ -1,8 +1,8 @@
 Package: mapdeck
 Type: Package
 Title: Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'
-Version: 0.3.3001
-Date: 2020-05-14
+Version: 0.3.4
+Date: 2020-08-04
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
@@ -40,6 +40,7 @@ LinkingTo:
     BH,
     colourvalues,
     geojsonsf (>= 1.3.3),
+    geometries,
     jsonify (>= 1.1.1),
     rapidjsonr,
     Rcpp,
