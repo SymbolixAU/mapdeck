@@ -6,7 +6,7 @@
 %   R/map_layer_line.R, R/map_layer_mesh.R, R/map_layer_path.R,
 %   R/map_layer_pointcloud.R, R/map_layer_polygon.R, R/map_layer_scatterplot.R,
 %   R/map_layer_screengrid.R, R/map_layer_terrain.R, R/map_layer_text.R,
-%   R/map_layer_title.R, R/map_layer_trips.R
+%   R/map_layer_title.R, R/map_layer_triangle.R, R/map_layer_trips.R
 \name{clear_animated_arc}
 \alias{clear_animated_arc}
 \alias{clear_line}
@@ -27,6 +27,7 @@
 \alias{clear_terrain}
 \alias{clear_text}
 \alias{clear_title}
+\alias{clear_triangle}
 \alias{clear_trips}
 \title{Clear Animated Arc}
 \usage{
@@ -69,6 +70,8 @@ clear_terrain(map, layer_id = NULL)
 clear_text(map, layer_id = NULL)
 
 clear_title(map, layer_id = NULL)
+
+clear_triangle(map, layer_id = NULL)
 
 clear_trips(map, layer_id = NULL)
 }

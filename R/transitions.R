@@ -19,6 +19,7 @@ resolve_transitions <- function( transitions, layer ) {
 		"path" = transitions_path( transitions ),
 		"pointcloud" = transitions_pointcloud( transitions ),
 		"polygon" = transitions_polygon( transitions ),
+		"triangle" = transitions_polygon( transitions ),
 		"scatterplot" = transitions_scatterplot( transitions ),
 		"text" = transitions_text( transitions )
 	)

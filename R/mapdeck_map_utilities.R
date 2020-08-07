@@ -125,7 +125,7 @@ layerId <- function(
 	layer = c("animated_arc", "animated_line", "arc", "bitmap", "cesium", "column",
 						"geojson", "greatcircle","grid","heatmap","hexagon", "i3s",
 						"line", "mesh", "path","pointcloud", "polygon","scatterplot", "screengrid", "terrain",
-						"text", "title","trips")
+						"text", "title","triangle","trips")
 	) {
 
 	layer <- match.arg( layer )

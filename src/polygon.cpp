@@ -42,6 +42,37 @@ Rcpp::List rcpp_polygon_geojson(
 	);
 }
 
+
+// [[Rcpp::export]]
+Rcpp::List rcpp_triangle_columnar(
+		Rcpp::DataFrame data,
+		Rcpp::List params,
+		Rcpp::StringVector geometry_columns,
+		int digits
+) {
+
+	int data_rows = data.nrows();
+
+	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
+
+	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::layer_colours::fill_stroke_colours;
+	Rcpp::StringVector polygon_legend = mapdeck::layer_colours::fill_stroke_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
+
+	return spatialwidget::api::create_geojson(
+		data,
+		params,
+		lst_defaults,
+		polygon_colours,
+		polygon_legend,
+		data_rows,
+		parameter_exclusions,
+		geometry_columns,
+		true,  // jsonify legend
+		digits
+	);
+}
+
 // // [[Rcpp::export]]
 // Rcpp::List rcpp_polygon_quadmesh( Rcpp::DataFrame data,
 //                                   Rcpp::List params,
