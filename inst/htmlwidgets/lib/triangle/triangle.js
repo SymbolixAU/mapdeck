@@ -1,6 +1,9 @@
 
 function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, elevation_scale, brush_radius ) {
 
+	console.log( auto_highlight );
+	console.log( highlight_colour );
+
   var extensions = [];
 
   if ( brush_radius > 0 ) {
@@ -129,16 +132,6 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
 		0.9921569, 0.9058824, 0.145098, 1
 	]);
 
-/*
-	const binaryStartIndices = new Uint16Array([
-		0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33
-	]);
-
-	const binaryIndices = new Uint16Array([
-		0, 0.6, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
-	]);
-*/
-
 	const binaryStartIndices = new Uint16Array([
 		0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60,
 		63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 99, 102, 105, 108, 111
@@ -155,7 +148,32 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
 		106, 107, 108, 109, 110, 111, 112, 113
 	]);
 
-	const n_points = binaryLocation / stride;
+	/*
+	const binaryLocation = new Float32Array([
+		0,0,0,
+		0,5,0,
+		5,5,0
+	]);
+
+	const binaryFill = new Float32Array([
+		0.7,0.2,0,1,
+		0.8,0.6,0,1,
+		0.3,0.5,0,1
+	]);
+
+	const binaryIndices = new Uint16Array([
+		0,1,2
+	]);
+
+	const binaryStartIndices = new Uint16Array([
+		0
+	]);
+	*/
+
+	//console.log( binaryLocation.length );
+
+	const stride = 2;
+	const n_points = binaryLocation.length / stride;
 	const n_points_per_tri = 3;
 
 	// the number of triangles is the number of pairs of coordinates / stride
@@ -163,6 +181,7 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
 
 	//const len = binaryIndices.count;
 	const len = n_points / n_points_per_tri;  // the number of triangles
+	//console.log( 'len: ' + len );
 
 /*
 	const binaryFill = new Float32Array([
@@ -179,27 +198,28 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
   	map_id: map_id,
     id: 'polygon-'+layer_id,
     //data: polygon_data,
-    pickable: true,
-    stroked: true,
-    filled: true,
-    parameters: {
-	    depthTest: true
-	  },
-    wireframe: false,
-    extruded: is_extruded,
-    lineWidthMinPixels: 0,
-    elevationScale: elevation_scale,
+    //stroked: true,
+    //filled: true,
+    //parameters: {
+	  //  depthTest: true
+	  //},
+    //wireframe: false,
+    //extruded: is_extruded,
+    //lineWidthMinPixels: 0,
+    //elevationScale: elevation_scale,
 
     data: {
     	length: len, // number of triangles (length( res$coordinates ) )
     	startIndices: binaryStartIndices,
     	attributes: {
     		indices: binaryIndices, // seq(0, length( res$coordinates ) )
-    		getPolygon: {value: binaryLocation, size: 2},
+    		getPolygon: {value: binaryLocation, size: stride},
     		getFillColor: {value: binaryFill, size: 4},
     	}
     },
-    _normalize: false, // skip normalization
+    _normalize: false, // skip normalization for ear-cut polygons
+    pickable: true,
+    autoHighlight: true,
 
 		/*
     getPolygon: d => md_get_polygon_coordinates( d ),
@@ -210,14 +230,15 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
     */
 
 
-    lightSettings: light_settings,
-    autoHighlight: auto_highlight,
-    highlightColor: md_hexToRGBA( highlight_colour ),
-    onHover: md_update_tooltip,
-    onClick: info => md_layer_click( map_id, "polygon", info ),
-    transitions: js_transition || {},
-    brushingRadius: brush_radius,
-    extensions: extensions
+    //lightSettings: light_settings,
+    //autoHighlight: auto_highlight,
+    //highlightColor: md_hexToRGBA( highlight_colour ),
+    //onHover: md_update_tooltip,
+    //onHover: test_hover
+    //onClick: info => md_layer_click( map_id, "polygon", info ),
+    //transitions: js_transition || {},
+    //brushingRadius: brush_radius,
+    //extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -232,3 +253,9 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
+
+function test_hover({x,y,object,layer,index}) {
+	console.log("hovering");
+}
+
+
