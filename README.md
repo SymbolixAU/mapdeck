@@ -4,13 +4,15 @@
 # mapdeck
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
+[![Codecov test
+coverage](https://codecov.io/gh/symbolixau/mapdeck/branch/master/graph/badge.svg)](https://codecov.io/gh/symbolixau/mapdeck?branch=master)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/mapdeck)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
 [![Github
 Stars](https://img.shields.io/github/stars/SymbolixAU/mapdeck.svg?style=social&label=Github)](https://github.com/SymbolixAU/mapdeck)
 
-![](./vignettes/img/articles/hexagons.png)
+![](./docs/articles/img/articles/hexagons.png)
 
 ## What is mapdeck?
 
