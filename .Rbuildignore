@@ -18,3 +18,4 @@
 ^vignettes/google_map.Rmd
 ^vignettes/trips.Rmd
 .github
+^\.github$
