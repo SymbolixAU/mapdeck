@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@
       <h1 data-toc-skip>Tips &amp; Tricks</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2020-06-25</h4>
+            <h4 class="date">2020-08-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SymbolixAU/mapdeck/blob/master/vignettes/tips_tricks.Rmd"><code>vignettes/tips_tricks.Rmd</code></a></small>
       <div class="hidden name"><code>tips_tricks.Rmd</code></div>
@@ -160,7 +160,7 @@
 <li>
 <code><a href="../reference/mapdeck.html">mapdeck()</a></code> to define the map, then</li>
 <li>
-<code><a href="../reference/mapdeck_update.html">mapdeck_update()</a></code> inside an <code><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent()</a></code> (or similar) function to add &amp; remove layers to the initial map.</li>
+<code><a href="../reference/mapdeck_update.html">mapdeck_update()</a></code> inside an <code><a href="https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html">observeEvent()</a></code> (or similar) function to add &amp; remove layers to the initial map.</li>
 </ul>
 <p>If you only use <code><a href="../reference/mapdeck.html">mapdeck()</a></code> inside a reactive / observe function the map gets re-draw every call. The <code><a href="../reference/mapdeck_update.html">mapdeck_update()</a></code> will only udpate the data on the map, and not re-draw the map.</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
@@ -170,7 +170,7 @@
 <span class="no">ui</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardPage.html">dashboardPage</a></span>(
     <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardHeader.html">dashboardHeader</a></span>()
     , <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardSidebar.html">dashboardSidebar</a></span>(
-        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span>(<span class="kw">inputId</span> <span class="kw">=</span> <span class="st">"roads"</span>, <span class="kw">label</span> <span class="kw">=</span> <span class="st">"roads"</span>)
+        <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/actionButton.html">actionButton</a></span>(<span class="kw">inputId</span> <span class="kw">=</span> <span class="st">"roads"</span>, <span class="kw">label</span> <span class="kw">=</span> <span class="st">"roads"</span>)
     )
     , <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardBody.html">dashboardBody</a></span>(
         <span class="fu"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(<span class="kw">outputId</span> <span class="kw">=</span> <span class="st">"map"</span>)
@@ -185,7 +185,7 @@
     })
 
     <span class="co">## use an observer to add and remove layers</span>
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({<span class="no">input</span>$<span class="no">roads</span>},{
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html">observeEvent</a></span>({<span class="no">input</span>$<span class="no">roads</span>},{
 
         <span class="kw">if</span> ( <span class="no">input</span>$<span class="no">roads</span> <span class="kw">%%</span> <span class="fl">2</span> <span class="kw">==</span> <span class="fl">1</span> ) {
 
@@ -203,7 +203,7 @@
     })
 }
 
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span>(<span class="no">ui</span>, <span class="no">server</span>)</pre></body></html></div>
+<span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span>(<span class="no">ui</span>, <span class="no">server</span>)</pre></body></html></div>
 <p>You will have noticed I’m using <code>update_view = TRUE</code> (the default) inside the layer methods. This will cause the map to re-focus on the layer being added.</p>
 </div>
 <div id="update_view" class="section level2">
@@ -218,7 +218,7 @@
 <span class="no">ui</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardPage.html">dashboardPage</a></span>(
     <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardHeader.html">dashboardHeader</a></span>()
     , <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardSidebar.html">dashboardSidebar</a></span>(
-        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span>(<span class="kw">inputId</span> <span class="kw">=</span> <span class="st">"roads"</span>, <span class="kw">label</span> <span class="kw">=</span> <span class="st">"roads"</span>)
+        <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/actionButton.html">actionButton</a></span>(<span class="kw">inputId</span> <span class="kw">=</span> <span class="st">"roads"</span>, <span class="kw">label</span> <span class="kw">=</span> <span class="st">"roads"</span>)
     )
     , <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardBody.html">dashboardBody</a></span>(
         <span class="fu"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(<span class="kw">outputId</span> <span class="kw">=</span> <span class="st">"map"</span>)
@@ -233,7 +233,7 @@
     })
 
     <span class="co">## use an observer to add and remove layers</span>
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({<span class="no">input</span>$<span class="no">roads</span>},{
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html">observeEvent</a></span>({<span class="no">input</span>$<span class="no">roads</span>},{
 
         <span class="kw">if</span> ( <span class="no">input</span>$<span class="no">roads</span> <span class="kw">%%</span> <span class="fl">2</span> <span class="kw">==</span> <span class="fl">1</span> ) {
 
@@ -251,7 +251,7 @@
     })
 }
 
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span>(<span class="no">ui</span>, <span class="no">server</span>)</pre></body></html></div>
+<span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span>(<span class="no">ui</span>, <span class="no">server</span>)</pre></body></html></div>
 </div>
 <div id="focus_layer" class="section level2">
 <h2 class="hasAnchor">
@@ -278,7 +278,7 @@
 <p>If this value refers to a column of your data, this value is returned to your shiny session when you click on the layer in a shiny app. This way you know which row of data refers to the object you clicked on.</p>
 <p>You can observe click events using the syntax <code>input$&lt;map_id&gt;&lt;layer&gt;click</code></p>
 <p>So to observe clicks on the path layer on a map you’ve called ‘map’, you would use</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({<span class="no">input</span>$<span class="no">map_path_click</span>})</pre></body></html></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html">observeEvent</a></span>({<span class="no">input</span>$<span class="no">map_path_click</span>})</pre></body></html></div>
 <p>To see this in action, here’s an example shiny for you</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shinydashboard</span>)
@@ -287,7 +287,7 @@
 <span class="no">ui</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardPage.html">dashboardPage</a></span>(
     <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardHeader.html">dashboardHeader</a></span>()
     , <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardSidebar.html">dashboardSidebar</a></span>(
-        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span>(<span class="kw">inputId</span> <span class="kw">=</span> <span class="st">"roads"</span>, <span class="kw">label</span> <span class="kw">=</span> <span class="st">"roads"</span>)
+        <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/actionButton.html">actionButton</a></span>(<span class="kw">inputId</span> <span class="kw">=</span> <span class="st">"roads"</span>, <span class="kw">label</span> <span class="kw">=</span> <span class="st">"roads"</span>)
     )
     , <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardBody.html">dashboardBody</a></span>(
         <span class="fu"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(<span class="kw">outputId</span> <span class="kw">=</span> <span class="st">"map"</span>)
@@ -307,7 +307,7 @@
     })
 
     <span class="co">## use an observer to respond to the click event.</span>
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({<span class="no">input</span>$<span class="no">map_path_click</span>},{
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html">observeEvent</a></span>({<span class="no">input</span>$<span class="no">map_path_click</span>},{
         <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>( <span class="no">input</span>$<span class="no">map_path_click</span> )
 
         <span class="no">js</span> <span class="kw">&lt;-</span> <span class="no">input</span>$<span class="no">map_path_click</span>
@@ -316,7 +316,7 @@
     })
 }
 
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span>(<span class="no">ui</span>, <span class="no">server</span>)</pre></body></html></div>
+<span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span>(<span class="no">ui</span>, <span class="no">server</span>)</pre></body></html></div>
 <p>This doesn’t work for geojson, or layers where the data is aggregated</p>
 <ul>
 <li>add_geojson()</li>

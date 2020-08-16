@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@
       <h1 data-toc-skip>Layers</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2020-06-25</h4>
+            <h4 class="date">2020-08-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SymbolixAU/mapdeck/blob/master/vignettes/layers.Rmd"><code>vignettes/layers.Rmd</code></a></small>
       <div class="hidden name"><code>layers.Rmd</code></div>
@@ -125,7 +125,7 @@
 <h2 class="hasAnchor">
 <a href="#layer_id" class="anchor"></a>layer_id</h2>
 <p>Each layer requires a <code>layer_id</code> value. If you don’t supply one, it will create it for you, but this may have some unintended consequences for you.</p>
-<p>The <code>layer_id</code> is the ID that <code>deck.gl</code> uses to ‘shallow-compare’ layers to see if they need updating. Which comes in handy when working in Shiny. If you update data, for example when using a <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive()</a></code> function, and use the same <code>layer_id</code>, <code>deck.gl</code> knows it should update the layer rather than re-draw it completely.</p>
+<p>The <code>layer_id</code> is the ID that <code>deck.gl</code> uses to ‘shallow-compare’ layers to see if they need updating. Which comes in handy when working in Shiny. If you update data, for example when using a <code><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive()</a></code> function, and use the same <code>layer_id</code>, <code>deck.gl</code> knows it should update the layer rather than re-draw it completely.</p>
 <p><strong>However</strong>, if two of your layers of the same type have the same <code>layer_id</code>, then <code>deck.gl</code> will get confused and will only show the last layer drawn.</p>
 <p>For example, if you have to scatterplot layers, both with the same <code>layer_id</code>, only the second one will be shown.</p>
 </div>
@@ -471,7 +471,7 @@
 <li>
 <code><a href="../reference/mapdeck_update.html">mapdeck_update()</a></code> to update an existing map</li>
 </ol>
-<p>You can observe interactions with the layers by using <code><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent()</a></code>. The event you observe is formed by combining</p>
+<p>You can observe interactions with the layers by using <code><a href="https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html">observeEvent()</a></code>. The event you observe is formed by combining</p>
 <p><code>'map_id + "_" + layer + "_click"</code></p>
 <p>where</p>
 <ul>
@@ -494,14 +494,14 @@
         <span class="fu"><a href="../reference/mapdeck-shiny.html">mapdeckOutput</a></span>(
             <span class="kw">outputId</span> <span class="kw">=</span> <span class="st">'myMap'</span>
             ),
-        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sliderInput.html">sliderInput</a></span>(
+        <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sliderInput.html">sliderInput</a></span>(
             <span class="kw">inputId</span> <span class="kw">=</span> <span class="st">"longitudes"</span>
             , <span class="kw">label</span> <span class="kw">=</span> <span class="st">"Longitudes"</span>
             , <span class="kw">min</span> <span class="kw">=</span> -<span class="fl">180</span>
             , <span class="kw">max</span> <span class="kw">=</span> <span class="fl">180</span>
             , <span class="kw">value</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">180</span>,-<span class="fl">90</span>)
         )
-        , <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html">verbatimTextOutput</a></span>(
+        , <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/textOutput.html">verbatimTextOutput</a></span>(
             <span class="kw">outputId</span> <span class="kw">=</span> <span class="st">"observed_click"</span>
         )
     )
@@ -522,7 +522,7 @@
     })
 
     <span class="co">## plot points &amp; lines according to the selected longitudes</span>
-    <span class="no">df_reactive</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span>({
+    <span class="no">df_reactive</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>({
         <span class="kw">if</span>(<span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(<span class="no">input</span>$<span class="no">longitudes</span>)) <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="kw">NULL</span>)
         <span class="no">lons</span> <span class="kw">&lt;-</span> <span class="no">input</span>$<span class="no">longitudes</span>
         <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(
@@ -530,7 +530,7 @@
         )
     })
 
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>({<span class="no">input</span>$<span class="no">longitudes</span>}, {
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html">observeEvent</a></span>({<span class="no">input</span>$<span class="no">longitudes</span>}, {
         <span class="kw">if</span>(<span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(<span class="no">input</span>$<span class="no">longitudes</span>)) <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>()
 
         <span class="fu"><a href="../reference/mapdeck_update.html">mapdeck_update</a></span>(<span class="kw">map_id</span> <span class="kw">=</span> <span class="st">'myMap'</span>) <span class="kw">%&gt;%</span>
@@ -557,16 +557,16 @@
     })
 
     <span class="co">## observe clicking on a line and return the text</span>
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span>(<span class="no">input</span>$<span class="no">myMap_arc_click</span>, {
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html">observeEvent</a></span>(<span class="no">input</span>$<span class="no">myMap_arc_click</span>, {
 
         <span class="no">event</span> <span class="kw">&lt;-</span> <span class="no">input</span>$<span class="no">myMap_arc_click</span>
-        <span class="no">output</span>$<span class="no">observed_click</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderText.html">renderText</a></span>({
+        <span class="no">output</span>$<span class="no">observed_click</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderText.html">renderText</a></span>({
             <span class="kw pkg">jsonify</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonify/man/pretty_json.html">pretty_json</a></span>( <span class="no">event</span> )
         })
     })
 }
 
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span>(<span class="no">ui</span>, <span class="no">server</span>)</pre></body></html></div>
+<span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span>(<span class="no">ui</span>, <span class="no">server</span>)</pre></body></html></div>
 <div class="figure">
 <img src="img/articles/shiny.gif" alt=""><p class="caption">Shiny</p>
 </div>
