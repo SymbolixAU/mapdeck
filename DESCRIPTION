@@ -41,6 +41,7 @@ LinkingTo:
     colourvalues,
     geojsonsf (>= 1.3.3),
     geometries,
+    interleave,
     jsonify (>= 1.1.1),
     rapidjsonr,
     Rcpp,

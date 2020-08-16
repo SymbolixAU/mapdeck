@@ -218,9 +218,11 @@ add_triangle <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
+	# return( shape )
+
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["data"]], layer_id, light_settings,
-		auto_highlight, highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		map, jsfunc, map_type( map ), shape[["interleaved"]], shape[["data"]][["data"]], layer_id, light_settings,
+		auto_highlight, highlight_colour, shape[["data"]][["legend"]], bbox, update_view, focus_layer,
 		js_transitions, is_extruded, elevation_scale, brush_radius
 	)
 }

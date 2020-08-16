@@ -1,8 +1,8 @@
 
-function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, elevation_scale, brush_radius ) {
+function add_triangle( map_id, map_type, triangles, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, elevation_scale, brush_radius ) {
 
-	console.log( auto_highlight );
-	console.log( highlight_colour );
+	console.log( triangles );
+	console.log( polygon_data ) ;
 
   var extensions = [];
 
@@ -11,6 +11,8 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
   }
 
 	// location / position coordinates will come in already in Triangles
+
+	const binaryLocation = new Float32Array(triangles.coordinates);
 
 	const binaryLocation = new Float32Array([
 		-76.98069, 36.23024,
@@ -132,13 +134,15 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
 		0.9921569, 0.9058824, 0.145098, 1
 	]);
 
+	// this defines where the shapes startIndices
+	// so if it's every 3, then each triangle is separate (for picking)
 	const binaryStartIndices = new Uint16Array([
-		0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60,
-		63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 99, 102, 105, 108, 111
+		0//,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60,
+		//63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 99, 102, 105, 108, 111
 	]);
 
 	const binaryIndices = new Uint16Array([
-		0, 0.6, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
 		16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
 		31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
 		46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
@@ -233,6 +237,7 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
     //lightSettings: light_settings,
     //autoHighlight: auto_highlight,
     //highlightColor: md_hexToRGBA( highlight_colour ),
+    highlightColor: md_hexToRGBA( "#AAFFFF80")
     //onHover: md_update_tooltip,
     //onHover: test_hover
     //onClick: info => md_layer_click( map_id, "polygon", info ),
