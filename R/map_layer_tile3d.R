@@ -39,6 +39,14 @@ mapdeckTile3DDependency <- function() {
 
 #' Add Cesium
 #'
+#' Renders 3D tiles data from Cesium ION assets. To use this layer you need a
+#' Cesium ION account \url{https://cesium.com/docs/tutorials/getting-started/#your-first-app}.
+#' This layer is experimental
+#'
+#' @inheritParams add_pointcloud
+#' @param ion_token ion asset token
+#' @param point_size size of point in pixels
+#'
 #' @examples
 #' \donttest{
 #'
@@ -49,7 +57,7 @@ mapdeckTile3DDependency <- function() {
 #' mapdeck() %>%
 #'  add_cesium(
 #'    data = tile_data
-#'    , ion_token = secret::get_secret("ion")
+#'    , ion_token = "ion_token"
 #'  )
 #'
 #' }
@@ -58,6 +66,7 @@ mapdeckTile3DDependency <- function() {
 add_cesium <- function(
 	map,
 	data,
+	point_size = 2,
 	layer_id = NULL,
 	ion_token = NULL
 ) {
@@ -72,7 +81,7 @@ add_cesium <- function(
 	jsfunc <- "add_cesium"
 
 	invoke_method(
-		map, jsfunc, map_type( map ), data, layer_id, ion_token
+		map, jsfunc, map_type( map ), data, point_size, layer_id, ion_token
 	)
 }
 
@@ -80,12 +89,24 @@ add_cesium <- function(
 
 #' Add I3S
 #'
+#' Adds I3S tiles to the map. This layer is experimental.
+#'
+#' @inheritParams add_pointcloud
+#'
 #' @examples
 #' \donttest{
 #'
 #' ## San Francisco buildings
-#' i3s <- 'https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer/layers/0'
-#' mapdeck() %>%
+#' i3s <- paste0(
+#'   'https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/'
+#'   , 'SanFrancisco_Bldgs/SceneServer/layers/0'
+#'   )
+#'
+#' mapdeck(
+#'   location = c(-122.41, 37.77)
+#'   , zoom = 16
+#'   , pitch = 60
+#' ) %>%
 #'   add_i3s(
 #'     data = i3s
 #'   )
@@ -111,14 +132,3 @@ add_i3s <- function(
 		map, jsfunc, map_type( map ), data, layer_id
 	)
 }
-
-# ## canary_warf <- 'https://raw.githubusercontent.com/AnalyticalGraphicsInc/3d-tiles/master/examples/tileset.json'
-# tl <- "https://raw.githubusercontent.com/AnalyticalGraphicsInc/3d-tiles-samples/master/tilesets/TilesetWithDiscreteLOD/tileset.json"
-# mapdeck(
-#   location = c(0, 0)
-#   , zoom = 6
-#   ) %>%
-#   add_cesium(
-#     data = tl
-#   )
-

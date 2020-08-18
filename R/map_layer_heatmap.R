@@ -68,7 +68,7 @@ mapdeckHeatmapDependency <- function() {
 #' ))
 #'
 #' df <- df[ !is.na(df$lng), ]
-#' df$weight <- sample(1:10, size = nrow(df), replace = T)
+#' df$weight <- sample(1:10, size = nrow(df), replace = TRUE)
 #'
 #' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_heatmap(

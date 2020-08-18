@@ -4,10 +4,26 @@
 \alias{add_cesium}
 \title{Add Cesium}
 \usage{
-add_cesium(map, data, layer_id = NULL, ion_token = NULL)
+add_cesium(map, data, point_size = 2, layer_id = NULL, ion_token = NULL)
+}
+\arguments{
+\item{map}{a mapdeck map object}
+
+\item{data}{data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system}
+
+\item{point_size}{size of point in pixels}
+
+\item{layer_id}{single value specifying an id for the layer. Use this value to
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
+
+\item{ion_token}{ion asset token}
 }
 \description{
-Add Cesium
+Renders 3D tiles data from Cesium ION assets. To use this layer you need a
+Cesium ION account \url{https://cesium.com/docs/tutorials/getting-started/#your-first-app}.
+This layer is experimental
 }
 \examples{
 \donttest{
@@ -19,7 +35,7 @@ tile_data <- paste0("https://assets.cesium.com/",ion_asset,"/tileset.json")
 mapdeck() \%>\%
  add_cesium(
    data = tile_data
-   , ion_token = secret::get_secret("ion")
+   , ion_token = "ion_token"
  )
 
 }

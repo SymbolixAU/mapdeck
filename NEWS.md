@@ -1,6 +1,7 @@
 # v0.3.4
 
-* add_cesium and add_i3s layers
+* various updates to documentation
+* initial support for cesium js via add_cesium and add_i3s layers
 * add Linking to geometries ready for migration
 
 # v0.3.3
@@ -16,7 +17,7 @@
 * better handling of polygon colours [issue287](https://github.com/SymbolixAU/mapdeck/issues/287)
 * bug fixed when clearing a layer [issue286](https://github.com/SymbolixAU/mapdeck/issues/286)
 * layers can repeat at low zoom levels [issue282](https://github.com/SymbolixAU/mapdeck/issues/282)
-* mapbox dependencies udpated to 1.9.0
+* mapbox dependencies updated to 1.9.0
 * tooltip for binary layers fixed [issue280](https://github.com/SymbolixAU/mapdeck/issues/280)
 
 # v0.3.1
