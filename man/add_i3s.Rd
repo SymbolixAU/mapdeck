@@ -17,7 +17,7 @@ distinguish between shape layers of the same type. Layers with the same id are l
 to conflict and not plot correctly}
 }
 \description{
-Adds I3S tiles to the map. This layer is experimental.
+Adds OGC Indexed 3D Scene (I3S) tiles to the map. This layer is experimental.
 }
 \examples{
 \donttest{

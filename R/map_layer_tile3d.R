@@ -52,12 +52,17 @@ mapdeckTile3DDependency <- function() {
 #'
 #' ## Melbourne point cloud
 #' ion_asset <- 43978
+#' ion_token <- "ION_TOKEN"
 #' tile_data <- paste0("https://assets.cesium.com/",ion_asset,"/tileset.json")
 #'
-#' mapdeck() %>%
+#' mapdeck(
+#'   location = c(144.95, -37.82)
+#'   , zoom = 14
+#'   , pitch = 60
+#' ) %>%
 #'  add_cesium(
 #'    data = tile_data
-#'    , ion_token = "ion_token"
+#'    , ion_token = ion_token
 #'  )
 #'
 #' }
@@ -89,7 +94,7 @@ add_cesium <- function(
 
 #' Add I3S
 #'
-#' Adds I3S tiles to the map. This layer is experimental.
+#' Adds OGC Indexed 3D Scene (I3S) tiles to the map. This layer is experimental.
 #'
 #' @inheritParams add_pointcloud
 #'

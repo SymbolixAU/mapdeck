@@ -13,6 +13,21 @@ function add_cesium( map_id, map_type, tile_data, point_size, layer_id, ion_toke
 			},
 			'cesium-ion': {accessToken: ion_token}
 		},
+		onTilesetLoad: (tileset) => {
+      // Recenter to cover the tileset
+      console.log(tileset);
+      /*
+      const {cartographicCenter, zoom} = tileset;
+      this.setState({
+          viewState: {
+            ...this.state.viewState,
+            longitude: cartographicCenter[0],
+            latitude: cartographicCenter[1],
+            zoom
+          }
+      });
+      */
+    },
 		// override scenegraph subLayer prop
     _subLayerProps: {
       scenegraph: {_lighting: 'flat'}
