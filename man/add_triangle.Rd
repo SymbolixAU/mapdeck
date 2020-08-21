@@ -7,7 +7,6 @@
 add_triangle(
   map,
   data = get_map_data(map),
-  polyline = NULL,
   stroke_colour = NULL,
   stroke_width = NULL,
   stroke_opacity = NULL,
@@ -38,8 +37,6 @@ add_triangle(
 
 \item{data}{data to be used in the layer. All coordinates are expected to be
 EPSG:4326 (WGS 84) coordinate system}
-
-\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
 \code{elevation} is ignored.
@@ -105,6 +102,8 @@ a named list indicating which colour attributes should be included in the legend
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
+
+\item{polyline}{optional column of \code{data} containing the polylines, if using encoded polylines}
 }
 \description{
 The Triangle Layer renders filled and/or stroked polygons.

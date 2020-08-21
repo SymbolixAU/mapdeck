@@ -31,3 +31,10 @@ NULL
 experimental_layer <- function(layer) {
 	message(layer, " is an experimental layer and the function may change without warning")
 }
+
+# returns 0-based index of all the list columns in a data.frame (sf object)
+list_columns <- function(x, geometry_col) {
+	geom_col <- which(names(x) == geometry_col)
+	return( setdiff( which( vapply(x, is.list, T) ), geom_col ) - 1 )
+}
+

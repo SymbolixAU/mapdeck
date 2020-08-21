@@ -69,8 +69,8 @@ rcpp_polygon_geojson <- function(data, params, geometry_columns, digits) {
     .Call(`_mapdeck_rcpp_polygon_geojson`, data, params, geometry_columns, digits)
 }
 
-rcpp_triangle_columnar <- function(data, params, geometry_columns, digits) {
-    .Call(`_mapdeck_rcpp_triangle_columnar`, data, params, geometry_columns, digits)
+rcpp_triangle_columnar <- function(data, params, list_columns, geometry_columns, digits) {
+    .Call(`_mapdeck_rcpp_triangle_columnar`, data, params, list_columns, geometry_columns, digits)
 }
 
 rcpp_polygon_polyline <- function(data, params, geometry_columns) {

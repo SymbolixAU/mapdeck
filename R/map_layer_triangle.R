@@ -110,7 +110,6 @@ mapdeckTriangleDependency <- function() {
 add_triangle <- function(
 	map,
 	data = get_map_data(map),
-	polyline = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
 	stroke_opacity = NULL,
@@ -139,7 +138,7 @@ add_triangle <- function(
 	#if( is.null( stroke_colour )) stroke_colour <- fill_colour
 
 	l <- list()
-	l[["polyline"]] <- force( polyline )
+	# l[["polyline"]] <- force( polyline )
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_width"]] <- force( stroke_width )
 	l[["stroke_opacity"]] <- resolve_opacity( stroke_opacity )
@@ -197,8 +196,9 @@ add_triangle <- function(
 	jsfunc <- "add_triangle"
 
 	if ( tp == "sf" ) {
-		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		shape <- rcpp_triangle_columnar( data, l, geometry_column, digits )
+		geometry_column <- c( "geometry" ) ## This is where we would also specify 'origin' or 'destination'
+		list_cols <- list_columns( data, geometry_column )
+		shape <- rcpp_triangle_columnar( data, l, list_cols, geometry_column, digits )
 	# } else if ( tp == "sfencoded" ) {
 	# 	geometry_column <- "polyline"
 	# 	shape <- rcpp_polygon_polyline( data, l, geometry_column )
@@ -218,7 +218,7 @@ add_triangle <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
-	# return( shape )
+	return( shape )
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["interleaved"]], shape[["data"]][["data"]], layer_id, light_settings,

@@ -50,9 +50,13 @@ Rcpp::List rcpp_polygon_geojson(
 Rcpp::List rcpp_triangle_columnar(
 		Rcpp::DataFrame data,
 		Rcpp::List params,
+		Rcpp::IntegerVector list_columns,      //
 		Rcpp::StringVector geometry_columns,
 		int digits
 ) {
+
+	// any list-columns must have the same number of elements as cordinates
+	// as they go through interleaving and get shuffled as per the triangulation of coords
 
 	int data_rows = data.nrows();
 
@@ -88,9 +92,24 @@ Rcpp::List rcpp_triangle_columnar(
 	// TODO:
 	// this is the 'repeats' vector
 
-	Rcpp::List tri = interleave::primitives::interleave_triangle( poly );
+	Rcpp::List tri_properties( list_columns.length() );
+	for( R_xlen_t i = 0; i < list_columns.length(); ++i ) {
+		R_xlen_t idx = list_columns[ i ];
+		tri_properties[ i ] = data[ idx ];
+	}
+	Rcpp::List tri = interleave::primitives::interleave_triangle( poly, tri_properties );
 
-	Rcpp::IntegerVector indices = tri["indices"];
+	Rcpp::IntegerVector indices = tri["input_index"];
+
+	// put the properties back onto 'data'
+	Rcpp::List shuffled_properties = tri["properties"];
+	//return shuffled_properties;
+	for( R_xlen_t i = 0; i < list_columns.length(); ++i ) {
+		R_xlen_t idx = list_columns[ i ];
+		data[ idx ] = shuffled_properties[ i ];
+	}
+
+	return data;
 
 	// IFF any columns of 'data' are lists, where each element is a vector the same length as
 	// the number of coordinates in that sfg_POLYGON, then that vector needs to be subset
@@ -114,7 +133,7 @@ Rcpp::List rcpp_triangle_columnar(
 
 	Rcpp::StringVector js_tri = jsonify::api::to_json(
 		tri, false, digits,
-		true, true, "column" // numeric_dates, factors_as_strin, by -- not used on interleaved data
+		true, true, "column" // numeric_dates, factors_as_string, by -- not used on interleaved data
 	);
 
 	Rcpp::List processed = spatialwidget::api::create_interleaved(
