@@ -60,7 +60,7 @@ Rcpp::List rcpp_triangle_columnar(
 
 	int data_rows = data.nrows();
 
-	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
+
 
 	// TODO
 	// call geometries:::rcpp_geometry_dimensions()
@@ -86,8 +86,14 @@ Rcpp::List rcpp_triangle_columnar(
 	// the do all the formatting
 
 	//Rcpp::IntegerVector start_indices = dimensions( Rcpp::_, 0 );
-	//R_xlen_t n_geometries = dimensions.nrow();
-	//R_xlen_t total_coordinates = dimensions( n_geometries - 1, 1 );
+	R_xlen_t n_geometries = dimensions.nrow();
+	//int total_coordinates = dimensions( n_geometries - 1, 1 );
+	// total_coordinates is the total number of coordinates AFTER ear-cutting
+
+
+	//Rcpp::Rcout << "data_rows: " << data_rows << std::endl;
+	//Rcpp::Rcout << "total_coords: " << total_coordinates << std::endl;
+
 
 	// TODO:
 	// this is the 'repeats' vector
@@ -109,16 +115,27 @@ Rcpp::List rcpp_triangle_columnar(
 		data[ idx ] = shuffled_properties[ i ];
 	}
 
-	return data;
+	//return data;
 
 	// IFF any columns of 'data' are lists, where each element is a vector the same length as
 	// the number of coordinates in that sfg_POLYGON, then that vector needs to be subset
 	// according to `indices`, which will correctly align the value to the coordinate
 	//
 
-	R_xlen_t total_coordinates = indices.length();
-	Rcpp::IntegerVector n_coordinates( total_coordinates, 3 );
+	int total_coordinates = indices.length();
+	Rcpp::List lst_defaults = polygon_defaults( total_coordinates );  // initialise with defaults
 
+	//Rcpp::Rcout << "total_coords: " << total_coordinates << std::endl;
+	Rcpp::IntegerVector n_coordinates = tri["n_coordinates"];
+	Rcpp::IntegerVector start_indices( n_coordinates.length() );
+	start_indices[0] = 0;
+	for( R_xlen_t i = 1; i < n_coordinates.length(); ++i ) {
+		start_indices[ i ] = n_coordinates[ i - 1 ] + start_indices[ i - 1 ];
+	}
+
+	//Rcpp::IntegerVector n_coordinates( total_coordinates, 3 );
+
+	// Rcpp::Rcout << "n_coordinates: " << n_coordinates << std::endl;
 
 	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::layer_colours::fill_stroke_colours;
 	Rcpp::StringVector polygon_legend = mapdeck::layer_colours::fill_stroke_legend;
@@ -136,22 +153,29 @@ Rcpp::List rcpp_triangle_columnar(
 		true, true, "column" // numeric_dates, factors_as_string, by -- not used on interleaved data
 	);
 
+	//return interleaved;
+
 	Rcpp::List processed = spatialwidget::api::create_interleaved(
 		interleaved,
 		params,
 		lst_defaults,
 		polygon_colours,
 		polygon_legend,
-		data_rows,
+		total_coordinates,
 		parameter_exclusions,
 		true, // jsonify legend
 		digits,
 		"interleaved"
 	);
 
+	//return processed;
+
+	//Rcpp::stop("stopping");
+
 	Rcpp::List res = Rcpp::List::create(
 		Rcpp::_["interleaved"] = js_tri,
-		Rcpp::_["data"] = processed
+		Rcpp::_["data"] = processed,
+		Rcpp::_["start_indices"] = start_indices
 	);
 
 	return res;

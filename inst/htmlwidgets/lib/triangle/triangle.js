@@ -1,8 +1,10 @@
 
-function add_triangle( map_id, map_type, triangles, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, elevation_scale, brush_radius ) {
+function add_triangle( map_id, map_type, triangles, polygon_data, start_indices, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, elevation_scale, brush_radius ) {
 
 	console.log( triangles );
-	console.log( polygon_data ) ;
+	console.log( polygon_data );
+	console.log( start_indices );
+	//console.log( polygon_data.data.fill_colour );
 
   var extensions = [];
 
@@ -12,8 +14,19 @@ function add_triangle( map_id, map_type, triangles, polygon_data, layer_id, ligh
 
 	// location / position coordinates will come in already in Triangles
 
-	const binaryLocation = new Float32Array(triangles.coordinates);
+	//let fill_colour = polygon_data.data.fill_colour;
 
+	const binaryLocation = new Float32Array( triangles.coordinates );
+ 	//const binaryFill = new Float32Array( fill_colour.length );
+ 	//for( var i = 0; i < fill_colour.length; i++ ) {
+ 	//	binaryFill[ i ] = fill_colour[ i ] / 255;
+ 	//}
+ 	const binaryFill = new Float32Array( polygon_data.data.fill_colour );
+ 	const binaryElevation = new Float32Array( polygon_data.data.elevation );
+
+ 	const binaryStartIndices = new Uint16Array( start_indices );
+
+/*
 	const binaryLocation = new Float32Array([
 		-76.98069, 36.23024,
 		-76.74506, 36.23392,
@@ -73,7 +86,9 @@ function add_triangle( map_id, map_type, triangles, polygon_data, layer_id, ligh
 		-76.99475, 36.23558,
 		-76.95367, 36.41923
 	]);
+*/
 
+/*
 	const binaryFill = new Float32Array([
 		0.2666667, 0.003921569, 0.3294118, 1,
 		0.2745098, 0.02745098, 0.3568627, 1,
@@ -133,14 +148,20 @@ function add_triangle( map_id, map_type, triangles, polygon_data, layer_id, ligh
 		0.9490196, 0.9019608, 0.1137255, 1,
 		0.9921569, 0.9058824, 0.145098, 1
 	]);
+*/
+
 
 	// this defines where the shapes startIndices
 	// so if it's every 3, then each triangle is separate (for picking)
+	/*
 	const binaryStartIndices = new Uint16Array([
-		0//,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60,
-		//63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 99, 102, 105, 108, 111
+		0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60,
+		63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 99, 102, 105, 108, 111,
+		114, 117
 	]);
+	*/
 
+	/*
 	const binaryIndices = new Uint16Array([
 		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
 		16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
@@ -151,6 +172,20 @@ function add_triangle( map_id, map_type, triangles, polygon_data, layer_id, ligh
 		91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105,
 		106, 107, 108, 109, 110, 111, 112, 113
 	]);
+	*/
+
+/*
+	const binaryElevation = new Uint16Array([
+			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+			16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+			31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
+			46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+			61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,
+			76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
+			91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105,
+			106, 107, 108, 109, 110, 111, 112, 113
+		]);
+*/
 
 	/*
 	const binaryLocation = new Float32Array([
@@ -174,7 +209,7 @@ function add_triangle( map_id, map_type, triangles, polygon_data, layer_id, ligh
 	]);
 	*/
 
-	//console.log( binaryLocation.length );
+	console.log( binaryLocation.length );
 
 	const stride = 2;
 	const n_points = binaryLocation.length / stride;
@@ -185,7 +220,14 @@ function add_triangle( map_id, map_type, triangles, polygon_data, layer_id, ligh
 
 	//const len = binaryIndices.count;
 	const len = n_points / n_points_per_tri;  // the number of triangles
-	//console.log( 'len: ' + len );
+	console.log( 'len: ' + len );
+
+	const binaryIndices = new Uint16Array( binaryLocation.length );
+	for( var i = 0; i < binaryLocation.length; i++ ) {
+		binaryIndices[i] = i;
+	}
+
+	console.log( binaryIndices );
 
 /*
 	const binaryFill = new Float32Array([
@@ -207,10 +249,10 @@ function add_triangle( map_id, map_type, triangles, polygon_data, layer_id, ligh
     //parameters: {
 	  //  depthTest: true
 	  //},
-    //wireframe: false,
-    //extruded: is_extruded,
+    wireframe: false,
+    extruded: is_extruded,
     //lineWidthMinPixels: 0,
-    //elevationScale: elevation_scale,
+    elevationScale: elevation_scale,
 
     data: {
     	length: len, // number of triangles (length( res$coordinates ) )
@@ -219,6 +261,7 @@ function add_triangle( map_id, map_type, triangles, polygon_data, layer_id, ligh
     		indices: binaryIndices, // seq(0, length( res$coordinates ) )
     		getPolygon: {value: binaryLocation, size: stride},
     		getFillColor: {value: binaryFill, size: 4},
+    		getElevation: {value: binaryElevation, size: 1}
     	}
     },
     _normalize: false, // skip normalization for ear-cut polygons
@@ -237,7 +280,7 @@ function add_triangle( map_id, map_type, triangles, polygon_data, layer_id, ligh
     //lightSettings: light_settings,
     //autoHighlight: auto_highlight,
     //highlightColor: md_hexToRGBA( highlight_colour ),
-    highlightColor: md_hexToRGBA( "#AAFFFF80")
+    //highlightColor: md_hexToRGBA( "#AAFFFF80")
     //onHover: md_update_tooltip,
     //onHover: test_hover
     //onClick: info => md_layer_click( map_id, "polygon", info ),

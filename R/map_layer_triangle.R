@@ -198,6 +198,8 @@ add_triangle <- function(
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we would also specify 'origin' or 'destination'
 		list_cols <- list_columns( data, geometry_column )
+		# print( list_cols )
+
 		shape <- rcpp_triangle_columnar( data, l, list_cols, geometry_column, digits )
 	# } else if ( tp == "sfencoded" ) {
 	# 	geometry_column <- "polyline"
@@ -218,10 +220,10 @@ add_triangle <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
-	return( shape )
+	# return( shape )
 
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["interleaved"]], shape[["data"]][["data"]], layer_id, light_settings,
+		map, jsfunc, map_type( map ), shape[["interleaved"]], shape[["data"]][["data"]], shape[["start_indices"]], layer_id, light_settings,
 		auto_highlight, highlight_colour, shape[["data"]][["legend"]], bbox, update_view, focus_layer,
 		js_transitions, is_extruded, elevation_scale, brush_radius
 	)
