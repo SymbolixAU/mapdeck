@@ -3,6 +3,7 @@
 * various updates to documentation
 * initial support for cesium js via add_cesium and add_i3s layers
 * add Linking to geometries ready for migration
+* fixed bug when plotting a single point
 
 # v0.3.3
 
