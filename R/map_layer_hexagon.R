@@ -110,7 +110,7 @@ mapdeckHexagonDependency <- function() {
 #' )
 #'
 #' ## with a legend
-#' df$val <- sample(1:10, size = nrow(df), replace = T)
+#' df$val <- sample(1:10, size = nrow(df), replace = TRUE)
 #'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
 #' add_hexagon(
@@ -119,7 +119,7 @@ mapdeckHexagonDependency <- function() {
 #' 	, lon = "lng"
 #' 	, layer_id = "hex_layer"
 #' 	, elevation_scale = 100
-#' 	, legend = T
+#' 	, legend = TRUE
 #' 	, legend_options = list( digits = 0 )
 #' 	, colour_function = "mean"
 #' 	, colour = "val"

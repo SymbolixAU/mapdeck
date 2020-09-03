@@ -99,7 +99,7 @@ mapdeckPolygonDependency <- function() {
 #'     , fill_colour = "SA2_NAME"
 #'     , elevation = "elevation"
 #'     , tooltip = 'info'
-#'     , legend = T
+#'     , legend = TRUE
 #'   )
 #'
 #' }

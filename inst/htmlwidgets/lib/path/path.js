@@ -2,6 +2,8 @@
 
 function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels, use_offset, use_dash ) {
 
+	console.log( path_data );
+
   var extensions = [];
 
   if ( brush_radius > 0 ) {

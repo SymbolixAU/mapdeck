@@ -6,15 +6,33 @@
 \usage{
 add_i3s(map, data, layer_id = NULL)
 }
+\arguments{
+\item{map}{a mapdeck map object}
+
+\item{data}{data to be used in the layer. All coordinates are expected to be
+EPSG:4326 (WGS 84) coordinate system}
+
+\item{layer_id}{single value specifying an id for the layer. Use this value to
+distinguish between shape layers of the same type. Layers with the same id are likely
+to conflict and not plot correctly}
+}
 \description{
-Add I3S
+Adds OGC Indexed 3D Scene (I3S) tiles to the map. This layer is experimental.
 }
 \examples{
 \donttest{
 
 ## San Francisco buildings
-i3s <- 'https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer/layers/0'
-mapdeck() \%>\%
+i3s <- paste0(
+  'https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/'
+  , 'SanFrancisco_Bldgs/SceneServer/layers/0'
+  )
+
+mapdeck(
+  location = c(-122.41, 37.77)
+  , zoom = 16
+  , pitch = 60
+) \%>\%
   add_i3s(
     data = i3s
   )

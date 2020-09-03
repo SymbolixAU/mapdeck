@@ -186,7 +186,7 @@ set_token( key )
 
 
 df <- capitals
-df$elev <- sample(50000:500000, size = nrow(df), replace = T)
+df$elev <- sample(50000:500000, size = nrow(df), replace = TRUE)
 
 mapdeck(style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_column(

@@ -179,7 +179,7 @@ mapdeckGeojsonDependency <- function() {
 #' library(geojsonsf)
 #' sf <- geojsonsf::geojson_sf( geojson )
 #' sf$width <- sample(1:100, size = nrow(sf), replace = TRUE)
-#' sf$elevation <- sample(100:1000, size = nrow(sf), replace = T)
+#' sf$elevation <- sample(100:1000, size = nrow(sf), replace = TRUE)
 #' geo <- geojsonsf::sf_geojson( sf )
 #'
 #' mapdeck(

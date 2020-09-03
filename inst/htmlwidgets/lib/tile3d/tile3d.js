@@ -1,11 +1,11 @@
 
-function add_cesium( map_id, map_type, tile_data, layer_id, ion_token ) {
+function add_cesium( map_id, map_type, tile_data, point_size, layer_id, ion_token ) {
 
 	const tileLayer = new deck.Tile3DLayer({
 		map_id: map_id,
 		id: 'cesium-'+layer_id,
 		data: tile_data,
-		pointSize: 2,
+		pointSize: point_size,
 		loader: loaders.CesiumIonLoader,
 		loadOptions: {
 			tileset: {
@@ -13,6 +13,21 @@ function add_cesium( map_id, map_type, tile_data, layer_id, ion_token ) {
 			},
 			'cesium-ion': {accessToken: ion_token}
 		},
+		onTilesetLoad: (tileset) => {
+      // Recenter to cover the tileset
+      console.log(tileset);
+      /*
+      const {cartographicCenter, zoom} = tileset;
+      this.setState({
+          viewState: {
+            ...this.state.viewState,
+            longitude: cartographicCenter[0],
+            latitude: cartographicCenter[1],
+            zoom
+          }
+      });
+      */
+    },
 		// override scenegraph subLayer prop
     _subLayerProps: {
       scenegraph: {_lighting: 'flat'}
@@ -33,7 +48,6 @@ function add_cesium( map_id, map_type, tile_data, layer_id, ion_token ) {
 
   */
   //md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
-
 }
 
 
@@ -43,7 +57,6 @@ function add_i3s( map_id, map_type, tile_data, layer_id ) {
 		map_id: map_id,
 		id: 'i3s-'+layer_id,
 		data: tile_data,
-		//pointSize: 2,
 		loader: loaders.I3SLoader
 	});
 

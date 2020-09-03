@@ -73,7 +73,7 @@ with a certain radius." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -404,8 +404,7 @@ you are clicking on</p>
   , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"country"</span>
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"scatter_layer"</span>
   , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"capital"</span>
-)
-
+)</div><div class='output co'>#&gt; default</div><div class='input'>
 <span class='co'>## using legend options</span>
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>( <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>"dark"</span>), <span class='kw'>pitch</span> <span class='kw'>=</span> <span class='fl'>45</span> ) <span class='kw'>%&gt;%</span>
 <span class='fu'>add_scatterplot</span>(
@@ -419,8 +418,8 @@ you are clicking on</p>
   , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"capital"</span>
   , <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>T</span>
   , <span class='kw'>legend_options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>( <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>5</span> )
-)
-
+)</div><div class='output co'>#&gt; default
+#&gt; default</div><div class='input'>
 
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(
 <span class='st'>'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/'</span>,
@@ -436,8 +435,8 @@ you are clicking on</p>
   , <span class='kw'>lon</span> <span class='kw'>=</span> <span class='st'>"lng"</span>
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"scatter_layer"</span>
   , <span class='kw'>stroke_colour</span> <span class='kw'>=</span> <span class='st'>"lng"</span>
-)
-
+)</div><div class='output co'>#&gt; default
+#&gt; default</div><div class='input'>
 <span class='co'>## as an sf object</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sfheaders</span>)
 <span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sfheaders</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sfheaders/man/sf_point.html'>sf_point</a></span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"lng"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"lat"</span>)
@@ -449,9 +448,10 @@ you are clicking on</p>
   , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"country"</span>
   , <span class='kw'>layer_id</span> <span class='kw'>=</span> <span class='st'>"scatter_layer"</span>
   , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"capital"</span>
-)
+)</div><div class='output co'>#&gt; default</div><div class='input'>
+# }
 
-<span class='co'># }</span></div></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
