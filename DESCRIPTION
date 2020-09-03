@@ -2,13 +2,13 @@ Package: mapdeck
 Type: Package
 Title: Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'
 Version: 0.3.4
-Date: 2020-09-02
+Date: 2020-09-03
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
 Description: Provides a mechanism to plot an interactive map using 'Mapbox GL' 
 		(<https://docs.mapbox.com/mapbox-gl-js/api/>), a javascript library for interactive maps,
-		and 'Deck.gl' (<http://deck.gl/>), a javascript library which uses 'WebGL' for 
+		and 'Deck.gl' (<https://deck.gl/>), a javascript library which uses 'WebGL' for 
 		visualising large data sets.
 License: GPL-3
 URL: https://symbolixau.github.io/mapdeck/articles/mapdeck.html
