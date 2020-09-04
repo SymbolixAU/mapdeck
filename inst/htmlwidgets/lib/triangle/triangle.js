@@ -211,7 +211,8 @@ function add_triangle( map_id, map_type, triangles, polygon_data, start_indices,
 
 	console.log( binaryLocation.length );
 
-	const stride = 2;
+	//const stride = 2;
+	const stride = triangles.stride[ 0 ] ;
 	const n_points = binaryLocation.length / stride;
 	const n_points_per_tri = 3;
 
@@ -220,14 +221,15 @@ function add_triangle( map_id, map_type, triangles, polygon_data, start_indices,
 
 	//const len = binaryIndices.count;
 	const len = n_points / n_points_per_tri;  // the number of triangles
-	console.log( 'len: ' + len );
+	//console.log( 'len: ' + len );
 
 	const binaryIndices = new Uint16Array( binaryLocation.length );
+	//const binaryIndices = new Uint16Array( n_points );
 	for( var i = 0; i < binaryLocation.length; i++ ) {
-		binaryIndices[i] = i;
+		binaryIndices[i] = i; //* stride;
 	}
 
-	console.log( binaryIndices );
+	//console.log( binaryIndices );
 
 /*
 	const binaryFill = new Float32Array([
@@ -249,7 +251,7 @@ function add_triangle( map_id, map_type, triangles, polygon_data, start_indices,
     //parameters: {
 	  //  depthTest: true
 	  //},
-    wireframe: false,
+    wireframe: true,
     extruded: is_extruded,
     //lineWidthMinPixels: 0,
     elevationScale: elevation_scale,

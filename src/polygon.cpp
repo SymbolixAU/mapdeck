@@ -130,7 +130,7 @@ Rcpp::List rcpp_triangle_columnar(
 	Rcpp::IntegerVector start_indices( n_coordinates.length() );
 	start_indices[0] = 0;
 	for( R_xlen_t i = 1; i < n_coordinates.length(); ++i ) {
-		start_indices[ i ] = n_coordinates[ i - 1 ] + start_indices[ i - 1 ];
+		start_indices[ i ] = n_coordinates[ i - 1 ] + start_indices[ i - 1 ] - 1;
 	}
 
 	//Rcpp::IntegerVector n_coordinates( total_coordinates, 3 );
