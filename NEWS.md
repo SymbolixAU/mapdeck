@@ -1,5 +1,6 @@
 # v0.3.4
 
+* fixed `update_style` bug [issue 322](https://github.com/SymbolixAU/mapdeck/issues/322)
 * various updates to documentation
 * initial support for cesium js via add_cesium and add_i3s layers
 * add Linking to geometries ready for migration
