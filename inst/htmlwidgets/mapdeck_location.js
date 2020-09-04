@@ -50,8 +50,8 @@ function md_update_style( map_id, style ) {
 
   window[ map_id + 'map' ].setProps({
   	layers: [...window[map_id + 'layers'] ],
-  	map: map,
-  	viewState: vs
+  	map: map
+  	//viewState: vs // issue 239 (& 322) - viewState no longer supported in deck.gl v8.0.8
   });
 }
 
