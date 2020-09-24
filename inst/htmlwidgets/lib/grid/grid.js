@@ -60,7 +60,7 @@ function add_grid_geo_columnar( map_id, map_type, grid_data, data_count, layer_i
 }
 */
 
-function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend, brush_radius  ) {
+function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend, brush_radius, gpu_aggregation  ) {
 
   //console.log( grid_data );
   //console.log( highlight_colour );
@@ -82,7 +82,7 @@ function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extrude
     elevationScale: elevation_scale,
     getPosition: d => md_get_point_coordinates( d ),
 
-    gpuAggregation: true,
+    gpuAggregation: gpu_aggregation,
 
     getColorWeight: d => d.properties.colour || 1,
     colorAggregation: colour_function,
@@ -108,7 +108,7 @@ function add_grid_geo( map_id, map_type, grid_data, layer_id, cell_size, extrude
 }
 
 
-function add_grid_polyline( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend, brush_radius ) {
+function add_grid_polyline( map_id, map_type, grid_data, layer_id, cell_size, extruded, elevation_scale, colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, use_weight, use_colour, elevation_function, colour_function, legend, brush_radius, gpu_aggregation ) {
 
   var extensions = [];
 
@@ -128,7 +128,7 @@ function add_grid_polyline( map_id, map_type, grid_data, layer_id, cell_size, ex
     onClick: info => md_layer_click( map_id, "grid", info ),
     getPosition: d => md_decode_polyline( d.polyline )[0],
 
-    gpuAggregation: true,
+    gpuAggregation: gpu_aggregation,
 
     getColorWeight: d => d.properties.colour || 1,
     colorAggregation: colour_function,

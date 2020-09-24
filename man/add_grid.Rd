@@ -27,7 +27,8 @@ add_grid(
   focus_layer = FALSE,
   digits = 6,
   transitions = NULL,
-  brush_radius = NULL
+  brush_radius = NULL,
+  gpu_aggregation = c(TRUE, FALSE)
 )
 }
 \arguments{

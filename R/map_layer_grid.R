@@ -123,7 +123,8 @@ add_grid <- function(
 	focus_layer = FALSE,
 	digits = 6,
 	transitions = NULL,
-	brush_radius = NULL
+	brush_radius = NULL,
+	gpu_aggregation = c(TRUE, FALSE)
 ) {
 
 	l <- list()
@@ -216,7 +217,7 @@ add_grid <- function(
 		jsonify::to_json(extruded, unbox = TRUE), elevation_scale,
 		colour_range, auto_highlight, highlight_colour, bbox, update_view, focus_layer,
 		js_transitions, use_weight, use_colour, elevation_function, colour_function, legend,
-		brush_radius
+		brush_radius, gpu_aggregation
 		)
 }
 
