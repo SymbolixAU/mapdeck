@@ -141,7 +141,7 @@ add_grid(
 )
 
 ## using colour and elevation functions, and legends
-df$val <- sample(1:10, size = nrow(df), replace = T)
+df$val <- sample(1:10, size = nrow(df), replace = TRUE)
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_grid(
@@ -150,7 +150,7 @@ add_grid(
 	, lon = "lng"
 	, layer_id = "hex_layer"
 	, elevation_scale = 100
-	, legend = T
+	, legend = TRUE
 	, colour_function = "max"
 	, colour = "val"
 )
@@ -162,7 +162,7 @@ add_grid(
 	, lon = "lng"
 	, layer_id = "hex_layer"
 	, elevation_scale = 10
-	, legend = T
+	, legend = TRUE
 	, elevation_function = "mean"
 	, elevation = "val"
 )

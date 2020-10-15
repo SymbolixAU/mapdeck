@@ -129,7 +129,7 @@
 # dt[, start_time := sample(0:100, size = 1), by = r]
 #
 # ## set a 'speed' between each sequential coordinate
-# dt[, time_to_next_point := sample(10:50, size = .N, replace = T)]
+# dt[, time_to_next_point := sample(10:50, size = .N, replace = TRUE)]
 #
 # dt[, time := cumsum(time_to_next_point) + start_time, by = r]
 #
@@ -354,7 +354,7 @@
 # 		# , loop_length = 87000
 # 		# , animation_speed = 2500
 # 		# , trail_length = 1500
-# 		, legend = T
+# 		, legend = TRUE
 # 	)
 #
 #

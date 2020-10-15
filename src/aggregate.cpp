@@ -25,7 +25,7 @@ Rcpp::List screengrid_defaults(int n) {
 	);
 }
 
-Rcpp::List get_aggregate_defaults( std::string layer_name, int data_rows ) {
+Rcpp::List get_aggregate_defaults( std::string layer_name, R_xlen_t data_rows ) {
 	if( layer_name == "heatmap" ) {
 		return heatmap_defaults( data_rows );
 	// } else if ( layer_name == "grid" ) {
@@ -46,7 +46,7 @@ Rcpp::List rcpp_aggregate_geojson(
 		std::string layer_name
 ) {
 
-	int data_rows = data.nrows();
+	R_xlen_t data_rows = data.nrows();
 
 
 	Rcpp::List lst_defaults = get_aggregate_defaults( layer_name, data_rows );
@@ -78,7 +78,7 @@ Rcpp::List rcpp_aggregate_geojson_df(
 		std::string layer_name
 ) {
 
-	int data_rows = data.nrows();
+	R_xlen_t data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = get_aggregate_defaults( layer_name, data_rows );
 
@@ -108,7 +108,7 @@ Rcpp::List rcpp_aggregate_polyline(
 		std::string layer_name
 ) {
 
-	int data_rows = data.nrows();
+	R_xlen_t data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = get_aggregate_defaults( layer_name, data_rows );
 

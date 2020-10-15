@@ -45,6 +45,14 @@ If left empty layers will still be plotted, but without a Mapbox map.}
 
 \item{bearing}{bearing of the map between 0 and 360}
 
+\item{max_zoom}{sets the maximum zoom level}
+
+\item{min_zoom}{sets the minimum zoom level}
+
+\item{max_pitch}{sets the maximum pitch}
+
+\item{min_pitch}{sets the minimum pitch}
+
 \item{location}{unnamed vector of lon and lat coordinates (in that order)}
 
 \item{show_view_state}{logical, indicating whether to add the current View State to the map.

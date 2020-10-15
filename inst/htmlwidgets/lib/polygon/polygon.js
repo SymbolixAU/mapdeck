@@ -14,6 +14,9 @@ function add_polygon_geo( map_id, map_type, polygon_data, layer_id, light_settin
     pickable: true,
     stroked: true,
     filled: true,
+    parameters: {
+	    depthTest: true
+	  },
     wireframe: false,
     extruded: is_extruded,
     lineWidthMinPixels: 0,

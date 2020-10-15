@@ -22,19 +22,20 @@ The timestamps have to be positive, and in sequential order.
 
 ```r
 library(sf)
+library(sfheaders)
 library(data.table)
 
 set_token( "MAPBOX_TOKEN" )
-coords <- sf::st_coordinates( roads )
-dt <- as.data.table( coords )
+dt <- sfheaders::sf_to_df( mapdeck::roads ) 
+setDT( dt )
 
-dt[, elev := 0]
-dt[, seq := 1:.N, by = L1 ]
+dt[, elev := 0 ]
+dt[, seq := 1:.N, by = linestring_id ]
 dt1 <- dt[ seq == 1]
 dt1[, start_time := sample(1:100, size = .N, replace = T)]
 dt[
-	dt1[, .(L1, start_time)]
-	, on = c("L1")
+	dt1[, .(linestring_id, start_time)]
+	, on = c("linestring_id")
 	, start_time := i.start_time
 	]
 
@@ -42,15 +43,16 @@ dt[, time := start_time + seq ]
 s <- dt[, min( time )]
 e <- dt[, max( time )]
 
-dt <- dt[
-	, {
-		geometry <- sf::st_linestring( x = matrix( c(X,Y,elev,time), ncol = 4 ))
-		geometry <- sf::st_sf( geometry = sf::st_sfc( geometry ) )
-	}
-	, by = L1
-	]
+setorder( dt, linestring_id )
+sfc <- sfheaders::sfc_linestring(
+	obj = dt
+	, x = "x"
+	, y = "y"
+	, z = "elev"
+	, m = "time"
+	, linestring_id = "linestring_id"
+)
 
-sfc <- dt$geometry
 sf <- roads
 sf$geometry <- sfc
 ```

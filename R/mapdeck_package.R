@@ -15,8 +15,8 @@ NULL
 #' @examples
 #' \donttest{
 #'
-#' key <- "your_api_key"
-#' mapdeck(key = key) %>%
+#' token <- "your_api_token"
+#' mapdeck(token = token) %>%
 #' add_scatterplot(
 #'   data = capitals
 #'   , lat = "lat"

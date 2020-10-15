@@ -74,7 +74,7 @@ mapdeckScatterplotDependency <- function() {
 #'   , stroke_colour = "lat"
 #'   , layer_id = "scatter_layer"
 #'   , tooltip = "capital"
-#'   , legend = T
+#'   , legend = TRUE
 #'   , legend_options = list( digits = 5 )
 #' )
 #'

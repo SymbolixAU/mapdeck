@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -385,22 +385,8 @@ you are clicking on</p>
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>geojsonsf</span>)
 
-<span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/geojsonsf/man/geojson_sf.html'>geojson_sf</a></span>(<span class='st'>"https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json"</span>)</div><div class='output co'>#&gt; $input
-#&gt; [1] NA
-#&gt; 
-#&gt; $wkt
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; $input
-#&gt; [1] NA
-#&gt; 
-#&gt; $wkt
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"</div><div class='input'>
+<span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/geojsonsf/man/geojson_sf.html'>geojson_sf</a></span>(<span class='st'>"https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json"</span>)
+
 <span class='fu'><a href='mapdeck.html'>mapdeck</a></span>(
   <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='mapdeck_style.html'>mapdeck_style</a></span>(<span class='st'>'dark'</span>)
 ) <span class='kw'>%&gt;%</span>
@@ -408,8 +394,7 @@ you are clicking on</p>
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sf</span>
     , <span class='kw'>layer</span> <span class='kw'>=</span> <span class='st'>"polygon_layer"</span>
     , <span class='kw'>fill_colour</span> <span class='kw'>=</span> <span class='st'>"SA2_NAME16"</span>
-)
-
+)</div><div class='output co'>#&gt; default</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>melbourne</span>  <span class='co'>## data.frame with encoded polylnies</span>
 <span class='no'>df</span>$<span class='no'>elevation</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>100</span>:<span class='fl'>5000</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>df</span>))
 <span class='no'>df</span>$<span class='no'>info</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"&lt;b&gt;SA2 - &lt;/b&gt;&lt;br&gt;"</span>,<span class='no'>df</span>$<span class='no'>SA2_NAME</span>)
@@ -427,9 +412,10 @@ you are clicking on</p>
     , <span class='kw'>elevation</span> <span class='kw'>=</span> <span class='st'>"elevation"</span>
     , <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>'info'</span>
     , <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>T</span>
-  )
+  )</div><div class='output co'>#&gt; default</div><div class='input'>
+# }
 
-<span class='co'># }</span></div></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -445,7 +431,7 @@ you are clicking on</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

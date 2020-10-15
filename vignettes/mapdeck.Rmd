@@ -30,11 +30,11 @@ library(mapdeck)
 ```
 
 
-![](./img/articles/hexagons.png)
+![](./img/hexagons.png)
 
 # What is Mapdeck?
 
-Mapdeck is a combination of [Mabox](https://www.mapbox.com/help/define-mapbox-gl/) and [Deck.gl](http://deck.gl/#/)
+Mapdeck is a combination of [Mapbox](https://docs.mapbox.com/mapbox-gl-js/api/) and [Deck.gl](https://deck.gl/)
 
 
 # Why did you build it?
@@ -45,7 +45,7 @@ Because Deck.gl is one of the most user-friendly WebGL javascript libraries and 
 
 # The basics
 
-You need a [Mapbox Access Token](https://www.mapbox.com/help/how-access-tokens-work/) to load a map. Then call `mapdeck(token = token)` to give you a map
+You need a [Mapbox Access Token](https://docs.mapbox.com/help/how-mapbox-works/access-tokens/) to load a map. Then call `mapdeck(token = token)` to give you a map
 
 ```{r, fig.width=6}
 key <- 'abc'    ## put your own token here
@@ -65,7 +65,7 @@ mapdeck_tokens()
 ```
 
 
-You can style the map using any [mapbox style](https://www.mapbox.com/api-documentation/#styles) template styles, or you can [create one of your own](https://www.mapbox.com/help/studio-manual-styles/)
+You can style the map using any [mapbox style](https://docs.mapbox.com/api/#styles) template styles, or you can [create one of your own](https://docs.mapbox.com/studio-manual/reference/styles/)
 
 ```{r, fig.width=6}
 mapdeck(token = key, style = 'mapbox://styles/mapbox/dark-v9')
@@ -80,7 +80,7 @@ mapdeck_style(style = 'dark')
 
 Once you have a map you can start adding layers through the various `add_*()` functions (there is an example of each one in this vignette).
 
-All details about layers, colours, tips & triks, etc, are here
+All details about layers, colours, tips & tricks, etc, are here
 
 - [layers](https://symbolixau.github.io/mapdeck/articles/layers.html)
 - [colours](https://symbolixau.github.io/mapdeck/articles/colours.html)

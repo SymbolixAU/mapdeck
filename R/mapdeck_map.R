@@ -14,6 +14,10 @@
 #' @param pitch the pitch angle of the map
 #' @param zoom zoom level of the map
 #' @param bearing bearing of the map between 0 and 360
+#' @param max_zoom sets the maximum zoom level
+#' @param min_zoom sets the minimum zoom level
+#' @param max_pitch sets the maximum pitch
+#' @param min_pitch sets the minimum pitch
 #' @param location unnamed vector of lon and lat coordinates (in that order)
 #' @param show_view_state logical, indicating whether to add the current View State to the map.
 #' When \code{TRUE}, the following is added as an overlay to the map

@@ -1,5 +1,64 @@
 
-function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels, use_offset, use_dash ) {
+const ATTRIBUTE_TRANSITION = {
+  enter: (value, chunk) => {
+    return chunk.length ? chunk.subarray(chunk.length - value.length) : value;
+  }
+};
+
+const DEFAULT_COLOR = [0, 0, 0, 255];
+
+class MultiColouredPathLayer extends deck.PathLayer {
+
+    initializeState() {
+      super.initializeState();
+      this.state.attributeManager.addInstanced({
+        instanceColors: {
+          size: this.props.colorFormat.length,
+          vertexOffset: 0,
+          type: 0x1401,  // UNSIGNED_BYTE
+          normalized: true,
+          accessor: 'getColor',
+          transition: ATTRIBUTE_TRANSITION,
+          defaultValue: DEFAULT_COLOR,
+          shaderAttributes: {
+            instanceColors: {
+              vertexOffset: 0
+            },
+            instanceNextColour: {
+              vertexOffset: 1
+            }
+          }
+        }
+      });
+    }
+
+    getShaders() {
+      return {
+        ...super.getShaders(),
+        inject: {
+         'vs:#decl': `
+          attribute vec4 instanceNextColour;
+
+          varying vec4 firstColour;
+          varying vec4 lastColour;
+          `,
+          'vs:#main-start':`
+          `,
+          'vs:#main-end':`
+          firstColour = vec4( instanceColors.rgb, instanceColors.a * opacity );
+          lastColour = vec4( instanceNextColour.rgb, instanceNextColour.a * opacity );
+
+          vColor = mix( firstColour, lastColour, positions.x );
+          `
+        }
+      }
+    };
+  }
+
+
+function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels, use_offset, use_dash ) {
+
+	console.log( path_data );
 
   var extensions = [];
 
@@ -11,16 +70,21 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
 //  	new deck.PathStyleExtension({dash: use_dash, offset: use_offset})
 //  );
 
-  let hasTooltip = path_data.data.tooltip !== undefined;
+  //let hasTooltip = path_data.data.tooltip !== undefined;
 
   const binaryLocation = new Float32Array( path_data.coordinates );
   const binaryStartIndices = new Uint32Array( path_data.start_indices );
-  const binaryLineColour = new Uint8Array( path_data.data.stroke_colour );
+  const binaryLineColour = new Float32Array( path_data.data.stroke_colour );
   const binaryLineWidth = new Float32Array( path_data.data.stroke_width );
+
+  console.log( binaryLocation );
+  console.log( binaryStartIndices );
+  console.log( binaryLineColour ) ;
+  console.log( binaryLineWidth );
 
   //let legend = path_data.legend;
   let stride = path_data.stride;
-  let data_count = path_data.n_coordinates.length;
+  let data_count = path_data.start_indices.length;
 
 /*
   //const binaryDash = new Float32Array( path_data.dash_array );
@@ -43,7 +107,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
   	//const binaryDash = new Float32Array();
   }
 */
-  const pathLayer = new deck.PathLayer({
+  const pathLayer = new MultiColouredPathLayer({
     map_id: map_id,
     id: 'path-'+layer_id,
     pickable: true,
@@ -70,7 +134,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
     },
     _pathType: 'open',
     onClick: info => md_layer_click( map_id, "path", info ),
-    onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
+    //onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {},
@@ -84,8 +148,8 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
 	  md_update_layer( map_id, 'path-'+layer_id, pathLayer );
 	}
 
-	if ( legend !== false ) {
-	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
+	if ( path_data.legend !== false ) {
+	  md_add_legend( map_id, map_type, layer_id, path_data.legend, "rgb" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

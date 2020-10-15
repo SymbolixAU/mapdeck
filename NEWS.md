@@ -1,5 +1,14 @@
+# v0.3.4
+
+* fixed `update_style` bug [issue 322](https://github.com/SymbolixAU/mapdeck/issues/322)
+* various updates to documentation
+* initial support for cesium js via add_cesium and add_i3s layers
+* add Linking to geometries ready for migration
+* fixed bug when plotting a single point
+
 # v0.3.3
 
+* fixed bug in polygon layer when using `sfheaders::sf_cast()`
 * fixed bug in manual legend for point layers [issue 301](https://github.com/SymbolixAU/mapdeck/issues/301)
 * path width options [issue 300](https://github.com/SymbolixAU/mapdeck/issues/300)
 * min and max pitch and zoom options [issue 295](https://github.com/SymbolixAU/mapdeck/issues/295)
@@ -10,7 +19,7 @@
 * better handling of polygon colours [issue287](https://github.com/SymbolixAU/mapdeck/issues/287)
 * bug fixed when clearing a layer [issue286](https://github.com/SymbolixAU/mapdeck/issues/286)
 * layers can repeat at low zoom levels [issue282](https://github.com/SymbolixAU/mapdeck/issues/282)
-* mapbox dependencies udpated to 1.9.0
+* mapbox dependencies updated to 1.9.0
 * tooltip for binary layers fixed [issue280](https://github.com/SymbolixAU/mapdeck/issues/280)
 
 # v0.3.1

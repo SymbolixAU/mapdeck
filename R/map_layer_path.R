@@ -72,7 +72,7 @@ mapdeckPathDependency <- function() {
 #'     , layer_id = "path_layer"
 #'     , tooltip = "ROAD_NAME"
 #'     , auto_highlight = TRUE
-#'     , legend = T
+#'     , legend = TRUE
 #'   )
 #' }
 #'
@@ -183,7 +183,10 @@ add_path <- function(
 		# 	unlist <- NULL
 		# }
 
-		shape <- rcpp_path_geojson( data, l, digits, "path" )
+		geometry_column <- c( "geometry" ) ## This is where we would also specify 'origin' or 'destination'
+		list_cols <- list_columns( data, geometry_column )
+
+		shape <- rcpp_path_geojson( data, l, list_cols, digits, "path" )
 		jsfunc <- "add_path_geo"
 
 	} else if ( tp == "sfencoded" ) {
@@ -199,9 +202,11 @@ add_path <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
+	# return( shape )
+
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight,
-		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
+		map, jsfunc, map_type( map ), shape, layer_id, auto_highlight,
+		highlight_colour, bbox, update_view, focus_layer,
 		js_transitions, billboard, brush_radius, width_units, width_scale, width_min_pixels,
 		width_max_pixels, use_offset, use_dash
 		)

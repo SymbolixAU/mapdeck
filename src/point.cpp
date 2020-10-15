@@ -40,7 +40,7 @@ Rcpp::List grid_defaults(int n) {
 }
 
 
-Rcpp::List get_point_defaults( std::string layer_name, int data_rows ) {
+Rcpp::List get_point_defaults( std::string layer_name, R_xlen_t data_rows ) {
 	if( layer_name == "column" ) {
 		return column_defaults( data_rows );
 	} else if ( layer_name == "scatterplot" ) {
@@ -89,7 +89,7 @@ Rcpp::List rcpp_point_df_columnar(
 		std::string layer_name
 ) {
 
-	int data_rows = data.nrows();
+	R_xlen_t data_rows = data.nrows();
 
 
 	Rcpp::List lst_defaults = get_point_defaults( layer_name, data_rows );
@@ -155,7 +155,7 @@ Rcpp::List rcpp_point_sf_columnar(
 // 		std::string layer_name
 // ) {
 //
-// 	int data_rows = data.nrows();
+// 	R_xlen_t data_rows = data.nrows();
 //
 // 	Rcpp::List lst_defaults = get_point_defaults( layer_name, data_rows );
 //
@@ -187,7 +187,7 @@ Rcpp::List rcpp_point_geojson_df(
 		std::string layer_name
 ) {
 
-	int data_rows = data.nrows();
+	R_xlen_t data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = get_point_defaults( layer_name, data_rows );
 
@@ -238,7 +238,7 @@ Rcpp::List rcpp_point_polyline(
 		std::string layer_name
 ) {
 
-	int data_rows = data.nrows();
+	R_xlen_t data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = get_point_defaults( layer_name, data_rows );
 

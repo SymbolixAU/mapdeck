@@ -73,7 +73,7 @@ lines and points" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -491,14 +491,8 @@ This should be a named list, where the names are one of</p><ul>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>geojsonsf</span>)</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘geojsonsf’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:googleway’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    geo_melbourne</span></div><div class='input'><span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/geojsonsf/man/geojson_sf.html'>geojson_sf</a></span>( <span class='no'>geojson</span> )</div><div class='output co'>#&gt; $input
-#&gt; [1] NA
-#&gt; 
-#&gt; $wkt
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"</div><div class='input'><span class='no'>sf</span>$<span class='no'>width</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>100</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>sf</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+#&gt; <span class='message'>    geo_melbourne</span></div><div class='input'><span class='no'>sf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/geojsonsf/man/geojson_sf.html'>geojson_sf</a></span>( <span class='no'>geojson</span> )
+<span class='no'>sf</span>$<span class='no'>width</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>100</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>sf</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>sf</span>$<span class='no'>elevation</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>100</span>:<span class='fl'>1000</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>sf</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='no'>T</span>)
 <span class='no'>geo</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>geojsonsf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/geojsonsf/man/sf_geojson.html'>sf_geojson</a></span>( <span class='no'>sf</span> )
 
@@ -530,7 +524,7 @@ This should be a named list, where the names are one of</p><ul>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

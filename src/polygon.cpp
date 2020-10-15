@@ -20,7 +20,7 @@ Rcpp::List rcpp_polygon_geojson(
 		int digits
 	) {
 
-	int data_rows = data.nrows();
+	R_xlen_t data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
 
@@ -47,7 +47,7 @@ Rcpp::List rcpp_polygon_geojson(
 //                                   Rcpp::List params,
 //                                   Rcpp::List geometry_columns) {
 //
-// 	int data_rows = data.nrow();
+// 	R_xlen_t data_rows = data.nrow();
 //
 // 	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
 // 	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::polygon::polygon_colours;
@@ -76,7 +76,7 @@ Rcpp::List rcpp_polygon_polyline(
 		Rcpp::StringVector geometry_columns
 	) {
 
-	int data_rows = data.nrows();
+	R_xlen_t data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = polygon_defaults( data_rows );  // initialise with defaults
 
