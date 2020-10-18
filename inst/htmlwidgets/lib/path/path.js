@@ -70,7 +70,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
 //  	new deck.PathStyleExtension({dash: use_dash, offset: use_offset})
 //  );
 
-  //let hasTooltip = path_data.data.tooltip !== undefined;
+  let hasTooltip = path_data.data.tooltip !== undefined;
 
   const binaryLocation = new Float32Array( path_data.coordinates );
   const binaryStartIndices = new Uint32Array( path_data.start_indices );
@@ -134,7 +134,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
     },
     _pathType: 'open',
     onClick: info => md_layer_click( map_id, "path", info ),
-    //onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
+    onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {},

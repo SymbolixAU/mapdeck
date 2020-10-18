@@ -112,7 +112,7 @@ Rcpp::List rcpp_mesh_geojson(
 	// can now create a data.frame of the vbt objc, and this new polygons list,
 	// where polygons list is the sf_geometry column
 
-	R_xlen_t data_rows = data.nrows();
+	int data_rows = data.nrows();
 
 	Rcpp::StringVector geometry_columns({"geometry"});
 
@@ -147,7 +147,7 @@ Rcpp::StringVector rcpp_mesh_geojson2( Rcpp::List mesh, Rcpp::StringVector verti
 	// can now create a data.frame of the vbt objc, and this new polygons list,
 	// where polygons list is the sf_geometry column
 
-	// R_xlen_t data_rows = data.nrows();
+	// int data_rows = data.nrows();
 	//
 	// std::string geometry_columns = "geometry";
 	//

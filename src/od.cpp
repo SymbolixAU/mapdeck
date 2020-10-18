@@ -30,7 +30,7 @@ Rcpp::List greatcircle_defaults(int n) {
 	);
 }
 
-Rcpp::List get_od_defaults( std::string layer_name, R_xlen_t data_rows ) {
+Rcpp::List get_od_defaults( std::string layer_name, int data_rows ) {
 	if( layer_name == "line" ) {
 		return line_defaults( data_rows );
 	} else if ( layer_name == "arc" ) {
@@ -71,7 +71,7 @@ Rcpp::List rcpp_od_geojson(
 		std::string layer_name
 ) {
 
-	R_xlen_t data_rows = data.nrows();
+	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = get_od_defaults( layer_name, data_rows );
 
@@ -103,7 +103,7 @@ Rcpp::List rcpp_od_geojson_df(
 		std::string layer_name
 ) {
 
-	R_xlen_t data_rows = data.nrows();
+	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = get_od_defaults( layer_name, data_rows );
 
@@ -136,7 +136,7 @@ Rcpp::List rcpp_od_polyline(
 		std::string layer_name
 ) {
 
-	R_xlen_t data_rows = data.nrows();
+	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = get_od_defaults( layer_name, data_rows );
 

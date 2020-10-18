@@ -131,69 +131,56 @@ add_path <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, c("LINESTRING") )
 
 	bbox <- init_bbox()
+	layer_id <- layerId(layer_id, "path")
+	checkHexAlpha( highlight_colour )
+
 	update_view <- force( update_view )
 	focus_layer <- force( focus_layer )
 
-	if ( !is.null(l[["data"]]) ) {
-		data <- l[["data"]]
-		l[["data"]] <- NULL
-	}
+	use_offset <- !is.null( offset )
+	use_dash <- !is.null( dash_size ) | !is.null( dash_gap )
+
+	map <- addDependency(map, mapdeckPathDependency())
+
+	#bypass <- FALSE
+	#if( inherits( data, "interleaved") ) {
+	l <- resolve_binary_data( data, l )
+	#	bypass <- TRUE
+	#} else {
+	#	l <- resolve_data( dadta, l, c("LINESTRING") )
+	#}
 
 	if( !is.null(l[["bbox"]] ) ) {
 		bbox <- l[["bbox"]]
 		l[["bbox"]] <- NULL
 	}
 
-	use_offset <- !is.null( offset )
-	use_dash <- !is.null( dash_size ) | !is.null( dash_gap )
-
-	layer_id <- layerId(layer_id, "path")
-	checkHexAlpha( highlight_colour )
-
-	map <- addDependency(map, mapdeckPathDependency())
+	if ( !is.null(l[["data"]]) ) {
+		data <- l[["data"]]
+		l[["data"]] <- NULL
+	}
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
+	jsfunc <- "add_path_geo"
 	if ( tp == "sf" ) {
-		# geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		# l[["geometry"]] <- NULL
-		#
-		## which of the columns of data need to be unlist?
-		# unlist_column <- function( data, l, var ) {
-		# 	if( is.null( l[[ var ]] ) ) {
-		# 		return( NULL )
-		# 	}
-		# 	if( l[[ var ]] %in% names( data ) ) {
-		# 		if( is.list( data[[ l[[ var ]] ]] ) ) {
-		# 		  return( l[[ var ]] )
-		# 		}
-		# 	}
-		# 	return( NULL )
-		# }
-		#
-		# unlist <- NULL
-		# unlist <- append( unlist, unlist_column( data, l, "stroke_colour" ) )
-		# unlist <- append( unlist, unlist_column( data, l, "stroke_width" ) )
-		#
-		# if( length( unlist ) == 0 ) {
-		# 	unlist <- NULL
-		# }
 
 		geometry_column <- c( "geometry" ) ## This is where we would also specify 'origin' or 'destination'
 		list_cols <- list_columns( data, geometry_column )
 
-		shape <- rcpp_path_geojson( data, l, list_cols, digits, "path" )
-		jsfunc <- "add_path_geo"
+		shape <- rcpp_path_interleaved( data, l, list_cols, digits, "path" )
 
 	} else if ( tp == "sfencoded" ) {
 		jsfunc <- "add_path_polyline"
 		geometry_column <- "polyline"
 		shape <- rcpp_path_polyline( data, l, geometry_column, "path" )
+	} else if ( tp == "interleaved" ) {
+		shape <- data
 	}
+
 
 	js_transitions <- resolve_transitions( transitions, "path" )
 	if( inherits( legend, "json" ) ) {
@@ -201,6 +188,7 @@ add_path <- function(
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
+
 
 	# return( shape )
 
@@ -210,6 +198,39 @@ add_path <- function(
 		js_transitions, billboard, brush_radius, width_units, width_scale, width_min_pixels,
 		width_max_pixels, use_offset, use_dash
 		)
+}
+
+
+resolve_binary_data <- function( data, l ) UseMethod("resolve_binary_data")
+
+resolve_binary_data.interleaved <- function( data, l ) {
+	l[["bbox"]] <- data[["bbox"]]
+	l[["data_type"]] <- "interleaved"
+
+	return( l )
+}
+
+#' @export
+resolve_binary_data.sf <- function( data, l ) {
+	sfc_col <- attr( data, "sf_column" )
+	l[["geometry"]] <- sfc_col
+
+	## TODO: move to c++
+	## only cast if it's needed
+	cls <- attr( data[[ sfc_col ]], "class" )
+
+	if( is.null( cls ) ) {
+		stop("mapdeck - invalid sf object; have you loaded library(sf)?")
+	}
+
+	# cls <- gsub("sfc_", "", cls[1])
+	# if( cls != sf_geom ) {
+	# 	l[["data"]] <- sfheaders::sf_cast( data, sf_geom )
+	# }
+
+	l[["bbox"]] <- get_box( data, l )
+	l[["data_type"]] <- "sf"
+	return(l)
 }
 
 

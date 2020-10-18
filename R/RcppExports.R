@@ -41,8 +41,8 @@ rcpp_od_polyline <- function(data, params, geometry_columns, layer_name) {
     .Call(`_mapdeck_rcpp_od_polyline`, data, params, geometry_columns, layer_name)
 }
 
-rcpp_path_geojson <- function(sf, params, list_columns, digits, layer_name) {
-    .Call(`_mapdeck_rcpp_path_geojson`, sf, params, list_columns, digits, layer_name)
+rcpp_path_interleaved <- function(sf, params, list_columns, digits, layer_name) {
+    .Call(`_mapdeck_rcpp_path_interleaved`, sf, params, list_columns, digits, layer_name)
 }
 
 rcpp_path_polyline <- function(data, params, geometry_columns, layer_name) {

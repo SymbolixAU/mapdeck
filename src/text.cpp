@@ -23,7 +23,7 @@ Rcpp::List rcpp_text_geojson(
 		int digits
 	) {
 
-	R_xlen_t data_rows = data.nrows();
+	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = text_defaults( data_rows );  // initialise with defaults
 
@@ -53,7 +53,7 @@ Rcpp::List rcpp_text_geojson_df(
 		int digits
 	) {
 
-	R_xlen_t data_rows = data.nrows();
+	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = text_defaults( data_rows );  // initialise with defaults
 
@@ -81,7 +81,7 @@ Rcpp::List rcpp_text_polyline(
 		Rcpp::List params, Rcpp::StringVector geometry_columns
 	) {
 
-	R_xlen_t data_rows = data.nrows();
+	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = text_defaults( data_rows );  // initialise with defaults
 

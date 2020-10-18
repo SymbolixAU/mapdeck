@@ -24,7 +24,7 @@ Rcpp::List rcpp_geojson_geojson(
 		int digits
 	) {
 
-	R_xlen_t data_rows = data.nrows();
+	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = geojson_defaults( data_rows );  // initialise with defaults
 

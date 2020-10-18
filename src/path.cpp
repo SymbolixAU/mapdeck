@@ -28,7 +28,7 @@ Rcpp::List trips_defaults(int n) {
 	);
 }
 
-Rcpp::List get_path_defaults( std::string layer_name, R_xlen_t data_rows ) {
+Rcpp::List get_path_defaults( std::string layer_name, int data_rows ) {
 	if( layer_name == "path" ) {
 		return path_defaults( data_rows );
 	}
@@ -37,7 +37,7 @@ Rcpp::List get_path_defaults( std::string layer_name, R_xlen_t data_rows ) {
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_path_geojson(
+SEXP rcpp_path_interleaved(
 		Rcpp::DataFrame sf,  // sf object
 		Rcpp::List params,
 		Rcpp::IntegerVector list_columns,
@@ -92,15 +92,16 @@ SEXP rcpp_path_geojson(
 
 	//R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
 
-	int stride = 2; // TODO
+	//int stride = 2; // TODO
 	Rcpp::List paths = interleave::primitives::interleave_primitive(
-		path, stride, interleave::primitives::INTERLEAVE_LINE
+		path, interleave::primitives::INTERLEAVE_LINE
 		);
 
 	Rcpp::NumericVector coordinates = paths[ "coordinates" ];
-	R_xlen_t total_coordinates = paths[ "total_coordinates" ];
+	int total_coordinates = paths[ "total_coordinates" ];
 	Rcpp::IntegerVector geometry_coordinates = paths[ "geometry_coordinates" ];
 	Rcpp::IntegerVector start_indices = paths["start_indices"];
+	int stride = paths[ "stride" ];
 
 
 	// the object required for spatialwidget::create_interleaved
@@ -125,7 +126,7 @@ SEXP rcpp_path_geojson(
 
 
 	// these defaults need to be the length of the interleaved data, not the original.
-	//R_xlen_t data_rows = data.nrow();
+	//int data_rows = data.nrow();
 
 	Rcpp::List lst_defaults = get_path_defaults( layer_name, total_coordinates );
 
@@ -202,7 +203,7 @@ Rcpp::List rcpp_path_polyline(
 		std::string layer_name
 	) {
 
-	R_xlen_t data_rows = data.nrows();
+	int data_rows = data.nrows();
 
 	Rcpp::List lst_defaults = get_path_defaults( layer_name, data_rows );
 
