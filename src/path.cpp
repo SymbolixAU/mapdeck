@@ -37,6 +37,37 @@ Rcpp::List get_path_defaults( std::string layer_name, int data_rows ) {
 }
 
 // [[Rcpp::export]]
+Rcpp::List rcpp_path_geojson(
+		Rcpp::DataFrame data,
+		Rcpp::List params,
+		Rcpp::StringVector geometry_columns,
+		int digits,
+		std::string layer_name
+) {
+
+	int data_rows = data.nrows();
+
+	Rcpp::List lst_defaults = get_path_defaults( layer_name, data_rows );
+
+	std::unordered_map< std::string, std::string > path_colours = mapdeck::layer_colours::stroke_colours;
+	Rcpp::StringVector path_legend = mapdeck::layer_colours::stroke_legend;
+	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
+
+	return spatialwidget::api::create_geojson(
+		data,
+		params,
+		lst_defaults,
+		path_colours,
+		path_legend,
+		data_rows,
+		parameter_exclusions,
+		geometry_columns,
+		true,   // jsonify legend
+		digits
+	);
+}
+
+// [[Rcpp::export]]
 SEXP rcpp_path_interleaved(
 		Rcpp::DataFrame sf,  // sf object
 		Rcpp::List params,
