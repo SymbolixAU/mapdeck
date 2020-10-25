@@ -159,8 +159,8 @@ add_screengrid <- function(
 
 #' @rdname clear
 #' @export
-clear_screengrid <- function( map, layer_id = NULL) {
+clear_screengrid <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "screengrid")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "screengrid" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "screengrid", update_view )
 }
 

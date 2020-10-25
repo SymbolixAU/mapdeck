@@ -153,7 +153,7 @@ function md_findObjectElementByKey(array, key, value ) {
     return -1;
 }
 
-function md_layer_clear( map_id, map_type, layer_id, layer ) {
+function md_layer_clear( map_id, map_type, layer_id, layer, update_view ) {
 
   if( map_type == "mapdeck" ) {
 		md_clear_layer( map_id, layer+'-'+layer_id );
@@ -162,7 +162,9 @@ function md_layer_clear( map_id, map_type, layer_id, layer ) {
   }
 
   md_remove_from_bounds( map_id, layer_id );
-	md_update_location( map_id, map_type );
+  if( update_view ) {
+	  md_update_location( map_id, map_type );
+  }
 	md_clear_legend( map_id, map_type, layer_id );
 }
 

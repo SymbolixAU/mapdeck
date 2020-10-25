@@ -349,8 +349,9 @@ add_arc <- function(
 #' @rdname clear
 #' @param map a mapdeck map object
 #' @param layer_id the layer_id of the layer you want to clear
+#' @param update_view logical indicating if the map should update the bounds after removing the layer
 #' @export
-clear_arc <- function( map, layer_id = NULL ) {
+clear_arc <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "arc")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "arc" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "arc", update_view )
 }

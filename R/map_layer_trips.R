@@ -124,9 +124,9 @@ add_trips <- function(
 
 #' @rdname clear
 #' @export
-clear_trips <- function( map, layer_id = NULL) {
+clear_trips <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "trips")
-	invoke_method(map, "md_layer_clear", layer_id, "trips" )
+	invoke_method(map, "md_layer_clear", layer_id, "trips", update_view )
 }
 
 

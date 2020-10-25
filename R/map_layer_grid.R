@@ -223,7 +223,7 @@ add_grid <- function(
 
 #' @rdname clear
 #' @export
-clear_grid <- function( map, layer_id = NULL) {
+clear_grid <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "grid")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "grid" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "grid", update_view )
 }

@@ -188,8 +188,8 @@ add_line <- function(
 
 #' @rdname clear
 #' @export
-clear_line <- function( map, layer_id = NULL) {
+clear_line <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "line")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "line" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "line", update_view )
 }
 

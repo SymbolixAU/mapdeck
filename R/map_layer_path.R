@@ -183,9 +183,9 @@ add_path <- function(
 
 #' @rdname clear
 #' @export
-clear_path <- function( map, layer_id = NULL) {
+clear_path <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "path")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "path" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "path", update_view )
 }
 
 

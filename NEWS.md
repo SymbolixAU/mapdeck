@@ -1,3 +1,7 @@
+# v0.3.5
+
+* `clear_layer()` functions get `update_view` argument
+
 # v0.3.4
 
 * fixed `update_style` bug [issue 322](https://github.com/SymbolixAU/mapdeck/issues/322)
