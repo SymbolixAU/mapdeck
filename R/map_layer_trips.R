@@ -24,6 +24,8 @@ mapdeckTripsDependency <- function() {
 #' @param start_time the minimum timestamp
 #' @param end_time the maximum timestamp
 #' @param animation_speed speed of animation
+#' @param animate logical set to FALSE to stop the animation. You need to set this to
+#' FALSE before calling clear_trips()
 #' @inheritSection add_arc legend
 #' @inheritSection add_arc id
 #'
@@ -60,6 +62,7 @@ add_trips <- function(
 	stroke_width = NULL,
 	opacity = 0.3,
 	palette = "viridis",
+	animate = TRUE,
 	trail_length = 180,
 	start_time = get_m_range_start( data ),
 	end_time = get_m_range_end( data ),
@@ -117,7 +120,7 @@ add_trips <- function(
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], opacity, layer_id, trail_length,
-		start_time, end_time, animation_speed, shape[["legend"]]
+		start_time, end_time, animation_speed, shape[["legend"]], animate
 	)
 }
 
@@ -126,7 +129,7 @@ add_trips <- function(
 #' @export
 clear_trips <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "trips")
-	invoke_method(map, "md_layer_clear", layer_id, "trips", update_view )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "trips", update_view )
 }
 
 

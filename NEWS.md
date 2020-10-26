@@ -1,6 +1,8 @@
 # v0.3.5
 
 * `clear_layer()` functions get `update_view` argument
+* `add_trips()` get `animate` argument so animation can be stopped
+* `clear_trips()` fixed 
 
 # v0.3.4
 

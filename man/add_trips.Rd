@@ -11,6 +11,7 @@ add_trips(
   stroke_width = NULL,
   opacity = 0.3,
   palette = "viridis",
+  animate = TRUE,
   trail_length = 180,
   start_time = get_m_range_start(data),
   end_time = get_m_range_end(data),
@@ -38,6 +39,9 @@ A matrix must have at least 5 rows, and 3 or 4 columns of values between [0, 255
 where the 4th column represents the alpha. You can use a named list to specify a different
 palette for different colour options (where available),
  e.g. list(fill_colour = "viridis", stroke_colour = "inferno")}
+
+\item{animate}{logical set to FALSE to stop the animation. You need to set this to
+FALSE before calling clear_trips()}
 
 \item{trail_length}{how long it takes for the trail to completely fade out
 (in same units as timestamps )}

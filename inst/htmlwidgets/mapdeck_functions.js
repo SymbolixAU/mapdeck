@@ -193,16 +193,16 @@ function md_clear_layer( map_id, layer_id ) {
 
   if ( elem != -1 ) {
   	window[ map_id + 'layers'].splice( elem, 1 );
+
+  	// ## issue 137
+	  //var vs = window[ map_id + 'map'].viewState;
+	  window[map_id + 'map'].setProps({
+	  	layers: [...window[map_id + 'layers'] ]
+	  	//viewState: vs                            // issue 239 & 286
+	  });
+
   }
-
-  // ## issue 137
-  //var vs = window[ map_id + 'map'].viewState;
-  window[map_id + 'map'].setProps({
-  	layers: [...window[map_id + 'layers'] ]
-  	//viewState: vs                            // issue 239 & 286
-  });
 }
-
 
 function md_update_overlay( map_id, layer_id, layer ) {
 
