@@ -16,6 +16,7 @@ function md_setup_window_objects( map_id ) {
   window[map_id + 'mapdeckBounds'] = [];       // store the bounding box of each layer
   window[map_id + 'globalBox'] = [];
   window[map_id + 'currentZoomLevel'] = 0;
+  window[map_id + 'trip_animation'] = 0;
 }
 
 function md_setup_mapdeck_div( map_id ) {

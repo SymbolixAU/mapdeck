@@ -1,8 +1,7 @@
 # v0.3.5
 
 * `clear_layer()` functions get `update_view` argument
-* `add_trips()` get `animate` argument so animation can be stopped
-* `clear_trips()` fixed 
+* `clear_trips()` fixed to first 'stop_trips' using cancelAnimationFrame
 
 # v0.3.4
 

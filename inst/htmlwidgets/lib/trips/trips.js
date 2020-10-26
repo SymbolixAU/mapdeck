@@ -1,6 +1,8 @@
 
+var animation_id;
+
 function add_trips_geo( map_id, map_type, trips_data, opacity, layer_id,
-trail_length, start_time, end_time, animation_speed, legend, animate ) {
+trail_length, start_time, end_time, animation_speed, legend ) {
 
   	var loopLength = end_time - start_time; // unit corresponds to the timestamp in source data
     var animationSpeed = animation_speed; // unit time per second
@@ -38,13 +40,18 @@ trail_length, start_time, end_time, animation_speed, legend, animate ) {
 	   md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	 }
 
-	if( animate ) {
-	   window.requestAnimationFrame( function() {
-	   	  add_trips_geo( map_id, map_type, trips_data, opacity, layer_id, trail_length,
-	   	  start_time, end_time, animation_speed, legend, animate );
-	   });
-	}
+   window[map_id + 'trip_animation'] = window.requestAnimationFrame( function() {
+   	  add_trips_geo( map_id, map_type, trips_data, opacity, layer_id, trail_length,
+   	  start_time, end_time, animation_speed, legend );
+   });
 }
+
+
+function md_stop_trips(map_id, map_type, layer_id, layer, update_view  ) {
+	window.cancelAnimationFrame( window[map_id + 'trip_animation'] );
+	md_layer_clear( map_id, map_type, layer_id, layer, update_view );
+}
+
 
 
 function md_trip_coordinates( coords ) {
