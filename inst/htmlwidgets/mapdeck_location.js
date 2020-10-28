@@ -16,12 +16,20 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 	    currentPitch = pitch === null ? window[ map_id + 'map'].viewState["default-view"].pitch : pitch;
 	    currentBearing = bearing === null ? window[ map_id + 'map' ].viewState["default-view"].bearing : bearing;
 	    currentZoom = zoom === null ? window[ map_id + 'map'].viewState["default-view"].zoom : zoom;
+	    currentMaxZoom = maxZoom === null ? window[ map_id + 'map'].viewState["default-view"].maxZoom : maxZoom;
+	    currentMinZoom = minZoom === null ? window[ map_id + 'map'].viewState["default-view"].minZoom : minZoom;
+	    currentMaxPitch = maxPitch === null ? window[ map_id + 'map'].viewState["default-view"].maxPitch : maxPitch;
+	    currentMinPitch = minPitch === null ? window[ map_id + 'map'].viewState["default-view"].minPitch : minPitch;
 	  } else {
 	  	currentLon = location === null ? window[ map_id + 'map'].viewState.longitude : location[0];
 	  	currentLat = location === null ? window[ map_id + 'map'].viewState.latitude : location[1];
 	    currentPitch = pitch === null ? window[ map_id + 'map'].viewState.pitch : pitch;
 	    currentBearing = bearing === null ? window[ map_id + 'map' ].viewState.bearing : bearing;
 	    currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
+	    currentMaxZoom = maxZoom === null ? window[ map_id + 'map'].viewState.maxZoom : maxZoom;
+	    currentMinZoom = minZoom === null ? window[ map_id + 'map'].viewState.minZoom : minZoom;
+	  	currentMaxPitch = maxPitch === null ? window[ map_id + 'map'].viewState.maxPitch : maxPitch;
+	    currentMinPitch = minPitch === null ? window[ map_id + 'map'].viewState.minPitch : minPitch;
 	  }
 
 	  //console.log( currentLon );
