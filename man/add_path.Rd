@@ -142,6 +142,15 @@ stroke_width = 0
 )
 }
 
+\section{gradient fill}{
+
+
+If a colour is supplied for each coordinate (see examples), the colour along each segment
+of the line is gradient-filled. However, if either \code{dash_gap}, \code{dash_size} or
+\code{offset} are supplied the the segment is filled with a solid colour, accoding to the
+first point on the segment.
+}
+
 \section{data}{
 
 
@@ -197,8 +206,7 @@ set_token( key )
 
 mapdeck(
   style = mapdeck_style("dark")
-  , location = c(145, -37.8)
-  , zoom = 10) \%>\%
+  ) \%>\%
   add_path(
     data = roads
     , stroke_colour = "RIGHT_LOC"
@@ -207,6 +215,90 @@ mapdeck(
     , auto_highlight = TRUE
     , legend = TRUE
   )
+
+## Dashed lines
+mapdeck(
+  style = mapdeck_style("dark")
+  ) \%>\%
+  add_path(
+    data = roads
+    , stroke_colour = "RIGHT_LOC"
+    , layer_id = "path_layer"
+    , tooltip = "ROAD_NAME"
+    , dash_size = 3
+    , dash_gap = 1
+  )
+
+## Different dashes per path
+
+sf <- mapdeck::roads
+sf$dash_size <- sample(1:5, size = nrow( sf ), replace = TRUE )
+sf$dash_gap <- sample(1:5, size = nrow( sf ), replace = TRUE )
+
+mapdeck(
+  style = mapdeck_style("dark")
+  ) \%>\%
+  add_path(
+    data = sf
+    , stroke_colour = "RIGHT_LOC"
+    , layer_id = "path_layer"
+    , tooltip = "ROAD_NAME"
+    , dash_size = "dash_size"
+    , dash_gap = "dash_gap"
+  )
+
+## Offset lines
+sf <- mapdeck::roads
+sf$offset <- sample(-10:10, size = nrow( sf ), replace = TRUE )
+
+mapdeck(
+  style = mapdeck_style("light")
+) \%>\%
+	add_path(
+   data = sf
+   , stroke_colour = "ROAD_NAME"
+   , offset = "offset"
+ )
+
+## Multi Coloured line
+## You need to supply one colour per coordinate in the sf object
+## so you need the colour
+sf_line <- sfheaders::sf_linestring(
+  obj = data.frame(
+  id = c(1,1,1,1,1,2,2,2,2,2)
+  , x = c(0,0,1,1,2,-1,-1,0,0,1)
+  , y = c(0,1,1,2,2,0,1,1,2,2)
+  , col = c(1,2,3,4,5,5,4,3,2,1)
+ )
+ , x = "x"
+ , y = "y"
+ , linestring_id = "id"
+ , list_columns = "col"
+ , keep = T
+)
+
+mapdeck(
+ style = mapdeck_style("light")
+) \%>\%
+ add_path(
+   data = sf_line
+   , stroke_colour = "col"
+   , stroke_width = 50000
+)
+
+## If using dashed lines, colours won't be gradient-filled
+mapdeck(
+ style = mapdeck_style("light")
+) \%>\%
+ add_path(
+   data = sf_line
+   , stroke_colour = "col"
+   , stroke_width = 50000
+   , dash_size = 1
+   , dash_gap = 1
+ )
+
+
 }
 
 }

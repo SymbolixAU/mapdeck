@@ -182,6 +182,8 @@ add_scatterplot <- function(
 		l[["data"]] <- NULL
 	}
 
+	# print( data )
+
 	if( !is.null(l[["bbox"]] ) ) {
 		bbox <- l[["bbox"]]
 		l[["bbox"]] <- NULL
@@ -216,7 +218,6 @@ add_scatterplot <- function(
 	}
 
 	js_transitions <- resolve_transitions( transitions, "scatterplot" )
-
 
 	if( inherits( legend, "json" ) ) {
 		shape[["legend"]] <- legend

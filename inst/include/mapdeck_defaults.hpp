@@ -51,15 +51,25 @@ namespace defaults {
 		return nv;
 	}
 
-	inline Rcpp::NumericVector default_fill_opacity( int n ) {
-		Rcpp::NumericVector nv(n, 255.0);
+	// inline Rcpp::NumericVector default_fill_opacity( int n ) {
+	// 	Rcpp::NumericVector nv(n, 255.0);
+	// 	return nv;
+	// }
+
+	// inline Rcpp::NumericVector default_stroke_opacity( int n ) {
+	// 	Rcpp::NumericVector nv(n, 255.0);
+	// 	return nv;
+	// }
+
+	inline Rcpp::NumericVector default_binary_colour( int n ) {
+		Rcpp::NumericVector nv(n, 1.0);
 		return nv;
 	}
 
-	inline Rcpp::NumericVector default_stroke_opacity( int n ) {
-		Rcpp::NumericVector nv(n, 255.0);
-		return nv;
-	}
+	// inline Rcpp::NumericVector default_binary_opacity( int n ) {
+	// 	Rcpp::NumericVector nv(n, 1.0);
+	// 	return nv;
+	// }
 
 	inline Rcpp::NumericVector default_stroke_width( int n ) {
 		Rcpp::NumericVector nv(n, 1.0);

@@ -17,7 +17,7 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.5.0)
 Imports:
-    colourvalues (>= 0.3.4),
+    colourvalues (>= 0.3.6),
     googlePolylines (>= 0.7.2),
     geojsonsf (>= 1.3.3),
     htmlwidgets,
@@ -25,8 +25,8 @@ Imports:
     magrittr,
     Rcpp,
     shiny,
-    sfheaders (>= 0.2.2)
-RoxygenNote: 7.1.0
+    sfheaders (>= 0.3.0)
+RoxygenNote: 7.1.1
 Suggests: 
     covr,
     googleway,
@@ -38,11 +38,12 @@ Suggests:
 VignetteBuilder: knitr
 LinkingTo: 
     BH,
-    colourvalues,
+    colourvalues (>= 0.3.6),
     geojsonsf (>= 1.3.3),
     geometries,
+    interleave,
     jsonify (>= 1.1.1),
     rapidjsonr,
     Rcpp,
-    sfheaders (>= 0.2.2),
-    spatialwidget (>= 0.2.3)
+    sfheaders (>= 0.3.0),
+    spatialwidget (>= 0.2.4)

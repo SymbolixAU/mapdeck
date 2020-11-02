@@ -265,6 +265,11 @@ get_box.sf <- function( data, l ) {
 }
 
 #' @export
+get_box.interleaved <- function( data, l ) {
+	return( jsonify::to_json( data[["bbox"]] ) )
+}
+
+#' @export
 get_box.data.frame <- function( data, l ) {
 
 	lat <- data[, l[["lat"]], drop = TRUE ]
