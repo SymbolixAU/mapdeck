@@ -127,7 +127,6 @@ mapdeckPathDependency <- function() {
 #'
 #' ## Multi Coloured line
 #' ## You need to supply one colour per coordinate in the sf object
-#' ## so you need the colour
 #' sf_line <- sfheaders::sf_linestring(
 #'   obj = data.frame(
 #'   id = c(1,1,1,1,1,2,2,2,2,2)
