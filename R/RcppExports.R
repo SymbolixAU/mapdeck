@@ -49,6 +49,10 @@ rcpp_path_interleaved <- function(sf, params, list_columns, digits, layer_name) 
     .Call(`_mapdeck_rcpp_path_interleaved`, sf, params, list_columns, digits, layer_name)
 }
 
+rcpp_trips_interleaved <- function(sf, params, list_columns, digits, layer_name, start_time) {
+    .Call(`_mapdeck_rcpp_trips_interleaved`, sf, params, list_columns, digits, layer_name, start_time)
+}
+
 rcpp_path_polyline <- function(data, params, geometry_columns, layer_name) {
     .Call(`_mapdeck_rcpp_path_polyline`, data, params, geometry_columns, layer_name)
 }

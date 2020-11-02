@@ -58,6 +58,10 @@ add_trips <- function(
 	data = get_map_data(map),
 	stroke_colour = NULL,
 	stroke_width = NULL,
+	width_units = c("meters","pixels"),
+	width_min_pixels = NULL,
+	width_max_pixels = NULL,
+	width_scale = 1,
 	opacity = 0.3,
 	palette = "viridis",
 	trail_length = 180,
@@ -80,7 +84,10 @@ add_trips <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, c("LINESTRING") )
+
+	l <- resolve_binary_data( data, l )
+
+	# l <- resolve_data( data, l, c("LINESTRING") )
 
 	# bbox <- init_bbox()
 	#update_view <- force( update_view )
@@ -91,33 +98,46 @@ add_trips <- function(
 		l[["data"]] <- NULL
 	}
 
-	# if( !is.null(l[["bbox"]] ) ) {
-	# 	bbox <- l[["bbox"]]
-	# 	l[["bbox"]] <- NULL
-	# }
-
-	layer_id <- layerId(layer_id, "trips")
-	# checkHexAlpha( highlight_colour )
-
-	map <- addDependency(map, mapdeckTripsDependency())
+	if( !is.null(l[["bbox"]] ) ) {
+		bbox <- l[["bbox"]]
+		l[["bbox"]] <- NULL
+	}
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
+	layer_id <- layerId(layer_id, "trips")
+	map <- addDependency(map, mapdeckTripsDependency())
+
+	jsfunc <- "add_trips_geo"
 	if ( tp == "sf" ) {
-		geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
-		shape <- rcpp_path_geojson( data, l, geometry_column, digits, "trips" )
-		jsfunc <- "add_trips_geo"
+
+		# geometry_column <- c( "geometry" ) ## This is where we woudl also specify 'origin' or 'destination'
+		# shape <- rcpp_path_geojson( data, l, geometry_column, digits, "trips" )
+
+		geometry_column <- c( "geometry" ) ## This is where we would also specify 'origin' or 'destination'
+		list_cols <- list_columns( data, geometry_column )
+
+		shape <- rcpp_trips_interleaved( data, l, list_cols, digits, "trips", start_time )
+
+	  #return( shape )
 	} else {
 		stop("mapdeck - currently only sf objects are supported for the trips layer")
 	}
 
 	# js_transitions <- resolve_transitions( transitions, "path" )
-	shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	if( inherits( legend, "json" ) ) {
+		shape[["legend"]] <- legend
+	} else {
+		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+	}
+
+	# shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["data"]], opacity, layer_id, trail_length,
-		start_time, end_time, animation_speed, shape[["legend"]]
+		map, jsfunc, map_type( map ), shape, opacity, layer_id, trail_length,
+		start_time, end_time, animation_speed, width_units, width_scale, width_min_pixels,
+		width_max_pixels
 	)
 }
 

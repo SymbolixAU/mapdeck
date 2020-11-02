@@ -111,7 +111,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
 		attributes.getOffset = {value: binaryOffset, sizie: 1};
 	}
 
-  var layer = {
+  const layer = {
   	map_id: map_id,
     id: 'path-'+layer_id,
     pickable: true,

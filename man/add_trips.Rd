@@ -9,6 +9,10 @@ add_trips(
   data = get_map_data(map),
   stroke_colour = NULL,
   stroke_width = NULL,
+  width_units = c("meters", "pixels"),
+  width_min_pixels = NULL,
+  width_max_pixels = NULL,
+  width_scale = 1,
   opacity = 0.3,
   palette = "viridis",
   trail_length = 180,
@@ -30,6 +34,18 @@ add_trips(
 \item{stroke_colour}{variable of data or hex colour for the stroke.}
 
 \item{stroke_width}{width of the stroke in meters. Default 1.}
+
+\item{width_units}{The units of the line width, one of 'meters', 'pixels'.
+When zooming in and out, meter sizes scale with the base map, and pixel sizes
+remain the same on screen.}
+
+\item{width_min_pixels}{The minimum path width in pixels.
+This can be used to prevent the path from getting too thin when zoomed out.}
+
+\item{width_max_pixels}{The maximum path width in pixels.
+his prop can be used to prevent the path from getting too thick when zoomed in.}
+
+\item{width_scale}{The path width multiplier that multiplied to all paths.}
 
 \item{opacity}{single value in [0,1]}
 
