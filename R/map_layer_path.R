@@ -54,6 +54,13 @@ mapdeckPathDependency <- function() {
 #' stroke_width = 0
 #' )
 #'
+#' @section gradient fill:
+#'
+#' If a colour is supplied for each coordinate (see examples), the colour along each segment
+#' of the line is gradient-filled. However, if either \code{dash_gap}, \code{dash_size} or
+#' \code{offset} are supplied the the segment is filled with a solid colour, accoding to the
+#' first point on the segment.
+#'
 #'
 #' @examples
 #' \donttest{
@@ -64,8 +71,7 @@ mapdeckPathDependency <- function() {
 #'
 #' mapdeck(
 #'   style = mapdeck_style("dark")
-#'   , location = c(145, -37.8)
-#'   , zoom = 10) %>%
+#'   ) %>%
 #'   add_path(
 #'     data = roads
 #'     , stroke_colour = "RIGHT_LOC"
@@ -74,6 +80,90 @@ mapdeckPathDependency <- function() {
 #'     , auto_highlight = TRUE
 #'     , legend = TRUE
 #'   )
+#'
+#' ## Dashed lines
+#' mapdeck(
+#'   style = mapdeck_style("dark")
+#'   ) %>%
+#'   add_path(
+#'     data = roads
+#'     , stroke_colour = "RIGHT_LOC"
+#'     , layer_id = "path_layer"
+#'     , tooltip = "ROAD_NAME"
+#'     , dash_size = 3
+#'     , dash_gap = 1
+#'   )
+#'
+#' ## Different dashes per path
+#'
+#' sf <- mapdeck::roads
+#' sf$dash_size <- sample(1:5, size = nrow( sf ), replace = TRUE )
+#' sf$dash_gap <- sample(1:5, size = nrow( sf ), replace = TRUE )
+#'
+#' mapdeck(
+#'   style = mapdeck_style("dark")
+#'   ) %>%
+#'   add_path(
+#'     data = sf
+#'     , stroke_colour = "RIGHT_LOC"
+#'     , layer_id = "path_layer"
+#'     , tooltip = "ROAD_NAME"
+#'     , dash_size = "dash_size"
+#'     , dash_gap = "dash_gap"
+#'   )
+#'
+#' ## Offset lines
+#' sf <- mapdeck::roads
+#' sf$offset <- sample(-10:10, size = nrow( sf ), replace = TRUE )
+#'
+#' mapdeck(
+#' 	style = mapdeck_style("light")
+#' ) %>%
+#' 	add_path(
+#' 		data = sf
+#' 		, stroke_colour = "ROAD_NAME"
+#' 		, offset = "offset"
+#' 	)
+#'
+#' ## Multi Coloured line
+#' ## You need to supply one colour per coordinate in the sf object
+#' ## so you need the colour
+#' sf_line <- sfheaders::sf_linestring(
+#' 	obj = data.frame(
+#' 	  id = c(1,1,1,1,1,2,2,2,2,2)
+#' 		, x = c(0,0,1,1,2,-1,-1,0,0,1)
+#' 		, y = c(0,1,1,2,2,0,1,1,2,2)
+#' 		, col = c(1,2,3,4,5,5,4,3,2,1)
+#' 	)
+#' 	, x = "x"
+#' 	, y = "y"
+#' 	, linestring_id = "id"
+#' 	, list_columns = "col"
+#' 	, keep = T
+#' )
+#'
+#' mapdeck(
+#' 	style = mapdeck_style("light")
+#' ) %>%
+#' 	add_path(
+#' 		data = sf_line
+#' 		, stroke_colour = "col"
+#' 		, stroke_width = 50000
+#' 	)
+#'
+#' ## If using dashed lines, colours won't be gradient-filled
+#' mapdeck(
+#' 	style = mapdeck_style("light")
+#' ) %>%
+#' 	add_path(
+#' 		data = sf_line
+#' 		, stroke_colour = "col"
+#' 		, stroke_width = 50000
+#' 		, dash_size = 1
+#' 		, dash_gap = 1
+#' 	)
+#'
+#'
 #' }
 #'
 #' @details
@@ -140,17 +230,11 @@ add_path <- function(
 	focus_layer <- force( focus_layer )
 
 	use_offset <- !is.null( offset )
-	use_dash <- !is.null( dash_size ) | !is.null( dash_gap )
+	use_dash <- !is.null( dash_size ) && !is.null( dash_gap )
 
 	map <- addDependency(map, mapdeckPathDependency())
 
-	#bypass <- FALSE
-	#if( inherits( data, "interleaved") ) {
 	l <- resolve_binary_data( data, l )
-	#	bypass <- TRUE
-	#} else {
-	#	l <- resolve_data( dadta, l, c("LINESTRING") )
-	#}
 
 	if( !is.null(l[["bbox"]] ) ) {
 		bbox <- l[["bbox"]]
@@ -178,7 +262,17 @@ add_path <- function(
 		geometry_column <- "polyline"
 		shape <- rcpp_path_polyline( data, l, geometry_column, "path" )
 	} else if ( tp == "interleaved" ) {
-		shape <- data
+
+		shape <- list(
+			data = jsonify::to_json(
+				data
+				, unbox = FALSE
+				, digits = digits
+				, factors_as_string = TRUE
+				, numeric_dates = FALSE
+				, by = "column"
+			)
+		)
 	}
 
 
@@ -188,9 +282,6 @@ add_path <- function(
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
-
-
-	# return( shape )
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape, layer_id, auto_highlight,
@@ -204,7 +295,8 @@ add_path <- function(
 resolve_binary_data <- function( data, l ) UseMethod("resolve_binary_data")
 
 resolve_binary_data.interleaved <- function( data, l ) {
-	l[["bbox"]] <- data[["bbox"]]
+
+	l[["bbox"]] <- get_box( data, l )
 	l[["data_type"]] <- "interleaved"
 
 	return( l )
@@ -215,22 +307,19 @@ resolve_binary_data.sf <- function( data, l ) {
 	sfc_col <- attr( data, "sf_column" )
 	l[["geometry"]] <- sfc_col
 
-	## TODO: move to c++
-	## only cast if it's needed
 	cls <- attr( data[[ sfc_col ]], "class" )
 
 	if( is.null( cls ) ) {
 		stop("mapdeck - invalid sf object; have you loaded library(sf)?")
 	}
 
-	# cls <- gsub("sfc_", "", cls[1])
-	# if( cls != sf_geom ) {
-	# 	l[["data"]] <- sfheaders::sf_cast( data, sf_geom )
-	# }
-
 	l[["bbox"]] <- get_box( data, l )
 	l[["data_type"]] <- "sf"
 	return(l)
+}
+
+resolve_binary_data.default <- function( data, l ) {
+	return( resolve_data( data, l, "LINESTRING" ) )
 }
 
 

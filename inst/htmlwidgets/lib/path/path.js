@@ -55,60 +55,71 @@ class MultiColouredPathLayer extends deck.PathLayer {
     };
   }
 
-
 function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels, use_offset, use_dash ) {
 
 	console.log( path_data );
-
   var extensions = [];
+
+  console.log( "use_dash " + use_dash + ", use_offset: " + use_offset);
 
   if ( brush_radius > 0 ) {
   	extensions.push( new deck.BrushingExtension() );
   }
 
-//  extensions.push(
-//  	new deck.PathStyleExtension({dash: use_dash, offset: use_offset})
-//  );
+	if( use_dash || use_offset ) {
+	  extensions.push(
+	  	new deck.PathStyleExtension({dash: use_dash, offset: use_offset})
+	  );
+	}
 
-  let hasTooltip = path_data.data.tooltip !== undefined;
+  let hasTooltip = path_data.data.data.tooltip !== undefined;
 
-  const binaryLocation = new Float32Array( path_data.coordinates );
-  const binaryStartIndices = new Uint32Array( path_data.start_indices );
-  const binaryLineColour = new Float32Array( path_data.data.stroke_colour );
-  const binaryLineWidth = new Float32Array( path_data.data.stroke_width );
+  console.log( "hasTooltip " + hasTooltip );
 
-  console.log( binaryLocation );
-  console.log( binaryStartIndices );
-  console.log( binaryLineColour ) ;
-  console.log( binaryLineWidth );
+  const binaryLocation = new Float32Array( path_data.data.coordinates );
+  const binaryStartIndices = new Uint32Array( path_data.data.start_indices );
+  const binaryLineColour = new Float32Array( path_data.data.data.stroke_colour );
+  const binaryLineWidth = new Float32Array( path_data.data.data.stroke_width );
 
   //let legend = path_data.legend;
-  let stride = path_data.stride;
-  let data_count = path_data.start_indices.length;
+  let stride = path_data.data.stride[0];
+  let data_count = path_data.data.start_indices.length;
 
-/*
-  //const binaryDash = new Float32Array( path_data.dash_array );
   var binaryDash;
 
-  if( use_dashes ) {
-  	const n = path_data.data.dash_size.length * 2;
-  	var dashes = [ n ];
+  if( use_dash ) {
+  	const n = path_data.data.data.dash_size.length;
+  	var dashes = [ n * 2 ];
   	var counter = 0;
   	for( i = 0; i < n; i++ ) {
-  		dashes[ counter ] = path_data.data.dash_size[ i ];
+  		dashes[ counter ] = path_data.data.data.dash_size[ i ];
   		counter = counter + 1;
-  		dashes[ counter ] = path_data.data.dash_gap[ i ];
+  		dashes[ counter ] = path_data.data.data.dash_gap[ i ];
   		counter = counter + 1;
   	}
-  	console.log( dashes );
+  	//console.log( dashes );
   	binaryDash = new Float32Array( dashes );
-  	//const binaryDash = new Float32Array( dashes );
-  } else {
-  	//const binaryDash = new Float32Array();
   }
-*/
-  const pathLayer = new MultiColouredPathLayer({
-    map_id: map_id,
+
+  var attributes = {
+			getPath: {value: binaryLocation, size: stride},
+      getColor: {value: binaryLineColour, size: 4},
+      getWidth: {value: binaryLineWidth, size: 1}
+  };
+
+	if( use_dash ) {
+      attributes.getDashArray = {value: binaryDash, size: 2};
+	}
+
+	if( use_offset ) {
+		const binaryOffset = new Float32Array( path_data.data.data.offset );
+		//console.log( "binaryOffset" );
+		//console.log( binaryOffset );
+		attributes.getOffset = {value: binaryOffset, sizie: 1};
+	}
+
+  var layer = {
+  	map_id: map_id,
     id: 'path-'+layer_id,
     pickable: true,
     widthScale: width_scale,
@@ -123,14 +134,8 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
 		data: {
       length: data_count,
       startIndices: binaryStartIndices,
-      attributes: {
-        getPath: {value: binaryLocation, size: stride},
-        getColor: {value: binaryLineColour, size: 4},
-        getWidth: {value: binaryLineWidth, size: 1}
-        //getDashArray: {value: binaryDash, size: 2}
-        //getOffset: d => d.properties.offset,
-      },
-      tooltip: path_data.data.tooltip
+      attributes,
+      tooltip: path_data.data.data.tooltip
     },
     _pathType: 'open',
     onClick: info => md_layer_click( map_id, "path", info ),
@@ -140,7 +145,32 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
     transitions: js_transition || {},
     brushingRadius: brush_radius,
     extensions: extensions
-  });
+  };
+
+
+	// - if using any extensions, it falls back to pathLayer
+	// - because teh extensions add instanceAttributes to WebGL
+	// - https://deck.gl/docs/api-reference/extensions/path-style-extension#limitations
+
+	console.log( "extensions: " );
+	console.log( extensions );
+
+/*
+	var pathLayer;
+	if( Array.isArray( extensions ) && extensions.length ) {
+		console.log( "pathLayer = MultiColouredPathLayer( layer )");
+		pathLayer = new MultiColouredPathLayer(layer);
+	} else {
+		console.log("pathLayer = deck.PathLayer( layer )");
+		pathLayer = new deck.PathLayer(layer);
+	}
+*/
+
+	const pathLayer = Array.isArray( extensions ) && extensions.length ?
+		new deck.PathLayer(layer) :
+		new MultiColouredPathLayer(layer);
+
+	console.log( pathLayer );
 
   if( map_type == "google_map") {
 	  md_update_overlay( map_id, 'path-'+layer_id, pathLayer );

@@ -3,6 +3,7 @@
 S3method(findEncodedColumn,default)
 S3method(findEncodedColumn,sfencoded)
 S3method(get_box,data.frame)
+S3method(get_box,interleaved)
 S3method(get_box,mesh3d)
 S3method(get_box,quadmesh)
 S3method(get_box,sf)
