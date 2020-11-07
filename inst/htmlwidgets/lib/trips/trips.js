@@ -4,9 +4,6 @@
 
 function add_trips_geo( map_id, map_type, path_data, opacity, layer_id,
 trail_length, start_time, end_time, animation_speed, width_units, width_scale, width_min_pixels, width_max_pixels ) {
-
-	  //console.log( path_data );
-
   	var loopLength = end_time - start_time; // unit corresponds to the timestamp in source data
     var animationSpeed = animation_speed; // unit time per second
 
@@ -20,8 +17,6 @@ trail_length, start_time, end_time, animation_speed, width_units, width_scale, w
 	  const binaryLineColour = new Float32Array( path_data.data.data.stroke_colour );
 	  const binaryLineWidth = new Float32Array( path_data.data.data.stroke_width );
 	  const binaryTimestamps = new Float32Array( path_data.timestamps );
-
-	  //console.log( binaryTimestamps );
 
     let stride = path_data.data.stride[0];
   	let data_count = path_data.data.start_indices.length;
@@ -51,10 +46,6 @@ trail_length, start_time, end_time, animation_speed, width_units, width_scale, w
 		      tooltip: path_data.data.data.tooltip
 		    },
 		    _pathType: 'open',
-		    //getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
-		    //getTimestamps: d => md_trip_timestamp( d.geometry.geometry.coordinates, start_time ),
-		    //getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
-		    //getWidth: d => d.properties.stroke_width,
 		    opacity: opacity,
 		    trailLength: trail_length,
 		    currentTime: time
