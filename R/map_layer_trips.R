@@ -80,7 +80,7 @@ mapdeckTripsDependency <- function() {
 #'
 #' lens <- vapply( json$segments, nrow, 1L )
 #' mat <- do.call( rbind, json$segments )
-#' df <- setNames( as.data.table( mat ), c("x","y","m") )
+#' df <- setNames( as.data.frame( mat ), c("x","y","m") )
 #' idx <- rep( seq_along( lens ), times = lens )
 #' df$vendor <- rep( json$vendor, times = lens )
 #'
