@@ -23,6 +23,8 @@ add_trips(
   legend = FALSE,
   legend_options = NULL,
   legend_format = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
   digits = 6
 )
 }
@@ -74,6 +76,10 @@ a named list indicating which colour attributes should be included in the legend
 \item{legend_options}{A list of options for controlling the legend.}
 
 \item{legend_format}{A list containing functions to apply to legend values. See section legend}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{digits}{number of digits for rounding coordinates}
 }
@@ -134,10 +140,42 @@ location = c(145, -37.8)
 ) \%>\%
  add_trips(
    data = sf
-   , animation_speed = 2000
-   , trail_length = 1000
+   , animation_speed = 500
+   , trail_length = 500
    , stroke_colour = "#FFFFFF"
+   , stroke_width = 25
 )
+
+## Multi-coloured trips
+## requires a colour for each coordiante
+## In this example I'm assining the elevation (z) value
+## to a new column
+df <- sfheaders::sf_to_df( city_trail )
+df$colour <- df$z
+sf <- sfheaders::sf_linestring(
+  obj = df
+  , x = "x"
+  , y = "y"
+  , z = "z"
+  , m = "m"
+  , keep = TRUE
+  , list_column = "colour"
+)
+
+mapdeck(
+location = c(145, -37.8)
+, zoom = 10
+, style = mapdeck_style("light")
+) \%>\%
+ add_trips(
+   data = sf
+   , animation_speed = 1000
+   , trail_length = 1000
+   , stroke_colour = "colour"
+   , stroke_width = 50
+   , legend = TRUE
+)
+
 
 }
 

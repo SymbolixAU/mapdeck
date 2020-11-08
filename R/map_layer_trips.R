@@ -35,16 +35,50 @@ mapdeckTripsDependency <- function() {
 #' sf <- city_trail
 #'
 #' mapdeck(
-#' location = c(145, -37.8)
-#' , zoom = 10
-#' , style = mapdeck_style("dark")
+#'   style = mapdeck_style("dark")
 #' ) %>%
 #'  add_trips(
 #'    data = sf
-#'    , animation_speed = 2000
-#'    , trail_length = 1000
+#'    , animation_speed = 500
+#'    , trail_length = 500
 #'    , stroke_colour = "#FFFFFF"
+#'    , stroke_width = 25
 #' )
+#'
+#' ## Multi-coloured trips
+#' ## requires a colour for each coordiante
+#' ## In this example I'm assining the elevation (z) value
+#' ## to a new column
+#' df <- sfheaders::sf_to_df( city_trail )
+#' df$colour <- df$z
+#' sf <- sfheaders::sf_linestring(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , z = "z"
+#'   , m = "m"
+#'   , keep = TRUE
+#'   , list_column = "colour"
+#' )
+#'
+#' mapdeck(
+#'   style = mapdeck_style("light")
+#' ) %>%
+#'  add_trips(
+#'    data = sf
+#'    , animation_speed = 1000
+#'    , trail_length = 1000
+#'    , stroke_colour = "colour"
+#'    , stroke_width = 50
+#'    , legend = TRUE
+#' )
+#'
+#' ## New York Taxi Trips
+#' json <- jsonify::from_json(
+#'   "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/trips.json"
+#' )
+#' lapply( json$segments, sfheaders::sfc_linestring )
+#'
 #'
 #' }
 #'
@@ -72,6 +106,8 @@ add_trips <- function(
 	legend = FALSE,
 	legend_options = NULL,
 	legend_format = NULL,
+	update_view = TRUE,
+	focus_layer = FALSE,
 	digits = 6
 ) {
 
@@ -85,13 +121,17 @@ add_trips <- function(
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
 
-	l <- resolve_binary_data( data, l )
 
 	# l <- resolve_data( data, l, c("LINESTRING") )
 
-	# bbox <- init_bbox()
-	#update_view <- force( update_view )
-	#focus_layer <- force( focus_layer )
+	bbox <- init_bbox()
+	layer_id <- layerId(layer_id, "trips")
+	update_view <- force( update_view )
+	focus_layer <- force( focus_layer )
+
+	l <- resolve_binary_data( data, l )
+
+	map <- addDependency(map, mapdeckTripsDependency())
 
 	if ( !is.null(l[["data"]]) ) {
 		data <- l[["data"]]
@@ -106,8 +146,6 @@ add_trips <- function(
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL
 
-	layer_id <- layerId(layer_id, "trips")
-	map <- addDependency(map, mapdeckTripsDependency())
 
 	jsfunc <- "add_trips_geo"
 	if ( tp == "sf" ) {
@@ -120,7 +158,6 @@ add_trips <- function(
 
 		shape <- rcpp_trips_interleaved( data, l, list_cols, digits, "trips", start_time )
 
-	  #return( shape )
 	} else {
 		stop("mapdeck - currently only sf objects are supported for the trips layer")
 	}
@@ -132,12 +169,10 @@ add_trips <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
-	# shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
-
 	invoke_method(
 		map, jsfunc, map_type( map ), shape, opacity, layer_id, trail_length,
-		start_time, end_time, animation_speed, width_units, width_scale, width_min_pixels,
-		width_max_pixels
+		start_time, end_time, animation_speed, bbox, update_view, focus_layer,
+		width_units, width_scale, width_min_pixels, width_max_pixels
 	)
 }
 

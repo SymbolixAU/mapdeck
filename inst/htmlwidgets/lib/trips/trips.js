@@ -1,9 +1,13 @@
 // NOTES
 // - Can't have MultiColouredTrips because it adds too many attributes to WebGL
+// - but, the way it works anyway, the colours fade into each other anyway
 
 
 function add_trips_geo( map_id, map_type, path_data, opacity, layer_id,
-trail_length, start_time, end_time, animation_speed, width_units, width_scale, width_min_pixels, width_max_pixels ) {
+trail_length, start_time, end_time, animation_speed, bbox, update_view, focus_layer, width_units, width_scale, width_min_pixels, width_max_pixels ) {
+
+		console.log( bbox );
+
   	var loopLength = end_time - start_time; // unit corresponds to the timestamp in source data
     var animationSpeed = animation_speed; // unit time per second
 
@@ -59,17 +63,16 @@ trail_length, start_time, end_time, animation_speed, width_units, width_scale, w
 		   md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 		}
 
-   //if (legend !== false) {
-	 //  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
-	 //}
-
 	 if ( path_data.legend !== false ) {
 		  md_add_legend( map_id, map_type, layer_id, path_data.legend, "rgb" );
 		}
 
+		md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
+
+		// passing 'update_view' and 'focus_layer' to false
    window[map_id + 'trip_animation'] = window.requestAnimationFrame( function() {
    	  add_trips_geo( map_id, map_type, path_data, opacity, layer_id,
-trail_length, start_time, end_time, animation_speed, width_units, width_scale, width_min_pixels, width_max_pixels );
+trail_length, start_time, end_time, animation_speed, bbox, false, false, width_units, width_scale, width_min_pixels, width_max_pixels );
    });
 }
 
@@ -79,33 +82,3 @@ function md_stop_trips(map_id, map_type, layer_id, layer, update_view  ) {
 	md_layer_clear( map_id, map_type, layer_id, layer, update_view );
 }
 
-
-
-function md_trip_coordinates( coords ) {
-	var res = [];
-	var inner = [];
-	var x, y, z;
-	for( i = 0; i < coords.length; i++ ) {
-		inner = coords[i];
-		x = inner[0];
-		y = inner[1];
-		z = inner[2] || 0;
-		res[i] = [x,y,z];
-	}
-
-	return res;
-}
-
-
-function md_trip_timestamp( coords, start_time ) {
-	var res = [];
-	var inner = [];
-	var z;
-	for( i = 0; i < coords.length; i++ ) {
-		inner = coords[i];
-		x = inner[3] - start_time;
-		//console.log( x );
-		res[i] = [x];
-	}
-	return res;
-}
