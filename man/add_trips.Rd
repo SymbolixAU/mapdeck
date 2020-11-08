@@ -134,9 +134,7 @@ set_token( "MAPBOX_TOKEN")
 sf <- city_trail
 
 mapdeck(
-location = c(145, -37.8)
-, zoom = 10
-, style = mapdeck_style("dark")
+  style = mapdeck_style("dark")
 ) \%>\%
  add_trips(
    data = sf
@@ -163,9 +161,7 @@ sf <- sfheaders::sf_linestring(
 )
 
 mapdeck(
-location = c(145, -37.8)
-, zoom = 10
-, style = mapdeck_style("light")
+  style = mapdeck_style("light")
 ) \%>\%
  add_trips(
    data = sf
@@ -175,6 +171,45 @@ location = c(145, -37.8)
    , stroke_width = 50
    , legend = TRUE
 )
+
+## New York Taxi Trips
+json <- jsonify::from_json(
+  "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/trips.json"
+)
+
+lens <- vapply( json$segments, nrow, 1L )
+mat <- do.call( rbind, json$segments )
+df <- setNames( as.data.table( mat ), c("x","y","m") )
+idx <- rep( seq_along( lens ), times = lens )
+df$vendor <- rep( json$vendor, times = lens )
+
+df$z <- 0 ## z column is required in SF object
+df$idx <- idx
+
+## Using the timestamp as a colour
+df$timestamp <- df$m
+
+sf_line <- sfheaders::sf_linestring(
+  obj = df
+  , x = "x"
+  , y = "y"
+  , z = "z"
+  , m = "m"
+  , linestring_id = "idx"
+  , keep = TRUE
+  , list_column = "timestamp"
+)
+
+mapdeck(
+  style = mapdeck_style("dark")
+) \%>\%
+  add_trips(
+    data = sf_line
+    , stroke_colour = "timestamp"
+    , animation_speed = 1000
+    , trail_length = 1000
+    , palette = colourvalues::get_palette("viridis")[100:256, ]
+  )
 
 
 }
