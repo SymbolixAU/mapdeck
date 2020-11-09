@@ -307,9 +307,9 @@ add_mesh <- function(
 
 #' @rdname clear
 #' @export
-clear_mesh <- function( map, layer_id = NULL) {
+clear_mesh <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "mesh")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "mesh" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "mesh", update_view )
 }
 
 

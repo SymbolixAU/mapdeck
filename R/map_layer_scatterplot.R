@@ -182,6 +182,8 @@ add_scatterplot <- function(
 		l[["data"]] <- NULL
 	}
 
+	# print( data )
+
 	if( !is.null(l[["bbox"]] ) ) {
 		bbox <- l[["bbox"]]
 		l[["bbox"]] <- NULL
@@ -217,7 +219,6 @@ add_scatterplot <- function(
 
 	js_transitions <- resolve_transitions( transitions, "scatterplot" )
 
-
 	if( inherits( legend, "json" ) ) {
 		shape[["legend"]] <- legend
 		legend_format <- "hex"
@@ -235,7 +236,7 @@ add_scatterplot <- function(
 
 #' @rdname clear
 #' @export
-clear_scatterplot <- function( map, layer_id = NULL) {
+clear_scatterplot <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "scatterplot")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "scatterplot" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "scatterplot", update_view )
 }

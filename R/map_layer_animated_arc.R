@@ -195,7 +195,7 @@ add_animated_arc <- function(
 #' @param map a mapdeck map object
 #' @param layer_id the layer_id of the layer you want to clear
 #' @export
-clear_animated_arc <- function( map, layer_id = NULL ) {
+clear_animated_arc <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "animated_arc")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "animated_arc" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "animated_arc", update_view )
 }

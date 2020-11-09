@@ -31,54 +31,56 @@
 \alias{clear_trips}
 \title{Clear Animated Arc}
 \usage{
-clear_animated_arc(map, layer_id = NULL)
+clear_animated_arc(map, layer_id = NULL, update_view = TRUE)
 
-clear_line(map, layer_id = NULL)
+clear_line(map, layer_id = NULL, update_view = TRUE)
 
-clear_arc(map, layer_id = NULL)
+clear_arc(map, layer_id = NULL, update_view = TRUE)
 
-clear_bitmap(map, layer_id = NULL)
+clear_bitmap(map, layer_id = NULL, update_view = TRUE)
 
-clear_column(map, layer_id = NULL)
+clear_column(map, layer_id = NULL, update_view = TRUE)
 
-clear_geojson(map, layer_id = NULL)
+clear_geojson(map, layer_id = NULL, update_view = TRUE)
 
-clear_greatcircle(map, layer_id = NULL)
+clear_greatcircle(map, layer_id = NULL, update_view = TRUE)
 
-clear_grid(map, layer_id = NULL)
+clear_grid(map, layer_id = NULL, update_view = TRUE)
 
-clear_heatmap(map, layer_id = NULL)
+clear_heatmap(map, layer_id = NULL, update_view = TRUE)
 
-clear_hexagon(map, layer_id = NULL)
+clear_hexagon(map, layer_id = NULL, update_view = TRUE)
 
-clear_line(map, layer_id = NULL)
+clear_line(map, layer_id = NULL, update_view = TRUE)
 
-clear_mesh(map, layer_id = NULL)
+clear_mesh(map, layer_id = NULL, update_view = TRUE)
 
-clear_path(map, layer_id = NULL)
+clear_path(map, layer_id = NULL, update_view = TRUE)
 
-clear_pointcloud(map, layer_id = NULL)
+clear_pointcloud(map, layer_id = NULL, update_view = TRUE)
 
-clear_polygon(map, layer_id = NULL)
+clear_polygon(map, layer_id = NULL, update_view = TRUE)
 
-clear_scatterplot(map, layer_id = NULL)
+clear_scatterplot(map, layer_id = NULL, update_view = TRUE)
 
-clear_screengrid(map, layer_id = NULL)
+clear_screengrid(map, layer_id = NULL, update_view = TRUE)
 
-clear_terrain(map, layer_id = NULL)
+clear_terrain(map, layer_id = NULL, update_view = TRUE)
 
-clear_text(map, layer_id = NULL)
+clear_text(map, layer_id = NULL, update_view = TRUE)
 
 clear_title(map, layer_id = NULL)
 
 clear_triangle(map, layer_id = NULL)
 
-clear_trips(map, layer_id = NULL)
+clear_trips(map, layer_id = NULL, update_view = TRUE)
 }
 \arguments{
 \item{map}{a mapdeck map object}
 
 \item{layer_id}{the layer_id of the layer you want to clear}
+
+\item{update_view}{logical indicating if the map should update the bounds after removing the layer}
 }
 \description{
 Clears elements from a map

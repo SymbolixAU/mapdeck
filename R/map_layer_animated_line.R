@@ -174,8 +174,8 @@ add_animated_line <- function(
 
 #' @rdname clear
 #' @export
-clear_line <- function( map, layer_id = NULL) {
+clear_line <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "animated_line")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "animated_line" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "animated_line", update_view )
 }
 

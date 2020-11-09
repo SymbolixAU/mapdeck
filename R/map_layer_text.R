@@ -186,8 +186,8 @@ add_text <- function(
 
 #' @rdname clear
 #' @export
-clear_text <- function( map, layer_id = NULL) {
+clear_text <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "text")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "text" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "text", update_view )
 }
 

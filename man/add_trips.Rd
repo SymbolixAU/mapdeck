@@ -9,6 +9,10 @@ add_trips(
   data = get_map_data(map),
   stroke_colour = NULL,
   stroke_width = NULL,
+  width_units = c("meters", "pixels"),
+  width_min_pixels = NULL,
+  width_max_pixels = NULL,
+  width_scale = 1,
   opacity = 0.3,
   palette = "viridis",
   trail_length = 180,
@@ -19,6 +23,8 @@ add_trips(
   legend = FALSE,
   legend_options = NULL,
   legend_format = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
   digits = 6
 )
 }
@@ -30,6 +36,18 @@ add_trips(
 \item{stroke_colour}{variable of data or hex colour for the stroke.}
 
 \item{stroke_width}{width of the stroke in meters. Default 1.}
+
+\item{width_units}{The units of the line width, one of 'meters', 'pixels'.
+When zooming in and out, meter sizes scale with the base map, and pixel sizes
+remain the same on screen.}
+
+\item{width_min_pixels}{The minimum path width in pixels.
+This can be used to prevent the path from getting too thin when zoomed out.}
+
+\item{width_max_pixels}{The maximum path width in pixels.
+his prop can be used to prevent the path from getting too thick when zoomed in.}
+
+\item{width_scale}{The path width multiplier that multiplied to all paths.}
 
 \item{opacity}{single value in [0,1]}
 
@@ -58,6 +76,10 @@ a named list indicating which colour attributes should be included in the legend
 \item{legend_options}{A list of options for controlling the legend.}
 
 \item{legend_format}{A list containing functions to apply to legend values. See section legend}
+
+\item{update_view}{logical indicating if the map should update the bounds to include this layer}
+
+\item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
 \item{digits}{number of digits for rounding coordinates}
 }
@@ -112,16 +134,83 @@ set_token( "MAPBOX_TOKEN")
 sf <- city_trail
 
 mapdeck(
-location = c(145, -37.8)
-, zoom = 10
-, style = mapdeck_style("dark")
+  style = mapdeck_style("dark")
 ) \%>\%
  add_trips(
    data = sf
-   , animation_speed = 2000
-   , trail_length = 1000
+   , animation_speed = 500
+   , trail_length = 500
    , stroke_colour = "#FFFFFF"
+   , stroke_width = 25
 )
+
+## Multi-coloured trips
+## requires a colour for each coordiante
+## In this example I'm assining the elevation (z) value
+## to a new column
+df <- sfheaders::sf_to_df( city_trail )
+df$colour <- df$z
+sf <- sfheaders::sf_linestring(
+  obj = df
+  , x = "x"
+  , y = "y"
+  , z = "z"
+  , m = "m"
+  , keep = TRUE
+  , list_column = "colour"
+)
+
+mapdeck(
+  style = mapdeck_style("light")
+) \%>\%
+ add_trips(
+   data = sf
+   , animation_speed = 1000
+   , trail_length = 1000
+   , stroke_colour = "colour"
+   , stroke_width = 50
+   , legend = TRUE
+)
+
+## New York Taxi Trips
+json <- jsonify::from_json(
+  "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/trips.json"
+)
+
+lens <- vapply( json$segments, nrow, 1L )
+mat <- do.call( rbind, json$segments )
+df <- setNames( as.data.frame( mat ), c("x","y","m") )
+idx <- rep( seq_along( lens ), times = lens )
+df$vendor <- rep( json$vendor, times = lens )
+
+df$z <- 0 ## z column is required in SF object
+df$idx <- idx
+
+## Using the timestamp as a colour
+df$timestamp <- df$m
+
+sf_line <- sfheaders::sf_linestring(
+  obj = df
+  , x = "x"
+  , y = "y"
+  , z = "z"
+  , m = "m"
+  , linestring_id = "idx"
+  , keep = TRUE
+  , list_column = "timestamp"
+)
+
+mapdeck(
+  style = mapdeck_style("dark")
+) \%>\%
+  add_trips(
+    data = sf_line
+    , stroke_colour = "timestamp"
+    , animation_speed = 1000
+    , trail_length = 1000
+    , palette = colourvalues::get_palette("viridis")[100:256, ]
+  )
+
 
 }
 

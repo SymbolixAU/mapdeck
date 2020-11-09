@@ -225,7 +225,7 @@ add_column <- function(
 
 #' @rdname clear
 #' @export
-clear_column <- function( map, layer_id = NULL) {
+clear_column <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "column")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "column" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "column", update_view )
 }

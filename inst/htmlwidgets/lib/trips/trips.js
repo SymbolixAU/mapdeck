@@ -1,41 +1,12 @@
+// NOTES
+// - Can't have MultiColouredTrips because it adds too many attributes to WebGL
+// - but, the way it works anyway, the colours fade into each other anyway
 
-function add_trips_geo( map_id, map_type, trips_data, opacity, layer_id,
-trail_length, start_time, end_time, animation_speed, legend ) {
 
-  var tripsLayer = new deck.TripsLayer({
-    id: 'trips-'+layer_id,
-    data: trips_data,
-    parameters: {
-	    depthTest: false
-	  },
-    getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
-    getTimestamps: d => md_trip_timestamp( d.geometry.geometry.coordinates, start_time ),
-    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
-    getWidth: d => d.properties.stroke_width,
-    opacity: opacity,
-    widthMinPixels: 2,
-    rounded: true,
-    trailLength: trail_length,
-    currentTime: 0
-  });
+function add_trips_geo( map_id, map_type, path_data, opacity, layer_id,
+trail_length, start_time, end_time, animation_speed, bbox, update_view, focus_layer, width_units, width_scale, width_min_pixels, width_max_pixels ) {
 
-  if( map_type == "google_map") {
-		  md_update_overlay( map_id, 'trips-'+layer_id, tripsLayer );
-	} else {
-		  md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
-	}
-
-	if (legend !== false) {
-	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
-	}
-
-	//md_layer_view( map_id, map_type, layer_id, true, bbox, true );
-
-  animate_trips( map_id, map_type, trips_data, opacity, layer_id, trail_length, start_time, end_time, animation_speed, legend );
-
-  //function animate_trips( tripsLayer ) {
-  function animate_trips( map_id, map_type, trips_data, opacity, layer_id,
-trail_length, start_time, end_time, animation_speed, legend) {
+		console.log( bbox );
 
   	var loopLength = end_time - start_time; // unit corresponds to the timestamp in source data
     var animationSpeed = animation_speed; // unit time per second
@@ -45,23 +16,46 @@ trail_length, start_time, end_time, animation_speed, legend) {
 
     var time = ((timestamp % loopTime) / loopTime) * loopLength;
 
-		var tripsLayer = new deck.TripsLayer({
+    const binaryLocation = new Float32Array( path_data.data.coordinates );
+	  const binaryStartIndices = new Uint32Array( path_data.data.start_indices );
+	  const binaryLineColour = new Float32Array( path_data.data.data.stroke_colour );
+	  const binaryLineWidth = new Float32Array( path_data.data.data.stroke_width );
+	  const binaryTimestamps = new Float32Array( path_data.timestamps );
+
+    let stride = path_data.data.stride[0];
+  	let data_count = path_data.data.start_indices.length;
+
+  	var attributes = {
+			getPath: {value: binaryLocation, size: stride},
+      getColor: {value: binaryLineColour, size: 4},
+      getWidth: {value: binaryLineWidth, size: 1},
+      getTimestamps: {value: binaryTimestamps, size: 1}
+	  };
+
+		const layer = {
 		    id: 'trips-'+layer_id,
-		    data: trips_data,
+		    pickable: true,
+		    widthScale: width_scale,
+		    widthUnits: width_units,
+		    widthMinPixels: width_min_pixels || 1,
+		    widthMaxPixels: width_max_pixels || Number.MAX_SAFE_INTEGER,
+		    rounded: true,
 		    parameters: {
 			    depthTest: false
 			  },
-
-		    getPath: d => md_trip_coordinates( d.geometry.geometry.coordinates ),
-		    getTimestamps: d => md_trip_timestamp( d.geometry.geometry.coordinates, start_time ),
-		    getColor: d => md_hexToRGBA( d.properties.stroke_colour ),
-		    getWidth: d => d.properties.stroke_width,
+				data: {
+		      length: data_count,
+		      startIndices: binaryStartIndices,
+		      attributes,
+		      tooltip: path_data.data.data.tooltip
+		    },
+		    _pathType: 'open',
 		    opacity: opacity,
-		    widthMinPixels: 2,
 		    trailLength: trail_length,
-		    rounded: true,
 		    currentTime: time
-		  });
+		  };
+
+		var tripsLayer = new deck.TripsLayer(layer);
 
 	  if( map_type == "google_map") {
 		   md_update_overlay( map_id, 'trips-'+layer_id, tripsLayer );
@@ -69,43 +63,22 @@ trail_length, start_time, end_time, animation_speed, legend) {
 		   md_update_layer( map_id, 'trips-'+layer_id, tripsLayer );
 		}
 
-   if (legend !== false) {
-	   md_add_legend( map_id, map_type, layer_id, legend, "hex" );
-	 }
+	 if ( path_data.legend !== false ) {
+		  md_add_legend( map_id, map_type, layer_id, path_data.legend, "rgb" );
+		}
 
-   window.requestAnimationFrame( function() {
-   	  animate_trips( map_id, map_type, trips_data, opacity, layer_id, trail_length,
-   	  start_time, end_time, animation_speed, legend );
+		md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
+
+		// passing 'update_view' and 'focus_layer' to false
+   window[map_id + 'trip_animation'] = window.requestAnimationFrame( function() {
+   	  add_trips_geo( map_id, map_type, path_data, opacity, layer_id,
+trail_length, start_time, end_time, animation_speed, bbox, false, false, width_units, width_scale, width_min_pixels, width_max_pixels );
    });
-
-  }
-}
-
-function md_trip_coordinates( coords ) {
-	var res = [];
-	var inner = [];
-	var x, y, z;
-	for( i = 0; i < coords.length; i++ ) {
-		inner = coords[i];
-		x = inner[0];
-		y = inner[1];
-		z = inner[2] || 0;
-		res[i] = [x,y,z];
-	}
-
-	return res;
 }
 
 
-function md_trip_timestamp( coords, start_time ) {
-	var res = [];
-	var inner = [];
-	var z;
-	for( i = 0; i < coords.length; i++ ) {
-		inner = coords[i];
-		x = inner[3] - start_time;
-		//console.log( x );
-		res[i] = [x];
-	}
-	return res;
+function md_stop_trips(map_id, map_type, layer_id, layer, update_view  ) {
+	window.cancelAnimationFrame( window[map_id + 'trip_animation'] );
+	md_layer_clear( map_id, map_type, layer_id, layer, update_view );
 }
+

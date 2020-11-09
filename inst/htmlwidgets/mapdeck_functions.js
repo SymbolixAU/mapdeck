@@ -16,6 +16,7 @@ function md_setup_window_objects( map_id ) {
   window[map_id + 'mapdeckBounds'] = [];       // store the bounding box of each layer
   window[map_id + 'globalBox'] = [];
   window[map_id + 'currentZoomLevel'] = 0;
+  window[map_id + 'trip_animation'] = 0;
 }
 
 function md_setup_mapdeck_div( map_id ) {
@@ -153,7 +154,7 @@ function md_findObjectElementByKey(array, key, value ) {
     return -1;
 }
 
-function md_layer_clear( map_id, map_type, layer_id, layer ) {
+function md_layer_clear( map_id, map_type, layer_id, layer, update_view ) {
 
   if( map_type == "mapdeck" ) {
 		md_clear_layer( map_id, layer+'-'+layer_id );
@@ -162,7 +163,9 @@ function md_layer_clear( map_id, map_type, layer_id, layer ) {
   }
 
   md_remove_from_bounds( map_id, layer_id );
-	md_update_location( map_id, map_type );
+  if( update_view ) {
+	  md_update_location( map_id, map_type );
+  }
 	md_clear_legend( map_id, map_type, layer_id );
 }
 
@@ -191,16 +194,16 @@ function md_clear_layer( map_id, layer_id ) {
 
   if ( elem != -1 ) {
   	window[ map_id + 'layers'].splice( elem, 1 );
+
+  	// ## issue 137
+	  //var vs = window[ map_id + 'map'].viewState;
+	  window[map_id + 'map'].setProps({
+	  	layers: [...window[map_id + 'layers'] ]
+	  	//viewState: vs                            // issue 239 & 286
+	  });
+
   }
-
-  // ## issue 137
-  //var vs = window[ map_id + 'map'].viewState;
-  window[map_id + 'map'].setProps({
-  	layers: [...window[map_id + 'layers'] ]
-  	//viewState: vs                            // issue 239 & 286
-  });
 }
-
 
 function md_update_overlay( map_id, layer_id, layer ) {
 

@@ -1,5 +1,12 @@
+# v0.3.5
+
+* `minZoom`, `maxZoom`, `minPitch`, `maxPitch` values retained after adding layers [issue 333](https://github.com/SymbolixAU/mapdeck/issues/333)
+* `clear_layer()` functions get `update_view` argument
+* `clear_trips()` fixed to first 'stop_trips' using cancelAnimationFrame
+
 # v0.3.4
 
+* fixed `update_style` bug [issue 322](https://github.com/SymbolixAU/mapdeck/issues/322)
 * various updates to documentation
 * initial support for cesium js via add_cesium and add_i3s layers
 * add Linking to geometries ready for migration

@@ -36,7 +36,7 @@ browser can handle), on interactive maps using Mapbox GL and Deck.gl
 > deck.gl is a WebGL-powered framework for visual exploratory data
 > analysis of large datasets.
 
-  - <http://deck.gl/#/>
+  - <https://deck.gl/#/>
 
 ## How do I use it?
 
@@ -59,7 +59,7 @@ page](https://symbolixau.github.io/mapdeck/articles/mapdeck.html)
 
 Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox
 you need an [access
-token](https://www.mapbox.com/help/how-access-tokens-work/).
+token](https://docs.mapbox.com/help/how-mapbox-works/access-tokens/).
 
 Once you’ve generate a token you can use their maps.
 

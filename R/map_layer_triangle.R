@@ -200,7 +200,7 @@ add_triangle <- function(
 		list_cols <- list_columns( data, geometry_column )
 		# print( list_cols )
 
-		shape <- rcpp_triangle_columnar( data, l, list_cols, geometry_column, digits )
+		shape <- rcpp_triangle_interleaved( data, l, list_cols, digits, "triangle" )
 	# } else if ( tp == "sfencoded" ) {
 	# 	geometry_column <- "polyline"
 	# 	shape <- rcpp_polygon_polyline( data, l, geometry_column )
@@ -220,7 +220,7 @@ add_triangle <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
-	# return( shape )
+	return( shape )
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["interleaved"]], shape[["data"]][["data"]], shape[["start_indices"]], layer_id, light_settings,

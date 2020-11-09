@@ -196,7 +196,7 @@ add_greatcircle <- function(
 #' @param map a mapdeck map object
 #' @param layer_id the layer_id of the layer you want to clear
 #' @export
-clear_greatcircle <- function( map, layer_id = NULL ) {
+clear_greatcircle <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "greatcircle")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "greatcircle" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "greatcircle", update_view )
 }

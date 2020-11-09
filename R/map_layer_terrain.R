@@ -96,9 +96,9 @@ add_terrain <- function(
 
 #' @rdname clear
 #' @export
-clear_terrain <- function( map, layer_id = NULL) {
+clear_terrain <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "terrain")
-	invoke_method(map, "md_layer_clear", layer_id )
+	invoke_method(map, "md_layer_clear", layer_id, "terrain", update_view )
 }
 
 
