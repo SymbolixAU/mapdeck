@@ -6,8 +6,6 @@
 function add_trips_geo( map_id, map_type, path_data, opacity, layer_id,
 trail_length, start_time, end_time, animation_speed, bbox, update_view, focus_layer, width_units, width_scale, width_min_pixels, width_max_pixels ) {
 
-		console.log( bbox );
-
   	var loopLength = end_time - start_time; // unit corresponds to the timestamp in source data
     var animationSpeed = animation_speed; // unit time per second
 
