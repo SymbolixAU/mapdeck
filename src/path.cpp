@@ -74,7 +74,7 @@ SEXP rcpp_path_interleaved(
 		Rcpp::IntegerVector list_columns,
 		int digits,
 		std::string layer_name
-	) {
+) {
 
 	// NOTES:
 	// different to polygons, don't need to pass in list columns, they can remian on the
@@ -85,7 +85,7 @@ SEXP rcpp_path_interleaved(
 
 	Rcpp::List paths = interleave::primitives::interleave_primitive(
 		path, interleave::primitives::INTERLEAVE_LINE
-		);
+	);
 
 	Rcpp::NumericVector coordinates = paths[ "coordinates" ];
 	int total_coordinates = paths[ "total_coordinates" ];
@@ -246,7 +246,7 @@ Rcpp::List rcpp_path_polyline(
 		Rcpp::List params,
 		Rcpp::StringVector geometry_columns,
 		std::string layer_name
-	) {
+) {
 
 	int data_rows = data.nrows();
 
