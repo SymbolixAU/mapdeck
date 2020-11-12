@@ -119,7 +119,7 @@ SEXP rcpp_path_interleaved(
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	std::string format = "interleaved";
-	Rcpp::StringVector binary_columns = lst_defaults.names();
+	Rcpp::StringVector binary_columns = mapdeck::binary_columns::get_binary_columns( layer_name );
 
 	Rcpp::List lst = spatialwidget::api::create_interleaved(
 		interleaved,
@@ -212,7 +212,7 @@ SEXP rcpp_trips_interleaved(
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	std::string format = "interleaved";
-	Rcpp::StringVector binary_columns = lst_defaults.names();
+	Rcpp::StringVector binary_columns = mapdeck::binary_columns::get_binary_columns( layer_name );
 
 	Rcpp::List lst = spatialwidget::api::create_interleaved(
 		interleaved,

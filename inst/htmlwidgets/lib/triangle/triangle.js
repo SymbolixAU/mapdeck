@@ -259,8 +259,8 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
     	startIndices: binaryStartIndices,
     	attributes: {
     		indices: binaryIndices, // seq(0, length( res$coordinates ) )
-    		getPolygon: {value: binaryLocation, size: stride}
-    		//getFillColor: {value: binaryFill, size: 4},
+    		getPolygon: {value: binaryLocation, size: stride},
+    		getFillColor: {value: binaryFill, size: 4},
     		//getElevation: {value: binaryElevation, size: 1}
     	}
     },

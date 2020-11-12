@@ -4,6 +4,27 @@
 #include <Rcpp.h>
 
 namespace mapdeck {
+namespace binary_columns {
+
+	// binary columns are non-colour columns
+	inline Rcpp::StringVector get_binary_columns( std::string layer_name ) {
+		if( layer_name == "trips" ) {
+			return Rcpp::StringVector{"stroke_width"};
+		} else if ( layer_name == "path" ) {
+			return Rcpp::StringVector{"stroke_width","dash_size","dash_gap","offset"};
+		} else if (layer_name == "triangle" ) {
+			return Rcpp::StringVector{"elevation"};
+		} else if (layer_name == "polygon") {
+			return Rcpp::StringVector{"elevation"};
+		}
+
+		Rcpp::stop("mapdeck - unknown binary layer type");
+	}
+
+} // binary_columns
+} // mapdeck
+
+namespace mapdeck {
 namespace defaults {
 
 inline Rcpp::NumericVector default_arc_height( int n ) {
