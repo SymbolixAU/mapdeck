@@ -36,14 +36,14 @@ Rcpp::List get_path_defaults( std::string layer_name, int data_rows ) {
 	return trips_defaults( data_rows );
 }
 
-Rcpp::StringVector get_binary_columns( std::string layer_name ) {
-	if( layer_name == "trips" ) {
-		return Rcpp::StringVector{"stroke_width"};
-	}
-
-	// default is path
-	return Rcpp::StringVector{"stroke_width","dash_size","dash_gap","offset"};
-}
+// Rcpp::StringVector get_binary_columns( std::string layer_name ) {
+// 	if( layer_name == "trips" ) {
+// 		return Rcpp::StringVector{"stroke_width"};
+// 	}
+//
+// 	// default is path
+// 	return Rcpp::StringVector{"stroke_width","dash_size","dash_gap","offset"};
+// }
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_path_geojson(
@@ -128,7 +128,7 @@ SEXP rcpp_path_interleaved(
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	std::string format = "interleaved";
-	Rcpp::StringVector binary_columns = get_binary_columns( layer_name );
+	Rcpp::StringVector binary_columns = mapdeck::binary_columns::get_binary_columns( layer_name );
 
 	Rcpp::List lst = spatialwidget::api::create_interleaved(
 		interleaved,
@@ -221,7 +221,7 @@ SEXP rcpp_trips_interleaved(
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	std::string format = "interleaved";
-	Rcpp::StringVector binary_columns = get_binary_columns( layer_name );
+	Rcpp::StringVector binary_columns = mapdeck::binary_columns::get_binary_columns( layer_name );
 
 	Rcpp::List lst = spatialwidget::api::create_interleaved(
 		interleaved,
