@@ -287,7 +287,7 @@ add_path <- function(
 		highlight_colour, bbox, update_view, focus_layer,
 		js_transitions, billboard, brush_radius, width_units, width_scale, width_min_pixels,
 		width_max_pixels, use_offset, use_dash
-		)
+	)
 }
 
 
