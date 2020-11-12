@@ -1,9 +1,7 @@
 
-function add_triangle( map_id, map_type, triangles, polygon_data, start_indices, layer_id, light_settings, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, is_extruded, elevation_scale, brush_radius ) {
+function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, is_extruded, elevation_scale, brush_radius ) {
 
-	console.log( triangles );
 	console.log( polygon_data );
-	console.log( start_indices );
 	//console.log( polygon_data.data.fill_colour );
 
   var extensions = [];
@@ -16,15 +14,15 @@ function add_triangle( map_id, map_type, triangles, polygon_data, start_indices,
 
 	//let fill_colour = polygon_data.data.fill_colour;
 
-	const binaryLocation = new Float32Array( triangles.coordinates );
+	const binaryLocation = new Float32Array( polygon_data.data.coordinates );
  	//const binaryFill = new Float32Array( fill_colour.length );
  	//for( var i = 0; i < fill_colour.length; i++ ) {
  	//	binaryFill[ i ] = fill_colour[ i ] / 255;
  	//}
- 	const binaryFill = new Float32Array( polygon_data.data.fill_colour );
- 	const binaryElevation = new Float32Array( polygon_data.data.elevation );
+ 	const binaryFill = new Float32Array( polygon_data.data.data.fill_colour );
+ 	const binaryElevation = new Float32Array( polygon_data.data.data.elevation );
 
- 	const binaryStartIndices = new Uint16Array( start_indices );
+ 	const binaryStartIndices = new Uint16Array( polygon_data.data.start_indices );
 
 /*
 	const binaryLocation = new Float32Array([
@@ -212,7 +210,7 @@ function add_triangle( map_id, map_type, triangles, polygon_data, start_indices,
 	console.log( binaryLocation.length );
 
 	//const stride = 2;
-	const stride = triangles.stride[ 0 ] ;
+	const stride = polygon_data.data.stride[ 0 ] ;
 	const n_points = binaryLocation.length / stride;
 	const n_points_per_tri = 3;
 
@@ -261,9 +259,9 @@ function add_triangle( map_id, map_type, triangles, polygon_data, start_indices,
     	startIndices: binaryStartIndices,
     	attributes: {
     		indices: binaryIndices, // seq(0, length( res$coordinates ) )
-    		getPolygon: {value: binaryLocation, size: stride},
-    		getFillColor: {value: binaryFill, size: 4},
-    		getElevation: {value: binaryElevation, size: 1}
+    		getPolygon: {value: binaryLocation, size: stride}
+    		//getFillColor: {value: binaryFill, size: 4},
+    		//getElevation: {value: binaryElevation, size: 1}
     	}
     },
     _normalize: false, // skip normalization for ear-cut polygons
@@ -298,8 +296,8 @@ function add_triangle( map_id, map_type, triangles, polygon_data, start_indices,
 	  md_update_layer( map_id, 'polygon-'+layer_id, polygonLayer );
   }
 
-	if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend, "hex" );
+	if ( polygon_data.legend !== false) {
+	  md_add_legend(map_id, map_type, layer_id, polygon_data.legend, "rgb" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

@@ -223,8 +223,8 @@ add_triangle <- function(
 	return( shape )
 
 	invoke_method(
-		map, jsfunc, map_type( map ), shape[["interleaved"]], shape[["data"]][["data"]], shape[["start_indices"]], layer_id, light_settings,
-		auto_highlight, highlight_colour, shape[["data"]][["legend"]], bbox, update_view, focus_layer,
+		map, jsfunc, map_type( map ), shape, layer_id, light_settings,
+		auto_highlight, highlight_colour, bbox, update_view, focus_layer,
 		js_transitions, is_extruded, elevation_scale, brush_radius
 	)
 }

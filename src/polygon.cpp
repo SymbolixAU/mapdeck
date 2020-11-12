@@ -111,7 +111,7 @@ Rcpp::List rcpp_triangle_interleaved(
 	Rcpp::NumericVector coordinates = tri[ "coordinates" ];
 	Rcpp::IntegerVector indices = tri["input_index"];
 	Rcpp::IntegerVector geometry_coordinates = tri[ "geometry_coordinates" ];
-	Rcpp::IntegerVector start_indices = tri["start_indices"];
+	//Rcpp::IntegerVector start_indices = tri["start_indices"];
 	int stride = tri[ "stride" ];
 
 	// put the properties back onto 'data'
@@ -132,12 +132,12 @@ Rcpp::List rcpp_triangle_interleaved(
 	int total_coordinates = indices.length();
 
 	//Rcpp::Rcout << "total_coords: " << total_coordinates << std::endl;
-	//Rcpp::IntegerVector n_coordinates = tri["n_coordinates"];
-	// Rcpp::IntegerVector start_indices( n_coordinates.length() );
-	// start_indices[0] = 0;
-	// for( R_xlen_t i = 1; i < n_coordinates.length(); ++i ) {
-	// 	start_indices[ i ] = n_coordinates[ i - 1 ] + start_indices[ i - 1 ] - 1;
-	// }
+	//Rcpp::IntegerVector geometry_coordinates = tri["geometry_coordinates"];
+	Rcpp::IntegerVector start_indices( geometry_coordinates.length() );
+	start_indices[0] = 0;
+	for( R_xlen_t i = 1; i < geometry_coordinates.length(); ++i ) {
+		start_indices[ i ] = geometry_coordinates[ i - 1 ] + start_indices[ i - 1 ];
+	}
 
 	Rcpp::List interleaved = Rcpp::List::create(
 		Rcpp::_["data"] = data,  // TODO: remove the geometry column from data
@@ -151,12 +151,14 @@ Rcpp::List rcpp_triangle_interleaved(
 
 	Rcpp::List lst_defaults = polygon_defaults( total_coordinates );  // initialise with defaults
 
+	Rcpp::Rcout << "total_coordinates: " << total_coordinates << std::endl;
+
 	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::layer_colours::fill_stroke_colours;
 	Rcpp::StringVector polygon_legend = mapdeck::layer_colours::fill_stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	std::string format = "interleaved";
-	Rcpp::StringVector binary_columns = mapdeck::binary_columns::get_binary_columns( layer_name );
+	Rcpp::StringVector binary_columns = lst_defaults.names();
 
 	//return interleaved;
 
