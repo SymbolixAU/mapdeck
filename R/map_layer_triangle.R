@@ -220,7 +220,7 @@ add_triangle <- function(
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
 
-	#return( shape )
+	return( shape )
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape, layer_id, light_settings,

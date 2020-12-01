@@ -59,23 +59,8 @@ Rcpp::List rcpp_triangle_interleaved(
 	Rcpp::String sfc_column = data.attr("sf_column");
 	SEXP polygons = data[ sfc_column.get_cstring() ];
 
-
-
 	// any list-columns must have the same number of elements as cordinates
 	// as they go through interleaving and get shuffled as per the triangulation of coords
-
-	//int data_rows = data.nrows();
-
-	// TODO
-	// call geometries:::rcpp_geometry_dimensions()
-	// and the first column is the binaryStartIndices
-	// which is the first 'row' where each matrix (ring) starts
-	//
-	// then 'binaryIndices' is a sequence 0:(n_coordinates-1)
-
-
-	// remove teh poly column?
-	// because it can't be used
 
 	Rcpp::List dim = geometries::coordinates::geometry_dimensions( polygons );
 	Rcpp::IntegerMatrix dimensions = dim[ "dimensions" ];
@@ -89,30 +74,27 @@ Rcpp::List rcpp_triangle_interleaved(
 
 	//Rcpp::IntegerVector start_indices = dimensions( Rcpp::_, 0 );
 	R_xlen_t n_geometries = dimensions.nrow();
-	//int total_coordinates = dimensions( n_geometries - 1, 1 );
-	// total_coordinates is the total number of coordinates AFTER ear-cutting
-
-
-	//Rcpp::Rcout << "data_rows: " << data_rows << std::endl;
-	//Rcpp::Rcout << "total_coords: " << total_coordinates << std::endl;
-
-
-	// TODO:
-	// this is the 'repeats' vector
 
 	Rcpp::List tri_properties( list_columns.length() );
 	for( R_xlen_t i = 0; i < list_columns.length(); ++i ) {
 		R_xlen_t idx = list_columns[ i ];
-		tri_properties[ i ] = data[ idx ];
+		Rcpp::Rcout << "idx: " << idx << std::endl;
+		Rcpp::Rcout << "data ncol: " << data.ncol() << std::endl;
+		Rcpp::List list_col = Rcpp::as< Rcpp::List >( data[ idx ] );
+		tri_properties[ i ] = list_col;
 	}
+	//return tri_properties;
+	Rcpp::Rcout << "made properties" << std::endl;
 	Rcpp::List tri = interleave::primitives::interleave_triangle( polygons, tri_properties );
-
+	Rcpp::Rcout << "interleaved" << std::endl;
 
 	Rcpp::NumericVector coordinates = tri[ "coordinates" ];
 	Rcpp::IntegerVector indices = tri["input_index"];
 	Rcpp::IntegerVector geometry_coordinates = tri[ "geometry_coordinates" ];
-	//Rcpp::IntegerVector start_indices = tri["start_indices"];
+	Rcpp::IntegerVector start_indices = tri["start_indices"];
 	int stride = tri[ "stride" ];
+
+	Rcpp::Rcout << "shuffling properties " << std::endl;
 
 	// put the properties back onto 'data'
 	Rcpp::List shuffled_properties = tri["properties"];
@@ -121,6 +103,8 @@ Rcpp::List rcpp_triangle_interleaved(
 		R_xlen_t idx = list_columns[ i ];
 		data[ idx ] = shuffled_properties[ i ];
 	}
+
+	Rcpp::Rcout << "shuffled properties" << std::endl;
 
 	//return data;
 
@@ -133,11 +117,16 @@ Rcpp::List rcpp_triangle_interleaved(
 
 	//Rcpp::Rcout << "total_coords: " << total_coordinates << std::endl;
 	//Rcpp::IntegerVector geometry_coordinates = tri["geometry_coordinates"];
-	Rcpp::IntegerVector start_indices( geometry_coordinates.length() );
-	start_indices[0] = 0;
-	for( R_xlen_t i = 1; i < geometry_coordinates.length(); ++i ) {
-		start_indices[ i ] = geometry_coordinates[ i - 1 ] + start_indices[ i - 1 ];
-	}
+
+
+
+	// non-extruded polygons use the start index as the start of each geometry,
+	// and NOT each triangle.
+	// Rcpp::IntegerVector start_indices( geometry_coordinates.length() );
+	// start_indices[0] = 0;
+	// for( R_xlen_t i = 1; i < geometry_coordinates.length(); ++i ) {
+	// 	start_indices[ i ] = geometry_coordinates[ i - 1 ] + start_indices[ i - 1 ];
+	// }
 
 	Rcpp::List interleaved = Rcpp::List::create(
 		Rcpp::_["data"] = data,  // TODO: remove the geometry column from data
@@ -151,30 +140,12 @@ Rcpp::List rcpp_triangle_interleaved(
 
 	Rcpp::List lst_defaults = polygon_defaults( total_coordinates );  // initialise with defaults
 
-	Rcpp::Rcout << "total_coordinates: " << total_coordinates << std::endl;
-
 	std::unordered_map< std::string, std::string > polygon_colours = mapdeck::layer_colours::fill_stroke_colours;
 	Rcpp::StringVector polygon_legend = mapdeck::layer_colours::fill_stroke_legend;
 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
 
 	std::string format = "interleaved";
 	Rcpp::StringVector binary_columns = mapdeck::binary_columns::get_binary_columns( layer_name );
-
-	//return interleaved;
-
-
-	// Rcpp::List interleaved = Rcpp::List::create(
-	// 	Rcpp::_["data"] = data,
-	// 	Rcpp::_["n_coordinates"] = n_coordinates,
-	// 	Rcpp::_["total_coordinates"] = total_coordinates
-	// );
-	//
-	// Rcpp::StringVector js_tri = jsonify::api::to_json(
-	// 	tri, false, digits,
-	// 	true, true, "column" // numeric_dates, factors_as_string, by -- not used on interleaved data
-	// );
-
-	//return interleaved;
 
 	Rcpp::List lst = spatialwidget::api::create_interleaved(
 		interleaved,
@@ -191,28 +162,6 @@ Rcpp::List rcpp_triangle_interleaved(
 	);
 
 	return lst;
-
-	// Rcpp::List res = Rcpp::List::create(
-	// 	Rcpp::_["interleaved"] = js_tri,
-	// 	Rcpp::_["data"] = processed,
-	// 	Rcpp::_["start_indices"] = start_indices
-	// );
-	//
-	// return res;
-
-	// Rcpp::List formatted_data = spatialwidget::api::format_data(
-	// 		data,
-	// 		params,
-	// 		lst_defaults,
-	// 		polygon_colours,
-	// 		polygon_legend,
-	// 		data_rows,
-	// 		parameter_exclusions,
-	// 		digits,
-	// 		"interleaved"
-	// );
-	//
-	// return formatted_data;
 
 }
 
