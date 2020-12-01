@@ -196,8 +196,10 @@ add_trips <- function(
 	}
 
 	# js_transitions <- resolve_transitions( transitions, "path" )
+	legend_type <- "rgb"
 	if( inherits( legend, "json" ) ) {
 		shape[["legend"]] <- legend
+		legend_type <- "hex"
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
@@ -205,7 +207,7 @@ add_trips <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape, opacity, layer_id, trail_length,
 		start_time, end_time, animation_speed, bbox, update_view, focus_layer,
-		width_units, width_scale, width_min_pixels, width_max_pixels
+		width_units, width_scale, width_min_pixels, width_max_pixels, legend_type
 	)
 }
 

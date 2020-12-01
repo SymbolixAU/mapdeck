@@ -55,9 +55,9 @@ class MultiColouredPathLayer extends deck.PathLayer {
     };
   }
 
-function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels, use_offset, use_dash ) {
+function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels, use_offset, use_dash, legend_type ) {
 
-  console.log( path_data );
+  //console.log( path_data );
 
   var extensions = [];
 
@@ -158,7 +158,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
 	}
 
 	if ( path_data.legend !== false ) {
-	  md_add_legend( map_id, map_type, layer_id, path_data.legend, "rgb" );
+	  md_add_legend( map_id, map_type, layer_id, path_data.legend, legend_type );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

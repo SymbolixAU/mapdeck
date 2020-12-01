@@ -275,9 +275,11 @@ add_path <- function(
 	}
 
 
+	legend_type <- "rgb"
 	js_transitions <- resolve_transitions( transitions, "path" )
 	if( inherits( legend, "json" ) ) {
 		shape[["legend"]] <- legend
+		legend_type <- "hex"
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
 	}
@@ -286,7 +288,7 @@ add_path <- function(
 		map, jsfunc, map_type( map ), shape, layer_id, auto_highlight,
 		highlight_colour, bbox, update_view, focus_layer,
 		js_transitions, billboard, brush_radius, width_units, width_scale, width_min_pixels,
-		width_max_pixels, use_offset, use_dash
+		width_max_pixels, use_offset, use_dash, legend_type
 		)
 }
 

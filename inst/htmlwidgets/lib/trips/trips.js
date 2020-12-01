@@ -4,7 +4,7 @@
 
 
 function add_trips_geo( map_id, map_type, path_data, opacity, layer_id,
-trail_length, start_time, end_time, animation_speed, bbox, update_view, focus_layer, width_units, width_scale, width_min_pixels, width_max_pixels ) {
+trail_length, start_time, end_time, animation_speed, bbox, update_view, focus_layer, width_units, width_scale, width_min_pixels, width_max_pixels, legend_type ) {
 
   	var loopLength = end_time - start_time; // unit corresponds to the timestamp in source data
     var animationSpeed = animation_speed; // unit time per second
@@ -62,7 +62,7 @@ trail_length, start_time, end_time, animation_speed, bbox, update_view, focus_la
 		}
 
 	 if ( path_data.legend !== false ) {
-		  md_add_legend( map_id, map_type, layer_id, path_data.legend, "rgb" );
+		  md_add_legend( map_id, map_type, layer_id, path_data.legend, legend_type );
 		}
 
 		md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
@@ -70,7 +70,7 @@ trail_length, start_time, end_time, animation_speed, bbox, update_view, focus_la
 		// passing 'update_view' and 'focus_layer' to false
    window[map_id + 'trip_animation'] = window.requestAnimationFrame( function() {
    	  add_trips_geo( map_id, map_type, path_data, opacity, layer_id,
-trail_length, start_time, end_time, animation_speed, bbox, false, false, width_units, width_scale, width_min_pixels, width_max_pixels );
+trail_length, start_time, end_time, animation_speed, bbox, false, false, width_units, width_scale, width_min_pixels, width_max_pixels, legend_type );
    });
 }
 
