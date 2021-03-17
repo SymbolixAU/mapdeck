@@ -45,6 +45,10 @@ rcpp_path_geojson <- function(data, params, geometry_columns, digits, layer_name
     .Call(`_mapdeck_rcpp_path_geojson`, data, params, geometry_columns, digits, layer_name)
 }
 
+rcpp_interleave_primitive_line <- function(sf) {
+    .Call(`_mapdeck_rcpp_interleave_primitive_line`, sf)
+}
+
 rcpp_path_interleaved <- function(sf, params, list_columns, digits, layer_name) {
     .Call(`_mapdeck_rcpp_path_interleaved`, sf, params, list_columns, digits, layer_name)
 }
@@ -65,16 +69,16 @@ rcpp_point_sf_columnar <- function(data, params, geometry_columns, digits, layer
     .Call(`_mapdeck_rcpp_point_sf_columnar`, data, params, geometry_columns, digits, layer_name)
 }
 
-rcpp_point_geojson_df <- function(data, params, geometry_columns, digits, layer_name) {
-    .Call(`_mapdeck_rcpp_point_geojson_df`, data, params, geometry_columns, digits, layer_name)
-}
-
 rcpp_point_polyline <- function(data, params, geometry_columns, layer_name) {
     .Call(`_mapdeck_rcpp_point_polyline`, data, params, geometry_columns, layer_name)
 }
 
 rcpp_polygon_geojson <- function(data, params, geometry_columns, digits) {
     .Call(`_mapdeck_rcpp_polygon_geojson`, data, params, geometry_columns, digits)
+}
+
+rcpp_interleave_primitive_triangle <- function(data, list_columns) {
+    .Call(`_mapdeck_rcpp_interleave_primitive_triangle`, data, list_columns)
 }
 
 rcpp_triangle_interleaved <- function(data, params, list_columns, digits, layer_name) {

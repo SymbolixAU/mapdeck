@@ -233,7 +233,7 @@ add_path <- function(
 
 	map <- addDependency(map, mapdeckPathDependency())
 
-	l <- resolve_binary_data( data, l )
+	l <- resolve_binary_data( data, l, sf_geom = "LINESTRING" )
 
 	if( !is.null(l[["bbox"]] ) ) {
 		bbox <- l[["bbox"]]
@@ -291,9 +291,9 @@ add_path <- function(
 }
 
 
-resolve_binary_data <- function( data, l ) UseMethod("resolve_binary_data")
+resolve_binary_data <- function( data, l, sf_geom ) UseMethod("resolve_binary_data")
 
-resolve_binary_data.interleaved <- function( data, l ) {
+resolve_binary_data.interleaved <- function( data, l, sf_geom ) {
 
 	l[["bbox"]] <- get_box( data, l )
 	l[["data_type"]] <- "interleaved"
@@ -302,7 +302,7 @@ resolve_binary_data.interleaved <- function( data, l ) {
 }
 
 #' @export
-resolve_binary_data.sf <- function( data, l ) {
+resolve_binary_data.sf <- function( data, l, sf_geom ) {
 	sfc_col <- attr( data, "sf_column" )
 	l[["geometry"]] <- sfc_col
 
@@ -317,8 +317,8 @@ resolve_binary_data.sf <- function( data, l ) {
 	return(l)
 }
 
-resolve_binary_data.default <- function( data, l ) {
-	return( resolve_data( data, l, "LINESTRING" ) )
+resolve_binary_data.default <- function( data, l, sf_geom ) {
+	return( resolve_data( data, l, sf_geom ) )
 }
 
 

@@ -178,56 +178,56 @@ Rcpp::List rcpp_point_sf_columnar(
 // 	);
 // }
 
-// [[Rcpp::export]]
-Rcpp::List rcpp_point_geojson_df(
-		Rcpp::DataFrame data,
-		Rcpp::List params,
-		Rcpp::List geometry_columns,
-		int digits,
-		std::string layer_name
-) {
-
-	int data_rows = data.nrows();
-
-	Rcpp::List lst_defaults = get_point_defaults( layer_name, data_rows );
-
-	Rcpp::StringVector point_legend = get_point_legend_colours( layer_name );
-	std::unordered_map< std::string, std::string > point_colours = get_point_colours( layer_name );
-
-	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
-
-	bool elevation = layer_name == "pointcloud" ? true : false;
-
-
-	if( elevation ) {
-		return spatialwidget::api::create_geojson(
-			data,
-			params,
-			lst_defaults,
-			point_colours,
-			point_legend,
-			data_rows,
-			parameter_exclusions,
-			geometry_columns,
-			true,  // jsonify legend
-			true,  // elevation
-			digits
-		);
-	}
-
-	return spatialwidget::api::create_geojson(
-		data,
-		params,
-		lst_defaults,
-		point_colours,
-		point_legend,
-		data_rows,
-		parameter_exclusions,
-		geometry_columns,
-		true,  // jsonify legend
-		digits
-	);
-}
+// // [[Rcpp::export]]
+// Rcpp::List rcpp_point_geojson_df(
+// 		Rcpp::DataFrame data,
+// 		Rcpp::List params,
+// 		Rcpp::List geometry_columns,
+// 		int digits,
+// 		std::string layer_name
+// ) {
+//
+// 	int data_rows = data.nrows();
+//
+// 	Rcpp::List lst_defaults = get_point_defaults( layer_name, data_rows );
+//
+// 	Rcpp::StringVector point_legend = get_point_legend_colours( layer_name );
+// 	std::unordered_map< std::string, std::string > point_colours = get_point_colours( layer_name );
+//
+// 	Rcpp::StringVector parameter_exclusions = Rcpp::StringVector::create("legend","legend_options","palette","na_colour");
+//
+// 	bool elevation = layer_name == "pointcloud" ? true : false;
+//
+//
+// 	if( elevation ) {
+// 		return spatialwidget::api::create_geojson(
+// 			data,
+// 			params,
+// 			lst_defaults,
+// 			point_colours,
+// 			point_legend,
+// 			data_rows,
+// 			parameter_exclusions,
+// 			geometry_columns,
+// 			true,  // jsonify legend
+// 			true,  // elevation
+// 			digits
+// 		);
+// 	}
+//
+// 	return spatialwidget::api::create_geojson(
+// 		data,
+// 		params,
+// 		lst_defaults,
+// 		point_colours,
+// 		point_legend,
+// 		data_rows,
+// 		parameter_exclusions,
+// 		geometry_columns,
+// 		true,  // jsonify legend
+// 		digits
+// 	);
+// }
 
 
 // [[Rcpp::export]]

@@ -5,6 +5,9 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
 
   var extensions = [];
 
+  let hasTooltip = polygon_data.data.data.tooltip !== undefined;
+  console.log("hasTooltip " + hasTooltip);
+
   if ( brush_radius > 0 ) {
   	extensions.push( new deck.BrushingExtension() );
   }
@@ -32,15 +35,22 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
 
 	console.log( binaryIndices );
 
+	var attributes = {
+			getPolygon: {value: binaryLocation, size: stride},
+    	getFillColor: {value: binaryFill, size: 4},
+    	//getElevation: {value: binaryElevation, size: 1}  // Don't use elevation in Triangles because picking is difficult
+    	indices: binaryIndices
+  };
+
   const polygonLayer = new deck.SolidPolygonLayer({
   	map_id: map_id,
     id: 'polygon-'+layer_id,
     //data: polygon_data,
     //stroked: true,
     //filled: true,
-    //parameters: {
-	  //  depthTest: true
-	  //},
+    parameters: {
+	    depthTest: true
+	  },
     wireframe: true,
     extruded: is_extruded,
     //lineWidthMinPixels: 0,
@@ -49,16 +59,13 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
     data: {
     	length: len,
     	startIndices: binaryStartIndices,
-    	attributes: {
-    		indices: binaryIndices,
-    		getPolygon: {value: binaryLocation, size: stride},
-    		getFillColor: {value: binaryFill, size: 4}
-    		//getElevation: {value: binaryElevation, size: 1}
-    	}
+    	attributes,
+    	tooltip: polygon_data.data.data.tooltip
     },
     _normalize: false, // skip normalization for ear-cut polygons
     pickable: true,
     autoHighlight: auto_highlight,
+    onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
 
 		/*
     getPolygon: d => md_get_polygon_coordinates( d ),

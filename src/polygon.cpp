@@ -45,15 +45,11 @@ Rcpp::List rcpp_polygon_geojson(
 	);
 }
 
-
 // [[Rcpp::export]]
-Rcpp::List rcpp_triangle_interleaved(
-		Rcpp::DataFrame data,  // sf object
-		Rcpp::List params,
-		Rcpp::IntegerVector list_columns,
-		int digits,
-		std::string layer_name
-) {
+Rcpp::List rcpp_interleave_primitive_triangle(
+		Rcpp::DataFrame data,
+		Rcpp::IntegerVector list_columns
+	) {
 
 	Rcpp::StringVector sf_names = data.names();
 	Rcpp::String sfc_column = data.attr("sf_column");
@@ -85,6 +81,8 @@ Rcpp::List rcpp_triangle_interleaved(
 	}
 	//return tri_properties;
 	Rcpp::Rcout << "made properties" << std::endl;
+
+
 	Rcpp::List tri = interleave::primitives::interleave_triangle( polygons, tri_properties );
 	Rcpp::Rcout << "interleaved" << std::endl;
 
@@ -118,8 +116,6 @@ Rcpp::List rcpp_triangle_interleaved(
 	//Rcpp::Rcout << "total_coords: " << total_coordinates << std::endl;
 	//Rcpp::IntegerVector geometry_coordinates = tri["geometry_coordinates"];
 
-
-
 	// non-extruded polygons use the start index as the start of each geometry,
 	// and NOT each triangle.
 	// Rcpp::IntegerVector start_indices( geometry_coordinates.length() );
@@ -137,6 +133,21 @@ Rcpp::List rcpp_triangle_interleaved(
 		Rcpp::_["stride"] = stride
 	);
 
+	return interleaved;
+}
+
+
+// [[Rcpp::export]]
+Rcpp::List rcpp_triangle_interleaved(
+		Rcpp::DataFrame data,  // sf object
+		Rcpp::List params,
+		Rcpp::IntegerVector list_columns,
+		int digits,
+		std::string layer_name
+) {
+
+	Rcpp::List interleaved = rcpp_interleave_primitive_triangle(data, list_columns);
+	int total_coordinates = interleaved[ "total_coordinates" ];
 
 	Rcpp::List lst_defaults = polygon_defaults( total_coordinates );  // initialise with defaults
 

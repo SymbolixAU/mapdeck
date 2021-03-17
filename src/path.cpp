@@ -68,13 +68,9 @@ Rcpp::List rcpp_path_geojson(
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_path_interleaved(
-		Rcpp::DataFrame sf,  // sf object
-		Rcpp::List params,
-		Rcpp::IntegerVector list_columns,
-		int digits,
-		std::string layer_name
-) {
+SEXP rcpp_interleave_primitive_line(
+		Rcpp::DataFrame sf
+	) {
 
 	// NOTES:
 	// different to polygons, don't need to pass in list columns, they can remian on the
@@ -110,6 +106,21 @@ SEXP rcpp_path_interleaved(
 		Rcpp::_["start_indices"] = start_indices,
 		Rcpp::_["stride"] = stride
 	);
+
+	return interleaved;
+}
+
+// [[Rcpp::export]]
+SEXP rcpp_path_interleaved(
+		Rcpp::DataFrame sf,  // sf object
+		Rcpp::List params,
+		Rcpp::IntegerVector list_columns,
+		int digits,
+		std::string layer_name
+) {
+
+	Rcpp::List interleaved = rcpp_interleave_primitive_line( sf );
+	int total_coordinates = interleaved[ "total_coordinates" ];
 
 	// these defaults need to be the length of the interleaved data, not the original.
 	Rcpp::List lst_defaults = get_path_defaults( layer_name, total_coordinates );

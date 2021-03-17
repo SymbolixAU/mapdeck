@@ -160,6 +160,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_interleave_primitive_line
+SEXP rcpp_interleave_primitive_line(Rcpp::DataFrame sf);
+RcppExport SEXP _mapdeck_rcpp_interleave_primitive_line(SEXP sfSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type sf(sfSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_interleave_primitive_line(sf));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_path_interleaved
 SEXP rcpp_path_interleaved(Rcpp::DataFrame sf, Rcpp::List params, Rcpp::IntegerVector list_columns, int digits, std::string layer_name);
 RcppExport SEXP _mapdeck_rcpp_path_interleaved(SEXP sfSEXP, SEXP paramsSEXP, SEXP list_columnsSEXP, SEXP digitsSEXP, SEXP layer_nameSEXP) {
@@ -235,21 +246,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_point_geojson_df
-Rcpp::List rcpp_point_geojson_df(Rcpp::DataFrame data, Rcpp::List params, Rcpp::List geometry_columns, int digits, std::string layer_name);
-RcppExport SEXP _mapdeck_rcpp_point_geojson_df(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP, SEXP layer_nameSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type params(paramsSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type geometry_columns(geometry_columnsSEXP);
-    Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type layer_name(layer_nameSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_point_geojson_df(data, params, geometry_columns, digits, layer_name));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_point_polyline
 Rcpp::List rcpp_point_polyline(Rcpp::DataFrame data, Rcpp::List params, Rcpp::StringVector geometry_columns, std::string layer_name);
 RcppExport SEXP _mapdeck_rcpp_point_polyline(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnsSEXP, SEXP layer_nameSEXP) {
@@ -275,6 +271,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::StringVector >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< int >::type digits(digitsSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_polygon_geojson(data, params, geometry_columns, digits));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_interleave_primitive_triangle
+Rcpp::List rcpp_interleave_primitive_triangle(Rcpp::DataFrame data, Rcpp::IntegerVector list_columns);
+RcppExport SEXP _mapdeck_rcpp_interleave_primitive_triangle(SEXP dataSEXP, SEXP list_columnsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type list_columns(list_columnsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_interleave_primitive_triangle(data, list_columns));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -360,14 +368,15 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mapdeck_rcpp_od_geojson_df", (DL_FUNC) &_mapdeck_rcpp_od_geojson_df, 5},
     {"_mapdeck_rcpp_od_polyline", (DL_FUNC) &_mapdeck_rcpp_od_polyline, 4},
     {"_mapdeck_rcpp_path_geojson", (DL_FUNC) &_mapdeck_rcpp_path_geojson, 5},
+    {"_mapdeck_rcpp_interleave_primitive_line", (DL_FUNC) &_mapdeck_rcpp_interleave_primitive_line, 1},
     {"_mapdeck_rcpp_path_interleaved", (DL_FUNC) &_mapdeck_rcpp_path_interleaved, 5},
     {"_mapdeck_rcpp_trips_interleaved", (DL_FUNC) &_mapdeck_rcpp_trips_interleaved, 6},
     {"_mapdeck_rcpp_path_polyline", (DL_FUNC) &_mapdeck_rcpp_path_polyline, 4},
     {"_mapdeck_rcpp_point_df_columnar", (DL_FUNC) &_mapdeck_rcpp_point_df_columnar, 5},
     {"_mapdeck_rcpp_point_sf_columnar", (DL_FUNC) &_mapdeck_rcpp_point_sf_columnar, 5},
-    {"_mapdeck_rcpp_point_geojson_df", (DL_FUNC) &_mapdeck_rcpp_point_geojson_df, 5},
     {"_mapdeck_rcpp_point_polyline", (DL_FUNC) &_mapdeck_rcpp_point_polyline, 4},
     {"_mapdeck_rcpp_polygon_geojson", (DL_FUNC) &_mapdeck_rcpp_polygon_geojson, 4},
+    {"_mapdeck_rcpp_interleave_primitive_triangle", (DL_FUNC) &_mapdeck_rcpp_interleave_primitive_triangle, 2},
     {"_mapdeck_rcpp_triangle_interleaved", (DL_FUNC) &_mapdeck_rcpp_triangle_interleaved, 5},
     {"_mapdeck_rcpp_polygon_polyline", (DL_FUNC) &_mapdeck_rcpp_polygon_polyline, 3},
     {"_mapdeck_rcpp_text_geojson", (DL_FUNC) &_mapdeck_rcpp_text_geojson, 4},
