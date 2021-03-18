@@ -6,7 +6,7 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
   var extensions = [];
 
   let hasTooltip = polygon_data.data.data.tooltip !== undefined;
-  console.log("hasTooltip " + hasTooltip);
+  //console.log("hasTooltip " + hasTooltip);
 
   if ( brush_radius > 0 ) {
   	extensions.push( new deck.BrushingExtension() );
@@ -47,7 +47,7 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
     id: 'polygon-'+layer_id,
     //data: polygon_data,
     //stroked: true,
-    //filled: true,
+    filled: true,
     parameters: {
 	    depthTest: true
 	  },
@@ -76,14 +76,13 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
     */
 
 
-    //lightSettings: light_settings,
+    lightSettings: light_settings,
     //autoHighlight: auto_highlight,
     //highlightColor: md_hexToRGBA( highlight_colour ),
     //highlightColor: md_hexToRGBA( "#AAFFFF80")
     //onHover: md_update_tooltip,
-    //onHover: test_hover
     //onClick: info => md_layer_click( map_id, "polygon", info ),
-    //transitions: js_transition || {},
+    transitions: js_transition || {},
     //brushingRadius: brush_radius,
     //extensions: extensions
   });

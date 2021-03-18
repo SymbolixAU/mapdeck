@@ -40,10 +40,10 @@ LinkingTo:
     BH,
     colourvalues (>= 0.3.6),
     geojsonsf (>= 1.3.3),
-    geometries,
+    geometries (>= 0.2.1),
     interleave (>= 0.1.1),
     jsonify (>= 1.1.1),
     rapidjsonr,
     Rcpp,
-    sfheaders (>= 0.3.0),
+    sfheaders (>= 0.4.0),
     spatialwidget (>= 0.2.4)

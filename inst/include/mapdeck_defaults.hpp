@@ -28,7 +28,7 @@ namespace mapdeck {
 namespace defaults {
 
 inline Rcpp::NumericVector default_arc_height( int n ) {
-	int x;
+
 	Rcpp::NumericVector nv(n, 1.0);
 	return nv;
 }
