@@ -38,7 +38,7 @@
 # 	fill_colour = "sfg_id"
 # )
 #
-# sf_poly <- sfheaders::sf_cast( sf, "POLYGON" )
+# sf_poly <- sfheaders::sf_cast( sf, "POLYGON", list_columns = "s" )
 #
 # # res <- mapdeck:::rcpp_triangle_interleaved(
 # # 	data = sf_poly
@@ -51,7 +51,7 @@
 #
 # res <- mapdeck() %>%
 # 	add_triangle(
-# 		data = sf_poly
+# 		data = sf
 # 		, fill_colour = "s"
 # 		, tooltip = "multipolygon_id"
 # 		#, auto_highlight = TRUE

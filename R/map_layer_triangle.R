@@ -198,7 +198,6 @@ add_triangle <- function(
 	if ( tp == "sf" ) {
 		geometry_column <- c( "geometry" ) ## This is where we would also specify 'origin' or 'destination'
 		list_cols <- list_columns( data, geometry_column )
-		# print( list_cols )
 
 		shape <- rcpp_triangle_interleaved( data, l, list_cols, digits, "triangle" )
 	# } else if ( tp == "sfencoded" ) {
