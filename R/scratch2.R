@@ -34,11 +34,11 @@
 # 	, keep = T
 # )
 #
-# l <- list(
-# 	fill_colour = "sfg_id"
-# )
+# # l <- list(
+# # 	fill_colour = "sfg_id"
+# # )
 #
-# sf_poly <- sfheaders::sf_cast( sf, "POLYGON" )
+# sf_poly <- sfheaders::sf_cast( sf, "POLYGON", list_columns = "s" )
 #
 # # res <- mapdeck:::rcpp_triangle_interleaved(
 # # 	data = sf_poly
@@ -47,16 +47,16 @@
 # # 	, digits = 6L
 # # 	, layer_name = "triangle"
 # # )
-#
-#
-# interleave:::rcpp_interleave_triangle(
-# 	obj = sf_poly[4, ]$geometry, list( sf_poly[5, ]$s )
-# )
+# #
+# #
+# # interleave:::rcpp_interleave_triangle(
+# # 	obj = sf_poly[4, ]$geometry, list( sf_poly[5, ]$s )
+# # )
 #
 #
 # mapdeck() %>%
 # 	add_triangle(
-# 		data = sf_poly[7, ]
+# 		data = sf
 # 		, fill_colour = "s"
 # 		, tooltip = "multipolygon_id"
 # 		#, auto_highlight = TRUE
