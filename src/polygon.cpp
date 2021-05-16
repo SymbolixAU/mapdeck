@@ -86,6 +86,8 @@ Rcpp::List rcpp_interleave_primitive_triangle(
 	Rcpp::List tri = interleave::primitives::interleave_triangle( polygons, tri_properties );
 	Rcpp::Rcout << "interleaved" << std::endl;
 
+	//return tri;
+
 	Rcpp::NumericVector coordinates = tri[ "coordinates" ];
 	Rcpp::IntegerVector indices = tri["input_index"];
 	Rcpp::IntegerVector geometry_coordinates = tri[ "geometry_coordinates" ];
@@ -147,6 +149,9 @@ Rcpp::List rcpp_triangle_interleaved(
 ) {
 
 	Rcpp::List interleaved = rcpp_interleave_primitive_triangle(data, list_columns);
+
+	//return interleaved;
+
 	int total_coordinates = interleaved[ "total_coordinates" ];
 
 	Rcpp::List lst_defaults = polygon_defaults( total_coordinates );  // initialise with defaults
@@ -157,6 +162,8 @@ Rcpp::List rcpp_triangle_interleaved(
 
 	std::string format = "interleaved";
 	Rcpp::StringVector binary_columns = mapdeck::binary_columns::get_binary_columns( layer_name );
+
+	//return Rcpp::List::create();
 
 	Rcpp::List lst = spatialwidget::api::create_interleaved(
 		interleaved,
