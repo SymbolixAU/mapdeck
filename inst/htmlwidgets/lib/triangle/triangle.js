@@ -1,8 +1,6 @@
 
 function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, is_extruded, elevation_scale, brush_radius ) {
 
-	console.log( polygon_data );
-
   var extensions = [];
 
   let hasTooltip = polygon_data.data.data.tooltip !== undefined;
@@ -33,7 +31,7 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
 		binaryIndices[i] = i;
 	}
 
-	console.log( binaryIndices );
+	//console.log( binaryIndices );
 
 	var attributes = {
 			getPolygon: {value: binaryLocation, size: stride},
@@ -101,7 +99,7 @@ function add_triangle( map_id, map_type, polygon_data, layer_id, light_settings,
 }
 
 function test_hover({x,y,object,layer,index}) {
-	console.log("hovering");
+	//console.log("hovering");
 }
 
 

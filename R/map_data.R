@@ -219,8 +219,8 @@ resolve_data.sf <- function( data, l, sf_geom ) {
 	if( cls != sf_geom ) {
 		## find any list columns before casting
 		list_cols <- names(data)[ list_columns( data, sfc_col) + 1 ]
-		print("list_cols: ")
-		print(list_cols)
+		# print("list_cols: ")
+		# print(list_cols)
 		l[["data"]] <- sfheaders::sf_cast( data, sf_geom, list_columns = list_cols )
 		#l[["data"]] <- sfheaders::sf_cast( data, sf_geom )
 	}

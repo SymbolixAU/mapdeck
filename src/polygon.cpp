@@ -74,17 +74,17 @@ Rcpp::List rcpp_interleave_primitive_triangle(
 	Rcpp::List tri_properties( list_columns.length() );
 	for( R_xlen_t i = 0; i < list_columns.length(); ++i ) {
 		R_xlen_t idx = list_columns[ i ];
-		Rcpp::Rcout << "idx: " << idx << std::endl;
-		Rcpp::Rcout << "data ncol: " << data.ncol() << std::endl;
+		// Rcpp::Rcout << "idx: " << idx << std::endl;
+		// Rcpp::Rcout << "data ncol: " << data.ncol() << std::endl;
 		Rcpp::List list_col = Rcpp::as< Rcpp::List >( data[ idx ] );
 		tri_properties[ i ] = list_col;
 	}
 	//return tri_properties;
-	Rcpp::Rcout << "made properties" << std::endl;
+	// Rcpp::Rcout << "made properties" << std::endl;
 
 
 	Rcpp::List tri = interleave::primitives::interleave_triangle( polygons, tri_properties );
-	Rcpp::Rcout << "interleaved" << std::endl;
+	// Rcpp::Rcout << "interleaved" << std::endl;
 
 	//return tri;
 
@@ -94,7 +94,7 @@ Rcpp::List rcpp_interleave_primitive_triangle(
 	Rcpp::IntegerVector start_indices = tri["start_indices"];
 	int stride = tri[ "stride" ];
 
-	Rcpp::Rcout << "shuffling properties " << std::endl;
+	// Rcpp::Rcout << "shuffling properties " << std::endl;
 
 	// put the properties back onto 'data'
 	Rcpp::List shuffled_properties = tri["properties"];
@@ -104,7 +104,7 @@ Rcpp::List rcpp_interleave_primitive_triangle(
 		data[ idx ] = shuffled_properties[ i ];
 	}
 
-	Rcpp::Rcout << "shuffled properties" << std::endl;
+	// Rcpp::Rcout << "shuffled properties" << std::endl;
 
 	//return data;
 
