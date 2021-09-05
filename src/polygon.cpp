@@ -82,8 +82,8 @@ Rcpp::List rcpp_interleave_primitive_triangle(
 	//return tri_properties;
 	// Rcpp::Rcout << "made properties" << std::endl;
 
-
 	Rcpp::List tri = interleave::primitives::interleave_triangle( polygons, tri_properties );
+	Rcpp::stop("stopping");
 	// Rcpp::Rcout << "interleaved" << std::endl;
 
 	//return tri;
@@ -150,6 +150,7 @@ Rcpp::List rcpp_triangle_interleaved(
 
 	Rcpp::List interleaved = rcpp_interleave_primitive_triangle(data, list_columns);
 
+	Rcpp::stop("stopping");
 	//return interleaved;
 
 	int total_coordinates = interleaved[ "total_coordinates" ];
@@ -162,6 +163,7 @@ Rcpp::List rcpp_triangle_interleaved(
 
 	std::string format = "interleaved";
 	Rcpp::StringVector binary_columns = mapdeck::binary_columns::get_binary_columns( layer_name );
+
 
 	//return Rcpp::List::create();
 
