@@ -57,14 +57,14 @@ class MultiColouredPathLayer extends deck.PathLayer {
 
 function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels, use_offset, use_dash, legend_type ) {
 
-  //console.log( path_data );
+  console.log( path_data );
 
   var extensions = [];
-
+/*
   if ( brush_radius > 0 ) {
   	extensions.push( new deck.BrushingExtension() );
   }
-
+*/
 	if( use_dash || use_offset ) {
 	  extensions.push(
 	  	new deck.PathStyleExtension({dash: use_dash, offset: use_offset})
@@ -78,10 +78,17 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
   const binaryLineColour = new Float32Array( path_data.data.data.stroke_colour );
   const binaryLineWidth = new Float32Array( path_data.data.data.stroke_width );
 
+	console.log( binaryLocation );
+	console.log( binaryStartIndices );
+	console.log( binaryLineColour );
+	console.log( binaryLineWidth );
+
   //let legend = path_data.legend;
   let stride = path_data.data.stride[0];
   let data_count = path_data.data.start_indices.length;
 
+  console.log( data_count );
+/*
   var binaryDash;
 
   if( use_dash ) {
@@ -97,13 +104,14 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
   	//console.log( dashes );
   	binaryDash = new Float32Array( dashes );
   }
+*/
 
   var attributes = {
 			getPath: {value: binaryLocation, size: stride},
       getColor: {value: binaryLineColour, size: 4},
       getWidth: {value: binaryLineWidth, size: 1}
   };
-
+/*
 	if( use_dash ) {
       attributes.getDashArray = {value: binaryDash, size: 2};
 	}
@@ -112,7 +120,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
 		const binaryOffset = new Float32Array( path_data.data.data.offset );
 		attributes.getOffset = {value: binaryOffset, sizie: 1};
 	}
-
+*/
   const layer = {
   	map_id: map_id,
     id: 'path-'+layer_id,
@@ -129,10 +137,11 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
 		data: {
       length: data_count,
       startIndices: binaryStartIndices,
-      attributes,
-      tooltip: path_data.data.data.tooltip
+      attributes
+      //tooltip: path_data.data.data.tooltip
     },
-    _pathType: 'open',
+    _pathType: 'open'
+    /*
     onClick: info => md_layer_click( map_id, "path", info ),
     onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
     autoHighlight: auto_highlight,
@@ -140,6 +149,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
     transitions: js_transition || {},
     brushingRadius: brush_radius,
     extensions: extensions
+    */
   };
 
 
@@ -150,6 +160,8 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
 	const pathLayer = Array.isArray( extensions ) && extensions.length ?
 		new deck.PathLayer(layer) :
 		new MultiColouredPathLayer(layer);
+
+	console.log(pathLayer);
 
   if( map_type == "google_map") {
 	  md_update_overlay( map_id, 'path-'+layer_id, pathLayer );
