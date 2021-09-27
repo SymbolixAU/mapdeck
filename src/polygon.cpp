@@ -83,7 +83,7 @@ Rcpp::List rcpp_interleave_primitive_triangle(
 	// Rcpp::Rcout << "made properties" << std::endl;
 
 	Rcpp::List tri = interleave::primitives::interleave_triangle( polygons, tri_properties );
-	Rcpp::stop("stopping");
+	//Rcpp::stop("stopping");
 	// Rcpp::Rcout << "interleaved" << std::endl;
 
 	//return tri;
@@ -111,7 +111,6 @@ Rcpp::List rcpp_interleave_primitive_triangle(
 	// IFF any columns of 'data' are lists, where each element is a vector the same length as
 	// the number of coordinates in that sfg_POLYGON, then that vector needs to be subset
 	// according to `indices`, which will correctly align the value to the coordinate
-	//
 
 	int total_coordinates = indices.length();
 
@@ -150,7 +149,7 @@ Rcpp::List rcpp_triangle_interleaved(
 
 	Rcpp::List interleaved = rcpp_interleave_primitive_triangle(data, list_columns);
 
-	Rcpp::stop("stopping");
+	//Rcpp::stop("stopping");
 	//return interleaved;
 
 	int total_coordinates = interleaved[ "total_coordinates" ];
@@ -165,7 +164,7 @@ Rcpp::List rcpp_triangle_interleaved(
 	Rcpp::StringVector binary_columns = mapdeck::binary_columns::get_binary_columns( layer_name );
 
 
-	//return Rcpp::List::create();
+	return Rcpp::List::create();
 
 	Rcpp::List lst = spatialwidget::api::create_interleaved(
 		interleaved,

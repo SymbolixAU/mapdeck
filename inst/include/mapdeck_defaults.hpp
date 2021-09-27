@@ -6,7 +6,7 @@
 namespace mapdeck {
 namespace binary_columns {
 
-	// inline int x;
+	inline int x;
 
 	// binary columns are non-colour columns
 	inline Rcpp::StringVector get_binary_columns( std::string layer_name ) {

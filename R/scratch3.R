@@ -1,4 +1,4 @@
-#
+
 #
 # library(sf)
 # library(geojsonsf)
@@ -7,11 +7,17 @@
 #
 # set_token(read.dcf("~/.mapbox", fields="MAPBOX"))
 # sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
-# sf <- sf[1:16, ]
+# ##sf <- sf[1:16, ]
 #
-# ## calling on the full object crashes
+# # calling on the full object crashes
 # res <- mapdeck() %>%
 # 	add_triangle(
+# 		data = sf,
+# 		fill_colour = "SA2_NAME16"
+# 	)
+#
+# poly <- mapdeck() %>%
+# 	add_polygon(
 # 		data = sf
 # 	)
 #
