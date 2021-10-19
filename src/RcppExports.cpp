@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // rcpp_aggregate_geojson
 Rcpp::List rcpp_aggregate_geojson(Rcpp::DataFrame data, Rcpp::List params, Rcpp::StringVector geometry_column, int digits, std::string layer_name);
 RcppExport SEXP _mapdeck_rcpp_aggregate_geojson(SEXP dataSEXP, SEXP paramsSEXP, SEXP geometry_columnSEXP, SEXP digitsSEXP, SEXP layer_nameSEXP) {
