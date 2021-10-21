@@ -168,13 +168,13 @@ deckgl_min_js <- function() {
 	)
 }
 
-## https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js
-## https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css
+## https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js
+## https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css
 mapboxgl <- function() {
 	list(
 		createHtmlDependency(
 			name = "mapboxgl",
-			version = "1.12.0",
+			version = "1.13.0",
 			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
 			script = c("mapbox-gl.js"),
 			stylesheet = c("mapbox-gl.css"),
