@@ -174,7 +174,7 @@ mapboxgl <- function() {
 	list(
 		createHtmlDependency(
 			name = "mapboxgl",
-			version = "1.12.0",
+			version = "1.13.0",
 			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
 			script = c("mapbox-gl.js"),
 			stylesheet = c("mapbox-gl.css"),
