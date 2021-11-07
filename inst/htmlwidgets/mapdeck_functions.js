@@ -5,6 +5,7 @@ function md_setup_window( map_id ) {
 
   md_setup_legend( map_id );
   md_setup_title( map_id );
+  md_setup_view_state( map_id );
   md_setup_tooltip( map_id );
 }
 
@@ -15,6 +16,7 @@ function md_setup_window_objects( map_id ) {
   window[map_id + 'mapdeckBounds'] = [];       // store the bounding box of each layer
   window[map_id + 'globalBox'] = [];
   window[map_id + 'currentZoomLevel'] = 0;
+  window[map_id + 'trip_animation'] = 0;
 }
 
 function md_setup_mapdeck_div( map_id ) {
@@ -31,12 +33,19 @@ function md_setup_legend( map_id ) {
 }
 
 function md_setup_title( map_id ) {
-	console.log( "setup_title" ) ;
 	var mapDiv = document.getElementById(map_id);
 	var mapTitle = document.createElement('div');
   mapTitle.className = "mapTitleContainer";
   mapTitle.id = "mapTitleContainer"+map_id;
   mapDiv.appendChild( mapTitle );
+}
+
+function md_setup_view_state( map_id ) {
+	var mapDiv = document.getElementById(map_id);
+	var mapViewState = document.createElement('div');
+  mapViewState.className = "mapViewStateContainer";
+  mapViewState.id = "mapViewStateContainer"+map_id;
+  mapDiv.appendChild( mapViewState );
 }
 
 function md_setup_tooltip( map_id ) {
@@ -66,10 +75,6 @@ function md_update_tooltip({x, y, object, layer, index}) {
   const tooltip = document.getElementById('mapdecktooltip'+layer.props.map_id);
   var tt;
 
-  //console.log( tooltip );
-  //console.log( object );
-  //console.log( x, ", ", y );
-
   if (object) {
   	if( object.properties !== undefined ) {
 	  	if ( object.properties.tooltip !== undefined ) {
@@ -91,6 +96,28 @@ function md_update_tooltip({x, y, object, layer, index}) {
   	tooltip.style.display = 'none';
     tooltip.innerHTML = '';
   }
+}
+
+function md_update_binary_tooltip(layer, idx, x, y) {
+
+	if( !md_div_exists( 'mapdecktooltip'+ layer.props.map_id ) ) {
+  	md_setup_tooltip( layer.props.map_id );
+  }
+
+  const tooltip = document.getElementById( 'mapdecktooltip'+layer.props.map_id );
+  var tt;
+
+	  if( layer.props.data.tooltip && idx >= 0 ) {
+	  	tt = layer.props.data.tooltip[ idx ];
+	  	tooltip.style.display = 'block';
+	    tooltip.style.top = `${y}px`;
+	    tooltip.style.left = `${x}px`;
+	    tooltip.innerHTML = `<div>${tt}</div>`;
+	  } else {
+    	tooltip.style.display = 'none';
+	    tooltip.innerHTML = '';
+  }
+
 }
 
 
@@ -127,7 +154,7 @@ function md_findObjectElementByKey(array, key, value ) {
     return -1;
 }
 
-function md_layer_clear( map_id, map_type, layer_id, layer ) {
+function md_layer_clear( map_id, map_type, layer_id, layer, update_view ) {
 
   if( map_type == "mapdeck" ) {
 		md_clear_layer( map_id, layer+'-'+layer_id );
@@ -136,7 +163,9 @@ function md_layer_clear( map_id, map_type, layer_id, layer ) {
   }
 
   md_remove_from_bounds( map_id, layer_id );
-	md_update_location( map_id, map_type );
+  if( update_view ) {
+	  md_update_location( map_id, map_type );
+  }
 	md_clear_legend( map_id, map_type, layer_id );
 }
 
@@ -151,29 +180,30 @@ function md_update_layer( map_id, layer_id, layer ) {
   }
 
   // ## issue 137
-  var vs = window[ map_id + 'map'].viewState;
+  //var vs = window[ map_id + 'map'].viewState;
 
   window[map_id + 'map'].setProps({
-  	layers: [...window[map_id + 'layers'] ],
-  	viewState: vs
+  	layers: [...window[map_id + 'layers'] ]
+  	//viewState: vs                           // issue 239 - viewState no longer supported in deck.gl v8.0.8
   });
 }
 
 function md_clear_layer( map_id, layer_id ) {
 
   var elem = md_findObjectElementByKey( window[map_id + 'map'].props.layers, 'id', layer_id);
+
   if ( elem != -1 ) {
   	window[ map_id + 'layers'].splice( elem, 1 );
+
+  	// ## issue 137
+	  //var vs = window[ map_id + 'map'].viewState;
+	  window[map_id + 'map'].setProps({
+	  	layers: [...window[map_id + 'layers'] ]
+	  	//viewState: vs                            // issue 239 & 286
+	  });
+
   }
-
-  // ## issue 137
-  var vs = window[ map_id + 'map'].viewState;
-  window[map_id + 'map'].setProps({
-  	layers: [...window[map_id + 'layers'] ],
-  	viewState: vs
-  });
 }
-
 
 function md_update_overlay( map_id, layer_id, layer ) {
 
@@ -182,7 +212,7 @@ function md_update_overlay( map_id, layer_id, layer ) {
   }
 
   if ( window[ map_id + 'GoogleMapsOverlay'] == null ) {
-  	window[ map_id + 'GoogleMapsOverlay'] = new GoogleMapsOverlay();
+  	window[ map_id + 'GoogleMapsOverlay'] = new deck.GoogleMapsOverlay();
   }
 
 	var elem = md_findObjectElementByKey( window[map_id + 'layers'], 'id', layer_id );

@@ -28,6 +28,8 @@ mapdeckGeojsonDependency <- function() {
 #' @param fill_opacity column of an \code{sf} object, or field inside a GeoJSON \code{property} to use for opacity
 #' @param radius radius of points in meters. Default 1. See details
 #' @param elevation elevation of polygons. Default 0. See details
+#' @param extruded logical indicating if polygons should extrude from the map.
+#' If \code{TRUE}, \code{stroke_colour} for polygons is ignored
 #' @param light_settings list of light setting parameters. See \link{light_settings}
 #' @param line_width_units The units of the line width, one of 'meters', 'pixels'.
 #' When zooming in and out, meter sizes scale with the base map, and pixel sizes remain the same on screen.
@@ -177,7 +179,7 @@ mapdeckGeojsonDependency <- function() {
 #' library(geojsonsf)
 #' sf <- geojsonsf::geojson_sf( geojson )
 #' sf$width <- sample(1:100, size = nrow(sf), replace = TRUE)
-#' sf$elevation <- sample(100:1000, size = nrow(sf), replace = T)
+#' sf$elevation <- sample(100:1000, size = nrow(sf), replace = TRUE)
 #' geo <- geojsonsf::sf_geojson( sf )
 #'
 #' mapdeck(
@@ -207,6 +209,7 @@ add_geojson <- function(
 	fill_opacity = NULL,
 	radius = NULL,
 	elevation = NULL,
+	extruded = FALSE,
 	light_settings = list(),
 	legend = F,
 	legend_options = NULL,
@@ -310,14 +313,14 @@ add_geojson <- function(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, light_settings, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
 		js_transitions, line_width_units, line_width_scale, line_width_min_pixels,
-		elevation_scale, point_radius_scale, point_radius_min_pixels
+		elevation_scale, point_radius_scale, point_radius_min_pixels, extruded
 		)
 }
 
 
 #' @rdname clear
 #' @export
-clear_geojson <- function( map, layer_id = NULL) {
+clear_geojson <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "geojson")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "geojson" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "geojson", update_view )
 }

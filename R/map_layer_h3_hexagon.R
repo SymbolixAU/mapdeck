@@ -22,11 +22,9 @@ mapdeckH3JSDependency <- function() {
 	)
 }
 
-#' Add hexagon
+#' Add h3
 #'
-#' The Hexagon Layer renders a hexagon heatmap based on an array of points.
-#' It takes the radius of hexagon bin, projects points into hexagon bins.
-#' The color and height of the hexagon is scaled by number of points it contains.
+#' The h3 layer renders hexagons from the H3 geospatial indexing system.
 #'
 #' @inheritParams add_arc
 #' @param lon column containing longitude values
@@ -66,21 +64,19 @@ mapdeckH3JSDependency <- function() {
 #' key <- 'abc'
 #' set_token( key )
 #'
-#' # TODO: Move to file somewhere.
-#' road_safety <- read_csv("https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv")
-#' road_safety_h3 <- road_safety %>%
-#' 	transmute(h3 = h3js::h3_geo_to_h3(lat, lng, 7)) %>%
-#' 	count(h3)
-#'
-#' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
-#'   add_h3_hexagon(
-#'   data = road_safety_h3
-#'   , layer_id = "h3_layer"
-#'   , hexagon = "h3"
-#'   , tooltip = "n"
-#'   , auto_highlight = TRUE
-#'   , legend = TRUE
-#'  )
+#' mapdeck(
+#'  style = mapdeck_style("dark")
+#'  , libraries = "h3-js"
+#'  ) %>%
+#'  add_h3(
+#'    data = road_safety
+#'    , hexagon = "hex"
+#'    , fill_colour = "count"
+#'    , auto_highlight = TRUE
+#'    , legend = TRUE
+#'    , elevation = "count"
+#'    , elevation_scale = 10
+#'    )
 #'
 #' }
 #'
@@ -90,7 +86,7 @@ mapdeckH3JSDependency <- function() {
 #'
 #'
 #' @export
-add_h3_hexagon <- function(
+add_h3 <- function(
 	map,
 	data = get_map_data(map),
 	# polyline = NULL,
@@ -176,11 +172,14 @@ add_h3_hexagon <- function(
 	jsfunc <- "add_h3_hexagon_geo"
 
 	geometry_column <- "hexagon"
-	shape <- rcpp_point_polyline( data, l, geometry_column, "scatterplot")
+	shape <- rcpp_point_polyline( data, l, geometry_column, "h3_hexagon")
+
+	return(shape)
+
 	jsfunc <- "add_h3_hexagon"
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)
-	js_transitions <- resolve_transitions( transitions, "polygon" )
+	js_transitions <- resolve_transitions(transitions, "polygon")
 
 	if( inherits( legend, "json" ) ) {
 		shape[["legend"]] <- legend

@@ -53,7 +53,7 @@ mapdeckLineDependency <- function() {
 #' url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 #' flights <- read.csv(url)
 #' flights$id <- seq_len(nrow(flights))
-#' flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
+#' flights$stroke <- sample(1:3, size = nrow(flights), replace = TRUE)
 #'
 #' mapdeck(style = mapdeck_style("dark"), pitch = 45 ) %>%
 #'   add_line(
@@ -67,18 +67,18 @@ mapdeckLineDependency <- function() {
 #'  )
 #'
 #' ## Using a 2-sfc-column sf object
-#' library(sf)
+#' library(sfheaders)
 #'
-#' sf_flights <- cbind(
-#'   sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
-#'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
-#' )
+#' sf_flights <- sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = TRUE )
+#' destination <- sfheaders::sfc_point( flights, x = "end_lon", y = "end_lat" )
+#'
+#' sf_flights$destination <- destination
 #'
 #' mapdeck() %>%
 #'  add_line(
 #'    data = sf_flights
 #'    , origin = 'geometry'
-#'    , destination = 'geometry.1'
+#'    , destination = 'destination'
 #'    , layer_id = 'arcs'
 #'    , stroke_colour = "airport1"
 #' )
@@ -117,7 +117,8 @@ add_line <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	digits = 6,
-	transitions = NULL
+	transitions = NULL,
+	brush_radius = NULL
 ) {
 
 	l <- list()
@@ -161,7 +162,7 @@ add_line <- function(
 		geometry_column <- c( "origin", "destination" )
 		shape <- rcpp_od_geojson( data, l, geometry_column, digits, "line" )
 	} else if ( tp == "df" ) {
-		geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
+		geometry_column <- list( origin = c("start_lon", "start_lat","start_elev"), destination = c("end_lon", "end_lat","end_elev") )
 		shape <- rcpp_od_geojson_df( data, l, geometry_column, digits, "line" )
 	}
 	# } else if ( tp == "sfencoded" ) {
@@ -179,7 +180,7 @@ add_line <- function(
 	invoke_method(
 		map, "add_line_geo", map_type( map ), shape[["data"]], layer_id, auto_highlight,
 		highlight_colour, shape[["legend"]], bbox, update_view, focus_layer,
-		js_transitions
+		js_transitions, brush_radius
 		)
 }
 
@@ -187,8 +188,8 @@ add_line <- function(
 
 #' @rdname clear
 #' @export
-clear_line <- function( map, layer_id = NULL) {
+clear_line <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "line")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "line" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "line", update_view )
 }
 

@@ -1,7 +1,11 @@
 function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_settings, elevation_scale, auto_highlight, highlight_colour, legend, js_transition, is_extruded ) {
 //bbox, update_view, focus_layer,
 
-  const h3Layer = new H3HexagonLayer({
+//	console.log(h3_hexagon_data);
+//	console.log(layer_id);
+  console.log( legend );
+
+  const h3Layer = new deck.H3HexagonLayer({
   	map_id: map_id,
     id: 'h3_hexagon-'+layer_id,
     data: h3_hexagon_data,
@@ -12,8 +16,8 @@ function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_sett
     extruded: is_extruded,
     lineWidthMinPixels: 0,
     getHexagon: d => d.hexagon,
-    getLineColor: d => md_hexToRGBA( d.stroke_colour ),
-    getFillColor: d => md_hexToRGBA( d.fill_colour ),
+    getLineColor: d => d.stroke_colour,
+    getFillColor: d => d.fill_colour,
     getLineWidth: d => d.stroke_width,
     getElevation: d => d.elevation,
     elevationScale: elevation_scale,

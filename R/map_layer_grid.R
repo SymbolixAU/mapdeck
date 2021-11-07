@@ -52,8 +52,8 @@ mapdeckGridDependency <- function() {
 #' )
 #'
 #' ## using sf object
-#' library(sf)
-#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 #'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_grid(
@@ -65,7 +65,7 @@ mapdeckGridDependency <- function() {
 #' )
 #'
 #' ## using colour and elevation functions, and legends
-#' df$val <- sample(1:10, size = nrow(df), replace = T)
+#' df$val <- sample(1:10, size = nrow(df), replace = TRUE)
 #'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
 #' add_grid(
@@ -74,8 +74,8 @@ mapdeckGridDependency <- function() {
 #' 	, lon = "lng"
 #' 	, layer_id = "hex_layer"
 #' 	, elevation_scale = 100
-#' 	, legend = T
-#' 	, colour_function = "mean"
+#' 	, legend = TRUE
+#' 	, colour_function = "max"
 #' 	, colour = "val"
 #' )
 #'
@@ -85,8 +85,8 @@ mapdeckGridDependency <- function() {
 #' 	, lat = "lat"
 #' 	, lon = "lng"
 #' 	, layer_id = "hex_layer"
-#' 	, elevation_scale = 100
-#' 	, legend = T
+#' 	, elevation_scale = 10
+#' 	, legend = TRUE
 #' 	, elevation_function = "mean"
 #' 	, elevation = "val"
 #' )
@@ -148,7 +148,7 @@ add_grid <- function(
 	use_colour <- FALSE
 	if(!is.null(colour)) use_colour <- TRUE
 
-	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+	l <- resolve_data( data, l, c("POINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -186,7 +186,6 @@ add_grid <- function(
 	l[["data_type"]] <- NULL
 
 	jsfunc <- "add_grid_geo"
-
 	if ( tp == "sf" ) {
 	  geometry_column <- c( "geometry" )
 	  shape <- rcpp_aggregate_geojson( data, l, geometry_column, digits, "grid" )
@@ -213,7 +212,7 @@ add_grid <- function(
 
 #' @rdname clear
 #' @export
-clear_grid <- function( map, layer_id = NULL) {
+clear_grid <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "grid")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "grid" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "grid", update_view )
 }

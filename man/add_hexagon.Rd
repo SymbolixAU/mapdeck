@@ -73,6 +73,8 @@ If supplied it specifies how the colour values are calculated. Defaults to sum.}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{transitions}{list specifying the duration of transitions.}
 
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
@@ -136,8 +138,8 @@ add_hexagon(
   , elevation_scale = 100
 )
 
-library( sf )
-sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lng", y = "lat" )
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_hexagon(
@@ -175,7 +177,7 @@ add_hexagon(
 )
 
 ## with a legend
-df$val <- sample(1:10, size = nrow(df), replace = T)
+df$val <- sample(1:10, size = nrow(df), replace = TRUE)
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_hexagon(
@@ -184,7 +186,7 @@ add_hexagon(
 	, lon = "lng"
 	, layer_id = "hex_layer"
 	, elevation_scale = 100
-	, legend = T
+	, legend = TRUE
 	, legend_options = list( digits = 0 )
 	, colour_function = "mean"
 	, colour = "val"

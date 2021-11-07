@@ -36,7 +36,13 @@ test_that("layerId includes all layers", {
 	f <- sort( f )
 	f <- setdiff(f, c("parameter_checks","sf"))
 
+
 	expect_equal( f, sort( layers ) )
+
+	res <- sapply( layers, function(x) { mapdeck:::layerId( layer_id = "test", layer = x) })
+	expect_equal( layers, names( res ) )
+
+
 })
 
 

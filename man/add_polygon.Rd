@@ -16,6 +16,7 @@ add_polygon(
   elevation = NULL,
   tooltip = NULL,
   auto_highlight = FALSE,
+  elevation_scale = 1,
   highlight_colour = "#AAFFFFFF",
   light_settings = list(),
   layer_id = NULL,
@@ -28,7 +29,8 @@ add_polygon(
   update_view = TRUE,
   focus_layer = FALSE,
   digits = 6,
-  transitions = NULL
+  transitions = NULL,
+  brush_radius = NULL
 )
 }
 \arguments{
@@ -41,12 +43,17 @@ EPSG:4326 (WGS 84) coordinate system}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
 \code{elevation} is ignored.
-If using a hex colour, use either a single value, or a vector the same length as \code{data}}
+If using a hex colour, use either a single value, or a column of hex colours  on \code{data}}
 
 \item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
 
+\item{stroke_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
+
 \item{fill_colour}{column of \code{data} or hex colour for the fill colour.
-If using a hex colour, use either a single value, or a vector the same length as \code{data}}
+If using a hex colour, use either a single value, or a column of hex colours  on \code{data}}
 
 \item{fill_opacity}{Either a string specifying the column of \code{data}
 containing the opacity of each shape, or a single value in [0,255], or [0, 1),
@@ -59,6 +66,8 @@ colour, this argument is ignored and you should include the alpha on the hex str
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
+
+\item{elevation_scale}{elevation multiplier.}
 
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
 
@@ -89,7 +98,13 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{transitions}{list specifying the duration of transitions.}
+
+\item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed}
 }
 \description{
 The Polygon Layer renders filled and/or stroked polygons.
@@ -170,7 +185,6 @@ you are clicking on
 key <- 'abc'
 set_token( key )
 
-library(sf)
 library(geojsonsf)
 
 sf <- geojsonsf::geojson_sf("https://symbolixau.github.io/data/geojson/SA2_2016_VIC.json")
@@ -200,7 +214,7 @@ mapdeck(
     , fill_colour = "SA2_NAME"
     , elevation = "elevation"
     , tooltip = 'info'
-    , legend = T
+    , legend = TRUE
   )
 
 }

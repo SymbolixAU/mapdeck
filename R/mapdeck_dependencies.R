@@ -33,6 +33,8 @@ addDependency <- function(map, dependencyFunction, priority = FALSE) {
 #'
 #' Adds the required mapdeck javascript dependencies to a map when not using a mapdeck map.
 #'
+#' @param map the map object to which dependencies will be added
+#'
 #' @examples
 #' \donttest{
 #'
@@ -85,7 +87,7 @@ htmlwidgets_js <- function() {
 	list(
 		createHtmlDependency(
 			name = "htmlwidgets",
-			version = as.character( packageVersion("htmlwidgets") ),
+			version = as.character( utils::packageVersion("htmlwidgets") ),
 			src = system.file("www", package = "htmlwidgets"),
 			script = c("htmlwidgets.js"),
 			all_files = FALSE
@@ -97,7 +99,7 @@ mapdeck_js <- function() {
 	list(
 		createHtmlDependency(
 			name = "mpadeck-binding",
-			version = as.character( packageVersion("mapdeck") ),
+			version = as.character( utils::packageVersion("mapdeck") ),
 			src = system.file("htmlwidgets/", package = "mapdeck"),
 			script = c("mapdeck.js"),
 			all_files = FALSE
@@ -158,7 +160,7 @@ deckgl_min_js <- function() {
 	list(
 		createHtmlDependency(
 			name = "deckgl",
-			version = "7.4.0",
+			version = "8.6.0",
 			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
 			script = c("deckgl.min.js"),
 			all_files = FALSE
@@ -166,11 +168,13 @@ deckgl_min_js <- function() {
 	)
 }
 
+## https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js
+## https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css
 mapboxgl <- function() {
 	list(
 		createHtmlDependency(
 			name = "mapboxgl",
-			version = "0.52.0",
+			version = "1.13.0",
 			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
 			script = c("mapbox-gl.js"),
 			stylesheet = c("mapbox-gl.css"),

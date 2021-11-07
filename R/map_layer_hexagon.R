@@ -71,8 +71,8 @@ mapdeckHexagonDependency <- function() {
 #'   , elevation_scale = 100
 #' )
 #'
-#' library( sf )
-#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lng", y = "lat" )
 #'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
 #' add_hexagon(
@@ -110,7 +110,7 @@ mapdeckHexagonDependency <- function() {
 #' )
 #'
 #' ## with a legend
-#' df$val <- sample(1:10, size = nrow(df), replace = T)
+#' df$val <- sample(1:10, size = nrow(df), replace = TRUE)
 #'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45) %>%
 #' add_hexagon(
@@ -119,7 +119,7 @@ mapdeckHexagonDependency <- function() {
 #' 	, lon = "lng"
 #' 	, layer_id = "hex_layer"
 #' 	, elevation_scale = 100
-#' 	, legend = T
+#' 	, legend = TRUE
 #' 	, legend_options = list( digits = 0 )
 #' 	, colour_function = "mean"
 #' 	, colour = "val"
@@ -180,7 +180,7 @@ add_hexagon <- function(
 	use_colour <- FALSE
 	if(!is.null(colour)) use_colour <- TRUE
 
-	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+	l <- resolve_data( data, l, c("POINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -238,7 +238,7 @@ add_hexagon <- function(
 
 #' @rdname clear
 #' @export
-clear_hexagon <- function( map, layer_id = NULL) {
+clear_hexagon <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "hexagon")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "hexagon" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "hexagon", update_view )
 }

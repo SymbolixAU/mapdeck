@@ -1,5 +1,5 @@
-pandoc: 2.7.2
-pkgdown: 1.4.1
+pandoc: 2.7.3
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   benchmarks: benchmarks.html
@@ -11,4 +11,5 @@ articles:
   mapdeck: mapdeck.html
   tips_tricks: tips_tricks.html
   trips: trips.html
+last_built: 2020-08-16T21:54Z
 

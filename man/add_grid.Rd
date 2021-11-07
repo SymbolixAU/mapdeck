@@ -57,7 +57,7 @@ IF supplied it specifies how the elevation values are calcualted. Defaults to su
 \item{colour_function}{one of 'min', 'mean', 'max', 'sum'.
 If supplied it specifies how the colour values are calculated. Defaults to sum.}
 
-\item{elevation_scale}{value to scale the elevations of the hexagons. Default 1}
+\item{elevation_scale}{elevation multiplier.}
 
 \item{colour_range}{vector of 6 hex colours}
 
@@ -77,6 +77,8 @@ to conflict and not plot correctly}
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{digits}{number of digits for rounding coordinates}
 
 \item{transitions}{list specifying the duration of transitions.}
 
@@ -126,8 +128,8 @@ add_grid(
 )
 
 ## using sf object
-library(sf)
-sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_grid(
@@ -139,7 +141,7 @@ add_grid(
 )
 
 ## using colour and elevation functions, and legends
-df$val <- sample(1:10, size = nrow(df), replace = T)
+df$val <- sample(1:10, size = nrow(df), replace = TRUE)
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_grid(
@@ -148,8 +150,8 @@ add_grid(
 	, lon = "lng"
 	, layer_id = "hex_layer"
 	, elevation_scale = 100
-	, legend = T
-	, colour_function = "mean"
+	, legend = TRUE
+	, colour_function = "max"
 	, colour = "val"
 )
 
@@ -159,8 +161,8 @@ add_grid(
 	, lat = "lat"
 	, lon = "lng"
 	, layer_id = "hex_layer"
-	, elevation_scale = 100
-	, legend = T
+	, elevation_scale = 10
+	, legend = TRUE
 	, elevation_function = "mean"
 	, elevation = "val"
 )

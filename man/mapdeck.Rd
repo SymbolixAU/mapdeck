@@ -14,8 +14,14 @@ mapdeck(
   pitch = 0,
   zoom = 0,
   bearing = 0,
+  libraries = NULL,
+  max_zoom = 20,
+  min_zoom = 0,
+  max_pitch = 60,
+  min_pitch = 0,
   location = c(0, 0),
-  libraries = NULL
+  show_view_state = FALSE,
+  repeat_view = FALSE
 )
 }
 \arguments{
@@ -40,10 +46,34 @@ If left empty layers will still be plotted, but without a Mapbox map.}
 
 \item{bearing}{bearing of the map between 0 and 360}
 
-\item{location}{unnamed vector of lon and lat coordinates (in that order)}
-
 \item{libraries}{additional libraries required by some layers. Currently
 'h3-js' is required for \link{add_h3_hexagon}.}
+
+\item{max_zoom}{sets the maximum zoom level}
+
+\item{min_zoom}{sets the minimum zoom level}
+
+\item{max_pitch}{sets the maximum pitch}
+
+\item{min_pitch}{sets the minimum pitch}
+
+\item{location}{unnamed vector of lon and lat coordinates (in that order)}
+
+\item{show_view_state}{logical, indicating whether to add the current View State to the map.
+When \code{TRUE}, the following is added as an overlay to the map
+\itemize{
+  \item{width}
+  \item{height}
+  \item{latitude & longitude}
+  \item{zoom}
+  \item{bearing}
+  \item{pitch}
+  \item{altitude}
+  \item{viewBounds}
+  \item{interactionState}
+}}
+
+\item{repeat_view}{Logical indicating if the layers should repeat at low zoom levels}
 }
 \description{
 mapdeck

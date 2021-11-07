@@ -17,6 +17,7 @@ add_geojson(
   fill_opacity = NULL,
   radius = NULL,
   elevation = NULL,
+  extruded = FALSE,
   light_settings = list(),
   legend = F,
   legend_options = NULL,
@@ -65,6 +66,9 @@ to conflict and not plot correctly}
 
 \item{elevation}{elevation of polygons. Default 0. See details}
 
+\item{extruded}{logical indicating if polygons should extrude from the map.
+If \code{TRUE}, \code{stroke_colour} for polygons is ignored}
+
 \item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
 \item{legend}{either a logical indiciating if the legend(s) should be displayed, or
@@ -110,6 +114,8 @@ all polygon elevation without updating the data}
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{digits}{number of digits for rounding coordinates}
 
 \item{transitions}{list specifying the duration of transitions.}
 }
@@ -282,7 +288,7 @@ mapdeck(
 library(geojsonsf)
 sf <- geojsonsf::geojson_sf( geojson )
 sf$width <- sample(1:100, size = nrow(sf), replace = TRUE)
-sf$elevation <- sample(100:1000, size = nrow(sf), replace = T)
+sf$elevation <- sample(100:1000, size = nrow(sf), replace = TRUE)
 geo <- geojsonsf::sf_geojson( sf )
 
 mapdeck(

@@ -41,7 +41,7 @@ mapdeckScreengridDependency <- function() {
 #' ))
 #'
 #' df <- df[ !is.na(df$lng), ]
-#' df$weight <- sample(1:10, size = nrow(df), replace = T)
+#' df$weight <- sample(1:10, size = nrow(df), replace = TRUE)
 #'
 #' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_screengrid(
@@ -55,8 +55,8 @@ mapdeckScreengridDependency <- function() {
 #' )
 #'
 #' ## as an sf object
-#' library(sf)
-#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 #'
 #' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_screengrid(
@@ -97,7 +97,7 @@ add_screengrid <- function(
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
 
-	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+	l <- resolve_data( data, l, c("POINT") )
 
 	aggregation <- match.arg( aggregation )
 	aggregation <- toupper( aggregation )
@@ -159,8 +159,8 @@ add_screengrid <- function(
 
 #' @rdname clear
 #' @export
-clear_screengrid <- function( map, layer_id = NULL) {
+clear_screengrid <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "screengrid")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "screengrid" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "screengrid", update_view )
 }
 
