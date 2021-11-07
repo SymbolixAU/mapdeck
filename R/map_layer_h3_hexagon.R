@@ -174,7 +174,7 @@ add_h3 <- function(
 	geometry_column <- "hexagon"
 	shape <- rcpp_point_polyline( data, l, geometry_column, "h3_hexagon")
 
-	return(shape)
+	#return(shape)
 
 	jsfunc <- "add_h3_hexagon"
 
