@@ -47,3 +47,7 @@ LinkingTo:
     Rcpp,
     sfheaders (>= 0.3.0),
     spatialwidget (>= 0.2.4)
+Remotes:
+    dcooley/geometries,
+    dcooley/sfheaders,
+    SymbolixAU/spatialwidget

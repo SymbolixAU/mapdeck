@@ -29,14 +29,14 @@ browser can handle), on interactive maps using Mapbox GL and Deck.gl
 > We provide building blocks to add location features like maps, search,
 > and navigation into any experience you create.
 
-  - <https://www.mapbox.com/about/>
+-   <https://www.mapbox.com/about/>
 
 ## What is deck.gl?
 
 > deck.gl is a WebGL-powered framework for visual exploratory data
 > analysis of large datasets.
 
-  - <https://deck.gl/#/>
+-   <https://deck.gl/#/>
 
 ## How do I use it?
 
@@ -49,7 +49,16 @@ install.packages("mapdeck")
 Or from github (to get the latest development version)
 
 ``` r
-devtools::install_github("SymbolixAU/mapdeck")
+remotes::install_github("SymbolixAU/mapdeck")
+```
+
+If the github version fails to install, you’ll probably need to update
+dependencies too
+
+``` r
+remotes::install_github("dcooley/geometries")
+remotes::install_github("dcooley/sfheaders")
+remotes::install_github("SymbolixAU/spatialwidget")
 ```
 
 Then everything you need to know to get you started is on the [home
@@ -100,4 +109,4 @@ tracker](https://github.com/SymbolixAU/mapdeck/issues) on github.
 
 I don’t respond to emails asking for help because this is an open source
 package, and any advice should be kept open so everyone can benefit.
-(unless you want to pay me\!)
+(unless you want to pay me!)
