@@ -56,7 +56,7 @@ Or from github (to get the latest development version)
 remotes::install_github("SymbolixAU/mapdeck")
 ```
 
-If the github version fails to install, you'll probably need to update dependencies too
+If the github version fails to install, you'll probably need to update dependencies first
 
 ```r
 remotes::install_github("dcooley/geometries")

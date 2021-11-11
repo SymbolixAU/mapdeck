@@ -53,7 +53,7 @@ remotes::install_github("SymbolixAU/mapdeck")
 ```
 
 If the github version fails to install, you’ll probably need to update
-dependencies too
+dependencies first
 
 ``` r
 remotes::install_github("dcooley/geometries")
