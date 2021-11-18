@@ -11,6 +11,7 @@ class MultiColouredPathLayer extends deck.PathLayer {
 
     initializeState() {
       super.initializeState();
+
       this.state.attributeManager.addInstanced({
         instanceColors: {
           size: this.props.colorFormat.length,
@@ -57,7 +58,9 @@ class MultiColouredPathLayer extends deck.PathLayer {
 
 function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, highlight_colour, bbox, update_view, focus_layer, js_transition, billboard, brush_radius, width_units, width_scale, width_min_pixels, width_max_pixels, use_offset, use_dash, legend_type ) {
 
-  //console.log( path_data );
+  console.log( path_data );
+  console.log( use_dash );
+  console.log( use_offset );
 
   var extensions = [];
 
@@ -94,7 +97,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
   		dashes[ counter ] = path_data.data.data.dash_gap[ i ];
   		counter = counter + 1;
   	}
-  	//console.log( dashes );
+  	console.log( dashes );
   	binaryDash = new Float32Array( dashes );
   }
 
@@ -121,7 +124,8 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
     widthUnits: width_units,
     widthMinPixels: width_min_pixels || 1,
     widthMaxPixels: width_max_pixels || Number.MAX_SAFE_INTEGER,
-    rounded: true,
+    capRounded: true,
+    jointRounded: true,
     billboard: billboard,
     parameters: {
 	    depthTest: false
@@ -142,14 +146,17 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
     extensions: extensions
   };
 
-
 	// - if using any extensions, it falls back to pathLayer
 	// - because teh extensions add instanceAttributes to WebGL
 	// - https://deck.gl/docs/api-reference/extensions/path-style-extension#limitations
 
+	console.log(extensions);
+
 	const pathLayer = Array.isArray( extensions ) && extensions.length ?
 		new deck.PathLayer(layer) :
 		new MultiColouredPathLayer(layer);
+
+	console.log(pathLayer);
 
   if( map_type == "google_map") {
 	  md_update_overlay( map_id, 'path-'+layer_id, pathLayer );
@@ -183,7 +190,8 @@ function add_path_polyline( map_id, map_type, path_data, layer_id, auto_highligh
     pickable: true,
     widthScale: 1,
     widthMinPixels: 1,
-    rounded: true,
+    capRounded: true,
+    jointRounded: true,
     parameters: {
 	    depthTest: false
 	  },

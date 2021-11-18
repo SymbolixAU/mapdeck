@@ -47,7 +47,7 @@ If left empty layers will still be plotted, but without a Mapbox map.}
 \item{bearing}{bearing of the map between 0 and 360}
 
 \item{libraries}{additional libraries required by some layers. Currently
-'h3-js' is required for \link{add_h3_hexagon}.}
+'h3-js' is required for \link{add_h3}.}
 
 \item{max_zoom}{sets the maximum zoom level}
 

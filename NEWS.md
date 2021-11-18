@@ -1,5 +1,6 @@
 # v0.3.5
 
+* Multicoloured / gradient filled paths
 * `minZoom`, `maxZoom`, `minPitch`, `maxPitch` values retained after adding layers [issue 333](https://github.com/SymbolixAU/mapdeck/issues/333)
 * `clear_layer()` functions get `update_view` argument
 * `clear_trips()` fixed to first 'stop_trips' using cancelAnimationFrame

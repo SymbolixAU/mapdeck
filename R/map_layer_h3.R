@@ -1,4 +1,4 @@
-mapdeckH3HexagonDependency <- function() {
+mapdeckH3Dependency <- function() {
 	list(
 		createHtmlDependency(
 			name = "h3-hexagon",
@@ -29,7 +29,7 @@ mapdeckH3JSDependency <- function() {
 #' @inheritParams add_arc
 #' @param lon column containing longitude values
 #' @param lat column containing latitude values
-#' @param polyline column of \code{data} containing the polylines
+#' @param hexagon column of \code{data} containing the hexagon indexes
 #' @param radius in metres. Default 1000
 #' @param elevation_scale value to scale the elevations of the hexagons. Default 1
 #' @param colour_range vector of 6 hex colours
@@ -66,6 +66,9 @@ mapdeckH3JSDependency <- function() {
 #'
 #' mapdeck(
 #'  style = mapdeck_style("dark")
+#'  , location = c(0, 51.3)
+#'  , zoom = 10
+#'  , pitch = 60
 #'  , libraries = "h3-js"
 #'  ) %>%
 #'  add_h3(
@@ -76,6 +79,7 @@ mapdeckH3JSDependency <- function() {
 #'    , legend = TRUE
 #'    , elevation = "count"
 #'    , elevation_scale = 10
+#'    , palette = colourvalues::get_palette("inferno")
 #'    )
 #'
 #' }
@@ -89,7 +93,6 @@ mapdeckH3JSDependency <- function() {
 add_h3 <- function(
 	map,
 	data = get_map_data(map),
-	# polyline = NULL,
 	hexagon = NULL,
 	stroke_colour = NULL,
 	stroke_width = NULL,
@@ -163,8 +166,7 @@ add_h3 <- function(
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "h3_hexagon")
 
-	# map <- addDependency(map, mapdeckH3JSDependency(), priority = TRUE)
-	map <- addDependency(map, mapdeckH3HexagonDependency())
+	map <- addDependency(map, mapdeckH3Dependency())
 
 	tp <- l[["data_type"]]
 	l[["data_type"]] <- NULL

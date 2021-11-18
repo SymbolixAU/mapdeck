@@ -37,7 +37,7 @@ add_trips(
 
 \item{stroke_width}{width of the stroke in meters. Default 1.}
 
-\item{width_units}{The units of the line width, one of 'meters', 'pixels'.
+\item{width_units}{The units of the line width, one of 'meters', 'common' or 'pixels'.
 When zooming in and out, meter sizes scale with the base map, and pixel sizes
 remain the same on screen.}
 

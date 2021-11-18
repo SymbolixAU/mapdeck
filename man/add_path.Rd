@@ -14,7 +14,7 @@ add_path(
   dash_size = NULL,
   dash_gap = NULL,
   offset = NULL,
-  width_units = c("meters", "pixels"),
+  width_units = c("meters", "common", "pixels"),
   width_min_pixels = NULL,
   width_max_pixels = NULL,
   width_scale = 1,
@@ -63,7 +63,7 @@ colour, this argument is ignored and you should include the alpha on the hex str
 Negative offset is to the left hand side, and positive offset is to the right hand side.
 0 extrudes the path so that it is centered at the specified coordinates.}
 
-\item{width_units}{The units of the line width, one of 'meters', 'pixels'.
+\item{width_units}{The units of the line width, one of 'meters', 'common' or 'pixels'.
 When zooming in and out, meter sizes scale with the base map, and pixel sizes
 remain the same on screen.}
 
@@ -210,6 +210,7 @@ mapdeck(
   add_path(
     data = roads
     , stroke_colour = "RIGHT_LOC"
+    , stroke_width = 20
     , layer_id = "path_layer"
     , tooltip = "ROAD_NAME"
     , auto_highlight = TRUE
@@ -225,8 +226,9 @@ mapdeck(
     , stroke_colour = "RIGHT_LOC"
     , layer_id = "path_layer"
     , tooltip = "ROAD_NAME"
-    , dash_size = 3
-    , dash_gap = 1
+    , stroke_width = 1
+    , dash_size = 0.5
+    , dash_gap = 5
   )
 
 ## Different dashes per path
@@ -292,9 +294,9 @@ mapdeck(
  add_path(
    data = sf_line
    , stroke_colour = "col"
-   , stroke_width = 50000
-   , dash_size = 1
-   , dash_gap = 1
+   , stroke_width = 500
+   , dash_size = 10
+   , dash_gap = 10
  )
 
 

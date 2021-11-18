@@ -2,7 +2,7 @@
 % Please edit documentation in R/map_layer_animated_arc.R,
 %   R/map_layer_animated_line.R, R/map_layer_arc.R, R/map_layer_bitmap.R,
 %   R/map_layer_column.R, R/map_layer_geojson.R, R/map_layer_greatcircle.R,
-%   R/map_layer_grid.R, R/map_layer_h3_hexagon.R, R/map_layer_heatmap.R,
+%   R/map_layer_grid.R, R/map_layer_h3.R, R/map_layer_heatmap.R,
 %   R/map_layer_hexagon.R, R/map_layer_line.R, R/map_layer_mesh.R,
 %   R/map_layer_path.R, R/map_layer_pointcloud.R, R/map_layer_polygon.R,
 %   R/map_layer_scatterplot.R, R/map_layer_screengrid.R, R/map_layer_terrain.R,
