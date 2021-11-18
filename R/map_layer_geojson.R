@@ -219,7 +219,7 @@ add_geojson <- function(
 	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
 	na_colour = "#808080FF",
-	line_width_units = c("metres", "pixels"),
+	line_width_units = c("meters", "pixels"),
 	line_width_scale = 1,
 	line_width_min_pixels = 0,
 	elevation_scale = 1,
@@ -232,6 +232,9 @@ add_geojson <- function(
 	) {
 
 	l <- list()
+
+	line_width_units <- match.arg(line_width_units)
+
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_opacity"]] <- force( stroke_opacity )
 	l[["stroke_width"]] <- force( stroke_width )

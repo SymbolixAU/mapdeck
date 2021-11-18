@@ -72,7 +72,6 @@ function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_
     filled: true,
     extruded: extruded,
     wireframe: false,
-
     pointRadiusMinPixels: point_radius_min_pixels,
     pointRadiusScale: point_radius_scale,
     lineWidthUnits: line_width_units,
@@ -87,7 +86,7 @@ function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_
     getLineWidth: g => geojson_line_width( g ),
     getElevation: g => geojson_elevation( g ),
     getDashArray: d => [ d.dash_size, d.dash_gap ],
-
+/*
     lightSettings: light_settings,
     onClick: info => md_layer_click( map_id, "geojson", info ),
     autoHighlight: auto_highlight,
@@ -95,6 +94,7 @@ function add_geojson( map_id, map_type, geojson, layer_id, light_settings, auto_
     onHover: md_update_tooltip,
     transitions: js_transition || {},
     extension: extensions
+    */
   });
 
   if( map_type == "google_map") {
