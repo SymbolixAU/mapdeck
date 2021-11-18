@@ -137,6 +137,9 @@ set_token( key )
 
 mapdeck(
  style = mapdeck_style("dark")
+ , location = c(0, 51.3)
+ , zoom = 10
+ , pitch = 60
  , libraries = "h3-js"
  ) \%>\%
  add_h3(
@@ -147,6 +150,7 @@ mapdeck(
    , legend = TRUE
    , elevation = "count"
    , elevation_scale = 10
+   , palette = colourvalues::get_palette("inferno")
    )
 
 }
