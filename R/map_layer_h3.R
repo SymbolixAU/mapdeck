@@ -13,7 +13,7 @@ mapdeckH3Dependency <- function() {
 mapdeckH3JSDependency <- function() {
 	list(
 		createHtmlDependency(
-			name = "h3-js",
+			name = "h3",
 			version = "3.6.2",
 			src = system.file("htmlwidgets/lib", package = "mapdeck"),
 			script = c("h3-js.umd.js"),
@@ -69,7 +69,7 @@ mapdeckH3JSDependency <- function() {
 #'  , location = c(0, 51.3)
 #'  , zoom = 10
 #'  , pitch = 60
-#'  , libraries = "h3-js"
+#'  , libraries = "h3"
 #'  ) %>%
 #'  add_h3(
 #'    data = road_safety

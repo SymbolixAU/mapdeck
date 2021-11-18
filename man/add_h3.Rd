@@ -140,7 +140,7 @@ mapdeck(
  , location = c(0, 51.3)
  , zoom = 10
  , pitch = 60
- , libraries = "h3-js"
+ , libraries = "h3"
  ) \%>\%
  add_h3(
    data = road_safety
