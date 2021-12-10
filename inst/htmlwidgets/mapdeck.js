@@ -1,3 +1,4 @@
+
 HTMLWidgets.widget({
 
   name: 'mapdeck',
@@ -8,6 +9,19 @@ HTMLWidgets.widget({
     return {
 
       renderValue: function(x) {
+
+    		const getCircularReplacer = () => {
+				  const seen = new WeakSet();
+				  return (key, value) => {
+				    if (typeof value === "object" && value !== null) {
+				      if (seen.has(value)) {
+				        return;
+				      }
+				      seen.add(value);
+				    }
+				    return value;
+				  };
+				};
 
       	md_setup_window( el.id );
 
@@ -96,28 +110,32 @@ HTMLWidgets.widget({
 
 						  Shiny.onInputChange(el.id + '_view_change', viewState);
 			      },
+
 			      onDragStart(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	//console.log("drag start");
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	Shiny.onInputChange(el.id +'_drag_start', info);
+			      	Shiny.onInputChange(el.id +'_drag_start', JSON.stringify(info, getCircularReplacer()) );
 			      },
 			      onDrag(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	Shiny.onInputChange(el.id +'_drag', info);
+			      	Shiny.onInputChange(el.id +'_drag', JSON.stringify(info, getCircularReplacer()));
 			      },
 			      onDragEnd(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	Shiny.onInputChange(el.id +'_drag_end', info);
+			      	Shiny.onInputChange(el.id +'_drag_end', JSON.stringify(info, getCircularReplacer()));
 			      },
 			      onResize(size) {
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	Shiny.onInputChange(el.id +'_resize', size);
 			      }
+			      /*
+			      */
 			  });
 
 			  window[el.id + 'map'] = deckgl;
@@ -133,7 +151,6 @@ HTMLWidgets.widget({
     };
   }
 });
-
 
 if (HTMLWidgets.shinyMode) {
 
