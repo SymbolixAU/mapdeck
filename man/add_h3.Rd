@@ -40,17 +40,37 @@ EPSG:4326 (WGS 84) coordinate system}
 
 \item{hexagon}{column of \code{data} containing the hexagon indexes}
 
-\item{stroke_width}{width of the stroke in pixels}
+\item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
+\code{elevation} is ignored.
+If using a hex colour, use either a single value, or a column of hex colours  on \code{data}}
 
-\item{elevation}{column containing the elevation of the value.}
+\item{stroke_width}{width of the stroke in meters. If used, \code{elevation} is ignored. Default 1.}
+
+\item{stroke_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
+
+\item{fill_colour}{column of \code{data} or hex colour for the fill colour.
+If using a hex colour, use either a single value, or a column of hex colours  on \code{data}}
+
+\item{fill_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
+
+\item{elevation}{the height the polygon extrudes from the map. Only available if neither
+\code{stroke_colour} or \code{stroke_width} are supplied. Default 0}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
 \item{auto_highlight}{logical indicating if the shape under the mouse should auto-highlight}
 
-\item{elevation_scale}{value to scale the elevations of the hexagons. Default 1}
+\item{elevation_scale}{elevation multiplier.}
 
 \item{highlight_colour}{hex string colour to use for highlighting. Must contain the alpha component.}
+
+\item{light_settings}{list of light setting parameters. See \link{light_settings}}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely
@@ -66,7 +86,8 @@ palette for different colour options (where available),
 
 \item{na_colour}{hex string colour to use for NA values}
 
-\item{legend}{logical indicating if a legend should be displayed}
+\item{legend}{either a logical indiciating if the legend(s) should be displayed, or
+a named list indicating which colour attributes should be included in the legend.}
 
 \item{legend_options}{A list of options for controlling the legend.}
 
@@ -79,28 +100,13 @@ palette for different colour options (where available),
 \item{digits}{number of digits for rounding coordinates}
 
 \item{transitions}{list specifying the duration of transitions.}
-
-\item{lon}{column containing longitude values}
-
-\item{lat}{column containing latitude values}
-
-\item{radius}{in metres. Default 1000}
-
-\item{colour_range}{vector of 6 hex colours}
-
-\item{elevation_function}{one of 'min', 'mean', 'max', 'sum'.
-IF supplied it specifies how the elevation values are calcualted. Defaults to sum.}
-
-\item{colour}{column containing numeric values to colour by.}
-
-\item{colour_function}{one of 'min', 'mean', 'max', 'sum'.
-If supplied it specifies how the colour values are calculated. Defaults to sum.}
 }
 \description{
-The h3 layer renders hexagons from the H3 geospatial indexing system.
+The h3 layer renders hexagons from the H3 geospatial indexing system. To use
+this layer you must specify \code{libraries = "h3"} within the \code{mapdeck()} call. See examples.
 }
 \details{
-\code{add_hexagon} supports POINT and MULTIPOINT sf objects
+\code{add_h3} supports a data.frame with a column of h3 indexes
 }
 \section{transitions}{
 
@@ -111,21 +117,12 @@ and on WebGL-2 supported browsers and hardware.
 
 The time is in milliseconds
 
-Available transitions for hexagon
+Available transitions for h3
 
 list(
 elevation = 0
 colour = 0
 )
-}
-
-\section{data}{
-
-
-If the \code{data} is a simple feature object, the geometry column is automatically
-detected. If the sf object contains more than one geometry column and you want to use a specific one,
-you'll need to set the active geometry using \code{sf::st_geometry( x ) <- "your_column" },
-where \code{"your_column"} is the name of the column you're activating. See \code{?sf::st_geometry}
 }
 
 \examples{

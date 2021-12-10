@@ -24,24 +24,12 @@ mapdeckH3JSDependency <- function() {
 
 #' Add h3
 #'
-#' The h3 layer renders hexagons from the H3 geospatial indexing system.
+#' The h3 layer renders hexagons from the H3 geospatial indexing system. To use
+#' this layer you must specify \code{libraries = "h3"} within the \code{mapdeck()} call. See examples.
 #'
-#' @inheritParams add_arc
-#' @param lon column containing longitude values
-#' @param lat column containing latitude values
+#' @inheritParams add_polygon
 #' @param hexagon column of \code{data} containing the hexagon indexes
-#' @param radius in metres. Default 1000
-#' @param elevation_scale value to scale the elevations of the hexagons. Default 1
-#' @param colour_range vector of 6 hex colours
-#' @param elevation column containing the elevation of the value.
-#' @param elevation_function one of 'min', 'mean', 'max', 'sum'.
-#' IF supplied it specifies how the elevation values are calcualted. Defaults to sum.
-#' @param colour column containing numeric values to colour by.
-#' @param colour_function one of 'min', 'mean', 'max', 'sum'.
-#' If supplied it specifies how the colour values are calculated. Defaults to sum.
-#' @param legend logical indicating if a legend should be displayed
 #'
-#' @inheritSection add_polygon data
 #' @section transitions:
 #'
 #' The transitions argument lets you specify the time it will take for the shapes to transition
@@ -50,7 +38,7 @@ mapdeckH3JSDependency <- function() {
 #'
 #' The time is in milliseconds
 #'
-#' Available transitions for hexagon
+#' Available transitions for h3
 #'
 #' list(
 #' elevation = 0
@@ -78,7 +66,7 @@ mapdeckH3JSDependency <- function() {
 #'    , auto_highlight = TRUE
 #'    , legend = TRUE
 #'    , elevation = "count"
-#'    , elevation_scale = 10
+#'    , elevation_scale = 20
 #'    , palette = colourvalues::get_palette("inferno")
 #'    )
 #'
@@ -86,7 +74,7 @@ mapdeckH3JSDependency <- function() {
 #'
 #' @details
 #'
-#' \code{add_hexagon} supports POINT and MULTIPOINT sf objects
+#' \code{add_h3} supports a data.frame with a column of h3 indexes
 #'
 #'
 #' @export
