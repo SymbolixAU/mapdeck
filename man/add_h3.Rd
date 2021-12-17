@@ -146,7 +146,7 @@ mapdeck(
    , auto_highlight = TRUE
    , legend = TRUE
    , elevation = "count"
-   , elevation_scale = 10
+   , elevation_scale = 20
    , palette = colourvalues::get_palette("inferno")
    )
 
