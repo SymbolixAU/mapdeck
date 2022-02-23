@@ -52,7 +52,8 @@ HTMLWidgets.widget({
         	  views: [ new deck.MapView({
         	  	id: el.id,
         	  	repeat: x.repeat_view
-        	  	}) ],
+        	  	})
+        	  ],
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,

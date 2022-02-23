@@ -247,6 +247,8 @@ function md_layer_click( map_id, layer, info ) {
     return;
   }
 
+  console.log(info);
+
   var eventInfo = {
   	index: info.index,
   	color: info.color,

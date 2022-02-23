@@ -299,6 +299,7 @@ mapdeck(
 ) \%>\%
  add_geojson(
    data = geo
+   , extruded = TRUE ## required to show elevated polygons
  )
 
 }

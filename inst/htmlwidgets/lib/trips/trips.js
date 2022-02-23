@@ -2,9 +2,10 @@
 // - Can't have MultiColouredTrips because it adds too many attributes to WebGL
 // - but, the way it works anyway, the colours fade into each other anyway
 
-
 function add_trips_geo( map_id, map_type, path_data, opacity, layer_id,
 trail_length, start_time, end_time, animation_speed, bbox, update_view, focus_layer, width_units, width_scale, width_min_pixels, width_max_pixels, legend_type ) {
+
+		//console.log(path_data);
 
   	var loopLength = end_time - start_time; // unit corresponds to the timestamp in source data
     var animationSpeed = animation_speed; // unit time per second
@@ -14,13 +15,22 @@ trail_length, start_time, end_time, animation_speed, bbox, update_view, focus_la
 
     var time = ((timestamp % loopTime) / loopTime) * loopLength;
 
-    const binaryLocation = new Float32Array( path_data.data.coordinates );
+    const binaryLocation = new Float64Array( path_data.data.coordinates );
 	  const binaryStartIndices = new Uint32Array( path_data.data.start_indices );
 	  const binaryLineColour = new Float32Array( path_data.data.data.stroke_colour );
 	  const binaryLineWidth = new Float32Array( path_data.data.data.stroke_width );
 	  const binaryTimestamps = new Float32Array( path_data.timestamps );
 
+/*
+	  console.log(binaryLocation);
+	  console.log(binaryStartIndices);
+	  console.log(binaryLineColour);
+	  console.log(binaryLineWidth);
+	  console.log(binaryTimestamps);
+*/
+
     let stride = path_data.data.stride[0];
+
   	let data_count = path_data.data.start_indices.length;
 
   	var attributes = {
@@ -52,6 +62,8 @@ trail_length, start_time, end_time, animation_speed, bbox, update_view, focus_la
 		    trailLength: trail_length,
 		    currentTime: time
 		  };
+
+		//console.log(layer);
 
 		var tripsLayer = new deck.TripsLayer(layer);
 

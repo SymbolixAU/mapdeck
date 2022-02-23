@@ -147,6 +147,9 @@ add_trips <- function(
 	experimental_layer("trips")
 
 	l <- list()
+
+	width_units <- match.arg(width_units)
+
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_width"]] <- force( stroke_width )
 

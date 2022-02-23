@@ -160,7 +160,7 @@ deckgl_min_js <- function() {
 	list(
 		createHtmlDependency(
 			name = "deckgl",
-			version = "8.6.5",
+			version = "8.6.8",
 			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
 			script = c("deckgl.min.js"),
 			all_files = FALSE
