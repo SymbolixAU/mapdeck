@@ -1,3 +1,10 @@
+
+// issue 357
+if( typeof globalThis === 'undefined') {
+	var globalThis = window;
+}
+
+
 HTMLWidgets.widget({
 
   name: 'mapdeck',
@@ -5,19 +12,21 @@ HTMLWidgets.widget({
 
   factory: function(el, width, height) {
 
+		var deckgl;
+
     return {
 
       renderValue: function(x) {
 
       	md_setup_window( el.id );
 
-				if( x.show_view_state ) {
-      	  md_setup_view_state( el.id );
-      	  window[el.id + 'mapViewState'] = document.createElement("div");
-      	  window[el.id + 'mapViewState'].setAttribute('id', el.id + 'mapViewState');
-      	  window[el.id + 'mapViewState'].setAttribute('class', 'mapViewState');
-      	  var mapbox_ctrl = document.getElementById( "mapViewStateContainer"+el.id);
-    			mapbox_ctrl.appendChild( window[el.id + 'mapViewState'] );
+      	if( x.show_view_state ) {
+					md_setup_view_state( el.id );
+					window[el.id + 'mapViewState'] = document.createElement("div");
+					window[el.id + 'mapViewState'].setAttribute('id', el.id + 'mapViewState');
+					window[el.id + 'mapViewState'].setAttribute('class', 'mapViewState');
+					var mapbox_ctrl = document.getElementById( "mapViewStateContainer"+el.id);
+					mapbox_ctrl.appendChild( window[el.id + 'mapViewState'] );
 				}
 
         // INITIAL VIEW
@@ -34,7 +43,7 @@ HTMLWidgets.widget({
         };
 
        if( x.access_token === null ) {
-       	 const deckgl = new deck.DeckGL({
+       	 deckgl = new deck.DeckGL({
        	 	  views: [ new deck.MapView({
        	 	  	id: el.id,
        	 	  	repeat: x.repeat_view
@@ -48,7 +57,7 @@ HTMLWidgets.widget({
 			   });
 			   window[el.id + 'map'] = deckgl;
        } else {
-        const deckgl = new deck.DeckGL({
+        deckgl = new deck.DeckGL({
         	  views: [ new deck.MapView({
         	  	id: el.id,
         	  	repeat: x.repeat_view
@@ -123,8 +132,8 @@ HTMLWidgets.widget({
 
 			  window[el.id + 'map'] = deckgl;
 
-       }
-			    md_initialise_map(el, x);
+       } // end if { access_token } else { }
+				md_initialise_map(el, x);
       },
 
       resize: function(width, height) {
