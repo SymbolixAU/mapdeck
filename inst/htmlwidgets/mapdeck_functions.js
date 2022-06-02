@@ -67,6 +67,13 @@ function md_div_exists( div_element ) {
 // and: https://beta.observablehq.com/@pessimistress/deck-gl-geojsonlayer-example
 function md_update_tooltip({x, y, object, layer, index}) {
     // object is the data object sent to the layer function
+/*
+	console.log(x);
+	console.log(y);
+	console.log(object);
+	console.log(layer);
+	console.log(index);
+*/
 
   if( !md_div_exists( 'mapdecktooltip'+layer.props.map_id ) ) {
   	md_setup_tooltip( layer.props.map_id );
@@ -92,30 +99,41 @@ function md_update_tooltip({x, y, object, layer, index}) {
     tooltip.style.top = `${y}px`;
     tooltip.style.left = `${x}px`;
     tooltip.innerHTML = `<div>${tt}</div>`;
+
+    console.log(tooltip.innerHTML);
+
   } else {
   	tooltip.style.display = 'none';
     tooltip.innerHTML = '';
   }
 }
 
-function md_update_binary_tooltip(layer, idx, x, y) {
+function md_update_binary_tooltip({x, y, object, layer, index}) {
+
+	//console.log(layer);
+	//console.log(index);
 
 	if( !md_div_exists( 'mapdecktooltip'+ layer.props.map_id ) ) {
   	md_setup_tooltip( layer.props.map_id );
   }
 
   const tooltip = document.getElementById( 'mapdecktooltip'+layer.props.map_id );
-  var tt;
 
-	  if( layer.props.data.tooltip && idx >= 0 ) {
-	  	tt = layer.props.data.tooltip[ idx ];
-	  	tooltip.style.display = 'block';
-	    tooltip.style.top = `${y}px`;
-	    tooltip.style.left = `${x}px`;
-	    tooltip.innerHTML = `<div>${tt}</div>`;
-	  } else {
-    	tooltip.style.display = 'none';
-	    tooltip.innerHTML = '';
+  if( layer.props.data.tooltip && index >= 0 ) {
+  	const tt = layer.props.data.tooltip[ index ];
+
+  	console.log(tt);
+
+  	tooltip.style.display = 'block';
+    tooltip.style.top = `${y}px`;
+    tooltip.style.left = `${x}px`;
+    tooltip.innerHTML =  `<div>${tt}</div>`;
+
+    console.log(tooltip.innerHTML);
+
+  } else {
+  	tooltip.style.display = 'none';
+    tooltip.innerHTML = '';
   }
 
 }

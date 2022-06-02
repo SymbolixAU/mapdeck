@@ -43,7 +43,7 @@ function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_coun
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onClick: info => md_layer_click( map_id, "scatterplot", info ),
-    onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
+    onHover: hasTooltip ? md_update_binary_tooltip : null,
     transitions: js_transition || {},
     brushingRadius: brush_radius,
     extensions: extensions

@@ -63,6 +63,7 @@ trail_length, start_time, end_time, animation_speed, bbox, update_view, focus_la
 		    currentTime: time
 		  };
 
+		//console.log(time);
 		//console.log(layer);
 
 		var tripsLayer = new deck.TripsLayer(layer);

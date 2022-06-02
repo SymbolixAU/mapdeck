@@ -118,24 +118,21 @@
   isolation: 'isolate';
 }
 
-/* https://github.com/uber/deck.gl/blob/master/examples/gallery/src/geojson-layer.html#L18 */
-.mapdecktooltip:empty {
-	display: none;
-}
-
 .mapdecktooltip {
-/*	position: absolute; */
-/*	z-index: 1; */
-/*	pointer-events: none; */
+	position: absolute;
+	z-index: 1;
+	pointer-events: none;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 11px;
-  position: absolute;
   padding: 4px;
   margin: 8px;
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
   max-width: 300px;
-  font-size: 10px;
-  z-index: 9;
-  pointer-events: none;
 }
+
+
+.mapdecktooltip:empty {
+	display: none;
+}
+

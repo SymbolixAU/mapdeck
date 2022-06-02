@@ -138,7 +138,7 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
     },
     _pathType: 'open',
     onClick: info => md_layer_click( map_id, "path", info ),
-    onHover: info => hasTooltip ? md_update_binary_tooltip( info.layer, info.index, info.x, info.y ) : null,
+    onHover: hasTooltip ? md_update_binary_tooltip : null,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     transitions: js_transition || {},
