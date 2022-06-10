@@ -1,3 +1,21 @@
+.mapdecktooltip {
+	position: absolute;
+	z-index: 1;
+	/*pointer-events: none;*/
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  padding: 4px;
+  margin: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  max-width: 300px;
+}
+
+.mapdecktooltip:empty {
+	display: none;
+}
+
+
 .mapViewStateContainer {
 /*	  background: #fff; */
     position: absolute;
@@ -116,23 +134,5 @@
 
 .deckgl-parent-class {
   isolation: 'isolate';
-}
-
-.mapdecktooltip {
-	position: absolute;
-	z-index: 1;
-	pointer-events: none;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  padding: 4px;
-  margin: 8px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  max-width: 300px;
-}
-
-
-.mapdecktooltip:empty {
-	display: none;
 }
 

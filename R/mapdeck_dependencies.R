@@ -80,6 +80,7 @@ mapdeck_dependencies <- function() {
 		, mapdeck_dep_location()
 		, mapdeck_dep_colours()
 		, mapdeck_dep_coordinates()
+		, mapdeck_css()
 		)
 }
 
