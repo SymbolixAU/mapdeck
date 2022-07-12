@@ -1,4 +1,4 @@
-function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_settings, elevation_scale, auto_highlight, highlight_colour, legend, js_transition, is_extruded ) {
+function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_settings, elevation_scale, auto_highlight, highlight_colour, legend, legend_format, js_transition, is_extruded ) {
 //bbox, update_view, focus_layer,
 
   console.log( legend );
@@ -34,7 +34,7 @@ function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_sett
   }
 
 	if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, legend_format);
 	}
 
 	// md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );

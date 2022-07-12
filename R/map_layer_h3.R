@@ -173,13 +173,15 @@ add_h3 <- function(
 
 	if( inherits( legend, "json" ) ) {
 		shape[["legend"]] <- legend
+		legend_format <- "hex"
 	} else {
 		shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
+		legend_format <- "rgb"
 	}
 
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, light_settings,
-		elevation_scale, auto_highlight, highlight_colour, shape[["legend"]],
+		elevation_scale, auto_highlight, highlight_colour, shape[["legend"]], legend_format,
 		js_transitions, is_extruded
 	)
 }
