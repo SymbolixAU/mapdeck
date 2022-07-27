@@ -27,8 +27,8 @@ function md_setup_mapdeck_div( map_id ) {
 function md_setup_legend( map_id ) {
 	var mapDiv = document.getElementById(map_id);
 	var legendContainer = document.createElement('div');
-  legendContainer.className = "legendContainer";
-  legendContainer.id = "legendContainer"+map_id;
+  legendContainer.className = "mapdeckLegendContainer";
+  legendContainer.id = "mapdeckLegendContainer"+map_id;
   mapDiv.appendChild( legendContainer );
 }
 

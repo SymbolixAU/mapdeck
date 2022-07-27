@@ -39,7 +39,7 @@ function md_make_legend_range(startValue, stopValue, cardinality, digits ) {
 
 function md_add_legend(map_id, map_type, layer_id, legendValues, format ) {
 
-  if( !md_div_exists( 'legendContainer'+map_id ) ) {
+  if( !md_div_exists( 'mapdeckLegendContainer'+map_id ) ) {
   	md_setup_legend( map_id );
   }
 
@@ -84,7 +84,7 @@ function md_add_legend_gradient(map_id, map_type, layer_id, legendValues, format
     if (window[map_id + 'legend' + layer_id + legendValues.colourType] == null) {
         window[map_id + 'legend' + layer_id + legendValues.colourType] = document.createElement("div");
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('id', map_id + 'legend' + layer_id + legendValues.colourType);
-        window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('class', 'legend');
+        window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('class', 'mapdeckLegend');
     }  else {
         isUpdating = true;
 
@@ -101,14 +101,14 @@ function md_add_legend_gradient(map_id, map_type, layer_id, legendValues, format
     labelContainer = document.createElement("div"),
     legendColours = document.createElement('div'),
 
-    legendContent.setAttribute('class', 'legendContent');
-    legendTitle.setAttribute('class', 'legendTitle');
+    legendContent.setAttribute('class', 'mapdeckLegendContent');
+    legendTitle.setAttribute('class', 'mapdeckLegendTitle');
     legendTitle.innerHTML = legendValues.title;
 
     window[map_id + 'legend' + layer_id + legendValues.colourType].appendChild( legendTitle );
 
-    tickContainer.setAttribute('class', 'tickContainer');
-    labelContainer.setAttribute('class', 'labelContainer');
+    tickContainer.setAttribute('class', 'mapdeckTickContainer');
+    labelContainer.setAttribute('class', 'mapdeckLabelContainer');
 
     if (legendValues.css !== null) {
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('style', legendValues.css);
@@ -199,7 +199,7 @@ function md_add_legend_category(map_id, map_type, layer_id, legendValues, format
 
         window[map_id + 'legend' + layer_id + legendValues.colourType] = document.createElement("div");
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('id', map_id + 'legend' + layer_id + legendValues.colourType);
-        window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('class', 'legend');
+        window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('class', 'mapdeckLegend');
 
     } else {
         isUpdating = true;
@@ -216,20 +216,20 @@ function md_add_legend_category(map_id, map_type, layer_id, legendValues, format
     labelContainer = document.createElement("div");
     legendColours = document.createElement('div');
 
-    legendContent.setAttribute('class', 'legendContent');
+    legendContent.setAttribute('class', 'mapdeckLegendContent');
     legendContent.setAttribute('id', 'legendContentId' + map_id + layer_id);
 
-    legendTitle.setAttribute('class', 'legendTitle');
+    legendTitle.setAttribute('class', 'mapdeckLegendTitle');
     legendTitle.innerHTML = legendValues.title;
     window[map_id + 'legend' + layer_id + legendValues.colourType].appendChild(legendTitle);
 
-    colourContainer.setAttribute('class', 'labelContainer');
+    colourContainer.setAttribute('class', 'mapdeckLabelContainer');
     colourContainer.setAttribute('id', 'colourContainerId' + map_id + layer_id);
 
-    tickContainer.setAttribute('class', 'tickContainer');
+    tickContainer.setAttribute('class', 'mapdeckTickContainer');
     tickContainer.setAttribute('id', 'tickContainerId' + map_id + layer_id);
 
-    labelContainer.setAttribute('class', 'labelContainer');
+    labelContainer.setAttribute('class', 'mapdeckLabelContainer');
     labelContainer.setAttribute('id', 'labelContainerId' + map_id + layer_id);
 
     if (legendValues.css !== null) {
@@ -312,14 +312,14 @@ function md_clear_legend( map_id, map_type, layer_id ) {
 
 function md_placeControl( map_id, map_type, object ) {
 
-    var mapbox_ctrl = document.getElementById( "legendContainer"+map_id);
+    var mapbox_ctrl = document.getElementById( "mapdeckLegendContainer"+map_id);
     mapbox_ctrl.appendChild( object );
 
     var ledge = {};
     var position = "BOTTOM_RIGHT";
 
     if( map_type == "google_map") {
-    	window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT].push( object );
+    	window[map_id + 'map'].controls[google.maps.ControlPosition.LEFT_BOTTOM].push( mapbox_ctrl );
     }
 
     ledge = {
@@ -337,7 +337,7 @@ function md_removeControl( map_id, map_type, legend_id, position ) {
 	element.parentNode.removeChild( element );
 
 	if( map_type == "google_map") {
-	  md_clear_control( window[map_id + 'map'].controls[google.maps.ControlPosition.BOTTOM_LEFT], legend_id );
+	  md_clear_control( window[map_id + 'map'].controls[google.maps.ControlPosition.LEFT_BOTTOM], legend_id );
 	}
 
 /*

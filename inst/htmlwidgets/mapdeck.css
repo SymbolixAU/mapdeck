@@ -68,7 +68,7 @@
 }
 */
 
-.legendContainer {
+.mapdeckLegendContainer {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -77,7 +77,7 @@
     padding-bottom: 14px;
 }
 
-.legend {
+.mapdeckLegend {
     font-family: Arial, sans-serif;
     background: #fff;
     padding: 8px;
@@ -93,7 +93,7 @@
     right: 0;
 }
 
-.legendTitle {
+.mapdeckLegendTitle {
 /*  border: 1px solid #FF00FF; */
     font-size: 14px;
     padding-bottom: 4px;
@@ -101,19 +101,19 @@
     left: float;
 }
 
-.legendContent{
+.mapdeckLegendContent{
 /*  border: 1px solid #000000; */
     display: inline-flex;
     white-space: nowrap;
 }
 
-.tickContainer{
+.mapdeckTickContainer{
     padding-left: 2px;
     height: auto;
     display: inline-block;
 }
 
-.labelContainer{
+.mapdeckLabelContainer{
 /*  border: 1px solid #00FF00; */
   padding-left: 6px;
   height: auto;
