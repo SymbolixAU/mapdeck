@@ -4,10 +4,10 @@
 \alias{clear_legend}
 \title{Clear Legend}
 \usage{
-clear_legend(map_id, layer_id)
+clear_legend(map, layer_id)
 }
 \arguments{
-\item{map_id}{the id of the map you want to clear the legend from.}
+\item{map}{the map from which you want to clear the legend.}
 
 \item{layer_id}{single value specifying an id for the layer. Use this value to
 distinguish between shape layers of the same type. Layers with the same id are likely

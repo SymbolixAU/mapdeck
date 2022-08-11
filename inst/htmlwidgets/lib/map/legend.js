@@ -2,12 +2,7 @@
 //https://stackoverflow.com/a/40475362/5977215
 function md_colour_domain( x, colour_range, map_id, map_type, layer_id, legend, format ) {
 	if( legend.legend ) {
-
-		//console.log( "md_colour_domain" );
-		//console.log( x );
 		var cd = md_make_legend_range(x[0], x[1], colour_range.length, legend.digits );
-
-		//console.log( cd );
 
 		var ledge = {
   	fill_colour: {
@@ -65,9 +60,6 @@ function md_add_legend_gradient(map_id, map_type, layer_id, legendValues, format
     // fill gradient
     // numeric values; format numbers according to legendValues.digits
 
-    //console.log( "legend digits" );
-    //console.log( legendValues );
-
     'use strict';
     var legendContent,
         legendTitle,
@@ -114,7 +106,6 @@ function md_add_legend_gradient(map_id, map_type, layer_id, legendValues, format
         window[map_id + 'legend' + layer_id + legendValues.colourType].setAttribute('style', legendValues.css);
     }
 
-    //console.log( legendValues.colour );
 
     if( format === "hex") {
 	    for (i = 0; i < legendValues.colour.length; i++) {
@@ -332,7 +323,6 @@ function md_placeControl( map_id, map_type, object ) {
 
 
 function md_removeControl( map_id, map_type, legend_id, position ) {
-
 	var element = document.getElementById( legend_id );
 	element.parentNode.removeChild( element );
 
