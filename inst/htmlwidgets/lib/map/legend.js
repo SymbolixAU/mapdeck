@@ -302,7 +302,8 @@ function md_clear_legend( map_id, map_type, layer_id ) {
 
 
 function md_placeControl( map_id, map_type, object ) {
-
+		//console.log("md_placeControl");
+		//console.log(object);
     var mapbox_ctrl = document.getElementById( "mapdeckLegendContainer"+map_id);
     mapbox_ctrl.appendChild( object );
 
@@ -310,7 +311,16 @@ function md_placeControl( map_id, map_type, object ) {
     var position = "BOTTOM_RIGHT";
 
     if( map_type == "google_map") {
-    	window[map_id + 'map'].controls[google.maps.ControlPosition.LEFT_BOTTOM].push( mapbox_ctrl );
+
+    	var controls = window[map_id + 'map'].controls[google.maps.ControlPosition.LEFT_BOTTOM];
+    	console.log("controls")
+    	console.log(controls);
+    	// Iff the mapbox_ctrl already exists, don't push it to the left_bottom, only push the Object
+			if( controls.Id.length === 0 ) {
+				window[map_id + 'map'].controls[google.maps.ControlPosition.LEFT_BOTTOM].push( mapbox_ctrl );
+			}
+
+    	window[map_id + 'map'].controls[google.maps.ControlPosition.LEFT_BOTTOM].push( object );
     }
 
     ledge = {
@@ -325,6 +335,11 @@ function md_placeControl( map_id, map_type, object ) {
 function md_removeControl( map_id, map_type, legend_id, position ) {
 	var element = document.getElementById( legend_id );
 	element.parentNode.removeChild( element );
+
+	//console.log("md_removeControl")
+	//console.log(map_type);
+	//console.log(legend_id);
+	//console.log(position);
 
 	if( map_type == "google_map") {
 	  md_clear_control( window[map_id + 'map'].controls[google.maps.ControlPosition.LEFT_BOTTOM], legend_id );
@@ -354,6 +369,31 @@ function md_removeControl( map_id, map_type, legend_id, position ) {
 
 function md_clear_control(control, legend_id) {
 
+//console.log("md_clear_control");
+//console.log(control);
+
+
+if (control != null) {
+    control.forEach(function (item, index) {
+    	//console.log(index);
+    	//console.log(item);
+      if (item != null) {
+      	//console.log(item.getAttribute('id'));
+      	//console.log(legend_id);
+
+      	//var decendents = item.getElementsByTagName('div');
+      	//console.log(decendents);
+
+      	//var thisControl = item.getElementById(legend_id);
+      	//console.log(thisControl);
+
+        if (item.getAttribute('id') === legend_id) {
+          control.removeAt(index);
+        }
+      }
+    });
+  }
+  /*
   if (control !== undefined ) {
     control.forEach(function (item, index) {
       if (item !== undefined ) {
@@ -363,4 +403,5 @@ function md_clear_control(control, legend_id) {
       }
     });
   }
+  */
 }
