@@ -4,7 +4,6 @@ if( typeof globalThis === 'undefined') {
 	var globalThis = window;
 }
 
-
 HTMLWidgets.widget({
 
   name: 'mapdeck',
@@ -17,6 +16,24 @@ HTMLWidgets.widget({
     return {
 
       renderValue: function(x) {
+
+			// issue 349
+			function removeCircular(obj) {
+				const seen = new WeakSet();
+				const recurse = obj => {
+					seen.add(obj,true);
+					for( let [k, v] of Object.entries(obj)) {
+					  if( typeof v === "object" && v !== null) {
+						  if(seen.has(v)) delete obj[k];
+						  else recurse(v);
+					  } else {
+						  continue;
+					  }
+					}
+				}
+				recurse(obj);
+				return(obj);
+			}
 
       	md_setup_window( el.id );
 
@@ -106,28 +123,32 @@ HTMLWidgets.widget({
 
 						  Shiny.onInputChange(el.id + '_view_change', viewState);
 			      },
+
 			      onDragStart(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	//console.log("drag start");
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	Shiny.onInputChange(el.id +'_drag_start', info);
+			      	Shiny.onInputChange(el.id +'_drag_start', removeCircular(info) );
 			      },
 			      onDrag(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	Shiny.onInputChange(el.id +'_drag', info);
+			      	Shiny.onInputChange(el.id +'_drag', removeCircular(info) );
 			      },
 			      onDragEnd(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	Shiny.onInputChange(el.id +'_drag_end', info);
+			      	Shiny.onInputChange(el.id +'_drag_end', removeCircular(info) );
 			      },
 			      onResize(size) {
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	Shiny.onInputChange(el.id +'_resize', size);
 			      }
+			      /*
+			      */
 			  });
 
 			  window[el.id + 'map'] = deckgl;
@@ -143,7 +164,6 @@ HTMLWidgets.widget({
     };
   }
 });
-
 
 if (HTMLWidgets.shinyMode) {
 
