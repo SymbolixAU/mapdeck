@@ -10,18 +10,22 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
 
-    		const getCircularReplacer = () => {
-				  const seen = new WeakSet();
-				  return (key, value) => {
-				    if (typeof value === "object" && value !== null) {
-				      if (seen.has(value)) {
-				        return;
-				      }
-				      seen.add(value);
-				    }
-				    return value;
-				  };
-				};
+			function removeCircular(obj) {
+				const seen = new WeakSet();
+				const recurse = obj => {
+					seen.add(obj,true);
+					for( let [k, v] of Object.entries(obj)) {
+					  if( typeof v === "object" && v !== null) {
+						  if(seen.has(v)) delete obj[k];
+						  else recurse(v);
+					  } else {
+						  continue;
+					  }
+					}
+				}
+				recurse(obj);
+				return(obj);
+			}
 
       	md_setup_window( el.id );
 
@@ -116,19 +120,19 @@ HTMLWidgets.widget({
 			      	//console.log("drag start");
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	Shiny.onInputChange(el.id +'_drag_start', JSON.stringify(info, getCircularReplacer()) );
+			      	Shiny.onInputChange(el.id +'_drag_start', removeCircular(info) );
 			      },
 			      onDrag(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	Shiny.onInputChange(el.id +'_drag', JSON.stringify(info, getCircularReplacer()));
+			      	Shiny.onInputChange(el.id +'_drag', removeCircular(info) );
 			      },
 			      onDragEnd(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	Shiny.onInputChange(el.id +'_drag_end', JSON.stringify(info, getCircularReplacer()));
+			      	Shiny.onInputChange(el.id +'_drag_end', removeCircular(info) );
 			      },
 			      onResize(size) {
 			      	if (!HTMLWidgets.shinyMode) { return; }
