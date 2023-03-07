@@ -3,7 +3,7 @@ mapdeckLoader3dTilesDependency <- function() {
 		## https://unpkg.com/@loaders.gl/3d-tiles@2.2.3/dist/dist.min.js
 		createHtmlDependency(
 			name = "loader_3dtiles",
-			version = "2.2.3",
+			version = "3.3.1",
 			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
 			script = c("loader_3dtiles.min.js"),
 			all_files =  FALSE
@@ -11,12 +11,12 @@ mapdeckLoader3dTilesDependency <- function() {
 	)
 }
 
+## https://unpkg.com/@loaders.gl/i3s@latest/dist/dist.min.js
 mapdeckLoaderIS3Dependency <- function() {
 	list(
-		## https://unpkg.com/@loaders.gl/i3s@2.2.3/dist/dist.min.js
 		createHtmlDependency(
 			name = "loader_i3s",
-			version = "2.2.3",
+			version = "3.3.1",
 			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
 			script = c("loader_i3s.min.js"),
 			all_files =  FALSE

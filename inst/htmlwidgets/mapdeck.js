@@ -129,19 +129,20 @@ HTMLWidgets.widget({
 			      	//console.log("drag start");
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	Shiny.onInputChange(el.id +'_drag_start', removeCircular(info) );
+			      	//console.log( info );
+			      	//Shiny.onInputChange(el.id +'_drag_start', removeCircular(info) );
 			      },
 			      onDrag(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	Shiny.onInputChange(el.id +'_drag', removeCircular(info) );
+			      	//Shiny.onInputChange(el.id +'_drag', removeCircular(info) );
 			      },
 			      onDragEnd(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	Shiny.onInputChange(el.id +'_drag_end', removeCircular(info) );
+			      	//Shiny.onInputChange(el.id +'_drag_end', removeCircular(info) );
 			      },
 			      onResize(size) {
 			      	if (!HTMLWidgets.shinyMode) { return; }

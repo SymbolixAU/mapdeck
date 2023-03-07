@@ -26,7 +26,7 @@ Imports:
     Rcpp,
     shiny,
     sfheaders (>= 0.3.0)
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
 Suggests: 
     covr,
     googleway,

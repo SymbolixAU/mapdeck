@@ -161,7 +161,7 @@ deckgl_min_js <- function() {
 	list(
 		createHtmlDependency(
 			name = "deckgl",
-			version = "8.7.10",
+			version = "8.8.27",
 			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
 			script = c("deckgl.min.js"),
 			all_files = FALSE
@@ -169,8 +169,8 @@ deckgl_min_js <- function() {
 	)
 }
 
-## https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js
-## https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css
+## https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js
+## https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css
 mapboxgl <- function() {
 	list(
 		createHtmlDependency(
