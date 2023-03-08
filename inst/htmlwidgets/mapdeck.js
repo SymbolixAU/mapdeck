@@ -35,6 +35,17 @@ HTMLWidgets.widget({
 				return(obj);
 			}
 
+			function buildDragObject(info) {
+				var dragObject = {
+      		coordinate: info.coordinate,
+      		viewport: info.viewport,
+      		x: info.x,
+      		y: info.y
+      	};
+
+      	return(dragObject);
+			}
+
       	md_setup_window( el.id );
 
       	if( x.show_view_state ) {
@@ -130,19 +141,19 @@ HTMLWidgets.widget({
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
 			      	//console.log( info );
-			      	//Shiny.onInputChange(el.id +'_drag_start', removeCircular(info) );
+			      	Shiny.onInputChange(el.id +'_drag_start', buildDragObject(info) );
 			      },
 			      onDrag(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	//Shiny.onInputChange(el.id +'_drag', removeCircular(info) );
+			      	Shiny.onInputChange(el.id +'_drag', buildDragObject(info) );
 			      },
 			      onDragEnd(info, event){
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	//if( info.layer !== null ) { info.layer = null; }  // dragging a layer;
 			      	info.layer = undefined; // in case of dragging a layer
-			      	//Shiny.onInputChange(el.id +'_drag_end', removeCircular(info) );
+			      	Shiny.onInputChange(el.id +'_drag_end', buildDragObject(info) );
 			      },
 			      onResize(size) {
 			      	if (!HTMLWidgets.shinyMode) { return; }
