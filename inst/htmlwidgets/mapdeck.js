@@ -18,6 +18,7 @@ HTMLWidgets.widget({
       renderValue: function(x) {
 
 			// issue 349
+			/*
 			function removeCircular(obj) {
 				const seen = new WeakSet();
 				const recurse = obj => {
@@ -34,7 +35,9 @@ HTMLWidgets.widget({
 				recurse(obj);
 				return(obj);
 			}
+			*/
 
+			// issue 364
 			function buildDragObject(info) {
 				var dragObject = {
       		coordinate: info.coordinate,

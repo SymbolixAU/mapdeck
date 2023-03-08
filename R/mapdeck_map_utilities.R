@@ -122,10 +122,31 @@ doResolveFormula.data.frame = function(data, f) {
 # @param layer_id
 layerId <- function(
 	layer_id,
-	layer = c("animated_arc", "animated_line", "arc", "bitmap", "cesium", "column",
-						"geojson", "greatcircle","grid", "h3_hexagon","heatmap","hexagon", "i3s",
-						"line", "mesh", "mvt", "path","pointcloud", "polygon","scatterplot", "screengrid", "terrain",
-						"text", "title","trips")
+	layer = layers <- c(
+		"animated_arc"
+		, "animated_line"
+		, "arc"
+		, "bitmap"
+		, "column"
+		, "geojson"
+		, "greatcircle"
+		, "grid"
+		, "h3"
+		, "heatmap"
+		, "hexagon"
+		, "line"
+		, "mesh"
+		, "path"
+		, "pointcloud"
+		, "polygon"
+		, "scatterplot"
+		, "screengrid"
+		, "terrain"
+		, "text"
+		, "tile3d"
+		, "title"
+		, "trips"
+	)
 	) {
 
 	layer <- match.arg( layer )

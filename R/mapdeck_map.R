@@ -115,10 +115,9 @@ mapdeck <- function(
   mapdeckmap <- add_dependencies( mapdeckmap )
 
   mapdeckmap$dependencies <- c(
-  	if ('h3' %in% libraries) mapdeckH3JSDependency() else NULL,
-  	mapdeckmap$dependencies
+  	if ('h3' %in% libraries) mapdeckH3JSDependency() else NULL
+  	, mapdeckmap$dependencies
   	, mapboxgl()
-  	, mapdeck_css()
   	, mapdeck_js()
   	, htmlwidgets_js()
   	#, mapdeckViewStateDependency()
