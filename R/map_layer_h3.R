@@ -152,7 +152,7 @@ add_h3 <- function(
 	# }
 
 	checkHexAlpha(highlight_colour)
-	layer_id <- layerId(layer_id, "h3_hexagon")
+	layer_id <- layerId(layer_id, "h3")
 
 	map <- addDependency(map, mapdeckH3Dependency())
 
@@ -190,6 +190,6 @@ add_h3 <- function(
 #' @rdname clear
 #' @export
 clear_h3_hexagon <- function( map, layer_id = NULL) {
-	layer_id <- layerId(layer_id, "h3_hexagon")
+	layer_id <- layerId(layer_id, "h3")
 	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "h3_hexagon" )
 }
