@@ -143,7 +143,8 @@ add_scatterplot <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL,
-	brush_radius = NULL
+	brush_radius = NULL,
+	collision_filter = FALSE
 ) {
 
 	## using binary data requires hex-colorus to include teh alpha
@@ -230,7 +231,7 @@ add_scatterplot <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], nrow(data) , layer_id, auto_highlight, highlight_colour,
 		shape[["legend"]], legend_format, bbox, update_view, focus_layer, js_transitions,
-		radius_min_pixels, radius_max_pixels, brush_radius
+		radius_min_pixels, radius_max_pixels, brush_radius, collision_filter
 		)
 }
 

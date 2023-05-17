@@ -34,7 +34,8 @@ add_text(
   focus_layer = FALSE,
   digits = 6,
   transitions = NULL,
-  brush_radius = NULL
+  brush_radius = NULL,
+  collision_filter = FALSE
 )
 }
 \arguments{

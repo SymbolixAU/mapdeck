@@ -1,9 +1,13 @@
-function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_count, layer_id, auto_highlight, highlight_colour, legend, legend_format, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius ) {
+function add_scatterplot_geo_columnar( map_id, map_type, scatter_data, data_count, layer_id, auto_highlight, highlight_colour, legend, legend_format, bbox, update_view, focus_layer, js_transition, radius_min_pixels, radius_max_pixels, brush_radius, collision_filter) {
 
   var extensions = [];
 
   if ( brush_radius > 0 ) {
   	extensions.push( new deck.BrushingExtension() );
+  }
+
+  if ( collision_filter ) {
+  	extensions.push( new deck.CollisionFilterExtension() )
   }
 
   let hasTooltip = scatter_data.tooltip !== undefined;

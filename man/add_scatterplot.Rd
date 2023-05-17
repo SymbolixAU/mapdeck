@@ -32,7 +32,8 @@ add_scatterplot(
   update_view = TRUE,
   focus_layer = FALSE,
   transitions = NULL,
-  brush_radius = NULL
+  brush_radius = NULL,
+  collision_filter = FALSE
 )
 }
 \arguments{

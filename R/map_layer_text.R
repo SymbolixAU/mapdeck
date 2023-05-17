@@ -108,7 +108,8 @@ add_text <- function(
 	focus_layer = FALSE,
 	digits = 6,
 	transitions = NULL,
-	brush_radius = NULL
+	brush_radius = NULL,
+	collision_filter = FALSE
 ) {
 
 	l <- list()
@@ -180,7 +181,7 @@ add_text <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
 		shape[["legend"]], bbox, update_view, focus_layer, js_transitions, billboard,
-		font_family, font_weight, brush_radius
+		font_family, font_weight, brush_radius, collision_filter
 		)
 }
 

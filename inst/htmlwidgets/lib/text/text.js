@@ -1,10 +1,14 @@
 
-function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight, brush_radius ) {
+function add_text_geo( map_id, map_type, text_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, billboard, font_family, font_weight, brush_radius, collision_filter ) {
 
   var extensions = [];
 
   if ( brush_radius > 0 ) {
   	extensions.push( new deck.BrushingExtension() );
+  }
+
+  if ( collision_filter ) {
+  	extensions.push( new deck.CollisionFilterExtension() )
   }
 
   const textLayer = new deck.TextLayer({
