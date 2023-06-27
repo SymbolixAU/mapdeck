@@ -91,7 +91,7 @@ add_bitmap <- function(
 	layer_id <- layerId( layer_id, "bitmap" )
 
 	invoke_method(
-		map, "add_bitmap", layer_id, image, bounds, desaturate, transparent_colour,
+		map, "add_bitmap", map_type( map ), layer_id, image, bounds, desaturate, transparent_colour,
 		tint_colour, bbox, focus_layer, update_view
 	)
 }
@@ -101,7 +101,7 @@ add_bitmap <- function(
 #' @export
 clear_bitmap <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "bitmap")
-	invoke_method(map, "md_layer_clear", layer_id, "bitmap", update_view )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "bitmap", update_view )
 }
 
 
