@@ -128,6 +128,8 @@ layerId <- function(
 		, "arc"
 		, "bitmap"
 		, "column"
+		, "cesium"
+		, "i3s"
 		, "geojson"
 		, "greatcircle"
 		, "grid"
