@@ -46,7 +46,7 @@ LinkingTo:
     rapidjsonr,
     Rcpp (>= 1.0.10),
     sfheaders (>= 0.4.2),
-    spatialwidget (>= 0.2.4)
+    spatialwidget (>= 0.2.5)
 Remotes:
     dcooley/geometries,
     dcooley/sfheaders,
