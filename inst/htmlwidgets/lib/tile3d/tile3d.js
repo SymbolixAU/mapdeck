@@ -1,6 +1,8 @@
 
 function add_cesium( map_id, map_type, tile_data, point_size, layer_id, ion_token ) {
 
+  console.log(tile_data);
+
 	const tileLayer = new deck.Tile3DLayer({
 		map_id: map_id,
 		id: 'cesium-'+layer_id,

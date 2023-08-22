@@ -1,9 +1,9 @@
 mapdeckLoader3dTilesDependency <- function() {
 	list(
-		## https://unpkg.com/@loaders.gl/3d-tiles@2.2.3/dist/dist.min.js
+		## https://unpkg.com/@loaders.gl/3d-tiles@latest/dist/dist.min.js
 		createHtmlDependency(
 			name = "loader_3dtiles",
-			version = "3.3.1",
+			version = "3.4.11",
 			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
 			script = c("loader_3dtiles.min.js"),
 			all_files =  FALSE
@@ -16,7 +16,7 @@ mapdeckLoaderIS3Dependency <- function() {
 	list(
 		createHtmlDependency(
 			name = "loader_i3s",
-			version = "3.3.1",
+			version = "3.4.11",
 			src = system.file("htmlwidgets/lib/", package = "mapdeck"),
 			script = c("loader_i3s.min.js"),
 			all_files =  FALSE
@@ -53,7 +53,7 @@ mapdeckTile3DDependency <- function() {
 #' ## Melbourne point cloud
 #' ion_asset <- 43978
 #' ion_token <- "ION_TOKEN"
-#' tile_data <- paste0("https://assets.cesium.com/",ion_asset,"/tileset.json")
+#' tile_data <- paste0("https://assets.ion.cesium.com/",ion_asset,"/tileset.json")
 #'
 #' mapdeck(
 #'   location = c(144.95, -37.82)
