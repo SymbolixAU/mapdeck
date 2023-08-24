@@ -255,7 +255,7 @@ function md_layer_click( map_id, layer, info ) {
   	index: info.index,
   	color: info.color,
   	object: info.object,
-  	layerId: info.layer_id,
+  	layerId: info.layer.id,
   	lat: info.coordinate[1], // deck.gl 8.4 - https://deck.gl/docs/upgrade-guide#upgrading-from-deckgl-v83-to-v84
   	lon: info.coordinate[0]
   };
