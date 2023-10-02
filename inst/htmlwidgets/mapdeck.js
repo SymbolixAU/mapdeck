@@ -77,7 +77,9 @@ HTMLWidgets.widget({
        	 deckgl = new deck.DeckGL({
        	 	  views: [ new deck.MapView({
        	 	  	id: el.id,
-       	 	  	repeat: x.repeat_view
+       	 	  	repeat: x.repeat_view,
+       	 	  	width: width,
+		       	 	height: height
        	 	  	}) ],
        	 	  map: false,
 			      container: el.id,
@@ -91,7 +93,9 @@ HTMLWidgets.widget({
         deckgl = new deck.DeckGL({
         	  views: [ new deck.MapView({
         	  	id: el.id,
-        	  	repeat: x.repeat_view
+        	  	repeat: x.repeat_view,
+		       	 	width: width,
+		       	 	height: height
         	  	})
         	  ],
           	mapboxApiAccessToken: x.access_token,

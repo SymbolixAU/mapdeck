@@ -31,7 +31,7 @@ This layer is experimental
 ## Melbourne point cloud
 ion_asset <- 43978
 ion_token <- "ION_TOKEN"
-tile_data <- paste0("https://assets.cesium.com/",ion_asset,"/tileset.json")
+tile_data <- paste0("https://assets.ion.cesium.com/",ion_asset,"/tileset.json")
 
 mapdeck(
   location = c(144.95, -37.82)
