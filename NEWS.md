@@ -1,5 +1,6 @@
 # v0.3.5
 
+* `collisions_filter` argument to hide overlapping features on some layers
 * `clear_legend()` argument `map_id` renamed to `map`, to make it 'correct' and match other functions
 * removing 'circular reference' bug when `repeat_view = TRUE` [issue 349](https://github.com/SymbolixAU/mapdeck/issues/349)
 * `add_h3()` layer for plotting H3 indexes
