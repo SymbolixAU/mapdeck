@@ -78,8 +78,8 @@ HTMLWidgets.widget({
        	 	  views: [ new deck.MapView({
        	 	  	id: el.id,
        	 	  	repeat: x.repeat_view,
-       	 	  	width: width,
-		       	 	height: height
+//       	 	  	width: width,
+//		       	 	height: height
        	 	  	}) ],
        	 	  map: false,
 			      container: el.id,
@@ -94,8 +94,8 @@ HTMLWidgets.widget({
         	  views: [ new deck.MapView({
         	  	id: el.id,
         	  	repeat: x.repeat_view,
-		       	 	width: width,
-		       	 	height: height
+//		       	 	width: width,
+//		       	 	height: height
         	  	})
         	  ],
           	mapboxApiAccessToken: x.access_token,
