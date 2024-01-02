@@ -116,9 +116,9 @@ add_greatcircle <- function(
 	update_view = TRUE,
 	focus_layer = FALSE,
 	transitions = NULL,
-	digits = 6
-) {
+	digits = 6,
 	brush_radius = NULL
+) {
 
 	l <- list()
 	l[["origin"]] <- force(origin)

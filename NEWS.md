@@ -1,5 +1,6 @@
 # v0.3.5
 
+* GreateCircleLayer gets `brush_radius` argument [issue 164](https://github.com/SymbolixAU/mapdeck/issues/164)
 * better handling of empty geometries - [issue 363](https://github.com/SymbolixAU/mapdeck/issues/363)
 * `collisions_filter` argument to hide overlapping features on some layers
 * `clear_legend()` argument `map_id` renamed to `map`, to make it 'correct' and match other functions
