@@ -96,6 +96,7 @@ SEXP rcpp_path_interleaved(
 		path, interleave::primitives::INTERLEAVE_LINE
 		);
 
+
 	Rcpp::NumericVector coordinates = paths[ "coordinates" ];
 	int total_coordinates = paths[ "total_coordinates" ];
 	int n_coordinates = coordinates.length();

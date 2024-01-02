@@ -1,7 +1,7 @@
 Package: mapdeck
 Type: Package
 Title: Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'
-Version: 0.3.40004
+Version: 0.3.40005
 Date: 2020-10-28
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
@@ -41,7 +41,7 @@ LinkingTo:
     colourvalues (>= 0.3.8),
     geojsonsf (>= 1.3.3),
     geometries (>= 0.2.2),
-    interleave,
+    interleave (>= 0.1.2),
     jsonify (>= 1.1.1),
     rapidjsonr,
     Rcpp (>= 1.0.10),
@@ -49,6 +49,7 @@ LinkingTo:
     spatialwidget (>= 0.2.5)
 Remotes:
     dcooley/geometries,
+    dcooley/interleave,
     dcooley/sfheaders,
     SymbolixAU/geojsonsf,
     SymbolixAU/spatialwidget
