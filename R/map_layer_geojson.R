@@ -179,7 +179,7 @@ mapdeckGeojsonDependency <- function() {
 #' library(geojsonsf)
 #' sf <- geojsonsf::geojson_sf( geojson )
 #' sf$width <- sample(1:100, size = nrow(sf), replace = TRUE)
-#' sf$elevation <- sample(100:1000, size = nrow(sf), replace = T)
+#' sf$elevation <- sample(100:1000, size = nrow(sf), replace = TRUE)
 #' geo <- geojsonsf::sf_geojson( sf )
 #'
 #' mapdeck(
@@ -190,6 +190,7 @@ mapdeckGeojsonDependency <- function() {
 #' ) %>%
 #'  add_geojson(
 #'    data = geo
+#'    , extruded = TRUE ## required to show elevated polygons
 #'  )
 #'
 #' }
@@ -219,7 +220,7 @@ add_geojson <- function(
 	highlight_colour = "#AAFFFFFF",
 	palette = "viridis",
 	na_colour = "#808080FF",
-	line_width_units = c("metres", "pixels"),
+	line_width_units = c("meters", "pixels"),
 	line_width_scale = 1,
 	line_width_min_pixels = 0,
 	elevation_scale = 1,
@@ -233,6 +234,9 @@ add_geojson <- function(
 	) {
 
 	l <- list()
+
+	line_width_units <- match.arg(line_width_units)
+
 	l[["stroke_colour"]] <- force( stroke_colour )
 	l[["stroke_opacity"]] <- force( stroke_opacity )
 	l[["stroke_width"]] <- force( stroke_width )
@@ -326,7 +330,7 @@ add_geojson <- function(
 
 #' @rdname clear
 #' @export
-clear_geojson <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE) {
+clear_geojson <- function( map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE) {
 	layer_id <- layerId(layer_id, "geojson")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "geojson", clear_legend, clear_view )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "geojson", update_view, clear_legend )
 }

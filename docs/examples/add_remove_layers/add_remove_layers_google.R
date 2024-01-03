@@ -16,6 +16,7 @@ ui <- dashboardPage(
 		actionButton(inputId = "arc", label = "arc")
 		, actionButton(inputId = "path", label = "path")
 		, actionButton(inputId = "scatterplot", label = "scatterplot")
+		, actionButton(inputId = "polygon", label = "polygon")
 	)
 	, dashboardBody(
 		mapdeck::mapdeck_dependencies()  ## add JS dependencies
@@ -83,6 +84,21 @@ server <- function( input, output ) {
 		} else {
 			googleway::google_map_update(map_id = "map") %>%
 				mapdeck::clear_scatterplot()
+		}
+	})
+
+	observeEvent({input$polygon},{
+		res <- input$polygon %% 2
+		if( res == 1 ) {
+			googleway::google_map_update(map_id = "map") %>%
+				mapdeck::add_polygon(
+					data = mapdeck::melbourne
+					, fill_colour = "SA2_NAME"
+					, legend = TRUE
+				)
+		} else {
+			googleway::google_map_update(map_id = "map") %>%
+				mapdeck::clear_polygon()
 		}
 	})
 

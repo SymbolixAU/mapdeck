@@ -109,6 +109,7 @@ add_text <- function(
 	digits = 6,
 	transitions = NULL,
 	brush_radius = NULL,
+	collision_filter = FALSE,
 	...
 ) {
 
@@ -134,7 +135,7 @@ add_text <- function(
 	l <- resolve_palette( l, palette )
 	l <- resolve_legend( l, legend )
 	l <- resolve_legend_options( l, legend_options )
-	l <- resolve_data( data, l, c("POINT","MULTIPOINT"))
+	l <- resolve_data( data, l, c("POINT"))
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -185,14 +186,14 @@ add_text <- function(
 	invoke_method(
 		map, jsfunc, map_type( map ), shape[["data"]], layer_id, auto_highlight, highlight_colour,
 		shape[["legend"]], bbox, update_view, focus_layer, js_transitions, billboard,
-		font_family, font_weight, brush_radius
+		font_family, font_weight, brush_radius, collision_filter
 		)
 }
 
 #' @rdname clear
 #' @export
-clear_text <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE ) {
+clear_text <- function( map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE) {
 	layer_id <- layerId(layer_id, "text")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "text", clear_legend, clear_view )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "text", update_view, clear_legend )
 }
 

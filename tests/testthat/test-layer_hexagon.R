@@ -2,9 +2,8 @@ context("hexagon")
 
 
 test_that("add_hexagon accepts multiple objects", {
-
 	testthat::skip_on_cran()
-	testthat::skip_on_travis()
+	library(sfheaders)
 
 	geo <- '[{"type":"Feature","properties":{},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
 	poly <- '[{"polyline":"_ifpEo`ydL"}]'
@@ -13,7 +12,7 @@ test_that("add_hexagon accepts multiple objects", {
 	set_token("abc")
 	m <- mapdeck()
 
-	sf <- sf::st_as_sf( capitals[1, ], coords = c("lon", "lat") )
+	sf <- sfheaders::sf_point( capitals[1, ], x = "lon", y = "lat" )
 	p <- add_hexagon(map = m, data = sf)
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 

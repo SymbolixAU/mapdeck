@@ -4,13 +4,15 @@
 \name{capitals}
 \alias{capitals}
 \title{Capital cities for each country}
-\format{A data frame with 200 observations and 4 variables
+\format{
+A data frame with 200 observations and 4 variables
 \describe{
   \item{country}{country name}
   \item{capital}{capital name}
   \item{lat}{latitude of capital}
   \item{lon}{longitude of capital}
-}}
+}
+}
 \usage{
 capitals
 }

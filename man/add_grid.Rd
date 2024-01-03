@@ -4,6 +4,7 @@
 \alias{add_grid}
 \title{Add Grid}
 \usage{
+<<<<<<< HEAD
 add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, cell_size = 1000, extruded = TRUE,
   elevation = NULL, elevation_function = c("sum", "mean", "min",
@@ -13,6 +14,33 @@ add_grid(map, data = get_map_data(map), lon = NULL, lat = NULL,
   highlight_colour = "#AAFFFFFF", layer_id = NULL,
   update_view = TRUE, focus_layer = FALSE, digits = 6,
   transitions = NULL, brush_radius = NULL, ...)
+=======
+add_grid(
+  map,
+  data = get_map_data(map),
+  lon = NULL,
+  lat = NULL,
+  polyline = NULL,
+  cell_size = 1000,
+  extruded = TRUE,
+  elevation = NULL,
+  elevation_function = c("sum", "mean", "min", "max"),
+  colour = NULL,
+  colour_function = c("sum", "mean", "min", "max"),
+  elevation_scale = 1,
+  colour_range = NULL,
+  legend = FALSE,
+  legend_options = NULL,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  layer_id = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL,
+  brush_radius = NULL
+)
+>>>>>>> origin
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -61,6 +89,8 @@ to conflict and not plot correctly}
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{digits}{number of digits for rounding coordinates}
 
 \item{transitions}{list specifying the duration of transitions.}
 
@@ -112,8 +142,8 @@ add_grid(
 )
 
 ## using sf object
-library(sf)
-sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45 ) \%>\%
 add_grid(
@@ -125,7 +155,7 @@ add_grid(
 )
 
 ## using colour and elevation functions, and legends
-df$val <- sample(1:10, size = nrow(df), replace = T)
+df$val <- sample(1:10, size = nrow(df), replace = TRUE)
 
 mapdeck( style = mapdeck_style("dark"), pitch = 45) \%>\%
 add_grid(
@@ -134,8 +164,8 @@ add_grid(
 	, lon = "lng"
 	, layer_id = "hex_layer"
 	, elevation_scale = 100
-	, legend = T
-	, colour_function = "mean"
+	, legend = TRUE
+	, colour_function = "max"
 	, colour = "val"
 )
 
@@ -145,8 +175,8 @@ add_grid(
 	, lat = "lat"
 	, lon = "lng"
 	, layer_id = "hex_layer"
-	, elevation_scale = 100
-	, legend = T
+	, elevation_scale = 10
+	, legend = TRUE
 	, elevation_function = "mean"
 	, elevation = "val"
 )

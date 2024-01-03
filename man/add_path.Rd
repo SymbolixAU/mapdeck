@@ -4,6 +4,7 @@
 \alias{add_path}
 \title{Add Path}
 \usage{
+<<<<<<< HEAD
 add_path(map, data = get_map_data(map), polyline = NULL,
   stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
   dash_size = NULL, dash_gap = NULL, tooltip = NULL,
@@ -12,6 +13,39 @@ add_path(map, data = get_map_data(map), polyline = NULL,
   palette = "viridis", na_colour = "#808080FF", legend = FALSE,
   legend_options = NULL, legend_format = NULL, update_view = TRUE,
   focus_layer = FALSE, digits = 6, transitions = NULL, ...)
+=======
+add_path(
+  map,
+  data = get_map_data(map),
+  polyline = NULL,
+  stroke_colour = NULL,
+  stroke_width = NULL,
+  stroke_opacity = NULL,
+  dash_size = NULL,
+  dash_gap = NULL,
+  offset = NULL,
+  width_units = c("meters", "common", "pixels"),
+  width_min_pixels = NULL,
+  width_max_pixels = NULL,
+  width_scale = 1,
+  tooltip = NULL,
+  billboard = FALSE,
+  layer_id = NULL,
+  id = NULL,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  palette = "viridis",
+  na_colour = "#808080FF",
+  legend = FALSE,
+  legend_options = NULL,
+  legend_format = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL,
+  brush_radius = NULL
+)
+>>>>>>> origin
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -23,13 +57,34 @@ EPSG:4326 (WGS 84) coordinate system}
 
 \item{stroke_colour}{variable of \code{data} or hex colour for the stroke. If used,
 \code{elevation} is ignored.
-If using a hex colour, use either a single value, or a vector the same length as \code{data}}
+If using a hex colour, use either a single value, or a column of hex colours  on \code{data}}
 
 \item{stroke_width}{width of the stroke in meters. Default 1.}
+
+\item{stroke_opacity}{Either a string specifying the column of \code{data}
+containing the opacity of each shape, or a single value in [0,255], or [0, 1),
+to be applied to all the shapes. Default 255. If a hex-string is used as the
+colour, this argument is ignored and you should include the alpha on the hex string}
 
 \item{dash_size}{size of each dash, relative to the width of the stroke}
 
 \item{dash_gap}{size of the gap between dashes, relative to the width of the stroke}
+
+\item{offset}{The offset to draw each path with, relative to the width of the path.
+Negative offset is to the left hand side, and positive offset is to the right hand side.
+0 extrudes the path so that it is centered at the specified coordinates.}
+
+\item{width_units}{The units of the line width, one of 'meters', 'common' or 'pixels'.
+When zooming in and out, meter sizes scale with the base map, and pixel sizes
+remain the same on screen.}
+
+\item{width_min_pixels}{The minimum path width in pixels.
+This can be used to prevent the path from getting too thin when zoomed out.}
+
+\item{width_max_pixels}{The maximum path width in pixels.
+his prop can be used to prevent the path from getting too thick when zoomed in.}
+
+\item{width_scale}{The path width multiplier that multiplied to all paths.}
 
 \item{tooltip}{variable of \code{data} containing text or HTML to render as a tooltip}
 
@@ -65,9 +120,17 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{transitions}{list specifying the duration of transitions.}
 
+<<<<<<< HEAD
 \item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
+=======
+\item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed}
+>>>>>>> origin
 }
 \description{
 The Path Layer takes in lists of coordinate points and renders them as
@@ -92,6 +155,15 @@ path = 0,
 stroke_colour = 0,
 stroke_width = 0
 )
+}
+
+\section{gradient fill}{
+
+
+If a colour is supplied for each coordinate (see examples), the colour along each segment
+of the line is gradient-filled. However, if either \code{dash_gap}, \code{dash_size} or
+\code{offset} are supplied the the segment is filled with a solid colour, accoding to the
+first point on the segment.
 }
 
 \section{data}{
@@ -148,17 +220,101 @@ key <- 'abc'
 set_token( key )
 
 mapdeck(
-  style = 'mapbox://styles/mapbox/dark-v9'
-  , location = c(145, -37.8)
-  , zoom = 10) \%>\%
+  style = mapdeck_style("dark")
+  ) \%>\%
+  add_path(
+    data = roads
+    , stroke_colour = "RIGHT_LOC"
+    , stroke_width = 20
+    , layer_id = "path_layer"
+    , tooltip = "ROAD_NAME"
+    , auto_highlight = TRUE
+    , legend = TRUE
+  )
+
+## Dashed lines
+mapdeck(
+  style = mapdeck_style("dark")
+  ) \%>\%
   add_path(
     data = roads
     , stroke_colour = "RIGHT_LOC"
     , layer_id = "path_layer"
     , tooltip = "ROAD_NAME"
-    , auto_highlight = TRUE
-    , legend = T
+    , stroke_width = 1
+    , dash_size = 0.5
+    , dash_gap = 5
   )
+
+## Different dashes per path
+
+sf <- mapdeck::roads
+sf$dash_size <- sample(1:5, size = nrow( sf ), replace = TRUE )
+sf$dash_gap <- sample(1:5, size = nrow( sf ), replace = TRUE )
+
+mapdeck(
+  style = mapdeck_style("dark")
+  ) \%>\%
+  add_path(
+    data = sf
+    , stroke_colour = "RIGHT_LOC"
+    , layer_id = "path_layer"
+    , tooltip = "ROAD_NAME"
+    , dash_size = "dash_size"
+    , dash_gap = "dash_gap"
+  )
+
+## Offset lines
+sf <- mapdeck::roads
+sf$offset <- sample(-10:10, size = nrow( sf ), replace = TRUE )
+
+mapdeck(
+  style = mapdeck_style("light")
+) \%>\%
+	add_path(
+   data = sf
+   , stroke_colour = "ROAD_NAME"
+   , offset = "offset"
+ )
+
+## Multi Coloured line
+## You need to supply one colour per coordinate in the sf object
+sf_line <- sfheaders::sf_linestring(
+  obj = data.frame(
+  id = c(1,1,1,1,1,2,2,2,2,2)
+  , x = c(0,0,1,1,2,-1,-1,0,0,1)
+  , y = c(0,1,1,2,2,0,1,1,2,2)
+  , col = c(1,2,3,4,5,5,4,3,2,1)
+ )
+ , x = "x"
+ , y = "y"
+ , linestring_id = "id"
+ , list_columns = "col"
+ , keep = T
+)
+
+mapdeck(
+ style = mapdeck_style("light")
+) \%>\%
+ add_path(
+   data = sf_line
+   , stroke_colour = "col"
+   , stroke_width = 50000
+)
+
+## If using dashed lines, colours won't be gradient-filled
+mapdeck(
+ style = mapdeck_style("light")
+) \%>\%
+ add_path(
+   data = sf_line
+   , stroke_colour = "col"
+   , stroke_width = 500
+   , dash_size = 10
+   , dash_gap = 10
+ )
+
+
 }
 
 }

@@ -4,11 +4,31 @@
 \alias{add_heatmap}
 \title{Add Heatmap}
 \usage{
+<<<<<<< HEAD
 add_heatmap(map, data = get_map_data(map), lon = NULL, lat = NULL,
   polyline = NULL, weight = NULL, colour_range = NULL,
   radius_pixels = 30, intensity = 1, threshold = 0.05,
   layer_id = NULL, update_view = TRUE, focus_layer = FALSE,
   digits = 6, transitions = NULL, ...)
+=======
+add_heatmap(
+  map,
+  data = get_map_data(map),
+  lon = NULL,
+  lat = NULL,
+  polyline = NULL,
+  weight = NULL,
+  colour_range = NULL,
+  radius_pixels = 30,
+  intensity = 1,
+  threshold = 0.05,
+  layer_id = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL
+)
+>>>>>>> origin
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -47,6 +67,8 @@ to conflict and not plot correctly}
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{digits}{number of digits for rounding coordinates}
 
 \item{transitions}{list specifying the duration of transitions.}
 
@@ -106,7 +128,7 @@ df <- read.csv(paste0(
 ))
 
 df <- df[ !is.na(df$lng), ]
-df$weight <- sample(1:10, size = nrow(df), replace = T)
+df$weight <- sample(1:10, size = nrow(df), replace = TRUE)
 
 mapdeck( style = mapdeck_style('dark'), pitch = 45 ) \%>\%
 add_heatmap(
@@ -118,8 +140,8 @@ add_heatmap(
 )
 
 ## as an sf object
-library(sf)
-sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+library(sfheaders)
+sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 
 mapdeck( style = mapdeck_style('dark'), pitch = 45 ) \%>\%
 add_heatmap(

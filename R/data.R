@@ -16,7 +16,7 @@
 #' A simple feature \code{sf} object of roads in central Melbourne
 #'
 #' @details
-#' Obtained from \url{www.data.gov.au} and distributed under the Creative Commons 4 License
+#' Obtained from \url{https://www.data.gov.au} and distributed under the Creative Commons 4 License
 #' \url{https://creativecommons.org/licenses/by/4.0/}
 #'
 #' @format An sf and data frame object with 18286 observations and 16 variables
@@ -38,8 +38,15 @@
 #' @format a 'json' object
 "geojson"
 
-#' garmin
+#' Melbourne Mesh
 #'
-#' An sf object of my cycling activities from my Garmin
+#' A mesh3d object of Melbourne
 #'
-"garmin"
+"melbourne_mesh"
+
+#' city_trail
+#'
+#' An sf object of a cyclist cycling around Melbourne's Capital City Trail
+#'
+"city_trail"
+

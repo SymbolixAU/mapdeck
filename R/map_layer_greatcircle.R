@@ -31,7 +31,7 @@ mapdeckGreatCircleDependency <- function() {
 #' url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 #' flights <- read.csv(url)
 #' flights$id <- seq_len(nrow(flights))
-#' flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
+#' flights$stroke <- sample(1:3, size = nrow(flights), replace = TRUE)
 #' flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 #'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
@@ -45,7 +45,7 @@ mapdeckGreatCircleDependency <- function() {
 #'   , stroke_width = "stroke"
 #'   , tooltip = "info"
 #'   , auto_highlight = TRUE
-#'   , legend = T
+#'   , legend = TRUE
 #'   , legend_options = list(
 #'     stroke_from = list( title = "Origin airport" ),
 #'     css = "max-height: 100px;")
@@ -63,18 +63,18 @@ mapdeckGreatCircleDependency <- function() {
 #'   )
 #'
 #' ## Using a 2-sfc-column sf object
-#' library(sf)
+#' library(sfheaders)
 #'
-#' sf_flights <- cbind(
-#'   sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
-#'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
-#' )
+#' sf_flights <- sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = TRUE )
+#' destination <- sfheaders::sfc_point( flights, x = "end_lon", y = "end_lat" )
+#'
+#' sf_flights$destination <- destination
 #'
 #' mapdeck() %>%
 #'  add_greatcircle(
 #'    data = sf_flights
 #'    , origin = 'geometry'
-#'    , destination = 'geometry.1'
+#'    , destination = 'destination'
 #'    , layer_id = 'greatcircles'
 #'    , stroke_from = "airport1"
 #'    , stroke_to = "airport2"
@@ -117,9 +117,9 @@ add_greatcircle <- function(
 	focus_layer = FALSE,
 	transitions = NULL,
 	digits = 6,
+	brush_radius = NULL,
 	...
 ) {
-	brush_radius = NULL
 
 	if( nrow( data ) == 0 ) {
 		return( clear_greatcircle( map, layer_id, ... ) )
@@ -171,7 +171,7 @@ add_greatcircle <- function(
 		geometry_column <- c( "origin", "destination" )
 		shape <- rcpp_od_geojson( data, l, geometry_column, digits, "greatcircle" )
 	} else if ( tp == "df" ) {
-		geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
+		geometry_column <- list( origin = c("start_lon", "start_lat","start_elev"), destination = c("end_lon", "end_lat","end_elev") )
 		shape <- rcpp_od_geojson_df( data, l, geometry_column, digits, "greatcircle" )
 	} else if ( tp == "sfencoded" ) {
 		geometry_column <- c("origin", "destination")
@@ -199,7 +199,7 @@ add_greatcircle <- function(
 #'
 #' @rdname clear
 #' @export
-clear_greatcircle <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE ) {
+clear_greatcircle <- function( map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE ) {
 	layer_id <- layerId(layer_id, "greatcircle")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "greatcircle", clear_legend, clear_view )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "greatcircle", update_view, clear_legend )
 }

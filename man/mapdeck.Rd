@@ -4,10 +4,25 @@
 \alias{mapdeck}
 \title{mapdeck}
 \usage{
-mapdeck(data = NULL, token = get_access_token(api = "mapbox"),
-  width = NULL, height = NULL, padding = 0,
-  style = "mapbox://styles/mapbox/streets-v9", pitch = 0, zoom = 0,
-  bearing = 0, location = c(0, 0), show_view_state = FALSE)
+mapdeck(
+  data = NULL,
+  token = get_access_token(api = "mapbox"),
+  width = NULL,
+  height = NULL,
+  padding = 0,
+  style = "mapbox://styles/mapbox/streets-v9",
+  pitch = 0,
+  zoom = 0,
+  bearing = 0,
+  libraries = NULL,
+  max_zoom = 20,
+  min_zoom = 0,
+  max_pitch = 60,
+  min_pitch = 0,
+  location = c(0, 0),
+  show_view_state = FALSE,
+  repeat_view = FALSE
+)
 }
 \arguments{
 \item{data}{data to be used in the layer. All coordinates are expected to be
@@ -31,6 +46,17 @@ If left empty layers will still be plotted, but without a Mapbox map.}
 
 \item{bearing}{bearing of the map between 0 and 360}
 
+\item{libraries}{additional libraries required by some layers. Currently
+'h3' is required for \link{add_h3}.}
+
+\item{max_zoom}{sets the maximum zoom level}
+
+\item{min_zoom}{sets the minimum zoom level}
+
+\item{max_pitch}{sets the maximum pitch}
+
+\item{min_pitch}{sets the minimum pitch}
+
 \item{location}{unnamed vector of lon and lat coordinates (in that order)}
 
 \item{show_view_state}{logical, indicating whether to add the current View State to the map.
@@ -46,6 +72,8 @@ When \code{TRUE}, the following is added as an overlay to the map
   \item{viewBounds}
   \item{interactionState}
 }}
+
+\item{repeat_view}{Logical indicating if the layers should repeat at low zoom levels}
 }
 \description{
 mapdeck

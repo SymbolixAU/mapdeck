@@ -3,21 +3,25 @@
 
 # mapdeck
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mapdeck)](http://cran.r-project.org/package=mapdeck)
+[![R build
+status](https://github.com/SymbolixAU/mapdeck/workflows/R-CMD-check/badge.svg)](https://github.com/SymbolixAU/mapdeck/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/symbolixau/mapdeck/branch/master/graph/badge.svg)](https://codecov.io/gh/symbolixau/mapdeck?branch=master)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/mapdeck)
 [![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/mapdeck)](http://cran.r-project.org/web/packages/mapdeck/index.html)
+downloads](http://cranlogs.r-pkg.org/badges/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
 [![Github
 Stars](https://img.shields.io/github/stars/SymbolixAU/mapdeck.svg?style=social&label=Github)](https://github.com/SymbolixAU/mapdeck)
-[![Build
-Status](https://travis-ci.org/SymbolixAU/mapdeck.svg?branch=master)](https://travis-ci.org/SymbolixAU/mapdeck)
-[![Coverage
-Status](https://codecov.io/github/SymbolixAU/mapdeck/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/mapdeck?branch=master)
+
+![](./docs/articles/img/articles/hexagons.png)
 
 ## What is mapdeck?
 
 An R library which lets you plot large data sets (as much as your GPU &
 browser can handle), on interactive maps using Mapbox GL and Deck.gl
+
+![](./docs/articles/img/articles/polygon_transitions.gif)
 
 ## What is mapbox?
 
@@ -25,46 +29,46 @@ browser can handle), on interactive maps using Mapbox GL and Deck.gl
 > We provide building blocks to add location features like maps, search,
 > and navigation into any experience you create.
 
-  - <https://www.mapbox.com/about/>
+-   <https://www.mapbox.com/about/>
 
 ## What is deck.gl?
 
 > deck.gl is a WebGL-powered framework for visual exploratory data
 > analysis of large datasets.
 
-  - <http://deck.gl/#/>
+-   <https://deck.gl/#/>
 
 ## How do I use it?
 
-Everything you need to know to get you started is on the [home
-page](https://symbolixau.github.io/mapdeck/articles/mapdeck.html)
-
-## Installation
-
-#### From cran
+First you need to install it, either from CRAN
 
 ``` r
 install.packages("mapdeck")
 ```
 
-#### Development version
-
-During development cycles the main changes happen to the dependant libraries, so you'll need to update those too. 
+Or from github (to get the latest development version)
 
 ``` r
-devtools::install_github("SymbolixAU/jsonify", force = TRUE)
-devtools::install_github("dcooley/sfheaders", force = TRUE)
-devtools::install_github("SymbolixAU/geojsonsf", force = TRUE)
-devtools::install_github("SymbolixAU/colourvalues", force = TRUE)
-devtools::install_github("SymbolixAU/spatialwidget", force = TRUE)
-devtools::install_github("SymbolixAU/mapdeck")
+remotes::install_github("SymbolixAU/mapdeck")
 ```
 
-## Getting Started
+If the github version fails to install, you’ll probably need to update
+dependencies first
+
+``` r
+remotes::install_github("dcooley/geometries")
+remotes::install_github("dcooley/sfheaders")
+remotes::install_github("SymbolixAU/spatialwidget")
+```
+
+Then everything you need to know to get you started is on the [home
+page](https://symbolixau.github.io/mapdeck/articles/mapdeck.html)
+
+## Quick Start
 
 Mapdeck uses [Mapbox maps](https://www.mapbox.com/), and to use Mapbox
 you need an [access
-token](https://www.mapbox.com/help/how-access-tokens-work/).
+token](https://docs.mapbox.com/help/how-mapbox-works/access-tokens/).
 
 Once you’ve generate a token you can use their maps.
 
@@ -105,4 +109,4 @@ tracker](https://github.com/SymbolixAU/mapdeck/issues) on github.
 
 I don’t respond to emails asking for help because this is an open source
 package, and any advice should be kept open so everyone can benefit.
-(unless you want to pay me\!)
+(unless you want to pay me!)

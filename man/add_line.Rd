@@ -4,6 +4,7 @@
 \alias{add_line}
 \title{Add line}
 \usage{
+<<<<<<< HEAD
 add_line(map, data = get_map_data(map), layer_id = NULL, origin,
   destination, id = NULL, stroke_colour = NULL, stroke_width = NULL,
   stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
@@ -11,6 +12,32 @@ add_line(map, data = get_map_data(map), layer_id = NULL, origin,
   na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
   legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
   digits = 6, transitions = NULL, ...)
+=======
+add_line(
+  map,
+  data = get_map_data(map),
+  layer_id = NULL,
+  origin,
+  destination,
+  id = NULL,
+  stroke_colour = NULL,
+  stroke_width = NULL,
+  stroke_opacity = NULL,
+  tooltip = NULL,
+  auto_highlight = FALSE,
+  highlight_colour = "#AAFFFFFF",
+  palette = "viridis",
+  na_colour = "#808080FF",
+  legend = FALSE,
+  legend_options = NULL,
+  legend_format = NULL,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL,
+  brush_radius = NULL
+)
+>>>>>>> origin
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -22,9 +49,11 @@ EPSG:4326 (WGS 84) coordinate system}
 distinguish between shape layers of the same type. Layers with the same id are likely
 to conflict and not plot correctly}
 
-\item{origin}{vector of longitude and latitude columns, or an \code{sfc} column}
+\item{origin}{vector of longitude and latitude columns, and optionally an elevation column,
+or an \code{sfc} column}
 
-\item{destination}{vector of longitude and latitude columns, or an \code{sfc} column}
+\item{destination}{vector of longitude and latitude columns, and optionally an elevatino column,
+or an \code{sfc} column}
 
 \item{id}{an id value in \code{data} to identify layers when interacting in Shiny apps.}
 
@@ -62,9 +91,17 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
 
+\item{digits}{number of digits for rounding coordinates}
+
 \item{transitions}{list specifying the duration of transitions.}
 
+<<<<<<< HEAD
 \item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
+=======
+\item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
+the arcs will only show if the origin or destination are within the radius of the mouse.
+If NULL, all arcs are displayed}
+>>>>>>> origin
 }
 \description{
 The Line Layer renders raised lines joining pairs of source and target coordinates
@@ -145,7 +182,7 @@ set_token( key )
 url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 flights <- read.csv(url)
 flights$id <- seq_len(nrow(flights))
-flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
+flights$stroke <- sample(1:3, size = nrow(flights), replace = TRUE)
 
 mapdeck(style = mapdeck_style("dark"), pitch = 45 ) \%>\%
   add_line(
@@ -159,18 +196,18 @@ mapdeck(style = mapdeck_style("dark"), pitch = 45 ) \%>\%
  )
 
 ## Using a 2-sfc-column sf object
-library(sf)
+library(sfheaders)
 
-sf_flights <- cbind(
-  sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
-  , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
-)
+sf_flights <- sfheaders::sf_point( flights, x = "start_lon", y = "start_lat", keep = TRUE )
+destination <- sfheaders::sfc_point( flights, x = "end_lon", y = "end_lat" )
+
+sf_flights$destination <- destination
 
 mapdeck() \%>\%
  add_line(
    data = sf_flights
    , origin = 'geometry'
-   , destination = 'geometry.1'
+   , destination = 'destination'
    , layer_id = 'arcs'
    , stroke_colour = "airport1"
 )

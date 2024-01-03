@@ -10,6 +10,7 @@ mapdeckArcDependency <- function() {
 	)
 }
 
+
 #' Add arc
 #'
 #' The Arc Layer renders raised arcs joining pairs of source and target coordinates
@@ -20,17 +21,19 @@ mapdeckArcDependency <- function() {
 #' @param layer_id single value specifying an id for the layer. Use this value to
 #' distinguish between shape layers of the same type. Layers with the same id are likely
 #' to conflict and not plot correctly
-#' @param origin vector of longitude and latitude columns, or an \code{sfc} column
-#' @param destination vector of longitude and latitude columns, or an \code{sfc} column
+#' @param origin vector of longitude and latitude columns, and optionally an elevation column,
+#' or an \code{sfc} column
+#' @param destination vector of longitude and latitude columns, and optionally an elevatino column,
+#' or an \code{sfc} column
 #' @param id an id value in \code{data} to identify layers when interacting in Shiny apps.
 #' @param stroke_from column of \code{data} or hex colour to use as the staring stroke colour.
-#' If using a hex colour, use either a single value, or a vector the same length as \code{data}
+#' IIf using a hex colour, use either a single value, or a column of hex colours  on \code{data}
 #' @param stroke_from_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes. If a hex-string is used as the
 #' colour, this argument is ignored and you should include the alpha on the hex string
 #' @param stroke_to column of \code{data} or hex colour to use as the ending stroke colour.
-#' If using a hex colour, use either a single value, or a vector the same length as \code{data}
+#' If using a hex colour, use either a single value, or a column of hex colours  on \code{data}
 #' @param stroke_to_opacity Either a string specifying the
 #' column of \code{data} containing the stroke opacity of each shape, or a value
 #' between 1 and 255 to be applied to all the shapes. If a hex-string is used as the
@@ -58,6 +61,7 @@ mapdeckArcDependency <- function() {
 #' the arcs will only show if the origin or destination are within the radius of the mouse.
 #' If NULL, all arcs are displayed
 #' @param ... \code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions
+#' @param digits number of digits for rounding coordinates
 #'
 #' @section data:
 #'
@@ -126,7 +130,7 @@ mapdeckArcDependency <- function() {
 #' url <- 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv'
 #' flights <- read.csv(url)
 #' flights$id <- seq_len(nrow(flights))
-#' flights$stroke <- sample(1:3, size = nrow(flights), replace = T)
+#' flights$stroke <- sample(1:3, size = nrow(flights), replace = TRUE)
 #' flights$info <- paste0("<b>",flights$airport1, " - ", flights$airport2, "</b>")
 #'
 #' mapdeck( style = mapdeck_style("dark"), pitch = 45 ) %>%
@@ -140,7 +144,7 @@ mapdeckArcDependency <- function() {
 #'   , stroke_width = "stroke"
 #'   , tooltip = "info"
 #'   , auto_highlight = TRUE
-#'   , legend = T
+#'   , legend = TRUE
 #'   , legend_options = list(
 #'     stroke_from = list( title = "Origin airport" ),
 #'     css = "max-height: 100px;")
@@ -157,20 +161,45 @@ mapdeckArcDependency <- function() {
 #'   , stroke_width = "stroke"
 #'   )
 #'
-#' ## Using a 2-sfc-column sf object
-#' library(sf)
+#' ## Arcs can have an elevated start & destination
+#' flights$start_elev <- sample(100000:1000000, size = nrow(flights), replace = TRUE )
 #'
-#' sf_flights <- cbind(
-#'   sf::st_as_sf(flights, coords = c("start_lon", "start_lat"))
-#'   , sf::st_as_sf(flights[, c("end_lon","end_lat")], coords = c("end_lon", "end_lat"))
-#' )
+#' mapdeck( style = mapdeck_style("dark")) %>%
+#'   add_arc(
+#'   data = flights
+#'   , layer_id = "arc_layer"
+#'   , origin = c("start_lon", "start_lat", "start_elev")
+#'   , destination = c("end_lon", "end_lat", "start_elev")
+#'   , stroke_from = "airport1"
+#'   , stroke_to = "airport2"
+#'   , stroke_width = "stroke"
+#'   )
+#'
+#' ## Using a 2-sfc-column sf object
+#' library(sfheaders)
+#'
+#' sf_flights <- sfheaders::sf_point(
+#'   flights
+#'   , x = "start_lon"
+#'   , y = "start_lat"
+#'   , z = "start_elev"
+#'   , keep = TRUE
+#'   )
+#' destination <- sfheaders::sfc_point(
+#'   flights
+#'   , x = "end_lon"
+#'   , y = "end_lat"
+#'   , z = "start_elev"
+#'   )
+#'
+#' sf_flights$destination <- destination
 #'
 #' mapdeck(
 #' ) %>%
 #'  add_arc(
 #'    data = sf_flights
 #'    , origin = 'geometry'
-#'    , destination = 'geometry.1'
+#'    , destination = 'destination'
 #'    , layer_id = 'arcs'
 #'    , stroke_from = "airport1"
 #'    , stroke_to = "airport2"
@@ -184,7 +213,7 @@ mapdeckArcDependency <- function() {
 #'  add_arc(
 #'    data = sf_flights
 #'    , origin = 'geometry'
-#'    , destination = 'geometry.1'
+#'    , destination = 'destination'
 #'    , layer_id = 'arcs'
 #'    , stroke_from = "airport1"
 #'    , stroke_to = "airport2"
@@ -292,7 +321,7 @@ add_arc <- function(
 		geometry_column <- c( "origin", "destination" )
 		shape <- rcpp_od_geojson( data, l, geometry_column, digits, "arc" )
   } else if ( tp == "df" ) {
-  	geometry_column <- list( origin = c("start_lon", "start_lat"), destination = c("end_lon", "end_lat") )
+  	geometry_column <- list( origin = c("start_lon", "start_lat", "start_elev"), destination = c("end_lon", "end_lat", "end_elev") )
   	shape <- rcpp_od_geojson_df( data, l, geometry_column, digits, "arc" )
   } else if ( tp == "sfencoded" ) {
   	geometry_column <- c("origin", "destination")
@@ -327,10 +356,9 @@ add_arc <- function(
 #' @param map a mapdeck map object
 #' @param layer_id the layer_id of the layer you want to clear
 #' @param clear_legend logical indicating if the legend should be removed
-#' @param clear_view logical indicating if the view should update (TRUE) or not (FALSE)
-#' when the data is cleared
+#' @param update_view logical indicating if the map should update the bounds after removing the layer
 #' @export
-clear_arc <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE ) {
+clear_arc <- function( map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE) {
 	layer_id <- layerId(layer_id, "arc")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "arc", clear_legend, clear_view )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "arc", update_view, clear_legend )
 }

@@ -68,7 +68,7 @@ mapdeckHeatmapDependency <- function() {
 #' ))
 #'
 #' df <- df[ !is.na(df$lng), ]
-#' df$weight <- sample(1:10, size = nrow(df), replace = T)
+#' df$weight <- sample(1:10, size = nrow(df), replace = TRUE)
 #'
 #' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_heatmap(
@@ -80,8 +80,8 @@ mapdeckHeatmapDependency <- function() {
 #' )
 #'
 #' ## as an sf object
-#' library(sf)
-#' sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+#' library(sfheaders)
+#' sf <- sfheaders::sf_point( df, x = "lng", y = "lat")
 #'
 #' mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 #' add_heatmap(
@@ -126,7 +126,7 @@ add_heatmap <- function(
 	l[["lon"]] <- force( lon )
 	l[["lat"]] <- force( lat )
 
-	l <- resolve_data( data, l, c("POINT","MULTIPOINT") )
+	l <- resolve_data( data, l, c("POINT") )
 
 	bbox <- init_bbox()
 	update_view <- force( update_view )
@@ -185,7 +185,7 @@ add_heatmap <- function(
 
 #' @rdname clear
 #' @export
-clear_heatmap <- function( map, layer_id = NULL, clear_legend = TRUE, clear_view = TRUE) {
+clear_heatmap <- function( map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE)  {
 	layer_id <- layerId(layer_id, "heatmap")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "heatmap", clear_legend, clear_view )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "heatmap", update_view, clear_legend )
 }

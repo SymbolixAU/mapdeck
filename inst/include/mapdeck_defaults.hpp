@@ -4,6 +4,27 @@
 #include <Rcpp.h>
 
 namespace mapdeck {
+namespace binary_columns {
+
+	// binary columns are non-colour columns
+	inline Rcpp::StringVector get_binary_columns( std::string layer_name ) {
+		if( layer_name == "trips" ) {
+			return Rcpp::StringVector{"stroke_width"};
+		} else if ( layer_name == "path" ) {
+			return Rcpp::StringVector{"stroke_width","dash_size","dash_gap","offset"};
+		} else if (layer_name == "triangle" ) {
+			return Rcpp::StringVector{"elevation"};
+		} else if (layer_name == "polygon") {
+			return Rcpp::StringVector{"elevation"};
+		}
+
+		Rcpp::stop("mapdeck - unknown binary layer type");
+	}
+
+} // binary_columns
+} // mapdeck
+
+namespace mapdeck {
 namespace defaults {
 
 	inline Rcpp::NumericVector default_arc_height( int n ) {
@@ -16,7 +37,6 @@ namespace defaults {
 		return nv;
 	}
 
-  // dont' necessarily need polyline anymore
 	inline Rcpp::StringVector default_polyline( int n ) {
 		Rcpp::StringVector sv(n);
 		return sv;
@@ -38,7 +58,7 @@ namespace defaults {
 	}
 
 	inline Rcpp::IntegerVector default_radius( int n ) {
-		Rcpp::IntegerVector iv(n, 1000);
+		Rcpp::IntegerVector iv(n, 1.0);
 		return iv;
 	}
 
@@ -52,15 +72,25 @@ namespace defaults {
 		return nv;
 	}
 
-	inline Rcpp::NumericVector default_fill_opacity( int n ) {
-		Rcpp::NumericVector nv(n, 255.0);
+	// inline Rcpp::NumericVector default_fill_opacity( int n ) {
+	// 	Rcpp::NumericVector nv(n, 255.0);
+	// 	return nv;
+	// }
+
+	// inline Rcpp::NumericVector default_stroke_opacity( int n ) {
+	// 	Rcpp::NumericVector nv(n, 255.0);
+	// 	return nv;
+	// }
+
+	inline Rcpp::NumericVector default_binary_colour( int n ) {
+		Rcpp::NumericVector nv(n, 1.0);
 		return nv;
 	}
 
-	inline Rcpp::NumericVector default_stroke_opacity( int n ) {
-		Rcpp::NumericVector nv(n, 255.0);
-		return nv;
-	}
+	// inline Rcpp::NumericVector default_binary_opacity( int n ) {
+	// 	Rcpp::NumericVector nv(n, 1.0);
+	// 	return nv;
+	// }
 
 	inline Rcpp::NumericVector default_stroke_width( int n ) {
 		Rcpp::NumericVector nv(n, 1.0);
@@ -96,6 +126,11 @@ namespace defaults {
   	Rcpp::NumericVector nv(n, 0.0);
   	return nv;
   }
+
+	inline Rcpp::NumericVector default_offset( int n ) {
+		Rcpp::NumericVector nv(n, 0.0);
+		return nv;
+	}
 
 } // namespace defaults
 } // namespace mapdeck

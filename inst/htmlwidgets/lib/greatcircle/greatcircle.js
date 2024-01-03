@@ -2,13 +2,13 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
 
  var extensions = [];
 
-  console.log( brush_radius ) ;
+  //console.log( brush_radius ) ;
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
-  const greatcircleLayer = new GreatCircleLayer({
+  const greatcircleLayer = new deck.GreatCircleLayer({
   	map_id: map_id,
     id: 'greatcircle-'+layer_id,
     data: greatcircle_data,
@@ -39,7 +39,7 @@ function add_greatcircle_geo( map_id, map_type, greatcircle_data, layer_id, auto
 	  md_update_layer( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
 	}
 	if (legend !== false) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
@@ -50,10 +50,10 @@ function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id,
  var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
-  const greatcircleLayer = new GreatCircleLayer({
+  const greatcircleLayer = new deck.GreatCircleLayer({
     map_id: map_id,
     id: 'greatcircle-'+layer_id,
     data: greatcircle_data,
@@ -84,7 +84,7 @@ function add_greatcircle_polyline( map_id, map_type, greatcircle_data, layer_id,
 	  md_update_layer( map_id, 'greatcircle-'+layer_id, greatcircleLayer );
 	}
 	if (legend !== false) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
   md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

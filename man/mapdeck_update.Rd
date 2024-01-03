@@ -4,9 +4,13 @@
 \alias{mapdeck_update}
 \title{Mapdeck update}
 \usage{
-mapdeck_update(data = NULL, map_id,
-  session = shiny::getDefaultReactiveDomain(), deferUntilFlush = TRUE,
-  map_type = c("mapdeck_update", "google_map_update"))
+mapdeck_update(
+  data = NULL,
+  map_id,
+  session = shiny::getDefaultReactiveDomain(),
+  deferUntilFlush = TRUE,
+  map_type = c("mapdeck_update", "google_map_update")
+)
 }
 \arguments{
 \item{data}{data to be used in the layer. All coordinates are expected to be
@@ -20,6 +24,8 @@ default value will suffice.}
 \item{deferUntilFlush}{indicates whether actions performed against this
 instance should be carried out right away, or whether they should be held until
 after the next time all of the outputs are updated; defaults to TRUE.}
+
+\item{map_type}{either mapdeck_update or google_map_update}
 }
 \description{
 Update a Mapdeck map in a shiny app. Use this function whenever the map needs

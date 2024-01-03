@@ -3,10 +3,10 @@ function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, high
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
-  const arcLayer = new ArcLayer({
+  const arcLayer = new deck.ArcLayer({
   	map_id: map_id,
     id: 'arc-'+layer_id,
     data: arc_data,
@@ -34,7 +34,7 @@ function add_arc_geo( map_id, map_type, arc_data, layer_id, auto_highlight, high
 	}
 
 	if (legend !== false) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
@@ -45,10 +45,10 @@ function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight,
   var extensions = [];
 
   if ( brush_radius > 0 ) {
-  	extensions.push( new BrushingExtension() );
+  	extensions.push( new deck.BrushingExtension() );
   }
 
-  const arcLayer = new ArcLayer({
+  const arcLayer = new deck.ArcLayer({
     map_id: map_id,
     id: 'arc-'+layer_id,
     data: arc_data,
@@ -76,7 +76,7 @@ function add_arc_polyline( map_id, map_type, arc_data, layer_id, auto_highlight,
 	}
 
 	if (legend !== false) {
-	  md_add_legend( map_id, map_type, layer_id, legend );
+	  md_add_legend( map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

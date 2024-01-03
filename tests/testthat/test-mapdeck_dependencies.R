@@ -27,7 +27,7 @@ test_that("dependencies are loaded", {
 	s <- unlist( l )
 	expect_equal(
 		s,
-		c("mapbox-gl.css","mapdeck.css")
+		c("mapdeck.css", "mapbox-gl.css")
 	)
 
 	## madpeck_dependencies are those required for shiny

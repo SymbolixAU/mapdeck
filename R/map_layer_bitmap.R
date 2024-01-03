@@ -28,26 +28,28 @@ mapdeckBitmapDependency <- function() {
 #'
 #' set_token( "MAPBOX_TOKEN" )
 #'
-#' mapdeck() %>%
+#' mapdeck(location = c(-122.3, 37.8), zoom = 10) %>%
 #'  add_bitmap(
-#'    image = 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/website/sf-districts.png'
+#'    image = paste0(
+#'    'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/',
+#'    'website/sf-districts.png')
 #'    , bounds = c(-122.519, 37.7045, -122.355, 37.829)
 #'  )
 #'
-#' mapdeck() %>%
+#' mapdeck(location = c(-75.9, 40.9), zoom = 4) %>%
 #'   add_bitmap(
 #'     image = 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'
 #'     , bounds = c(-80.425, 37.936, -71.516, 46.437)
 #'   )
 #'
-#' mapdeck() %>%
+#' mapdeck(location = c(-75.9, 40.9), zoom = 4) %>%
 #'   add_bitmap(
 #'     image = 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'
 #'     , bounds = c(-80.425, 37.936, -71.516, 46.437)
 #'     , tint_colour = "#FF0000"
 #'   )
 #'
-#' mapdeck() %>%
+#' mapdeck(location = c(-75.9, 40.9), zoom = 4) %>%
 #'   add_bitmap(
 #'     image = 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif'
 #'     , bounds = c(-80.425, 37.936, -71.516, 46.437)
@@ -89,7 +91,7 @@ add_bitmap <- function(
 	layer_id <- layerId( layer_id, "bitmap" )
 
 	invoke_method(
-		map, "add_bitmap", layer_id, image, bounds, desaturate, transparent_colour,
+		map, "add_bitmap", map_type( map ), layer_id, image, bounds, desaturate, transparent_colour,
 		tint_colour, bbox, focus_layer, update_view
 	)
 }
@@ -97,9 +99,9 @@ add_bitmap <- function(
 
 #' @rdname clear
 #' @export
-clear_bitmap <- function( map, layer_id = NULL) {
+clear_bitmap <- function( map, layer_id = NULL, update_view = TRUE ) {
 	layer_id <- layerId(layer_id, "bitmap")
-	invoke_method(map, "md_layer_clear", layer_id, "bitmap" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "bitmap", update_view )
 }
 
 

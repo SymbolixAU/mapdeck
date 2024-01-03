@@ -4,6 +4,7 @@
 \alias{add_geojson}
 \title{Add Geojson}
 \usage{
+<<<<<<< HEAD
 add_geojson(map, data = get_map_data(map), layer_id = NULL,
   stroke_colour = NULL, stroke_opacity = NULL, stroke_width = NULL,
   dash_size = NULL, dash_gap = NULL, fill_colour = NULL,
@@ -17,6 +18,42 @@ add_geojson(map, data = get_map_data(map), layer_id = NULL,
   elevation_scale = 1, point_radius_scale = 1,
   point_radius_min_pixels = 1, update_view = TRUE,
   focus_layer = FALSE, digits = 6, transitions = NULL, ...)
+=======
+add_geojson(
+  map,
+  data = get_map_data(map),
+  layer_id = NULL,
+  stroke_colour = NULL,
+  stroke_opacity = NULL,
+  stroke_width = NULL,
+  dash_size = NULL,
+  dash_gap = NULL,
+  fill_colour = NULL,
+  fill_opacity = NULL,
+  radius = NULL,
+  elevation = NULL,
+  extruded = FALSE,
+  light_settings = list(),
+  legend = F,
+  legend_options = NULL,
+  legend_format = NULL,
+  auto_highlight = FALSE,
+  tooltip = NULL,
+  highlight_colour = "#AAFFFFFF",
+  palette = "viridis",
+  na_colour = "#808080FF",
+  line_width_units = c("meters", "pixels"),
+  line_width_scale = 1,
+  line_width_min_pixels = 0,
+  elevation_scale = 1,
+  point_radius_scale = 1,
+  point_radius_min_pixels = 1,
+  update_view = TRUE,
+  focus_layer = FALSE,
+  digits = 6,
+  transitions = NULL
+)
+>>>>>>> origin
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -93,6 +130,8 @@ all polygon elevation without updating the data}
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
+
+\item{digits}{number of digits for rounding coordinates}
 
 \item{transitions}{list specifying the duration of transitions.}
 
@@ -267,7 +306,7 @@ mapdeck(
 library(geojsonsf)
 sf <- geojsonsf::geojson_sf( geojson )
 sf$width <- sample(1:100, size = nrow(sf), replace = TRUE)
-sf$elevation <- sample(100:1000, size = nrow(sf), replace = T)
+sf$elevation <- sample(100:1000, size = nrow(sf), replace = TRUE)
 geo <- geojsonsf::sf_geojson( sf )
 
 mapdeck(
@@ -278,6 +317,7 @@ mapdeck(
 ) \%>\%
  add_geojson(
    data = geo
+   , extruded = TRUE ## required to show elevated polygons
  )
 
 }

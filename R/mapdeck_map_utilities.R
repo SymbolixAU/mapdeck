@@ -122,7 +122,33 @@ doResolveFormula.data.frame = function(data, f) {
 # @param layer_id
 layerId <- function(
 	layer_id,
-	layer = mapdeck_layers()
+	layer = layers <- c(
+		"animated_arc"
+		, "animated_line"
+		, "arc"
+		, "bitmap"
+		, "column"
+		, "cesium"
+		, "i3s"
+		, "geojson"
+		, "greatcircle"
+		, "grid"
+		, "h3"
+		, "heatmap"
+		, "hexagon"
+		, "line"
+		, "mesh"
+		, "path"
+		, "pointcloud"
+		, "polygon"
+		, "scatterplot"
+		, "screengrid"
+		, "terrain"
+		, "text"
+		, "tile3d"
+		, "title"
+		, "trips"
+	)
 	) {
 
 	layer <- match.arg( layer )
@@ -136,10 +162,8 @@ layerId <- function(
 	}
 }
 
-mapdeck_layers <- function() {
-	c("arc", "bitmap", "column", "geojson", "greatcircle","grid","heatmap","hexagon",
-		"line", "mesh", "path","pointcloud", "polygon","scatterplot", "screengrid",
-		"text", "title","trips")
+# returns 0-based index of all the list columns in a data.frame (sf object)
+list_columns <- function(x, geometry_col) {
+	geom_col <- which(names(x) == geometry_col)
+	return( setdiff( which( vapply(x, is.list, T) ), geom_col ) - 1 )
 }
-
-

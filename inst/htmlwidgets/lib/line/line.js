@@ -1,7 +1,13 @@
 
-function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
 
-  const lineLayer = new LineLayer({
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new deck.BrushingExtension() );
+  }
+
+  const lineLayer = new deck.LineLayer({
   	map_id: map_id,
     id: 'line-'+layer_id,
     data: line_data,
@@ -17,7 +23,9 @@ function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, hi
     onHover: md_update_tooltip,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -27,15 +35,21 @@ function add_line_geo( map_id, map_type, line_data, layer_id, auto_highlight, hi
 	}
 
 	if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }
 
 
-function add_line_polyline( map_id, map_type, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition ) {
+function add_line_polyline( map_id, map_type, line_data, layer_id, auto_highlight, highlight_colour, legend, bbox, update_view, focus_layer, js_transition, brush_radius ) {
 
-  const lineLayer = new LineLayer({
+  var extensions = [];
+
+  if ( brush_radius > 0 ) {
+  	extensions.push( new deck.BrushingExtension() );
+  }
+
+  const lineLayer = new deck.LineLayer({
     map_id: map_id,
     id: 'line-'+layer_id,
     data: line_data,
@@ -51,7 +65,9 @@ function add_line_polyline( map_id, map_type, line_data, layer_id, auto_highligh
     onHover: md_update_tooltip,
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
-    transitions: js_transition || {}
+    transitions: js_transition || {},
+    brushingRadius: brush_radius,
+    extensions: extensions
   });
 
   if( map_type == "google_map") {
@@ -61,7 +77,7 @@ function add_line_polyline( map_id, map_type, line_data, layer_id, auto_highligh
 	}
 
 	if (legend !== false) {
-	  md_add_legend(map_id, map_type, layer_id, legend);
+	  md_add_legend(map_id, map_type, layer_id, legend, "hex" );
 	}
 	md_layer_view( map_id, map_type, layer_id, focus_layer, bbox, update_view );
 }

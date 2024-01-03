@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -53,7 +57,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -67,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mapdeck</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -123,7 +127,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/SymbolixAU/mapdeck/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -155,7 +164,24 @@
           <p class="section-desc"></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
+        
+        <td>
+          <p><code><a href="add_animated_arc.html">add_animated_arc()</a></code> </p>
+        </td>
+        <td><p>Add animated arc</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_animated_line.html">add_animated_line()</a></code> </p>
+        </td>
+        <td><p>Add Animated line</p></td>
+      </tr><tr>
         
         <td>
           <p><code><a href="add_arc.html">add_arc()</a></code> </p>
@@ -167,6 +193,12 @@
           <p><code><a href="add_bitmap.html">add_bitmap()</a></code> </p>
         </td>
         <td><p>Add bitmap</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_cesium.html">add_cesium()</a></code> </p>
+        </td>
+        <td><p>Add Cesium</p></td>
       </tr><tr>
         
         <td>
@@ -209,6 +241,12 @@
           <p><code><a href="add_hexagon.html">add_hexagon()</a></code> </p>
         </td>
         <td><p>Add hexagon</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_i3s.html">add_i3s()</a></code> </p>
+        </td>
+        <td><p>Add I3S</p></td>
       </tr><tr>
         
         <td>
@@ -260,6 +298,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="add_terrain.html">add_terrain()</a></code> </p>
+        </td>
+        <td><p>Add terrain</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="add_text.html">add_text()</a></code> </p>
         </td>
         <td><p>Add Text</p></td>
@@ -284,9 +328,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="clear.html">clear_arc()</a></code> <code><a href="clear.html">clear_bitmap()</a></code> <code><a href="clear.html">clear_column()</a></code> <code><a href="clear.html">clear_geojson()</a></code> <code><a href="clear.html">clear_greatcircle()</a></code> <code><a href="clear.html">clear_grid()</a></code> <code><a href="clear.html">clear_heatmap()</a></code> <code><a href="clear.html">clear_hexagon()</a></code> <code><a href="clear.html">clear_line()</a></code> <code><a href="clear.html">clear_mesh()</a></code> <code><a href="clear.html">clear_path()</a></code> <code><a href="clear.html">clear_pointcloud()</a></code> <code><a href="clear.html">clear_polygon()</a></code> <code><a href="clear.html">clear_scatterplot()</a></code> <code><a href="clear.html">clear_screengrid()</a></code> <code><a href="clear.html">clear_text()</a></code> <code><a href="clear.html">clear_title()</a></code> <code><a href="clear.html">clear_trips()</a></code> </p>
+          <p><code><a href="city_trail.html">city_trail</a></code> </p>
         </td>
-        <td><p>Clear Arc</p></td>
+        <td><p>city_trail</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="clear.html">clear_animated_arc()</a></code> <code><a href="clear.html">clear_line()</a></code> <code><a href="clear.html">clear_arc()</a></code> <code><a href="clear.html">clear_bitmap()</a></code> <code><a href="clear.html">clear_column()</a></code> <code><a href="clear.html">clear_geojson()</a></code> <code><a href="clear.html">clear_greatcircle()</a></code> <code><a href="clear.html">clear_grid()</a></code> <code><a href="clear.html">clear_heatmap()</a></code> <code><a href="clear.html">clear_hexagon()</a></code> <code><a href="clear.html">clear_line()</a></code> <code><a href="clear.html">clear_mesh()</a></code> <code><a href="clear.html">clear_path()</a></code> <code><a href="clear.html">clear_pointcloud()</a></code> <code><a href="clear.html">clear_polygon()</a></code> <code><a href="clear.html">clear_scatterplot()</a></code> <code><a href="clear.html">clear_screengrid()</a></code> <code><a href="clear.html">clear_terrain()</a></code> <code><a href="clear.html">clear_text()</a></code> <code><a href="clear.html">clear_title()</a></code> <code><a href="clear.html">clear_trips()</a></code> </p>
+        </td>
+        <td><p>Clear Animated Arc</p></td>
       </tr><tr>
         
         <td>
@@ -299,12 +349,6 @@
           <p><code><a href="clear_tokens.html">clear_tokens()</a></code> </p>
         </td>
         <td><p>Clear tokens</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="garmin.html">garmin</a></code> </p>
-        </td>
-        <td><p>garmin</p></td>
       </tr><tr>
         
         <td>
@@ -386,6 +430,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="melbourne_mesh.html">melbourne_mesh</a></code> </p>
+        </td>
+        <td><p>Melbourne Mesh</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="pipe.html">%>%</a></code> </p>
         </td>
         <td><p>Pipe</p></td>
@@ -412,11 +462,10 @@
     </table>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
-    </ul>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -427,7 +476,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
