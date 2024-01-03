@@ -1,5 +1,6 @@
 # v0.3.5
 
+* Passing empty data to a layer clears the layer [issue 252](https://github.com/SymbolixAU/mapdeck/issues/252)
 * GreateCircleLayer gets `brush_radius` argument [issue 164](https://github.com/SymbolixAU/mapdeck/issues/164)
 * better handling of empty geometries - [issue 363](https://github.com/SymbolixAU/mapdeck/issues/363)
 * `collisions_filter` argument to hide overlapping features on some layers
@@ -8,7 +9,7 @@
 * `add_h3()` layer for plotting H3 indexes
 * Multicoloured / gradient filled paths
 * `minZoom`, `maxZoom`, `minPitch`, `maxPitch` values retained after adding layers [issue 333](https://github.com/SymbolixAU/mapdeck/issues/333)
-* `clear_layer()` functions get `update_view` argument
+* `clear_layer()` functions get `update_view` and `clear_legend` arguments
 * `clear_trips()` fixed to first 'stop_trips' using cancelAnimationFrame
 
 # v0.3.4
