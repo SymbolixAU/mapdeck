@@ -4,15 +4,6 @@
 \alias{add_line}
 \title{Add line}
 \usage{
-<<<<<<< HEAD
-add_line(map, data = get_map_data(map), layer_id = NULL, origin,
-  destination, id = NULL, stroke_colour = NULL, stroke_width = NULL,
-  stroke_opacity = NULL, tooltip = NULL, auto_highlight = FALSE,
-  highlight_colour = "#AAFFFFFF", palette = "viridis",
-  na_colour = "#808080FF", legend = FALSE, legend_options = NULL,
-  legend_format = NULL, update_view = TRUE, focus_layer = FALSE,
-  digits = 6, transitions = NULL, ...)
-=======
 add_line(
   map,
   data = get_map_data(map),
@@ -35,9 +26,9 @@ add_line(
   focus_layer = FALSE,
   digits = 6,
   transitions = NULL,
-  brush_radius = NULL
+  brush_radius = NULL,
+  ...
 )
->>>>>>> origin
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -95,13 +86,11 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{transitions}{list specifying the duration of transitions.}
 
-<<<<<<< HEAD
-\item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
-=======
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
->>>>>>> origin
+
+\item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
 }
 \description{
 The Line Layer renders raised lines joining pairs of source and target coordinates
