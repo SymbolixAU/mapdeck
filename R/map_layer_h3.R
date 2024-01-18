@@ -102,7 +102,6 @@ add_h3 <- function(
 	legend_format = NULL,
 	update_view = TRUE,
 	focus_layer = FALSE,
-	digits = 6,
 	transitions = NULL
 ) {
 
@@ -146,11 +145,6 @@ add_h3 <- function(
 		l[["data"]] <- NULL
 	}
 
-	# if( !is.null(l[["bbox"]] ) ) {
-	# 	bbox <- l[["bbox"]]
-	# 	l[["bbox"]] <- NULL
-	# }
-
 	checkHexAlpha(highlight_colour)
 	layer_id <- layerId(layer_id, "h3")
 
@@ -162,9 +156,11 @@ add_h3 <- function(
 	jsfunc <- "add_h3_hexagon_geo"
 
 	geometry_column <- "hexagon"
+
+	## use 'polyline' method because we have strings (cells), not lat/lon coordinates
 	shape <- rcpp_point_polyline( data, l, geometry_column, "h3_hexagon")
 
-	#return(shape)
+	# return(shape)
 
 	jsfunc <- "add_h3_hexagon"
 
