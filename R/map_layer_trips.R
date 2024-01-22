@@ -222,7 +222,6 @@ add_trips <- function(
 
 #' @rdname clear
 #' @export
-
 clear_trips <- function( map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE) {
 	layer_id <- layerId(layer_id, "trips")
 	## TRIPS needs to be stopped first

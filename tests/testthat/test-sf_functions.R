@@ -1,7 +1,7 @@
 context("sf")
 
-test_that("sf objects are subset correctly", {
-
+# test_that("sf objects are subset correctly", {
+#
 	# testthat::skip_on_cran()
 	# testthat::skip_on_travis()
 	# library(sf)
@@ -46,11 +46,6 @@ test_that("sf objects are subset correctly", {
 	# l <- list()
 	# l <- mapdeck:::resolve_data( sf, l, "MULTILINESTRING" )
 	# expect_true(nrow(l$data) == 1)
+#
+# })
 
-})
-
-test_that("sf objects are CAST correctly",{
-
-
-
-})

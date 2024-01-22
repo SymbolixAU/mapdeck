@@ -24,6 +24,8 @@ mapdeckScatterplotDependency <- function() {
 #' small for the given zoom level
 #' @param radius_max_pixels the maximum radius in pixels. Can prevent the circle from
 #' getting too big when zoomed in
+#' @param collision_filter set to `TRUE` if you want to hide features that overlap
+#' other features. Default is `FALSE`
 #'
 #' @inheritSection add_polygon data
 #' @inheritSection add_arc legend

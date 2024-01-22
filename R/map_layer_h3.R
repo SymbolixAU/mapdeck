@@ -160,8 +160,6 @@ add_h3 <- function(
 	## use 'polyline' method because we have strings (cells), not lat/lon coordinates
 	shape <- rcpp_point_polyline( data, l, geometry_column, "h3_hexagon")
 
-	# return(shape)
-
 	jsfunc <- "add_h3_hexagon"
 
 	light_settings <- jsonify::to_json(light_settings, unbox = T)

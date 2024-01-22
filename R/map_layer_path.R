@@ -140,7 +140,7 @@ mapdeckPathDependency <- function() {
 #'  , y = "y"
 #'  , linestring_id = "id"
 #'  , list_columns = "col"
-#'  , keep = T
+#'  , keep = TRUE
 #' )
 #'
 #' mapdeck(

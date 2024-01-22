@@ -39,7 +39,7 @@ find_mesh_index <- function( data ) {
 #' m <- melbourne_mesh
 #' m$vb[3, ] <- m$vb[3, ] * 50
 #'
-#'mapdeck() %>%
+#' mapdeck() %>%
 #'  add_mesh(
 #'  data = m
 #'  )
@@ -74,8 +74,8 @@ add_mesh <- function(
 	brush_radius = NULL
 ) {
 
-	if( nrow( data ) == 0 ) {
-		return( clear_mesh( map, layer_id, ... ) )
+	if( length( data ) == 0 ) {
+		return( clear_mesh( map = map, layer_id = layer_id, update_view = update_view, clear_legend = clear_legend ) )
 	}
 
 	experimental_layer( "mesh" )

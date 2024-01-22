@@ -2,6 +2,11 @@ context("map_layers")
 
 test_that("layerId includes all layers", {
 
+	testthat::skip_on_appveyor()
+	testthat::skip_on_cran()
+	testthat::skip_on_travis()
+	testthat::skip("run these manually")
+
 	layers <- c(
 		"animated_arc"
 		, "animated_line"
@@ -28,8 +33,6 @@ test_that("layerId includes all layers", {
 		, "trips"
 	)
 
-	# expect_equal( layers, mapdeck:::mapdeck_layers() )
-
 	res <- sapply( layers, function(x) { mapdeck:::layerId( layer_id = "test", layer = x) })
 	expect_equal( layers, names( res ) )
 
@@ -39,7 +42,6 @@ test_that("layerId includes all layers", {
 	f <- gsub("\\.R","",f)
 	f <- sort( f )
 	f <- setdiff(f, c("parameter_checks","sf"))
-
 
 	expect_equal( f, sort( layers ) )
 

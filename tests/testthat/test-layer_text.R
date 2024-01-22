@@ -1,7 +1,7 @@
 context("text")
 
-test_that("add_text accepts multiple objects", {
-
+# test_that("add_text accepts multiple objects", {
+#
 	# testthat::skip_on_cran()
 	#
 	# library(sfheaders)
@@ -37,8 +37,8 @@ test_that("add_text accepts multiple objects", {
 	# ## data.frame
 	# p <- add_text( map = m, data = capitals[1, ], lon = "lon", lat = "lat", text = "capital" )
 	# expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
-
-})
+#
+# })
 
 
 test_that("empty data doesn't crash",{

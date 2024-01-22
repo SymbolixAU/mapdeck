@@ -1,6 +1,6 @@
 context("pointcloud")
 
-test_that("add_pointcloud accepts multiple objects", {
+# test_that("add_pointcloud accepts multiple objects", {
 	# testthat::skip_on_cran()
 	# library(sfheaders)
 	#
@@ -51,10 +51,10 @@ test_that("add_pointcloud accepts multiple objects", {
 	# geo <- '{"elevation":12345.0,"fill_colour":[68.0,1.0,84.0,255.0],"lon":69.11,"lat":34.28,"geometry":[69.11,34.28,12345.0]}'
 	# p <- add_pointcloud( map = m, data = df, lon = "lon", lat = "lat", elevation = "z" )
 	# check( geo, p )
+#
+# })
 
-})
-
-test_that("pointcloud reads elevation from sf Z attribute", {
+# test_that("pointcloud reads elevation from sf Z attribute", {
 
 	# geo <- '[{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[0,0,1]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[0,0,2]}}]'
 	# sf <- geojsonsf::geojson_sf( geo )
@@ -78,7 +78,7 @@ test_that("pointcloud reads elevation from sf Z attribute", {
 	# shape <- mapdeck:::rcpp_point_sf_columnar( sf, l, geometry_column, digits = 6, "pointcloud" )
 	# js <- '{"elevation":[1.0,2.0],"fill_colour":[68.0,1.0,84.0,255.0,68.0,1.0,84.0,255.0],"lat":[0.0,0.0],"lon":[0.0,0.0],"geometry":[0.0,0.0,1.0,0.0,0.0,2.0]}'
 	# check( js, shape$data )
-})
+# })
 
 test_that("empty data doesn't crash",{
 	## issue 252

@@ -120,6 +120,9 @@ a named list indicating which colour attributes should be included in the legend
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
 
+\item{collision_filter}{set to `TRUE` if you want to hide features that overlap
+other features. Default is `FALSE`}
+
 \item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
 }
 \description{
