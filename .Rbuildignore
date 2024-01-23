@@ -19,3 +19,4 @@
 ^vignettes/trips.Rmd
 .github
 ^\.github$
+^CRAN-SUBMISSION$

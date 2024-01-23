@@ -48,9 +48,3 @@ Suggests:
     spatialwidget,
     testthat
 VignetteBuilder: knitr
-Remotes:
-    dcooley/geometries,
-    dcooley/interleave,
-    dcooley/sfheaders,
-    SymbolixAU/geojsonsf,
-    SymbolixAU/spatialwidget
