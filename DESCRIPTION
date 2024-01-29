@@ -2,7 +2,7 @@ Package: mapdeck
 Type: Package
 Title: Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'
 Version: 0.3.5
-Date: 2024-01-23
+Date: 2024-01-29
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
@@ -37,7 +37,7 @@ LinkingTo:
     jsonify (>= 1.2.2),
     rapidjsonr,
     Rcpp (>= 1.0.10),
-    sfheaders (>= 0.4.2),
+    sfheaders (>= 0.4.4),
     spatialwidget (>= 0.2.5)
 Suggests: 
     covr,

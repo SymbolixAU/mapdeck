@@ -34,7 +34,7 @@ browser can handle), on interactive maps using Mapbox GL and Deck.gl
 
 > Mapbox is the location data platform for mobile and web applications. We provide building blocks to add location features like maps, search, and navigation into any experience you create.
 
-- https://www.mapbox.com/about/
+- https://www.mapbox.com/about/company
 
 ## What is deck.gl?
 
