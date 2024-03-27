@@ -165,6 +165,10 @@ HTMLWidgets.widget({
 			      onResize(size) {
 			      	if (!HTMLWidgets.shinyMode) { return; }
 			      	Shiny.onInputChange(el.id +'_resize', size);
+			      },
+			      onClick(info) {
+			      	if (!HTMLWidgets.shinyMode) { return; }
+			      	Shiny.onInputChange(el.id + '_click', info);
 			      }
 			      /*
 			      */
