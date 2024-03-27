@@ -1,3 +1,7 @@
+# v0.3.6
+
+* `map_click` event added to shiny - e.g. `observeEvent({input$map_click})`
+
 # v0.3.5
 
 * Passing empty data to a layer clears the layer [issue 252](https://github.com/SymbolixAU/mapdeck/issues/252)
