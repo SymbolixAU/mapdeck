@@ -17,7 +17,7 @@ mapdeckTerrainDependency <- function() {
 #'
 #' @inheritParams add_arc
 #' @param elevation_data Image URL that encodes height data. When \code{elevation_data}
-#' is a URL template, i.e. a string containing '{x}' and '{y}', it loads terrain tiles on demand
+#' is a URL template, i.e. a string containing `\{x\}` and `\{y\}`, it loads terrain tiles on demand
 #' and renders a mesh for each tile. If \code{elevation_data} is an absolute URL, as ingle mesh is used,
 #' and the \code{bounds} argument is required to position it into the world space.
 #' @param texture Image URL to use as the texture

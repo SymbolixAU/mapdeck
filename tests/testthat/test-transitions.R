@@ -1,7 +1,7 @@
 context("transitions")
 
-test_that("transition names replaced", {
-
+# test_that("transition names replaced", {
+#
 	# ## arc
 	# t <- mapdeck:::arc_transitions()
 	# res <- mapdeck:::transitions_arc( t )
@@ -49,5 +49,5 @@ test_that("transition names replaced", {
 	# res <- mapdeck:::transitions_text( t )
 	# expect_true( all( names( res ) %in% c("getPosition", "getColor","getAngle","getSize") ) )
 	# expect_true( length( res ) == 4)
-
-})
+#
+# })

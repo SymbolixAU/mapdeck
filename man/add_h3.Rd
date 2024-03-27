@@ -28,7 +28,6 @@ add_h3(
   legend_format = NULL,
   update_view = TRUE,
   focus_layer = FALSE,
-  digits = 6,
   transitions = NULL
 )
 }
@@ -96,8 +95,6 @@ a named list indicating which colour attributes should be included in the legend
 \item{update_view}{logical indicating if the map should update the bounds to include this layer}
 
 \item{focus_layer}{logical indicating if the map should update the bounds to only include this layer}
-
-\item{digits}{number of digits for rounding coordinates}
 
 \item{transitions}{list specifying the duration of transitions.}
 }

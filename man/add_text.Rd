@@ -4,19 +4,6 @@
 \alias{add_text}
 \title{Add Text}
 \usage{
-<<<<<<< HEAD
-add_text(map, data = get_map_data(map), text, lon = NULL, lat = NULL,
-  polyline = NULL, fill_colour = NULL, fill_opacity = NULL,
-  size = NULL, angle = NULL, anchor = NULL,
-  alignment_baseline = NULL, billboard = TRUE,
-  font_family = "Monaco, monospace", font_weight = "normal",
-  tooltip = NULL, layer_id = NULL, id = NULL,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, digits = 6, transitions = NULL,
-  brush_radius = NULL, ...)
-=======
 add_text(
   map,
   data = get_map_data(map),
@@ -48,9 +35,9 @@ add_text(
   digits = 6,
   transitions = NULL,
   brush_radius = NULL,
-  collision_filter = FALSE
+  collision_filter = FALSE,
+  ...
 )
->>>>>>> origin
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -129,13 +116,14 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{transitions}{list specifying the duration of transitions.}
 
-<<<<<<< HEAD
-\item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
-=======
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
->>>>>>> origin
+
+\item{collision_filter}{set to `TRUE` if you want to hide features that overlap
+other features. Default is `FALSE`}
+
+\item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
 }
 \description{
 The Text Layer renders text labels on the map

@@ -4,16 +4,6 @@
 \alias{add_path}
 \title{Add Path}
 \usage{
-<<<<<<< HEAD
-add_path(map, data = get_map_data(map), polyline = NULL,
-  stroke_colour = NULL, stroke_width = NULL, stroke_opacity = NULL,
-  dash_size = NULL, dash_gap = NULL, tooltip = NULL,
-  billboard = FALSE, layer_id = NULL, id = NULL,
-  auto_highlight = FALSE, highlight_colour = "#AAFFFFFF",
-  palette = "viridis", na_colour = "#808080FF", legend = FALSE,
-  legend_options = NULL, legend_format = NULL, update_view = TRUE,
-  focus_layer = FALSE, digits = 6, transitions = NULL, ...)
-=======
 add_path(
   map,
   data = get_map_data(map),
@@ -43,9 +33,9 @@ add_path(
   focus_layer = FALSE,
   digits = 6,
   transitions = NULL,
-  brush_radius = NULL
+  brush_radius = NULL,
+  ...
 )
->>>>>>> origin
 }
 \arguments{
 \item{map}{a mapdeck map object}
@@ -124,13 +114,11 @@ a named list indicating which colour attributes should be included in the legend
 
 \item{transitions}{list specifying the duration of transitions.}
 
-<<<<<<< HEAD
-\item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
-=======
 \item{brush_radius}{radius of the brush in metres. Default NULL. If supplied,
 the arcs will only show if the origin or destination are within the radius of the mouse.
 If NULL, all arcs are displayed}
->>>>>>> origin
+
+\item{...}{\code{clear_legend} and \code{clear_view} arguments passed to 'clear_()' functions}
 }
 \description{
 The Path Layer takes in lists of coordinate points and renders them as
@@ -290,7 +278,7 @@ sf_line <- sfheaders::sf_linestring(
  , y = "y"
  , linestring_id = "id"
  , list_columns = "col"
- , keep = T
+ , keep = TRUE
 )
 
 mapdeck(

@@ -50,3 +50,7 @@
 #'
 "city_trail"
 
+#' road_safety
+#'
+#' A data.frame of counts of traffic accidents in the UK
+"road_safety"

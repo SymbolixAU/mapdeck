@@ -7,7 +7,7 @@ output: github_document
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
+  comment = "# ",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 # mapdeck
 
 [![R build status](https://github.com/SymbolixAU/mapdeck/workflows/R-CMD-check/badge.svg)](https://github.com/SymbolixAU/mapdeck/actions)
-[![Codecov test coverage](https://codecov.io/gh/symbolixau/mapdeck/branch/master/graph/badge.svg)](https://codecov.io/gh/symbolixau/mapdeck?branch=master)
+[![Codecov test coverage](https://app.codecov.io/gh/symbolixau/mapdeck?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/mapdeck)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
@@ -34,7 +34,7 @@ browser can handle), on interactive maps using Mapbox GL and Deck.gl
 
 > Mapbox is the location data platform for mobile and web applications. We provide building blocks to add location features like maps, search, and navigation into any experience you create.
 
-- https://www.mapbox.com/about/
+- https://www.mapbox.com/about/company
 
 ## What is deck.gl?
 

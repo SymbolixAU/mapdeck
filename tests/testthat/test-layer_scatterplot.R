@@ -1,6 +1,6 @@
 context("scatterplot")
 
-test_that("add_scatterplot accepts multiple objects", {
+# test_that("add_scatterplot accepts multiple objects", {
 	# testthat::skip_on_cran()
 	# library(sfheaders)
 	#
@@ -47,7 +47,7 @@ test_that("add_scatterplot accepts multiple objects", {
 	# p <- add_scatterplot( map = m, data = capitals[1, ], lon = "lon", lat = "lat" )
 	# check( geo, p )
 
-})
+# })
 
 test_that("empty data doesn't crash",{
 	## issue 252

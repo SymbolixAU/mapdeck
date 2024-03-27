@@ -5,9 +5,9 @@
 
 [![R build
 status](https://github.com/SymbolixAU/mapdeck/workflows/R-CMD-check/badge.svg)](https://github.com/SymbolixAU/mapdeck/actions)
-[![Codecov test
-coverage](https://codecov.io/gh/symbolixau/mapdeck/branch/master/graph/badge.svg)](https://codecov.io/gh/symbolixau/mapdeck?branch=master)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
+\[![Codecov test
+coverage](https://app.codecov.io/gh/symbolixau/mapdeck?branch=master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/mapdeck)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/mapdeck)](https://CRAN.R-project.org/package=mapdeck)
@@ -29,14 +29,14 @@ browser can handle), on interactive maps using Mapbox GL and Deck.gl
 > We provide building blocks to add location features like maps, search,
 > and navigation into any experience you create.
 
--   <https://www.mapbox.com/about/>
+- <https://www.mapbox.com/about/company>
 
 ## What is deck.gl?
 
 > deck.gl is a WebGL-powered framework for visual exploratory data
 > analysis of large datasets.
 
--   <https://deck.gl/#/>
+- <https://deck.gl/#/>
 
 ## How do I use it?
 
@@ -92,7 +92,10 @@ mapdeck(token = key, style = mapdeck_style('dark')) %>%
   )
 ```
 
-![Arcs](./vignettes/img/readme_arcs_small.gif)
+<figure>
+<img src="./vignettes/img/readme_arcs_small.gif" alt="Arcs" />
+<figcaption aria-hidden="true">Arcs</figcaption>
+</figure>
 
 See the
 [Layers](https://symbolixau.github.io/mapdeck/articles/layers.html) page
