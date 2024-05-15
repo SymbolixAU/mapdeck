@@ -183,7 +183,7 @@ add_h3 <- function(
 
 #' @rdname clear
 #' @export
-clear_h3_hexagon <- function( map, layer_id = NULL) {
+clear_h3_hexagon <- function( map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE) {
 	layer_id <- layerId(layer_id, "h3")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "h3_hexagon" )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "h3_hexagon", update_view, clear_legend )
 }
