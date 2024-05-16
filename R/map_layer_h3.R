@@ -158,7 +158,7 @@ add_h3 <- function(
 	geometry_column <- "hexagon"
 
 	## use 'polyline' method because we have strings (cells), not lat/lon coordinates
-	shape <- rcpp_point_polyline( data, l, geometry_column, "h3_hexagon")
+	shape <- rcpp_point_polyline( data, l, geometry_column, "h3")
 
 	jsfunc <- "add_h3_hexagon"
 
@@ -185,5 +185,5 @@ add_h3 <- function(
 #' @export
 clear_h3_hexagon <- function( map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE) {
 	layer_id <- layerId(layer_id, "h3")
-	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "h3_hexagon", update_view, clear_legend )
+	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "h3", update_view, clear_legend )
 }

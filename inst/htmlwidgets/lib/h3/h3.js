@@ -5,7 +5,7 @@ function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_sett
 
   const h3Layer = new deck.H3HexagonLayer({
   	map_id: map_id,
-    id: 'h3_hexagon-'+layer_id,
+    id: 'h3-'+layer_id,
     data: h3_hexagon_data,
     pickable: true,
     stroked: true,
@@ -23,14 +23,14 @@ function add_h3_hexagon( map_id, map_type, h3_hexagon_data, layer_id, light_sett
     autoHighlight: auto_highlight,
     highlightColor: md_hexToRGBA( highlight_colour ),
     onHover: md_update_tooltip,
-    onClick: info => md_layer_click( map_id, "h3_hexagon", info ),
+    onClick: info => md_layer_click( map_id, "h3", info ),
     transitions: js_transition || {}
   });
 
   if( map_type == "google_map") {
-    md_update_overlay( map_id, 'h3_hexagon-'+layer_id, h3Layer );
+    md_update_overlay( map_id, 'h3-'+layer_id, h3Layer );
   } else {
-	  md_update_layer( map_id, 'h3_hexagon-'+layer_id, h3Layer );
+	  md_update_layer( map_id, 'h3-'+layer_id, h3Layer );
   }
 
 	if (legend !== false) {
