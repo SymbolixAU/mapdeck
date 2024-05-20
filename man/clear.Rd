@@ -52,7 +52,7 @@ clear_greatcircle(
 
 clear_grid(map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE)
 
-clear_h3_hexagon(map, layer_id = NULL)
+clear_h3_hexagon(map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE)
 
 clear_heatmap(map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE)
 
