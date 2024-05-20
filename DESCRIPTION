@@ -1,8 +1,8 @@
 Package: mapdeck
 Type: Package
 Title: Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'
-Version: 0.3.5
-Date: 2024-01-29
+Version: 0.3.6
+Date: 2024-05-21
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
@@ -47,10 +47,11 @@ Suggests:
     spatialwidget,
     testthat
 VignetteBuilder: knitr
-https: //github.com/SymbolixAU/rapidjsonr
-  https://github.com/SymbolixAU/jsonify
-  https://github.com/SymbolixAU/geojsonsf
-  https://github.com/dcooley/geometries
-  https://github.com/dcooley/interleave
-  https://github.com/dcooley/sfheaders
+remotes:
+	https://github.com/SymbolixAU/rapidjsonr,
+  https://github.com/SymbolixAU/jsonify,
+  https://github.com/SymbolixAU/geojsonsf,
+  https://github.com/dcooley/geometries,
+  https://github.com/dcooley/interleave,
+  https://github.com/dcooley/sfheaders,
   https://github.com/SymbolixAU/spatialwidget
