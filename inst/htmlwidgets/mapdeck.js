@@ -101,7 +101,7 @@ HTMLWidgets.widget({
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
-			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
 			      controller: true,
 			      //onLayerHover: setTooltip
