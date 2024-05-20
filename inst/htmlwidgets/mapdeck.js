@@ -83,7 +83,7 @@ HTMLWidgets.widget({
        	 	  	}) ],
        	 	  map: false,
 			      container: el.id,
-			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      viewState: window[el.id + 'INITIAL_VIEW_STATE'],
 			      layers: [],
 			      controller: true
 			      //onLayerHover: setTooltip
@@ -140,6 +140,7 @@ HTMLWidgets.widget({
   						if (!HTMLWidgets.shinyMode ) { return; }
 
 						  Shiny.onInputChange(el.id + '_view_change', viewState);
+						  deckgl.setProps({ viewState })
 			      },
 
 			      onDragStart(info, event){
