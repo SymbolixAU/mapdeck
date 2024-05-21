@@ -184,6 +184,13 @@ add_h3 <- function(
 #' @rdname clear
 #' @export
 clear_h3_hexagon <- function( map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE) {
+	.Deprecated("clear_h3")
+	clear_h3(map, layer_id = layer_id, update_view = update_view, clear_legend = clear_legend)
+}
+
+#' @rdname clear
+#' @export
+clear_h3 <- function(map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE) {
 	layer_id <- layerId(layer_id, "h3")
 	invoke_method(map, "md_layer_clear", map_type( map ), layer_id, "h3", update_view, clear_legend )
 }
