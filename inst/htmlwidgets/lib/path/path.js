@@ -12,7 +12,7 @@ class MultiColouredPathLayer extends deck.PathLayer {
     initializeState() {
       super.initializeState();
 
-      this.state.attributeManager.addInstanced({
+      this.getAttributeManager().addInstanced({
         instanceColors: {
           size: this.props.colorFormat.length,
           vertexOffset: 0,
@@ -152,9 +152,11 @@ function add_path_geo( map_id, map_type, path_data, layer_id, auto_highlight, hi
 
 	console.log(extensions);
 
-	const pathLayer = Array.isArray( extensions ) && extensions.length ?
-		new deck.PathLayer(layer) :
-		new MultiColouredPathLayer(layer);
+//	const pathLayer = Array.isArray( extensions ) && extensions.length ?
+//		new deck.PathLayer(layer) :
+//		new MultiColouredPathLayer(layer);
+
+	const pathLayer = new deck.PathLayer(layer);
 
 	console.log(pathLayer);
 
