@@ -6,7 +6,6 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 	var currentMinZoom;
 	var currentMaxPitch;
 	var currentMinPitch;
-	var currentViewState;
 
   if( map_type == "google_map" ) {
   	//console.log( location );
@@ -14,26 +13,34 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
   	window[map_id + 'map'].setZoom( zoom );
   } else {
 
-	  if ( window[ map_id + 'map'].viewManager.viewState["default-view"] !== undefined ) {
+  	console.log( window[ map_id + 'map' ].viewState.longitude );
 
-	  	currentViewState = window[ map_id + 'map'].viewManager.viewState["default-view"]
+	  if ( window[ map_id + 'map'].viewState["default-view"] !== undefined ) {
+	  	currentLon = (location === null || location.length == 0) ? window[ map_id + 'map'].viewState["default-view"].longitude : location[0];
+	  	currentLat = (location === null || location.length == 0) ? window[ map_id + 'map'].viewState["default-view"].latitude : location[1];
+	    currentPitch = pitch === null ? window[ map_id + 'map'].viewState["default-view"].pitch : pitch;
+	    currentBearing = bearing === null ? window[ map_id + 'map' ].viewState["default-view"].bearing : bearing;
+	    currentZoom = zoom === null ? window[ map_id + 'map'].viewState["default-view"].zoom : zoom;
+	    currentMaxZoom = window[ map_id + 'map'].viewState["default-view"].maxZoom;
+	    currentMinZoom = window[ map_id + 'map'].viewState["default-view"].minZoom;
+	    currentMaxPitch = window[ map_id + 'map'].viewState["default-view"].maxPitch;
+	    currentMinPitch = window[ map_id + 'map'].viewState["default-view"].minPitch;
 	  } else {
-	  	currentViewState = window[ map_id + 'map'].viewManager.viewState
+	  	currentLon = (location === null || location.length == 0) ? window[ map_id + 'map'].viewState.longitude : location[0];
+	  	currentLat = (location === null || location.length == 0) ? window[ map_id + 'map'].viewState.latitude : location[1];
+	    currentPitch = pitch === null ? window[ map_id + 'map'].viewState.pitch : pitch;
+	    currentBearing = bearing === null ? window[ map_id + 'map' ].viewState.bearing : bearing;
+	    currentZoom = zoom === null ? window[ map_id + 'map'].viewState.zoom : zoom;
+	    currentMaxZoom = window[ map_id + 'map'].viewState.maxZoom;
+	    currentMinZoom = window[ map_id + 'map'].viewState.minZoom;
+	  	currentMaxPitch = window[ map_id + 'map'].viewState.maxPitch;
+	    currentMinPitch = window[ map_id + 'map'].viewState.minPitch;
 	  }
 
-	  	currentViewState = window[ map_id + 'map'].viewManager.viewState
-	  	currentLon = (location === null || location.length == 0) ? currentViewState.longitude : location[0];
-	  	currentLat = (location === null || location.length == 0) ? currentViewState.latitude : location[1];
-	    currentPitch = pitch === null ? currentViewState.pitch : pitch;
-	    currentBearing = bearing === null ? currentViewState.bearing : bearing;
-	    currentZoom = zoom === null ? currentViewState.zoom : zoom;
-	    currentMaxZoom = currentViewState.maxZoom;
-	    currentMinZoom = currentViewState.minZoom;
-	  	currentMaxPitch = currentViewState.maxPitch;
-	    currentMinPitch = currentViewState.minPitch;
+	  console.log( currentLon );
 
 		window[map_id + 'map'].setProps({
-	    viewState: {
+	    initialViewState: {
 	      longitude: currentLon,
 	      latitude: currentLat,
 	      zoom: currentZoom,
@@ -48,11 +55,13 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 	      controller: true
 	    }
 	  });
+
   }
 }
 
 function md_update_style( map_id, style ) {
 
+  var vs = window[ map_id + 'map'].viewState;
 	var map = window[ map_id + 'map'].getMapboxMap();
 	map.setStyle( style );
 
@@ -249,4 +258,3 @@ function md_get_zoom_level( globalBox ) {
 
   return diff;
 }
-
