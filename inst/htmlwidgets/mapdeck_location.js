@@ -48,7 +48,6 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 	      controller: true
 	    }
 	  });
-
   }
 }
 
