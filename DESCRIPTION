@@ -1,8 +1,8 @@
 Package: mapdeck
 Type: Package
 Title: Interactive Maps Using 'Mapbox GL JS' and 'Deck.gl'
-Version: 0.3.6
-Date: 2024-05-21
+Version: 0.3.5
+Date: 2024-01-29
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
@@ -15,29 +15,30 @@ URL: https://symbolixau.github.io/mapdeck/articles/mapdeck.html
 BugReports: https://github.com/SymbolixAU/mapdeck/issues
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 4.0.0)
+Depends: R (>= 3.5.0)
+SystemRequirements: C++14
 Imports:
-    colourvalues,
+    colourvalues (>= 0.3.9),
     googlePolylines (>= 0.7.2),
-    geojsonsf,
+    geojsonsf (>= 2.0.3),
     htmlwidgets,
-    jsonify,
+    jsonify (>= 1.2.2),
     magrittr,
-    Rcpp,
+    Rcpp (>= 1.0.10),
     shiny,
-    sfheaders
-RoxygenNote: 7.3.1
+    sfheaders (>= 0.4.4)
+RoxygenNote: 7.2.3
 LinkingTo: 
     BH,
     colourvalues (>= 0.3.9),
-    geojsonsf (>= 2.0.4),
+    geojsonsf (>= 2.0.3),
     geometries (>= 0.2.4),
     interleave (>= 0.1.2),
-    jsonify (>= 1.2.3),
+    jsonify (>= 1.2.2),
     rapidjsonr,
     Rcpp (>= 1.0.10),
     sfheaders (>= 0.4.4),
-    spatialwidget (>= 0.2.6)
+    spatialwidget (>= 0.2.5)
 Suggests: 
     covr,
     googleway,
@@ -47,11 +48,3 @@ Suggests:
     spatialwidget,
     testthat
 VignetteBuilder: knitr
-remotes:
-	https://github.com/SymbolixAU/rapidjsonr,
-  https://github.com/SymbolixAU/jsonify,
-  https://github.com/SymbolixAU/geojsonsf,
-  https://github.com/dcooley/geometries,
-  https://github.com/dcooley/interleave,
-  https://github.com/dcooley/sfheaders,
-  https://github.com/SymbolixAU/spatialwidget
