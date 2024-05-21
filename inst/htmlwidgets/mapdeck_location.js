@@ -15,8 +15,6 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
   	window[map_id + 'map'].setZoom( zoom );
   } else {
 
-  	console.log( window[ map_id + 'map' ].viewState.longitude );
-
 	  if ( window[ map_id + 'map'].viewState["default-view"] !== undefined ) {
 
 	  	currentViewState = window[ map_id + 'map'].viewState["default-view"];
@@ -33,9 +31,6 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 	    currentMinZoom = currentViewState.minZoom;
 	    currentMaxPitch = currentViewState.maxPitch;
 	    currentMinPitch = currentViewState.minPitch;
-
-
-	  console.log( currentLon );
 
 		window[map_id + 'map'].setProps({
 	    initialViewState: {
