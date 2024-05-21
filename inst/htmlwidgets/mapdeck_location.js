@@ -8,15 +8,21 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 	var currentMinPitch;
 	var currentViewState;
 
-  if( map_type == "google_map" ) {
-  	//console.log( location );
-  	window[map_id + 'map'].setCenter( { lat: location[1], lng: location[0] } );
-  	window[map_id + 'map'].setZoom( zoom );
-  } else {
+	  if( map_type == "google_map" ) {
+	  	//console.log( location );
+	  	window[map_id + 'map'].setCenter( { lat: location[1], lng: location[0] } );
+	  	window[map_id + 'map'].setZoom( zoom );
+	  } else {
 
-  	console.log( window[ map_id + 'map' ].viewManager.getViewState(map_id).longitude );
+  	//console.log( window[ map_id + 'map' ].viewManager );
 
-  	currentViewState = window[ map_id + 'map'].viewManager.getViewState(map_id)
+		if( window[ map_id + 'map'].viewManager !== null ) {
+
+	  	currentViewState = window[ map_id + 'map'].viewManager.getViewState(map_id)
+		} else {
+			currentViewState = window[ map_id + 'map'];
+		}
+
   	currentLon = (location === null || location.length == 0) ? currentViewState.longitude : location[0];
   	currentLat = (location === null || location.length == 0) ? currentViewState.latitude : location[1];
     currentPitch = pitch === null ? currentViewState.pitch : pitch;
@@ -45,7 +51,6 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 	      controller: true
 	    }
 	  });
-
   }
 }
 
