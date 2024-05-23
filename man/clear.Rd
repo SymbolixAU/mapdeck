@@ -17,6 +17,7 @@
 \alias{clear_greatcircle}
 \alias{clear_grid}
 \alias{clear_h3_hexagon}
+\alias{clear_h3}
 \alias{clear_heatmap}
 \alias{clear_hexagon}
 \alias{clear_mesh}
@@ -52,7 +53,9 @@ clear_greatcircle(
 
 clear_grid(map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE)
 
-clear_h3_hexagon(map, layer_id = NULL)
+clear_h3_hexagon(map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE)
+
+clear_h3(map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE)
 
 clear_heatmap(map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE)
 
