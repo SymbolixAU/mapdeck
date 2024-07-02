@@ -1,3 +1,4 @@
+/*
 function add_view_state( map_id, viewState ) {
 	'use strict';
 
@@ -26,7 +27,6 @@ function add_view_state( map_id, viewState ) {
     }
 
 }
-
 function md_placeViewState( map_id, object ) {
 
     var mapbox_ctrl = document.getElementById( "mapViewStateContainer"+map_id);
@@ -44,3 +44,4 @@ function clear_view_state( map_id ) {
 
 }
 
+*/

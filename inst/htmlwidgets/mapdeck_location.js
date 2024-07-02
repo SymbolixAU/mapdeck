@@ -19,8 +19,25 @@ function md_change_location( map_id, map_type, location, zoom, pitch, bearing, d
 
 	  	currentViewState = window[ map_id + 'map'].viewState["default-view"];
 	  } else {
-	  	currentViewState = window[ map_id + 'map'].viewState;
+	  	//currentViewState = window[ map_id + 'map'].viewState;
+	  	currentViewState = window[ map_id + 'viewState'];
 	  }
+/*
+	  console.log("default-view");
+	  console.log(window[ map_id + 'map'].viewState["default-view"]);
+
+	  console.log("viewState");
+	  console.log(window[ map_id + 'map'].viewState);
+	  console.log(window[ map_id + 'viewState']);
+
+
+	  console.log("viewManager");
+	  console.log(window[ map_id + 'map'].viewManager);
+
+	  console.log("viewManager.viewState");
+	  console.log(window[ map_id + 'map'].viewManager.viewState);
+*/
+
 
 	  	currentLon = (location === null || location.length == 0) ? currentViewState.longitude : location[0];
 	  	currentLat = (location === null || location.length == 0) ? currentViewState.latitude : location[1];

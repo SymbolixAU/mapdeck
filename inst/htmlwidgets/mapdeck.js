@@ -61,7 +61,7 @@ HTMLWidgets.widget({
 				}
 
         // INITIAL VIEW
-        window[el.id + 'INITIAL_VIEW_STATE'] = {
+        const initialViewState = {
         	longitude: x.location[0],
         	latitude: x.location[1],
         	zoom: x.zoom,
@@ -73,17 +73,19 @@ HTMLWidgets.widget({
        	 	minPitch: x.min_pitch
         };
 
+				window[el.id + 'viewState'] = initialViewState;
+
+				const mapView = new deck.MapView({
+					id: el.id,
+					repeat: x.repeat_view
+				})
+
        if( x.access_token === null ) {
        	 deckgl = new deck.DeckGL({
-       	 	  views: [ new deck.MapView({
-       	 	  	id: el.id,
-       	 	  	repeat: x.repeat_view,
-//       	 	  	width: width,
-//		       	 	height: height
-       	 	  	}) ],
+       	 	  views: [mapView],
        	 	  map: false,
 			      container: el.id,
-			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      initialViewState: initialViewState,
 			      layers: [],
 			      controller: true
 			      //onLayerHover: setTooltip
@@ -91,21 +93,21 @@ HTMLWidgets.widget({
 			   window[el.id + 'map'] = deckgl;
        } else {
         deckgl = new deck.DeckGL({
-        	  views: [ new deck.MapView({
-        	  	id: el.id,
-        	  	repeat: x.repeat_view,
-//		       	 	width: width,
-//		       	 	height: height
-        	  	})
-        	  ],
+        	  views: [mapView],
           	mapboxApiAccessToken: x.access_token,
 			      container: el.id,
 			      mapStyle: x.style,
-			      initialViewState: window[el.id + 'INITIAL_VIEW_STATE'],
+			      initialViewState: initialViewState,
 			      layers: [],
 			      controller: true,
 			      //onLayerHover: setTooltip
 			      onViewStateChange: ({viewId, viewState, interactionState}) => {
+
+			      	//console.log("onViewStateChange");
+			      	//console.log(viewState);
+
+							// issue 382
+			      	window[el.id + 'viewState'] = viewState;
 
 			      	if (!HTMLWidgets.shinyMode && !x.show_view_state ) { return; }
 							// as per:
