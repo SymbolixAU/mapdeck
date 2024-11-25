@@ -6,6 +6,7 @@
 
 Rcpp::List text_defaults(int n) {
 	return Rcpp::List::create(
+		_["elevation"] = mapdeck::defaults::default_elevation(n),
 		_["fill_colour"] = mapdeck::defaults::default_fill_colour(n),
 		_["anchor"] = mapdeck::defaults::default_text_anchor(n),
 		_["angle"] = mapdeck::defaults::default_angle(n),
@@ -71,6 +72,7 @@ Rcpp::List rcpp_text_geojson_df(
 		parameter_exclusions,
 		geometry_columns,
 		true,  // jsonify legend
+		true, // elevation
 		digits
 	);
 }

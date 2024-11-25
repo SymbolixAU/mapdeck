@@ -1,5 +1,6 @@
 # v0.3.6
 
+* `add_text()` gets `elevation` argument for when using a `data.frame`
 * `map_click` event added to shiny - e.g. `observeEvent({input$map_click})`
 
 # v0.3.5
