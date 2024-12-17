@@ -1,5 +1,6 @@
 # v0.3.6
 
+* `add_legend` and `clear_legend()` for adding custom legends to the map [issue 390](https://github.com/SymbolixAU/mapdeck/issues/390)
 * `add_text()` gets `elevation` argument for when using a `data.frame`
 * `map_click` event added to shiny - e.g. `observeEvent({input$map_click})`
 

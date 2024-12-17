@@ -10,6 +10,7 @@ add_text(
   text,
   lon = NULL,
   lat = NULL,
+  elevation = NULL,
   polyline = NULL,
   fill_colour = NULL,
   fill_opacity = NULL,

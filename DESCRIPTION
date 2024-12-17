@@ -27,7 +27,7 @@ Imports:
     Rcpp (>= 1.0.10),
     shiny,
     sfheaders (>= 0.4.4)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 LinkingTo: 
     BH,
     colourvalues (>= 0.3.9),
