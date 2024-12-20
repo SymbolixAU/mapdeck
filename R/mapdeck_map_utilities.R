@@ -141,6 +141,7 @@ layerId <- function(
 		, "path"
 		, "pointcloud"
 		, "polygon"
+		, "s2"
 		, "scatterplot"
 		, "screengrid"
 		, "terrain"
