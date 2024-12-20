@@ -170,9 +170,6 @@ mapdeck( style = mapdeck_style('dark'), pitch = 45 ) %>%
 ```{r}
 
 
-library(mapdeck)
-
-set_token( read.dcf("~/Documents/.googleAPI", fields = "MAPBOX"))
 df <- read.csv(paste0(
   'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/'
   , '3d-heatmap/heatmap-data.csv'
@@ -273,6 +270,33 @@ mapdeck(token = key, style = mapdeck_style("dark")) %>%
 ```
 
 ![Polygons](./img/articles/polygons.gif)
+
+## S2
+
+```{r}
+df <- jsonify::from_json("https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf.s2cells.json")
+
+mapdeck(
+  style = mapdeck_style("dark")
+  , location = c(-122.4, 37.8)
+  , zoom = 10
+  , pitch = 60
+  ) %>%
+  add_s2(
+    data = df
+    , token = "token"
+    , fill_colour = "value"
+    , auto_highlight = TRUE
+    , legend = FALSE
+    , elevation = "value"
+    , elevation_scale = 1000
+    , palette = colourvalues::get_palette("inferno")
+  )
+
+
+```
+
+![S2](./img/articles/s2.png)
 
 ## Scatter
 

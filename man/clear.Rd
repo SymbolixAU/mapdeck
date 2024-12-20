@@ -5,8 +5,9 @@
 %   R/map_layer_grid.R, R/map_layer_h3.R, R/map_layer_heatmap.R,
 %   R/map_layer_hexagon.R, R/map_layer_line.R, R/map_layer_mesh.R,
 %   R/map_layer_path.R, R/map_layer_pointcloud.R, R/map_layer_polygon.R,
-%   R/map_layer_scatterplot.R, R/map_layer_screengrid.R, R/map_layer_terrain.R,
-%   R/map_layer_text.R, R/map_layer_title.R, R/map_layer_trips.R
+%   R/map_layer_s2.R, R/map_layer_scatterplot.R, R/map_layer_screengrid.R,
+%   R/map_layer_terrain.R, R/map_layer_text.R, R/map_layer_title.R,
+%   R/map_layer_trips.R
 \name{clear_animated_arc}
 \alias{clear_animated_arc}
 \alias{clear_line}
@@ -24,6 +25,7 @@
 \alias{clear_path}
 \alias{clear_pointcloud}
 \alias{clear_polygon}
+\alias{clear_s2}
 \alias{clear_scatterplot}
 \alias{clear_screengrid}
 \alias{clear_terrain}
@@ -70,6 +72,8 @@ clear_path(map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE)
 clear_pointcloud(map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE)
 
 clear_polygon(map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE)
+
+clear_s2(map, layer_id = NULL, update_view = TRUE, clear_legend = TRUE)
 
 clear_scatterplot(
   map,
