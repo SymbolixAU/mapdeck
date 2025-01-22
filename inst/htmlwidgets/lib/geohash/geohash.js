@@ -13,7 +13,7 @@ function add_geohash( map_id, map_type, geohash_data, layer_id, light_settings, 
     wireframe: false,
     extruded: is_extruded,
     lineWidthMinPixels: 0,
-    getGeohash: d => d.geohash
+    getGeohash: d => d.geohash,
     getLineColor: d => d.stroke_colour,
     getFillColor: d => d.fill_colour,
     getLineWidth: d => d.stroke_width,
