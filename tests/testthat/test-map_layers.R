@@ -14,6 +14,7 @@ test_that("layerId includes all layers", {
 		, "bitmap"
 		, "column"
 		, "geojson"
+		, "geohash"
 		, "greatcircle"
 		, "grid"
 		, "h3"

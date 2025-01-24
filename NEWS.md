@@ -1,3 +1,7 @@
+# v0.3.7
+
+* `add_s2` and `clear_s2` for adding S2 layers to the map [issue394](https://github.com/SymbolixAU/mapdeck/issues/394)
+
 # v0.3.6
 
 * `add_legend` and `clear_legend()` for adding custom legends to the map [issue 390](https://github.com/SymbolixAU/mapdeck/issues/390)

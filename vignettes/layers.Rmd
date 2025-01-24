@@ -320,6 +320,20 @@ add_screengrid(
 
 ![Screengrid](./img/articles/screengrid_small.gif)
 
+## Geohash
+
+```{r}
+
+mapdeck( token = key, style = mapdeck_style('dark')) %>%
+	add_geohash(data = mapdeck::geohash
+							, geohash = "geohash"
+							, fill_colour = "value"
+							, elevation = "value"
+							, elevation_scale = 1000)
+
+```
+
+![Scatter](./img/articles/geohash.png)
 
 ## Text
 
