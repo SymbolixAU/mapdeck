@@ -2,46 +2,47 @@ context("geohash")
 
 
 test_that("add_geohash accepts multiple objects", {
+
 	testthat::skip_on_cran()
+
 	library(geohashTools)
 
-	geo <- '[{"type":"Feature","properties":{},"geometry":{"geometry":{"type":"Point","coordinates":[69.11,34.28]}}}]'
-	poly <- '[{"polyline":"_ifpEo`ydL"}]'
+	geo <- "[{\"elevation\":0,\"fill_colour\":[68.0,1.0,84.0,255.0],\"stroke_colour\":[68.0,1.0,84.0,255.0],\"geohash\":\"9q8yu\"}]"
+	poly <- '[{"weight":1.0,"polyline":"_ifpEo`ydL"}]'
 
 	## sf
 	set_token("abc")
 	m <- mapdeck()
-
-	dt_gh <- data.frame(geohash_id = gh_encode(capitals$lat[1], capitals$lon[1], precision = 6L))
-	p <- add_geohash(map = m, data = dt_gh)
+	sf <- sfheaders::sf_point( capitals[1, ], x = "lon", y = "lat" )
+	p <- add_geohash(map = m, data = geohash[1,], geohash = "geohash")
 	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 
-	## sfencoded
-	enc <- googlePolylines::encode( sf )
-	p <- add_hexagon( map = m, data = enc )
-	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly )
-
-	## sfencodedLite
-	enc <- googlePolylines::encode( sf, strip = T )
-	p <- add_hexagon( map = m, data = enc )
-	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly )
+	# ## sfencoded
+	# enc <- googlePolylines::encode( sf )
+	# p <- add_geohash( map = m, data = enc )
+	# expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly )
+	#
+	# ## sfencodedLite
+	# enc <- googlePolylines::encode( sf, strip = T )
+	# p <- add_geohash( map = m, data = enc )
+	# expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly )
 
 	## data.frame with polyline
-	df <- as.data.frame( enc )
-	df$geometry <- unlist( df$geometry )
-
-	p <- add_hexagon( map = m, data = df, polyline = "geometry" )
-	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly )
+	# df <- as.data.frame( enc )
+	# df$geometry <- unlist( df$geometry )
+	#
+	# p <- add_geohash( map = m, data = df, polyline = "geometry" )
+	# expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), poly )
 
 	## data.frame
-	p <- add_hexagon( map = m, data = capitals[1, ], lon = "lon", lat = "lat" )
-	expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
+	# p <- add_geohash( map = m, data = capitals[1, ], lon = "lon", lat = "lat" )
+	# expect_equal( as.character( p$x$calls[[1]]$args[[2]] ), geo )
 
 })
 
 test_that("empty data doesn't crash",{
-	## issue 252
 	m <- mapdeck()
-	res <- mapdeck::add_hexagon(map = m, data = data.frame())
+	res <- mapdeck::add_geohash(map = m, data = data.frame())
 	expect_true( res$x$calls[[1]]$functions == "md_layer_clear" )
 })
+

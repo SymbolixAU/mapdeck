@@ -42,19 +42,18 @@ mapdeckGeohashDependency <- function() {
 #'
 #' mapdeck(
 #'  style = mapdeck_style("dark")
-#'  , location = c(0, 51.3)
+#'  , location = c(-122.419, 37.774)
 #'  , zoom = 10
 #'  , pitch = 60
-#'  , libraries = "h3"
 #'  ) %>%
-#'  add_h3(
-#'    data = road_safety
-#'    , hexagon = "hex"
-#'    , fill_colour = "count"
+#'  add_geohash(
+#'    data = geohash
+#'    , geohash = "geohash"
+#'    , fill_colour = "value"
 #'    , auto_highlight = TRUE
 #'    , legend = TRUE
-#'    , elevation = "count"
-#'    , elevation_scale = 20
+#'    , elevation = "value"
+#'    , elevation_scale = 1000
 #'    , palette = colourvalues::get_palette("inferno")
 #'    )
 #'
@@ -62,7 +61,7 @@ mapdeckGeohashDependency <- function() {
 #'
 #' @details
 #'
-#' \code{add_h3} supports a data.frame with a column of h3 indexes
+#' \code{add_geohash} supports a data.frame with a column of geohash indexes
 #'
 #'
 #' @export
@@ -92,6 +91,10 @@ add_geohash <- function(
     focus_layer = FALSE,
     transitions = NULL
 ) {
+
+	if( nrow( data ) == 0 ) {
+		return( clear_geohash( map, layer_id ) )
+	}
 
   l <- list()
   l[["geohash"]] <- force( geohash )
@@ -158,11 +161,6 @@ add_geohash <- function(
     shape[["legend"]] <- resolve_legend_format( shape[["legend"]], legend_format )
     legend_format <- "rgb"
   }
-
-	print(shape[["data"]])
-	print(layer_id)
-	print(light_settings)
-	print(is_extruded)
 
   invoke_method(
     map, jsfunc, map_type( map ), shape[["data"]], layer_id, light_settings,

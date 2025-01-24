@@ -1,7 +1,7 @@
 function add_geohash( map_id, map_type, geohash_data, layer_id, light_settings, elevation_scale, auto_highlight, highlight_colour, legend, legend_format, js_transition, is_extruded ) {
 //bbox, update_view, focus_layer,
 
-  console.log( legend );
+  // console.log( legend );
 
   const geohashLayer = new deck.GeohashLayer({
   	map_id: map_id,

@@ -99,11 +99,11 @@ a named list indicating which colour attributes should be included in the legend
 \item{transitions}{list specifying the duration of transitions.}
 }
 \description{
-The GeohashLayer renders filled and/or stroked polygons based on the Geohash 
+The GeohashLayer renders filled and/or stroked polygons based on the Geohash
 geospatial indexing system. To use, See examples.
 }
 \details{
-\code{add_h3} supports a data.frame with a column of h3 indexes
+\code{add_geohash} supports a data.frame with a column of geohash indexes
 }
 \section{transitions}{
 
@@ -131,19 +131,18 @@ set_token( key )
 
 mapdeck(
  style = mapdeck_style("dark")
- , location = c(0, 51.3)
+ , location = c(-122.419, 37.774)
  , zoom = 10
  , pitch = 60
- , libraries = "h3"
  ) \%>\%
- add_h3(
-   data = road_safety
-   , hexagon = "hex"
-   , fill_colour = "count"
+ add_geohash(
+   data = geohash
+   , geohash = "geohash"
+   , fill_colour = "value"
    , auto_highlight = TRUE
    , legend = TRUE
-   , elevation = "count"
-   , elevation_scale = 20
+   , elevation = "value"
+   , elevation_scale = 1000
    , palette = colourvalues::get_palette("inferno")
    )
 

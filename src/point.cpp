@@ -56,7 +56,8 @@ Rcpp::StringVector get_point_legend_colours( std::string layer_name ) {
 
 	Rcpp::StringVector point_legend;
 
-	if( layer_name == "column" || layer_name == "scatterplot" || layer_name == "h3" || layer_name == "geohash" ) {
+	if( layer_name == "column" || layer_name == "scatterplot" || layer_name == "h3"
+       || layer_name == "geohash" ) {
 		point_legend = mapdeck::layer_colours::fill_stroke_legend;
 	} else if ( layer_name == "pointcloud" ) {
 		point_legend = mapdeck::layer_colours::fill_legend;
@@ -70,7 +71,8 @@ std::unordered_map< std::string, std::string > get_point_colours( std::string la
 
 	std::unordered_map< std::string, std::string > point_colours;
 
-	if( layer_name == "column" || layer_name == "scatterplot" || layer_name == "h3" || layer_name == "geohash" ) {
+	if( layer_name == "column" || layer_name == "scatterplot" || layer_name == "h3"
+       || layer_name == "geohash" ) {
 		point_colours = mapdeck::layer_colours::fill_stroke_colours;
 	} else if ( layer_name == "pointcloud" ) {
 		point_colours = mapdeck::layer_colours::fill_colours;
