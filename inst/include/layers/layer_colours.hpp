@@ -6,6 +6,8 @@
 namespace mapdeck {
 namespace layer_colours {
 
+	inline int x;
+
 	const std::unordered_map< std::string, std::string > fill_stroke_colours({
 		{ "fill_colour", "fill_opacity" },
 		{ "stroke_colour", "stroke_opacity"}

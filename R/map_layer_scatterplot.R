@@ -206,7 +206,6 @@ add_scatterplot <- function(
 	l[["data_type"]] <- NULL
 
 	jsfunc <- "add_scatterplot_geo_columnar"
-	map <- addDependency(map, mapdeckScatterplotDependency())
 
 	if ( tp == "sf" ) {
 		geometry_column <- list( geometry = c("lon","lat") )  ## using columnar structure, the 'sf' is converted to a data.frame

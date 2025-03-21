@@ -15,22 +15,21 @@ URL: https://symbolixau.github.io/mapdeck/articles/mapdeck.html
 BugReports: https://github.com/SymbolixAU/mapdeck/issues
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 3.5.0)
-SystemRequirements: C++14
+Depends: R (>= 4.0.0)
 Imports:
-    colourvalues (>= 0.3.9),
-    googlePolylines (>= 0.7.2),
+    colourvalues (>= 0.3.11),
+    googlePolylines (>= 0.8.7),
     geojsonsf (>= 2.0.3),
     htmlwidgets,
     jsonify (>= 1.2.2),
     magrittr,
-    Rcpp (>= 1.0.10),
+    Rcpp (>= 1.0.14),
     shiny,
     sfheaders (>= 0.4.4)
 RoxygenNote: 7.3.1
 LinkingTo: 
     BH,
-    colourvalues (>= 0.3.9),
+    colourvalues (>= 0.3.11),
     geojsonsf (>= 2.0.3),
     geometries (>= 0.2.4),
     interleave (>= 0.1.2),
@@ -38,7 +37,7 @@ LinkingTo:
     rapidjsonr,
     Rcpp (>= 1.0.10),
     sfheaders (>= 0.4.4),
-    spatialwidget (>= 0.2.5)
+    spatialwidget (>= 0.2.6)
 Suggests: 
     covr,
     googleway,
