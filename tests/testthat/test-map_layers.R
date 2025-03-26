@@ -26,6 +26,7 @@ test_that("layerId includes all layers", {
 		, "polygon"
 		, "scatterplot"
 		, "screengrid"
+		, "s2"
 		, "terrain"
 		, "text"
 		, "tile3d"
