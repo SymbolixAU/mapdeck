@@ -131,6 +131,7 @@ layerId <- function(
 		, "cesium"
 		, "i3s"
 		, "geojson"
+		, "geohash"
 		, "greatcircle"
 		, "grid"
 		, "h3"
